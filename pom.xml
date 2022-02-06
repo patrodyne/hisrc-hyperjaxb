@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jvnet.hyperjaxb3</groupId>
+	<groupId>org.patrodyne.jvnet</groupId>
 	<artifactId>hyperjaxb3</artifactId>
 	<packaging>pom</packaging>
 	<version>0.6.3-SNAPSHOT</version>
@@ -16,32 +16,35 @@
 		<system>GitHub Issues</system>
 		<url>https://github.com/patrodyne/hisrc-hyperjaxb/issues</url>
 	</issueManagement>
+	<!-- OSS Repository Hosting <https://central.sonatype.org/publish/publish-guide/> -->
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 	<inceptionYear>2005</inceptionYear>
-	<mailingLists>
-		<mailingList>
-			<name>Users List</name>
-			<subscribe>users-subscribe@hyperjaxb.java.net</subscribe>
-			<unsubscribe>users-unsubscribe@hyperjaxb.java.net</unsubscribe>
-			<post>users@hyperjaxb.java.net</post>
-			<archive>http://java.net/projects/hyperjaxb/lists/users/archive</archive>
-		</mailingList>
-	</mailingLists>
 	<developers>
 		<developer>
-			<id>lexi</id>
+			<id>patrodyne</id>
+			<name>Rick O'Sullivan</name>
+			<email>rick.osullivan@patrodyne.org</email>
+			<roles>
+				<role>maintainer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>highsource</id>
 			<name>Aleksei Valikov</name>
-			<email>valikov@gmx.net</email>
+			<roles>
+				<role>architect (late)</role>
+			</roles>
 		</developer>
 	</developers>
-	<contributors>
-		<!--contributor>
-			<name></name>
-			<email></email>
-			<organization></organization>
-			<organizationUrl></organizationUrl>
-			<timezone></timezone>
-		</contributor-->
-	</contributors>
 	<licenses>
 		<license>
 			<name>BSD 3-Clause License</name>
@@ -50,9 +53,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:git:git@github.com:highsource/hyperjaxb3.git</connection>
-		<developerConnection>scm:git:git@github.com:highsource/hyperjaxb3.git</developerConnection>
-		<url>https://github.com/highsource/hyperjaxb3</url>
+		<connection>scm:git:git@github.com:patrodyne/hisrc-hyperjaxb.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/patrodyne/hisrc-hyperjaxb.git</developerConnection>
+		<url>https://github.com/patrodyne/hisrc-hyperjaxb/tree/master</url>
 	</scm>
 	<modules>
 		<!-- General -->
