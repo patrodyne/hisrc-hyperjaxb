@@ -1,33 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>hyperjaxb3-ejb-tutorials-po-step-three</artifactId>
-	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Tutorial [po:step-three]</name>
 	<parent>
 		<groupId>org.jvnet.hyperjaxb3</groupId>
 		<artifactId>hyperjaxb3-ejb-tutorials-po</artifactId>
 		<version>0.6.3-SNAPSHOT</version>
 	</parent>
+	<artifactId>hyperjaxb3-ejb-tutorials-po-step-three</artifactId>
+	<packaging>jar</packaging>
+	<name>Hyperjaxb3 EJB Tutorial [po:step-three]</name>
 	<dependencies>
 		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<artifactId>jaxb2-basics-runtime</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.jvnet.hyperjaxb3</groupId>
 			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
-		</dependency>
-
-		<!-- Test dependencies -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
 		</dependency>
 
 		<!-- Roundtrip -->
@@ -36,22 +36,36 @@
 			<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
 		</dependency>
 
-		<!-- TopLink Dependencies -->
+		<!-- Toplink Implementaion of JPA -->
 		<dependency>
 			<groupId>toplink.essentials</groupId>
 			<artifactId>toplink-essentials</artifactId>
-			<version>2.1-60f</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>test</scope>
 		</dependency>
-
-		<!-- Database -->
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -67,19 +81,23 @@
 						<goals>
 							<goal>generate</goal>
 						</goals>
+						<configuration>
+							<extension>true</extension>
+							<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tutorials.po.stepthree.RoundtripTest</roundtripTestClassName>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<extension>true</extension>
-					<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tutorials.po.stepthree.RoundtripTest</roundtripTestClassName>
-				</configuration>
 			</plugin>
 			<plugin>
-				<inherited>true</inherited>
-				<artifactId>maven-compiler-plugin</artifactId>
+				<artifactId>maven-dependency-plugin</artifactId>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<ignoredUnusedDeclaredDependencies>
+						<ignoredUnusedDeclaredDependency>javax.persistence:persistence-api:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>org.glassfish.jaxb:jaxb-runtime:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-entitymanager:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>org.hsqldb:hsqldb:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-simple:jar:</ignoredUnusedDeclaredDependency>
+					</ignoredUnusedDeclaredDependencies>
 				</configuration>
 			</plugin>
 		</plugins>

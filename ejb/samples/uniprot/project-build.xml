@@ -1,7 +1,8 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project name="hyperjaxb3-hibernate-sample-ant" default="install">
+	<property name="build.compiler" value="extJavac"/>
 	<property name="artifactId" value="hyperjaxb3-sample-uniprot-ant"/>
-	<property name="version" value="0.6.2-SNAPSHOT"/>
+	<property name="version" value="${project.version}"/>
 	<path id="compile.path">
 		<fileset dir="${basedir}/lib">
 			<include name="commons-lang3-*.jar"/>
@@ -12,6 +13,7 @@
 			<include name="persistence-api-*.jar"/>
 			<include name="hyperjaxb3-ejb-runtime-*.jar"/>
 
+			<include name="slf4j-api*.jar"/>
 
 			<include name="junit-*.jar"/>
 			<include name="hyperjaxb3-ejb-roundtrip-*.jar"/>
@@ -30,12 +32,12 @@
 			<include name="jaxb2-basics-testing-*.jar"/>
 			<include name="xmlunit-*.jar"/>
 			<include name="commons-lang3-*.jar"/>
-			<include name="commons-logging-*.jar"/>
 
 			<include name="hibernate-jpa-2.1-api-*.jar"/>
 			<include name="persistence-api-*.jar"/>
 			<include name="hyperjaxb3-ejb-runtime-*.jar"/>
 
+			<include name="slf4j-api*.jar"/>
 
 			<include name="junit-*.jar"/>
 			<include name="hyperjaxb3-ejb-roundtrip-*.jar"/>
@@ -54,7 +56,6 @@
 			<include name="xmlunit-*.jar"/>
 			<include name="commons-io-*.jar"/>
 			<include name="commons-lang3-*.jar"/>
-			<include name="commons-logging-*.jar"/>
 			<include name="commons-collections-*.jar"/>
 			<include name="dom4j-*.jar"/>
 			<include name="ehcache-*.jar"/>
@@ -74,7 +75,6 @@
 			<include name="hibernate-jpa-2.1-api-*.jar"/>
 			<include name="persistence-api-*.jar"/>
 			<include name="jta-*.jar"/>
-			<include name="log4j-*.jar"/>
 			<include name="slf4j-*.jar"/>
 			<include name="xmlunit-*.jar"/>
 		</fileset>
@@ -136,9 +136,7 @@
 		<javac
 			destdir="${basedir}/target/classes" 
 			srcdir="${basedir}/src/main/java:${basedir}/target/generated-sources/xjc"
-			classpathref="compile.path"
-			source="1.5"
-			target="1.5">
+			classpathref="compile.path">
 		</javac>
 		<copy todir="${basedir}/target/classes">
 			<fileset dir="${basedir}/src/main/resources"/>
@@ -152,9 +150,7 @@
 		<javac
 			destdir="${basedir}/target/test-classes" 
 			srcdir="${basedir}/src/test/java:${basedir}/target/generated-sources/xjc"
-			classpathref="test-compile.path"
-			source="1.5"
-			target="1.5">
+			classpathref="test-compile.path">
 		</javac>
 		<copy todir="${basedir}/target/test-classes">
 			<fileset dir="${basedir}/src/test/resources"/>
