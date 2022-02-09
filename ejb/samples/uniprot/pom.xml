@@ -4,21 +4,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3-ejb-samples</artifactId>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-ejb-samples</artifactId>
 		<version>0.6.3-SNAPSHOT</version>
 	</parent>
-	<artifactId>hyperjaxb3-ejb-samples-uniprot</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-samples-uniprot</artifactId>
 	<packaging>pom</packaging>
 	<name>Hyperjaxb3 EJB Sample [uniprot]</name>
 	<dependencies>
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
-			<artifactId>hyperjaxb3-ejb-plugin</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-plugin</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-ant</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-basicjaxb-ant</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
@@ -36,8 +36,8 @@
 		</dependency>
 		<!-- Roundtrip -->
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
-			<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-roundtrip</artifactId>
 		</dependency>
 		<!-- Database -->
 		<dependency>

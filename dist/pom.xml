@@ -3,75 +3,75 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jvnet.hyperjaxb3</groupId>
-	<artifactId>hyperjaxb3-dist</artifactId>
+	<groupId>org.patrodyne.jvnet</groupId>
+	<artifactId>hisrc-hyperjaxb-dist</artifactId>
 	<packaging>pom</packaging>
 	<name>Hyperjaxb3 Distribution</name>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3</artifactId>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-project</artifactId>
 		<version>0.6.3-SNAPSHOT</version>
 	</parent>
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hyperjaxb3-ejb-samples-po-initial</artifactId>
+			<artifactId>hisrc-hyperjaxb-ejb-samples-po-initial</artifactId>
 			<type>zip</type>
 			<classifier>maven-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hyperjaxb3-ejb-samples-po-initial</artifactId>
+			<artifactId>hisrc-hyperjaxb-ejb-samples-po-initial</artifactId>
 			<type>zip</type>
 			<classifier>ant-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hyperjaxb3-ejb-samples-po-customized-toplink</artifactId>
+			<artifactId>hisrc-hyperjaxb-ejb-samples-po-customized-toplink</artifactId>
 			<type>zip</type>
 			<classifier>maven-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hyperjaxb3-ejb-samples-po-customized-toplink</artifactId>
+			<artifactId>hisrc-hyperjaxb-ejb-samples-po-customized-toplink</artifactId>
 			<type>zip</type>
 			<classifier>ant-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hyperjaxb3-ejb-samples-uniprot</artifactId>
+			<artifactId>hisrc-hyperjaxb-ejb-samples-uniprot</artifactId>
 			<type>zip</type>
 			<classifier>maven-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hyperjaxb3-ejb-samples-uniprot</artifactId>
+			<artifactId>hisrc-hyperjaxb-ejb-samples-uniprot</artifactId>
 			<type>zip</type>
 			<classifier>ant-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hyperjaxb3-ejb-samples-po-maven-jaxb2-plugin</artifactId>
+			<artifactId>hisrc-hyperjaxb-ejb-samples-po-maven-jaxb2-plugin</artifactId>
 			<type>zip</type>
 			<classifier>maven-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hyperjaxb3-ejb-template-basic</artifactId>
+			<artifactId>hisrc-hyperjaxb-ejb-template-basic</artifactId>
 			<type>zip</type>
 			<classifier>maven-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hyperjaxb3-ejb-template-basic</artifactId>
+			<artifactId>hisrc-hyperjaxb-ejb-template-basic</artifactId>
 			<type>zip</type>
 			<classifier>ant-src</classifier>
 			<version>${project.version}</version>

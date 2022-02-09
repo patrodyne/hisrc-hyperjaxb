@@ -4,11 +4,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3-ejb</artifactId>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-ejb</artifactId>
 		<version>0.6.3-SNAPSHOT</version>
 	</parent>
-	<artifactId>hyperjaxb3-ejb-plugin</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-plugin</artifactId>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb3 EJB Plugin</name>
 	<dependencies>
@@ -30,40 +30,40 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.jvnet.annox</groupId>
-			<artifactId>annox</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-basicjaxb-annox-parser</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-annotate</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-annox-plugin</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-basicjaxb</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-tools</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-basicjaxb-tools</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-runtime</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-basicjaxb-runtime</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
-			<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-roundtrip</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
-			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
-			<artifactId>hyperjaxb3-ejb-schemas-persistence</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-schemas-persistence</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
-			<artifactId>hyperjaxb3-ejb-schemas-customizations</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-schemas-customizations</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>

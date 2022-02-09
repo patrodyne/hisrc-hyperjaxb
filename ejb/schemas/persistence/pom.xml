@@ -4,17 +4,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3-ejb-schemas</artifactId>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-ejb-schemas</artifactId>
 		<version>0.6.3-SNAPSHOT</version>
 	</parent>
-	<artifactId>hyperjaxb3-ejb-schemas-persistence</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-schemas-persistence</artifactId>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb3 EJB Schemas Persistence</name>
 	<dependencies>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-runtime</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-basicjaxb-runtime</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
@@ -30,9 +30,9 @@
 		<defaultGoal>install</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>${maven-jaxb2-plugin.version}</version>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-higherjaxb2-maven-plugin</artifactId>
+				<version>${hisrc-higherjaxb-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -52,8 +52,8 @@
 							</args>
 							<plugins>
 								<plugin>
-									<groupId>org.jvnet.jaxb2_commons</groupId>
-									<artifactId>jaxb2-basics</artifactId>
+									<groupId>org.patrodyne.jvnet</groupId>
+									<artifactId>hisrc-basicjaxb</artifactId>
 								</plugin>
 							</plugins>
 						</configuration>

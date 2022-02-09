@@ -4,11 +4,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3-ejb-tests</artifactId>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
 		<version>0.6.3-SNAPSHOT</version>
 	</parent>
-	<artifactId>hyperjaxb3-ejb-tests-ota</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-tests-ota</artifactId>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb3 EJB Test [ota]</name>
 	<dependencies>
@@ -51,8 +51,8 @@
 		<defaultGoal>test</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.hyperjaxb3</groupId>
-				<artifactId>hyperjaxb3-maven-plugin</artifactId>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<schemaIncludes>
 						<include>_2008A_XML/OTA_SimpleTypes.xsd</include>

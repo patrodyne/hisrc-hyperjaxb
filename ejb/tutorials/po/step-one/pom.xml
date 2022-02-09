@@ -4,11 +4,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3-ejb-tutorials-po</artifactId>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-ejb-tutorials-po</artifactId>
 		<version>0.6.3-SNAPSHOT</version>
 	</parent>
-	<artifactId>hyperjaxb3-ejb-tutorials-po-step-one</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-tutorials-po-step-one</artifactId>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb3 EJB Tutorial [po:step-one]</name>
 	<dependencies>
@@ -17,12 +17,12 @@
 			<artifactId>jaxb-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-runtime</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-basicjaxb-runtime</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
-			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
 		</dependency>
 
 		<!-- Hibernate Implementaion of JPA -->
@@ -69,8 +69,8 @@
 		<defaultGoal>install</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.hyperjaxb3</groupId>
-				<artifactId>hyperjaxb3-maven-plugin</artifactId>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<version>${project.version}</version>
 				<executions>
 					<execution>

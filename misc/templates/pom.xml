@@ -3,14 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jvnet.hyperjaxb3</groupId>
-	<artifactId>hyperjaxb3-templates</artifactId>
+	<groupId>org.patrodyne.jvnet</groupId>
+	<artifactId>hisrc-hyperjaxb-templates</artifactId>
 	<version>0.5.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Hyperjaxb3 Templates</name>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3</artifactId>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-project</artifactId>
 		<version>0.5.7-SNAPSHOT</version>
 	</parent>
 	<build>

@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3-ejb-samples</artifactId>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-ejb-samples</artifactId>
 		<version>0.6.3-SNAPSHOT</version>
 	</parent>
-	<artifactId>hyperjaxb3-ejb-samples-customerservice-cxf</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-samples-customerservice-cxf</artifactId>
 	<packaging>war</packaging>
 	<name>Hyperjaxb3 EJB Sample [customerservice-cxf]</name>
 	<properties>
@@ -23,8 +23,8 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-runtime</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-basicjaxb-runtime</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -117,14 +117,14 @@
 		</dependency>
 		<!-- Hyperjaxb3 -->
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
-			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics</artifactId>
-			<version>${jaxb2-basics.version}</version>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-basicjaxb</artifactId>
+			<version>${hisrc-basicjaxb.version}</version>
 		</dependency>
 		<!-- HSQLDB -->
 		<dependency>
@@ -231,13 +231,13 @@
 				</executions>
 				<dependencies>
 					<dependency>
-						<groupId>org.jvnet.jaxb2_commons</groupId>
-						<artifactId>jaxb2-basics</artifactId>
-						<version>${jaxb2-basics.version}</version>
+						<groupId>org.patrodyne.jvnet</groupId>
+						<artifactId>hisrc-basicjaxb</artifactId>
+						<version>${hisrc-basicjaxb.version}</version>
 					</dependency>
 					<dependency>
-						<groupId>org.jvnet.hyperjaxb3</groupId>
-						<artifactId>hyperjaxb3-ejb-plugin</artifactId>
+						<groupId>org.patrodyne.jvnet</groupId>
+						<artifactId>hisrc-hyperjaxb-ejb-plugin</artifactId>
 						<version>0.6.3-SNAPSHOT</version>
 					</dependency>
 				</dependencies>
@@ -265,7 +265,7 @@
 						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-entitymanager:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.hisrc.hifaces20:hifaces20-testing:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.hsqldb:hsqldb:jar:</ignoredUnusedDeclaredDependency>
-						<ignoredUnusedDeclaredDependency>org.jvnet.jaxb2_commons:jaxb2-basics:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>org.patrodyne.jvnet:hisrc-basicjaxb:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-simple:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.springframework:spring-test:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.springframework:spring-web:jar:</ignoredUnusedDeclaredDependency>

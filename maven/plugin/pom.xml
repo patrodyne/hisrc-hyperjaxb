@@ -4,12 +4,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3-maven</artifactId>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-maven</artifactId>
 		<version>0.6.3-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>hyperjaxb3-maven-plugin</artifactId>
+	<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
 	<name>Hyperjaxb3 Maven Plugin</name>
 	<dependencies>
@@ -34,16 +34,16 @@
 			<artifactId>jaxb-xjc</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2.maven2</groupId>
-			<artifactId>maven-jaxb2-plugin-core</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-higherjaxb-maven-plugin-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
-			<artifactId>hyperjaxb3-ejb-plugin</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-plugin</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2.maven2</groupId>
-			<artifactId>maven-jaxb2-plugin</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-higherjaxb2-maven-plugin</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.plexus</groupId>
@@ -64,8 +64,8 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2.maven2</groupId>
-			<artifactId>maven-jaxb2-plugin-testing</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-higherjaxb-maven-plugin-testing</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -84,7 +84,7 @@
 						<ignoredUnusedDeclaredDependency>org.apache.maven:maven-artifact:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.apache.maven.plugin-testing:maven-plugin-testing-harness:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.codehaus.plexus:plexus-utils:jar:</ignoredUnusedDeclaredDependency>
-						<ignoredUnusedDeclaredDependency>org.jvnet.hyperjaxb3:hyperjaxb3-ejb-plugin:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>org.patrodyne.jvnet:hisrc-hyperjaxb-ejb-plugin:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:jcl-over-slf4j:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-simple:jar:</ignoredUnusedDeclaredDependency>
 					</ignoredUnusedDeclaredDependencies>

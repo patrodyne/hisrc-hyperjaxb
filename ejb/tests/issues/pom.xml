@@ -4,11 +4,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3-ejb-tests</artifactId>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
 		<version>0.6.3-SNAPSHOT</version>
 	</parent>
-	<artifactId>hyperjaxb3-ejb-tests-issues</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-tests-issues</artifactId>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb3 EJB Test [issues]</name>
 	<dependencies>
@@ -24,14 +24,14 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
-			<artifactId>hyperjaxb3-ejb-tests-po</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-tests-po</artifactId>
 			<version>${project.version}</version>
 			<scope>runtime</scope>
 		</dependency>	
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
-			<artifactId>hyperjaxb3-ejb-tests-issues-pre</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-tests-issues-pre</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>	
@@ -53,8 +53,8 @@
 		<defaultGoal>test</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.hyperjaxb3</groupId>
-				<artifactId>hyperjaxb3-maven-plugin</artifactId>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<version>${project.version}</version>
 				<configuration>
 					<args>
@@ -63,12 +63,12 @@
 					</args>
 					<plugins>
 						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
-							<artifactId>jaxb2-basics</artifactId>
+							<groupId>org.patrodyne.jvnet</groupId>
+							<artifactId>hisrc-basicjaxb</artifactId>
 						</plugin>
 						<plugin>
-							<groupId>org.jvnet.hyperjaxb3</groupId>
-							<artifactId>hyperjaxb3-ejb-tests-issues-pre</artifactId>
+							<groupId>org.patrodyne.jvnet</groupId>
+							<artifactId>hisrc-hyperjaxb-ejb-tests-issues-pre</artifactId>
 						</plugin>
 					</plugins>
 				</configuration>

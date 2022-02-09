@@ -4,17 +4,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3-ejb-tests-punit</artifactId>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-ejb-tests-punit</artifactId>
 		<version>0.6.3-SNAPSHOT</version>
 	</parent>
-	<artifactId>hyperjaxb3-ejb-tests-punit-ext</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-tests-punit-ext</artifactId>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb3 EJB Test [punit-ext]</name>
 	<dependencies>
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
-			<artifactId>hyperjaxb3-ejb-tests-punit-core</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-tests-punit-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<!-- Hibernate Dependencies -->

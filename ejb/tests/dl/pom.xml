@@ -4,11 +4,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3-ejb-tests</artifactId>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
 		<version>0.6.3-SNAPSHOT</version>
 	</parent>
-	<artifactId>hyperjaxb3-ejb-tests-dl</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-tests-dl</artifactId>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb3 EJB Test [dl]</name>
 	<dependencies>
@@ -34,8 +34,8 @@
 		<defaultGoal>test</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.hyperjaxb3</groupId>
-				<artifactId>hyperjaxb3-maven-plugin</artifactId>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tests.dl.RoundtripTest</roundtripTestClassName>
 					<!--generateHashCode>false</generateHashCode>
