@@ -13,7 +13,11 @@
 
   <xsd:annotation>
     <xsd:appinfo>
-      <jaxb:globalBindings typesafeEnumBase="xsd:string"/>
+      <!-- JPA section 2.1, entities must be top-level classes. -->
+      <!-- JPA section 2.1, entities must implement the serializable interface. -->
+      <jaxb:globalBindings typesafeEnumBase="xsd:string" localScoping="toplevel">
+        <jaxb:serializable uid="20211201" />
+      </jaxb:globalBindings>
     </xsd:appinfo>
   </xsd:annotation> 
 

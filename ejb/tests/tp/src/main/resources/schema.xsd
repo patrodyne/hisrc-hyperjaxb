@@ -17,12 +17,13 @@
 
 	<xsd:annotation>
 		<xsd:appinfo>
-			<jaxb:globalBindings>
+			<jaxb:globalBindings localScoping="toplevel">
 				<jaxb:javaType
 					name="java.util.Calendar"
 					xmlType="xsd:date"
 					parseMethod="javax.xml.bind.DatatypeConverter.parseDate"
 					printMethod="javax.xml.bind.DatatypeConverter.printDate" />
+				<jaxb:serializable uid="20211201" />
 			</jaxb:globalBindings>
 			<jaxb:schemaBindings>
 				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.tp"/>

@@ -5,8 +5,8 @@
 	jaxb:extensionBindingPrefixes="hj orm annox" jaxb:version="2.0">
 	<xs:annotation>
 		<xs:appinfo>
-			<jaxb:globalBindings>
-				<jaxb:serializable/>
+			<jaxb:globalBindings localScoping="toplevel">
+				<jaxb:serializable uid="20211201" />
 			</jaxb:globalBindings>
 			<jaxb:schemaBindings>
 				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.embeddablejpa2"/>

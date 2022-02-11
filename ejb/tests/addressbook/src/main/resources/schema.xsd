@@ -196,6 +196,7 @@ use="required"/>-->
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
+	<!--
 	<xs:complexType name="param">
 		<xs:annotation>
 			<xs:documentation>A Param</xs:documentation>
@@ -208,6 +209,7 @@ use="required"/>-->
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
+	-->
 	<xs:complexType name="document_type">
 		<xs:annotation>
 			<xs:appinfo>
