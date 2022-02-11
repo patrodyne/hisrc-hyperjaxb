@@ -9,9 +9,11 @@
   <jaxb:bindings schemaLocation="rim.xsd" node="/xsd:schema">
     <jaxb:globalBindings
         collectionType="java.util.ArrayList"
-        typesafeEnumBase="xsd:string">               
+        typesafeEnumBase="xsd:string"
+        localScoping="toplevel">
 
         <jaxb:javaType name="java.lang.Float" xmlType="xsd:float" parseMethod="new" printMethod="toString" />
+        <jaxb:serializable uid="20211201" />
     </jaxb:globalBindings>
     
     <jaxb:schemaBindings>
