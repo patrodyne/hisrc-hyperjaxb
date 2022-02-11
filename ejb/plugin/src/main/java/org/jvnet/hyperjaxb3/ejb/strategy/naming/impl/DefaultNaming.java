@@ -13,8 +13,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
@@ -30,7 +32,7 @@ import com.sun.tools.xjc.model.CClassRef;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.model.nav.NType;
-import  com.sun.tools.xjc.model.Aspect;
+import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
@@ -52,7 +54,7 @@ public class DefaultNaming implements Naming, InitializingBean {
 		this.ignoring = ignoring;
 	}
 
-	protected Log logger = LogFactory.getLog(Naming.class);
+	protected Logger logger = LoggerFactory.getLogger(Naming.class);
 
 	private int maxIdentifierLength = 30;
 

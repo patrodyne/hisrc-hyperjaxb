@@ -7,8 +7,9 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Basic;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.CreatePropertyInfos;
@@ -39,7 +40,7 @@ import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
-import  com.sun.tools.xjc.model.Aspect;
+import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.reader.Ring;
 import com.sun.tools.xjc.reader.xmlschema.BGMBuilder;
@@ -49,7 +50,7 @@ import com.sun.xml.bind.v2.model.core.WildcardMode;
 
 public class WrapCollectionHeteroReference implements CreatePropertyInfos {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public Collection<CPropertyInfo> process(ProcessModel context,
 			final CPropertyInfo propertyInfo) {
