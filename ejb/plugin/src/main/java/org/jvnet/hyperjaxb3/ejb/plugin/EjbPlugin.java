@@ -14,8 +14,9 @@ import java.util.Map;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
@@ -29,6 +30,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.w3c.dom.Element;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.Locator;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
@@ -59,7 +61,7 @@ import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
  */
 public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final Method generateFieldDecl;
 	{
@@ -287,53 +289,38 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 		}
 	}
 
-	private void checkCustomizations(CClassInfo classInfo,
-			CPropertyInfo customizable) {
-
-		for (CPluginCustomization pluginCustomization : CustomizationUtils
-				.getCustomizations(customizable)) {
-			if (!pluginCustomization.isAcknowledged()
-					&& Customizations.NAMESPACE_URI
-							.equals(pluginCustomization.element
-									.getNamespaceURI())) {
-				logger.warn("Unacknowledged customization [" +
-
-				getName(pluginCustomization.element) + "] in the property ["
-						+ classInfo.getName() + "."
-						+ customizable.getName(true) + "].");
-
-				pluginCustomization.markAsAcknowledged();
+	private void checkCustomizations(CClassInfo classInfo, CPropertyInfo propInfo)
+	{
+		Map<CPluginCustomization, String> infoMap = CustomizationUtils.getInfo("check", classInfo, propInfo);
+		for (CPluginCustomization customization : infoMap.keySet())
+		{
+			final String namespace = customization.element.getNamespaceURI();
+			if (!customization.isAcknowledged())
+			{
+				if ( Customizations.NAMESPACE_URI.equals(namespace) )
+					logger.warn("Unacknowledged customization "+infoMap.get(customization));
+				else
+					logger.debug("Unacknowledged customization pending "+infoMap.get(customization));
+				customization.markAsAcknowledged();
 			}
 		}
-
 	}
 
-	private void checkCustomizations(CClassInfo customizable) {
-
-		for (final CPluginCustomization pluginCustomization : CustomizationUtils
-				.getCustomizations(customizable)) {
-			final Element element = pluginCustomization.element;
-
-			if (!pluginCustomization.isAcknowledged()
-			// && Customizations.NAMESPACE_URI.equals(element
-			// .getNamespaceURI())
-			) {
-				logger.warn("Unacknowledged customization [" +
-
-				getName(element) + "] in the class [" + customizable.getName()
-						+ "].");
-
-				pluginCustomization.markAsAcknowledged();
-
+	private void checkCustomizations(CClassInfo classInfo)
+	{
+		Map<CPluginCustomization, String> infoMap = CustomizationUtils.getInfo("check", classInfo);
+		for (CPluginCustomization customization : infoMap.keySet())
+		{
+			final String namespace = customization.element.getNamespaceURI();
+			if (!customization.isAcknowledged())
+			{
+				if ( Customizations.NAMESPACE_URI.equals(namespace) )
+					logger.warn("Unacknowledged customization "+infoMap.get(customization));
+				else
+					logger.debug("Unacknowledged customization pending "+infoMap.get(customization));
+				customization.markAsAcknowledged();
 			}
 		}
-
-	}
-
-	private QName getName(Element element) {
-		return new QName(element.getNamespaceURI(), element.getLocalName(),
-				element.getPrefix() == null ? XMLConstants.DEFAULT_NS_PREFIX
-						: element.getPrefix());
 	}
 
 	@Override
