@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+	version="2.1"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:uni="http://uniprot.org/uniprot"
+>
+
+	<!-- Global Bindings -->
+	<jaxb:bindings>
+		<!-- JPA section 2.1, entities must be top-level classes. -->
+		<!-- JPA section 2.1, entities must implement the serializable interface. -->
+		<jaxb:globalBindings localScoping="toplevel">
+			<jaxb:serializable uid="20211201" />
+		</jaxb:globalBindings>
+	</jaxb:bindings>
+
+	<!-- Schema Bindings -->
+	<jaxb:bindings schemaLocation="uniprot2008_rev1.xsd" node="/xs:schema">
+
+		<jaxb:bindings node="//xs:complexType[@name='isoformType']/xs:sequence/xs:element[@name='sequence']/xs:complexType">
+			<jaxb:class name="IsoformSequenceType"/>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='commentType']/xs:sequence/xs:choice/xs:element[@name='conflict']/xs:complexType/xs:sequence/xs:element[@name='sequence']/xs:complexType">
+			<jaxb:class name="CommentConflictSequenceType"/>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='proteinType']/xs:sequence/xs:sequence/xs:element[@name='recommendedName']/xs:complexType">
+			<jaxb:class name="ProteinRecommendedNameType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='proteinType']/xs:sequence/xs:element[@name='domain']/xs:complexType/xs:sequence/xs:element[@name='recommendedName']/xs:complexType">
+			<jaxb:class name="ProteinDomainRecommendedNameType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='proteinType']/xs:sequence/xs:element[@name='component']/xs:complexType/xs:sequence/xs:element[@name='recommendedName']/xs:complexType">
+			<jaxb:class name="ProteinComponentRecommendedNameType"/>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='proteinType']/xs:sequence/xs:sequence/xs:element[@name='alternativeName']/xs:complexType">
+			<jaxb:class name="ProteinAlternativeNameType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='proteinType']/xs:sequence/xs:element[@name='domain']/xs:complexType/xs:sequence/xs:element[@name='alternativeName']/xs:complexType">
+			<jaxb:class name="ProteinDomainAlternativeNameType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='proteinType']/xs:sequence/xs:element[@name='component']/xs:complexType/xs:sequence/xs:element[@name='alternativeName']/xs:complexType">
+			<jaxb:class name="ProteinComponentAlternativeNameType"/>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='proteinType']/xs:sequence/xs:sequence/xs:element[@name='submittedName']/xs:complexType">
+			<jaxb:class name="ProteinSubmittedNameType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='proteinType']/xs:sequence/xs:element[@name='domain']/xs:complexType/xs:sequence/xs:element[@name='submittedName']/xs:complexType">
+			<jaxb:class name="ProteinDomainSubmittedNameType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='proteinType']/xs:sequence/xs:element[@name='component']/xs:complexType/xs:sequence/xs:element[@name='submittedName']/xs:complexType">
+			<jaxb:class name="ProteinComponentSubmittedNameType"/>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+</jaxb:bindings>
