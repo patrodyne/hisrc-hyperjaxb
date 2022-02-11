@@ -21,14 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.Layout;
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.varia.NullAppender;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
@@ -132,26 +124,19 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	 * Sets up the verbose and debug mode depending on mvn logging level, and
 	 * sets up hyperjaxb logging.
 	 */
-	protected void setupLogging() {
+	protected void setupLogging()
+	{
 		super.setupLogging();
-
-		final Logger rootLogger = LogManager.getRootLogger();
-		rootLogger.addAppender(new NullAppender());
-		final Logger logger = LogManager.getLogger("org.jvnet.hyperjaxb3");
-
+		// final Logger logger = LoggerFactory.getLogger("org.jvnet.hyperjaxb3");
 		final Log log = getLog();
-		logger.addAppender(new Appender(getLog(), new PatternLayout(
-				"%m%n        %c%n")));
-
-		if (this.getDebug()) {
-			log.debug("Logger level set to [debug].");
-			logger.setLevel(Level.DEBUG);
-		} else if (this.getVerbose())
-			logger.setLevel(Level.INFO);
+		if (this.getDebug())
+			todo(log, "Logger level not set to [debug] because not supported.");
+		else if (this.getVerbose())
+			todo(log, "Logger level not set to [info] because not supported.");
 		else if (log.isWarnEnabled())
-			logger.setLevel(Level.WARN);
+			todo(log, "Logger level not set to [warn] because not supported.");
 		else
-			logger.setLevel(Level.ERROR);
+			todo(log, "Logger level not set to [error] because not supported.");
 	}
 
 	/**
@@ -276,7 +261,6 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	 * Updates XJC's compilePath ans resources and update hyperjaxb2's
 	 * resources, that is, *.hbm.xml files and hibernate.config.xml file.
 	 * 
-	 * @param xjcOpts
 	 * @throws MojoExecutionException
 	 */
 	protected void setupMavenPaths() {
@@ -295,42 +279,13 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 		}
 	}
 
-	public static class Appender extends AppenderSkeleton {
-		private final Log log;
-
-		private final Layout layout;
-
-		public Appender(final Log log, final Layout layout) {
-			super();
-			this.log = log;
-			this.layout = layout;
-		}
-
-		@Override
-		public boolean requiresLayout() {
-			return true;
-		}
-
-		@Override
-		protected void append(LoggingEvent event) {
-
-			if (event.getLevel().equals(Level.TRACE)) {
-				log.debug(layout.format(event));
-			} else if (event.getLevel().equals(Level.DEBUG)) {
-				log.debug(layout.format(event));
-			} else if (event.getLevel().equals(Level.INFO)) {
-				log.info(layout.format(event));
-			} else if (event.getLevel().equals(Level.WARN)) {
-				log.warn(layout.format(event));
-			} else if (event.getLevel().equals(Level.ERROR)) {
-				log.error(layout.format(event));
-			} else if (event.getLevel().equals(Level.FATAL)) {
-				log.error(layout.format(event));
-			}
-		}
-
-		@Override
-		public void close() {
-		}
-	}
+    private void todo(Log logger, String comment) {
+        String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
+        String level = System.getProperty("todoLogLevel");
+        if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);
+        else if ( "INFO".equalsIgnoreCase(level) ) logger.info(msg);
+        else if ( "WARN".equalsIgnoreCase(level) ) logger.warn(msg);
+        else if ( "ERROR".equalsIgnoreCase(level) ) logger.error(msg);
+        else logger.error(msg);
+    }
 }
