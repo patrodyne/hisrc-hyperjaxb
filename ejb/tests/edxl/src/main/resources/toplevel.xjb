@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE bindings>
+<jaxb:bindings version="2.1"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb https://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+>
+	<!-- Global Bindings -->
+	<jaxb:bindings>
+		<!-- JPA section 2.1, entities must be top-level classes. -->
+		<!-- JPA section 2.1, entities must implement the serializable interface. -->
+		<jaxb:globalBindings localScoping="toplevel" >
+			<jaxb:serializable uid="20211201" />
+		</jaxb:globalBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="CommonTypes.xsd" node="/xs:schema">
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="edxl-have-pr05.xsd" node="/xs:schema">
+		<jaxb:bindings node="//xs:element[@name='HospitalStatus']/xs:complexType/xs:sequence/xs:element[@name='Hospital']/xs:complexType">
+			<jaxb:class name="HospitalStatusHospitalType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='EmergencyDepartmentStatus']/xs:sequence/xs:element[@name='EMSTraffic']/xs:complexType">
+			<jaxb:class name="EmergencyDepartmentStatusEMSTrafficType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='HospitalBedCapacityStatus']/xs:sequence/xs:element[@name='BedCapacity']/xs:complexType">
+			<jaxb:class name="HospitalBedCapacityStatusBedCapacityType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='CardiologyIndicator']/xs:complexType/xs:choice/xs:element[@name='CardiologySubType']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusCardiologyIndicatorCardiologySubType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='CardiologyIndicator']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusCardiologyIndicatorType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='NeurologyIndicator']/xs:complexType/xs:choice/xs:element[@name='NeurologySubType']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusNeurologyIndicatorNeurologySubType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='NeurologyIndicator']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusNeurologyIndicatorType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='OBGYNIndicator']/xs:complexType/xs:choice/xs:element[@name='OBGYNSubType']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusOBGYNIndicatorOBGYNSubType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='OBGYNIndicator']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusOBGYNIndicatorType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='PsychiatricIndicator']/xs:complexType/xs:choice/xs:element[@name='PsychiatricSubType']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusPsychiatricIndicatorPsychiatricSubType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='PsychiatricIndicator']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusPsychiatricIndicatorType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='SurgeryIndicator']/xs:complexType/xs:choice/xs:element[@name='SurgerySubType']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusSurgeryIndicatorSurgerySubType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='SurgeryIndicator']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusSurgeryIndicatorType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='TransportServicesIndicator']/xs:complexType/xs:choice/xs:element[@name='TransportServicesSubType']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusTransportServicesIndicatorTransportServicesSubType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='TransportServicesIndicator']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusTransportServicesIndicatorType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ServiceCoverageStatus']/xs:sequence/xs:element[@name='TraumaCenterServicesIndicator']/xs:complexType">
+			<jaxb:class name="ServiceCoverageStatusTraumaCenterServicesIndicatorType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='HospitalFacilityStatus']/xs:sequence/xs:element[@name='DeconCapacity']/xs:complexType">
+			<jaxb:class name="HospitalFacilityStatusDeconCapacityType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='HospitalFacilityStatus']/xs:sequence/xs:element[@name='MorgueCapacity']/xs:complexType">
+			<jaxb:class name="HospitalFacilityStatusMorgueCapacityType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='HospitalFacilityStatus']/xs:sequence/xs:element[@name='Activity24Hr']/xs:complexType">
+			<jaxb:class name="HospitalFacilityStatusActivity24HrType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='TriageCount']/xs:sequence/xs:sequence/xs:element[@name='TriageCode']/xs:complexType">
+			<jaxb:class name="TriageCountTriageCodeType"/>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="geo-oasis.xsd" node="/xs:schema">
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="gml-oasis.xsd" node="/xs:schema">
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="xAL-types.xsd" node="/xs:schema">
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="xAL.xsd" node="/xs:schema">
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='FreeTextAddress']/xs:complexType/xs:sequence/xs:element[@name='AddressLine']/xs:complexType">
+			<jaxb:class name="AddressFreeTextAddressAddressLineType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='FreeTextAddress']/xs:complexType">
+			<jaxb:class name="AddressFreeTextAddressType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='Country']/xs:complexType">
+			<jaxb:class name="AddressCountryType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='AdministrativeArea']/xs:complexType/xs:sequence/xs:element[@name='NameElement']/xs:complexType">
+			<jaxb:class name="AddressAdministrativeAreaNameElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='AdministrativeArea']/xs:complexType/xs:sequence/xs:element[@name='SubAdministrativeArea']/xs:complexType/xs:sequence/xs:element[@name='NameElement']/xs:complexType">
+			<jaxb:class name="AddressAdministrativeAreaSubAdministrativeAreaNameElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='AdministrativeArea']/xs:complexType/xs:sequence/xs:element[@name='SubAdministrativeArea']/xs:complexType">
+			<jaxb:class name="AddressAdministrativeAreaSubAdministrativeAreaType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='AdministrativeArea']/xs:complexType">
+			<jaxb:class name="AddressAdministrativeAreaType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='Locality']/xs:complexType/xs:sequence/xs:element[@name='NameElement']/xs:complexType">
+			<jaxb:class name="AddressLocalityNameElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='Locality']/xs:complexType/xs:sequence/xs:element[@name='SubLocality']/xs:complexType/xs:sequence/xs:element[@name='NameElement']/xs:complexType">
+			<jaxb:class name="AddressLocalitySubLocalityNameElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='Locality']/xs:complexType/xs:sequence/xs:element[@name='SubLocality']/xs:complexType">
+			<jaxb:class name="AddressLocalitySubLocalityType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='Locality']/xs:complexType">
+			<jaxb:class name="AddressLocalityType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='Thoroughfare']/xs:complexType/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='SubThoroughfare']/xs:complexType">
+			<jaxb:class name="AddressThoroughfareSubThoroughfareType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='Thoroughfare']/xs:complexType">
+			<jaxb:class name="AddressThoroughfareType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='Premises']/xs:complexType/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='SubPremises']/xs:complexType">
+			<jaxb:class name="AddressPremisesSubPremisesType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='Premises']/xs:complexType">
+			<jaxb:class name="AddressPremisesType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='PostCode']/xs:complexType">
+			<jaxb:class name="AddressPostCodeType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='RuralDelivery']/xs:complexType">
+			<jaxb:class name="AddressRuralDeliveryType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='PostalDeliveryPoint']/xs:complexType">
+			<jaxb:class name="AddressPostalDeliveryPointType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='PostOffice']/xs:complexType">
+			<jaxb:class name="AddressPostOfficeType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='GeoRSS']/xs:complexType">
+			<jaxb:class name="AddressGeoRSSType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='LocationByCoordinates']/xs:complexType/xs:sequence/xs:element[@name='Latitude']/xs:complexType">
+			<jaxb:class name="AddressLocationByCoordinatesLatitudeType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='LocationByCoordinates']/xs:complexType/xs:sequence/xs:element[@name='Longitude']/xs:complexType">
+			<jaxb:class name="AddressLocationByCoordinatesLongitudeType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='LocationByCoordinates']/xs:complexType">
+			<jaxb:class name="AddressLocationByCoordinatesType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='CountryType']/xs:sequence/xs:element[@name='NameElement']/xs:complexType">
+			<jaxb:class name="CountryNameElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='PremisesType']/xs:choice/xs:element[@name='NameElement']/xs:complexType">
+			<jaxb:class name="PremisesNameElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ThoroughfareType']/xs:choice/xs:element[@name='NameElement']/xs:complexType">
+			<jaxb:class name="ThoroughfareNameElementType"/>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="xNL-types.xsd" node="/xs:schema">
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="xNL.xsd" node="/xs:schema">
+		<jaxb:bindings node="//xs:complexType[@name='PartyNameType']/xs:sequence/xs:element[@name='PersonName']/xs:complexType">
+			<jaxb:class name="PartyNamePersonNameType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='PartyNameType']/xs:sequence/xs:element[@name='OrganisationName']/xs:complexType">
+			<jaxb:class name="PartyNameOrganisationNameType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='PersonNameType']/xs:sequence/xs:element[@name='NameElement']/xs:complexType">
+			<jaxb:class name="PersonNameNameElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='OrganisationNameType']/xs:sequence/xs:element[@name='NameElement']/xs:complexType">
+			<jaxb:class name="OrganisationNameNameElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='OrganisationNameType']/xs:sequence/xs:element[@name='SubDivisionName']/xs:complexType">
+			<jaxb:class name="OrganisationNameSubDivisionNameType"/>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="xPIL-types.xsd" node="/xs:schema">
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="xPIL.xsd" node="/xs:schema">
+		<jaxb:bindings node="//xs:element[@name='FreeTextLines']/xs:complexType/xs:sequence/xs:element[@name='FreeTextLine']/xs:complexType">
+			<jaxb:class name="FreeTextLinesFreeTextLineType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Accounts']/xs:complexType/xs:sequence/xs:element[@name='Account']/xs:complexType/xs:sequence/xs:element[@name='AccountElement']/xs:complexType">
+			<jaxb:class name="AccountsAccountAccountElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Accounts']/xs:complexType/xs:sequence/xs:element[@name='Account']/xs:complexType/xs:sequence/xs:element[@name='Organisation']/xs:complexType">
+			<jaxb:class name="AccountsAccountOrganisationType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Accounts']/xs:complexType/xs:sequence/xs:element[@name='Account']/xs:complexType">
+			<jaxb:class name="AccountsAccountType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Addresses']/xs:complexType/xs:sequence/xs:element[@name='Address']/xs:complexType">
+			<jaxb:class name="AddressesAddressType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContactNumbers']/xs:complexType/xs:sequence/xs:element[@name='ContactNumber']/xs:complexType/xs:sequence/xs:element[@name='ContactNumberElement']/xs:complexType">
+			<jaxb:class name="ContactNumbersContactNumberContactNumberElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContactNumbers']/xs:complexType/xs:sequence/xs:element[@name='ContactNumber']/xs:complexType">
+			<jaxb:class name="ContactNumbersContactNumberType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Documents']/xs:complexType/xs:sequence/xs:element[@name='Document']/xs:complexType/xs:sequence/xs:element[@name='DocumentElement']/xs:complexType">
+			<jaxb:class name="DocumentsDocumentDocumentElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Documents']/xs:complexType/xs:sequence/xs:element[@name='Document']/xs:complexType/xs:sequence/xs:element[@name='IssuerName']/xs:complexType">
+			<jaxb:class name="DocumentsDocumentIssuerNameType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Documents']/xs:complexType/xs:sequence/xs:element[@name='Document']/xs:complexType">
+			<jaxb:class name="DocumentsDocumentType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ElectronicAddressIdentifiers']/xs:complexType/xs:sequence/xs:element[@name='ElectronicAddressIdentifier']/xs:complexType">
+			<jaxb:class name="ElectronicAddressIdentifiersElectronicAddressIdentifierType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Events']/xs:complexType/xs:sequence/xs:element[@name='Event']/xs:complexType">
+			<jaxb:class name="EventsEventType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Identifiers']/xs:complexType/xs:sequence/xs:element[@name='Identifier']/xs:complexType/xs:sequence/xs:element[@name='IdentifierElement']/xs:complexType">
+			<jaxb:class name="IdentifiersIdentifierIdentifierElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Identifiers']/xs:complexType/xs:sequence/xs:element[@name='Identifier']/xs:complexType">
+			<jaxb:class name="IdentifiersIdentifierType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Memberships']/xs:complexType/xs:sequence/xs:element[@name='Membership']/xs:complexType/xs:sequence/xs:element[@name='MembershipElement']/xs:complexType">
+			<jaxb:class name="MembershipsMembershipMembershipElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Memberships']/xs:complexType/xs:sequence/xs:element[@name='Membership']/xs:complexType/xs:sequence/xs:element[@name='Organisation']/xs:complexType">
+			<jaxb:class name="MembershipsMembershipOrganisationType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Memberships']/xs:complexType/xs:sequence/xs:element[@name='Membership']/xs:complexType">
+			<jaxb:class name="MembershipsMembershipType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Relationships']/xs:complexType/xs:sequence/xs:element[@name='Relationship']/xs:complexType">
+			<jaxb:class name="RelationshipsRelationshipType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Revenues']/xs:complexType/xs:sequence/xs:element[@name='Revenue']/xs:complexType">
+			<jaxb:class name="RevenuesRevenueType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Stocks']/xs:complexType/xs:sequence/xs:element[@name='Stock']/xs:complexType">
+			<jaxb:class name="StocksStockType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Vehicles']/xs:complexType/xs:sequence/xs:element[@name='Vehicle']/xs:complexType/xs:sequence/xs:element[@name='VehicleElement']/xs:complexType">
+			<jaxb:class name="VehiclesVehicleVehicleElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Vehicles']/xs:complexType/xs:sequence/xs:element[@name='Vehicle']/xs:complexType">
+			<jaxb:class name="VehiclesVehicleType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='BirthInfo']/xs:complexType/xs:sequence/xs:element[@name='BirthInfoElement']/xs:complexType">
+			<jaxb:class name="BirthInfoBirthInfoElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='CountriesOfResidence']/xs:complexType/xs:sequence/xs:element[@name='Country']/xs:complexType">
+			<jaxb:class name="CountriesOfResidenceCountryType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Favourites']/xs:complexType/xs:sequence/xs:element[@name='Favourite']/xs:complexType">
+			<jaxb:class name="FavouritesFavouriteType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Habits']/xs:complexType/xs:sequence/xs:element[@name='Habit']/xs:complexType">
+			<jaxb:class name="HabitsHabitType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Hobbies']/xs:complexType/xs:sequence/xs:element[@name='Hobby']/xs:complexType">
+			<jaxb:class name="HobbiesHobbyType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Languages']/xs:complexType/xs:sequence/xs:element[@name='Language']/xs:complexType">
+			<jaxb:class name="LanguagesLanguageType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Nationalities']/xs:complexType/xs:sequence/xs:element[@name='Country']/xs:complexType">
+			<jaxb:class name="NationalitiesCountryType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Occupations']/xs:complexType/xs:sequence/xs:element[@name='Occupation']/xs:complexType/xs:sequence/xs:element[@name='OccupationElement']/xs:complexType">
+			<jaxb:class name="OccupationsOccupationOccupationElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Occupations']/xs:complexType/xs:sequence/xs:element[@name='Occupation']/xs:complexType/xs:sequence/xs:element[@name='Employer']/xs:complexType">
+			<jaxb:class name="OccupationsOccupationEmployerType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Occupations']/xs:complexType/xs:sequence/xs:element[@name='Occupation']/xs:complexType">
+			<jaxb:class name="OccupationsOccupationType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='PhysicalInfo']/xs:complexType/xs:sequence/xs:element[@name='FreeTextLine']/xs:complexType">
+			<jaxb:class name="PhysicalInfoFreeTextLineType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='PhysicalInfo']/xs:complexType/xs:sequence/xs:element[@name='Feature']/xs:complexType">
+			<jaxb:class name="PhysicalInfoFeatureType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='PhysicalInfo']/xs:complexType/xs:sequence/xs:element[@name='BodyMark']/xs:complexType">
+			<jaxb:class name="PhysicalInfoBodyMarkType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='PhysicalInfo']/xs:complexType/xs:sequence/xs:element[@name='Disability']/xs:complexType">
+			<jaxb:class name="PhysicalInfoDisabilityType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='PhysicalInfo']/xs:complexType/xs:sequence/xs:element[@name='Allergy']/xs:complexType">
+			<jaxb:class name="PhysicalInfoAllergyType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='PhysicalInfo']/xs:complexType/xs:sequence/xs:element[@name='HealthCondition']/xs:complexType">
+			<jaxb:class name="PhysicalInfoHealthConditionType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Preferences']/xs:complexType/xs:sequence/xs:element[@name='Preference']/xs:complexType">
+			<jaxb:class name="PreferencesPreferenceType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Qualifications']/xs:complexType/xs:sequence/xs:element[@name='Qualification']/xs:complexType/xs:sequence/xs:element[@name='QualificationElement']/xs:complexType">
+			<jaxb:class name="QualificationsQualificationQualificationElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Qualifications']/xs:complexType/xs:sequence/xs:element[@name='Qualification']/xs:complexType/xs:sequence/xs:element[@name='Institution']/xs:complexType">
+			<jaxb:class name="QualificationsQualificationInstitutionType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Qualifications']/xs:complexType/xs:sequence/xs:element[@name='Qualification']/xs:complexType">
+			<jaxb:class name="QualificationsQualificationType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Visas']/xs:complexType/xs:sequence/xs:element[@name='Visa']/xs:complexType/xs:sequence/xs:element[@name='VisaElement']/xs:complexType">
+			<jaxb:class name="VisasVisaVisaElementType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Visas']/xs:complexType/xs:sequence/xs:element[@name='Visa']/xs:complexType">
+			<jaxb:class name="VisasVisaType"/>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="xlink-2003-12-31.xsd" node="/xs:schema">
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="xlinks.xsd" node="/xs:schema">
+	</jaxb:bindings>
+
+</jaxb:bindings>
