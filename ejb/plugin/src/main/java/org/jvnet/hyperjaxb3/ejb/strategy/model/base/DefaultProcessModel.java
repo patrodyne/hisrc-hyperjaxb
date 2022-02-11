@@ -7,8 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.plugin.EjbPlugin;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.strategy.customizing.Customizing;
@@ -31,7 +32,8 @@ import com.sun.tools.xjc.model.Model;
 
 public class DefaultProcessModel implements ProcessModel {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
+
 
 	public Collection<CClassInfo> process(EjbPlugin context, Model model,
 			Options options) throws Exception {
