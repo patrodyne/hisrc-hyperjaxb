@@ -10,8 +10,10 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Basic;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.CollectionProperty;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
@@ -42,8 +44,8 @@ import org.jvnet.hyperjaxb3.jaxb2_commons.lang.MergeableMergeStrategy;
 import org.jvnet.hyperjaxb3.xsom.SimpleTypeAnalyzer;
 import org.jvnet.hyperjaxb3.xsom.TypeUtils;
 import org.jvnet.jaxb2_commons.lang.JAXBMergeStrategy;
-import org.jvnet.jaxb2_commons.lang.MergeFrom;
-import org.jvnet.jaxb2_commons.lang.MergeStrategy;
+import org.jvnet.jaxb2_commons.lang.MergeFrom2;
+import org.jvnet.jaxb2_commons.lang.MergeStrategy2;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.springframework.beans.factory.annotation.Required;
 
@@ -52,6 +54,7 @@ import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CCustomizable;
 import com.sun.tools.xjc.model.CPluginCustomization;
 import com.sun.tools.xjc.model.CPropertyInfo;
+import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
@@ -59,7 +62,7 @@ import com.sun.xml.xsom.XSComponent;
 
 public class DefaultCustomizing implements Customizing {
 
-	private final static Log logger = LogFactory.getLog(Customizations.class);
+	private final static Logger logger = LoggerFactory.getLogger(Customizations.class);
 
 	private final Map<CPluginCustomization, Object> customizationsMap = new IdentityHashMap<CPluginCustomization, Object>();
 
@@ -89,6 +92,11 @@ public class DefaultCustomizing implements Customizing {
 		final List<CPluginCustomization> customizations = CustomizationUtils
 				.findCustomizations(classInfo, name);
 		return unmarshalCustomizations(customizations);
+	}
+
+	private List<CPluginCustomization> findCustomizations(CTypeInfo typeInfo,
+			QName name) {
+		return CustomizationUtils.findCustomizations(typeInfo, name);
 	}
 
 	private <T> T findCustomization(CPropertyInfo propertyInfo, QName name,
@@ -547,6 +555,11 @@ public class DefaultCustomizing implements Customizing {
 			basic = findCustomization(property,
 					Customizations.BASIC_ELEMENT_NAME, defaultBasic,
 					this.<Basic> merge());
+			for ( CPluginCustomization parentBasic : findCustomizations(property.parent(), Customizations.BASIC_ELEMENT_NAME) )
+			{
+				logger.debug("Acknowledging parent class customization: "+basic+" INFO: "+CustomizationUtils.getInfo("PARENT:", property.parent()));
+				parentBasic.markAsAcknowledged();
+			}
 		} else {
 			basic = defaultBasic;
 		}
@@ -1112,10 +1125,10 @@ public class DefaultCustomizing implements Customizing {
 		return jaxbContext;
 	}
 
-	private final static MergeStrategy MERGE_STRATEGY = new MergeableMergeStrategy(
-			JAXBMergeStrategy.INSTANCE);
+	private final static MergeStrategy2 MERGE_STRATEGY = new MergeableMergeStrategy(
+			JAXBMergeStrategy.INSTANCE2);
 
-	private <T extends Mergeable & MergeFrom> void mergeFrom(T value,
+	private <T extends Mergeable & MergeFrom2> void mergeFrom(T value,
 			T defaultValue) {
 		value.mergeFrom(null, null, value, defaultValue, MERGE_STRATEGY);
 	}
@@ -1124,7 +1137,7 @@ public class DefaultCustomizing implements Customizing {
 		public void merge(M value, M defaultValue);
 	}
 
-	private <M extends Mergeable & MergeFrom> Merge<M> merge() {
+	private <M extends Mergeable & MergeFrom2> Merge<M> merge() {
 		return new Merge<M>() {
 			public void merge(M value, M defaultValue) {
 				DefaultCustomizing.this.mergeFrom(value, defaultValue);
