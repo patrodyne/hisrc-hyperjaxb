@@ -12,8 +12,7 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb  http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
 
-
-
+	<!--
     <jaxb:bindings schemaLocation="_2008A_XML/OTA_CommonTypes.xsd" node="/xs:schema">
 
 		<hj:persistence>
@@ -28,34 +27,18 @@
 			</hj:basic>
 		</jaxb:bindings>
     </jaxb:bindings>
+	-->
 
-
-    <!--jaxb:bindings schemaLocation="_2008A_XML/OTA_CommonTypes.xsd" node="/xs:schema">
-	<jaxb:schemaBindings>
-		<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.ota"/>
-	</jaxb:schemaBindings>
-
-
-
-    </jaxb:bindings>
-
-    <jaxb:bindings schemaLocation="_2008A_XML/OTA_RailAvailRS.xsd" node="/xs:schema">        
-
-	<jaxb:bindings node="xs:complexType[@name='PriceRuleType']//xs:attribute[@name='Value']">
-		<jaxb:property name="QualifyingValue"/>
+	<jaxb:bindings schemaLocation="_2008A_XML/OTA_RailAvailRS.xsd" node="/xs:schema">        
+		<jaxb:bindings node="xs:complexType[@name='PriceRuleType']//xs:attribute[@name='Value']">
+			<jaxb:property name="QualifyingValue"/>
+		</jaxb:bindings>
 	</jaxb:bindings>
-
-    </jaxb:bindings>
 
     <jaxb:bindings schemaLocation="_2008A_XML/OTA_TourInformation.xsd" node="/xs:schema">        
-
-	<jaxb:bindings node="xs:complexType[@name='TourInformationType']//xs:element[@name='Duration']">
-		<jaxb:property name="TourDuration"/>
-	</jaxb:bindings>
-
-
-    </jaxb:bindings-->
-
-
+		<jaxb:bindings node="xs:complexType[@name='TourInformationType']//xs:element[@name='Duration']">
+			<jaxb:property name="TourDuration"/>
+		</jaxb:bindings>
+    </jaxb:bindings>
 
 </jaxb:bindings>
