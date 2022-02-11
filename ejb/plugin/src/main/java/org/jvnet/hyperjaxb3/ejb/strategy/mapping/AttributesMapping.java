@@ -2,8 +2,9 @@ package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
 import java.util.Collection;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.codemodel.util.JTypeUtils;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.xjc.model.CTypeInfoUtils;
@@ -30,13 +31,13 @@ import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CEnumLeafInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
-import  com.sun.tools.xjc.model.Aspect;
+import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 
 public class AttributesMapping implements ClassOutlineMapping<Attributes> {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public Attributes process(Mapping context, ClassOutline classOutline,
 			Options options) {
@@ -185,7 +186,7 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes> {
 
 			}
 
-			logger.error("Field outline  [" +
+			todo("Field outline  [" +
 
 			((CClassInfo) propertyInfo.parent()).getName() + "."
 					+ propertyInfo.getName(true)
@@ -330,4 +331,13 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes> {
 						Customizations.EMBEDDED_ID_ELEMENT_NAME));
 	}
 
+	private void todo(String comment) {
+        String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
+		String level = System.getProperty("todoLogLevel");
+		if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);
+		else if ( "INFO".equalsIgnoreCase(level) ) logger.info(msg);
+		else if ( "WARN".equalsIgnoreCase(level) ) logger.warn(msg);
+		else if ( "ERROR".equalsIgnoreCase(level) ) logger.error(msg);
+		else logger.error(msg);
+	}
 }
