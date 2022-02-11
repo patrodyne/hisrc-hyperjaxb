@@ -19,7 +19,7 @@ public class HsqlBigDecimalTest {
 		Connection conn = DriverManager.getConnection(url, "sa", "");
 		Statement stmt = conn.createStatement();
 
-		stmt.executeUpdate("create table test (value NUMERIC(5,2));");
+		stmt.executeUpdate("create table test (value NUMERIC(5,0));");
 
 		String sql = "INSERT INTO test (value) VALUES(?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
