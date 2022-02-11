@@ -3,8 +3,9 @@ package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 
@@ -15,7 +16,7 @@ import com.sun.tools.xjc.model.TypeUse;
 
 public abstract class AbstractWrapBuiltin implements CreatePropertyInfos {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public Collection<CPropertyInfo> process(ProcessModel context,
 			CPropertyInfo propertyInfo) {
@@ -34,8 +35,7 @@ public abstract class AbstractWrapBuiltin implements CreatePropertyInfos {
 			return Collections.emptyList();
 		} else if (originalTypeUse == CBuiltinLeafInfo.DATA_HANDLER) {
 			// TODO #42
-			logger
-					.error("Data handler is currently not supported. See issue #88 (http://java.net/jira/browse/HYPERJAXB3-88).");
+			todo("Data handler is currently not supported. See issue #88 (http://java.net/jira/browse/HYPERJAXB3-88).");
 			return Collections.emptyList();
 		} else if (originalTypeUse == CBuiltinLeafInfo.ANYTYPE) {
 			return wrapAnyType(context, propertyInfo);
@@ -45,7 +45,7 @@ public abstract class AbstractWrapBuiltin implements CreatePropertyInfos {
 					.process(context, propertyInfo);
 
 			if (adaptedTypeUse == null) {
-				logger.error("Unsupported builtin type ["
+				todo("Unsupported builtin type ["
 						+ originalTypeUse.getTypeName() + "] in property ["
 						+ propertyInfo.getName(true) + "].");
 				return Collections.emptyList();
@@ -70,4 +70,14 @@ public abstract class AbstractWrapBuiltin implements CreatePropertyInfos {
 
 	public abstract CreatePropertyInfos getCreatePropertyInfos(
 			ProcessModel context, CPropertyInfo propertyInfo);
+
+	private void todo(String comment) {
+        String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
+		String level = System.getProperty("todoLogLevel");
+		if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);
+		else if ( "INFO".equalsIgnoreCase(level) ) logger.info(msg);
+		else if ( "WARN".equalsIgnoreCase(level) ) logger.warn(msg);
+		else if ( "ERROR".equalsIgnoreCase(level) ) logger.error(msg);
+		else logger.error(msg);
+	}
 }

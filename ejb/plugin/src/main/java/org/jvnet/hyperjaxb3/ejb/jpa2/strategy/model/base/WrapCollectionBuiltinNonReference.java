@@ -2,8 +2,9 @@ package org.jvnet.hyperjaxb3.ejb.jpa2.strategy.model.base;
 
 import java.util.Collection;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.base.AbstractWrapBuiltin;
@@ -28,8 +29,8 @@ public class WrapCollectionBuiltinNonReference extends AbstractWrapBuiltin {
 		this.fallback = fallback;
 	}
 
-	protected Log logger = LogFactory.getLog(getClass());
-
+	protected Logger logger = LoggerFactory.getLogger(getClass());
+	
 	public CBuiltinLeafInfo getTypeUse(ProcessModel context,
 			CPropertyInfo propertyInfo) {
 		return (CBuiltinLeafInfo) context.getGetTypes().process(context, propertyInfo).iterator().next();
@@ -57,7 +58,17 @@ public class WrapCollectionBuiltinNonReference extends AbstractWrapBuiltin {
 
 	protected Collection<CPropertyInfo> wrapAnyType(ProcessModel context,
 			CPropertyInfo propertyInfo) {
-		logger.error("Element collections of any type is not supported. See issue #HJIII-89 (http://jira.highsource.org/browse/HJIII-89)");
+		todo("Element collections of any type is not supported. See issue #HJIII-89 (http://jira.highsource.org/browse/HJIII-89)");
 		return getFallback().process(context, propertyInfo);
+	}
+
+	private void todo(String comment) {
+        String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
+		String level = System.getProperty("todoLogLevel");
+		if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);
+		else if ( "INFO".equalsIgnoreCase(level) ) logger.info(msg);
+		else if ( "WARN".equalsIgnoreCase(level) ) logger.warn(msg);
+		else if ( "ERROR".equalsIgnoreCase(level) ) logger.error(msg);
+		else logger.error(msg);
 	}
 }

@@ -10,8 +10,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.xjc.model.CTypeInfoUtils;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
@@ -39,7 +40,7 @@ import com.sun.tools.xjc.outline.Outline;
 
 public class DefaultAssociationMapping implements AssociationMapping {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public Collection<FieldOutline> getSourceIdFieldsOutline(Mapping context,
 			FieldOutline fieldOutline) {
@@ -71,7 +72,7 @@ public class DefaultAssociationMapping implements AssociationMapping {
 			return getIdFieldsOutline(targetClassOutline);
 		} else {
 
-			logger.error(MessageFormat
+			todo(MessageFormat
 					.format("Field outline [{0}] references the type [{1}] which is not present in the XJC model "
 							+ "(it is probably a class reference due to episodic compilation). "
 							+ "Due to this reason Hyperjaxb3 cannot generate correct identifier column mapping. "
@@ -524,4 +525,13 @@ public class DefaultAssociationMapping implements AssociationMapping {
 		}
 	}
 
+	private void todo(String comment) {
+        String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
+		String level = System.getProperty("todoLogLevel");
+		if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);
+		else if ( "INFO".equalsIgnoreCase(level) ) logger.info(msg);
+		else if ( "WARN".equalsIgnoreCase(level) ) logger.warn(msg);
+		else if ( "ERROR".equalsIgnoreCase(level) ) logger.error(msg);
+		else logger.error(msg);
+	}
 }

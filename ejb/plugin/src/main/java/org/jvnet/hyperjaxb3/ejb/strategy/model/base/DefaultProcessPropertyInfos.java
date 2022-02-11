@@ -8,8 +8,9 @@ import java.util.LinkedList;
 import javax.persistence.Embeddable;
 import javax.persistence.MappedSuperclass;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessPropertyInfos;
@@ -27,7 +28,7 @@ import com.sun.tools.xjc.model.CValuePropertyInfo;
 
 public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public Collection<CPropertyInfo> process(ProcessModel context,
 			CClassInfo classInfo) {
@@ -44,7 +45,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 					.getGetIdPropertyInfos().process(context, classInfo);
 
 			if (!idPropertyInfos.isEmpty()) {
-				logger.error(MessageFormat.format(
+				todo(MessageFormat.format(
 						"Class info [{0}] is annotated with hj:generated-id customization, "
 								+ "but it already contains id properties. "
 								+ "The customization will be ignored.",
@@ -69,7 +70,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 			final Collection<CPropertyInfo> versionPropertyInfos = context
 					.getGetVersionPropertyInfos().process(context, classInfo);
 			if (!versionPropertyInfos.isEmpty()) {
-				logger.error(MessageFormat
+				todo(MessageFormat
 						.format("Class info [{0}] is annotated with hj:generated-version customization, "
 								+ "but it already contains version properties. "
 								+ "The customization will be ignored.",
@@ -100,7 +101,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 		}
 
 		if (classInfo.declaresAttributeWildcard()) {
-			logger.error("Class ["
+			todo("Class ["
 					+ classInfo.getName()
 					+ "] declares an attribute wildcard. This is currently not supported. See issue #46.");
 		}
@@ -241,7 +242,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 
 		public Collection<CPropertyInfo> onSingleOtherAttribute(
 				CAttributePropertyInfo attributePropertyInfo) {
-			logger.error("[" + attributePropertyInfo.getName(true)
+			todo("[" + attributePropertyInfo.getName(true)
 					+ "] is a single other attribute. See issue #56.");
 			return Collections.emptyList();
 		}
@@ -262,7 +263,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 
 		public Collection<CPropertyInfo> onCollectionOtherAttribute(
 				CAttributePropertyInfo attributePropertyInfo) {
-			logger.error("[" + attributePropertyInfo.getName(true)
+			todo("[" + attributePropertyInfo.getName(true)
 					+ "] is a collection other attribute. See issue #59.");
 			return Collections.emptyList();
 		}
@@ -285,7 +286,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 
 		public Collection<CPropertyInfo> onSingleOtherValue(
 				CValuePropertyInfo valuePropertyInfo) {
-			logger.error("[" + valuePropertyInfo.getName(true)
+			todo("[" + valuePropertyInfo.getName(true)
 					+ "] is a single other value. See issue #60.");
 			return Collections.emptyList();
 		}
@@ -306,7 +307,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 
 		public Collection<CPropertyInfo> onCollectionOtherValue(
 				CValuePropertyInfo valuePropertyInfo) {
-			logger.error("[" + valuePropertyInfo.getName(true)
+			todo("[" + valuePropertyInfo.getName(true)
 					+ "] is a collection other value. See issue #63.");
 			return Collections.emptyList();
 		}
@@ -396,14 +397,14 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 
 		// public Collection<CPropertyInfo> onSingleElementReference(
 		// CReferencePropertyInfo referencePropertyInfo) {
-		// logger.error("[" + referencePropertyInfo.getName(true)
+		// todo("[" + referencePropertyInfo.getName(true)
 		// + "] is a single element reference. See issue #65.");
 		// return Collections.emptyList();
 		// }
 
 		public Collection<CPropertyInfo> onSingleClassReference(
 				CReferencePropertyInfo referencePropertyInfo) {
-			// logger.error("[" + referencePropertyInfo.getName(true)
+			// todo("[" + referencePropertyInfo.getName(true)
 			// + "] is a single class reference. See issue #66.");
 			// return Collections.emptyList();
 			return context.getWrapSingleClassReference().process(context,
@@ -439,7 +440,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 		public Collection<CPropertyInfo> onCollectionBuiltinElementReference(
 				CReferencePropertyInfo referencePropertyInfo) {
 
-			logger.error("["
+			todo("["
 					+ referencePropertyInfo.getName(true)
 					+ "] is a collection builtin element reference. See issue #67 (http://java.net/jira/browse/HYPERJAXB3-67).");
 			return Collections.emptyList();
@@ -447,7 +448,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 
 		public Collection<CPropertyInfo> onCollectionEnumElementReference(
 				CReferencePropertyInfo referencePropertyInfo) {
-			logger.error("["
+			todo("["
 					+ referencePropertyInfo.getName(true)
 					+ "] is a collection enum element reference. See issue #68 (http://java.net/jira/browse/HYPERJAXB3-68).");
 			return Collections.emptyList();
@@ -460,14 +461,14 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 
 //		public Collection<CPropertyInfo> onCollectionElementReference(
 //				CReferencePropertyInfo referencePropertyInfo) {
-//			logger.error("[" + referencePropertyInfo.getName(true)
+//			todo("[" + referencePropertyInfo.getName(true)
 //					+ "] is a collection element reference. See issue #69.");
 //			return Collections.emptyList();
 //		}
 
 		public Collection<CPropertyInfo> onCollectionClassReference(
 				CReferencePropertyInfo referencePropertyInfo) {
-			logger.error("[" + referencePropertyInfo.getName(true)
+			todo("[" + referencePropertyInfo.getName(true)
 					+ "] is a collection class reference. See issue #70.");
 			return Collections.emptyList();
 		}
@@ -480,7 +481,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 
 		public Collection<CPropertyInfo> onCollectionClassElementReference(
 				CReferencePropertyInfo referencePropertyInfo) {
-			logger.error("["
+			todo("["
 					+ referencePropertyInfo.getName(true)
 					+ "] is a collection class element reference. See issue #71.");
 			return Collections.emptyList();
@@ -498,4 +499,14 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos {
 					referencePropertyInfo);
 		}
 	};
+
+	private void todo(String comment) {
+        String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
+		String level = System.getProperty("todoLogLevel");
+		if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);
+		else if ( "INFO".equalsIgnoreCase(level) ) logger.info(msg);
+		else if ( "WARN".equalsIgnoreCase(level) ) logger.warn(msg);
+		else if ( "ERROR".equalsIgnoreCase(level) ) logger.error(msg);
+		else logger.error(msg);
+	}
 }

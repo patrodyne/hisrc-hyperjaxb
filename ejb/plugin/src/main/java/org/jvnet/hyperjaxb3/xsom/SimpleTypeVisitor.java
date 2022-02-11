@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.xml.xsom.XSAnnotation;
 import com.sun.xml.xsom.XSAttGroupDecl;
@@ -30,7 +30,7 @@ import com.sun.xml.xsom.visitor.XSVisitor;
 
 public class SimpleTypeVisitor implements XSVisitor {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	private List<QName> typeNames = new LinkedList<QName>();
 
@@ -127,7 +127,12 @@ public class SimpleTypeVisitor implements XSVisitor {
 	}
 
 	private void todo(String comment) {
-		logger.error((comment == null ? "" : comment + " ")
-				+ "Not yet supported.");
+        String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
+		String level = System.getProperty("todoLogLevel");
+		if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);
+		else if ( "INFO".equalsIgnoreCase(level) ) logger.info(msg);
+		else if ( "WARN".equalsIgnoreCase(level) ) logger.warn(msg);
+		else if ( "ERROR".equalsIgnoreCase(level) ) logger.error(msg);
+		else logger.error(msg);
 	}
 }
