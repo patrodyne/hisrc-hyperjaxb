@@ -3,7 +3,6 @@
 
   <xsd:annotation>
     <xsd:appinfo>
-      <jaxb:globalBindings generateIsSetMethod="true"/>
       <jaxb:schemaBindings>
         <jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.po"/>
       </jaxb:schemaBindings>

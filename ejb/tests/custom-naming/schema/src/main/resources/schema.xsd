@@ -1,14 +1,4 @@
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="1.0">
-
-  <xsd:annotation>
-    <xsd:appinfo>
-      <jaxb:globalBindings generateIsSetMethod="true"/>
-      <jaxb:schemaBindings>
-        <jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.po"/>
-      </jaxb:schemaBindings>
-    </xsd:appinfo>
-  </xsd:annotation>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
