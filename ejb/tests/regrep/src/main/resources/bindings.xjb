@@ -9,14 +9,21 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 		xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb  http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
     
+	<!-- Global Bindings -->
+	<jaxb:bindings>
+		<!-- JPA section 2.1, entities must be top-level classes. -->
+		<!-- JPA section 2.1, entities must implement the serializable interface. -->
+		<jaxb:globalBindings localScoping="toplevel">
+		    <!--xjc:simple/-->
+			<jaxb:serializable uid="20211201" />
+		</jaxb:globalBindings>
+	</jaxb:bindings>
     
     <!--
     $Id: bindings.xjb,v 1.2 2007/06/03 19:32:54 lexi Exp $    
     -->
     <jaxb:bindings schemaLocation="rim.xsd" node="/xs:schema">        
-	<jaxb:globalBindings>
-		<!--xjc:simple/-->
-	</jaxb:globalBindings>
+
         <jaxb:bindings node="xs:complexType[@name='IdentifiableType']/xs:attribute[@name='id']">
             <hj:id/>
             <!--hj:id name="id" type="java.lang.String">            

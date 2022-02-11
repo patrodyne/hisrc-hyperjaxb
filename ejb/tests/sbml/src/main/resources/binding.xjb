@@ -1,9 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jxb:bindings version="2.1" 
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
   xmlns:xs="http://www.w3.org/2001/XMLSchema" 
   xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
   jxb:extensionBindingPrefixes="xjc">
 
+	<!-- Global Bindings -->
+	<jxb:bindings>
+		<!-- JPA section 2.1, entities must be top-level classes. -->
+		<!-- JPA section 2.1, entities must implement the serializable interface. -->
+		<jxb:globalBindings localScoping="toplevel">
+			<jxb:serializable uid="20211201" />
+		</jxb:globalBindings>
+	</jxb:bindings>
+
+	<!-- Schema Bindings -->
     <jxb:bindings schemaLocation="mathml2.xsd" node="/xs:schema">
         <jxb:bindings node="/xs:schema/xs:element[@name='math']">
             <xjc:dom/>
@@ -28,6 +39,7 @@
         </jxb:bindings>
     </jxb:bindings-->
 
+	<!-- Schema Bindings -->
     <jxb:bindings schemaLocation="sbml.xsd" node="/xs:schema">
         <jxb:bindings node="//xs:complexType[@name='Sbml']">
             <jxb:class name="SBMLType"/>
@@ -42,6 +54,38 @@
         <jxb:bindings node="/xs:schema/xs:complexType[@name='SBase']/xs:sequence/xs:element[@name='annotation']">
             <xjc:dom/>
         </jxb:bindings>
+
+		<jxb:bindings node="//xs:complexType[@name='Model']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='listOfFunctionDefinitions']/xs:complexType">
+			<jxb:class name="ModelListOfFunctionDefinitions"/>
+		</jxb:bindings>
+
+		<jxb:bindings node="//xs:complexType[@name='Model']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='listOfUnitDefinitions']/xs:complexType">
+			<jxb:class name="ModelListOfUnitDefinitions"/>
+		</jxb:bindings>
+
+		<jxb:bindings node="//xs:complexType[@name='Model']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='listOfCompartments']/xs:complexType">
+			<jxb:class name="ModelListOfCompartments"/>
+		</jxb:bindings>
+
+		<jxb:bindings node="//xs:complexType[@name='Model']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='listOfSpecies']/xs:complexType">
+			<jxb:class name="ModelListOfSpecies"/>
+		</jxb:bindings>
+
+		<jxb:bindings node="//xs:complexType[@name='Model']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='listOfParameters']/xs:complexType">
+			<jxb:class name="ModelListOfParameters"/>
+		</jxb:bindings>
+
+		<jxb:bindings node="//xs:complexType[@name='Model']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='listOfRules']/xs:complexType">
+			<jxb:class name="ModelListOfRules"/>
+		</jxb:bindings>
+
+		<jxb:bindings node="//xs:complexType[@name='Model']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='listOfReactions']/xs:complexType">
+			<jxb:class name="ModelListOfReactions"/>
+		</jxb:bindings>
+
+		<jxb:bindings node="//xs:complexType[@name='Model']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='listOfEvents']/xs:complexType">
+			<jxb:class name="ModelListOfEvents"/>
+		</jxb:bindings>
 
     </jxb:bindings>
 </jxb:bindings>

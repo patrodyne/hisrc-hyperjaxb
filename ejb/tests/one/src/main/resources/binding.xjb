@@ -7,8 +7,8 @@
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
 		<jaxb:globalBindings fixedAttributeAsConstantProperty="false"
 			typesafeEnumBase="xs:string" typesafeEnumMemberName="generateName"
-			generateIsSetMethod="true">
-			<jaxb:serializable/>
+			generateIsSetMethod="true" localScoping="toplevel">
+			<jaxb:serializable uid="20211201" />
 			<xjc:noValidator/>
 			<xjc:noValidatingUnmarshaller/>
 		</jaxb:globalBindings>

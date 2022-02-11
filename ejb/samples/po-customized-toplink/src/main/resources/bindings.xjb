@@ -9,7 +9,9 @@
 	jaxb:extensionBindingPrefixes="hj orm">
 
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
-		<jaxb:globalBindings generateIsSetMethod="true"/>
+		<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
+			<jaxb:serializable uid="20211201" />
+		</jaxb:globalBindings>
 		<jaxb:schemaBindings>
 			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.samples.poctl"/>
 		</jaxb:schemaBindings>

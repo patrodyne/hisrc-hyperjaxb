@@ -8,6 +8,15 @@
 	xmlns:annox="http://annox.dev.java.net"
 	jaxb:extensionBindingPrefixes="hj orm annox">
 
+	<!-- Global Bindings -->
+	<jaxb:bindings>
+		<!-- JPA section 2.1, entities must be top-level classes. -->
+		<!-- JPA section 2.1, entities must implement the serializable interface. -->
+		<jaxb:globalBindings localScoping="toplevel">
+			<jaxb:serializable uid="20211201" />
+		</jaxb:globalBindings>
+	</jaxb:bindings>
+
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
 		<jaxb:schemaBindings>
 			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.pocustomized"/>

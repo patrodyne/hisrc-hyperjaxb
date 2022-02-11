@@ -5,8 +5,10 @@
 	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
 
+	<!--  Global Bindings -->
 	<jaxws:bindings node="wsdl:definitions/wsdl:types/xs:schema">
-		<jaxb:globalBindings>
+		<jaxb:globalBindings localScoping="toplevel">
+			<jaxb:serializable uid="20211201" />
 			<jaxb:javaType name="java.util.Date" xmlType="xs:dateTime"
 				parseMethod="org.apache.cxf.tools.common.DataTypeAdapter.parseDateTime"
 				printMethod="org.apache.cxf.tools.common.DataTypeAdapter.printDateTime"/>

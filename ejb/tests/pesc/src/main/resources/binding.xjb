@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings
 	version="1.0"
 	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
@@ -5,14 +6,17 @@
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
 	jaxb:extensionBindingPrefixes="xjc">
 
+	<!-- Global Bindings -->
 	<jaxb:bindings schemaLocation="CoreMain_v1.2.0.xsd" node="/xs:schema">
 		<jaxb:globalBindings
 			fixedAttributeAsConstantProperty="true"
 			typesafeEnumBase="xs:string"
 			typesafeEnumMemberName="generateName"
-			generateIsSetMethod="true">
+			generateIsSetMethod="true"
+			localScoping="toplevel">
 			<xjc:noValidator />
 			<xjc:noValidatingUnmarshaller />
+			<jaxb:serializable uid="20211201" />
 		</jaxb:globalBindings>
 
 		<jaxb:schemaBindings>
@@ -20,5 +24,34 @@
 				<jaxb:elementName suffix="Element"/>
 			</jaxb:nameXmlTransform>
 		</jaxb:schemaBindings>
+	</jaxb:bindings>
+
+	<!-- Schema Bindings -->
+	<jaxb:bindings schemaLocation="CoreMain_v1.2.0.xsd" node="/xs:schema">
+
+		<jaxb:bindings node="//xs:complexType[@name='PellType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Disbursement']/xs:complexType">
+			<jaxb:class name="PellDisbursementKind"/>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='PLUSAwardType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Disbursement']/xs:complexType">
+			<jaxb:class name="PLUSAwardDisbursementKind"/>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='SubsidizedAwardType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Disbursement']/xs:complexType">
+			<jaxb:class name="SubsidizedAwardDisbursementKind"/>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='UnsubsidizedAwardType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Disbursement']/xs:complexType">
+			<jaxb:class name="UnsubsidizedAwardDisbursementKind"/>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='AcademicCompetitivenessGrantType']/xs:sequence/xs:element[@name='Disbursement']/xs:complexType">
+			<jaxb:class name="AcademicCompetitivenessGrantDisbursementKind"/>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='NationalSMARTGrantType']/xs:sequence/xs:element[@name='Disbursement']/xs:complexType">
+			<jaxb:class name="NationalSMARTGrantDisbursementKind"/>
+		</jaxb:bindings>
+
 	</jaxb:bindings>
 </jaxb:bindings>

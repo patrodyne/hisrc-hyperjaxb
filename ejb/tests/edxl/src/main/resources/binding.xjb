@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings
 	version="1.0"
 	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
@@ -22,7 +23,5 @@
 		</jaxb:bindings>
 		<hj:ignored-package name="net.opengis.gml"/>
 	</jaxb:bindings>
-
-
 
 </jaxb:bindings>

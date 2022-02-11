@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jxb:bindings version="1.0" 
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
   xmlns:xs="http://www.w3.org/2001/XMLSchema" 
@@ -16,7 +17,10 @@
 		  typesafeEnumMemberName="generateError"
 		  enableFailFastCheck="false"	
 		  generateIsSetMethod="false"
-		  underscoreBinding="asCharInWord"/>
+		  underscoreBinding="asCharInWord"
+		  localScoping="toplevel">
+		<jxb:serializable uid="20211201" />
+	</jxb:globalBindings>
 	<jxb:schemaBindings>
 	  <jxb:package name="newsml.entities"/>
 	</jxb:schemaBindings>
