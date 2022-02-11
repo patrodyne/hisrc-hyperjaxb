@@ -5,6 +5,7 @@
 	
 	<bean name="naming" class="org.jvnet.hyperjaxb3.ejb.tests.customnaming.naming.impl.CustomNaming">
 		<property name="reservedNames" ref="reservedNames"/>
+		<property name="ignoring" ref="ignoring"/>
 	</bean>
 
 </beans>
