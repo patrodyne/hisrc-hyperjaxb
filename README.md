@@ -42,12 +42,12 @@ The initial goals for this fork are:
 * New build scripts have been added.
 * POMs have been refactored with renamed artifacts.
 * POMs have been updated to reduce warnings and errors.
-
-#### In Progress
-
 * Configured SLF4J with SimpleLogger as the log framework.
 * Changes to Java sources to resolve warnings/errors.
 * Verification of unit and integration tests.
+
+#### In Progress
+
 * Release to Maven Central TBD.
 
 <!-- References -->
