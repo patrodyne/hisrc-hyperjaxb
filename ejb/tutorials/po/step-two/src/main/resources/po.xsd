@@ -31,7 +31,7 @@
       <xsd:element name="street" type="xsd:string"/>
       <xsd:element name="city" type="xsd:string"/>
       <xsd:element name="state" type="xsd:string"/>
-      <xsd:element name="zip" type="xsd:decimal"/>
+      <xsd:element name="zip" type="xsd:string"/>
     </xsd:sequence>
     <xsd:attribute name="country" type="xsd:NMTOKEN" fixed="US"/>
   </xsd:complexType>
@@ -59,7 +59,7 @@
                 </xsd:restriction>
               </xsd:simpleType>
             </xsd:element>
-            <xsd:element name="USPrice" type="xsd:decimal"/>
+            <xsd:element name="USPrice" type="money"/>
             <xsd:element ref="comment" minOccurs="0"/>
             <xsd:element name="shipDate" type="xsd:date" minOccurs="0"/>
           </xsd:sequence>
@@ -73,6 +73,12 @@
   <xsd:simpleType name="SKU">
     <xsd:restriction base="xsd:string">
       <xsd:pattern value="\d{3}-[A-Z]{2}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="money">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:fractionDigits value="2" />
     </xsd:restriction>
   </xsd:simpleType>
   
