@@ -20,7 +20,12 @@ import javax.xml.transform.dom.DOMResult;
 
 import junit.framework.TestCase;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class JAXBAndJPATest extends TestCase {
+
+	private static Logger log = LoggerFactory.getLogger(JAXBAndJPATest.class);
 
 	private ObjectFactory objectFactory;
 
@@ -77,6 +82,7 @@ public class JAXBAndJPATest extends TestCase {
 		final PurchaseOrderType beta = loadManager.find(
 				PurchaseOrderType.class, id);
 		assertEquals("Objects are not equal.", alpha, beta);
+		log.info("JAXB object equals JPA object.");
 		
 		final Marshaller marshaller = context.createMarshaller();
 		marshaller.marshal(objectFactory.createPurchaseOrder(beta), System.out);

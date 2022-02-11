@@ -26,7 +26,12 @@ import junit.framework.TestCase;
 
 import org.xml.sax.SAXException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class JAXBTest extends TestCase {
+
+	private static Logger log = LoggerFactory.getLogger(JAXBTest.class);
 
 	private JAXBContext context;
 
@@ -97,6 +102,7 @@ public class JAXBTest extends TestCase {
 
 		assertFalse("List of validation events must not be empty.", events
 				.isEmpty());
+		log.info("No JAXB validation issues.");
 		
 		System.out.println(events.get(0));
 	}

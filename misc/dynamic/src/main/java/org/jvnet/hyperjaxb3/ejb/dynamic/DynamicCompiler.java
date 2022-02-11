@@ -21,8 +21,9 @@ import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.SystemUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.CodeWriter;
 import com.sun.codemodel.JCodeModel;
@@ -86,7 +87,7 @@ public class DynamicCompiler {
 		}
 	}
 
-	protected static Log logger = LogFactory.getLog(DynamicCompiler.class);
+	protected static Logger logger = LoggerFactory.getLogger(DynamicCompiler.class);
 
 	public Options createOptions() throws IOException, BadCommandLineException {
 		final Options options = new Options();

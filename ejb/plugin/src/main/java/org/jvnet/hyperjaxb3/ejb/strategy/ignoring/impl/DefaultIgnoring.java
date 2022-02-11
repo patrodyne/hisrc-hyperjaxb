@@ -2,8 +2,9 @@ package org.jvnet.hyperjaxb3.ejb.strategy.ignoring.impl;
 
 import java.util.Collection;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.IgnoredPackage;
 import org.jvnet.hyperjaxb3.ejb.strategy.customizing.Customizing;
@@ -26,7 +27,7 @@ import com.sun.tools.xjc.outline.PackageOutline;
 
 public class DefaultIgnoring implements Ignoring {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	private Customizing customizing;
 

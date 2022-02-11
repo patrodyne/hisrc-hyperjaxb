@@ -16,8 +16,9 @@ import javax.jdo.Transaction;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jpox.samples.employee.model.Department;
 import org.jpox.samples.employee.model.Employee;
 import org.jpox.samples.employee.model.Project;

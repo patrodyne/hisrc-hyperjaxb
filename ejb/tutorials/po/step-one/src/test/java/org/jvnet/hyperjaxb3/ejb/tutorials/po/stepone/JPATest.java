@@ -13,7 +13,12 @@ import javax.persistence.Persistence;
 
 import junit.framework.TestCase;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class JPATest extends TestCase {
+
+	private static Logger log = LoggerFactory.getLogger(JPATest.class);
 
 	private ObjectFactory objectFactory;
 
@@ -64,6 +69,7 @@ public class JPATest extends TestCase {
 		loadManager.close();
 		// Check that we're still shipping to Sacramento
 		assertEquals("Sacramento", beta.getShipTo().getCity());
+		log.info("JAXB shipTo equals JPA shipTo.");
 
 	}
 

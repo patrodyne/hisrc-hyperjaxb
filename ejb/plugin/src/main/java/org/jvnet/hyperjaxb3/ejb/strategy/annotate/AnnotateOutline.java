@@ -6,8 +6,10 @@ import java.util.Collection;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.annox.model.XAnnotation;
 import org.jvnet.hyperjaxb3.ejb.plugin.EjbPlugin;
 import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
@@ -32,7 +34,7 @@ import com.sun.tools.xjc.outline.Outline;
 
 public class AnnotateOutline implements OutlineProcessor<EjbPlugin> {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public Collection<ClassOutline> process(EjbPlugin context, Outline outline,
 			Options options) throws Exception {

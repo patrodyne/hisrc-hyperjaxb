@@ -8,8 +8,9 @@ import java.util.Collection;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.plugin.EjbPlugin;
 import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb3.ejb.strategy.outline.OutlineProcessor;
@@ -32,7 +33,7 @@ public class MarshalMappings implements OutlineProcessor<EjbPlugin> {
 		return JPA1Utils.createMarshaller();
 	}
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public Collection<ClassOutline> process(EjbPlugin context, Outline outline,
 			Options options) throws Exception {

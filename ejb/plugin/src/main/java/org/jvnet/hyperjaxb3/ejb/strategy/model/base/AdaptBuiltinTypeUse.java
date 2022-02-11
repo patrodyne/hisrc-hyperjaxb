@@ -7,8 +7,9 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.strategy.model.AdaptTypeUse;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb3.xjc.model.CExternalLeafInfo;
@@ -33,7 +34,7 @@ import com.sun.xml.xsom.XSComponent;
 
 public class AdaptBuiltinTypeUse implements AdaptTypeUse {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public TypeUse process(ProcessModel context, CPropertyInfo propertyInfo) {
 		// propertyInfo.g

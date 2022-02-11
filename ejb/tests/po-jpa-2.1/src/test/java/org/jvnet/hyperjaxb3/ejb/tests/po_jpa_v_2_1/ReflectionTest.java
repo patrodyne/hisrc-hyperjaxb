@@ -9,8 +9,8 @@ import javax.xml.namespace.QName;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.xml.bind.v2.model.annotation.RuntimeInlineAnnotationReader;
 import com.sun.xml.bind.v2.model.core.ElementInfo;
@@ -22,7 +22,7 @@ import com.sun.xml.bind.v2.runtime.IllegalAnnotationsException;
 
 public class ReflectionTest extends TestCase {
 
-	public static final Log logger = LogFactory.getLog(ReflectionTest.class);
+	public static Logger logger = LoggerFactory.getLogger(ReflectionTest.class);
 
 	public static TypeInfoSet<Type, Class, Field, Method> create(
 			Class... classes) throws IllegalAnnotationsException {

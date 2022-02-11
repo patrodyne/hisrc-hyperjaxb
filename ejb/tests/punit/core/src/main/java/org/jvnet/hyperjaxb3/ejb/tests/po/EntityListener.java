@@ -1,11 +1,11 @@
 package org.jvnet.hyperjaxb3.ejb.tests.po;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EntityListener {
 
-	protected static Log logger = LogFactory.getLog(EntityListener.class);
+	protected static Logger logger = LoggerFactory.getLogger(EntityListener.class);
 
 	public void prePersist(Object object) {
 		logger.debug("Pre-persisting [" + object + "].");

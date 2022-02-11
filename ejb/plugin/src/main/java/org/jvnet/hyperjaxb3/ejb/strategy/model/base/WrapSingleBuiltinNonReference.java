@@ -2,8 +2,9 @@ package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 
 import java.util.Collection;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 
@@ -14,7 +15,7 @@ import com.sun.tools.xjc.model.TypeUse;
 
 public class WrapSingleBuiltinNonReference extends AbstractWrapBuiltin {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public CBuiltinLeafInfo getTypeUse(ProcessModel context,
 			CPropertyInfo propertyInfo) {

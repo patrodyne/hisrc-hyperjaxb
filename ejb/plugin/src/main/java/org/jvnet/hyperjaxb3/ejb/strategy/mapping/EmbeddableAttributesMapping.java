@@ -2,8 +2,9 @@ package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
 import java.util.Collection;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.codemodel.util.JTypeUtils;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
@@ -25,7 +26,7 @@ import com.sun.tools.xjc.outline.FieldOutline;
 public class EmbeddableAttributesMapping implements
 		ClassOutlineMapping<EmbeddableAttributes> {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public EmbeddableAttributes process(Mapping context,
 			ClassOutline classOutline, Options options) {

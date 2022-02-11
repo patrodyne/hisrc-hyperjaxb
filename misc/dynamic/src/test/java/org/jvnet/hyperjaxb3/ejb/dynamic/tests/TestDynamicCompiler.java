@@ -10,14 +10,16 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jvnet.hyperjaxb3.ejb.dynamic.DynamicCompiler;
 import org.jvnet.hyperjaxb3.ejb.test.RoundtripTest;
 
 public class TestDynamicCompiler extends TestCase {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	private File temporaryDirectory;
 
