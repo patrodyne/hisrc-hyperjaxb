@@ -1,5 +1,13 @@
 --
     If the <catalog/> parameter isn't working, this link to schema A is
     not recognized and the test will fail because of a missing schema.
+
+	TR9401 Format: https://dzone.com/articles/jaxb-xjc-imported-schemas-and
+	  The PUBLIC keyword indicates that a schema manager should use the associated
+	  specified public identifier with the storage object identifier to locate the
+	  schema text. The storage object identifier should make sense to the operating
+	  system involved; it should name a file accessible from the current file system.
+	  If a storage object identifier specifies a relative path name, the path is
+	  relative to the location of the catalog entry file itself.
 --
 PUBLIC "http://java.sun.com/xml/ns/persistence" "persistence_1_0.xsd"
