@@ -25,7 +25,14 @@ public class Hyperjaxb3MojoTest extends RunXJC2Mojo {
 		final MavenProject project = new MavenProject();
 		mojo.setProject(project);
 		mojo.setDebug(true);
-		mojo.setForceRegenerate(true);
+
+		// [WARNING] You are using forceRegenerate=true in your configuration.
+		//   This configuration setting is deprecated and not recommended as it causes problems with incremental builds in IDEs.
+		//   Please refer to the following link for more information:
+		//   https://github.com/highsource/maven-jaxb2-plugin/wiki/Do-Not-Use-forceRegenerate
+		//   Consider removing this setting from your plugin configuration.
+		//
+		// mojo.setForceRegenerate(true);
 	}
 
 	@Override
