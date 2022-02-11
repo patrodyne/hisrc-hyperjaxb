@@ -7,7 +7,7 @@
 		<version>7</version>
 	</parent>
 	<groupId>org.patrodyne.jvnet</groupId>
-	<artifactId>hisrc-hyperjaxb-maven-plugin-project</artifactId>
+	<artifactId>hisrc-hyperjaxb-project</artifactId>
 	<version>0.6.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Hyperjaxb3</name>
