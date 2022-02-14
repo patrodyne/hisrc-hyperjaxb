@@ -130,13 +130,15 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 		// final Logger logger = LoggerFactory.getLogger("org.jvnet.hyperjaxb3");
 		final Log log = getLog();
 		if (this.getDebug())
-			todo(log, "Logger level not set to [debug] because not supported.");
+		{
+			if ( !log.isDebugEnabled() )
+				todo(log, "Logger level not set to [debug] because not supported.");
+		}
 		else if (this.getVerbose())
-			todo(log, "Logger level not set to [info] because not supported.");
-		else if (log.isWarnEnabled())
-			todo(log, "Logger level not set to [warn] because not supported.");
-		else
-			todo(log, "Logger level not set to [error] because not supported.");
+		{
+			if ( !log.isInfoEnabled() )
+				todo(log, "Logger level not set to [info] because not supported.");
+		}
 	}
 
 	/**
