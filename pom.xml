@@ -65,6 +65,7 @@
 	</distributionManagement>
 	<properties>
 		<eclipselink.version>2.7.10</eclipselink.version>
+		<hibernate-commons-annotations.version>4.0.1.Final</hibernate-commons-annotations.version>
 		<hibernate-entitymanager.version>4.1.7.Final</hibernate-entitymanager.version>
 		<hibernate-jpa-2.0-api.version>1.0.0.Final</hibernate-jpa-2.0-api.version>
 		<hibernate-jpa-2.1-api.version>1.0.0.Final</hibernate-jpa-2.1-api.version>
@@ -281,7 +282,7 @@
 			<dependency>
 				<groupId>org.hibernate.common</groupId>
 				<artifactId>hibernate-commons-annotations</artifactId>
-				<version>4.0.1.Final</version>
+				<version>${hibernate-commons-annotations.version}</version>
 			</dependency>
 			<!-- Java Persistence API -->
 			<dependency>
