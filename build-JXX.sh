@@ -32,6 +32,6 @@ fi
   BUILD_OPTS="--fail-at-end $@"
   mvn ${DEBUG_OPTS} ${BUILD_OPTS}
 # mvn -DskipTests=true -DtodoLogLevel=DEBUG -Pnexus-deploy clean deploy
-# mvn -DskipTests=true -DtodoLogLevel=DEBUG -DdryRun=true release:clean
+# mvn -DskipTests=true -DtodoLogLevel=DEBUG -DdryRun=false release:clean
 # mvn -DskipTests=true -DtodoLogLevel=DEBUG -DdryRun=true release:prepare
 # mvn -DskipTests=true -DtodoLogLevel=DEBUG -DdryRun=true release:perform
