@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb-samples</artifactId>
-		<version>0.6.3-SNAPSHOT</version>
+		<version>0.6.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-samples-po-customized-toplink</artifactId>
 	<packaging>pom</packaging>

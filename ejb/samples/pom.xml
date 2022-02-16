@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb</artifactId>
-		<version>0.6.3-SNAPSHOT</version>
+		<version>0.6.4-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-samples</artifactId>
 	<packaging>pom</packaging>
 	<name>Hyperjaxb3 EJB Samples</name>
-	<version>0.6.3-SNAPSHOT</version>
+	<version>0.6.4-SNAPSHOT</version>
 	<modules>
 		<module>po-initial</module>
 		<module>po-customized-toplink</module>
