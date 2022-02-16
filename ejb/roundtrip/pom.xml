@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb</artifactId>
-		<version>0.6.3</version>
+		<version>0.6.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-roundtrip</artifactId>
 	<packaging>jar</packaging>
@@ -94,8 +94,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-  <scm>
-    <tag>0.6.3</tag>
-  </scm>
 </project>
