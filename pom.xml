@@ -71,7 +71,7 @@
 		<hibernate-jpa-2.1-api.version>1.0.0.Final</hibernate-jpa-2.1-api.version>
 		<hisrc-basicjaxb-annox-parser.version>1.0.3</hisrc-basicjaxb-annox-parser.version>
 		<hisrc-basicjaxb.version>0.12.1</hisrc-basicjaxb.version>
-		<hisrc-higherjaxb-maven-plugin.version>0.14.1-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
+		<hisrc-higherjaxb-maven-plugin.version>0.14.1</hisrc-higherjaxb-maven-plugin.version>
 		<hisrc-hyperjaxb-annox-plugin.version>1.1.1-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
 		<hsqldb.version>2.5.2</hsqldb.version>
 		<javassist.version>3.28.0-GA</javassist.version>
@@ -585,10 +585,12 @@
 						</executions>
 						<!-- Skip staging the components locally when connecting to the repository manager -->
 						<!-- We do not need staging for a simple deployment of -SNAPSHOT artifacts to Nexus -->
+						<!-- Auto close the staging repository and release -->
 						<configuration>
 							<serverId>ossrh</serverId>
 							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
 							<skipStaging>true</skipStaging>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
 						</configuration>
 					</plugin>
 				</plugins>
