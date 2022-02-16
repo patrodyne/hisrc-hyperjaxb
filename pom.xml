@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>org.patrodyne.jvnet</groupId>
 	<artifactId>hisrc-hyperjaxb-project</artifactId>
-	<version>0.6.3-SNAPSHOT</version>
+	<version>0.6.3</version>
 	<packaging>pom</packaging>
 	<name>Hyperjaxb3</name>
 	<description>Hyperjaxb3 is an open source project which provides relational persistence for JAXB objects.</description>
@@ -47,7 +47,8 @@
 		<connection>scm:git:git@github.com:patrodyne/hisrc-hyperjaxb.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/patrodyne/hisrc-hyperjaxb.git</developerConnection>
 		<url>https://github.com/patrodyne/hisrc-hyperjaxb/tree/master</url>
-	</scm>
+	  <tag>0.6.3</tag>
+  </scm>
 	<issueManagement>
 		<system>GitHub Issues</system>
 		<url>https://github.com/patrodyne/hisrc-hyperjaxb/issues</url>
