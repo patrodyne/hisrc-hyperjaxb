@@ -11,6 +11,18 @@
 			<replacevalue><![CDATA[version>0.6.4-SNAPSHOT</version>]]></replacevalue>
 		</replace>
 
+		<replace dir="${basedir}">
+			<include name="ejb/tests/custom-naming/schema/src/test/java/org/jvnet/hyperjaxb3/ejb/tests/po/RunPoPlugin.java"/>
+			<replacetoken><![CDATA["0.6.4-SNAPSHOT"]]></replacetoken>
+			<replacevalue><![CDATA["0.6.4-SNAPSHOT"]]></replacevalue>
+		</replace>
+
+		<replace dir="${basedir}">
+			<include name="ejb/tests/episodes/b/src/test/java/org/jvnet/hyperjaxb3/ejb/tests/episodes/b/tests/RunEpisodesBPlugin.java"/>
+			<replacetoken><![CDATA["0.6.4-SNAPSHOT"]]></replacetoken>
+			<replacevalue><![CDATA["0.6.4-SNAPSHOT"]]></replacevalue>
+		</replace>
+
 	</target>
 
 </project>
