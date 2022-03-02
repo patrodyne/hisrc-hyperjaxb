@@ -11,9 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.XMLConstants;
-import javax.xml.namespace.QName;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +25,7 @@ import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.jvnet.jaxb2_commons.util.GeneratorContextUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.w3c.dom.Element;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.Locator;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
@@ -223,9 +218,15 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 
 		for (final CClassInfo classInfo : getCreatedClasses()) {
 			final ClassOutline classOutline = outline.getClazz(classInfo);
-			if (Customizations.isGenerated(classInfo)) {
-				generateClassBody(outline, (ClassOutlineImpl) classOutline);
-			}
+			
+			// Generate class body and class serializable.
+			ClassOutlineImpl coi = (ClassOutlineImpl) classOutline;
+			// Note: org.jvnet.hyperjaxb3.ejb.strategy.model.base.CreateIdClass
+			//       is marked ignored but needs serialVersionUID, too.
+			//       So check every ClassOutlineImpl for it. 
+			generateClassSerializable(outline, coi);
+			if (Customizations.isGenerated(classInfo))
+				generateClassBody(outline, coi);
 
 			for (final CPropertyInfo propertyInfo : classInfo.getProperties()) {
 				if (outline.getField(propertyInfo) == null) {
@@ -510,42 +511,52 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 		return createdProperties;
 	}
 
-	private void generateClassBody(Outline outline, ClassOutlineImpl cc) {
-
+	// if serialization support is turned on, generate
+	// [RESULT]
+	// class ... implements Serializable {
+	// private static final long serialVersionUID = <id>;
+	// ....
+	// }
+	private void generateClassSerializable(Outline outline, ClassOutlineImpl coi)
+	{
 		final JCodeModel codeModel = outline.getCodeModel();
 		final Model model = outline.getModel();
-		CClassInfo target = cc.target;
-
-		// if serialization support is turned on, generate
-		// [RESULT]
-		// class ... implements Serializable {
-		// private static final long serialVersionUID = <id>;
-		// ....
-		// }
-		if (model.serializable) {
-			cc.implClass._implements(Serializable.class);
-			if (model.serialVersionUID != null) {
-				cc.implClass.field(JMod.PRIVATE | JMod.STATIC | JMod.FINAL,
+		final JDefinedClass implClass = coi.implClass;
+		
+		if (model.serializable)
+		{
+			implClass._implements(Serializable.class);
+			if (model.serialVersionUID != null)
+			{
+				if ( !implClass.fields().containsKey("serialVersionUID") )
+				{
+					implClass.field(JMod.PRIVATE | JMod.STATIC | JMod.FINAL,
 						codeModel.LONG, "serialVersionUID",
 						JExpr.lit(model.serialVersionUID));
+				}
 			}
 		}
+	}
+
+	private void generateClassBody(Outline outline, ClassOutlineImpl coi) {
+
+		CClassInfo target = coi.target;
 
 		// used to simplify the generated annotations
 		// String mostUsedNamespaceURI =
-		// cc._package().getMostUsedNamespaceURI();
+		// coi._package().getMostUsedNamespaceURI();
 
 		// [RESULT]
 		// @XmlType(name="foo", targetNamespace="bar://baz")
-		// XmlTypeWriter xtw = cc.implClass.annotate2(XmlTypeWriter.class);
-		// writeTypeName(cc.target.getTypeName(), xtw, mostUsedNamespaceURI);
+		// XmlTypeWriter xtw = coi.implClass.annotate2(XmlTypeWriter.class);
+		// writeTypeName(coi.target.getTypeName(), xtw, mostUsedNamespaceURI);
 
 		// if(model.options.target.isLaterThan(SpecVersion.V2_1)) {
 		// // @XmlSeeAlso
-		// Iterator<CClassInfo> subclasses = cc.target.listSubclasses();
+		// Iterator<CClassInfo> subclasses = coi.target.listSubclasses();
 		// if(subclasses.hasNext()) {
 		// XmlSeeAlsoWriter saw =
-		// cc.implClass.annotate2(XmlSeeAlsoWriter.class);
+		// coi.implClass.annotate2(XmlSeeAlsoWriter.class);
 		// while (subclasses.hasNext()) {
 		// CClassInfo s = subclasses.next();
 		// saw.value(outline.getClazz(s).implRef);
@@ -560,7 +571,7 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 		// // [RESULT]
 		// // @XmlRootElement(name="foo", targetNamespace="bar://baz")
 		// XmlRootElementWriter xrew =
-		// cc.implClass.annotate2(XmlRootElementWriter.class);
+		// coi.implClass.annotate2(XmlRootElementWriter.class);
 		// xrew.name(localPart);
 		// if(!namespaceURI.equals(mostUsedNamespaceURI)) // only generate if
 		// necessary
@@ -579,7 +590,7 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 		// }
 
 		for (CPropertyInfo prop : target.getProperties()) {
-			generateFieldDecl(outline, cc, prop);
+			generateFieldDecl(outline, coi, prop);
 		}
 
 		assert !target.declaresAttributeWildcard();
@@ -588,9 +599,9 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 		// }
 
 		// generate some class level javadoc
-		// cc.ref.javadoc().append(target.javadoc);
+		// coi.ref.javadoc().append(target.javadoc);
 
-		// cc._package().objectFactoryGenerator().populate(cc);
+		// coi._package().objectFactoryGenerator().populate(cc);
 	}
 
 	private FieldOutline generateFieldDecl(Outline outline,

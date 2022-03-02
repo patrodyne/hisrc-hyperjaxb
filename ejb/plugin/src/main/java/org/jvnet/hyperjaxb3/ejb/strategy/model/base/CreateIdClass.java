@@ -54,6 +54,7 @@ public class CreateIdClass implements ProcessClassInfo {
 			org.jvnet.jaxb2_commons.plugin.inheritance.Customizations
 					._implements(idClassInfo, Serializable.class.getName());
 
+			// Ignore IdClass from being an Entity.
 			Customizations.markIgnored(idClassInfo);
 			// Customizations.markGenerated(idClassInfo);
 

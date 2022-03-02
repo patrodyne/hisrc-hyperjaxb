@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE bindings>
 <jaxb:bindings version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
@@ -6,7 +8,8 @@
 	
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
 		<jaxb:globalBindings localScoping="toplevel">
-			<jaxb:serializable/>
+			<!-- JPA section 2.1, entities must implement the serializable interface. -->
+			<jaxb:serializable uid="20210901" />
 		</jaxb:globalBindings>
 		<jaxb:schemaBindings>
 			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.ids.tests"/>
