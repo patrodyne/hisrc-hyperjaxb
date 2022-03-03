@@ -5,6 +5,7 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -35,8 +36,8 @@ public class EntityUtils {
 					entity.getClass().getMethods(), EmbeddedId.class);
 			final Collection<Field> atIdFields = getAnnotatedElements(entity
 					.getClass().getFields(), Id.class);
-			final Collection<Method> atIdMethods = getAnnotatedElements(entity
-					.getClass().getMethods(), Id.class);
+			final Collection<Method> atIdMethods = getAnnotatedElements(getNonBridgedMethods(entity
+					.getClass()), Id.class);
 
 			if (atEmbeddedIdFields.size() > 0) {
 				assert atEmbeddedIdFields.size() == 1 : "More than one field is annotated with @EmbeddedId.";
@@ -62,6 +63,23 @@ public class EntityUtils {
 			}
 		}
 		throw new IllegalArgumentException("No id could be found.");
+	}
+
+	// There may be more than one method with a particular name and parameter types in a class
+	// because while the Java language forbids a class to declare multiple methods with the
+	// same signature but different return types, the Java virtual machine does not.
+	// All methods from the base type that are extended/implemented by derived types using
+	// covariant return types are marked as a "bridge" method.
+	// Note: Covariant methods are created when generics are used.
+	private static Method[] getNonBridgedMethods(Class<? extends Object> clazz)
+	{
+		ArrayList<Method> nbm = new ArrayList<>();
+		for ( Method method : clazz.getMethods() )
+		{
+			if ( !method.isBridge() )
+				nbm.add(method);
+		}
+		return nbm.toArray(new Method[nbm.size()]);
 	}
 
 	private static Object getIdWithHibernate(EntityManager entityManager,
