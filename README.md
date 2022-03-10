@@ -43,6 +43,7 @@ The new goals for this fork are:
 * Add sample projects to GitHub releases.
 * Update dependencies with newer versions *excluding* the Jakarta namespace.
 * Update dependencies with newer versions *including* the Jakarta namespace.
+* Replace [HSQLDB](http://hsqldb.org/) with [H2](https://www.h2database.com/) database engine.
 
 ### Status
 
