@@ -1,17 +1,34 @@
 package org.jvnet.hyperjaxb3.ejb.test;
 
+import static org.jvnet.jaxb2_commons.locator.util.LocatorUtils.item;
+import static org.jvnet.jaxb2_commons.locator.util.LocatorUtils.property;
+
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.transform.dom.DOMSource;
 
+import org.apache.commons.lang3.ObjectUtils;
+import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.Difference;
+import org.custommonkey.xmlunit.DifferenceConstants;
+import org.custommonkey.xmlunit.DifferenceListener;
 import org.jvnet.hyperjaxb3.ejb.util.EntityUtils;
+import org.jvnet.hyperjaxb3.xml.datatype.util.XMLGregorianCalendarUtils;
 import org.jvnet.jaxb2_commons.lang.ContextUtils;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
 import org.jvnet.jaxb2_commons.locator.DefaultRootObjectLocator;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
+import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
+import org.w3c.dom.Node;
 
 public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest {
 
@@ -100,49 +117,139 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest {
 
 		}
 
-		logger.debug("Checking the document identity.");
-
+		logger.debug("Checking the sample object identity: Merged vs Loaded.");
 		checkObjects(mergedObject, loadedObject);
+		
+		logger.debug("Checking the sample object identity: Etalon vs Loaded.");
 		checkObjects(etalonObject, loadedObject);
 
 		loadManager.close();
 
 	}
 
-	protected void checkObjects(final Object object, final Object loadedObject) {
-		final EqualsStrategy strategy = new org.jvnet.hyperjaxb3.lang.builder.ExtendedJAXBEqualsStrategy() {
-
+	protected void checkObjects(final Object leftObject, final Object rightObject)
+	{
+		final EqualsStrategy strategy = new org.jvnet.hyperjaxb3.lang.builder.ExtendedJAXBEqualsStrategy()
+		{
 			@Override
-			public boolean equals(ObjectLocator leftLocator,
-					ObjectLocator rightLocator, Object lhs, Object rhs) {
-				if (!super.equals(leftLocator, rightLocator, lhs, rhs)) {
-					logger.debug("Objects are not equal.");
-					super.equals(leftLocator, rightLocator, lhs, rhs);
-					logger.debug("Left: "
-							+ (lhs == null ? "null" : lhs.toString()));
-					if (leftLocator != null) {
-						logger.debug("At [" + leftLocator.getPathAsString()
-								+ "].");
-					}
-					logger.debug("Right: "
-							+ (rhs == null ? "null" : rhs.toString()));
-					if (rightLocator != null) {
-						logger.debug("At [" + rightLocator.getPathAsString()
-								+ "].");
-					}
-					return false;
-				} else
-
-				{
+			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, boolean left, boolean right)
+			{
+				if ( super.equals(leftLocator, rightLocator, left, right) )
 					return true;
+				else
+				{
+					debug(leftLocator, rightLocator, left, right);
+					return false;
 				}
 			}
 
+			@Override
+			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, byte left, byte right)
+			{
+				if ( super.equals(leftLocator, rightLocator, left, right) )
+					return true;
+				else
+				{
+					debug(leftLocator, rightLocator, left, right);
+					return false;
+				}
+			}
+
+			@Override
+			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, char left, char right)
+			{
+				if ( super.equals(leftLocator, rightLocator, left, right) )
+					return true;
+				else
+				{
+					debug(leftLocator, rightLocator, left, right);
+					return false;
+				}
+			}
+
+			@Override
+			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, long left, long right)
+			{
+				if ( super.equals(leftLocator, rightLocator, left, right) )
+					return true;
+				else
+				{
+					debug(leftLocator, rightLocator, left, right);
+					return false;
+				}
+			}
+
+			@Override
+			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, int left, int right)
+			{
+				if ( super.equals(leftLocator, rightLocator, left, right) )
+					return true;
+				else
+				{
+					debug(leftLocator, rightLocator, left, right);
+					return false;
+				}
+			}
+
+			@Override
+			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, short left, short right)
+			{
+				if ( super.equals(leftLocator, rightLocator, left, right) )
+					return true;
+				else
+				{
+					debug(leftLocator, rightLocator, left, right);
+					return false;
+				}
+			}
+			
+			@Override
+			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, Object lhs, Object rhs)
+			{
+				if ( super.equals(leftLocator, rightLocator, lhs, rhs) )
+					return true;
+				else
+				{
+					debug(leftLocator, rightLocator, lhs, rhs);
+					return false;
+				}
+			}
+
+			private void debug(ObjectLocator lhsLocator, ObjectLocator rhsLocator, Object lhs, Object rhs)
+			{
+				logger.debug("Objects are NOT equal!");
+				debugMessage("LHS", lhsLocator, lhs);
+				debugMessage("RHS", rhsLocator, rhs);
+			}
+
+			private void debugMessage(String label, ObjectLocator locator, Object obj)
+			{
+				String value = "null";
+				String text = "";
+				
+				if ( obj != null )
+				{
+					if (obj instanceof Collection<?>)
+						value = obj.getClass().getName() + "[" + ((Collection) obj).size() +"]";
+					else if ( obj != null && obj.getClass().isArray() )
+						value = obj.getClass().getName() + "[" + ((Object[]) obj).length +"]";
+					else
+						value = obj.toString();
+				}
+				
+				if (locator != null)
+					text = label + ": " + "{"+locator.getPathAsString()+"} -> " + value;
+				else
+					text = label + ": " + "{} -> " + value;
+					
+				logger.debug(text);
+			}
 		};
-		;
-		assertTrue("Objects must be equal.", strategy.equals(
-				new DefaultRootObjectLocator(object),
-				new DefaultRootObjectLocator(loadedObject), object,
-				loadedObject));
+		
+		assertTrue("Objects NOT equal. Use DEBUG for location details.", strategy.equals(
+				new DefaultRootObjectLocator(leftObject),
+				new DefaultRootObjectLocator(rightObject),
+				leftObject,
+				rightObject));
 	}
 }
