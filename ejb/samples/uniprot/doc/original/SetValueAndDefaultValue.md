@@ -107,7 +107,7 @@ The element default value is derived from the element declaration’s default at
 
 Next consider these two XML instances of our `Pet` type. They represent the same house-broken pet but differ in their representation. The first instance allows the schema to provide the default value for the `Trained` attribute and `Legs` element; ...
 
-#### Instance #1
+#### Instance `#1`
 ```
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <pet:Pet xmlns:pet="http://example.org/animal">
@@ -118,7 +118,7 @@ Next consider these two XML instances of our `Pet` type. They represent the same
 
 ... but, the second instance explicitly declares them.
 
-#### Instance #2
+#### Instance `#2`
 ```
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <pet:Pet xmlns:pet="http://example.org/animal" Trained="true">
@@ -127,7 +127,7 @@ Next consider these two XML instances of our `Pet` type. They represent the same
 </pet:Pet>
 ```
 
-### Question: Does instance #1 equal instance #2?
+### Question: Does instance `#1` equal instance `#2`?
 
 Temporarily, I'll argue that the two instances exhibit data equality. The fist instance explicitly provides a value for the `Trained` attribute. The second instance relies on the JAXB class to supply the value at unmarshall time. However, because data can travel, we need to consider what happens beyond this context and into other contexts.
 
@@ -204,30 +204,30 @@ public class Pet implements Serializable
 
 #### Unmarshall
 
-When we use JAXB to unmarshall instances #1 & #2 (above) into `Pet` objects, we get:
+When we use JAXB to unmarshall instances `#1` & `#2` (above) into `Pet` objects, we get:
 
 ##### Pet Name Element
-| Instance #1                  | Instance #2                  |
+| Instance `#1`                | Instance `#2`                |
 | ---------------------------- | ---------------------------- |
 | pet1.name is "Fido"          | pet2.name is "Fido"          |
 | pet1.getName() is "Fido"     | pet2.getName() is "Fido"     |
 | pet1.isSetName() is true     | pet2.isSetName() is true     |
 
 ##### Pet Legs Element
-| Instance #1                  | Instance #2                  |
+| Instance `#1`                | Instance `#2`                |
 | ---------------------------- | ---------------------------- |
 | pet1.legs is 4               | pet2.legs is 4               |
 | pet1.getLegs() is 4          | pet2.getLegs() is 4          |
 | pet1.isSetLegs() is true     | pet2.isSetLegs() is true     |
 
 ##### Pet Trained Attribute
-| Instance #1                  | Instance #2                  |
+| Instance `#1`                | Instance `#2`                |
 | ---------------------------- | ---------------------------- |
 | pet1.trained is null         | pet2.trained is true         |
 | pet1.isTrained() is true     | pet2.isTrained() is true     |
 | pet1.isSetTrained() is false | pet2.isSetTrained() is false |
 
-The difference is that instance #1 populates the `trained` field with the default attribute and element values but instance #2 does sets the values explicitly. Both objects return the same _accessor_ values, one _accessor_ using the implicit field value and the other using the explicit default value.
+The difference is that instance `#1` populates the `trained` field with the default attribute and element values but instance `#2` does sets the values explicitly. Both objects return the same _accessor_ values, one _accessor_ using the implicit field value and the other using the explicit default value.
 
 > **Note:** JAXB/XJC implements attributes and elements differently. When  an attribute is unset in the Java object, its _accessor_ returns the XML schema default value using its `if...then` block. When an element is nulled using its setter, its _accessor_ returns null!
 
@@ -235,9 +235,9 @@ The difference is that instance #1 populates the `trained` field with the defaul
 
 Next, let's look at the XML instance produced using JAXB to marshall the Java objects.
 
-As shown below, instance #1 omits the `Trained` attribute because the Java object was unmarshalled using its accessor's `if...then` block and its backing field was not set. The `Legs` element is output to the XML because JAXB used the `@XmlElement` to declare and set its backing field.
+As shown below, instance `#1` omits the `Trained` attribute because the Java object was unmarshalled using its accessor's `if...then` block and its backing field was not set. The `Legs` element is output to the XML because JAXB used the `@XmlElement` to declare and set its backing field.
 
-##### Instance #1
+##### Instance `#1`
 ```
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:Pet xmlns:ns2="http://example.org/animal">
@@ -246,9 +246,9 @@ As shown below, instance #1 omits the `Trained` attribute because the Java objec
 </ns2:Pet>
 ```
 
-Instance #2 includes the `Trained` attribute value and `Legs` element because they were set during unmarshalling.
+Instance `#2` includes the `Trained` attribute value and `Legs` element because they were set during unmarshalling.
 
-##### Instance #2
+##### Instance `#2`
 ```
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:Pet xmlns:ns2="http://example.org/animal" Trained="true">
@@ -263,11 +263,11 @@ Instance #2 includes the `Trained` attribute value and `Legs` element because th
 
 A goal of JAXB is to support "round trip" where an XML instance can be unmarshalled and marshalled into the same XML representation. This provides verification that JAXB is working, as intended.
 
-In the examples above, the marshalled instance #1 differs slightly from its original representation because the default for `Legs' element is set explicitly during unmarshalling. Instance #2 fairs better because the original XML does not rely on default values.
+In the examples above, the marshalled instance `#1` differs slightly from its original representation because the default for `Legs' element is set explicitly during unmarshalling. Instance `#2` fairs better because the original XML does not rely on default values.
 
-### Question: Does instance #1 equal instance #2?
+### Question: Does instance `#1` equal instance `#2`?
 
-This is the question asked earlier but this time I'll answer that the instances are not equal. They are not equal because the `isSetTraining` operator returns `false` for instance #1 and `true` for instance #2. This is the difference between an object with a `default value and another object with a `set value`!
+This is the question asked earlier but this time I'll answer that the instances are not equal. They are not equal because the `isSetTraining` operator returns `false` for instance `#1` and `true` for instance `#2`. This is the difference between an object with a `default value and another object with a `set value`!
 
 ### Equality/Hash Set Value Logic
 
