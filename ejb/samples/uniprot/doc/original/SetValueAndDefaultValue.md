@@ -36,7 +36,7 @@ Not included, this is how to customized XJB and XSD files to demonstrate how the
     - `/xs:schema/xs:complexType[@name='statusType']//xs:attribute[@name='status']`
         - Remove attribute: default="known"
 
-> **Recommendations:** Avoid `generateIsSetMethod="true"` because it can produce attribute accessor(s) with _Simple Value_ return types and _Complex Type_ backing fields. This can lead to _Null Pointer Exceptions_ when auto-boxing a `null` backing field into its return type. This is a documented JAXB issue. Avoid using XML Schema _default value_ because they does not travel well across round trip tests.
+> **Recommendations:** Avoid `generateIsSetMethod="true"` because it can produce attribute accessor(s) with _Simple Value_ return types and _Complex Type_ backing fields. This can lead to _Null Pointer Exceptions_ when auto-boxing a `null` backing field into its return type. This is a documented JAXB issue. Avoid using XML Schema _default value_ because they do not travel well across round trip tests.
 
 # Set Value & Default Value
 
@@ -263,11 +263,11 @@ Instance `#2` includes the `Trained` attribute value and `Legs` element because 
 
 A goal of JAXB is to support "round trip" where an XML instance can be unmarshalled and marshalled into the same XML representation. This provides verification that JAXB is working, as intended.
 
-In the examples above, the marshalled instance `#1` differs slightly from its original representation because the default for `Legs' element is set explicitly during unmarshalling. Instance `#2` fairs better because the original XML does not rely on default values.
+In the examples above, the marshalled instance `#1` differs slightly from its original representation because the default for `Legs` element is set explicitly during unmarshalling. Instance `#2` fairs better because the original XML does not rely on default values.
 
 ### Question: Does instance `#1` equal instance `#2`?
 
-This is the question asked earlier but this time I'll answer that the instances are not equal. They are not equal because the `isSetTraining` operator returns `false` for instance `#1` and `true` for instance `#2`. This is the difference between an object with a `default value and another object with a `set value`!
+This is the question asked earlier but this time I'll answer that the instances are not equal. They are not equal because the `isSetTraining` operator returns `false` for instance `#1` and `true` for instance `#2`. This is the difference between an object with a _default value_ and another object with a _set value_!
 
 ### Equality/Hash Set Value Logic
 
@@ -278,74 +278,74 @@ To provide the _set value_ logic, the `equal(Object)` and `hashCode` methods are
 The equals logic returns true when the left/right objects match on _set value_ and on _value_.
 
 ```
-    @Override
-    public boolean equals(Object object) {
-        if ((object == null)||(this.getClass()!= object.getClass())) {
-            return false;
-        }
-        if (this == object) {
-            return true;
-        }
-        final Pet that = ((Pet) object);
-        {
-            String leftName;
-            leftName = this.getName();
-            String rightName;
-            rightName = that.getName();
-            if (this.isSetName()) {
-                if (that.isSetName()) {
-                    if (!leftName.equals(rightName)) {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            } else {
-                if (that.isSetName()) {
-                    return false;
-                }
-            }
-        }
-        {
-            Integer leftLegs;
-            leftLegs = this.getLegs();
-            Integer rightLegs;
-            rightLegs = that.getLegs();
-            if (this.isSetLegs()) {
-                if (that.isSetLegs()) {
-                    if (!leftLegs.equals(rightLegs)) {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            } else {
-                if (that.isSetLegs()) {
-                    return false;
-                }
-            }
-        }
-        {
-            boolean leftTrained;
-            leftTrained = (this.isSetTrained()?this.isTrained():true);
-            boolean rightTrained;
-            rightTrained = (that.isSetTrained()?that.isTrained():true);
-            if (this.isSetTrained()) {
-                if (that.isSetTrained()) {
-                    if (leftTrained!= rightTrained) {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            } else {
-                if (that.isSetTrained()) {
-                    return false;
-                }
-            }
-        }
+@Override
+public boolean equals(Object object) {
+    if ((object == null)||(this.getClass()!= object.getClass())) {
+        return false;
+    }
+    if (this == object) {
         return true;
     }
+    final Pet that = ((Pet) object);
+    {
+        String leftName;
+        leftName = this.getName();
+        String rightName;
+        rightName = that.getName();
+        if (this.isSetName()) {
+            if (that.isSetName()) {
+                if (!leftName.equals(rightName)) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            if (that.isSetName()) {
+                return false;
+            }
+        }
+    }
+    {
+        Integer leftLegs;
+        leftLegs = this.getLegs();
+        Integer rightLegs;
+        rightLegs = that.getLegs();
+        if (this.isSetLegs()) {
+            if (that.isSetLegs()) {
+                if (!leftLegs.equals(rightLegs)) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            if (that.isSetLegs()) {
+                return false;
+            }
+        }
+    }
+    {
+        boolean leftTrained;
+        leftTrained = (this.isSetTrained()?this.isTrained():true);
+        boolean rightTrained;
+        rightTrained = (that.isSetTrained()?that.isTrained():true);
+        if (this.isSetTrained()) {
+            if (that.isSetTrained()) {
+                if (leftTrained!= rightTrained) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            if (that.isSetTrained()) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
 ```
 
 #### Hash Code
@@ -353,35 +353,35 @@ The equals logic returns true when the left/right objects match on _set value_ a
 The hash code logic implements different hash values for the `Trained` attribute depending of its `isSet` state.
 
 ```
-    @Override
-    public int hashCode() {
-        int currentHashCode = 1;
-        {
-            currentHashCode = (currentHashCode* 31);
-            String theName;
-            theName = this.getName();
-            if (this.isSetName()) {
-                currentHashCode += theName.hashCode();
-            }
+@Override
+public int hashCode() {
+    int currentHashCode = 1;
+    {
+        currentHashCode = (currentHashCode* 31);
+        String theName;
+        theName = this.getName();
+        if (this.isSetName()) {
+            currentHashCode += theName.hashCode();
         }
-        {
-            currentHashCode = (currentHashCode* 31);
-            Integer theLegs;
-            theLegs = this.getLegs();
-            if (this.isSetLegs()) {
-                currentHashCode += theLegs.hashCode();
-            }
-        }
-        {
-            currentHashCode = (currentHashCode* 31);
-            boolean theTrained;
-            theTrained = (this.isSetTrained()?this.isTrained():true);
-            if (this.isSetTrained()) {
-                currentHashCode += (theTrained? 1231 : 1237);
-            }
-        }
-        return currentHashCode;
     }
+    {
+        currentHashCode = (currentHashCode* 31);
+        Integer theLegs;
+        theLegs = this.getLegs();
+        if (this.isSetLegs()) {
+            currentHashCode += theLegs.hashCode();
+        }
+    }
+    {
+        currentHashCode = (currentHashCode* 31);
+        boolean theTrained;
+        theTrained = (this.isSetTrained()?this.isTrained():true);
+        if (this.isSetTrained()) {
+            currentHashCode += (theTrained? 1231 : 1237);
+        }
+    }
+    return currentHashCode;
+}
 ```
 
 <!-- Footnotes -->
