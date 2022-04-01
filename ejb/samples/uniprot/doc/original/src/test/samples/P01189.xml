@@ -724,186 +724,186 @@
 <keyword id="KW-0732">Signal</keyword>
 <feature type="signal peptide">
 <location>
-<begin position="1" status="certain" />
-<end position="26" status="certain" />
+<begin position="1" />
+<end position="26" />
 </location>
 </feature>
 <feature type="peptide" description="NPP" id="PRO_0000024966">
 <location>
-<begin position="27" status="certain" />
-<end position="102" status="certain" />
+<begin position="27" />
+<end position="102" />
 </location>
 </feature>
 <feature type="peptide" description="Melanotropin gamma" id="PRO_0000024967">
 <location>
-<begin position="77" status="certain" />
-<end position="87" status="certain" />
+<begin position="77" />
+<end position="87" />
 </location>
 </feature>
 <feature type="peptide" description="Potential peptide" id="PRO_0000024968">
 <location>
-<begin position="105" status="certain" />
-<end position="134" status="certain" />
+<begin position="105" />
+<end position="134" />
 </location>
 </feature>
 <feature type="peptide" description="Corticotropin" id="PRO_0000024969">
 <location>
-<begin position="138" status="certain" />
-<end position="176" status="certain" />
+<begin position="138" />
+<end position="176" />
 </location>
 </feature>
 <feature type="peptide" description="Melanotropin alpha" id="PRO_0000024970">
 <location>
-<begin position="138" status="certain" />
-<end position="150" status="certain" />
+<begin position="138" />
+<end position="150" />
 </location>
 </feature>
 <feature type="peptide" description="Corticotropin-like intermediary peptide" id="PRO_0000024971">
 <location>
-<begin position="156" status="certain" />
-<end position="176" status="certain" />
+<begin position="156" />
+<end position="176" />
 </location>
 </feature>
 <feature type="peptide" description="Lipotropin beta" id="PRO_0000024972">
 <location>
-<begin position="179" status="certain" />
-<end position="267" status="certain" />
+<begin position="179" />
+<end position="267" />
 </location>
 </feature>
 <feature type="peptide" description="Lipotropin gamma" id="PRO_0000024973">
 <location>
-<begin position="179" status="certain" />
-<end position="234" status="certain" />
+<begin position="179" />
+<end position="234" />
 </location>
 </feature>
 <feature type="peptide" description="Melanotropin beta" id="PRO_0000024974">
 <location>
-<begin position="217" status="certain" />
-<end position="234" status="certain" />
+<begin position="217" />
+<end position="234" />
 </location>
 </feature>
 <feature type="peptide" description="Beta-endorphin" id="PRO_0000024975">
 <location>
-<begin position="237" status="certain" />
-<end position="267" status="certain" />
+<begin position="237" />
+<end position="267" />
 </location>
 </feature>
 <feature type="peptide" description="Met-enkephalin" id="PRO_0000024976">
 <location>
-<begin position="237" status="certain" />
-<end position="241" status="certain" />
+<begin position="237" />
+<end position="241" />
 </location>
 </feature>
 <feature type="modified residue" description="Phenylalanine amide">
 <location>
-<position position="87" status="certain" />
+<position position="87" />
 </location>
 </feature>
 <feature type="modified residue" description="Glutamic acid 1-amide">
 <location>
-<position position="134" status="certain" />
+<position position="134" />
 </location>
 </feature>
 <feature type="modified residue" description="Valine amide">
 <location>
-<position position="150" status="certain" />
+<position position="150" />
 </location>
 </feature>
 <feature type="modified residue" description="Phosphoserine">
 <location>
-<position position="168" status="certain" />
+<position position="168" />
 </location>
 </feature>
 <feature type="glycosylation site" description="O-linked (HexNAc...)">
 <location>
-<position position="71" status="certain" />
+<position position="71" />
 </location>
 </feature>
 <feature type="glycosylation site" description="N-linked (GlcNAc...)">
 <location>
-<position position="91" status="certain" />
+<position position="91" />
 </location>
 </feature>
 <feature type="disulfide bond" status="by similarity">
 <location>
-<begin position="28" status="certain" />
-<end position="50" status="certain" />
+<begin position="28" />
+<end position="50" />
 </location>
 </feature>
 <feature type="sequence variant" id="VAR_010699">
 <original>S</original>
 <variation>T</variation>
 <location>
-<position position="7" status="certain" />
+<position position="7" />
 </location>
 </feature>
 <feature type="sequence variant" id="VAR_010700">
 <original>S</original>
 <variation>L</variation>
 <location>
-<position position="9" status="certain" />
+<position position="9" />
 </location>
 </feature>
 <feature type="sequence variant" description="In dbSNP:rs28932471." id="VAR_029762">
 <original>P</original>
 <variation>L</variation>
 <location>
-<position position="62" status="certain" />
+<position position="62" />
 </location>
 </feature>
 <feature type="sequence variant" id="VAR_010714">
 <location>
-<begin position="97" status="certain" />
-<end position="99" status="certain" />
+<begin position="97" />
+<end position="99" />
 </location>
 </feature>
 <feature type="sequence variant" id="VAR_010715">
 <original>D</original>
 <variation>N</variation>
 <location>
-<position position="106" status="certain" />
+<position position="106" />
 </location>
 </feature>
 <feature type="sequence variant" description="In dbSNP:rs8192606." id="VAR_029314">
 <original>P</original>
 <variation>A</variation>
 <location>
-<position position="132" status="certain" />
+<position position="132" />
 </location>
 </feature>
 <feature type="sequence variant" id="VAR_010716">
 <original>E</original>
 <variation>G</variation>
 <location>
-<position position="214" status="certain" />
+<position position="214" />
 </location>
 </feature>
 <feature type="sequence variant" description="May confer susceptibility to obesity; reduces the ability to activate melanocortin receptor 4; dbSNP:rs28932472." id="VAR_010701">
 <original>R</original>
 <variation>G</variation>
 <location>
-<position position="236" status="certain" />
+<position position="236" />
 </location>
 </feature>
 <feature type="sequence variant" id="VAR_012201">
 <original>R</original>
 <variation>Q</variation>
 <location>
-<position position="236" status="certain" />
+<position position="236" />
 </location>
 </feature>
 <feature type="sequence conflict" description="In Ref. 6." ref="20">
 <original>R</original>
 <variation>G</variation>
 <location>
-<position position="48" status="certain" />
+<position position="48" />
 </location>
 </feature>
 <feature type="sequence conflict" description="In Ref. 2." ref="7">
 <original>P</original>
 <variation>T</variation>
 <location>
-<position position="115" status="certain" />
+<position position="115" />
 </location>
 </feature>
 <sequence length="267" mass="29424" checksum="B927323474A67536" modified="1991-02-01" version="2" precursor="true">

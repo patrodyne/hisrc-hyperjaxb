@@ -10,7 +10,9 @@
 	<jaxb:bindings>
 		<!-- JPA section 2.1, entities must be top-level classes. -->
 		<!-- JPA section 2.1, entities must implement the serializable interface. -->
-		<jaxb:globalBindings localScoping="toplevel">
+		<!-- See https://github.com/javaee/jaxb-v2/issues/667 -->
+		<!-- See https://github.com/javaee/jaxb-v2/issues/679 -->
+		<jaxb:globalBindings localScoping="toplevel" generateIsSetMethod="true" optionalProperty="wrapper">
 			<jaxb:serializable uid="20211201" />
 		</jaxb:globalBindings>
 	</jaxb:bindings>

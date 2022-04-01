@@ -555,7 +555,7 @@
             </xs:annotation>
         </xs:attribute>
 
-        <xs:attribute name="mass" type="xs:float" use="optional" default="0.0">
+        <xs:attribute name="mass" type="xs:float" use="optional">
             <xs:annotation>
                 <xs:documentation>First the molecular weight which has been determined.</xs:documentation>
             </xs:annotation>
@@ -867,7 +867,7 @@
                 <xs:attribute name="checksum" type="xs:string" use="required"/>
                 <xs:attribute name="modified" type="xs:date" use="required"/>
                 <xs:attribute name="version" type="xs:integer" use="required"/>
-                <xs:attribute name="precursor" type="xs:boolean" use="optional" default="false"/>
+                <xs:attribute name="precursor" type="xs:boolean" use="optional"/>
                 <xs:attribute name="fragment" use="optional">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
