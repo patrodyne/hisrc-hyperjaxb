@@ -225,7 +225,7 @@ When we use JAXB to unmarshall instances `#1` & `#2` (above) into `Pet` objects,
 | ---------------------------- | ---------------------------- |
 | pet1.trained is null         | pet2.trained is true         |
 | pet1.isTrained() is true     | pet2.isTrained() is true     |
-| pet1.isSetTrained() is false | pet2.isSetTrained() is false |
+| pet1.isSetTrained() is false | pet2.isSetTrained() is true  |
 
 The difference is that instance `#1` populates the `trained` field with the default attribute and element values but instance `#2` does sets the values explicitly. Both objects return the same _accessor_ values, one _accessor_ using the implicit field value and the other using the explicit default value.
 
