@@ -22,6 +22,7 @@ import org.custommonkey.xmlunit.Difference;
 import org.custommonkey.xmlunit.DifferenceConstants;
 import org.custommonkey.xmlunit.DifferenceListener;
 import org.jvnet.hyperjaxb3.ejb.util.EntityUtils;
+import org.jvnet.hyperjaxb3.lang.builder.ExtendedJAXBEqualsStrategy;
 import org.jvnet.hyperjaxb3.xml.datatype.util.XMLGregorianCalendarUtils;
 import org.jvnet.jaxb2_commons.lang.ContextUtils;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
@@ -129,122 +130,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest {
 
 	protected void checkObjects(final Object leftObject, final Object rightObject)
 	{
-		final EqualsStrategy strategy = new org.jvnet.hyperjaxb3.lang.builder.ExtendedJAXBEqualsStrategy()
-		{
-			@Override
-			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, boolean left, boolean right)
-			{
-				if ( super.equals(leftLocator, rightLocator, left, right) )
-					return true;
-				else
-				{
-					debug(leftLocator, rightLocator, left, right);
-					return false;
-				}
-			}
-
-			@Override
-			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, byte left, byte right)
-			{
-				if ( super.equals(leftLocator, rightLocator, left, right) )
-					return true;
-				else
-				{
-					debug(leftLocator, rightLocator, left, right);
-					return false;
-				}
-			}
-
-			@Override
-			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, char left, char right)
-			{
-				if ( super.equals(leftLocator, rightLocator, left, right) )
-					return true;
-				else
-				{
-					debug(leftLocator, rightLocator, left, right);
-					return false;
-				}
-			}
-
-			@Override
-			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, long left, long right)
-			{
-				if ( super.equals(leftLocator, rightLocator, left, right) )
-					return true;
-				else
-				{
-					debug(leftLocator, rightLocator, left, right);
-					return false;
-				}
-			}
-
-			@Override
-			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, int left, int right)
-			{
-				if ( super.equals(leftLocator, rightLocator, left, right) )
-					return true;
-				else
-				{
-					debug(leftLocator, rightLocator, left, right);
-					return false;
-				}
-			}
-
-			@Override
-			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, short left, short right)
-			{
-				if ( super.equals(leftLocator, rightLocator, left, right) )
-					return true;
-				else
-				{
-					debug(leftLocator, rightLocator, left, right);
-					return false;
-				}
-			}
-			
-			@Override
-			public boolean equals(ObjectLocator leftLocator, ObjectLocator rightLocator, Object lhs, Object rhs)
-			{
-				if ( super.equals(leftLocator, rightLocator, lhs, rhs) )
-					return true;
-				else
-				{
-					debug(leftLocator, rightLocator, lhs, rhs);
-					return false;
-				}
-			}
-
-			private void debug(ObjectLocator lhsLocator, ObjectLocator rhsLocator, Object lhs, Object rhs)
-			{
-				logger.debug("Objects are NOT equal!");
-				debugMessage("LHS", lhsLocator, lhs);
-				debugMessage("RHS", rhsLocator, rhs);
-			}
-
-			private void debugMessage(String label, ObjectLocator locator, Object obj)
-			{
-				String value = "null";
-				String text = "";
-				
-				if ( obj != null )
-				{
-					if (obj instanceof Collection<?>)
-						value = obj.getClass().getName() + "[" + ((Collection) obj).size() +"]";
-					else if ( obj != null && obj.getClass().isArray() )
-						value = obj.getClass().getName() + "[" + ((Object[]) obj).length +"]";
-					else
-						value = obj.toString();
-				}
-				
-				if (locator != null)
-					text = label + ": " + "{"+locator.getPathAsString()+"} -> " + value;
-				else
-					text = label + ": " + "{} -> " + value;
-					
-				logger.debug(text);
-			}
-		};
+		final EqualsStrategy strategy = new ExtendedJAXBEqualsStrategy();
 		
 		assertTrue("Objects NOT equal. Use DEBUG for location details.", strategy.equals(
 				new DefaultRootObjectLocator(leftObject),
