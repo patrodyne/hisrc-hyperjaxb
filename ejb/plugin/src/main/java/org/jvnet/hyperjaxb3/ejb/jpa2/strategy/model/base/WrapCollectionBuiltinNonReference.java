@@ -1,10 +1,12 @@
 package org.jvnet.hyperjaxb3.ejb.jpa2.strategy.model.base;
 
+import static org.jvnet.hyperjaxb3.ejb.Constants.TODO_LOG_LEVEL;
+
 import java.util.Collection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.jvnet.hyperjaxb3.ejb.Constants;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.base.AbstractWrapBuiltin;
@@ -64,7 +66,7 @@ public class WrapCollectionBuiltinNonReference extends AbstractWrapBuiltin {
 
 	private void todo(String comment) {
         String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
-		String level = System.getProperty("todoLogLevel");
+		String level = System.getProperty(TODO_LOG_LEVEL);
 		if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);
 		else if ( "INFO".equalsIgnoreCase(level) ) logger.info(msg);
 		else if ( "WARN".equalsIgnoreCase(level) ) logger.warn(msg);

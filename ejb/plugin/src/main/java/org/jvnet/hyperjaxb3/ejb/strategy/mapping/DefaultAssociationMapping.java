@@ -1,5 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
+import static org.jvnet.hyperjaxb3.ejb.Constants.TODO_LOG_LEVEL;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +14,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.jvnet.hyperjaxb3.ejb.Constants;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.xjc.model.CTypeInfoUtils;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
@@ -527,7 +529,7 @@ public class DefaultAssociationMapping implements AssociationMapping {
 
 	private void todo(String comment) {
         String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
-		String level = System.getProperty("todoLogLevel");
+		String level = System.getProperty(TODO_LOG_LEVEL);
 		if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);
 		else if ( "INFO".equalsIgnoreCase(level) ) logger.info(msg);
 		else if ( "WARN".equalsIgnoreCase(level) ) logger.warn(msg);

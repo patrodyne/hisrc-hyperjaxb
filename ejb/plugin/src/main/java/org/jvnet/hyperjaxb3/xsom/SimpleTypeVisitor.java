@@ -1,10 +1,13 @@
 package org.jvnet.hyperjaxb3.xsom;
 
+import static org.jvnet.hyperjaxb3.ejb.Constants.TODO_LOG_LEVEL;
+
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.namespace.QName;
 
+import org.jvnet.hyperjaxb3.ejb.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -128,7 +131,7 @@ public class SimpleTypeVisitor implements XSVisitor {
 
 	private void todo(String comment) {
         String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
-		String level = System.getProperty("todoLogLevel");
+		String level = System.getProperty(TODO_LOG_LEVEL);
 		if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);
 		else if ( "INFO".equalsIgnoreCase(level) ) logger.info(msg);
 		else if ( "WARN".equalsIgnoreCase(level) ) logger.warn(msg);

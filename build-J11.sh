@@ -30,8 +30,8 @@ JAVA11_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
   fi
   export JAVA_HOME="${JAVA11_HOME}"
 # DEBUG_OPTS="-X -Dorg.slf4j.simpleLogger.showLogName=true"
-# BUILD_OPTS="--fail-at-end -DtodoLogLevel=DEBUG -DskipTests=true $@"
-  BUILD_OPTS="--fail-at-end -DtodoLogLevel=DEBUG -Dorg.jboss.logging.provider=slf4j $@"
+# BUILD_OPTS="--fail-at-end -Dorg.jvnet.hyperjaxb3.todoLogLevel=DEBUG -DskipTests=true $@"
+  BUILD_OPTS="--fail-at-end -Dorg.jvnet.hyperjaxb3.todoLogLevel=DEBUG -Dorg.jboss.logging.provider=slf4j $@"
   mvn ${BUILD_OPTS}
 # mvn ${BUILD_OPTS} install
 # mvn ${BUILD_OPTS} -Psamples package
