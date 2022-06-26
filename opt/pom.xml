@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-project</artifactId>
+		<version>0.6.4-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>hisrc-hyperjaxb-opt</artifactId>
+	<packaging>pom</packaging>
+	<name>Hyperjaxb3 Optional: Framework Support</name>
+	<modules>
+		<module>hibernate</module>
+		<module>hikaricp</module>
+	</modules>
+	<build>
+		<defaultGoal>install</defaultGoal>
+	</build>
+	<profiles>
+		<profile>
+			<id>all</id>
+			<modules>
+				<module>hibernate</module>
+				<module>hikaricp</module>
+			</modules>
+		</profile>
+	</profiles>
+</project>
