@@ -1,5 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.test;
 
+import static java.util.Arrays.sort;
+
 import java.io.File;
 import java.util.Collection;
 
@@ -33,11 +35,21 @@ public abstract class AbstractEntityManagerSamplesTest extends
 			: JAVA_1_6_SAMPLES;
 
 	private AbstractSamplesTest samplesTest;
+	public AbstractSamplesTest getSamplesTest()
+	{
+		if ( samplesTest == null )
+			setSamplesTest(createSamplesTest());
+		return samplesTest;
+	}
+	public void setSamplesTest(AbstractSamplesTest samplesTest)
+	{
+		this.samplesTest = samplesTest;
+	}
 
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		samplesTest = createSamplesTest();
+		setSamplesTest(createSamplesTest());
 	}
 
 	@Override
@@ -85,11 +97,11 @@ public abstract class AbstractEntityManagerSamplesTest extends
 	}
 
 	public void testSamples() throws Exception {
-		samplesTest.testSamples();
+		getSamplesTest().testSamples();
 	}
 
 	protected JAXBContext createContext() throws JAXBException {
-		return samplesTest.createContext();
+		return getSamplesTest().createContext();
 	}
 
 	@Override
@@ -119,7 +131,7 @@ public abstract class AbstractEntityManagerSamplesTest extends
 
 	protected File[] getSampleFiles() {
 		File samplesDirectory = getSamplesDirectory();
-		logger.debug("Sample directory [" + samplesDirectory.getAbsolutePath()
+		logger.info("Testing directory [" + samplesDirectory.getAbsolutePath()
 				+ "].");
 		if (samplesDirectory == null || !samplesDirectory.isDirectory()) {
 			return new File[] {};
@@ -127,7 +139,9 @@ public abstract class AbstractEntityManagerSamplesTest extends
 
 			final Collection<File> files = FileUtils.listFiles(
 					samplesDirectory, SAMPLES, TrueFileFilter.INSTANCE);
-			return files.toArray(new File[files.size()]);
+			File[] fileArray = files.toArray(new File[files.size()]);
+			sort(fileArray);
+			return fileArray;
 		}
 	}
 

@@ -61,14 +61,14 @@ public abstract class AbstractEntityManagerTest extends TestCase {
     return null;
   }
 
-  protected EntityManagerFactory createEntityManagerFactory() {
+  public EntityManagerFactory createEntityManagerFactory() {
 
     try {
       final Enumeration<URL> resources = getClass().getClassLoader().getResources(
           "META-INF/persistence.xml");
       while (resources.hasMoreElements()) {
         final URL resource = resources.nextElement();
-        logger.debug("Detected [" + resource + "].");
+        logger.info("EMF: Detected [" + resource + "].");
       }
 
     }
@@ -86,7 +86,19 @@ public abstract class AbstractEntityManagerTest extends TestCase {
     }
   }
 
-  public Map getEntityManagerFactoryProperties() {
+  private Map entityManagerFactoryProperties;
+  public Map getEntityManagerFactoryProperties()
+  {
+	if ( entityManagerFactoryProperties == null )
+		setEntityManagerFactoryProperties(createEntityManagerFactoryProperties());
+    return entityManagerFactoryProperties;
+  }
+  public void setEntityManagerFactoryProperties(Map entityManagerFactoryProperties)
+  {
+    this.entityManagerFactoryProperties = entityManagerFactoryProperties;
+  }
+
+public Map createEntityManagerFactoryProperties() {
 
     try {
       final Enumeration<URL> resources = getClass().getClassLoader().getResources(
@@ -102,7 +114,7 @@ public abstract class AbstractEntityManagerTest extends TestCase {
         final Properties properties = new Properties();
         while (resources.hasMoreElements()) {
           final URL resource = resources.nextElement();
-          logger.debug("Loading entity manager factory properties from [" + resource + "].");
+          logger.info("EMF: Loading [" + resource + "].");
 
           if (resource == null) {
             return null;
