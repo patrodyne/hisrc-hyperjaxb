@@ -99,10 +99,17 @@
 			<version>2.4.0</version>
 		</dependency>
 		<!-- Hibernate -->
+		<!--
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.1-api</artifactId>
 			<version>${hibernate-jpa-2.1-api.version}</version>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<version>${javax-persistence-api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>

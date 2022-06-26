@@ -36,10 +36,10 @@
 			<artifactId>hisrc-hyperjaxb-ejb-roundtrip</artifactId>
 		</dependency>
 
-		<!-- Hibernate Implementaion of JPA -->
+		<!-- Implementaion of JPA -->
 		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
 		</dependency>
 
 		<!-- Test dependencies -->

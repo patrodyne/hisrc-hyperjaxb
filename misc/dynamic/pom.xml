@@ -15,7 +15,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
+			<artifactId>javax.persistence-api</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
