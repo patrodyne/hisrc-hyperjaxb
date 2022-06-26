@@ -62,12 +62,14 @@
 	</distributionManagement>
 	<properties>
 		<eclipselink.version>2.7.10</eclipselink.version>
+		<ehcache.version>3.9.9</ehcache.version>
 		<hibernate-commons-annotations.version>5.1.0.Final</hibernate-commons-annotations.version>
 		<hibernate-entitymanager.version>5.4.1.Final</hibernate-entitymanager.version>
 		<hisrc-basicjaxb-annox-parser.version>1.0.4-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
 		<hisrc-basicjaxb.version>0.12.2-SNAPSHOT</hisrc-basicjaxb.version>
 		<hisrc-higherjaxb-maven-plugin.version>0.14.2-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
 		<hisrc-hyperjaxb-annox-plugin.version>1.1.2-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
+		<h2database.version>2.1.210</h2database.version>
 		<hsqldb.version>2.5.2</hsqldb.version>
 		<javassist.version>3.28.0-GA</javassist.version>
 		<javax-persistence-api.version>2.2</javax-persistence-api.version>
@@ -290,6 +292,12 @@
 				<artifactId>hibernate-commons-annotations</artifactId>
 				<version>${hibernate-commons-annotations.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.ehcache</groupId>
+				<artifactId>ehcache</artifactId>
+				<scope>runtime</scope>
+				<version>${ehcache.version}</version>
+			</dependency>
 			<!-- Java Persistence API -->
 			<dependency>
 				<groupId>javax.persistence</groupId>
@@ -335,6 +343,12 @@
 				<groupId>org.hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
 				<version>${hsqldb.version}</version>
+			</dependency>
+			<!-- H2 Database -->
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>${h2database.version}</version>
 			</dependency>
 			<!-- Saxon -->
 			<dependency>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:Product PartNum="ZHRN-U2615" Created="2022-05-04T16:04:28.981" Updated="2022-05-04T16:04:28.981" Stage="Open"
+    xmlns:ns2="http://jvnet.patrodyne.org/hyperjaxb/ex001/model">
+    <Picture>☕</Picture>
+    <Description>hot beverage</Description>
+    <Price>49.26</Price>
+</ns2:Product>

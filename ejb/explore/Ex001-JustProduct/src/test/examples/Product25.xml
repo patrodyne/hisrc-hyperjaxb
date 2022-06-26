@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:Product PartNum="ZHRN-U1F358" Created="2022-05-04T16:04:29.032" Updated="2022-05-04T16:04:29.032" Stage="Open"
+    xmlns:ns2="http://jvnet.patrodyne.org/hyperjaxb/ex001/model">
+    <Picture>🍘</Picture>
+    <Description>rice cracker</Description>
+    <Price>54.10</Price>
+</ns2:Product>

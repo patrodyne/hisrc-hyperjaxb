@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:Product PartNum="ZHRN-U1F33D" Created="2022-05-04T16:04:28.985" Updated="2022-05-04T16:04:28.985" Stage="Open"
+    xmlns:ns2="http://jvnet.patrodyne.org/hyperjaxb/ex001/model">
+    <Picture>🌽</Picture>
+    <Description>ear of maize</Description>
+    <Price>23.71</Price>
+</ns2:Product>

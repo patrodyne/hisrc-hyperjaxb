@@ -24,6 +24,7 @@
 		<profile>
 			<id>samples</id>
 			<modules>
+				<module>explore</module>
 				<module>samples</module>
 			</modules>
 		</profile>
@@ -36,6 +37,7 @@
 		<profile>
 			<id>all</id>
 			<modules>
+				<module>explore</module>
 				<module>samples</module>
 				<module>tests</module>
 				<module>tutorials</module>

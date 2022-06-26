@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns='http://www.ehcache.org/v3'
+    xmlns:jc='http://www.ehcache.org/v3/jsr107'
+    xsi:schemaLocation="
+    	http://www.ehcache.org/v3 https://www.ehcache.org/schema/ehcache-core-3.0.xsd
+    	http://www.ehcache.org/v3/jsr107 https://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd"
+>
+
+	<service>
+		<jc:defaults enable-management="true" enable-statistics="true" default-template="default" />
+	</service>
+
+	<persistence directory="${java.io.tmpdir}/ehcache/podb"/>
+
+    <cache alias="default-query-results-region">
+        <expiry>
+            <tti unit="seconds">300</tti>
+        </expiry>
+        <heap>1024</heap>
+    </cache>
+
+    <cache alias="default-update-timestamps-region">
+        <expiry>
+            <none />
+        </expiry>
+        <heap>4096</heap>
+    </cache>
+
+    <cache-template name="default">
+        <expiry>
+            <tti unit="seconds">300</tti>
+        </expiry>
+        <heap>1024</heap>
+    </cache-template>
+</config>
+

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:Product PartNum="ZHRN-U1F364" Created="2022-05-04T16:04:29.050" Updated="2022-05-04T16:04:29.050" Stage="Open"
+    xmlns:ns2="http://jvnet.patrodyne.org/hyperjaxb/ex001/model">
+    <Picture>🍤</Picture>
+    <Description>fried shrimp</Description>
+    <Price>46.61</Price>
+</ns2:Product>

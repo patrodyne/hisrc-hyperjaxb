@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:Product PartNum="ZHRN-U1F35C" Created="2022-05-04T16:04:29.038" Updated="2022-05-04T16:04:29.038" Stage="Open"
+    xmlns:ns2="http://jvnet.patrodyne.org/hyperjaxb/ex001/model">
+    <Picture>🍜</Picture>
+    <Description>steaming bowl</Description>
+    <Price>76.16</Price>
+</ns2:Product>

@@ -1,0 +1,31 @@
+package org.patrodyne.jvnet.hyperjaxb.ex001;
+
+import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
+
+/**
+ * Test roundtrip from XML instance to database and back.
+ * 
+ * Use instead of hisrc-hyperjaxb-maven-plugin, roundtripTestClassName
+ * in pom.xml.
+ * 
+ * @author Rick O'Sullivan
+ */
+public class RoundtripTest
+    extends org.jvnet.hyperjaxb3.ejb.test.RoundtripTest
+    implements ContextPathAware
+{
+    public String getContextPath()
+	{
+        return "org.patrodyne.jvnet.hyperjaxb.ex001.model";
+    }
+
+    public String getPersistenceUnitName()
+	{
+        return "org.patrodyne.jvnet.hyperjaxb.ex001.model";
+    }
+    
+    protected String getSamplesDirectoryName()
+    {
+    	return "src/test/examples";
+    }
+}

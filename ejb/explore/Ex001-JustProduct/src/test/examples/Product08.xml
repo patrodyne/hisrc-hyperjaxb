@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:Product PartNum="ZHRN-U1F347" Created="2022-05-04T16:04:28.999" Updated="2022-05-04T16:04:28.999" Stage="Open"
+    xmlns:ns2="http://jvnet.patrodyne.org/hyperjaxb/ex001/model">
+    <Picture>🍇</Picture>
+    <Description>grapes</Description>
+    <Price>60.78</Price>
+</ns2:Product>

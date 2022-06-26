@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="516px" preserveAspectRatio="none" style="width:376px;height:516px;background:#FFFFFF;" version="1.1" viewBox="0 0 376 516" width="376px" zoomAndPan="magnify"><defs/><g><!--MD5=[4d65745b34ac04401a8d54ebf626c2da]
+cluster org.patrodyne.jvnet.hyperjaxb.ex001.model--><g id="cluster_org.patrodyne.jvnet.hyperjaxb.ex001.model"><path d="M8.5,6 L356.5,6 A3.75,3.75 0 0 1 359,8.5 L366,28.2969 L366.5,28.2969 A2.5,2.5 0 0 1 369,30.7969 L369,506.5 A2.5,2.5 0 0 1 366.5,509 L8.5,509 A2.5,2.5 0 0 1 6,506.5 L6,8.5 A2.5,2.5 0 0 1 8.5,6 " style="stroke:#000000;stroke-width:1.5;fill:none;"/><line style="stroke:#000000;stroke-width:1.5;fill:none;" x1="6" x2="366" y1="28.2969" y2="28.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="347" x="10" y="20.9951">org.patrodyne.jvnet.hyperjaxb.ex001.model</text></g><!--MD5=[2a5f3a727342935f87baefbbcf5321de]
+class org.patrodyne.jvnet.hyperjaxb.ex001.model.ObjectFactory--><!--MD5=[1d55db3c4a104729c272e23afbd204d7]
+class org.patrodyne.jvnet.hyperjaxb.ex001.model.Product--><g id="elem_org.patrodyne.jvnet.hyperjaxb.ex001.model.Product"><rect codeLine="6" fill="#F1F1F1" height="105.1875" id="org.patrodyne.jvnet.hyperjaxb.ex001.model.Product" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="156" x="28" y="41"/><ellipse cx="74.75" cy="57" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M77.7188,62.6406 Q77.1406,62.9375 76.5,63.0781 Q75.8594,63.2344 75.1563,63.2344 Q72.6563,63.2344 71.3281,61.5938 Q70.0156,59.9375 70.0156,56.8125 Q70.0156,53.6875 71.3281,52.0313 Q72.6563,50.375 75.1563,50.375 Q75.8594,50.375 76.5,50.5313 Q77.1563,50.6875 77.7188,50.9844 L77.7188,53.7031 Q77.0938,53.125 76.5,52.8594 Q75.9063,52.5781 75.2813,52.5781 Q73.9375,52.5781 73.25,53.6563 Q72.5625,54.7188 72.5625,56.8125 Q72.5625,58.9063 73.25,59.9844 Q73.9375,61.0469 75.2813,61.0469 Q75.9063,61.0469 76.5,60.7813 Q77.0938,60.5 77.7188,59.9219 L77.7188,62.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="54" x="95.25" y="61.8467">Product</text><line style="stroke:#181818;stroke-width:0.5;" x1="29" x2="183" y1="73" y2="73"/><ellipse cx="39" cy="84" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="130" x="48" y="89.9951">description : String</text><ellipse cx="39" cy="100.2969" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112" x="48" y="106.292">partNum : String</text><ellipse cx="39" cy="116.5938" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="101" x="48" y="122.5889">picture : String</text><ellipse cx="39" cy="132.8906" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="124" x="48" y="138.8857">price : BigDecimal</text></g><!--MD5=[9882efefdad93ae758bc96060fec5e0e]
+class org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage--><g id="elem_org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage"><rect codeLine="14" fill="#F1F1F1" height="121.4844" id="org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="101" x="67.5" y="372"/><ellipse cx="95.55" cy="388" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M99.6594,394 L91.9406,394 L91.9406,381.6094 L99.6594,381.6094 L99.6594,383.7656 L94.3938,383.7656 L94.3938,386.4375 L99.1594,386.4375 L99.1594,388.5938 L94.3938,388.5938 L94.3938,391.8438 L99.6594,391.8438 L99.6594,394 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="112.45" y="392.8467">Stage</text><line style="stroke:#181818;stroke-width:0.5;" x1="68.5" x2="167.5" y1="404" y2="404"/><ellipse cx="78.5" cy="415" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="49" x="87.5" y="420.9951">ACTIVE</text><ellipse cx="78.5" cy="431.2969" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75" x="87.5" y="437.292">CANCELED</text><ellipse cx="78.5" cy="447.5938" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="57" x="87.5" y="453.5889">CLOSED</text><ellipse cx="78.5" cy="463.8906" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="39" x="87.5" y="469.8857">HOLD</text><ellipse cx="78.5" cy="480.1875" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="39" x="87.5" y="486.1826">OPEN</text></g><!--MD5=[baa7639d4732db21e835e13dd3d89828]
+class org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable--><g id="elem_org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable"><rect codeLine="23" fill="#F1F1F1" height="72.5938" id="org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="180" x="28" y="207"/><ellipse cx="79.25" cy="223" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M82.2188,228.6406 Q81.6406,228.9375 81,229.0781 Q80.3594,229.2344 79.6563,229.2344 Q77.1563,229.2344 75.8281,227.5938 Q74.5156,225.9375 74.5156,222.8125 Q74.5156,219.6875 75.8281,218.0313 Q77.1563,216.375 79.6563,216.375 Q80.3594,216.375 81,216.5313 Q81.6563,216.6875 82.2188,216.9844 L82.2188,219.7031 Q81.5938,219.125 81,218.8594 Q80.4063,218.5781 79.7813,218.5781 Q78.4375,218.5781 77.75,219.6563 Q77.0625,220.7188 77.0625,222.8125 Q77.0625,224.9063 77.75,225.9844 Q78.4375,227.0469 79.7813,227.0469 Q80.4063,227.0469 81,226.7813 Q81.5938,226.5 82.2188,225.9219 L82.2188,228.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="69" x="99.75" y="227.8467">Stageable</text><line style="stroke:#181818;stroke-width:0.5;" x1="29" x2="207" y1="239" y2="239"/><ellipse cx="39" cy="250" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="149" x="48" y="255.9951">created : XMLGregCal</text><ellipse cx="39" cy="266.2969" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="154" x="48" y="272.292">updated : XMLGregCal</text></g><!--MD5=[d0336340daefdb3ee8cc26d556d140ef]
+link org.patrodyne.jvnet.hyperjaxb.ex001.model.Product to org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable--><g id="link_org.patrodyne.jvnet.hyperjaxb.ex001.model.Product_org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable"><path codeLine="31" d="M110.2,146.26 C111.26,159.39 112.41,173.55 113.49,186.86 " fill="none" id="org.patrodyne.jvnet.hyperjaxb.ex001.model.Product-to-org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="120.47,186.31,115.11,206.81,106.51,187.45,120.47,186.31" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[e112b75a0b41357a60872a10d80128f7]
+link org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable to org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage--><g id="link_org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable_org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage"><path codeLine="32" d="M118,280.11 C118,304.45 118,337.43 118,366.38 " fill="none" id="org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable-to-org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="118,371.74,122,362.74,118,366.74,114,362.74,118,371.74" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="125" x="119" y="323.0669">@Column("STAGE")</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="36" x="163.5" y="338.1997">stage</text></g><!--MD5=[43a4535210713288b94a70c9ba5f6e22]
+@startuml
+
+class org.patrodyne.jvnet.hyperjaxb.ex001.model.ObjectFactory {
+}
+
+
+class org.patrodyne.jvnet.hyperjaxb.ex001.model.Product {
+	{field} +description : String
+	{field} +partNum : String
+	{field} +picture : String
+	{field} +price : BigDecimal
+}
+
+
+enum org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage {
+	{field} +ACTIVE
+	{field} +CANCELED
+	{field} +CLOSED
+	{field} +HOLD
+	{field} +OPEN
+}
+
+
+class org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable {
+	{field} +created : XMLGregCal
+	{field} +updated : XMLGregCal
+}
+
+
+
+
+org.patrodyne.jvnet.hyperjaxb.ex001.model.Product - -|>  org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable
+org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable - ->  org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage :  @Column("STAGE")\nstage
+
+hide methods
+hide org.patrodyne.jvnet.hyperjaxb.ex001.model.Bind
+hide org.patrodyne.jvnet.hyperjaxb.ex001.model.ObjectFactory
+
+@enduml
+
+PlantUML version 1.2022.5(Sat Apr 30 06:55:52 EDT 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

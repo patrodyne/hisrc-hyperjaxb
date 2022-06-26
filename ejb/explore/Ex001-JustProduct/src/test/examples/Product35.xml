@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:Product PartNum="ZHRN-U1F362" Created="2022-05-04T16:04:29.047" Updated="2022-05-04T16:04:29.047" Stage="Open"
+    xmlns:ns2="http://jvnet.patrodyne.org/hyperjaxb/ex001/model">
+    <Picture>🍢</Picture>
+    <Description>oden</Description>
+    <Price>32.44</Price>
+</ns2:Product>

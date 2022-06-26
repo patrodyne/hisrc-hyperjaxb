@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:Product PartNum="ZHRN-U1F35F" Created="2022-05-04T16:04:29.042" Updated="2022-05-04T16:04:29.042" Stage="Open"
+    xmlns:ns2="http://jvnet.patrodyne.org/hyperjaxb/ex001/model">
+    <Picture>🍟</Picture>
+    <Description>french fries</Description>
+    <Price>37.78</Price>
+</ns2:Product>
