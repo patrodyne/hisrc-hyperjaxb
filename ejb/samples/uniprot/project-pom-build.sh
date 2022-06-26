@@ -9,7 +9,7 @@
 #       from the sub-project to invoke this script.
 
 BASEDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-BUILDER="output mvn -DtodoLogLevel=DEBUG -Dorg.jboss.logging.provider=slf4j"
+BUILDER="output mvn -Dorg.jvnet.hyperjaxb3.todoLogLevel=DEBUG -Dorg.jboss.logging.provider=slf4j"
 FGTITLE="$(basename $(pwd))"
 BGTITLE="$(date --rfc-3339=sec) $(pwd)"
 

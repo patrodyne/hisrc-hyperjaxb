@@ -14,6 +14,8 @@
 
 package org.jvnet.hyperjaxb3.maven2;
 
+import static org.jvnet.hyperjaxb3.ejb.Constants.TODO_LOG_LEVEL;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -28,6 +30,7 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
+import org.jvnet.hyperjaxb3.ejb.Constants;
 import org.jvnet.mjiip.v_2.XJC2Mojo;
 
 import com.sun.tools.xjc.Options;
@@ -283,7 +286,7 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 
     private void todo(Log logger, String comment) {
         String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
-        String level = System.getProperty("todoLogLevel");
+        String level = System.getProperty(TODO_LOG_LEVEL);
         if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);
         else if ( "INFO".equalsIgnoreCase(level) ) logger.info(msg);
         else if ( "WARN".equalsIgnoreCase(level) ) logger.warn(msg);
