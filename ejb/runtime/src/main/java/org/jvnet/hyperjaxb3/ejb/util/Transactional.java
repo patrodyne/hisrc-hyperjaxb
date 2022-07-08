@@ -1,9 +1,12 @@
 package org.jvnet.hyperjaxb3.ejb.util;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
+import javax.persistence.RollbackException;
 
 /**
- * Execute work within a transaction. 
+ * Execute JPQL work within a transaction. 
+ * 
  * The caller provides a lambda expression to define the work method.
  *
  * @param <R> The type returned by the work method.
@@ -13,27 +16,49 @@ import javax.persistence.EntityManager;
 @FunctionalInterface
 public interface Transactional<R>
 {
-	public enum Cache { CLEAN, DIRTY };
+	/** Enumerate the cache option: clean or reuse. */
+	public enum CacheOption { CLEAN, REUSE };
 
 	/**
-	 * Work to be transacted. Lambdas implement this method.
+	 * Work to be transacted. Hint: Use a lambda to implement this method.
+	 *
+	 * Example:
+	 *
+	 * <pre>Transactional&lt;R&gt; tx = (em) -&gt; { ... };</pre>
+	 *
+	 * A lambda expression is a short block of code which takes in parameters
+	 * and returns a value. Lambda expressions are similar to methods, but
+	 * they do not need a name and they can be implemented right in the body of
+	 * a method.
 	 *
 	 * @param em The entity manager.
 	 */
 	public R work(EntityManager em);
 
+	/**
+	 * Execute the work method within a transaction. Always clean the first
+	 * level cache at the beginning of the topmost transaction (preferred).
+	 *
+	 * @param em The entity manager.
+	 *
+	 * @return The result of the work method.
+	 */
 	default public R transact(EntityManager em)
 	{
-		return transact(em, Cache.CLEAN);
+		return transact(em, CacheOption.CLEAN);
 	}
 
 	/**
-	 * Execute the work method within a transaction.
+	 * Execute the work method within a transaction. Optionally, clean the
+	 * first level cache at the beginning of the topmost transaction.
+	 *
+	 * Warning: Using <code>Cache.REUSE</code> may overwrite external data
+	 * changes.
 	 *
 	 * @param em The entity manager.
 	 * @param cache Flag to flush and clear the entity cache.
 	 */
-	default public R transact(EntityManager em, Cache cache)
+	default public R transact(EntityManager em, CacheOption cache)
 	{
 		// Is this the topmost (inactive) transaction?
 		boolean isTopTransaction = !em.getTransaction().isActive();
@@ -44,7 +69,7 @@ public interface Transactional<R>
 			if (isTopTransaction)
 			{
 				em.getTransaction().begin();
-				if ( cache == Cache.CLEAN )
+				if ( cache == CacheOption.CLEAN )
 				{
 					em.flush();
 					em.clear();
@@ -56,13 +81,18 @@ public interface Transactional<R>
 		}
 		catch (RuntimeException ex)
 		{
-			em.getTransaction().setRollbackOnly();
-			throw ex;
+			if ( em.getTransaction().isActive() )
+			{
+				em.getTransaction().setRollbackOnly();
+				throw new RollbackException("Transaction marked for rollback only.", ex);
+			}
+			else
+				throw new PersistenceException("Transaction is not active.", ex);
 		}
 		finally
 		{
 			// The topmost transaction is responsible for commit, rollback and cleanup.
-			if (isTopTransaction)
+			if ( isTopTransaction && em.getTransaction().isActive() )
 			{
 				if (em.getTransaction().getRollbackOnly())
 					em.getTransaction().rollback();
