@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.EntityManagerFactory;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.spi.SessionFactoryOptions;
@@ -23,6 +25,26 @@ import com.zaxxer.hikari.util.PropertyElf;
  */
 public class HikariCPUtil
 {
+	/**
+	 * Gather HikariCP configurable properties for the given EntityManagerFactory.
+	 * 
+	 * @param emf A EntityManagerFactory instance.
+	 * 
+	 * @return A map of configurable properties with current values.
+	 */
+	public static Map<String, Object> gatherProperties(EntityManagerFactory emf)
+	{
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+		return gatherProperties(sf);
+	}
+
+	/**
+	 * Gather HikariCP configurable properties for the given SessionFactory.
+	 * 
+	 * @param sf A SessionFactory instance.
+	 * 
+	 * @return A map of configurable properties with current values.
+	 */
 	public static Map<String, Object> gatherProperties(SessionFactory sf)
 	{
 		SessionFactoryImplementor sfi = (SessionFactoryImplementor) sf;

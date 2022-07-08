@@ -81,19 +81,26 @@ import static org.hibernate.cfg.AvailableSettings.USE_SECOND_LEVEL_CACHE;
 import static org.hibernate.cfg.AvailableSettings.USE_SQL_COMMENTS;
 import static org.hibernate.cfg.AvailableSettings.USE_STRUCTURED_CACHE;
 import static org.hibernate.cfg.AvailableSettings.WRAP_RESULT_SETS;
+import static org.hibernate.jpa.AvailableSettings.PERSISTENCE_UNIT_NAME;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.cache.CacheManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.SharedCacheMode;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -108,11 +115,15 @@ import org.hibernate.engine.query.spi.QueryPlanCache;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform;
 import org.hibernate.engine.transaction.jta.platform.internal.StandardJtaPlatformResolver;
+import org.hibernate.jdbc.ReturningWork;
 import org.hibernate.jdbc.Work;
 import org.hibernate.jpa.internal.util.CacheModeHelper;
+import org.hibernate.proxy.HibernateProxy;
+import org.hibernate.stat.Statistics;
 import org.hibernate.tool.schema.Action;
 import org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator;
 import org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.ActionGrouping;
+import org.jvnet.hyperjaxb3.ejb.util.TransactionalSql;
 import org.jvnet.jaxb2_commons.reflection.util.FieldAccessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,6 +136,33 @@ import org.slf4j.LoggerFactory;
 public class SessionFactoryUtil
 {
 	private static Logger log = LoggerFactory.getLogger(SessionFactoryUtil.class);
+
+	/**
+	 * Gather configurable properties from the SessionFactory context for the given EntityManagerFactory.
+	 * 
+	 * @param emf An EntityManagerFactory instance.
+	 * 
+	 * @return A map of configurable properties with current values.
+	 */
+	public static Map<String, Object> gatherProperties(EntityManagerFactory emf)
+	{
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+		return gatherProperties(sf, emf.getProperties());
+	}
+
+	/**
+	 * Gather configurable properties from the SessionFactory context for the given EntityManagerFactory.
+	 * 
+	 * @param emf An EntityManagerFactory instance.
+	 * @param emfProperties A map of the initial (or filtered) EntityManagerFactory properties.
+	 * 
+	 * @return A map of configurable properties with current values.
+	 */
+	public static Map<String, Object> gatherProperties(EntityManagerFactory emf, Map<String, Object> emfProperties)
+	{
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+		return gatherProperties(sf, emfProperties);
+	}
 
 	/**
 	 * Gather the Hibernate configurable SessionFactory properties from an SessionFactory instance.
@@ -144,21 +182,45 @@ public class SessionFactoryUtil
 		// Gather password and JPA specified properties.
 		Map<String, Object> etc = new HashMap<>();
 		etc.put(PASS, sf.getProperties().get(PASS));
-		if ( !emfProperties.containsKey(JPA_SHARED_CACHE_MODE) )
+		
+		if ( emfProperties.containsKey(JPA_SHARED_CACHE_MODE) )
+			etc.put(JPA_SHARED_CACHE_MODE, emfProperties.get(JPA_SHARED_CACHE_MODE));
+		else
 			etc.put(JPA_SHARED_CACHE_MODE, SharedCacheMode.UNSPECIFIED);
-		if ( !emfProperties.containsKey(JPA_SHARED_CACHE_RETRIEVE_MODE) )
+		
+		if ( emfProperties.containsKey(JPA_SHARED_CACHE_RETRIEVE_MODE) )
+			etc.put(JPA_SHARED_CACHE_RETRIEVE_MODE, emfProperties.get(JPA_SHARED_CACHE_RETRIEVE_MODE));
+		else
 			etc.put(JPA_SHARED_CACHE_RETRIEVE_MODE, CacheModeHelper.DEFAULT_RETRIEVE_MODE);
-		if ( !emfProperties.containsKey(JPA_SHARED_CACHE_STORE_MODE) )
+		
+		if ( emfProperties.containsKey(JPA_SHARED_CACHE_STORE_MODE) )
+			etc.put(JPA_SHARED_CACHE_STORE_MODE, emfProperties.get(JPA_SHARED_CACHE_STORE_MODE));
+		else
 			etc.put(JPA_SHARED_CACHE_STORE_MODE, CacheModeHelper.DEFAULT_STORE_MODE);
-		if ( !emfProperties.containsKey(JTA_CACHE_TM) )
+		
+		if ( emfProperties.containsKey(JTA_CACHE_TM) )
+			etc.put(JTA_CACHE_TM, emfProperties.get(JTA_CACHE_TM));
+		else
 			etc.put(JTA_CACHE_TM, true);
-		if ( !emfProperties.containsKey(JTA_CACHE_UT) )
+		
+		if ( emfProperties.containsKey(JTA_CACHE_UT) )
+			etc.put(JTA_CACHE_UT, emfProperties.get(JTA_CACHE_UT));
+		else
 			etc.put(JTA_CACHE_UT, false);
-		if ( !emfProperties.containsKey(JTA_PLATFORM) )
-			etc.put(JTA_PLATFORM, NoJtaPlatform.class.getName());
-		if ( !emfProperties.containsKey(JTA_PLATFORM_RESOLVER))
-			etc.put(JTA_PLATFORM_RESOLVER, StandardJtaPlatformResolver.class.getName());
 
+		if ( emfProperties.containsKey(JTA_PLATFORM) )
+			etc.put(JTA_PLATFORM, emfProperties.get(JTA_PLATFORM));
+		else
+			etc.put(JTA_PLATFORM, NoJtaPlatform.class.getName());
+
+		if ( emfProperties.containsKey(JTA_PLATFORM_RESOLVER))
+			etc.put(JTA_PLATFORM_RESOLVER, emfProperties.get(JTA_PLATFORM_RESOLVER));
+		else
+			etc.put(JTA_PLATFORM_RESOLVER, StandardJtaPlatformResolver.class.getName());
+		
+		if ( emfProperties.containsKey(PERSISTENCE_UNIT_NAME))
+			etc.put(PERSISTENCE_UNIT_NAME, emfProperties.get(PERSISTENCE_UNIT_NAME));
+		
 		if ( !emfProperties.containsKey(HBM2DDL_CONNECTION))
 			etc.put(HBM2DDL_CONNECTION, emfProperties.get(JPA_JDBC_URL));
 		
@@ -291,6 +353,7 @@ public class SessionFactoryUtil
 		putSetting(hcoMap, sf, ORDER_INSERTS, etc);
 		putSetting(hcoMap, sf, ORDER_UPDATES, etc);
 		putSetting(hcoMap, sf, PASS, etc);
+		putSetting(hcoMap, sf, PERSISTENCE_UNIT_NAME, etc);
 		putSetting(hcoMap, sf, PREFER_USER_TRANSACTION, etc);
 		putSetting(hcoMap, sf, QUERY_CACHE_FACTORY, etc);
 		putSetting(hcoMap, sf, QUERY_STARTUP_CHECKING, etc);
@@ -439,6 +502,7 @@ public class SessionFactoryUtil
 			case ORDER_INSERTS: value = sfo.isOrderInsertsEnabled(); break;
 			case ORDER_UPDATES: value = sfo.isOrderUpdatesEnabled(); break;
 			case PASS: value = etc.get(PASS); break;
+			case PERSISTENCE_UNIT_NAME: value = etc.get(PERSISTENCE_UNIT_NAME); break;
 			case PREFER_USER_TRANSACTION: value = sfo.isPreferUserTransaction(); break;
 			case QUERY_CACHE_FACTORY: value = sfo.getTimestampsCacheFactory().getClass().getName(); break;
 			case QUERY_STARTUP_CHECKING: value = sfo.isNamedQueryStartupCheckingEnabled(); break;
@@ -467,5 +531,200 @@ public class SessionFactoryUtil
 			case ConfigSettings.MISSING_CACHE_STRATEGY: value = etc.get(ConfigSettings.MISSING_CACHE_STRATEGY); break;
 		}
 		return value;
+	}
+
+    /**
+     * Check if the proxy or persistent collection is initialized.
+     *
+     * @param proxy a persistable object, proxy, persistent collection or null.
+     * @return true if the argument is already initialized, or is not a proxy or collection
+     */
+    public static boolean isInitialized(Object proxy)
+    {
+        return Hibernate.isInitialized(proxy);
+    }
+
+    /**
+     * Is this entity a proxy?
+     *
+     * @param entity The entity to examine.
+     *
+     * @return True when entity is proxied; otherwise, false.
+     */
+    public static boolean isProxy(Object entity)
+    {
+        return ( entity instanceof HibernateProxy );
+    }
+
+    /**
+	 * Exposes statistics for a particular {@link org.hibernate.SessionFactory}.
+	 * Beware of milliseconds metrics, they are dependent of the JVM precision:
+	 * you may then encounter a 10 ms approximation depending on you OS
+	 * platform.  Please refer to the JVM documentation for more information.
+     * 
+     * @param emf An Entity Manager Factory.
+     */
+    public static boolean logSummaryStatistics(EntityManagerFactory emf)
+    {
+        SessionFactory sessionFactory = emf.unwrap(SessionFactory.class);
+        Statistics stats = sessionFactory.getStatistics();
+        stats.logSummary();
+        return stats.isStatisticsEnabled();
+    }
+
+    /**
+     * Execute a SQL action (insert, update, delete, etc.) using a connection
+     * provided by a JPA EntityManagerFactory. The EntityManagerFactory is
+     * used to unwrap a Hibernate SessionFactory. 
+     * 
+     * The batch is executed in a JDBC transaction.
+     * 
+     * @param emf The JPA EntityManagerFactory
+     * @param sqlAction A SQL action.
+     * 
+     * @return The action count.
+     */
+	public static int sqlAction(EntityManagerFactory emf, String sqlAction)
+	{
+        SessionFactory sessionFactory = emf.unwrap(SessionFactory.class);
+        return sqlAction(sessionFactory, sqlAction);
+	}
+	
+    /**
+     * Execute a SQL action (insert, update, delete, etc.) using a connection
+     * provided by a Hibernate SessionFactory. The batch is executed
+     * in a JDBC transaction.
+     * 
+     * @param sf The Hibernate SessionFactory;
+     * @param sqlAction A SQL action.
+     * 
+     * @return The action count.
+     */
+	public static int sqlAction(SessionFactory sf, String sqlAction)
+	{
+		try ( Session session = sf.openSession() )
+		{
+			ReturningWork<Integer> rw = (connection) -> {
+				TransactionalSql<Integer> tx = (conn) ->
+				{
+					Statement stmt = conn.createStatement();
+					return stmt.executeUpdate(sqlAction);
+				};
+				return tx.transact(connection);
+			};
+			return session.doReturningWork(rw);
+		}
+	}
+	
+    /**
+     * Execute a JDBC batch of SQL actions (insert, update, delete, etc.) using a connection
+     * provided by a Hibernate SessionFactory. The EntityManagerFactory is used to unwrap a
+     * Hibernate SessionFactory.
+     * 
+     * The batch is executed in a JDBC transaction.
+     * 
+     * @param emf The JPA EntityManagerFactory
+     * @param sqlBatch A batch of SQL actions.
+     * 
+     * @return A list of counts for each SQL is the batch.
+     */
+	public static int[] sqlBatch(EntityManagerFactory emf, List<String> sqlBatch)
+	{
+        SessionFactory sessionFactory = emf.unwrap(SessionFactory.class);
+        return sqlBatch(sessionFactory, sqlBatch);
+	}
+	
+    /**
+     * Execute a JDBC batch of SQL actions (insert, update, delete, etc.) using a connection
+     * provided by a Hibernate SessionFactory. The batch is executed in a JDBC transaction.
+     * 
+     * @param sf The Hibernate SessionFactory;
+     * @param sqlBatch A batch of SQL actions.
+     * 
+     * @return A list of counts for each SQL is the batch.
+     */
+	public static int[] sqlBatch(SessionFactory sf, List<String> sqlBatch)
+	{
+		try ( Session session = sf.openSession() )
+		{
+			ReturningWork<int[]> rw = (connection) -> {
+				TransactionalSql<int[]> tx = (conn) ->
+				{
+					Statement stmt = conn.createStatement();
+					for ( String sql : sqlBatch )
+						stmt.addBatch(sql);
+					return stmt.executeBatch();
+				};
+				return tx.transact(connection);
+			};
+			return session.doReturningWork(rw);
+		}
+	}
+
+    /**
+     * Execute a JDBC query using a connection provided by a JPA EntityManagerFactory.
+     * The EntityManagerFactory is used to unwrap a Hibernate SessionFactory.
+     * 
+     * The query is executed in a JDBC transaction.
+     * 
+     * @param emf The JPA EntityManagerFactory.
+     * @param sql The SQL to execute.
+     * @return A map of column names and values.
+     */
+	public static Map<String,List<Object>> sqlQuery(EntityManagerFactory emf, String sql)
+	{
+        SessionFactory sessionFactory = emf.unwrap(SessionFactory.class);
+		return sqlQuery(sessionFactory, sql);
+	}
+
+    /**
+     * Execute a JDBC query using a connection provided by a Hibernate
+     * SessionFactory. The query is executed in a JDBC transaction.
+     * 
+     * @param sf The Hibernate SessionFactory.
+     * @param sql The SQL to execute.
+     * @return A map of column names and values.
+     */
+	public static Map<String,List<Object>> sqlQuery(SessionFactory sf, String sql)
+	{
+		try ( Session session = sf.openSession() )
+		{
+			ReturningWork<Map<String,List<Object>>> rw = (connection) -> {
+				TransactionalSql<Map<String,List<Object>>> tx = (conn) ->
+				{
+					Statement stmt = conn.createStatement();
+					try ( ResultSet rs = stmt.executeQuery(sql) )
+					{
+						return toColumnMap(rs); 
+					}
+				};
+				return tx.transact(connection);
+			};
+			return session.doReturningWork(rw);
+		}
+	}
+	
+	/**
+	 * Convert a JDBC ResultSet into a Map of column names with row lists.
+	 * @param rs A JDBC ResultSet
+	 * @return A Map of column names with each name having a list of row values.
+	 * @throws SQLException Information on a database access error or other errors.
+	 */
+	private static Map<String,List<Object>> toColumnMap(ResultSet rs) throws SQLException
+	{
+	    ResultSetMetaData md = rs.getMetaData();
+	    int columns = md.getColumnCount();
+	    Map<String,List<Object>> columnMap = new HashMap<>(columns);
+	    // Put column names and empty column lists into a Map.
+	    for (int index = 1; index <= columns; ++index)
+	        columnMap.put(md.getColumnName(index), new ArrayList<>());
+	    // Iterate of the JDBC result set and add row values to column map.
+	    while (rs.next())
+	    {
+	        for (int i = 1; i <= columns; ++i)
+	            columnMap.get(md.getColumnName(i)).add(rs.getObject(i));
+	    }
+	    // Return map of column names and list of row values for each column.
+	    return columnMap;
 	}
 }
