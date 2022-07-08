@@ -3,9 +3,11 @@
 <jaxb:bindings version="2.1"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
 	xmlns:inh="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	extensionBindingPrefixes="inh"
+	extensionBindingPrefixes="hj inh orm"
 >
 <!-- 
 	See https://jakarta.ee/xml/ns/jaxb/bindingschema_3_0.xsd
@@ -34,11 +36,16 @@
 	</jaxb:bindings>
 
 	<!-- Warning: Bindings in the XSD override bindings defined here! -->
-  	<jaxb:bindings schemaLocation="Product.xsd" node="/xsd:schema" >
-        <jaxb:bindings node="//xsd:complexType[not(@name='Stageable' or contains(@name, 'Join'))]" multiple="true">
-           	<inh:extends>org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable</inh:extends>
+	<jaxb:bindings schemaLocation="Product.xsd" node="/xsd:schema" >
+		<jaxb:bindings node="//xsd:complexType[not(@name='Stageable' or contains(@name, 'Join'))]" multiple="true">
+			<inh:extends>org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable</inh:extends>
+			<hj:entity cacheable="false">
+				<orm:entity-listeners>
+					<orm:entity-listener class="org.patrodyne.jvnet.hyperjaxb.ex001.orm.StageableListener"></orm:entity-listener>
+				</orm:entity-listeners>
+			</hj:entity>
 		</jaxb:bindings>
-  	</jaxb:bindings>
+	</jaxb:bindings>
 
 </jaxb:bindings>
 <!-- vi:set tabstop=4 hardtabs=4 shiftwidth=4 noexpandtab: -->

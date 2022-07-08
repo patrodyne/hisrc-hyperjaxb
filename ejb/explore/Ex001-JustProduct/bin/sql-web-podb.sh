@@ -6,16 +6,16 @@
 #
 # Options are case sensitive. Supported options are:
 #
-# [-help] or [-?]   Print the list of options
-# [-url]            Start a browser and connect to this URL
-# [-driver]         Used together with -url: the driver
-# [-user]           Used together with -url: the user name
-# [-password]       Used together with -url: the password
-# [-web]            Start the web server with the H2 Console
-# [-tool]           Start the icon or window that allows to start a browser
-# [-browser]        Start a browser connecting to the web server
-# [-tcp]            Start the TCP server
-# [-pg]             Start the PG server
+# [-help] or [-?]	Print the list of options
+# [-url]			Start a browser and connect to this URL
+# [-driver]			Used together with -url: the driver
+# [-user]			Used together with -url: the user name
+# [-password]		Used together with -url: the password
+# [-web]			Start the web server with the H2 Console
+# [-tool]			Start the icon or window that allows to start a browser
+# [-browser]		Start a browser connecting to the web server
+# [-tcp]			Start the TCP server
+# [-pg]				Start the PG server
 #
 # When running without options, -tcp, -web, -browser and -pg are started.
 #

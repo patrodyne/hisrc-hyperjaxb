@@ -2,22 +2,51 @@ package org.patrodyne.jvnet.hyperjaxb.ex001;
 
 import static java.lang.Integer.toHexString;
 import static java.lang.System.identityHashCode;
+import static java.util.Arrays.sort;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
 import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.filterProperties;
+import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.ACTIVE;
+import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.CANCELED;
+import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.CLOSED;
+import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.HOLD;
+import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.OPEN;
+import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.gatherProperties;
+import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.isInitialized;
+import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.isProxy;
+import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.sqlAction;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.Cache;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -32,12 +61,16 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.hibernate.SessionFactory;
+import org.jvnet.hyperjaxb3.ejb.util.Transactional;
+import org.jvnet.hyperjaxb3.ejb.util.Transactional.CacheOption;
 import org.jvnet.jaxb2_commons.test.Bogus;
 import org.patrodyne.jvnet.basicjaxb.explore.AbstractExplorer;
 import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputDomResolver;
 import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputStringResolver;
+import org.patrodyne.jvnet.hyperjaxb.ex001.model.ObjectFactory;
 import org.patrodyne.jvnet.hyperjaxb.ex001.model.Product;
+import org.patrodyne.jvnet.hyperjaxb.ex001.model.Product_;
+import org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage;
 import org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil;
 import org.patrodyne.jvnet.hyperjaxb.opt.hikaricp.HikariCPUtil;
 import org.xml.sax.SAXException;
@@ -61,6 +94,11 @@ public class Explorer extends AbstractExplorer
 {
 	private static final String WINDOW_TITLE = "HiSrc HyperJAXB Ex001 JustProduct";
 	private static final String EXPLORER_HTML = "Explorer.html";
+	private static final String PERSISTENCE_PROPERTIES_FILENAME = "src/test/resources/persistence.properties";
+	private static final String HIBERNATE_PUN = "hibernate.ejb.persistenceUnitName";
+	private static final String PRODUCT_FILES_PATH = "src/test/example/products";
+	private static final Integer MAX_RESULT_COUNT = 1000;
+	private static final Random RANDOM = new Random();
 
 	private RoundtripTest roundtripTest;
 	public RoundtripTest getRoundtripTest() { return roundtripTest; }
@@ -70,14 +108,18 @@ public class Explorer extends AbstractExplorer
 	public JAXBContext getJaxbContext() { return jaxbContext; }
 	public void setJaxbContext(JAXBContext jaxbContext) { this.jaxbContext = jaxbContext; }
 
-	private Marshaller marshaller;
-	public Marshaller getMarshaller() { return marshaller; }
-	public void setMarshaller(Marshaller marshaller) { this.marshaller = marshaller; }
-
 	private Unmarshaller unmarshaller;
 	public Unmarshaller getUnmarshaller() { return unmarshaller; }
 	public void setUnmarshaller(Unmarshaller unmarshaller) { this.unmarshaller = unmarshaller; }
 	
+	private Marshaller marshaller;
+	public Marshaller getMarshaller() { return marshaller; }
+	public void setMarshaller(Marshaller marshaller) { this.marshaller = marshaller; }
+
+	private String persistenceUnitName;
+	public String getPersistenceUnitName() { return persistenceUnitName; }
+	public void setPersistenceUnitName(String persistenceUnitName) { this.persistenceUnitName = persistenceUnitName; }
+
 	private Map<String,String> entityManagerFactoryProperties;
 	public Map<String, String> getEntityManagerFactoryProperties() { return entityManagerFactoryProperties; }
 	public void setEntityManagerFactoryProperties(Map<String, String> entityManagerFactoryProperties) { this.entityManagerFactoryProperties = entityManagerFactoryProperties; }
@@ -90,21 +132,25 @@ public class Explorer extends AbstractExplorer
 	public EntityManager getEntityManager() { return entityManager; }
 	public void setEntityManager(EntityManager entityManager) { this.entityManager = entityManager; }
 
-	private Product product1;
-	public Product getProduct1() { return product1; }
-	public void setProduct1(Product product1) { this.product1 = product1; }
+	private Map<String, Object> externalContextProperties;
+	public Map<String, Object> getExternalContextProperties() { return externalContextProperties; }
+	public void setExternalContextProperties(Map<String, Object> externalContextProperties) { this.externalContextProperties = externalContextProperties; }
 
-	private Product product2;
-	public Product getProduct2() { return product2; }
-	public void setProduct2(Product product2) { this.product2 = product2; }
+	private Map<String, Object> internalContextProperties;
+	public Map<String, Object> getInternalContextProperties() { return internalContextProperties; }
+	public void setInternalContextProperties(Map<String, Object> internalContextProperties) { this.internalContextProperties = internalContextProperties; }
 
-	private Product product3;
-	public Product getProduct3() { return product3; }
-	public void setProduct3(Product product3) { this.product3 = product3; }
-
-	private List<Product> productList;
-	public List<Product> getProductList() { return productList; }
-	public void setProductList(List<Product> productList) { this.productList = productList; }
+	private Set<Product> productSet;
+	public Set<Product> getProductSet()
+	{
+		if ( productSet == null )
+			setProductSet(new HashSet<>());
+		return productSet;
+	}
+	public void setProductSet(Set<Product> productSet)
+	{
+		this.productSet = productSet;
+	}
 	
 	/**
 	 * Main entry point for command line invocation.
@@ -195,123 +241,414 @@ public class Explorer extends AbstractExplorer
 	
 	public void displayEntityManagerFactoryProperties()
 	{
-		// JPA Entity Manager Factory
-		EntityManagerFactory emf = getEntityManagerFactory();
+		// Properties: JPA Entity Manager Factory
 		println("\nPersistence Configuration Properties: External:\n");
-		Map<String, Object> emfProperties = filterProperties(emf);
-		for ( Entry<String, Object> entry : emfProperties.entrySet() )
+		for ( Entry<String, Object> entry : getExternalContextProperties().entrySet() )
 			println("  " + entry.getKey() + " = " + entry.getValue());
 		
-		// Hibernate Session Factory
-		SessionFactory sf = emf.unwrap(SessionFactory.class);
+		// Properties: Hibernate Session Factory
 		println("\nPersistence Configuration Properties: Internal:\n");
-		Map<String, Object> hcoProperties = SessionFactoryUtil.gatherProperties(sf, emfProperties);
-		hcoProperties.putAll(HikariCPUtil.gatherProperties(sf));
-		for ( Entry<String, Object> entry : hcoProperties.entrySet() )
+		for ( Entry<String, Object> entry : getInternalContextProperties().entrySet() )
 			println("  " + entry.getKey() + " = " + entry.getValue());
 	}
-	
-	public void marshalProduct1()
-	{
-		marshal("Product1", getProduct1());
-	}
-	
-	public void marshalProduct2()
-	{
-		marshal("Product2", getProduct2());
-	}
-	
-	public void marshalProduct3()
-	{
-		marshal("Product3", getProduct3());
-	}
 
+	public void unmarshalProducts()
+	{
+		File productFilePath = new File(PRODUCT_FILES_PATH);
+		File[] productFileList = productFilePath.listFiles();
+		if ( productFileList != null )
+		{
+			getProductSet().clear();
+			sort(productFileList);
+			for ( File productFile : productFileList )
+			{
+				Product product = unmarshalFromFile(productFile);
+				if ( product != null )
+				{
+					if ( getProductSet().add(product) )
+						println("Unmarshal: " + "'" + productFile + "'");
+					else
+						println("Duplicate: " + "'" + productFile + "'");
+				}
+			}
+		}
+		else
+			println("No product files found at path '" + PRODUCT_FILES_PATH + "'");
+	}
+	
 	public void marshalProducts()
 	{
-//		marshal("Products", batch);
+		for ( Product product : getProductSet() )
+			marshal("Product: ", product);
 	}
 	
-	public void compareHashCodes()
+	public void persistProducts()
 	{
-		String product1HashCode = toHexString(getProduct1().hashCode());
-		String product2HashCode = toHexString(getProduct2().hashCode());
-		String product3HashCode = toHexString(getProduct3().hashCode());
-
-		String product1IdentityHashCode = toHexString(identityHashCode(getProduct1()));
-		String product2IdentityHashCode = toHexString(identityHashCode(getProduct2()));
-		String product3IdentityHashCode = toHexString(identityHashCode(getProduct3()));
-		
-		println("Compare Hash Codes\n");
-		println("Product1 hashCode: " + product1HashCode + "; identityHashCode: " + product1IdentityHashCode);
-		println("Product2 hashCode: " + product2HashCode + "; identityHashCode: " + product2IdentityHashCode);
-		println("Product3 hashCode: " + product3HashCode + "; identityHashCode: " + product3IdentityHashCode);
-		println();
-	}
-	
-	public void compareEquality()
-	{
-		println("Compare Equality\n");
-		println("Product1 vs Product2: " + (getProduct1().equals(getProduct2()) ? "EQUAL" : "UNEQUAL"));
-		println("Product1 vs Product3: " + (getProduct1().equals(getProduct3()) ? "EQUAL" : "UNEQUAL"));
-		println();
-	}
-
-	public void compareToString()
-	{
-		println("Compare ToString\n");
-		println("Product1 toString: " + getProduct1().toString());
-		println("Product2 toString: " + getProduct2().toString());
-		println("Product3 toString: " + getProduct3().toString());
-		println();
-	}
-
-	public void roundtripValid()
-	{
-		Product product1A = getProduct1();
-		String product1AXml = marshalToString(product1A);
-		Product product1B = unmarshalFromString(product1AXml, Product.class);
-		println("Product1A vs Product1B: " + (product1A.equals(product1B) ? "EQUAL" : "UNEQUAL"));
-		println();
-	}
-
-	public void roundtripInvalid()
-	{
-		// product1BXml is made intentionally invalid!
-		Product product1A = getProduct1();
-		String product1AXml = marshalToString(product1A);
-		String product1BXml = product1AXml.replaceAll("symbol", "simbol");
-		Product product1B = unmarshalFromString(product1BXml, Product.class);
-		if ( product1A.equals(product1B) )
-			println("Product1A vs Product1B: EQUAL");
-		else
+		// Always perform EntityManager actions within an EntityTransaction!
+		Transactional<Integer> tx = (em) ->
 		{
-			println("Product1A vs Product1B: UNEQUAL");
-			println();
-			println("[BEFORE] Product1A XML:\n" + product1AXml);
-			println("[BEFORE] Product1B XML:\n" + product1BXml);
-			println();
-			println("[AFTER] Product1A XML:\n" + marshalToString(product1A));
-			println("[AFTER] Product1B XML:\n" + marshalToString(product1B));
+			int count = 0;
+			for ( Product product : getProductSet() )
+			{
+				// Persist makes the instance managed and persistent.
+				em.persist(product);
+				++count;
+			}
+			return count;
+		};
+		Integer count = tx.transact(getEntityManager(), reuseCache());
+		println("Persist returned " + count + " count.");
+	}
+	
+	public void mergeProducts()
+	{
+		// Always perform EntityManager actions within an EntityTransaction!
+		Transactional<Integer> tx = (em) ->
+		{
+			Set<Product> mergeProductSet = new HashSet<Product>();
+			for ( Product product : getProductSet() )
+			{
+				// Merge returns the managed entity.
+				Product mergeProduct = em.merge(product);
+				mergeProductSet.add(mergeProduct);
+			}
+			setProductSet(mergeProductSet);
+			return mergeProductSet.size();
+		};
+		Integer count = tx.transact(getEntityManager(), reuseCache());
+		println("Merge returned " + count + " count.");
+	}
+	
+	public void queryProducts(Integer start, Integer count, Stage stage)
+	{
+		List<Product> productList = selectProducts(start, count, stage);
+		setProductSet(new HashSet<>(productList));
+		println("Query returned " + productList.size() + " results.");
+	}
+	
+	private List<Product> selectProducts(Integer start, Integer count, Stage stage)
+	{
+		// Always perform EntityManager actions within an EntityTransaction!
+		Transactional<List<Product>> tx = (em) ->
+		{
+			CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+			CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+			Root<Product> queryRoot = cq.from(Product.class);
+			
+			if ( stage != null )
+			{
+				cq.select(queryRoot)
+					.where(cb.equal(queryRoot.get(Product_.stage), stage));
+			}
+			else
+				cq.select(queryRoot);
+			
+			TypedQuery<Product> query = em.createQuery(cq);
+			query.setHint("org.hibernate.cacheable", true);
+			List<Product> entities = query
+				.setFirstResult(start)
+				.setMaxResults(count)
+				.getResultList();
+
+			return entities;
+		};
+		List<Product> productList = tx.transact(getEntityManager(), reuseCache());
+		return productList;
+	}
+	
+	public void processProducts()
+	{
+		processProducts(OPEN, ACTIVE, HOLD);
+		processProducts(ACTIVE, CLOSED, HOLD);
+		processProducts(HOLD, CANCELED, OPEN);
+		println();
+	}
+		
+	private void processProducts(Stage stageFrom, Stage stageTo, Stage stageAlt)
+	{
+		println(stageFrom + " products processing... ");
+		// Always perform EntityManager actions within an EntityTransaction!
+		Transactional<Integer> tx = (em) ->
+		{
+			int count = 0;
+			List<Product> selectProducts = selectProducts(0, MAX_RESULT_COUNT, stageFrom);
+			for ( Product product : selectProducts )
+			{
+				if ( RANDOM.nextInt(100) < 50 )
+				{
+					product.setStage(stageTo);
+					++count;
+					println("  " + stageTo + ": " + product);
+				}
+				else if ( RANDOM.nextInt(100) < 10 )
+				{
+					product.setStage(stageAlt);
+					++count;
+					println("  " + stageAlt + ": " + product);
+				}
+			}
+			return count;
+		};
+		int count = tx.transact(getEntityManager(), reuseCache());
+		println(stageFrom + " products processed: " + count);
+	}
+	
+	public void disposeProducts()
+	{
+		disposeProducts(CLOSED);
+		disposeProducts(CANCELED);
+		println();
+	}
+
+	private void disposeProducts(Stage stage)
+	{
+		println(stage + " products disposing... ");
+		// Always perform EntityManager actions within an EntityTransaction!
+		Transactional<Integer> tx = (em) ->
+		{
+			int count = 0;
+			List<Product> selectProducts = selectProducts(0, MAX_RESULT_COUNT, stage);
+			for ( Product product : selectProducts )
+			{
+				if ( RANDOM.nextInt(100) < 50 )
+				{
+					em.remove(product);
+					++count;
+					println("  " + stage + " disposed: " + product);
+				}
+			}
+			return count;
+		};
+		Integer count = tx.transact(getEntityManager(), reuseCache());
+		println(stage + " products disposed: " + count);
+	}
+
+	public void removeProducts()
+	{
+		// Always perform EntityManager actions within an EntityTransaction!
+		Transactional<Integer> tx = (em) ->
+		{
+			int count = 0;
+			Iterator<Product> iterator = getProductSet().iterator();
+			while ( iterator.hasNext() )
+			{
+				Product startProduct = iterator.next();
+				Product foundProduct = em.find(Product.class, startProduct.getPartNum());
+				if ( foundProduct != null)
+					em.remove(foundProduct);
+				iterator.remove();
+				++count;
+			}
+			return count;
+		};
+		Integer count = tx.transact(getEntityManager(), reuseCache());
+		println("Remove returned " + count + " count.");
+	}
+	
+	private String identify(Object object)
+	{
+		String objectId = toHexString(identityHashCode(object));
+		String entityId = toHexString(object.hashCode());
+		return "Object Id = " + objectId + " -> Entity Id = " + entityId;
+	}
+
+	public void extensionHashCodes()
+	{
+		println("Extension Hash Codes");
+		println();
+
+		for ( Product product : getProductSet() )
+			println(identify(product));
+		println();
+	}
+	
+	public void extensionEquality()
+	{
+		println("Extension Equality\n");
+		List<Product> productList = new ArrayList<>(getProductSet());
+		int needleIndex = RANDOM.nextInt(productList.size());
+		Product needle = productList.get(needleIndex);
+		println("Searching for index: " + needleIndex + "; " + identify(needle));
+		println();
+		// Loop over product list and compare each item to the needle.
+		for ( int index = 0; index < productList.size(); ++index )
+		{
+			Product haystackItem = productList.get(index);
+			if ( needle.equals(haystackItem) )
+				println("Comparing index: " + index + "; Match: " + identify(haystackItem));
+			else
+				println("Comparing index: " + index);
 		}
 		println();
 	}
+	
+	public void extensionToString()
+	{
+		println("Extension ToString\n");
+		List<Product> productList = new ArrayList<>(getProductSet());
+		for ( Product product : productList )
+			println(product.toString());
+		println();
+	}
 
+	public void roundtripJAXBValid()
+	{
+		List<Product> productList = new ArrayList<>(getProductSet());
+		if ( !productList.isEmpty() )
+		{
+			for ( Product productA : productList )
+			{
+				String productAXml = marshalToString(productA);
+				Product productB = unmarshalFromString(productAXml, Product.class);
+				println("ProductA vs ProductB (" + productA.getPartNum()+ "): " + (productA.equals(productB) ? "EQUAL" : "UNEQUAL"));
+			}
+			println();
+		}
+		else
+			println("No products.");
+	}
+
+	public void roundtripJAXBInvalid()
+	{
+		List<Product> productList = new ArrayList<>(getProductSet());
+		if ( !productList.isEmpty() )
+		{
+			Product product1A = productList.get(0);
+			String product1AXml = marshalToString(product1A);
+			// product1BXml is made intentionally invalid!
+			String product1BXml = product1AXml.replaceAll("Price", "Cost");
+			Product product1B = unmarshalFromString(product1BXml, Product.class);
+			if ( product1A.equals(product1B) )
+				println("Product1A vs Product1B: EQUAL");
+			else
+			{
+				println("Product1A vs Product1B: UNEQUAL");
+				println();
+				println("[BEFORE] Product1A XML:\n" + product1AXml);
+				println("[BEFORE] Product1B XML:\n" + product1BXml);
+				println();
+				println("[AFTER] Product1A XML:\n" + marshalToString(product1A));
+				println("[AFTER] Product1B XML:\n" + marshalToString(product1B));
+			}
+			println();
+		}
+		else
+			println("No products.");
+	}
+
+	public void roundtripJPA()
+	{
+		try
+		{
+			getRoundtripTest().testSamples();
+		}
+		catch (Exception ex)
+		{
+			errorln(ex);
+		}
+	}
+	
 	public void searchProducts()
 	{
-		Product product1 = Bogus.randomItem(getProductList());
-		Product product2 = unmarshalFromString(marshalToString(product1), Product.class);
-		int index = getProductList().indexOf(product2);
-		println("Search: " + product2);
-		println("Found.: " + getProductList().get(index));
-		println("Index.: " + index);
-		println();
+		List<Product> productList = new ArrayList<>(getProductSet());
+		if ( !productList.isEmpty() )
+		{
+			Product product1 = Bogus.randomItem(productList);
+			Product product2 = unmarshalFromString(marshalToString(product1), Product.class);
+			int index = productList.indexOf(product2);
+			println("Search: " + product2);
+			println("Found.: " + productList.get(index));
+			println("Index.: " + index);
+			println();
+		}
+		else
+			println("No products.");
+	}
+	
+	public void chaosExhaustConnectionPool()
+	{
+		int maximumPoolSize = getContextProperty("hibernate.hikari.maximumPoolSize", 10);
+		long connectionTimeout = getContextProperty("hibernate.hikari.connectionTimeout", 30000L);
+		long connectionTimeoutPlus = connectionTimeout + 5000L;
+		
+		// Loop the maximum pool size plus one.
+		for ( int index = 0; index <= maximumPoolSize; ++index )
+		{
+			// Create a thread to start our runnable in the background so
+			// Swing's event dispatch thread can display the output in parallel.
+			Runnable runnable = () ->
+			{
+				String threadName = Thread.currentThread().getName();
+				EntityManager entityManager = getEntityManagerFactory().createEntityManager();
+				Transactional<Long> tx = (em) ->
+				{
+					Query query = em.createQuery("select count(p) from Product p");
+					Long count = (Long) query.getSingleResult();
+					println("Pausing thread " + threadName + " for " + connectionTimeoutPlus + " ms");
+					sleep(connectionTimeoutPlus);
+					return count;
+				};
+				try
+				{
+					Long count = tx.transact(entityManager);
+					println("Query " + entityManager + "; Count = " + count);
+				}
+				catch ( RuntimeException ex)
+				{
+					errorln(ex);
+					errorDialog("Thread: "+threadName, ex);
+				}
+				entityManager.close();
+			};
+			Thread thread = new Thread(runnable, "chaosExhaustConnectionPool-" + index);
+			thread.start();
+		}
+	}
+	
+	public void chaosQueryCacheJPA()
+	{
+		// Always perform EntityManager actions within an EntityTransaction!
+		Transactional<Integer> tx = (em) ->
+		{
+			int count = 0;
+			Set<Product> mergeProductSet = new HashSet<Product>();
+			for ( Product product : getProductSet() )
+			{
+				Product mergeProduct = em.merge(product);
+				mergeProduct.setDescription("CHAOS-JPA: " + mergeProduct.getDescription());
+				mergeProductSet.add(mergeProduct);
+				++count;
+			}
+			setProductSet(mergeProductSet);
+			return count;
+		};
+		Integer count = tx.transact(getEntityManager(), reuseCache());
+		println("JPA updated " + count + " product descriptions with CHAOS!");
+	}
+	
+	public void chaosQueryCacheMEM()
+	{
+		int count = 0;
+		for ( Product product : getProductSet() )
+		{
+			product.setDescription("CHAOS-MEM: " + product.getDescription());
+			++count;
+		}
+		println("MEM updated (without transaction) " + count + " product descriptions with CHAOS!");
+	}
+	
+	public void chaosQueryCacheSQL()
+	{
+		String sql = "update product set description = concat('CHAOS-SQL: ', description)";
+		int count = sqlAction(getEntityManagerFactory(), sql);
+		println("SQL updated " + count + " product descriptions with CHAOS!");
 	}
 	
 	/**
 	 * Dispatch hyperlinks from the lesson to local method invocations.
 	 * The markdown for hyperlinks in the lesson is declared like this:
 	 * 
-	 *   [description](!hyperLink)
+	 *	 [description](!hyperLink)
 	 */
 	@Override
 	public void dispatchHyperLink(String hyperLink)
@@ -322,16 +659,24 @@ public class Explorer extends AbstractExplorer
 			case "generateXmlSchemaFromDom": generateXmlSchemaFromDom(); break;
 			case "generateXmlSchemaValidatorFromDom": generateXmlSchemaValidatorFromDom(); break;
 			case "displayEntityManagerFactoryProperties": displayEntityManagerFactoryProperties(); break;
-			case "marshalProduct1": marshalProduct1(); break;
-			case "marshalProduct2": marshalProduct2(); break;
-			case "marshalProduct3": marshalProduct3(); break;
 			case "marshalProducts": marshalProducts(); break;
-			case "compareHashCodes": compareHashCodes(); break;
-			case "compareEquality": compareEquality(); break;
-			case "compareToString": compareToString(); break;
-			case "roundtripValid": roundtripValid(); break;
-			case "roundtripInvalid": roundtripInvalid(); break;
+			case "unmarshalProducts": unmarshalProducts(); break;
+			case "persistProducts": persistProducts(); break;
+			case "mergeProducts": persistProducts(); break;
+			case "queryProducts": queryProducts(0, MAX_RESULT_COUNT, null); break;
+			case "processProducts": processProducts(); break;
+			case "disposeProducts": disposeProducts(); break;
+			case "removeProducts": removeProducts(); break;
+			case "extensionHashCodes": extensionHashCodes(); break;
+			case "extensionEquality": extensionEquality(); break;
+			case "extensionToString": extensionToString(); break;
+			case "roundtripValid": roundtripJAXBValid(); break;
+			case "roundtripInvalid": roundtripJAXBInvalid(); break;
 			case "searchProducts": searchProducts(); break;
+			case "chaosExhaustConnectionPool": chaosExhaustConnectionPool(); break;
+			case "chaosQueryCacheJPA": chaosQueryCacheJPA(); break;
+			case "chaosQueryCacheMEM": chaosQueryCacheMEM(); break;
+			case "chaosQueryCacheSQL": chaosQueryCacheSQL(); break;
 		}
 	}
 
@@ -373,73 +718,171 @@ public class Explorer extends AbstractExplorer
 			menuBar.add(contextMenu);
 		}
 
-		// Marshal Menu
+		// BindXml Menu
 		{
-			JMenu marshalMenu = new JMenu("Marshal");
-			// Marshal: Product1
+			JMenu bindXmlMenu = new JMenu("BindXml");
+			// BindXml: Products Sub-Menu
 			{
-				JMenuItem menuItem = new JMenuItem("Product1");
-				menuItem.addActionListener((event) -> marshalProduct1());
-				marshalMenu.add(menuItem);
+				JMenu productsMenu = new JMenu("Products");
+				// BindXml Products: Unmarshal Menu Item
+				{
+					JMenuItem menuItem = new JMenuItem("Unmarshal");
+					menuItem.addActionListener((event) -> unmarshalProducts());
+					productsMenu.add(menuItem);
+				}
+				// BindXml Products: Marshal Menu Item
+				{
+					JMenuItem menuItem = new JMenuItem("Marshal");
+					menuItem.addActionListener((event) -> marshalProducts());
+					productsMenu.add(menuItem);
+				}
+				bindXmlMenu.add(productsMenu);
 			}
-			// Marshal: Product2
-			{
-				JMenuItem menuItem = new JMenuItem("Product2");
-				menuItem.addActionListener((event) -> marshalProduct2());
-				marshalMenu.add(menuItem);
-			}
-			// Marshal: Product3
-			{
-				JMenuItem menuItem = new JMenuItem("Product3");
-				menuItem.addActionListener((event) -> marshalProduct3());
-				marshalMenu.add(menuItem);
-			}
-			// Marshal: Products
-			{
-				JMenuItem menuItem = new JMenuItem("Products");
-				menuItem.addActionListener((event) -> marshalProducts());
-				marshalMenu.add(menuItem);
-			}
-			menuBar.add(marshalMenu);
+			menuBar.add(bindXmlMenu);
 		}
 
-		// Compare Menu
+		// Persist Menu
 		{
-			JMenu compareMenu = new JMenu("Compare");
-			// Compare: HashCodes
+			JMenu persistenceMenu = new JMenu("Persistence");
+			// Persistence: Products Sub-Menu
+			{
+				JMenu productsMenu = new JMenu("Products");
+				// Persistence Products: Persist Menu Item
+				{
+					JMenuItem menuItem = new JMenuItem("Persist");
+					menuItem.addActionListener((event) -> persistProducts());
+					productsMenu.add(menuItem);
+				}
+				// Persistence Products: Merge Menu Item
+				{
+					JMenuItem menuItem = new JMenuItem("Merge");
+					menuItem.addActionListener((event) -> mergeProducts());
+					productsMenu.add(menuItem);
+				}
+				// Persistence Products: Query Sub-Menu
+				{
+					JMenu queryMenu = new JMenu("Query");
+					// Persistence Products Query: All Menu Item
+					{
+						JMenuItem menuItem = new JMenuItem("All");
+						menuItem.addActionListener((event) -> queryProducts(0, MAX_RESULT_COUNT, null));
+						queryMenu.add(menuItem);
+					}
+					// Persistence Products Query: Hold Menu Item
+					{
+						JMenuItem menuItem = new JMenuItem("Hold");
+						menuItem.addActionListener((event) -> queryProducts(0, MAX_RESULT_COUNT, HOLD));
+						queryMenu.add(menuItem);
+					}
+					// Persistence Products Query: Open Menu Item
+					{
+						JMenuItem menuItem = new JMenuItem("Open");
+						menuItem.addActionListener((event) -> queryProducts(0, MAX_RESULT_COUNT, OPEN));
+						queryMenu.add(menuItem);
+					}
+					// Persistence Products Query: Active Menu Item
+					{
+						JMenuItem menuItem = new JMenuItem("Active");
+						menuItem.addActionListener((event) -> queryProducts(0, MAX_RESULT_COUNT, ACTIVE));
+						queryMenu.add(menuItem);
+					}
+					// Persistence Products Query: Closed Menu Item
+					{
+						JMenuItem menuItem = new JMenuItem("Closed");
+						menuItem.addActionListener((event) -> queryProducts(0, MAX_RESULT_COUNT, CLOSED));
+						queryMenu.add(menuItem);
+					}
+					// Persistence Products Query: Canceled Menu Item
+					{
+						JMenuItem menuItem = new JMenuItem("Canceled");
+						menuItem.addActionListener((event) -> queryProducts(0, MAX_RESULT_COUNT, CANCELED));
+						queryMenu.add(menuItem);
+					}
+					productsMenu.add(queryMenu);
+				}
+				// Persistence Products: Process Menu Item
+				{
+					JMenuItem menuItem = new JMenuItem("Process");
+					menuItem.addActionListener((event) -> processProducts());
+					productsMenu.add(menuItem);
+				}
+				// Persistence Products: Dispose Menu Item
+				{
+					JMenuItem menuItem = new JMenuItem("Dispose");
+					menuItem.addActionListener((event) -> disposeProducts());
+					productsMenu.add(menuItem);
+				}
+				// Persistence Products: Remove Menu Item
+				{
+					JMenuItem menuItem = new JMenuItem("Remove");
+					menuItem.addActionListener((event) -> removeProducts());
+					productsMenu.add(menuItem);
+				}
+				persistenceMenu.add(productsMenu);
+			}
+			menuBar.add(persistenceMenu);
+		}
+		
+		// EntityState Menu
+		{
+			JMenu entityStateMenu = new JMenu("EntityState");
+			// EntityState: Products Sub-Menu
+			{
+				JMenuItem menuItem = new JMenuItem("Product");
+				menuItem.addActionListener((event) -> printEntityState(Product.class));
+				entityStateMenu.add(menuItem);
+			}
+			menuBar.add(entityStateMenu);
+		}
+		
+		// Extension Menu
+		{
+			JMenu extensionMenu = new JMenu("Extension");
+			// Extension: HashCodes
 			{
 				JMenuItem menuItem = new JMenuItem("HashCodes");
-				menuItem.addActionListener((event) -> compareHashCodes());
-				compareMenu.add(menuItem);
+				menuItem.addActionListener((event) -> extensionHashCodes());
+				extensionMenu.add(menuItem);
 			}
-			// Compare: Equality
+			// Extension: Equality
 			{
 				JMenuItem menuItem = new JMenuItem("Equality");
-				menuItem.addActionListener((event) -> compareEquality());
-				compareMenu.add(menuItem);
+				menuItem.addActionListener((event) -> extensionEquality());
+				extensionMenu.add(menuItem);
 			}
-			// Compare: ToString
+			// Extension: ToString
 			{
 				JMenuItem menuItem = new JMenuItem("ToString");
-				menuItem.addActionListener((event) -> compareToString());
-				compareMenu.add(menuItem);
+				menuItem.addActionListener((event) -> extensionToString());
+				extensionMenu.add(menuItem);
 			}
-			menuBar.add(compareMenu);
+			menuBar.add(extensionMenu);
 		}
 
 		// Roundtrip Menu
 		{
 			JMenu roundtripMenu = new JMenu("Roundtrip");
-			// Roundtrip: Valid
+			// Roundtrip: JAXB
 			{
-				JMenuItem menuItem = new JMenuItem("Valid");
-				menuItem.addActionListener((event) -> roundtripValid());
-				roundtripMenu.add(menuItem);
+				JMenu roundtripJaxbMenu = new JMenu("JAXB");
+				// Roundtrip JAXB: Valid
+				{
+					JMenuItem menuItem = new JMenuItem("Valid");
+					menuItem.addActionListener((event) -> roundtripJAXBValid());
+					roundtripJaxbMenu.add(menuItem);
+				}
+				// Roundtrip JAXB: Invalid
+				{
+					JMenuItem menuItem = new JMenuItem("Invalid");
+					menuItem.addActionListener((event) -> roundtripJAXBInvalid());
+					roundtripJaxbMenu.add(menuItem);
+				}
+				roundtripMenu.add(roundtripJaxbMenu);
 			}
-			// Roundtrip: Invalid
+			// Roundtrip JPA: Valid
 			{
-				JMenuItem menuItem = new JMenuItem("Invalid");
-				menuItem.addActionListener((event) -> roundtripInvalid());
+				JMenuItem menuItem = new JMenuItem("JPA");
+				menuItem.addActionListener((event) -> roundtripJPA());
 				roundtripMenu.add(menuItem);
 			}
 			menuBar.add(roundtripMenu);
@@ -457,6 +900,41 @@ public class Explorer extends AbstractExplorer
 			menuBar.add(searchMenu);
 		}
 
+		// Chaos Menu
+		{
+			JMenu chaosMenu = new JMenu("Chaos");
+			// Chaos: Exhaust Connection Pool
+			{
+				JMenuItem menuItem = new JMenuItem("Exhaust Connection Pool");
+				menuItem.addActionListener((event) -> chaosExhaustConnectionPool());
+				chaosMenu.add(menuItem);
+			}
+			// Chaos: Query Cache
+			{
+				JMenu chaosQueryCacheMenu = new JMenu("Query Cache");
+				// Chaos: Query Cache JPA
+				{
+					JMenuItem menuItem = new JMenuItem("JPA");
+					menuItem.addActionListener((event) -> chaosQueryCacheJPA());
+					chaosQueryCacheMenu.add(menuItem);
+				}
+				// Chaos: Query Cache MEM
+				{
+					JMenuItem menuItem = new JMenuItem("MEM");
+					menuItem.addActionListener((event) -> chaosQueryCacheMEM());
+					chaosQueryCacheMenu.add(menuItem);
+				}
+				// Chaos: Query Cache SQL
+				{
+					JMenuItem menuItem = new JMenuItem("SQL");
+					menuItem.addActionListener((event) -> chaosQueryCacheSQL());
+					chaosQueryCacheMenu.add(menuItem);
+				}
+				chaosMenu.add(chaosQueryCacheMenu);
+			}
+			menuBar.add(chaosMenu);
+		}
+
 		return menuBar;
 	}
 	
@@ -464,15 +942,72 @@ public class Explorer extends AbstractExplorer
 	public JToggleButton getValidateButton() { return validateButton; }
 	public void setValidateButton(JToggleButton validateButton) { this.validateButton = validateButton; }
 
+	private JToggleButton clean1stLevelCacheButton;
+	public JToggleButton getClean1stLevelCacheButton() { return clean1stLevelCacheButton; }
+	public void setClean1stLevelCacheButton(JToggleButton clean1stLevelCacheButton) { this.clean1stLevelCacheButton = clean1stLevelCacheButton; }
+
+	private JButton clean2ndLevelCacheButton;
+	public JButton getClean2ndLevelCacheButton() { return clean2ndLevelCacheButton; }
+	public void setClean2ndLevelCacheButton(JButton clean2ndLevelCacheButton) { this.clean2ndLevelCacheButton = clean2ndLevelCacheButton; }
+
+	private JButton reopenEntityManagerButton;
+	public JButton getReopenEntityManagerButton() { return reopenEntityManagerButton; }
+	public void setReopenEntityManagerButton(JButton reopenEntityManagerButton) { this.reopenEntityManagerButton = reopenEntityManagerButton; }
+
+	private JButton logSummaryStatisticsButton;
+	public JButton getLogSummaryStatisticsButton() { return logSummaryStatisticsButton; }
+	public void setLogSummaryStatisticsButton(JButton logSummaryStatisticsButton) { this.logSummaryStatisticsButton = logSummaryStatisticsButton; }
+
+	private CacheOption reuseCache()
+	{
+		return getClean1stLevelCacheButton().isSelected() ? CacheOption.REUSE : CacheOption.CLEAN;
+	}
+	
 	public void modifyToolBar()
 	{
 		getToolBar().addSeparator();
+		
+		// Toggle schema validation
 		String validateOffPath = OILPATH+"/actions/flag-red.png";
 		String validateOnPath = OILPATH+"/actions/flag-green.png";
 		setValidateButton(createImageToggleButton(Explorer.class, validateOffPath, validateOnPath));
 		getValidateButton().addActionListener((event) -> toggleValidateSchema(event));
 		getValidateButton().setToolTipText("Toggle schema validation");
-		getToolBar().add(validateButton);
+		getToolBar().add(getValidateButton());
+		
+		// Toggle clean first level cache
+		String clean1stLevelCacheOffPath = OILPATH+"/actions/general-recycling-green.png";
+		String clean1stLevelCacheOnPath = OILPATH+"/actions/general-recycling-green.png";
+		setClean1stLevelCacheButton(createImageToggleButton(Explorer.class, clean1stLevelCacheOffPath, clean1stLevelCacheOnPath));
+		getClean1stLevelCacheButton().addActionListener((event) -> toggle1stLevelCleanCache(event));
+		getClean1stLevelCacheButton().setToolTipText("Reuse 1st level cache");
+		getToolBar().add(getClean1stLevelCacheButton());
+		
+		// Clean second level cache
+		String clean2ndLevelCachePath = OILPATH+"/actions/db_remove.png";
+		setClean2ndLevelCacheButton(createImageButton(Explorer.class, clean2ndLevelCachePath));
+		getClean2ndLevelCacheButton().addActionListener((event) -> clear2ndLevelCache(event));
+		getClean2ndLevelCacheButton().setToolTipText("Clean 2nd level cache");
+		getToolBar().add(getClean2ndLevelCacheButton());
+		
+		// Reopen EnityManager
+		String reopenEntityManagerPath = OILPATH+"/actions/view-refresh-5.png";
+		setReopenEntityManagerButton(createImageButton(Explorer.class, reopenEntityManagerPath));
+		getReopenEntityManagerButton().addActionListener((event) -> reopenEntityManager(event));
+		getReopenEntityManagerButton().setToolTipText("Reopen session and connection");
+		getToolBar().add(getReopenEntityManagerButton());
+
+		// Log Summary Statistics
+		String logSummaryStatisticsPath = OILPATH+"/actions/utilities-log-viewer.png";
+		setLogSummaryStatisticsButton(createImageButton(Explorer.class, logSummaryStatisticsPath));
+		getLogSummaryStatisticsButton().addActionListener((event) -> logSummaryStatistics(event));
+		getLogSummaryStatisticsButton().setToolTipText("Log summary statistics");
+		getToolBar().add(getLogSummaryStatisticsButton());
+	}
+	
+	private void clear2ndLevelCache(ActionEvent event)
+	{
+		getEntityManagerFactory().getCache().evictAll();
 	}
 	
 	private void toggleValidateSchema(ActionEvent event)
@@ -488,25 +1023,137 @@ public class Explorer extends AbstractExplorer
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	private void toggle1stLevelCleanCache(ActionEvent event)
+	{
+		JToggleButton toggleButton = (JToggleButton) event.getSource();
+		if ( toggleButton.isSelected() )
+		{
+			println("Reuse first level entity cache between transactions.");
+		}
+		else
+		{
+			println("Clean first level entity cache at start of topmost transaction.");
+		}
+	}
+	
+	private void reopenEntityManager(ActionEvent event)
+	{
+		// JButton button = (JButton) event.getSource();
+		getEntityManager().close();
+		println("EnityManager: closed");
+		setEntityManager(createEntityManager());
+		println("EnityManager: created");
+	}
+	
+	private void logSummaryStatistics(ActionEvent event)
+	{
+		logSummaryStatistics();
+	}
+	
 	public void initializeLesson() throws Exception
 	{
-		// Explore RoundtripTest
-		setRoundtripTest(new RoundtripTest());
-		
 		// Initialize JAXB
-		setJaxbContext(getRoundtripTest().getSamplesTest().createContext());
+		setJaxbContext(createJAXBContext());
 		setMarshaller(createMarshaller(getJaxbContext()));
 		setUnmarshaller(createUnmarshaller(getJaxbContext()));
 		
 		// Initialize JPA
-		setEntityManagerFactoryProperties(getRoundtripTest().getEntityManagerFactoryProperties());
-		setEntityManagerFactory(getRoundtripTest().createEntityManagerFactory());
-		setEntityManager(getEntityManagerFactory().createEntityManager());
+		setEntityManagerFactoryProperties(loadEntityManagerFactoryProperties());
+		setPersistenceUnitName(resolvePerstenceUnitName());
+		setEntityManagerFactory(createEntityManagerFactory());
+		setEntityManager(createEntityManager());
 		
-//		setProductList(createProductList());
+		// Collect context properties
+		setExternalContextProperties(filterExternalProperties());
+		setInternalContextProperties(gatherInternalProperties());
+		
+		// Initialize RoundtripTest
+		setRoundtripTest(new RoundtripTest(getEntityManagerFactory()));
 	}
 
+	private String resolvePerstenceUnitName()
+	{
+		String puName = getEntityManagerFactoryProperties().get(HIBERNATE_PUN);
+		if ( puName == null )
+			puName = ObjectFactory.class.getPackageName();
+		return puName;
+	}
+	
+	private Map<String, String> loadEntityManagerFactoryProperties()
+	{
+		Properties props = new Properties();
+		try (Reader reader = new FileReader(PERSISTENCE_PROPERTIES_FILENAME))
+		{
+			if (reader != null)
+				props.load(reader);
+		}
+		catch (IOException ex)
+		{
+			errorln(ex);
+		}
+		// Convert Properties to Map<String, String>
+		return props.entrySet().stream().collect
+		(
+			Collectors.toMap
+			(
+				e -> String.valueOf(e.getKey()),
+				e -> String.valueOf(e.getValue()),
+				(prev, next) -> next, HashMap::new
+			)
+		);
+	}
+	
+	// Properties: JPA Entity Manager Factory
+	private Map<String, Object> filterExternalProperties()
+	{
+		return filterProperties(getEntityManagerFactory());
+	}
+	
+	// Properties: Hibernate Session Factory
+	private Map<String, Object> gatherInternalProperties()
+	{
+		EntityManagerFactory emf = getEntityManagerFactory();
+		Map<String, Object> extProps = gatherProperties(emf, getExternalContextProperties());
+		extProps.putAll(HikariCPUtil.gatherProperties(emf));
+		return extProps;
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> T getContextProperty(String name, T defaultValue)
+	{
+		Object value = getInternalContextProperties().get(name);
+		if ( value != null )
+			return (T) value;
+		else
+			return defaultValue;
+	}
+	
+	private EntityManagerFactory createEntityManagerFactory()
+	{
+		return Persistence.createEntityManagerFactory(
+			getPersistenceUnitName(), getEntityManagerFactoryProperties());
+	}
+	
+	private EntityManager createEntityManager()
+	{
+		return getEntityManagerFactory().createEntityManager();
+	}
+	
+	private JAXBContext createJAXBContext()
+	{
+		JAXBContext jaxbContext = null;
+		try
+		{
+			Class<?>[] classesToBeBound = { ObjectFactory.class, Product.class };
+			jaxbContext = JAXBContext.newInstance(classesToBeBound);
+		}
+		catch ( JAXBException ex)
+		{
+			errorln(ex);
+		}
+		return jaxbContext;
+	}
+	
 	private Marshaller createMarshaller(JAXBContext jaxbContext)
 	{
 		Marshaller marshaller = null;
@@ -552,8 +1199,7 @@ public class Explorer extends AbstractExplorer
 		String ihc = toHexString(identityHashCode(instance));
 		String productXml = marshalToString(instance);
 		// Entity Hash vs Object Hash
-		println(label + " XML: (E#=" + ehc + ", O#=" + ihc + ")\n\n" +productXml);
-		println();
+		println(label + " Hash = [ E#=" + ehc + ", O#=" + ihc + " ]\n" +productXml);
 	}
 	
 	private String marshalToString(Object instance)
@@ -575,6 +1221,21 @@ public class Explorer extends AbstractExplorer
 	}
 
 	@SuppressWarnings("unchecked")
+	private <T> T unmarshalFromFile(File file)
+	{
+		T instance = null;
+		try
+		{
+			instance = (T) getUnmarshaller().unmarshal(file);
+		}
+		catch (JAXBException ex)
+		{
+			errorln(ex);
+		}
+		return instance;
+	}
+	
+	@SuppressWarnings("unchecked")
 	private <T> T unmarshalFromString(String xml, Class<?> clazz)
 	{
 		T instance = null;
@@ -588,4 +1249,56 @@ public class Explorer extends AbstractExplorer
 		}
 		return instance;
 	}
+	
+	private void logSummaryStatistics()
+	{
+		if ( SessionFactoryUtil.logSummaryStatistics(getEntityManagerFactory()) )
+			println("Summary statistics have been logged.");
+		else
+			println("Summary statistics are not enabled!!!");
+	}
+	
+	/**
+	 * Print the management state(s) of a given entity type.
+	 * 
+	 * @param <T> The generic entity type.
+	 * @param type The entity class type.
+	 */
+	private <T extends Serializable> void printEntityState(Class<T> type)
+	{
+		println("Entity Managment State");
+		println("Legend:");
+		println("  c1 = first level cache");
+		println("  c2 = second level cache");
+		println("  in = initialized");
+		println("  pr = proxied");
+		Cache cache2 = getEntityManagerFactory().getCache();
+		if ( Product.class == type )
+		{
+			println("Products [size = " + getProductSet().size() + "]");
+			for ( Product product : getProductSet() )
+				printEntityState("	", product, product.getPartNum(), cache2);
+		}
+	}
+	
+	/**
+	 * Print the management state of a given entity.
+	 * 
+	 * @param indent An padding string for indentation.
+	 * @param entity The entity instance.
+	 * @param primaryKey The entity's primary key object.
+	 * @param cache2 The second level cache.
+	 */
+	private void printEntityState(String indent, Serializable entity, Object primaryKey, Cache cache2)
+	{
+		String name = entity.getClass().getSimpleName();
+		int hash = System.identityHashCode(entity);
+		boolean xc1 = getEntityManager().contains(entity);
+		boolean xc2 = cache2.contains(entity.getClass(), primaryKey);
+		boolean xin = isInitialized(entity);
+		boolean xpr = isProxy(entity);
+		getPrintStream().format("%s%s %08X: c1=%.1B c2=%.1B in=%.1B pr=%.1B\n", indent, name, hash, xc1, xc2, xin, xpr);
+		getPrintStream().flush();
+	}
+	
 }

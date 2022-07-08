@@ -1,5 +1,7 @@
 package org.patrodyne.jvnet.hyperjaxb.ex001;
 
+import javax.persistence.EntityManagerFactory;
+
 import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
 
 /**
@@ -11,21 +13,32 @@ import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
  * @author Rick O'Sullivan
  */
 public class RoundtripTest
-    extends org.jvnet.hyperjaxb3.ejb.test.RoundtripTest
-    implements ContextPathAware
+	extends org.jvnet.hyperjaxb3.ejb.test.RoundtripTest
+	implements ContextPathAware
 {
-    public String getContextPath()
+	public RoundtripTest()
 	{
-        return "org.patrodyne.jvnet.hyperjaxb.ex001.model";
-    }
+		super();
+	}
 
-    public String getPersistenceUnitName()
+	public RoundtripTest(EntityManagerFactory emf)
 	{
-        return "org.patrodyne.jvnet.hyperjaxb.ex001.model";
-    }
-    
-    protected String getSamplesDirectoryName()
-    {
-    	return "src/test/examples";
-    }
+		super();
+		setEntityManagerFactory(emf);
+	}
+	  
+	public String getContextPath()
+	{
+		return "org.patrodyne.jvnet.hyperjaxb.ex001.model";
+	}
+
+	public String getPersistenceUnitName()
+	{
+		return "org.patrodyne.jvnet.hyperjaxb.ex001.model";
+	}
+	
+	protected String getSamplesDirectoryName()
+	{
+		return "src/test/samples";
+	}
 }

@@ -25,42 +25,59 @@
 		<annotation>
 			<appinfo>
 				<hj:mapped-superclass />
-            </appinfo>
-        </annotation>
-        <attribute name="Created" use="optional" type="dateTime">
-            <annotation>
-                <appinfo>
+			</appinfo>
+		</annotation>
+		<attribute name="Created" use="optional" type="dateTime">
+			<annotation>
+				<appinfo>
 					<basic:ignored/>
-                    <hj:basic>
-                        <orm:column name="CREATED" />
-                    </hj:basic>
-                </appinfo>
-            </annotation>
-        </attribute>
-        <attribute name="Updated" use="optional" type="dateTime">
-            <annotation>
-                <appinfo>
+					<hj:basic>
+						<orm:column name="CREATED" />
+					</hj:basic>
+				</appinfo>
+			</annotation>
+		</attribute>
+		<attribute name="Updated" use="optional" type="dateTime">
+			<annotation>
+				<appinfo>
 					<basic:ignored/>
-                    <hj:basic>
-                        <orm:column name="UPDATED" />
-                    </hj:basic>
-                </appinfo>
-            </annotation>
-        </attribute>
+					<hj:basic>
+						<orm:column name="UPDATED" />
+					</hj:basic>
+				</appinfo>
+			</annotation>
+		</attribute>
 		<attribute name="Stage" type="tns:stage" use="required" />
 	</complexType>
 
-	<element name="Product" type="tns:Product"/>
-	<complexType name="Product">
-		<sequence>
-			<element name="Picture" type="string" />
-			<element name="Description" type="string" />
-			<element name="Price" type="tns:money" />
-		</sequence>
-		<attribute name="PartNum" type="tns:sku" use="required">
-			<annotation> <appinfo> <hj:id/> </appinfo> </annotation>
-		</attribute>
-	</complexType>
+	<!--
+		The XJC compiler adds @XmlRootElement to top-level elements
+		declared with anonymous complex types.
+	-->
+	<element name="Product">
+		<complexType>
+			<annotation>
+				<appinfo>
+				<hj:entity cacheable="true">
+					<orm:entity-listeners>
+						<orm:entity-listener class="org.patrodyne.jvnet.hyperjaxb.ex001.orm.StageableListener"></orm:entity-listener>
+					</orm:entity-listeners>
+				</hj:entity>
+				</appinfo>
+			</annotation>
+			<sequence>
+				<element name="Picture" type="string" />
+				<element name="Description" type="string" />
+				<element name="Price" type="tns:money" />
+			</sequence>
+			<attribute name="PartNum" type="tns:sku" use="required">
+				<annotation> <appinfo> <hj:id/> </appinfo> </annotation>
+			</attribute>
+			<!--
+			<attribute name="uom" type="string" default="each"/>
+			-->
+		</complexType>
+	</element>
 
 	<!-- Stock Keeping Unit, a code for identifying products -->
 	<simpleType name="sku">
@@ -70,20 +87,20 @@
 	</simpleType>
 
 	<simpleType name="stage">
-        <restriction base="string">
-            <enumeration value="Hold" />
-            <enumeration value="Open" />
-            <enumeration value="Active" />
-            <enumeration value="Closed" />
-            <enumeration value="Canceled" />
-        </restriction>
-    </simpleType>
-    
-    <simpleType name="money">
-        <restriction base="decimal">
-            <fractionDigits value="2" />
-        </restriction>
-    </simpleType>
+		<restriction base="string">
+			<enumeration value="Hold" />
+			<enumeration value="Open" />
+			<enumeration value="Active" />
+			<enumeration value="Closed" />
+			<enumeration value="Canceled" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="money">
+		<restriction base="decimal">
+			<fractionDigits value="2" />
+		</restriction>
+	</simpleType>
 
 </schema>
 <!-- vi:set tabstop=4 hardtabs=4 shiftwidth=4 noexpandtab: -->

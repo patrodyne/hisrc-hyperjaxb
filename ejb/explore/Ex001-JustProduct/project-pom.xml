@@ -21,6 +21,7 @@
 		<hibernate-entitymanager.version>${hibernate-entitymanager.version}</hibernate-entitymanager.version>
 		<hisrc-basicjaxb.version>${hisrc-basicjaxb.version}</hisrc-basicjaxb.version>
 		<hisrc-hyperjaxb.version>${project.version}</hisrc-hyperjaxb.version>
+		<javax-annotation.version>${javax-annotation.version}</javax-annotation.version>
 		<jaxb.version>${jaxb.version}</jaxb.version>
 		<junit.version>${junit.version}</junit.version>
 		<slf4j.version>${slf4j.version}</slf4j.version>
@@ -115,6 +116,11 @@
 			<artifactId>hisrc-hyperjaxb-opt-hikaricp</artifactId>
 			<version>\${hisrc-hyperjaxb.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>\${javax-annotation.version}</version>
 		</dependency>
 
 		<!-- Test Roundtrip -->
@@ -224,6 +230,17 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.9.0</version>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.hibernate</groupId>
+							<artifactId>hibernate-jpamodelgen</artifactId>
+							<version>${hibernate-entitymanager.version}</version>
+						</path>
+					</annotationProcessorPaths>
+					<!-- In Eclipse, Enable: Preferences / Maven / Annotation Processing / Auto-configure JDT APT. -->
+					<generatedSourcesDirectory>${project.build.directory}/generated-sources/apt</generatedSourcesDirectory>
+				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -244,6 +261,7 @@
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.10.0</version>
 			</plugin>
+
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<configuration>
@@ -253,12 +271,16 @@
 					</ignoredUnusedDeclaredDependencies>
 				</configuration>
 			</plugin>
+
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<version>${project.version}</version>
 				<executions>
 					<execution>
+						<id>generate</id>
 						<goals>
 							<goal>generate</goal>
 						</goals>
@@ -297,6 +319,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>com.ruleoftech</groupId>
 				<artifactId>markdown-page-generator-plugin</artifactId>
@@ -310,6 +333,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<artifactId>plantuml-generator-maven-plugin</artifactId>
 				<groupId>de.elnarion.maven</groupId>
@@ -332,6 +356,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
 </project>

@@ -4,9 +4,9 @@
 pom.xml
 src
 |-- main
-|   |-- java
-|   `-- resources
+|	|-- java
+|	`-- resources
 `-- test
-    |-- java
-    `-- resources
+	|-- java
+	`-- resources
 ~~~

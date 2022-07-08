@@ -19,6 +19,12 @@
 			<artifactId>hisrc-basicjaxb-tools</artifactId>
 		</dependency>
 
+		<!-- HiSrc HyperJAXB Dependencies -->
+		<dependency>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
+		</dependency>
+
 		<!-- Hibernate Dependencies -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
