@@ -72,6 +72,8 @@
 		<h2database.version>2.1.210</h2database.version>
 		<hsqldb.version>2.5.2</hsqldb.version>
 		<javassist.version>3.28.0-GA</javassist.version>
+		<javax-activation.version>1.2.0</javax-activation.version>
+		<javax-annotation.version>1.3.2</javax-annotation.version>
 		<javax-persistence-api.version>2.2</javax-persistence-api.version>
 		<jaxb-core.version>2.3.0.1</jaxb-core.version>
 		<jaxb.version>2.3.1</jaxb.version>
@@ -91,7 +93,12 @@
 			<dependency>
 				<groupId>javax.activation</groupId>
 				<artifactId>javax.activation-api</artifactId>
-				<version>1.2.0</version>
+				<version>${javax-activation.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.annotation</groupId>
+				<artifactId>javax.annotation-api</artifactId>
+				<version>${javax-annotation.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.patrodyne.jvnet</groupId>
