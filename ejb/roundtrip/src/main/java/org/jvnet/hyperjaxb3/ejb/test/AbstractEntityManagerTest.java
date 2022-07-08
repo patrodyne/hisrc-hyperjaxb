@@ -37,6 +37,17 @@ public abstract class AbstractEntityManagerTest extends TestCase {
     this.entityManagerFactory = entityManagerFactory;
   }
 
+  public AbstractEntityManagerTest()
+  {
+	  super();
+  }
+  
+  public AbstractEntityManagerTest(EntityManagerFactory emf)
+  {
+	  super();
+	  setEntityManagerFactory(emf);
+  }
+  
   public void setUp() throws Exception {
     super.setUp();
     final EntityManagerFactory emf = getEntityManagerFactory();
