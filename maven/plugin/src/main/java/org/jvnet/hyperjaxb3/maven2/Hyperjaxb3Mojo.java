@@ -150,21 +150,21 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	protected void logConfiguration() throws MojoExecutionException {
 		super.logConfiguration();
 
-		getLog().info("target:" + target);
-		getLog().info("roundtripTestClassName:" + roundtripTestClassName);
-		getLog().info("resourceIncludes:" + resourceIncludes);
-		getLog().info("variant:" + variant);
-		getLog().info("persistenceUnitName:" + persistenceUnitName);
-		getLog().info("persistenceXml:" + persistenceXml);
-		getLog().info("generateHashCode:" + generateHashCode);
-		getLog().info("generateEquals:" + generateEquals);
-		getLog().info("generateTransientId:" + generateTransientId);
-		getLog().info("result:" + result);
-		getLog().info("preArgs:" + Arrays.toString(preArgs));
-		getLog().info("postArgs:" + Arrays.toString(postArgs));
+		getLog().info("Configuration: target:" + target);
+		getLog().info("Configuration: roundtripTestClassName:" + roundtripTestClassName);
+		getLog().info("Configuration: resourceIncludes:" + resourceIncludes);
+		getLog().info("Configuration: variant:" + variant);
+		getLog().info("Configuration: persistenceUnitName:" + persistenceUnitName);
+		getLog().info("Configuration: persistenceXml:" + persistenceXml);
+		getLog().info("Configuration: generateHashCode:" + generateHashCode);
+		getLog().info("Configuration: generateEquals:" + generateEquals);
+		getLog().info("Configuration: generateTransientId:" + generateTransientId);
+		getLog().info("Configuration: result:" + result);
+		getLog().info("Configuration: preArgs:" + Arrays.toString(preArgs));
+		getLog().info("Configuration: postArgs:" + Arrays.toString(postArgs));
 		try {
 			getLog().info(
-					"XJC loaded from:"
+					"Configuration: XJC loaded from:"
 							+ Options.class.getResource("Options.class")
 									.toURI().toURL().toExternalForm());
 		} catch (IOException ignored) {
@@ -179,6 +179,8 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 		if (this.preArgs != null) {
 			arguments.addAll(Arrays.asList(this.preArgs));
 		}
+		
+		arguments.add("-Xinheritance");
 
 		arguments.addAll(super.getArguments());
 
@@ -253,7 +255,6 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 		if (generateHashCode) {
 			arguments.add("-XhashCode");
 		}
-		arguments.add("-Xinheritance");
 
 		if (this.postArgs != null) {
 			arguments.addAll(Arrays.asList(this.postArgs));
