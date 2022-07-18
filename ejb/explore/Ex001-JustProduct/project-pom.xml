@@ -61,12 +61,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jcache</artifactId>
+			<artifactId>hibernate-hikaricp</artifactId>
 			<version>\${hibernate-entitymanager.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-hikaricp</artifactId>
+			<artifactId>hibernate-jcache</artifactId>
 			<version>\${hibernate-entitymanager.version}</version>
 		</dependency>
 		<dependency>
@@ -239,7 +239,7 @@
 						</path>
 					</annotationProcessorPaths>
 					<!-- In Eclipse, Enable: Preferences / Maven / Annotation Processing / Auto-configure JDT APT. -->
-					<generatedSourcesDirectory>${project.build.directory}/generated-sources/apt</generatedSourcesDirectory>
+					<generatedSourcesDirectory>\${project.build.directory}/generated-sources/apt</generatedSourcesDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -299,19 +299,14 @@
 							</bindingIncludes>
 							<!-- variant: ejb | jpa1 | jpa2 -->
 							<variant>jpa2</variant>
-							<!-- Settings in args take precedence over other configuration parameters. -->
-							<args>
-								<arg>-no-header</arg>
-								<arg>-Xannotate</arg>
-								<arg>-XtoString</arg>
-								<!--
-								<arg>-XsimpleHashCode</arg>
-								<arg>-XsimpleEquals</arg>
-								<arg>-XsimpleToString</arg>
-								-->
-							</args>
+							<noFileHeader>true</noFileHeader>
+							<generateInheritance>true</generateInheritance>
+							<generateAnnotation>true</generateAnnotation>
 							<generateHashCode>true</generateHashCode>
 							<generateEquals>true</generateEquals>
+							<generateToString>true</generateToString>
+							<!-- overrideHET: strategic | simple[123] -->
+							<overrideHET>strategic</overrideHET>
 							<!-- Generates RoundtripTest.java for unit testing.
 							<roundtripTestClassName>RoundtripTest</roundtripTestClassName>
 							-->

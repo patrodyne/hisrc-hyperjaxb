@@ -2,6 +2,7 @@ package org.patrodyne.jvnet.hyperjaxb.ex001;
 
 import javax.persistence.EntityManagerFactory;
 
+import org.junit.Ignore;
 import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
 
 /**
@@ -12,6 +13,7 @@ import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
  * 
  * @author Rick O'Sullivan
  */
+@Ignore("XML Schema contains default value(s).")
 public class RoundtripTest
 	extends org.jvnet.hyperjaxb3.ejb.test.RoundtripTest
 	implements ContextPathAware

@@ -4,4 +4,7 @@
     <Picture>☕</Picture>
     <Description>hot beverage</Description>
     <Price>49.26</Price>
+    <!--
+    <QPU></QPU>
+    -->
 </ns2:Product>

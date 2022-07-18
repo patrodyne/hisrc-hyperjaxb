@@ -69,12 +69,15 @@
 				<element name="Picture" type="string" />
 				<element name="Description" type="string" />
 				<element name="Price" type="tns:money" />
+				<!--
+				<element name="QPU" type="int" default="1" minOccurs="1"/>
+				-->
 			</sequence>
 			<attribute name="PartNum" type="tns:sku" use="required">
 				<annotation> <appinfo> <hj:id/> </appinfo> </annotation>
 			</attribute>
 			<!--
-			<attribute name="uom" type="string" default="each"/>
+			<attribute name="UOM" type="string" default="each"/>
 			-->
 		</complexType>
 	</element>

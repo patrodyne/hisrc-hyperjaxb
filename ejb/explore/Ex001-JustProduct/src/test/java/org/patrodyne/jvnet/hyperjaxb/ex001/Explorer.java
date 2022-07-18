@@ -2,6 +2,7 @@ package org.patrodyne.jvnet.hyperjaxb.ex001;
 
 import static java.lang.Integer.toHexString;
 import static java.lang.System.identityHashCode;
+import static java.lang.System.nanoTime;
 import static java.util.Arrays.sort;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
@@ -242,12 +243,12 @@ public class Explorer extends AbstractExplorer
 	public void displayEntityManagerFactoryProperties()
 	{
 		// Properties: JPA Entity Manager Factory
-		println("\nPersistence Configuration Properties: External:\n");
+		println("\nPersistence Configuration Properties, External:\n");
 		for ( Entry<String, Object> entry : getExternalContextProperties().entrySet() )
 			println("  " + entry.getKey() + " = " + entry.getValue());
 		
 		// Properties: Hibernate Session Factory
-		println("\nPersistence Configuration Properties: Internal:\n");
+		println("\nPersistence Configuration Properties, Internal:\n");
 		for ( Entry<String, Object> entry : getInternalContextProperties().entrySet() )
 			println("  " + entry.getKey() + " = " + entry.getValue());
 	}
@@ -284,7 +285,7 @@ public class Explorer extends AbstractExplorer
 	
 	public void persistProducts()
 	{
-		// Always perform EntityManager actions within an EntityTransaction!
+		// Always perform EntityManager actions within a transaction!
 		Transactional<Integer> tx = (em) ->
 		{
 			int count = 0;
@@ -296,13 +297,15 @@ public class Explorer extends AbstractExplorer
 			}
 			return count;
 		};
+		long t1 = nanoTime();
 		Integer count = tx.transact(getEntityManager(), reuseCache());
-		println("Persist returned " + count + " count.");
+		long t2 = nanoTime();
+		println("Persist returned " + count + " count; " + ns(t1,t2));
 	}
 	
 	public void mergeProducts()
 	{
-		// Always perform EntityManager actions within an EntityTransaction!
+		// Always perform EntityManager actions within a transaction!
 		Transactional<Integer> tx = (em) ->
 		{
 			Set<Product> mergeProductSet = new HashSet<Product>();
@@ -315,20 +318,24 @@ public class Explorer extends AbstractExplorer
 			setProductSet(mergeProductSet);
 			return mergeProductSet.size();
 		};
+		long t1 = nanoTime();
 		Integer count = tx.transact(getEntityManager(), reuseCache());
-		println("Merge returned " + count + " count.");
+		long t2 = nanoTime();
+		println("Merge returned " + count + " count; " + ns(t1,t2));
 	}
 	
 	public void queryProducts(Integer start, Integer count, Stage stage)
 	{
+		long t1 = nanoTime();
 		List<Product> productList = selectProducts(start, count, stage);
+		long t2 = nanoTime();
+		println("Query returned " + productList.size() + " results; " + ns(t1,t2) + "\n");
 		setProductSet(new HashSet<>(productList));
-		println("Query returned " + productList.size() + " results.");
 	}
 	
 	private List<Product> selectProducts(Integer start, Integer count, Stage stage)
 	{
-		// Always perform EntityManager actions within an EntityTransaction!
+		// Always perform EntityManager actions within a transaction!
 		Transactional<List<Product>> tx = (em) ->
 		{
 			CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
@@ -355,6 +362,11 @@ public class Explorer extends AbstractExplorer
 		List<Product> productList = tx.transact(getEntityManager(), reuseCache());
 		return productList;
 	}
+
+	private void queryAllProducts()
+	{
+		queryProducts(0, MAX_RESULT_COUNT, null);
+	}
 	
 	public void processProducts()
 	{
@@ -362,12 +374,13 @@ public class Explorer extends AbstractExplorer
 		processProducts(ACTIVE, CLOSED, HOLD);
 		processProducts(HOLD, CANCELED, OPEN);
 		println();
+		queryAllProducts();
 	}
 		
 	private void processProducts(Stage stageFrom, Stage stageTo, Stage stageAlt)
 	{
 		println(stageFrom + " products processing... ");
-		// Always perform EntityManager actions within an EntityTransaction!
+		// Always perform EntityManager actions within a transaction!
 		Transactional<Integer> tx = (em) ->
 		{
 			int count = 0;
@@ -389,8 +402,10 @@ public class Explorer extends AbstractExplorer
 			}
 			return count;
 		};
+		long t1 = nanoTime();
 		int count = tx.transact(getEntityManager(), reuseCache());
-		println(stageFrom + " products processed: " + count);
+		long t2 = nanoTime();
+		println(stageFrom + " products processed: " + count + "; " + ns(t1,t2) + "\n");
 	}
 	
 	public void disposeProducts()
@@ -398,12 +413,13 @@ public class Explorer extends AbstractExplorer
 		disposeProducts(CLOSED);
 		disposeProducts(CANCELED);
 		println();
+		queryAllProducts();
 	}
 
 	private void disposeProducts(Stage stage)
 	{
 		println(stage + " products disposing... ");
-		// Always perform EntityManager actions within an EntityTransaction!
+		// Always perform EntityManager actions within a transaction!
 		Transactional<Integer> tx = (em) ->
 		{
 			int count = 0;
@@ -419,13 +435,15 @@ public class Explorer extends AbstractExplorer
 			}
 			return count;
 		};
+		long t1 = nanoTime();
 		Integer count = tx.transact(getEntityManager(), reuseCache());
-		println(stage + " products disposed: " + count);
+		long t2 = nanoTime();
+		println(stage + " products disposed: " + count + "; " + ns(t1,t2) + "\n");
 	}
 
 	public void removeProducts()
 	{
-		// Always perform EntityManager actions within an EntityTransaction!
+		// Always perform EntityManager actions within a transaction!
 		Transactional<Integer> tx = (em) ->
 		{
 			int count = 0;
@@ -441,8 +459,10 @@ public class Explorer extends AbstractExplorer
 			}
 			return count;
 		};
+		long t1 = nanoTime();
 		Integer count = tx.transact(getEntityManager(), reuseCache());
-		println("Remove returned " + count + " count.");
+		long t2 = nanoTime();
+		println("Remove returned " + count + " count; " + ns(t1,t2) + "\n");
 	}
 	
 	private String identify(Object object)
@@ -591,12 +611,12 @@ public class Explorer extends AbstractExplorer
 				try
 				{
 					Long count = tx.transact(entityManager);
-					println("Query " + entityManager + "; Count = " + count);
+					println("Successful thread " + threadName + "; Count = " + count);
 				}
 				catch ( RuntimeException ex)
 				{
 					errorln(ex);
-					errorDialog("Thread: "+threadName, ex);
+					errorDialog("Failed thread: "+threadName, ex);
 				}
 				entityManager.close();
 			};
@@ -607,7 +627,7 @@ public class Explorer extends AbstractExplorer
 	
 	public void chaosQueryCacheJPA()
 	{
-		// Always perform EntityManager actions within an EntityTransaction!
+		// Always perform EntityManager actions within a transaction!
 		Transactional<Integer> tx = (em) ->
 		{
 			int count = 0;
@@ -661,8 +681,9 @@ public class Explorer extends AbstractExplorer
 			case "displayEntityManagerFactoryProperties": displayEntityManagerFactoryProperties(); break;
 			case "marshalProducts": marshalProducts(); break;
 			case "unmarshalProducts": unmarshalProducts(); break;
+			case "entityStateProduct": printEntityState(Product.class); break;
 			case "persistProducts": persistProducts(); break;
-			case "mergeProducts": persistProducts(); break;
+			case "mergeProducts": mergeProducts(); break;
 			case "queryProducts": queryProducts(0, MAX_RESULT_COUNT, null); break;
 			case "processProducts": processProducts(); break;
 			case "disposeProducts": disposeProducts(); break;
@@ -670,8 +691,9 @@ public class Explorer extends AbstractExplorer
 			case "extensionHashCodes": extensionHashCodes(); break;
 			case "extensionEquality": extensionEquality(); break;
 			case "extensionToString": extensionToString(); break;
-			case "roundtripValid": roundtripJAXBValid(); break;
-			case "roundtripInvalid": roundtripJAXBInvalid(); break;
+			case "roundtripJAXBValid": roundtripJAXBValid(); break;
+			case "roundtripJAXBInvalid": roundtripJAXBInvalid(); break;
+			case "roundtripJPA": roundtripJPA(); break;
 			case "searchProducts": searchProducts(); break;
 			case "chaosExhaustConnectionPool": chaosExhaustConnectionPool(); break;
 			case "chaosQueryCacheJPA": chaosQueryCacheJPA(); break;
@@ -740,7 +762,19 @@ public class Explorer extends AbstractExplorer
 			}
 			menuBar.add(bindXmlMenu);
 		}
-
+		
+		// EntityState Menu
+		{
+			JMenu entityStateMenu = new JMenu("EntityState");
+			// EntityState: Products Sub-Menu
+			{
+				JMenuItem menuItem = new JMenuItem("Product");
+				menuItem.addActionListener((event) -> printEntityState(Product.class));
+				entityStateMenu.add(menuItem);
+			}
+			menuBar.add(entityStateMenu);
+		}
+		
 		// Persist Menu
 		{
 			JMenu persistenceMenu = new JMenu("Persistence");
@@ -765,7 +799,7 @@ public class Explorer extends AbstractExplorer
 					// Persistence Products Query: All Menu Item
 					{
 						JMenuItem menuItem = new JMenuItem("All");
-						menuItem.addActionListener((event) -> queryProducts(0, MAX_RESULT_COUNT, null));
+						menuItem.addActionListener((event) -> queryAllProducts());
 						queryMenu.add(menuItem);
 					}
 					// Persistence Products Query: Hold Menu Item
@@ -821,18 +855,6 @@ public class Explorer extends AbstractExplorer
 				persistenceMenu.add(productsMenu);
 			}
 			menuBar.add(persistenceMenu);
-		}
-		
-		// EntityState Menu
-		{
-			JMenu entityStateMenu = new JMenu("EntityState");
-			// EntityState: Products Sub-Menu
-			{
-				JMenuItem menuItem = new JMenuItem("Product");
-				menuItem.addActionListener((event) -> printEntityState(Product.class));
-				entityStateMenu.add(menuItem);
-			}
-			menuBar.add(entityStateMenu);
 		}
 		
 		// Extension Menu
@@ -1007,6 +1029,8 @@ public class Explorer extends AbstractExplorer
 	
 	private void clear2ndLevelCache(ActionEvent event)
 	{
+		// Evict only the "JPA cache", which is purely defined as the entity regions.
+		// Query cache is not evicted.
 		getEntityManagerFactory().getCache().evictAll();
 	}
 	
