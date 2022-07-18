@@ -8,6 +8,7 @@ import javax.persistence.RollbackException;
 
 /**
  * Execute SQL work within a transaction. 
+ * Always perform JDBC actions within a transaction!
  * 
  * The caller provides a lambda expression to define the work method.
  *
@@ -63,24 +64,26 @@ public interface TransactionalSql<R> // extends ReturningWork<R>
 				conn.setAutoCommit(false);
 
 			// Execute callback method for the business work.
-//			return (R) execute(conn);
 			return work(conn);
 		}
 		catch (Exception ex)
 		{
 			try
 			{
+				String msg = "Transaction is not active.";
 				if ( !conn.getAutoCommit() )
 				{
+					msg = "Transaction will be rolled back.";
 					isRollbackOnly = true;
-					throw new RollbackException("Transaction will be rolled back.", ex);
 				}
+				if ( ex instanceof RollbackException )
+					throw ex;
 				else
-					throw new PersistenceException("Transaction is not active.", ex);
+					throw new RollbackException(msg, ex);
 			}
 			catch ( SQLException sex)
 			{
-				throw new PersistenceException("Transaction will not be rolled back!", sex);
+				throw new RollbackException("Transaction will not be rolled back!", sex);
 			}
 		}
 		finally
@@ -98,7 +101,7 @@ public interface TransactionalSql<R> // extends ReturningWork<R>
 			}
 			catch ( SQLException sex)
 			{
-				throw new PersistenceException("Transaction not rolled back!", sex);
+				throw new PersistenceException("Transaction not completed!", sex);
 			}
 		}
 	}

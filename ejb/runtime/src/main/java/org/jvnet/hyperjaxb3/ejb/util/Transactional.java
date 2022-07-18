@@ -1,11 +1,11 @@
 package org.jvnet.hyperjaxb3.ejb.util;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
 import javax.persistence.RollbackException;
 
 /**
  * Execute JPQL work within a transaction. 
+ * Always perform EntityManager actions within a transaction!
  * 
  * The caller provides a lambda expression to define the work method.
  *
@@ -81,13 +81,16 @@ public interface Transactional<R>
 		}
 		catch (RuntimeException ex)
 		{
+			String msg = "Transaction is not active.";
 			if ( em.getTransaction().isActive() )
 			{
+				msg = "Transaction marked for rollback only.";
 				em.getTransaction().setRollbackOnly();
-				throw new RollbackException("Transaction marked for rollback only.", ex);
 			}
+			if ( ex instanceof RollbackException )
+				throw ex;
 			else
-				throw new PersistenceException("Transaction is not active.", ex);
+				throw new RollbackException(msg, ex);
 		}
 		finally
 		{
