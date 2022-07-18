@@ -30,7 +30,6 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
-import org.jvnet.hyperjaxb3.ejb.Constants;
 import org.jvnet.mjiip.v_2.XJC2Mojo;
 
 import com.sun.tools.xjc.Options;
@@ -41,7 +40,6 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	/**
 	 * Target directory for the generated mappings. If left empty, mappings are
 	 * generated together with sources.
-	 * 
 	 */
 	@Parameter(property = "maven.hj3.target")
 	public File target;
@@ -49,14 +47,12 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	/**
 	 * Name of the roundtrip test case. If omitted, no roundtrip test case is
 	 * generated.
-	 * 
 	 */
 	@Parameter(property = "maven.hj3.roundtripTestClassName")
 	public String roundtripTestClassName;
 
 	/**
 	 * Patterns for files to be included as resources.
-	 * 
 	 */
 	@Parameter
 	public String[] resourceIncludes = new String[] { "**/*.hbm.xml",
@@ -65,54 +61,66 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	/**
 	 * Persistence variant. Switches between various persistence
 	 * implementations. Possible values are "hibernate" and "ejb-hibernate".
-	 * 
 	 */
 	@Parameter(property = "maven.hj3.variant", defaultValue = "ejb")
 	public String variant = "ejb";
 
 	/**
-	 * 
 	 * Persistence unit name (EJB3 specific).
-	 * 
 	 */
 	@Parameter(property = "maven.hj3.persistenceUnitName")
 	public String persistenceUnitName;
 
 	/**
-	 * 
 	 * Persistence unit name (EJB3 specific).
-	 * 
 	 */
 	@Parameter(property = "maven.hj3.persistenceXml")
 	public File persistenceXml;
 
 	/**
-	 * 
+	 * Whether to add or remove arbitrary annotations to/from generated sources.
+	 */
+	@Parameter(property = "maven.hj3.generateAnnotation", defaultValue = "true")
+	public boolean generateAnnotation = true;
+
+	/**
+	 * Whether schema-derived classes extend certain class or implement certain interfaces.
+	 */
+	@Parameter(property = "maven.hj3.generateInheritance", defaultValue = "true")
+	public boolean generateInheritance = true;
+
+	/**
 	 * Whether the <code>hashCode()</code> method should be generated.
-	 * 
 	 */
 	@Parameter(property = "maven.hj3.generateHashCode", defaultValue = "true")
 	public boolean generateHashCode = true;
 
 	/**
-	 * 
 	 * Whether the <code>equals(...)</code> methods should be generated.
-	 * 
 	 */
 	@Parameter(property = "maven.hj3.generateEquals", defaultValue = "true")
 	public boolean generateEquals = true;
 
 	/**
-	 * 
+	 * Whether the <code>toString()</code> methods should be generated.
+	 */
+	@Parameter(property = "maven.hj3.generateToString", defaultValue = "true")
+	public boolean generateToString = true;
+
+	/**
+	 * Override HashCode, Equals, ToString. Possible values are "strategic", "simple[123]".
+	 */
+	@Parameter(property = "maven.hj3.overrideHET", defaultValue = "strategic")
+	public String overrideHET = "strategic";
+
+	/**
 	 * Whether the generated id property must be transient.
-	 * 
 	 */
 	@Parameter(property = "maven.hj3.generateTransientId", defaultValue = "false")
 	public boolean generateTransientId = false;
 
 	/**
 	 * Generation result. Possible values are "annotations", "mappingFiles".
-	 * 
 	 */
 	@Parameter(property = "maven.hj3.result", defaultValue = "annotations")
 	public String result = "annotations";
@@ -156,8 +164,12 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 		getLog().info("Configuration: variant:" + variant);
 		getLog().info("Configuration: persistenceUnitName:" + persistenceUnitName);
 		getLog().info("Configuration: persistenceXml:" + persistenceXml);
+		getLog().info("Configuration: generateInheritance:" + generateInheritance);
+		getLog().info("Configuration: generateAnnotation:" + generateAnnotation);
 		getLog().info("Configuration: generateHashCode:" + generateHashCode);
 		getLog().info("Configuration: generateEquals:" + generateEquals);
+		getLog().info("Configuration: generateToString:" + generateToString);
+		getLog().info("Configuration: generateHET:" + overrideHET);
 		getLog().info("Configuration: generateTransientId:" + generateTransientId);
 		getLog().info("Configuration: result:" + result);
 		getLog().info("Configuration: preArgs:" + Arrays.toString(preArgs));
@@ -177,18 +189,22 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 		final List<String> arguments = new ArrayList<String>();
 
 		if (this.preArgs != null) {
-			arguments.addAll(Arrays.asList(this.preArgs));
+			addAll(arguments,Arrays.asList(this.preArgs));
 		}
 		
-		arguments.add("-Xinheritance");
+		addAll(arguments,super.getArguments());
 
-		arguments.addAll(super.getArguments());
+		if (generateInheritance)
+			add(arguments,"-Xinheritance");
+
+		if (generateAnnotation)
+			add(arguments,"-Xannotate");
 
 		if ("ejb".equals(variant)) {
-			arguments.add("-Xhyperjaxb3-ejb");
+			add(arguments,"-Xhyperjaxb3-ejb");
 
 			if (result != null) {
-				arguments.add("-Xhyperjaxb3-ejb-result=" + result);
+				add(arguments,"-Xhyperjaxb3-ejb-result=" + result);
 			}
 
 			if (roundtripTestClassName != null) {
@@ -196,71 +212,146 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 						+ roundtripTestClassName);
 			}
 			if (persistenceUnitName != null) {
-				arguments.add("-Xhyperjaxb3-ejb-persistenceUnitName="
+				add(arguments,"-Xhyperjaxb3-ejb-persistenceUnitName="
 						+ persistenceUnitName);
 			}
 			if (persistenceXml != null) {
-				arguments.add("-Xhyperjaxb3-ejb-persistenceXml="
+				add(arguments,"-Xhyperjaxb3-ejb-persistenceXml="
 						+ persistenceXml.getAbsolutePath());
 			}
 
 			if (generateTransientId) {
-				arguments.add("-Xhyperjaxb3-ejb-generateTransientId=true");
+				add(arguments,"-Xhyperjaxb3-ejb-generateTransientId=true");
 			}
 
 		} else if ("jpa1".equals(variant)) {
 			arguments.add("-Xhyperjaxb3-jpa1");
 
 			if (result != null) {
-				arguments.add("-Xhyperjaxb3-jpa1-result=" + result);
+				add(arguments,"-Xhyperjaxb3-jpa1-result=" + result);
 			}
 
 			if (roundtripTestClassName != null) {
-				arguments.add("-Xhyperjaxb3-jpa1-roundtripTestClassName="
+				add(arguments,"-Xhyperjaxb3-jpa1-roundtripTestClassName="
 						+ roundtripTestClassName);
 			}
 			if (persistenceUnitName != null) {
-				arguments.add("-Xhyperjaxb3-jpa1-persistenceUnitName="
+				add(arguments,"-Xhyperjaxb3-jpa1-persistenceUnitName="
 						+ persistenceUnitName);
 			}
 			if (persistenceXml != null) {
-				arguments.add("-Xhyperjaxb3-jpa1-persistenceXml="
+				add(arguments,"-Xhyperjaxb3-jpa1-persistenceXml="
 						+ persistenceXml.getAbsolutePath());
 			}
 
 		} else if ("jpa2".equals(variant)) {
-			arguments.add("-Xhyperjaxb3-jpa2");
+			add(arguments,"-Xhyperjaxb3-jpa2");
 
 			if (result != null) {
-				arguments.add("-Xhyperjaxb3-jpa2-result=" + result);
+				add(arguments,"-Xhyperjaxb3-jpa2-result=" + result);
 			}
 
 			if (roundtripTestClassName != null) {
-				arguments.add("-Xhyperjaxb3-jpa2-roundtripTestClassName="
+				add(arguments,"-Xhyperjaxb3-jpa2-roundtripTestClassName="
 						+ roundtripTestClassName);
 			}
 			if (persistenceUnitName != null) {
-				arguments.add("-Xhyperjaxb3-jpa2-persistenceUnitName="
+				add(arguments,"-Xhyperjaxb3-jpa2-persistenceUnitName="
 						+ persistenceUnitName);
 			}
 			if (persistenceXml != null) {
-				arguments.add("-Xhyperjaxb3-jpa2-persistenceXml="
+				add(arguments,"-Xhyperjaxb3-jpa2-persistenceXml="
 						+ persistenceXml.getAbsolutePath());
 			}
 		}
 
-		if (generateEquals) {
-			arguments.add("-Xequals");
+		if (generateEquals)
+		{
+			switch (overrideHET)
+			{
+				case "strategic":
+					add(arguments,"-Xequals");
+					add(arguments,"-XhashCode");
+					break;
+				case "simple":
+				case "simple1":
+				case "simple2":
+				case "simple3":
+					add(arguments,"-XsimpleEquals");
+					add(arguments,"-XsimpleHashCode");
+					break;
+			}
 		}
-		if (generateHashCode) {
-			arguments.add("-XhashCode");
+		else if (generateHashCode)
+		{
+			switch (overrideHET)
+			{
+				case "strategic":
+					add(arguments,"-XhashCode");
+					break;
+				case "simple":
+				case "simple1":
+				case "simple2":
+				case "simple3":
+					add(arguments,"-XsimpleHashCode");
+					break;
+			}
+		}
+		if (generateToString)
+		{
+			switch (overrideHET)
+			{
+				case "strategic":
+					add(arguments,"-XtoString");
+					break;
+				case "simple":
+					add(arguments,"-XsimpleToString");
+					break;
+				case "simple1":
+					add(arguments,"-XsimpleToString");
+					add(arguments,"-XsimpleToString-showChildItems=true");
+					break;
+				case "simple2":
+					add(arguments,"-XsimpleToString");
+					add(arguments,"-XsimpleToString-showChildItems=true");
+					add(arguments,"-XsimpleToString-showFieldNames=true");
+					break;
+				case "simple3":
+					add(arguments,"-XsimpleToString");
+					add(arguments,"-XsimpleToString-showChildItems=true");
+					add(arguments,"-XsimpleToString-showFieldNames=true");
+					add(arguments,"-XsimpleToString-fullClassName=true");
+					break;
+			}
 		}
 
 		if (this.postArgs != null) {
-			arguments.addAll(Arrays.asList(this.postArgs));
+			addAll(arguments,Arrays.asList(this.postArgs));
 		}
 
 		return arguments;
+	}
+	
+	/**
+	 * Add an item to the list, if not present.
+	 * 
+	 * @param list The list to receive the item.
+	 * @param item The item to be added.
+	 * 
+	 * @return True when the item is added or is present; otherwise, false.
+	 */
+	private boolean add(List<String> list, String item)
+	{
+		boolean present = true;
+		if ( !list.contains(item) )
+			present = list.add(item);
+		return present;
+	}
+
+	private void addAll(List<String> list, List<String> items)
+	{
+		for ( String item : items )
+			add(list, item);
 	}
 
 	/**
