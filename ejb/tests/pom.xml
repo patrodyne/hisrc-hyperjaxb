@@ -10,201 +10,96 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 EJB Tests</name>
+	<name>HiSrc HyperJAXB EJB Tests</name>
 	<modules>
+		<module>addressbook</module>
+		<module>ak</module>
 		<module>any</module>
-		<!-- TODO<module>episodes</module>-->
-		<module>one</module>
-		<module>po</module>
-		<module>po-customized</module>
-		<module>st</module>
+		<module>bibtexml</module>
+		<module>component-jpa2</module>
+		<module>cu-one</module>
+		<module>custom-naming</module>
+		<module>dc</module>
+		<module>device</module>
+		<module>dom</module>
+		<module>dy</module>
+		<module>ebxmlrr</module>
+		<module>edxl</module>
+		<module>ek</module>
 		<module>embeddable</module>
 		<module>embeddable-jpa2</module>
+		<module>eminq</module>
+		<module>enum</module>
+		<module>equals-builder</module>
+		<module>ioda</module>
 		<module>issues-pre</module>
-		<!-- TODO<module>issues</module>-->
 		<module>issues-el</module>
 		<module>issues-jpa2</module>
+		<module>one</module>
+		<module>onix30</module>
+		<module>pesc</module>
+		<module>po</module>
+		<module>po-customized</module>
+		<module>po-el-customized</module>
+		<module>po-jaxb</module>
+		<module>polyform</module>
+		<module>punit</module>
+		<module>px</module>
+		<module>sbml</module>
+		<module>sepa</module>
+		<module>service</module>
+		<module>simple</module>
+		<module>st</module>
+		<module>tp</module>
+		<module>transient-ids</module>
+		<module>verylong</module>
+		<module>web</module>
+		<module>xmldsig</module>
 	</modules>
 	<profiles>
 		<profile>
+			<!-- package=SUCCESS; test=FAILURE -->
 			<id>tests-0</id>
 			<modules>
-				<module>addressbook</module>
-				<module>ak</module>
-				<module>annox</module>
-				<module>any</module>
-				<module>bibtexml</module>
-				<!-- ** module>ccr</module-->
-				<!-- *** Documents differ module>cda</module-->
-				<!-- ** module>component</module-->
-				<module>component-jpa2</module>
-				<module>cu-one</module>
-				<!-- ** module>custom-naming</module-->
-				<!-- ** module>customType</module-->
-				<!-- ** module>customizations</module-->
- 				<module>dc</module>
 				<module>derby</module>
-				<module>device</module>
-				<!-- ** module>dl</module-->
-				<module>dom</module>
-				<module>dy</module>
-				<module>ebxmlrr</module>
-				<!-- ** module>edxl</module-->
-				<module>ek</module>
-				<module>embeddable</module>
-				<module>embeddable-jpa2</module>
-				<module>eminq</module>
-				<module>enum</module>
-				<!-- TODO<module>episodes</module>-->
-				<module>equals-builder</module>
-				<!-- TODO module>fpml-pretrade</module-->
-				<!--module>idSymbolSpace</module-->
+				<module>dl</module>
 				<module>ids</module>
-				<!-- *** Duplicate definition module>ims-eportfolio</module -->
-				<!-- TODO module>ims-lip</module-->
-				<module>ioda</module>
-				<!-- TODO<module>issues</module>-->
-				<module>issues-el</module>
-				<module>issues-jpa2</module>
-				<!-- TODO module>nml</module-->
-				<!-- TODO module>nokis</module-->
+				<module>ims-lip</module>
+				<module>nml</module>
+				<module>nokis</module>
+				<module>ows</module>
+				<module>regrep</module>
+				<module>uniprot</module>
+				<module>xacml</module>
 			</modules>
 		</profile>
 		<profile>
+			<!-- package=SUCCESS; test=FAILURE; long running -->
 			<id>tests-1</id>
 			<modules>
-				<module>one</module>
-				<module>onix30</module>
-				<module>ota</module>
-				<!-- *** module>ows</module -->
-				<module>pesc</module>
-				<!-- *** module>plmxml</module -->
-				<module>po</module>
-				<module>po-customized</module>
-				<module>po-el-customized</module>
-				<module>po-jaxb</module>
-				<!-- module>po-mysql</module -->
-				<module>po-tl-customized</module>
-				<module>polyform</module>
-				<module>punit</module>
-				<module>px</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>tests-2</id>
-			<modules>
-				<module>regrep</module>
-				<!-- TODO module>rim</module-->
-				<module>sbml</module>
-				<module>sepa</module>
-				<module>service</module>
-				<module>simple</module>
-				<!-- TODO module>sml</module-->
-				<module>st</module>
-				<!-- *** module>star</module -->
-				<module>tp</module>
-				<module>transient-ids</module>
-				<module>uniprot</module>
-				<!-- module>verylong</module-->
-				<module>web</module>
-				<module>xacml</module>
-				<module>xmldsig</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>tests-all</id>
-			<modules>
-				<module>addressbook</module>
-				<module>ak</module>
-				<module>annox</module>
-				<module>any</module>
-				<module>bibtexml</module>
-				<!-- ** module>ccr</module-->
-				<!-- *** Documents differ module>cda</module-->
-				<!-- ** module>component</module-->
-				<module>component-jpa2</module>
-				<module>cu-one</module>
-				<module>custom-naming</module>
-				<!-- ** module>customType</module-->
-				<!-- ** module>customizations</module-->
- 				<module>dc</module>
-				<module>derby</module>
-				<module>device</module>
-				<!-- ** module>dl</module-->
-				<module>dom</module>
-				<module>dy</module>
-				<module>ebxmlrr</module>
-				<module>edxl</module>
-				<module>ek</module>
-				<module>embeddable</module>
-				<module>embeddable-jpa2</module>
-				<module>eminq</module>
-				<module>enum</module>
-				<!-- TODO<module>episodes</module>-->
-				<module>equals-builder</module>
-				<!-- TODO module>fpml-pretrade</module-->
-				<!--module>idSymbolSpace</module-->
-				<module>ids</module>
-				<!-- *** Duplicate definition module>ims-eportfolio</module -->
-				<!-- TODO module>ims-lip</module-->
-				<module>ioda</module>
-				<!-- TODO<module>issues</module>-->
-				<module>issues-el</module>
-				<module>issues-jpa2</module>
-				<!-- TODO module>nml</module-->
-				<!-- TODO module>nokis</module-->
-				<module>one</module>
-				<module>onix30</module>
-				<module>ota</module>
-				<module>ows</module>
-				<module>pesc</module>
-				<!-- *** module>plmxml</module -->
-				<module>po</module>
-				<module>po-customized</module>
-				<module>po-el-customized</module>
-				<module>po-jaxb</module>
-				<!-- module>po-mysql</module -->
-				<module>po-tl-customized</module>
-				<module>polyform</module>
-				<module>punit</module>
-				<module>px</module>
-				<module>regrep</module>
-				<!-- TODO module>rim</module-->
-				<module>sbml</module>
-				<module>sepa</module>
-				<module>service</module>
-				<module>simple</module>
-				<!-- TODO module>sml</module-->
-				<module>st</module>
-				<!-- *** module>star</module -->
-				<module>tp</module>
-				<module>transient-ids</module>
-				<module>uniprot</module>
-				<module>verylong</module>
-				<module>web</module>
-				<module>xacml</module>
-				<module>xmldsig</module>
-
-				<!-- Previously failing projects including to be able to update versions -->
-				<module>fpml-pretrade</module>
-				<module>nml</module>
-
-				<!-- Remaining failing projects including to be able to update versions -->
-				<!--
 				<module>cda</module>
-				<module>ccr</module>
-				<module>component</module>
-				<module>customType</module>
-				<module>customizations</module>
-				<module>dl</module>
-				<module>ims-eportfolio</module>
-				<module>ims-lip</module>
+				<module>episodes</module> <!-- package=SUCCESS; WARNINGS -->
+				<module>fpml-pretrade</module>
+				<module>ota</module>
 				<module>plmxml</module>
-				<module>po-mysql</module>
-				<module>rim</module>
 				<module>sml</module>
 				<module>star</module>
-				-->
+			</modules>
+		</profile>
+		<profile>
+			<!-- package=FAILURE; test=FAILURE -->
+			<id>tests-2</id>
+			<modules>
+				<module>annox</module>
+				<module>ccr</module>
+				<module>component</module>
+				<module>customizations</module>
+				<module>customType</module>
+				<module>idSymbolSpace</module>
+				<module>ims-eportfolio</module>
+				<module>issues</module>
+				<module>po-mysql</module>
+				<module>rim</module>
 			</modules>
 		</profile>
 	</profiles>

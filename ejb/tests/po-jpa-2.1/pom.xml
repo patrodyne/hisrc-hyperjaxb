@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-po-jpa-2.1</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Test [po-jpa-2.1]</name>
+	<name>HiSrc HyperJAXB EJB Test [po-jpa-2.1]</name>
 	<dependencies>
 		<!-- Hibernate Dependencies -->
 		<!-- Test -->
@@ -30,9 +30,13 @@
 			<artifactId>javax.persistence-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>2.3.2</version>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

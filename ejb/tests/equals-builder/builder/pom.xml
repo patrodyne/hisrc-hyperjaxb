@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-equals-builder-builder</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Test [equals-builder-builder]</name>
+	<name>HiSrc HyperJAXB EJB Test [equals-builder-builder]</name>
 	<dependencies>
 		<!-- Test -->
 		<dependency>

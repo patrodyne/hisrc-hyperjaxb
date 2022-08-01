@@ -2,11 +2,15 @@ package org.jvnet.hyperjaxb3.ejb.tests.componentjpa2.tests;
 
 
 import org.junit.Test;
+import org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil;
 import org.jvnet.hyperjaxb3.xml.bind.JAXBContextUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
+
 import java.io.*;
 import java.net.URL;
 import java.util.Enumeration;
@@ -90,7 +94,7 @@ public class TestHyperJaxb {
 
         try {
             final Enumeration<URL> resources = getClass().getClassLoader().getResources(
-                    getEntityManagerFactoryPropertiesResourceName());
+            	getPersistencePropertiesBaseFile());
 
             if (!resources.hasMoreElements()) {
                 System.out.println("Entity manager factory properties are not set.");
@@ -135,9 +139,5 @@ public class TestHyperJaxb {
         catch (IOException ex) {
             return null;
         }
-    }
-
-    public String getEntityManagerFactoryPropertiesResourceName() {
-        return "persistence.properties";
     }
 }

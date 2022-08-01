@@ -30,6 +30,9 @@
 						<hj:enumerated-value/>
 					</hj:basic>
 				</hj:default-single-property>
+				<hj:default-generated-id>
+					 <orm:generated-value strategy="IDENTITY"/> 
+				</hj:default-generated-id>
 			</hj:persistence>
 		</xsd:appinfo>
 	</xsd:annotation>

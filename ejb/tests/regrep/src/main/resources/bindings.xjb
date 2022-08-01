@@ -4,8 +4,9 @@
 		xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
 		xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 		xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+		xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
 		xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-		jaxb:extensionBindingPrefixes="xjc hj"
+		jaxb:extensionBindingPrefixes="xjc hj orm"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 		xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb  http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
     
@@ -37,6 +38,11 @@
             <jaxb:package name="org.freebxml.omar.jaxb.bindings.rim"/>
         </jaxb:schemaBindings>    
         
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
         
     </jaxb:bindings>
     

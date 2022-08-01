@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-custom-naming-schema</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Test [custom-naming-schema]</name>
+	<name>HiSrc HyperJAXB EJB Test [custom-naming-schema]</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven.shared</groupId>
@@ -26,8 +26,13 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>test</scope>
 		</dependency>
 		

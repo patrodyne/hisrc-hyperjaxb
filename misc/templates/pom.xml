@@ -7,7 +7,7 @@
 	<artifactId>hisrc-hyperjaxb-templates</artifactId>
 	<version>0.6.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 Templates</name>
+	<name>HiSrc HyperJAXB Templates</name>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-project</artifactId>

@@ -1,5 +1,10 @@
 package org.jvnet.hyperjaxb3.ejb.test;
 
+import static org.jvnet.hyperjaxb3.ejb.Constants.PERSISTENCE_PROPERTIES_BASE_FILE;
+import static org.jvnet.hyperjaxb3.ejb.Constants.PERSISTENCE_PROPERTIES_MORE_FILE;
+import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
+import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesMoreFile;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -109,60 +114,67 @@ public abstract class AbstractEntityManagerTest extends TestCase {
     this.entityManagerFactoryProperties = entityManagerFactoryProperties;
   }
 
-public Map createEntityManagerFactoryProperties() {
+	public Map createEntityManagerFactoryProperties()
+	{
+		try
+		{
+			final Enumeration<URL> resourcesBase =
+				getClass().getClassLoader().getResources(getPersistencePropertiesBaseFile());
+			if (!resourcesBase.hasMoreElements())
+			{
+				logger.debug("Entity manager factory properties are not set.");
+				return null;
+			}
+			else
+			{
+				logger.debug("Loading entity manager factory properties.");
+				Properties properties = new Properties();
+				properties = loadResources(properties, resourcesBase);
+				if ( properties != null )
+				{
+					final Enumeration<URL> resourcesMore =
+						getClass().getClassLoader().getResources(getPersistencePropertiesMoreFile());
+					if (resourcesMore.hasMoreElements())
+					{
+						logger.debug("Loading more entity manager factory properties.");
+						properties = loadResources(properties, resourcesMore);
+					}
+				}
+				return properties;
+			}
+		}
+		catch (IOException ex)
+		{
+			return null;
+		}
+	}
 
-    try {
-      final Enumeration<URL> resources = getClass().getClassLoader().getResources(
-          getEntityManagerFactoryPropertiesResourceName());
-
-      if (!resources.hasMoreElements()) {
-        logger.debug("Entity manager factory properties are not set.");
-        return null;
-
-      }
-      else {
-        logger.debug("Loading entity manager factory properties.");
-        final Properties properties = new Properties();
-        while (resources.hasMoreElements()) {
-          final URL resource = resources.nextElement();
-          logger.info("EMF: Loading [" + resource + "].");
-
-          if (resource == null) {
-            return null;
-          }
-          else {
-            InputStream is = null;
-            try {
-              is = resource.openStream();
-              properties.load(is);
-              return properties;
-            }
-            catch (IOException ex) {
-              return null;
-            }
-            finally {
-              if (is != null) {
-                try {
-                  is.close();
-                }
-                catch (IOException ex) {
-                  // Ignore
-                }
-              }
-            }
-          }
-        }
-        return properties;
-      }
-    }
-    catch (IOException ex) {
-      return null;
-    }
-  }
-
-  public String getEntityManagerFactoryPropertiesResourceName() {
-    return "persistence.properties";
-  }
+	private Properties loadResources(Properties properties, final Enumeration<URL> resourcesBase)
+	{
+		while (resourcesBase.hasMoreElements())
+		{
+			final URL resource = resourcesBase.nextElement();
+			logger.info("EMF: Loading [" + resource + "].");
+			if (resource == null)
+			{
+				properties = null;
+				break;
+			}
+			else
+			{
+				try ( InputStream is = resource.openStream() )
+				{
+					properties.load(is);
+				}
+				catch (IOException ex)
+				{
+					properties = null;
+					break;
+				}
+			}
+		}
+		return properties;
+	}
 
   public EntityManager createEntityManager() {
     final Map properties = getEntityManagerProperties();

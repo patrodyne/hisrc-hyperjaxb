@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-custom-naming-extension</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Test [custom-naming-extension]</name>
+	<name>HiSrc HyperJAXB EJB Test [custom-naming-extension]</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>

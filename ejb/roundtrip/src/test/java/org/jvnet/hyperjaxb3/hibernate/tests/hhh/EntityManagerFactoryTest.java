@@ -1,6 +1,8 @@
 package org.jvnet.hyperjaxb3.hibernate.tests.hhh;
 
 import static org.junit.Assert.assertNotNull;
+import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
+import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesMoreFile;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -14,14 +16,17 @@ public class EntityManagerFactoryTest {
 
 	@Test
 	public void entityManagerFactoryCreated() throws IOException {
+
 		final Properties properties = new Properties();
-		properties.load(getClass().getClassLoader().getResourceAsStream(
-				"persistence.properties"));
+		properties.load(getClass().getClassLoader().getResourceAsStream(getPersistencePropertiesBaseFile()));
+		Properties propertiesMore = new Properties();
+		propertiesMore.load(getClass().getClassLoader().getResourceAsStream(getPersistencePropertiesMoreFile()));
+		properties.putAll(propertiesMore);
+
 		final String persistenceUnitName = getClass().getPackage().getName();
 		final EntityManagerFactory entityManagerFactory = Persistence
 				.createEntityManagerFactory(persistenceUnitName, properties);
 		assertNotNull(entityManagerFactory);
-
 	}
 
 	public String getPersistenceUnitName() {

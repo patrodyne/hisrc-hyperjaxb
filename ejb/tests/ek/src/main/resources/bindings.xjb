@@ -2,6 +2,10 @@
 <jaxb:bindings
 	version="2.1"
 	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm"
 >
 
 	<!-- Global Bindings -->
@@ -11,6 +15,14 @@
 		<jaxb:globalBindings localScoping="toplevel">
 			<jaxb:serializable uid="20211201" />
 		</jaxb:globalBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="Transaction3.0.xsd" node="/xs:schema">
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
 	</jaxb:bindings>
 
 </jaxb:bindings>

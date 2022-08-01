@@ -34,6 +34,9 @@
 	<xsd:annotation>
 		<xsd:appinfo>
 			<hj:persistence>
+				<hj:default-generated-id>
+					 <orm:generated-value strategy="IDENTITY"/> 
+				</hj:default-generated-id>
 				<hj:default-single-property type="xsd:string">
 					<hj:basic>
 						<orm:column length="1000"/>

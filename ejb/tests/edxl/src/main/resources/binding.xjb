@@ -6,7 +6,8 @@
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
 	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-	jaxb:extensionBindingPrefixes="xjc hj orm">
+	jaxb:extensionBindingPrefixes="xjc hj orm"
+>
 
 	<jaxb:bindings schemaLocation="xlink-2003-12-31.xsd" node="/xs:schema">
 		<jaxb:bindings node="xs:attribute[@name='type']">
@@ -22,6 +23,11 @@
 			<jaxb:class name="AbstractCurve"/>
 		</jaxb:bindings>
 		<hj:ignored-package name="net.opengis.gml"/>
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
 	</jaxb:bindings>
 
 </jaxb:bindings>

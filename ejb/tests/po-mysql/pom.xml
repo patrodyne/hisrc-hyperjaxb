@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-po-mysql</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Test [po-mysql]</name>
+	<name>HiSrc HyperJAXB EJB Test [po-mysql]</name>
 	<dependencies>
 		<!-- Hibernate Dependencies -->
 		<!-- Test -->

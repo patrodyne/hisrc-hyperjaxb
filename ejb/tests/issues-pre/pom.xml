@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-issues-pre</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Test [issues-pre]</name>
+	<name>HiSrc HyperJAXB EJB Test [issues-pre]</name>
 	<dependencies>
 		<!-- Test -->
 		<dependency>

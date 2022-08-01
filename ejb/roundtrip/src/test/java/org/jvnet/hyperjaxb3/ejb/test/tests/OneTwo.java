@@ -29,7 +29,7 @@ public class OneTwo implements Equals {
 
     @Id
     @Column(name = "HJID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getHjid() {
         return hjid;
     }

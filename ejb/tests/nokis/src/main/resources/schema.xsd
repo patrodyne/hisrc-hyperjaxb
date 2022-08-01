@@ -7,17 +7,6 @@
 	<xsd:annotation>
 		<xsd:documentation xml:lang="de"> Schema f&#252;r den NOKIS Metadatenstandard Version 1.00 vom 2002/11/08 Carsten Heidmann </xsd:documentation>
 	</xsd:annotation>
-	<xsd:annotation>
-		<xsd:appinfo>
-			<jaxb:globalBindings fixedAttributeAsConstantProperty="true" typesafeEnumBase="xsd:string" typesafeEnumMemberName="generateName" 
-				generateIsSetMethod="true"/>
-			<jaxb:schemaBindings>
-				<jaxb:nameXmlTransform>
-					<jaxb:elementName suffix="Element"/>
-				</jaxb:nameXmlTransform>
-			</jaxb:schemaBindings>
-		</xsd:appinfo>
-	</xsd:annotation>
 	<!-- Ab hier sind die Hauptelemente des NOKIS-Standards aufgelistet -->
 	<xsd:element name="record" type="nokis:record"/>
 	<xsd:complexType name="record" decorum:default="WEB-INF/default/record.xml">

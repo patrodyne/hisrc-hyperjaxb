@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>hisrc-hyperjaxb-jdo</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 JDO</name>
+	<name>HiSrc HyperJAXB JDO</name>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-project</artifactId>

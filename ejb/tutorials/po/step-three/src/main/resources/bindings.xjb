@@ -5,7 +5,8 @@
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
 	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-	jaxb:extensionBindingPrefixes="hj orm">
+	jaxb:extensionBindingPrefixes="hj orm"
+>
 
 	<!-- Global Bindings -->
 	<jaxb:bindings>

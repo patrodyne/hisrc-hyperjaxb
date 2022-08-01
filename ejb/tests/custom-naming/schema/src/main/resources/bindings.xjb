@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE bindings>
-<jaxb:bindings version="2.1"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+<jaxb:bindings
+	version="2.1"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb https://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+	jaxb:extensionBindingPrefixes="hj orm"
 >
 	<!-- Global Bindings -->
 	<jaxb:bindings>
@@ -20,6 +24,11 @@
 		<jaxb:schemaBindings>
 			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.po"/>
 		</jaxb:schemaBindings>
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
 	</jaxb:bindings>
 
 </jaxb:bindings>

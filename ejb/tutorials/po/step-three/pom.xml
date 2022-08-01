@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tutorials-po-step-three</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Tutorial [po:step-three]</name>
+	<name>HiSrc HyperJAXB EJB Tutorial [po:step-three]</name>
 	<dependencies>
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
@@ -36,10 +36,15 @@
 			<artifactId>hisrc-hyperjaxb-ejb-roundtrip</artifactId>
 		</dependency>
 
-		<!-- Toplink Implementaion of JPA -->
+		<!-- EclipseLink Implementaion of JPA -->
 		<dependency>
-			<groupId>toplink.essentials</groupId>
-			<artifactId>toplink-essentials</artifactId>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>eclipselink</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.extension</artifactId>
 			<scope>test</scope>
 		</dependency>
 
@@ -54,8 +59,13 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -95,7 +105,7 @@
 						<ignoredUnusedDeclaredDependency>javax.persistence:persistence-api:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.glassfish.jaxb:jaxb-runtime:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-entitymanager:jar:</ignoredUnusedDeclaredDependency>
-						<ignoredUnusedDeclaredDependency>org.hsqldb:hsqldb:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>com.h2database:h2:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-simple:jar:</ignoredUnusedDeclaredDependency>
 					</ignoredUnusedDeclaredDependencies>
 				</configuration>

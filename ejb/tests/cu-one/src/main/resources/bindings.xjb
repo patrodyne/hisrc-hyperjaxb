@@ -24,6 +24,7 @@
 		<hj:persistence>
 			<hj:default-generated-id name="MySuperId" transient="true">
 				<orm:column name="MY_SUPER_ID"/>
+				<orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
 			<hj:default-one-to-many>
 				<orm:join-table/>

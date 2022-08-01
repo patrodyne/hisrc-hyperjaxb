@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-samples-customerservice-cxf</artifactId>
 	<packaging>war</packaging>
-	<name>Hyperjaxb3 EJB Sample [customerservice-cxf]</name>
+	<name>HiSrc HyperJAXB EJB Sample [customerservice-cxf]</name>
 	<properties>
 		<!--
 		<cxf.version>2.2.6</cxf.version>
@@ -18,18 +18,14 @@
 		<cxf.version>3.3.0</cxf.version>
 		<cxf.version>3.4.5</cxf.version>
 		<cxf.version>3.3.0</cxf.version>
-		-->
 		<cxf.version>3.3.0</cxf.version>
+		-->
+		<cxf.version>3.5.3</cxf.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
 			<artifactId>hisrc-basicjaxb-runtime</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>3.0.1.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>
@@ -49,8 +45,13 @@
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>3.0.1.RELEASE</version>
+			<version>${springframework.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -61,7 +62,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>3.0.1.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<!-- Apache CXF -->
 		<dependency>
@@ -73,6 +74,11 @@
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http</artifactId>
 			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf.xjc-utils</groupId>
+			<artifactId>cxf-xjc-runtime</artifactId>
+			<version>3.3.2</version>
 		</dependency>
 		<!--
 			<groupId>org.apache.cxf</groupId>
@@ -93,10 +99,14 @@
 			<version>3.3.0</version>
 		</dependency>
 		-->
+		<!-- See https://cxf.apache.org/docs/26-migration-guide.html, DataTypeAdapter -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-tools-common</artifactId>
+			<!--
 			<version>2.4.0</version>
+			-->
+			<version>3.5.3</version>
 		</dependency>
 		<!-- Hibernate -->
 		<!--
@@ -122,7 +132,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- Hyperjaxb3 -->
+		<!-- HiSrc HyperJAXB -->
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
 			<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
@@ -133,12 +143,17 @@
 			<artifactId>hisrc-basicjaxb</artifactId>
 			<version>${hisrc-basicjaxb.version}</version>
 		</dependency>
-		<!-- HSQLDB -->
+		<!-- H2 -->
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>${hsqldb.version}</version>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2database.version}</version>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<!-- Logging -->
 		<dependency>
@@ -150,15 +165,16 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.7</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>3.0.1.RELEASE</version>
+			<version>${springframework.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>org.hisrc.hifaces20</groupId>
 			<artifactId>hifaces20-testing</artifactId>
@@ -171,6 +187,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		-->
 	</dependencies>
 	<build>
 		<resources>
@@ -210,6 +227,7 @@
 						</goals>
 						<configuration>
 							<encoding>UTF-8</encoding>
+							<!--
 							<additionalJvmArgs>
 								-Dorg.slf4j.simpleLogger.logFile=System.out \
 								-Dorg.slf4j.simpleLogger.showDateTime=false \
@@ -219,6 +237,7 @@
 								-Dorg.slf4j.simpleLogger.showShortLogName=true \
 								-Dorg.slf4j.simpleLogger.defaultLogLevel=INFO
 							</additionalJvmArgs>
+							-->
 							<wsdlOptions>
 								<wsdlOption>
 									<wsdl>${basedir}/src/main/wsdl/CustomerService.wsdl</wsdl>
@@ -245,7 +264,7 @@
 					<dependency>
 						<groupId>org.patrodyne.jvnet</groupId>
 						<artifactId>hisrc-hyperjaxb-ejb-plugin</artifactId>
-						<version>0.6.4-SNAPSHOT</version>
+						<version>${project.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -271,7 +290,7 @@
 						<ignoredUnusedDeclaredDependency>org.apache.cxf:cxf-rt-transports-http:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-entitymanager:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.hisrc.hifaces20:hifaces20-testing:jar:</ignoredUnusedDeclaredDependency>
-						<ignoredUnusedDeclaredDependency>org.hsqldb:hsqldb:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>com.h2database:h2:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.patrodyne.jvnet:hisrc-basicjaxb:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-simple:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.springframework:spring-test:jar:</ignoredUnusedDeclaredDependency>

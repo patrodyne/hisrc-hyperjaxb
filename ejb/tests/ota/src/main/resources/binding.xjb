@@ -28,6 +28,13 @@
 		</jaxb:bindings>
     </jaxb:bindings>
 	-->
+    <jaxb:bindings schemaLocation="_2008A_XML/OTA_CommonTypes.xsd" node="/xs:schema">
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
+    </jaxb:bindings>
 
 	<jaxb:bindings schemaLocation="_2008A_XML/OTA_RailAvailRS.xsd" node="/xs:schema">        
 		<jaxb:bindings node="xs:complexType[@name='PriceRuleType']//xs:attribute[@name='Value']">

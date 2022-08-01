@@ -286,7 +286,7 @@ public class A implements Equals {
 		protected Long hjid;
 
 		@Id
-		@GeneratedValue(strategy = GenerationType.SEQUENCE)
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		public Long getHjid() {
 			return hjid;
 		}
@@ -316,7 +316,7 @@ public class A implements Equals {
 		protected Long hjid;
 
 		@Id
-		@GeneratedValue(strategy = GenerationType.SEQUENCE)
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		public Long getHjid() {
 			return hjid;
 		}
@@ -348,7 +348,7 @@ public class A implements Equals {
 		protected Long hjid;
 
 		@Id
-		@GeneratedValue(strategy = GenerationType.SEQUENCE)
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		public Long getHjid() {
 			return hjid;
 		}
@@ -392,7 +392,7 @@ public class A implements Equals {
 		protected Long hjid;
 
 		@Id
-		@GeneratedValue(strategy = GenerationType.SEQUENCE)
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		public Long getHjid() {
 			return hjid;
 		}
@@ -442,7 +442,7 @@ public class A implements Equals {
 		protected Long hjid;
 
 		@Id
-		@GeneratedValue(strategy = GenerationType.SEQUENCE)
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		public Long getHjid() {
 			return hjid;
 		}
@@ -568,7 +568,7 @@ public class A implements Equals {
 		protected Long hjid;
 
 		@Id
-		@GeneratedValue(strategy = GenerationType.SEQUENCE)
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		public Long getHjid() {
 			return hjid;
 		}

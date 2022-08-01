@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-component-jpa2</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Test [component-jpa2]</name>
+	<name>HiSrc HyperJAXB EJB Test [component-jpa2]</name>
 	<dependencies>
 		<!-- Test -->
 		<dependency>
@@ -20,7 +20,6 @@
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
-			<version>10.2.2.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

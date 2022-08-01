@@ -1,6 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.test.tests;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 import org.jvnet.hyperjaxb3.item.Item;
@@ -18,7 +19,9 @@ public abstract class PrimitiveItem<T, V> implements Equals, HashCode, Item<V> {
 
 	private T value;
 
+	// Note: "value" renamed to "content" because it is an SQL keyword.
 	@Basic
+	@Column(name = "content")
 	public T getValue() {
 		return value;
 	}

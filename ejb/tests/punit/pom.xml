@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-punit</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 EJB Test [punit]</name>
+	<name>HiSrc HyperJAXB EJB Test [punit]</name>
 	<modules>
 		<module>core</module>
 		<module>ext</module>

@@ -11,11 +11,11 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-samples</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 EJB Samples</name>
+	<name>HiSrc HyperJAXB EJB Samples</name>
 	<version>0.6.4-SNAPSHOT</version>
 	<modules>
 		<module>po-initial</module>
-		<module>po-customized-toplink</module>
+		<module>po-customized-eclipselink</module>
 		<module>uniprot</module>
 		<module>po-maven-jaxb2-plugin</module>
 		<!--module>customerservice-cxf</module-->

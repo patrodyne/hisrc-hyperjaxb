@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jxb:bindings version="1.0" 
-  xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-  xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
-  jxb:extensionBindingPrefixes="hj">
+<jxb:bindings
+	version="2.1"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jxb:extensionBindingPrefixes="hj orm"
+>
 
 
  <jxb:bindings schemaLocation="NewsML_1.2.xsd" node="/xs:schema">
@@ -28,7 +30,9 @@
 		<hj:column length="2000"/>
 	</jxb:bindings-->
 	<hj:persistence>
-		<hj:default-generated-id name="Hjid" transient="true"/>
+		<hj:default-generated-id name="Hjid" transient="true">
+			 <orm:generated-value strategy="IDENTITY"/> 
+		</hj:default-generated-id>
 	</hj:persistence>
   </jxb:bindings>
 </jxb:bindings>

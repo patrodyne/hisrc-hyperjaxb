@@ -14,11 +14,6 @@
                    
     <xsd:annotation>
         <xsd:appinfo>
-			<!-- JPA section 2.1, entities must be top-level classes. -->
-			<!-- JPA section 2.1, entities must implement the serializable interface. -->
-			<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
-				<jaxb:serializable uid="20211201" />
-			</jaxb:globalBindings>
             <jaxb:schemaBindings>
                 <jaxb:package name="com.sun.crae.generatedcomponents"/>
             </jaxb:schemaBindings>

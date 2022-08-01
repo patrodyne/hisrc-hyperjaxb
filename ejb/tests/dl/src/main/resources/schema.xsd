@@ -17,14 +17,6 @@
 		</xsd:documentation> 
 	</xsd:annotation>
 
-	<xsd:annotation>
-		<xsd:appinfo>
-			<jaxb:globalBindings generateIsSetMethod="true">
-			<!--	<xjc:typeSubstitution type="complex"/> -->
-			</jaxb:globalBindings>
-		</xsd:appinfo>
-	</xsd:annotation>
-
 <!-- enumerations defined : -->
 
 	<xsd:simpleType name="AccessControlSystemTypes"> 

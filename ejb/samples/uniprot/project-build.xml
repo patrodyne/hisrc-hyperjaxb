@@ -69,7 +69,7 @@
 			<include name="javassist-*.jar"/>
 			<include name="jboss-archive-browsing-*.jar"/>
 			<include name="jboss-common-core-*.jar"/>
-			<include name="hsqldb-*.jar"/>
+			<include name="h2-*.jar"/>
 			<include name="hyperjaxb3-ejb-runtime-*.jar"/>
 			<include name="hyperjaxb3-ejb-roundtrip-*.jar"/>
 			<include name="hibernate-jpa-2.1-api-*.jar"/>

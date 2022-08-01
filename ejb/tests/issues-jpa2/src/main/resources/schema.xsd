@@ -20,14 +20,6 @@
 			<jaxb:schemaBindings>
 				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.issuesjpa2"/>
 			</jaxb:schemaBindings>
-                        <hj:persistence>
-                                <hj:default-element-collection fetch="EAGER"/>
-				<!--hj:default-collection-property type="xsd:string">
-					<hj:element-collection fetch="EAGER">
-						<orm:column length="255"/>
-					</hj:element-collection>
-				</hj:default-collection-property-->
-                        </hj:persistence>
 		</xsd:appinfo>
 	</xsd:annotation>
 

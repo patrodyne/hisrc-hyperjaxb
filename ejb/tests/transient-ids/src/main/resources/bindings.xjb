@@ -5,7 +5,8 @@
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
 	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-	jaxb:extensionBindingPrefixes="hj orm">
+	jaxb:extensionBindingPrefixes="hj orm"
+>
 
 	<!-- Global Bindings -->
 	<jaxb:bindings>
@@ -21,7 +22,9 @@
 			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.transientids"/>
 		</jaxb:schemaBindings>
 		<hj:persistence>
-			<hj:default-generated-id transient="true" name="Hjid"/>
+			<hj:default-generated-id transient="true" name="Hjid">
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
 		</hj:persistence>
 	</jaxb:bindings>
 

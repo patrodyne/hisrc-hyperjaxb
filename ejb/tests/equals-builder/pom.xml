@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-equals-builder</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 EJB Test [equals-builder]</name>
+	<name>HiSrc HyperJAXB EJB Test [equals-builder]</name>
 	<modules>
 		<module>builder</module>
 		<module>schema</module>

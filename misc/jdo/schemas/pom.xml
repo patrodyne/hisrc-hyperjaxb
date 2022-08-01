@@ -6,7 +6,7 @@
 	<groupId>org.patrodyne.jvnet</groupId>
 	<artifactId>hisrc-hyperjaxb-jdo-schemas</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 JDO Schemas</name>
+	<name>HiSrc HyperJAXB JDO Schemas</name>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-jdo</artifactId>

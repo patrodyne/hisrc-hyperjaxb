@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jaxb:bindings version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<jaxb:bindings
+	version="2.1"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-	xmlns:hj="http://hyperjaxb3.jvnet.org/hibernate/customizations"
-	jaxb:extensionBindingPrefixes="xjc">
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm xjc">
+>
 	
+	<jaxb:globalBindings fixedAttributeAsConstantProperty="false"
+		typesafeEnumBase="xs:string" typesafeEnumMemberName="generateName"
+		generateIsSetMethod="true" typesafeEnumMaxMembers="512"
+		localScoping="toplevel">
+		<jaxb:serializable uid="20211201"/>
+	</jaxb:globalBindings>
+
 	<jaxb:bindings schemaLocation="ONIX_BookProduct_3.0_reference.xsd" node="/xs:schema">
-		<jaxb:globalBindings fixedAttributeAsConstantProperty="false"
-			typesafeEnumBase="xs:string" typesafeEnumMemberName="generateName"
-			generateIsSetMethod="true" typesafeEnumMaxMembers="512"
-			localScoping="toplevel">
-			<jaxb:serializable uid="20211201"/>
-		</jaxb:globalBindings>
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
 	</jaxb:bindings>
 
 	<jaxb:bindings schemaLocation="ONIX_XHTML_Subset.xsd" node="/xs:schema">

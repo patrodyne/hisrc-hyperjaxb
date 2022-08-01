@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-episodes</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 EJB Test [episodes]</name>
+	<name>HiSrc HyperJAXB EJB Test [episodes]</name>
 	<modules>
 		<module>a</module>
 		<module>b</module>

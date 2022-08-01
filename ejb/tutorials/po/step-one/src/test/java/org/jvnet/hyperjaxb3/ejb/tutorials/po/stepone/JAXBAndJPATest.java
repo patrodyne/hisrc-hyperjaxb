@@ -1,5 +1,8 @@
 package org.jvnet.hyperjaxb3.ejb.tutorials.po.stepone;
 
+import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
+import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesMoreFile;
+
 import generated.ObjectFactory;
 import generated.PurchaseOrderType;
 
@@ -38,18 +41,18 @@ public class JAXBAndJPATest extends TestCase {
 		objectFactory = new ObjectFactory();
 
 		final Properties persistenceProperties = new Properties();
-		InputStream is = null;
-		try {
-			is = getClass().getClassLoader().getResourceAsStream(
-					"persistence.properties");
+		try ( InputStream is = getClass().getClassLoader().getResourceAsStream(getPersistencePropertiesBaseFile()) )
+		{
 			persistenceProperties.load(is);
-		} finally {
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException ignored) {
+		}
 
-				}
+		final Properties persistencePropertiesMore = new Properties();
+		try ( InputStream is = getClass().getClassLoader().getResourceAsStream(getPersistencePropertiesMoreFile()) )
+		{
+			if ( is != null )
+			{
+				persistencePropertiesMore.load(is);
+				persistenceProperties.putAll(persistencePropertiesMore);
 			}
 		}
 

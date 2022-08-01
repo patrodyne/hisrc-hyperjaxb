@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tutorials-po</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 EJB Tutorial [po]</name>
+	<name>HiSrc HyperJAXB EJB Tutorial [po]</name>
 	<modules>
 		<module>step-one</module>
 		<module>step-two</module>

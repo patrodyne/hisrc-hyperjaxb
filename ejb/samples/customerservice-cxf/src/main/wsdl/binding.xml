@@ -10,11 +10,11 @@
 		<jaxb:globalBindings localScoping="toplevel">
 			<jaxb:serializable uid="20211201" />
 			<jaxb:javaType name="java.util.Date" xmlType="xs:dateTime"
-				parseMethod="org.apache.cxf.tools.common.DataTypeAdapter.parseDateTime"
-				printMethod="org.apache.cxf.tools.common.DataTypeAdapter.printDateTime"/>
+				parseMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.parseDateTime"
+				printMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.printDateTime"/>
 			<jaxb:javaType name="java.util.Date" xmlType="xs:date"
-				parseMethod="org.apache.cxf.tools.common.DataTypeAdapter.parseDate"
-				printMethod="org.apache.cxf.tools.common.DataTypeAdapter.printDate"/>
+				parseMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.parseDate"
+				printMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.printDate"/>
 		</jaxb:globalBindings>
 	</jaxws:bindings>
 </jaxws:bindings>

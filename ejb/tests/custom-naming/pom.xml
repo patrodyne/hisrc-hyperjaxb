@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-custom-naming</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 EJB Test [custom-naming]</name>
+	<name>HiSrc HyperJAXB EJB Test [custom-naming]</name>
 	<modules>
 		<module>extension</module>
 		<module>schema</module>

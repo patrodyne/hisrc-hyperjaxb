@@ -3,9 +3,6 @@
 
   <xsd:annotation>
     <xsd:appinfo>
-      <jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
-        <jaxb:serializable uid="20211201" />
-      </jaxb:globalBindings>
       <jaxb:schemaBindings>
         <jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.po"/>
       </jaxb:schemaBindings>

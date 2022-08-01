@@ -5,20 +5,6 @@
 	jaxb:extensionBindingPrefixes="xjc hj orm" jaxb:version="2.0"
 	attributeFormDefault="unqualified" elementFormDefault="qualified">
 
-	<!-- globale Konfiguration -->
-	<xs:annotation>
-		<xs:appinfo>
-			<!-- JPA section 2.1, entities must be top-level classes. -->
-			<!-- JPA section 2.1, entities must implement the serializable interface. -->
-			<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
-				<jaxb:serializable uid="20211201" />
-			</jaxb:globalBindings>
-			<jaxb:schemaBindings>
-				<jaxb:package name="com.innoq.model.impl" />
-			</jaxb:schemaBindings>
-		</xs:appinfo>
-	</xs:annotation>
-
 	<!-- Ableitungen zur besseren Struktierung des Inhaltes -->
 	<xs:simpleType name="DecimalValue">
 		<xs:restriction base="xs:decimal" />
@@ -91,7 +77,7 @@
 		<xs:attribute name="id" use="required" type="xs:long">
 			<xs:annotation>
 				<xs:appinfo>
-					<hj:id><orm:generated-value strategy="AUTO" /></hj:id>
+					<hj:id><orm:generated-value strategy="IDENTITY" /></hj:id>
 				</xs:appinfo>
 			</xs:annotation>
 		</xs:attribute>

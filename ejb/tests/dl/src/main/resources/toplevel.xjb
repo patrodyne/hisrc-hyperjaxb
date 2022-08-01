@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings version="2.1"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb https://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+>
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+		<jaxb:bindings node="//xs:complexType[@name='MetadataRecordType']/xs:sequence/xs:element[@name='AccessConditions']/xs:complexType">
+			<jaxb:class name="MetadataRecordAccessConditionsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='InstitutionType']/xs:sequence/xs:element[@name='Name']/xs:complexType">
+			<jaxb:class name="InstitutionNameType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AddressType']/xs:sequence/xs:element[@name='Country']/xs:complexType">
+			<jaxb:class name="AddressCountryType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='RangeType']/xs:sequence/xs:element[@name='Limit']/xs:complexType">
+			<jaxb:class name="RangeLimitType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ReferenceLocationType']/xs:sequence/xs:element[@name='Locator']/xs:complexType">
+			<jaxb:class name="ReferenceLocationLocatorType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='SelectNamedADOL']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='DataFormat']/xs:complexType">
+			<jaxb:class name="SelectNamedADOLDataFormatType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='CollectionLocatorType']/xs:sequence/xs:element[@name='Locator']/xs:complexType">
+			<jaxb:class name="CollectionLocatorLocatorType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ADOLocatorType']/xs:sequence/xs:element[@name='Locator']/xs:complexType">
+			<jaxb:class name="ADOLocatorLocatorType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ADOLocatorType']/xs:sequence/xs:element[@name='AccessMethod']/xs:complexType">
+			<jaxb:class name="ADOLocatorAccessMethodType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='PublicationType']/xs:sequence/xs:element[@name='Author']/xs:complexType">
+			<jaxb:class name="PublicationAuthorType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='PublicationType']/xs:sequence/xs:element[@name='Identifier']/xs:complexType">
+			<jaxb:class name="PublicationIdentifierType"/>
+		</jaxb:bindings>
+	</jaxb:bindings>
+</jaxb:bindings>

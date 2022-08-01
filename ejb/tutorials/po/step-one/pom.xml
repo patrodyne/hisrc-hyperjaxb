@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tutorials-po-step-one</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Tutorial [po:step-one]</name>
+	<name>HiSrc HyperJAXB EJB Tutorial [po:step-one]</name>
 	<dependencies>
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
@@ -60,8 +60,13 @@
 
 		<!-- Database -->
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

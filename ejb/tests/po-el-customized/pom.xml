@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-po-el-customized</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Test [po-el-customized]</name>
+	<name>HiSrc HyperJAXB EJB Test [po-el-customized]</name>
 	<dependencies>
 		<!-- Test -->
 		<dependency>
@@ -24,8 +24,13 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

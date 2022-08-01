@@ -5,7 +5,8 @@
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
 	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-	jaxb:extensionBindingPrefixes="hj orm">
+	jaxb:extensionBindingPrefixes="hj orm"
+>
 
 	<!-- Global Bindings -->
 	<jaxb:bindings>
@@ -18,6 +19,11 @@
 
 	<!-- Schema Bindings -->
 	<jaxb:bindings schemaLocation="po.xsd" node="/xs:schema">
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
 		<jaxb:schemaBindings>
 			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tutorials.po.steptwo"/>
 		</jaxb:schemaBindings>

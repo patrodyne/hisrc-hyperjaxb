@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jxb:bindings version="2.1" 
-  xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
-  jxb:extensionBindingPrefixes="xjc">
+<jxb:bindings
+	version="2.1"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jxb:extensionBindingPrefixes="hj orm xjc"
+>
 
 	<!-- Global Bindings -->
 	<jxb:bindings>
@@ -41,6 +45,12 @@
 
 	<!-- Schema Bindings -->
     <jxb:bindings schemaLocation="sbml.xsd" node="/xs:schema">
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
+
         <jxb:bindings node="//xs:complexType[@name='Sbml']">
             <jxb:class name="SBMLType"/>
         </jxb:bindings>

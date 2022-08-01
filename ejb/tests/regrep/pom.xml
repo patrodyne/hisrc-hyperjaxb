@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-regrep</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Test [regrep]</name>
+	<name>HiSrc HyperJAXB EJB Test [regrep]</name>
 	<dependencies>
 		<!-- Hibernate Dependencies -->
 		<!-- Test -->
@@ -20,8 +20,13 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -38,6 +43,7 @@
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<!--roundtripTestClassName>org.freebxml.omar.jaxb.bindings.RoundtripTest</roundtripTestClassName-->
+					<roundtripTestClassName>org.freebxml.omar.jaxb.bindings.RoundtripTest</roundtripTestClassName>
 				</configuration>
 			</plugin>
 		</plugins>

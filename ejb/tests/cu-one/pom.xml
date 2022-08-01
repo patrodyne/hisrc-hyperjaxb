@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-cuone</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Test [cuone]</name>
+	<name>HiSrc HyperJAXB EJB Test [cuone]</name>
 	<dependencies>
 		<!-- Test -->
 		<dependency>
@@ -18,15 +18,14 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<!--scope>test</scope-->
 		</dependency>
-		<!--dependency>
-			<groupId>toplink.essentials</groupId>
-			<artifactId>toplink-essentials</artifactId>
-			<version>2.0.1-04</version>
-			<scope>test</scope>
-		</dependency-->
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>test</scope>
 		</dependency>
 
