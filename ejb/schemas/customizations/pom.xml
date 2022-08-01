@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-schemas-customizations</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Schemas Customizations</name>
+	<name>HiSrc HyperJAXB EJB Schemas Customizations</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
@@ -101,7 +101,7 @@
 							<echo>Running the XSDDoc task</echo>
 							<taskdef classname="net.sf.xframe.xsddoc.Task" name="xsddoc" />
 							<mkdir dir="${basedir}/target/site/xsddoc" />
-							<xsddoc file="${basedir}/src/main/resources/customizations.xsd" out="${basedir}/target/site/xsddoc" doctitle="Hyperjaxb3 Customization schema" verbose="false" />
+							<xsddoc file="${basedir}/src/main/resources/customizations.xsd" out="${basedir}/target/site/xsddoc" doctitle="HiSrc HyperJAXB Customization schema" verbose="false" />
 							</tasks>
 						</configuration>
 						<goals>

@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-maven-plugin-testing</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 Maven Plugin Testing</name>
+	<name>HiSrc HyperJAXB Maven Plugin Testing</name>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -17,7 +17,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-project</artifactId>
+			<artifactId>maven-compat</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>

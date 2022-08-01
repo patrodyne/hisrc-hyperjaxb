@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-maven</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 Maven</name>
+	<name>HiSrc HyperJAXB Maven</name>
 	<modules>
 		<module>plugin</module>
 		<module>testing</module>

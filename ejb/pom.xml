@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 EJB</name>
+	<name>HiSrc HyperJAXB EJB</name>
 	<modules>
 		<module>schemas</module>
 		<module>runtime</module>

@@ -6,7 +6,7 @@
 	<groupId>org.patrodyne.jvnet</groupId>
 	<artifactId>hisrc-hyperjaxb-dist</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 Distribution</name>
+	<name>HiSrc HyperJAXB Distribution</name>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-project</artifactId>
@@ -29,14 +29,14 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hisrc-hyperjaxb-ejb-samples-po-customized-toplink</artifactId>
+			<artifactId>hisrc-hyperjaxb-ejb-samples-po-customized-eclipselink</artifactId>
 			<type>zip</type>
 			<classifier>maven-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hisrc-hyperjaxb-ejb-samples-po-customized-toplink</artifactId>
+			<artifactId>hisrc-hyperjaxb-ejb-samples-po-customized-eclipselink</artifactId>
 			<type>zip</type>
 			<classifier>ant-src</classifier>
 			<version>${project.version}</version>

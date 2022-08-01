@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-schemas-persistence</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Schemas Persistence</name>
+	<name>HiSrc HyperJAXB EJB Schemas Persistence</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>

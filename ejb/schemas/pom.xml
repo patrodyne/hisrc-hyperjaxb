@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-schemas</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 EJB Schemas</name>
+	<name>HiSrc HyperJAXB EJB Schemas</name>
 	<modules>
 		<module>persistence</module>
 		<module>customizations</module>

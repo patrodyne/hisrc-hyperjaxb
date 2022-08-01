@@ -11,7 +11,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-opt-hikaricp</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 Optional: HikariCP Support</name>
+	<name>HiSrc HyperJAXB Optional: HikariCP Support</name>
 	<dependencies>
 		<!-- HiSrc BasicJAXB Dependencies -->
 		<dependency>

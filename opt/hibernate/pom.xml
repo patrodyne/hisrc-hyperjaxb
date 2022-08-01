@@ -11,7 +11,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-opt-hibernate</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 Optional: Hibernate Support</name>
+	<name>HiSrc HyperJAXB Optional: Hibernate Support</name>
 	<dependencies>
 		<!-- HiSrc BasicJAXB Dependencies -->
 		<dependency>

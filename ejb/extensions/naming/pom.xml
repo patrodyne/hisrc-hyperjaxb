@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-extensions-naming</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 EJB Extensions Naming</name>
+	<name>HiSrc HyperJAXB EJB Extensions Naming</name>
 	<modules>
 		<module>custom-naming-pre_0_6_0</module>
 	</modules>

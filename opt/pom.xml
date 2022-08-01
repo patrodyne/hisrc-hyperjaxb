@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-opt</artifactId>
 	<packaging>pom</packaging>
-	<name>Hyperjaxb3 Optional: Framework Support</name>
+	<name>HiSrc HyperJAXB Optional: Framework Support</name>
 	<modules>
 		<module>hibernate</module>
 		<module>hikaricp</module>
