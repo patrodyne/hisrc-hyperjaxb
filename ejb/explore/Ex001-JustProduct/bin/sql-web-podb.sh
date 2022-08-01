@@ -1,5 +1,11 @@
 #!/bin/sh
 #
+# sql-cli-podb.sh: SQL command line tool using H2 Shell.
+#
+#	Usage: ./sql-web-podb.sh [h2|pg]
+#	h2	H2 local database (default)
+#	pg	PostgreSQL network database
+#
 # Starts the H2 Console (web-) server, as well as the TCP and PG server.
 #
 # Usage: java org.h2.tools.Console <options>
@@ -25,14 +31,35 @@
 # See also https://h2database.com/javadoc/org/h2/tools/Console.html
 #
 H2JAR="${M2_REPO}/com/h2database/h2/2.1.210/h2-2.1.210.jar"
-JDBC_URL="jdbc:h2:file:./target/test-database/podb"
-JDBC_OPT="MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1"
-if [ -r "${H2JAR}" ]; then
-	echo "Starting server and web console. Press CTRL-C to stop server."
-	java -cp "${H2JAR}" org.h2.tools.Console \
-		-url "${JDBC_URL};${JDBC_OPT}" \
-		-user "tester" \
-		-password "123456"
-else
-	echo "Please configure H2 location in this script."
+PGJAR="${M2_REPO}/org/postgresql/postgresql/42.4.0/postgresql-42.4.0.jar"
+if [ ! -r "${H2JAR}" ]; then
+	echo "Please configure H2JAR location in this script."
+	exit 1
 fi
+JDBC_TYPE=${1:-h2}
+case "${JDBC_TYPE}" in
+	h2)
+		JDBC_URL="jdbc:h2:file:./target/test-database/podb"
+		JDBC_OPT=";MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1"
+		JDBC_USER="tester"
+		JDBC_PASS="123456"
+		JDBC_LIBS="${H2JAR}"
+		;;
+	pg)
+		JDBC_URL="jdbc:postgresql://nas02/hyperjaxb"
+		JDBC_OPT=""
+		JDBC_USER="hyperjaxb"
+		JDBC_PASS="ChangeMe!"
+		JDBC_LIBS="${H2JAR}:${PGJAR}"
+		if [ ! -r "${PGJAR}" ]; then
+			echo "Please configure PGJAR location in this script."
+			exit 2
+		fi
+		;;
+esac
+echo "Starting server and web console. Press CTRL-C to stop server."
+java -cp "${JDBC_LIBS}" org.h2.tools.Console \
+	-url "${JDBC_URL}${JDBC_OPT}" \
+	-user "${JDBC_USER}" \
+	-password "${JDBC_PASS}"
+echo "DONE"

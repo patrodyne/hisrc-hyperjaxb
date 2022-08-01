@@ -1,12 +1,7 @@
 package org.patrodyne.jvnet.hyperjaxb.ex001;
 
-import static java.lang.Integer.toHexString;
-import static java.lang.System.identityHashCode;
 import static java.lang.System.nanoTime;
 import static java.util.Arrays.sort;
-import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
-import static javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
-import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.filterProperties;
 import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.ACTIVE;
 import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.CANCELED;
 import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.CLOSED;
@@ -20,61 +15,36 @@ import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.sql
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
 import java.io.Serializable;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.Random;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.persistence.Cache;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JToggleButton;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 
 import org.jvnet.hyperjaxb3.ejb.util.Transactional;
-import org.jvnet.hyperjaxb3.ejb.util.Transactional.CacheOption;
 import org.jvnet.jaxb2_commons.test.Bogus;
-import org.patrodyne.jvnet.basicjaxb.explore.AbstractExplorer;
-import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputDomResolver;
-import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputStringResolver;
 import org.patrodyne.jvnet.hyperjaxb.ex001.model.ObjectFactory;
 import org.patrodyne.jvnet.hyperjaxb.ex001.model.Product;
 import org.patrodyne.jvnet.hyperjaxb.ex001.model.Product_;
 import org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage;
+import org.patrodyne.jvnet.hyperjaxb.explore.AbstractEntityExplorer;
 import org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil;
 import org.patrodyne.jvnet.hyperjaxb.opt.hikaricp.HikariCPUtil;
-import org.xml.sax.SAXException;
 
 /**
  * A Swing application to explore features of the HiSrc HyperJAXB Framework.
@@ -91,55 +61,15 @@ import org.xml.sax.SAXException;
  * @author Rick O'Sullivan
  */
 @SuppressWarnings("serial")
-public class Explorer extends AbstractExplorer
+public class Explorer extends AbstractEntityExplorer
 {
 	private static final String WINDOW_TITLE = "HiSrc HyperJAXB Ex001 JustProduct";
-	private static final String EXPLORER_HTML = "Explorer.html";
-	private static final String PERSISTENCE_PROPERTIES_FILENAME = "src/test/resources/persistence.properties";
-	private static final String HIBERNATE_PUN = "hibernate.ejb.persistenceUnitName";
 	private static final String PRODUCT_FILES_PATH = "src/test/example/products";
 	private static final Integer MAX_RESULT_COUNT = 1000;
-	private static final Random RANDOM = new Random();
 
 	private RoundtripTest roundtripTest;
 	public RoundtripTest getRoundtripTest() { return roundtripTest; }
 	public void setRoundtripTest(RoundtripTest roundtripTest) { this.roundtripTest = roundtripTest; }
-	
-	private JAXBContext jaxbContext;
-	public JAXBContext getJaxbContext() { return jaxbContext; }
-	public void setJaxbContext(JAXBContext jaxbContext) { this.jaxbContext = jaxbContext; }
-
-	private Unmarshaller unmarshaller;
-	public Unmarshaller getUnmarshaller() { return unmarshaller; }
-	public void setUnmarshaller(Unmarshaller unmarshaller) { this.unmarshaller = unmarshaller; }
-	
-	private Marshaller marshaller;
-	public Marshaller getMarshaller() { return marshaller; }
-	public void setMarshaller(Marshaller marshaller) { this.marshaller = marshaller; }
-
-	private String persistenceUnitName;
-	public String getPersistenceUnitName() { return persistenceUnitName; }
-	public void setPersistenceUnitName(String persistenceUnitName) { this.persistenceUnitName = persistenceUnitName; }
-
-	private Map<String,String> entityManagerFactoryProperties;
-	public Map<String, String> getEntityManagerFactoryProperties() { return entityManagerFactoryProperties; }
-	public void setEntityManagerFactoryProperties(Map<String, String> entityManagerFactoryProperties) { this.entityManagerFactoryProperties = entityManagerFactoryProperties; }
-
-	private EntityManagerFactory entityManagerFactory;
-	public EntityManagerFactory getEntityManagerFactory() { return entityManagerFactory; }
-	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) { this.entityManagerFactory = entityManagerFactory; }
-
-	private EntityManager entityManager;
-	public EntityManager getEntityManager() { return entityManager; }
-	public void setEntityManager(EntityManager entityManager) { this.entityManager = entityManager; }
-
-	private Map<String, Object> externalContextProperties;
-	public Map<String, Object> getExternalContextProperties() { return externalContextProperties; }
-	public void setExternalContextProperties(Map<String, Object> externalContextProperties) { this.externalContextProperties = externalContextProperties; }
-
-	private Map<String, Object> internalContextProperties;
-	public Map<String, Object> getInternalContextProperties() { return internalContextProperties; }
-	public void setInternalContextProperties(Map<String, Object> internalContextProperties) { this.internalContextProperties = internalContextProperties; }
 
 	private Set<Product> productSet;
 	public Set<Product> getProductSet()
@@ -183,76 +113,39 @@ public class Explorer extends AbstractExplorer
 			errorln(ex);
 		}
 	}
-
-	public void generateXmlSchemaFromString()
-	{
-		try
-		{
-			SchemaOutputStringResolver sosr = new SchemaOutputStringResolver();
-			getJaxbContext().generateSchema(sosr);
-			println("Xml Schema from String:\n\n" + sosr.getSchemaString());
-		}
-		catch ( IOException ex )
-		{
-			errorln(ex);
-		}
-	}
 	
-	public void generateXmlSchemaFromDom()
+	public void initializeLesson() throws Exception
 	{
-		try
-		{
-			SchemaOutputDomResolver sodr = new SchemaOutputDomResolver();
-			getJaxbContext().generateSchema(sodr);
-			println("Xml Schema from DOM:\n\n" + sodr.getSchemaDomNodeString());
-		}
-		catch ( IOException | TransformerException ex )
-		{
-			errorln(ex);
-		}
-	}
-	
-	public void generateXmlSchemaValidatorFromDom()
-	{
-		try
-		{
-			if ( (getMarshaller() != null) && (getUnmarshaller() != null) )
-			{
-				// Generate a Schema Validator from given the JAXB context.
-				SchemaOutputDomResolver sodr = new SchemaOutputDomResolver();
-				getJaxbContext().generateSchema(sodr);
-				SchemaFactory schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
-				Schema schemaValidator = schemaFactory.newSchema(sodr.getDomSource());
-				
-				// Configure Marshaller / unmarshaller to use validator.
-				getMarshaller().setSchema(schemaValidator);
-				getUnmarshaller().setSchema(schemaValidator);
-				
-				getValidateButton().setSelected(true);
-				println("Schema Validation is ON.");
-			}
-			else
-				errorln("Please create marshaller and unmarshaller!");
-		}
-		catch ( IOException | SAXException ex )
-		{
-			errorln(ex);
-		}
-	}
-	
-	public void displayEntityManagerFactoryProperties()
-	{
-		// Properties: JPA Entity Manager Factory
-		println("\nPersistence Configuration Properties, External:\n");
-		for ( Entry<String, Object> entry : getExternalContextProperties().entrySet() )
-			println("  " + entry.getKey() + " = " + entry.getValue());
+		// Initialize JAXB
+		Class<?>[] classesToBeBound = { ObjectFactory.class, Product.class };
+		setJaxbContext(createJAXBContext(classesToBeBound));
+		setMarshaller(createMarshaller(getJaxbContext()));
+		setUnmarshaller(createUnmarshaller(getJaxbContext()));
 		
-		// Properties: Hibernate Session Factory
-		println("\nPersistence Configuration Properties, Internal:\n");
-		for ( Entry<String, Object> entry : getInternalContextProperties().entrySet() )
-			println("  " + entry.getKey() + " = " + entry.getValue());
+		// Initialize JPA
+		setEntityManagerFactoryProperties(loadEntityManagerFactoryProperties());
+		setPersistenceUnitName(resolvePerstenceUnitName(ObjectFactory.class));
+		setEntityManagerFactory(createEntityManagerFactory());
+		setEntityManager(createEntityManager());
+		
+		// Collect context properties
+		setExternalContextProperties(filterExternalProperties());
+		setInternalContextProperties(gatherInternalProperties());
+		
+		// Initialize RoundtripTest
+		setRoundtripTest(new RoundtripTest(getEntityManagerFactory()));
 	}
 
+	// Properties: Hibernate Session Factory
+	private Map<String, Object> gatherInternalProperties()
+	{
+		EntityManagerFactory emf = getEntityManagerFactory();
+		Map<String, Object> extProps = gatherProperties(emf, getExternalContextProperties());
+		Map<String, Object> hikariProperties = HikariCPUtil.gatherProperties(getEntityManagerFactory());
+		extProps.putAll(hikariProperties);
+		return extProps;
+	}
+	
 	public void unmarshalProducts()
 	{
 		File productFilePath = new File(PRODUCT_FILES_PATH);
@@ -463,13 +356,6 @@ public class Explorer extends AbstractExplorer
 		Integer count = tx.transact(getEntityManager(), reuseCache());
 		long t2 = nanoTime();
 		println("Remove returned " + count + " count; " + ns(t1,t2) + "\n");
-	}
-	
-	private String identify(Object object)
-	{
-		String objectId = toHexString(identityHashCode(object));
-		String entityId = toHexString(object.hashCode());
-		return "Object Id = " + objectId + " -> Entity Id = " + entityId;
 	}
 
 	public void extensionHashCodes()
@@ -960,328 +846,6 @@ public class Explorer extends AbstractExplorer
 		return menuBar;
 	}
 	
-	private JToggleButton validateButton;
-	public JToggleButton getValidateButton() { return validateButton; }
-	public void setValidateButton(JToggleButton validateButton) { this.validateButton = validateButton; }
-
-	private JToggleButton clean1stLevelCacheButton;
-	public JToggleButton getClean1stLevelCacheButton() { return clean1stLevelCacheButton; }
-	public void setClean1stLevelCacheButton(JToggleButton clean1stLevelCacheButton) { this.clean1stLevelCacheButton = clean1stLevelCacheButton; }
-
-	private JButton clean2ndLevelCacheButton;
-	public JButton getClean2ndLevelCacheButton() { return clean2ndLevelCacheButton; }
-	public void setClean2ndLevelCacheButton(JButton clean2ndLevelCacheButton) { this.clean2ndLevelCacheButton = clean2ndLevelCacheButton; }
-
-	private JButton reopenEntityManagerButton;
-	public JButton getReopenEntityManagerButton() { return reopenEntityManagerButton; }
-	public void setReopenEntityManagerButton(JButton reopenEntityManagerButton) { this.reopenEntityManagerButton = reopenEntityManagerButton; }
-
-	private JButton logSummaryStatisticsButton;
-	public JButton getLogSummaryStatisticsButton() { return logSummaryStatisticsButton; }
-	public void setLogSummaryStatisticsButton(JButton logSummaryStatisticsButton) { this.logSummaryStatisticsButton = logSummaryStatisticsButton; }
-
-	private CacheOption reuseCache()
-	{
-		return getClean1stLevelCacheButton().isSelected() ? CacheOption.REUSE : CacheOption.CLEAN;
-	}
-	
-	public void modifyToolBar()
-	{
-		getToolBar().addSeparator();
-		
-		// Toggle schema validation
-		String validateOffPath = OILPATH+"/actions/flag-red.png";
-		String validateOnPath = OILPATH+"/actions/flag-green.png";
-		setValidateButton(createImageToggleButton(Explorer.class, validateOffPath, validateOnPath));
-		getValidateButton().addActionListener((event) -> toggleValidateSchema(event));
-		getValidateButton().setToolTipText("Toggle schema validation");
-		getToolBar().add(getValidateButton());
-		
-		// Toggle clean first level cache
-		String clean1stLevelCacheOffPath = OILPATH+"/actions/general-recycling-green.png";
-		String clean1stLevelCacheOnPath = OILPATH+"/actions/general-recycling-green.png";
-		setClean1stLevelCacheButton(createImageToggleButton(Explorer.class, clean1stLevelCacheOffPath, clean1stLevelCacheOnPath));
-		getClean1stLevelCacheButton().addActionListener((event) -> toggle1stLevelCleanCache(event));
-		getClean1stLevelCacheButton().setToolTipText("Reuse 1st level cache");
-		getToolBar().add(getClean1stLevelCacheButton());
-		
-		// Clean second level cache
-		String clean2ndLevelCachePath = OILPATH+"/actions/db_remove.png";
-		setClean2ndLevelCacheButton(createImageButton(Explorer.class, clean2ndLevelCachePath));
-		getClean2ndLevelCacheButton().addActionListener((event) -> clear2ndLevelCache(event));
-		getClean2ndLevelCacheButton().setToolTipText("Clean 2nd level cache");
-		getToolBar().add(getClean2ndLevelCacheButton());
-		
-		// Reopen EnityManager
-		String reopenEntityManagerPath = OILPATH+"/actions/view-refresh-5.png";
-		setReopenEntityManagerButton(createImageButton(Explorer.class, reopenEntityManagerPath));
-		getReopenEntityManagerButton().addActionListener((event) -> reopenEntityManager(event));
-		getReopenEntityManagerButton().setToolTipText("Reopen session and connection");
-		getToolBar().add(getReopenEntityManagerButton());
-
-		// Log Summary Statistics
-		String logSummaryStatisticsPath = OILPATH+"/actions/utilities-log-viewer.png";
-		setLogSummaryStatisticsButton(createImageButton(Explorer.class, logSummaryStatisticsPath));
-		getLogSummaryStatisticsButton().addActionListener((event) -> logSummaryStatistics(event));
-		getLogSummaryStatisticsButton().setToolTipText("Log summary statistics");
-		getToolBar().add(getLogSummaryStatisticsButton());
-	}
-	
-	private void clear2ndLevelCache(ActionEvent event)
-	{
-		// Evict only the "JPA cache", which is purely defined as the entity regions.
-		// Query cache is not evicted.
-		getEntityManagerFactory().getCache().evictAll();
-	}
-	
-	private void toggleValidateSchema(ActionEvent event)
-	{
-		JToggleButton toggleButton = (JToggleButton) event.getSource();
-		if ( toggleButton.isSelected() )
-			generateXmlSchemaValidatorFromDom();
-		else
-		{
-			setMarshaller(createMarshaller(getJaxbContext()));
-			setUnmarshaller(createUnmarshaller(getJaxbContext()));
-			println("Schema Validation is OFF.");
-		}
-	}
-
-	private void toggle1stLevelCleanCache(ActionEvent event)
-	{
-		JToggleButton toggleButton = (JToggleButton) event.getSource();
-		if ( toggleButton.isSelected() )
-		{
-			println("Reuse first level entity cache between transactions.");
-		}
-		else
-		{
-			println("Clean first level entity cache at start of topmost transaction.");
-		}
-	}
-	
-	private void reopenEntityManager(ActionEvent event)
-	{
-		// JButton button = (JButton) event.getSource();
-		getEntityManager().close();
-		println("EnityManager: closed");
-		setEntityManager(createEntityManager());
-		println("EnityManager: created");
-	}
-	
-	private void logSummaryStatistics(ActionEvent event)
-	{
-		logSummaryStatistics();
-	}
-	
-	public void initializeLesson() throws Exception
-	{
-		// Initialize JAXB
-		setJaxbContext(createJAXBContext());
-		setMarshaller(createMarshaller(getJaxbContext()));
-		setUnmarshaller(createUnmarshaller(getJaxbContext()));
-		
-		// Initialize JPA
-		setEntityManagerFactoryProperties(loadEntityManagerFactoryProperties());
-		setPersistenceUnitName(resolvePerstenceUnitName());
-		setEntityManagerFactory(createEntityManagerFactory());
-		setEntityManager(createEntityManager());
-		
-		// Collect context properties
-		setExternalContextProperties(filterExternalProperties());
-		setInternalContextProperties(gatherInternalProperties());
-		
-		// Initialize RoundtripTest
-		setRoundtripTest(new RoundtripTest(getEntityManagerFactory()));
-	}
-
-	private String resolvePerstenceUnitName()
-	{
-		String puName = getEntityManagerFactoryProperties().get(HIBERNATE_PUN);
-		if ( puName == null )
-			puName = ObjectFactory.class.getPackageName();
-		return puName;
-	}
-	
-	private Map<String, String> loadEntityManagerFactoryProperties()
-	{
-		Properties props = new Properties();
-		try (Reader reader = new FileReader(PERSISTENCE_PROPERTIES_FILENAME))
-		{
-			if (reader != null)
-				props.load(reader);
-		}
-		catch (IOException ex)
-		{
-			errorln(ex);
-		}
-		// Convert Properties to Map<String, String>
-		return props.entrySet().stream().collect
-		(
-			Collectors.toMap
-			(
-				e -> String.valueOf(e.getKey()),
-				e -> String.valueOf(e.getValue()),
-				(prev, next) -> next, HashMap::new
-			)
-		);
-	}
-	
-	// Properties: JPA Entity Manager Factory
-	private Map<String, Object> filterExternalProperties()
-	{
-		return filterProperties(getEntityManagerFactory());
-	}
-	
-	// Properties: Hibernate Session Factory
-	private Map<String, Object> gatherInternalProperties()
-	{
-		EntityManagerFactory emf = getEntityManagerFactory();
-		Map<String, Object> extProps = gatherProperties(emf, getExternalContextProperties());
-		extProps.putAll(HikariCPUtil.gatherProperties(emf));
-		return extProps;
-	}
-
-	@SuppressWarnings("unchecked")
-	private <T> T getContextProperty(String name, T defaultValue)
-	{
-		Object value = getInternalContextProperties().get(name);
-		if ( value != null )
-			return (T) value;
-		else
-			return defaultValue;
-	}
-	
-	private EntityManagerFactory createEntityManagerFactory()
-	{
-		return Persistence.createEntityManagerFactory(
-			getPersistenceUnitName(), getEntityManagerFactoryProperties());
-	}
-	
-	private EntityManager createEntityManager()
-	{
-		return getEntityManagerFactory().createEntityManager();
-	}
-	
-	private JAXBContext createJAXBContext()
-	{
-		JAXBContext jaxbContext = null;
-		try
-		{
-			Class<?>[] classesToBeBound = { ObjectFactory.class, Product.class };
-			jaxbContext = JAXBContext.newInstance(classesToBeBound);
-		}
-		catch ( JAXBException ex)
-		{
-			errorln(ex);
-		}
-		return jaxbContext;
-	}
-	
-	private Marshaller createMarshaller(JAXBContext jaxbContext)
-	{
-		Marshaller marshaller = null;
-		try
-		{
-			if ( jaxbContext != null )
-			{
-				marshaller = jaxbContext.createMarshaller();
-				marshaller.setProperty(JAXB_FORMATTED_OUTPUT, true);
-			}
-			else
-				errorln("Cannot create marshaller because JAXB context is null!");
-		}
-		catch ( JAXBException ex )
-		{
-			errorln(ex);
-		}
-		return marshaller;
-	}
-	
-	private Unmarshaller createUnmarshaller(JAXBContext jaxbContext)
-	{
-		Unmarshaller unmarshaller = null;
-		try
-		{
-			if ( jaxbContext != null )
-			{
-				unmarshaller = jaxbContext.createUnmarshaller();
-			}
-			else
-				errorln("Cannot create unmarshaller because JAXB context is null!");
-		}
-		catch ( JAXBException ex )
-		{
-			errorln(ex);
-		}
-		return unmarshaller;
-	}
-
-	private void marshal(String label, Serializable instance)
-	{
-		String ehc = toHexString(instance.hashCode());
-		String ihc = toHexString(identityHashCode(instance));
-		String productXml = marshalToString(instance);
-		// Entity Hash vs Object Hash
-		println(label + " Hash = [ E#=" + ehc + ", O#=" + ihc + " ]\n" +productXml);
-	}
-	
-	private String marshalToString(Object instance)
-	{
-		String xml = null;
-		if ( instance != null)
-		{
-			try ( StringWriter writer = new StringWriter() )
-			{
-				getMarshaller().marshal(instance, writer);
-				xml = writer.toString();
-			}
-			catch (JAXBException | IOException ex)
-			{
-				errorln(ex);
-			}
-		}
-		return xml;
-	}
-
-	@SuppressWarnings("unchecked")
-	private <T> T unmarshalFromFile(File file)
-	{
-		T instance = null;
-		try
-		{
-			instance = (T) getUnmarshaller().unmarshal(file);
-		}
-		catch (JAXBException ex)
-		{
-			errorln(ex);
-		}
-		return instance;
-	}
-	
-	@SuppressWarnings("unchecked")
-	private <T> T unmarshalFromString(String xml, Class<?> clazz)
-	{
-		T instance = null;
-		try ( StringReader reader = new StringReader(xml) )
-		{
-			instance = (T) getUnmarshaller().unmarshal(new StreamSource(reader), clazz).getValue();
-		}
-		catch (JAXBException ex)
-		{
-			errorln(ex);
-		}
-		return instance;
-	}
-	
-	private void logSummaryStatistics()
-	{
-		if ( SessionFactoryUtil.logSummaryStatistics(getEntityManagerFactory()) )
-			println("Summary statistics have been logged.");
-		else
-			println("Summary statistics are not enabled!!!");
-	}
-	
 	/**
 	 * Print the management state(s) of a given entity type.
 	 * 
@@ -1301,28 +865,26 @@ public class Explorer extends AbstractExplorer
 		{
 			println("Products [size = " + getProductSet().size() + "]");
 			for ( Product product : getProductSet() )
-				printEntityState("	", product, product.getPartNum(), cache2);
+			{
+				String productId = product.getPartNum();
+				boolean xin = isInitialized(product);
+				boolean xpr = isProxy(product);
+				printEntityState("	", product, productId, cache2, xin, xpr);
+			}
 		}
 	}
-	
-	/**
-	 * Print the management state of a given entity.
-	 * 
-	 * @param indent An padding string for indentation.
-	 * @param entity The entity instance.
-	 * @param primaryKey The entity's primary key object.
-	 * @param cache2 The second level cache.
-	 */
-	private void printEntityState(String indent, Serializable entity, Object primaryKey, Cache cache2)
+
+	private void logSummaryStatistics()
 	{
-		String name = entity.getClass().getSimpleName();
-		int hash = System.identityHashCode(entity);
-		boolean xc1 = getEntityManager().contains(entity);
-		boolean xc2 = cache2.contains(entity.getClass(), primaryKey);
-		boolean xin = isInitialized(entity);
-		boolean xpr = isProxy(entity);
-		getPrintStream().format("%s%s %08X: c1=%.1B c2=%.1B in=%.1B pr=%.1B\n", indent, name, hash, xc1, xc2, xin, xpr);
-		getPrintStream().flush();
+		if ( SessionFactoryUtil.logSummaryStatistics(getEntityManagerFactory()) )
+			println("Summary statistics have been logged.");
+		else
+			println("Summary statistics are not enabled!!!");
 	}
-	
+
+	@Override
+	protected void logSummaryStatistics(ActionEvent event)
+	{
+		logSummaryStatistics();
+	}
 }

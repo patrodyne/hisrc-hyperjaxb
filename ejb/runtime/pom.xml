@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Runtime</name>
+	<name>HiSrc HyperJAXB EJB Runtime</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.commons</groupId>

@@ -1,5 +1,8 @@
 package org.jvnet.hyperjaxb3.ejb.util;
 
+import static org.jvnet.hyperjaxb3.ejb.Constants.PERSISTENCE_PROPERTIES_BASE_FILE;
+import static org.jvnet.hyperjaxb3.ejb.Constants.PERSISTENCE_PROPERTIES_MORE_FILE;
+
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -99,5 +102,24 @@ public class EntityManagerFactoryUtil
 		}
 		return result;
 	}
+	
+	public static String getPersistencePropertiesBaseFile()
+	{
+		return getPersistencePropertiesBaseFile("persistence.properties");
+	}
 
+	public static String getPersistencePropertiesBaseFile(String baseFile)
+	{
+		return System.getProperty(PERSISTENCE_PROPERTIES_BASE_FILE, baseFile);
+	}
+	
+	public static String getPersistencePropertiesMoreFile()
+	{
+		return getPersistencePropertiesMoreFile("persistence-more.properties");
+	}
+
+	public static String getPersistencePropertiesMoreFile(String moreFile)
+	{
+		return System.getProperty(PERSISTENCE_PROPERTIES_MORE_FILE, moreFile);
+	}
 }

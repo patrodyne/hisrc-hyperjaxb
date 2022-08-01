@@ -4,11 +4,11 @@ This project is the first exploration of the **HiSrc HyperJAXB Maven Plug-in**. 
 
 There is a lot to learn in this exploration. *HyperJAXB* is a powerful plug-in that generates Java code that can synchronize your data with almost any SQL database. The same code can read and write XML instances, too. It is XML Schema driven and supports customizations. It includes data caching and connection pooling, too. That is a lot. The key to using this plug-in is to learn XML Schema grammar well. It will help if you have experience with it. But if you don't, this exploration will show you how it works and it let's you can learn as you go.
 
-> This project includes a Swing application named *Explorer* to demonstrate features of the *HiSrc HyperJAXB* plug-in. This *Explorer* application presents a lesson with actions for real-time experimentation. Feel free to modify your copy of the [Explorer.java][7] source file by adding or modifying the action methods with your own investigative code. The `Explorer` class is an extension of `AbstractExplorer` which contains the more boring mechanics of this implementation. Feel free to create an `Explorer` class in your own projects to help explain the purpose of your work too.
+> This project includes a Swing application named *Explorer* to demonstrate features of the *HiSrc HyperJAXB* plug-in. This *Explorer* application presents a lesson with actions for real-time experimentation. Feel free to modify your copy of the [Explorer.java][7] source file by adding or modifying the action methods with your own investigative code. The `Explorer` class is an extension of `AbstractEntityExplorer` which contains the more boring mechanics of this implementation. Feel free to create an `Explorer` class in your own projects to help explain the purpose of your work too.
 
 > This **Explorer** application is a *development tool* and is omitted from your Maven generated artifact; although, you could place it in your main package if you want to build a Swing based application.
 
-> **About AbstractExplorer:** Projects can create their own custom Explorer by extending [AbstractExplorer][6] and writing an HTML lesson page plus `JMenuItem`(s) to trigger exploratory code. An `AbstractExplorer` implementation (like the one you see here) displays three panels: an HTML lesson, a print console and an error (logging) console. The lesson file is read as a resource relative to the implementation (i.e. `Explorer`) class. Text is sent to the print console by calling `println(text)` and error messages are sent to the error console by calling `errorln(msg)`. Additionally, 'standard out' / 'standard error' streams are sent to these respective consoles, too.
+> **About AbstractEntityExplorer:** Projects can create their own custom Explorer by extending [AbstractEntityExplorer][6] and writing an HTML lesson page plus `JMenuItem`(s) to trigger exploratory code. An `AbstractEntityExplorer` implementation (like the one you see here) displays three panels: an HTML lesson, a print console and an error (logging) console. The lesson file is read as a resource relative to the implementation (i.e. `Explorer`) class. Text is sent to the print console by calling `println(text)` and error messages are sent to the error console by calling `errorln(msg)`. Additionally, 'standard out' / 'standard error' streams are sent to these respective consoles, too.
 
 ## HiSrc HyperJAXB Maven Plug-in
 
@@ -178,7 +178,7 @@ The customizations will apply to the anonymous complex type of the `Product` ele
 
 ### Drop/Create Database Automatically
 
-This project reads its JPA properties from [persistence.properties][15]. These properties include JPA declarations that enable ORM implementations, like [Hibernate][17], to create the database (and DDL scripts) automatically. When *Explorer* is launched, the JPA/ORM will drop the local test database then recreate a fresh set of tables.
+This project reads its JPA properties from [persistence.properties][15] and one of [persistence-h2.properties][29] or [persistence-pg.properties][30]. These properties include JPA declarations that enable ORM implementations, like [Hibernate][17], to create the database (and DDL scripts) automatically. When *Explorer* is launched, the JPA/ORM will drop the local test database then recreate a fresh set of tables.
 
 ~~~
 javax.persistence.schema-generation.database.action=drop-and-create
@@ -241,9 +241,11 @@ When your *Explorer* application launches, it reads the configuration files from
 
 + [jvmsystem.properties][14] - JVM System configuration.
 + [persistence.properties][15] - JPA Persistence configuration.
+    + [persistence-h2.properties][29] - JPA Persistence [H2Database][18] configuration.
+    + [persistence-pg.properties][30] - JPA Persistence [PostgreSQL][19] configuration.
 + [simplelogger.properties][16] - [SLF4J][2] Logging configuration.
 
-Take a look at your `src/test/resources/persistence.properties`. It has two sections: *JPA* and *Hibernate*. The JPA section contains properties that apply to all ORM implementations while the *Hibernate* section contains ORM specific properties. Overall, this file provides the configuration for these components:
+Take a look at your `src/test/resources/persistence*.properties`. These files have two sections: *JPA* and *Hibernate*. The JPA section contains properties that apply to all ORM implementations while the *Hibernate* section contains ORM specific properties. Overall, this file provides the configuration for these components:
 
 + JDBC database connection ([H2][18]).
 + Database schema generation ([PostgreSQL][19] dialect).
@@ -463,6 +465,8 @@ The results can be paginated using the `start` and `count` integer values.
 There are several locations that contribute to the 2nd level cache configuration:
 
 + [persistence.properties][15] - Hibernate cache properties.
+    + [persistence-h2.properties][29] - JPA Persistence [H2Database][18] configuration.
+    + [persistence-pg.properties][30] - JPA Persistence [PostgreSQL][19] configuration.
 + [Product.xjb][13] - disable entity caching unless enabled in XSD.
 + [Product.xsd][12] - enable entity caching for specific element (i.e. Product).
 + [ehcache-podb.xml][25] - set default and custom cache regions.
@@ -879,7 +883,7 @@ These actions can be invoked from this list, as links, or from the menu bar, as 
 
 #### Exhaust Connection Pool
 
-Your project's [pom.xml][8] declares a dependency on `org.hibernate:hibernate-hikaricp` to configure the JDBC connection pool provider to be [HikariCP][23]. Plus, your [persistence.properties][15] configures the connection provider class to be a custom HyperJAXB class from [HikariCPHyperConnectionProvider][28]. 
+Your project's [pom.xml][8] declares a dependency on `org.hibernate:hibernate-hikaricp` to configure the JDBC connection pool provider to be [HikariCP][23]. Plus, your [persistence.properties][15] and one of [persistence-h2.properties][29] or [persistence-pg.properties][30] configures the connection provider class to be a custom HyperJAXB class from [HikariCPHyperConnectionProvider][28].
 			
 > Note: `HikariCPHyperConnectionProvider` is a minor extension of *Hibernate's* `HikariCPConnectionProvider` that sends the JDBC *catalog* and *schema* properties forward to *HikariCP*, when present.
 
@@ -983,7 +987,7 @@ Experiment with the toolbar and different sequences of the chaos to see the effe
 [3]: https://www.w3.org/TR/xmlschema-0/#Intro
 [4]: https://docs.oracle.com/cd/E17802_01/webservices/webservices/docs/1.5/tutorial/doc/JAXBUsing4.html
 [5]: https://en.wikipedia.org/wiki/ISO_8601
-[6]: https://github.com/patrodyne/hisrc-basicjaxb/blob/master/runtime/src/main/java/org/patrodyne/jvnet/basicjaxb/explore/AbstractExplorer.java?ts=4
+[6]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/runtime/src/main/java/org/patrodyne/jvnet/hyperjaxb/explore/AbstractEntityExplorer.java?ts=4
 [7]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/test/java/org/patrodyne/jvnet/hyperjaxb/ex001/Explorer.java?ts=4
 [8]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/project-pom.xml?ts=4
 [9]: https://github.com/patrodyne/hisrc-hyperjaxb#readme
@@ -1006,3 +1010,5 @@ Experiment with the toolbar and different sequences of the chaos to see the effe
 [26]: https://www.ironmountain.com/blogs/2020/7-data-destruction-best-practices
 [27]: https://www.w3.org/TR/xmlschema-0/#OccurrenceConstraints
 [28]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/opt/hikaricp/src/main/java/org/patrodyne/jvnet/hyperjaxb/opt/hikaricp/HikariCPHyperConnectionProvider.java?ts=4
+[29]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/test/resources/persistence-h2.properties?ts=4
+[30]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/test/resources/persistence-pg.properties?ts=4

@@ -18,6 +18,7 @@
 
 		<ehcache.version>${ehcache.version}</ehcache.version>
 		<h2database.version>${h2database.version}</h2database.version>
+		<postgresql.version>${postgresql.version}</postgresql.version>
 		<hibernate-entitymanager.version>${hibernate-entitymanager.version}</hibernate-entitymanager.version>
 		<hisrc-basicjaxb.version>${hisrc-basicjaxb.version}</hisrc-basicjaxb.version>
 		<hisrc-hyperjaxb.version>${project.version}</hisrc-hyperjaxb.version>
@@ -51,29 +52,6 @@
 			<artifactId>slf4j-simple</artifactId>
 			<version>\${slf4j.version}</version>
 			<scope>test</scope>
-		</dependency>
-
-		<!-- Hibernate Dependencies -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>\${hibernate-entitymanager.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-hikaricp</artifactId>
-			<version>\${hibernate-entitymanager.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jcache</artifactId>
-			<version>\${hibernate-entitymanager.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.ehcache</groupId>
-			<artifactId>ehcache</artifactId>
-			<scope>runtime</scope>
-			<version>\${ehcache.version}</version>
 		</dependency>
 
 		<!-- JAXB Dependencies -->
@@ -123,6 +101,35 @@
 			<version>\${javax-annotation.version}</version>
 		</dependency>
 
+		<!-- Hibernate Dependencies -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>\${hibernate-entitymanager.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-hikaricp</artifactId>
+			<version>\${hibernate-entitymanager.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jcache</artifactId>
+			<version>\${hibernate-entitymanager.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<scope>runtime</scope>
+			<version>\${ehcache.version}</version>
+			<exclusions>
+              <exclusion>
+                <groupId>org.glassfish.jaxb</groupId>
+				<artifactId>jaxb-runtime</artifactId>
+              </exclusion>
+            </exclusions>
+		</dependency>
+
 		<!-- Test Roundtrip -->
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
@@ -137,6 +144,11 @@
 			<artifactId>h2</artifactId>
 			<version>\${h2database.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>\${postgresql.version}</version>
 		</dependency>
 
 		<!-- Unit Test dependencies -->
@@ -246,7 +258,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M5</version>
 				<configuration>
-					<systemPropertiesFile>src/test/resources/jvmsystem.properties</systemPropertiesFile>
+					<systemPropertiesFile>${basedir}/src/test/resources/jvmsystem.properties</systemPropertiesFile>
 				</configuration>
 			</plugin>
 			<plugin>

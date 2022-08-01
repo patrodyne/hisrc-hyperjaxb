@@ -6,7 +6,9 @@ import org.xml.sax.helpers.LocatorImpl;
 public class Constants {
 
 	public static final String TODO_LOG_LEVEL="org.jvnet.hyperjaxb3.todoLogLevel";
-	
+	public static final String PERSISTENCE_PROPERTIES_BASE_FILE="org.jvnet.hyperjaxb3.persistencePropertiesBaseFile";
+	public static final String PERSISTENCE_PROPERTIES_MORE_FILE="org.jvnet.hyperjaxb3.persistencePropertiesMoreFile";
+
 	public static final String NAMESPACE = "http://hyperjaxb3.jvnet.org";
 
 	public static final Locator EMPTY_LOCATOR;

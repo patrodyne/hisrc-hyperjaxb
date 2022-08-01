@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>hisrc-hyperjaxb-ejb-explore-ex001</artifactId>
 	<packaging>pom</packaging>
-	<name>HiSrc HyperJAXB EJB Explore - Ex001 - JustProduct</name>
+	<name>HiSrc HyperJAXB EJB - Explore [Ex001 JustProduct]</name>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb-explore</artifactId>

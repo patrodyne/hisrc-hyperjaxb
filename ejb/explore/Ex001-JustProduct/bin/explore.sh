@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Run a Maven goal to execute the Explorer class.
 #
@@ -10,9 +10,11 @@
 #
 # Gnome scaling
 # export GDK_SCALE=2
-mvn test-compile exec:java \
-	-Dorg.jboss.logging.provider=slf4j \
-	-Dorg.jvnet.hyperjaxb3.todoLogLevel=DEBUG \
-	-Dcom.zaxxer.hikari.housekeeping.periodMs=30000 \
+
+BASEDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source ${BASEDIR}/build-inc.sh
+
+# Execute Explorer using 'org.codehaus.mojo:exec-maven-plugin'
+mvn test-compile exec:java ${JVM_SYS_PROPS} \
 	-Dexec.classpathScope="test" \
 	-Dexec.mainClass="org.patrodyne.jvnet.hyperjaxb.ex001.Explorer"
