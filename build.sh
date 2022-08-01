@@ -9,7 +9,8 @@
 #       from the sub-project to invoke this script.
 
 BASEDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-BUILDER="output mvn --fail-at-end -Dorg.jvnet.hyperjaxb3.todoLogLevel=DEBUG -Dorg.jboss.logging.provider=slf4j"
+source ${BASEDIR}/build-INC.sh
+BUILDER="output mvn --fail-at-end ${JVM_SYS_PROPS}"
 FGTITLE="$(basename $(pwd))"
 BGTITLE="$(date --rfc-3339=sec) $(pwd)"
 
@@ -42,7 +43,7 @@ menu_actions()
 			"e)")	${BUILDER} dependency:resolve-plugins ;;
 			"f)")	${BUILDER} -Dmaven.plugin.skip=true dependency:analyze ;;
 			"g)")	${BUILDER} -DskipTests=true clean install ;;
-			"h)")	${BUILDER} -DskipTests=true -Pall clean package ;;
+			"h)")	${BUILDER} -DskipTests=true -Pall,tests-0 clean package ;;
 			"i)")	${BUILDER} -DskipTests=false -Dmaven.plugin.skip=true -Pall test ;;
 			"j)")	${BUILDER} dependency:sources ;;
 			"v)")	vim . ;;

@@ -6,10 +6,9 @@
 # Profile Id: none - default, install common jars to local repository.
 # Profile Id: samples - package sample plus default projects.
 # Profile Id: tests - package test plus default projects.
-# Profile Id: tests,tests-0 - package test set #0 plus default projects.
-# Profile Id: tests,tests-1 - package test set #1 plus default projects.
-# Profile Id: tests,tests-2 - package test set #2 plus default projects.
-# Profile Id: tests,tests-all - package all test sets plus default projects.
+# Profile Id: tests,tests-0 - successful tests plus packagable, failing tests.
+# Profile Id: tests,tests-1 - successful tests plus longer packagable, failing tests.
+# Profile Id: tests,tests-2 - successful tests plus unpackagable, failing tests.
 # Profile Id: all - package the above plus templates and tutorials.
 # Profile Id: sonatype-oss-release - upload default artifacts to central repository.
 #
@@ -23,14 +22,22 @@
 #     Step #2 packages the shared, test and sample projects.
 #     Step #3 unit test the shared, test and sample projects.
 #
+
 if [ ! -d "${JAVA_HOME}" ]; then
 	echo "Please configure Java home path."
 	exit 1
 fi
-# DEBUG_OPTS="-X -Dorg.slf4j.simpleLogger.showLogName=true"
-# BUILD_OPTS="--fail-at-end -DskipTests=true $@"
-  BUILD_OPTS="--fail-at-end $@"
-  mvn ${DEBUG_OPTS} ${BUILD_OPTS}
+
+BASEDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source ${BASEDIR}/build-INC.sh
+
+if [ $# -eq 0 ]; then
+  ${BASEDIR}/build.sh
+else
+  mvn --fail-at-end ${JVM_SYS_PROPS} "$@"
+fi
+
+# mvn -DskipTests=true clean install
 # mvn -DskipTests=true -Dorg.jvnet.hyperjaxb3.todoLogLevel=DEBUG -Pnexus-deploy clean deploy
 # mvn -DskipTests=true -Dorg.jvnet.hyperjaxb3.todoLogLevel=DEBUG -DdryRun=false release:clean
 # mvn -DskipTests=true -Dorg.jvnet.hyperjaxb3.todoLogLevel=DEBUG -DdryRun=true release:prepare
