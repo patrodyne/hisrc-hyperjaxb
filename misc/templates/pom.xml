@@ -5,13 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.patrodyne.jvnet</groupId>
 	<artifactId>hisrc-hyperjaxb-templates</artifactId>
-	<version>0.6.4-SNAPSHOT</version>
+	<version>0.6.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB Templates</name>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-project</artifactId>
-		<version>0.6.4-SNAPSHOT</version>
+		<version>0.6.5-SNAPSHOT</version>
 	</parent>
 	<build>
 		<defaultGoal>install</defaultGoal>

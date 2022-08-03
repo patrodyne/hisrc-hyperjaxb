@@ -107,7 +107,7 @@ public class RunEpisodesBPlugin extends AbstractMojoTestCase {
 
 		episode.setGroupId("org.patrodyne.jvnet");
 		episode.setArtifactId("hisrc-hyperjaxb-ejb-tests-episodes-a");
-		episode.setVersion("0.6.4-SNAPSHOT");
+		episode.setVersion("0.6.5-SNAPSHOT");
 		mojo.setEpisodes(new Dependency[] { episode });
 
 		mojo.execute();
