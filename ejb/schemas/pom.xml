@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb</artifactId>
-		<version>0.6.4-SNAPSHOT</version>
+		<version>0.6.4</version>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-schemas</artifactId>
 	<packaging>pom</packaging>
@@ -16,4 +16,8 @@
 	<build>
 		<defaultGoal>install</defaultGoal>
 	</build>
+
+  <scm>
+    <tag>0.6.4</tag>
+  </scm>
 </project>
