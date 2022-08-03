@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-maven</artifactId>
-		<version>0.6.4</version>
+		<version>0.6.5-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
@@ -157,8 +157,4 @@
 			</build>
 		</profile>
 	</profiles>
-
-  <scm>
-    <tag>0.6.4</tag>
-  </scm>
 </project>

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
         	<artifactId>hisrc-hyperjaxb-ejb-extensions</artifactId>
-		<version>0.6.4</version>
+		<version>0.6.5-SNAPSHOT</version>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-extensions-naming</artifactId>
 	<packaging>pom</packaging>
@@ -12,8 +12,4 @@
 	<modules>
 		<module>custom-naming-pre_0_6_0</module>
 	</modules>
-
-  <scm>
-    <tag>0.6.4</tag>
-  </scm>
 </project>
