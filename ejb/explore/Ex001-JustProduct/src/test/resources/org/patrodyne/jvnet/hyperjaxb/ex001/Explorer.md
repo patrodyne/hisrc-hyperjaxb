@@ -336,7 +336,7 @@ These actions can be invoked from this list, as links, or from the menu bar, as 
 
 After [unmarshalling products](!unmarshalProducts) into this application, you can [Persist Products](!persistProducts) to the local test database. The logging console shows the SQL used to INSERT each product into the database, scroll the contents to review.
 
-> Hint: You can control the SQL logging using the properties in your `simplelogger.properties' file.
+> Hint: You can control the SQL logging using the properties in your `simplelogger.properties` file.
 
 ~~~
     org.slf4j.simpleLogger.log.org.hibernate.SQL=DEBUG
@@ -959,7 +959,7 @@ After performing the *Query Cache JPA Update*, you can explore the *query cache*
 
 First, [query](!queryProducts) all the products and observe how:
 
-+ the modified (and managed) products were flushed to the database, prior to teh query.
++ the modified (and managed) products were flushed to the database, prior to the query.
 + the query cache is populated.
 
 Repeatedly [query](!queryProducts) all the products again and observe how the query cache is used.
@@ -987,7 +987,7 @@ Experiment with the toolbar and different sequences of the chaos to see the effe
 [3]: https://www.w3.org/TR/xmlschema-0/#Intro
 [4]: https://docs.oracle.com/cd/E17802_01/webservices/webservices/docs/1.5/tutorial/doc/JAXBUsing4.html
 [5]: https://en.wikipedia.org/wiki/ISO_8601
-[6]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/runtime/src/main/java/org/patrodyne/jvnet/hyperjaxb/explore/AbstractEntityExplorer.java?ts=4
+[6]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/runtime/src/main/java/org/patrodyne/jvnet/hyperjaxb/explore/AbstractEntityExplorer.java?ts=4
 [7]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/test/java/org/patrodyne/jvnet/hyperjaxb/ex001/Explorer.java?ts=4
 [8]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/project-pom.xml?ts=4
 [9]: https://github.com/patrodyne/hisrc-hyperjaxb#readme
