@@ -52,7 +52,7 @@ New goals for the next release are:
 
 #### In Progress
 
-* Adding sample projects to GitHub releases.
+* Review Jakarta dependencies.
 
 ### Fork History
 
