@@ -992,7 +992,7 @@ Experiment with the toolbar and different sequences of the chaos to see the effe
 [8]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/project-pom.xml?ts=4
 [9]: https://github.com/patrodyne/hisrc-hyperjaxb#readme
 [10]: https://github.com/patrodyne/hisrc-higherjaxb#readme
-[11]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/explore/Ex001-JustProduct/src/test/resources/JustProduct.svg
+[11]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/explore/Ex001-JustProduct/src/main/resources/JustProduct.svg
 [12]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/main/resources/Product.xsd?ts=4
 [13]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/main/resources/Product.xjb?ts=4
 [14]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/test/resources/jvmsystem.properties?ts=4

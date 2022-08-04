@@ -46,7 +46,7 @@
 	</dependencies>
 	<build>
 		<defaultGoal>package</defaultGoal>
-		<finalName>hisrc-hyperjaxb-ex001-${project.version}</finalName>
+		<finalName>hisrc-hyperjaxb-ex001-${hisrc-hyperjaxb.version}</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>

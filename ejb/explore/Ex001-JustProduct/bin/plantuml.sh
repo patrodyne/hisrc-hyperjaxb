@@ -11,7 +11,7 @@ DIAGRAM_NAME="JustProduct"
 PLANTUML_HOME="/opt/java/plantuml"
 PLANTUML_TEMP="target/generated-docs/${DIAGRAM_NAME}Temp.puml"
 PLANTUML_FILE="target/generated-docs/${DIAGRAM_NAME}.puml"
-PLANTUML_DEST="src/test/resources/${DIAGRAM_NAME}.${IMGTYPE}"
+PLANTUML_DEST="src/main/resources/${DIAGRAM_NAME}.${IMGTYPE}"
 # Configure END
 
 # Pre-process PUML

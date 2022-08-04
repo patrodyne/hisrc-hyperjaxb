@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.patrodyne.jvnet</groupId>
 	<artifactId>hisrc-hyperjaxb-ejb-ex001</artifactId>
-	<version>${project.version}</version>
+	<version>${hisrc-hyperjaxb.version}</version>
 	<packaging>jar</packaging>
 	<name>HyperJAXB EJB - Ex001 - JustProduct</name>
 
@@ -21,7 +21,8 @@
 		<postgresql.version>${postgresql.version}</postgresql.version>
 		<hibernate-entitymanager.version>${hibernate-entitymanager.version}</hibernate-entitymanager.version>
 		<hisrc-basicjaxb.version>${hisrc-basicjaxb.version}</hisrc-basicjaxb.version>
-		<hisrc-hyperjaxb.version>${project.version}</hisrc-hyperjaxb.version>
+		<hisrc-higherjaxb-maven-plugin.version>${hisrc-higherjaxb-maven-plugin.version}</hisrc-higherjaxb-maven-plugin.version>
+		<hisrc-hyperjaxb.version>${hisrc-hyperjaxb.version}</hisrc-basicjaxb.version>
 		<javax-annotation.version>${javax-annotation.version}</javax-annotation.version>
 		<jaxb.version>${jaxb.version}</jaxb.version>
 		<junit.version>${junit.version}</junit.version>
@@ -289,7 +290,7 @@
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
-				<version>${project.version}</version>
+				<version>\${hisrc-hyperjaxb.version}</version>
 				<executions>
 					<execution>
 						<id>generate</id>
