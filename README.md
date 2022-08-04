@@ -27,23 +27,22 @@ with the original `maven-jaxb2-plugin` name.
 
 ### Releases
 
+#### GitHub Releases, Demonstrations
+
+* [HiSrc HyperJAXB v0.6.4, Explorations][31]
+
 #### Maven Central Repository
 
 * [Maven Central Repository Search](https://search.maven.org/search?q=g:org.patrodyne.jvnet)
 * [Maven Central Repository Index](https://repo1.maven.org/maven2/org/patrodyne/jvnet/)
 
-#### GitHub Zip Releases
-
-* TBD
-
 ### Goals
 
-The new goals for this fork are:
+New goals for the next release are:
 
-* Add sample projects to GitHub releases.
-* Update dependencies with newer versions *excluding* the Jakarta namespace.
 * Update dependencies with newer versions *including* the Jakarta namespace.
-* Replace [HSQLDB](http://hsqldb.org/) with [H2](https://www.h2database.com/) database engine.
+* Update JUnit v4 to JUnit v5.
+* Add more explorations for other HyperJAXB features.
 
 ### Status
 
@@ -56,6 +55,13 @@ The new goals for this fork are:
 * Adding sample projects to GitHub releases.
 
 ### Fork History
+
+#### Version 0.6.4
+
+* Added sample projects to GitHub releases.
+* Updated dependencies with newer versions *excluding* the Jakarta namespace.
+* Replaced [HSQLDB](http://hsqldb.org/) with [H2](https://www.h2database.com/) database engine.
+* Added option to run tests using a local H2 database or a remote PostgreSQL server.
 
 #### Version 0.6.3
 
@@ -81,3 +87,4 @@ The new goals for this fork are:
   [23]: https://github.com/highsource/maven-jaxb2-plugin#readme
   [24]: https://github.com/highsource/jaxb2-annotate-plugin#readme
   [25]: https://github.com/highsource/hyperjaxb3#readme
+  [31]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/0.6.4
