@@ -21,8 +21,6 @@
 		<profile>
 			<id>all</id>
 			<modules>
-				<module>hibernate</module>
-				<module>hikaricp</module>
 			</modules>
 		</profile>
 	</profiles>

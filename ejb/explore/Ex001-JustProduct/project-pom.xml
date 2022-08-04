@@ -22,7 +22,7 @@
 		<hibernate-entitymanager.version>${hibernate-entitymanager.version}</hibernate-entitymanager.version>
 		<hisrc-basicjaxb.version>${hisrc-basicjaxb.version}</hisrc-basicjaxb.version>
 		<hisrc-higherjaxb-maven-plugin.version>${hisrc-higherjaxb-maven-plugin.version}</hisrc-higherjaxb-maven-plugin.version>
-		<hisrc-hyperjaxb.version>${hisrc-hyperjaxb.version}</hisrc-basicjaxb.version>
+		<hisrc-hyperjaxb.version>${hisrc-hyperjaxb.version}</hisrc-hyperjaxb.version>
 		<javax-annotation.version>${javax-annotation.version}</javax-annotation.version>
 		<jaxb.version>${jaxb.version}</jaxb.version>
 		<junit.version>${junit.version}</junit.version>
@@ -359,7 +359,7 @@
 							</hideClasses>
 							<hideFields>false</hideFields>
 							<hideMethods>true</hideMethods>
-							<outputFilename>JustProductTemp.puml</outputFilename>
+							<outputFilename>ProductTemp.puml</outputFilename>
 						</configuration>
 					</execution>
 				</executions>

@@ -7,7 +7,7 @@
 # Configure BEGIN
 export GRAPHVIZ_DOT="/usr/bin/dot"
 IMGTYPE="svg"
-DIAGRAM_NAME="JustProduct"
+DIAGRAM_NAME="Product"
 PLANTUML_HOME="/opt/java/plantuml"
 PLANTUML_TEMP="target/generated-docs/${DIAGRAM_NAME}Temp.puml"
 PLANTUML_FILE="target/generated-docs/${DIAGRAM_NAME}.puml"

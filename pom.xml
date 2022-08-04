@@ -659,5 +659,21 @@
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>all</id>
+			<modules/>
+		</profile>
+		<profile>
+			<id>tests-0</id>
+			<modules/>
+		</profile>
+		<profile>
+			<id>tests-1</id>
+			<modules/>
+		</profile>
+		<profile>
+			<id>tests-2</id>
+			<modules/>
+		</profile>
 	</profiles>
 </project>
