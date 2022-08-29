@@ -2,8 +2,8 @@ package org.patrodyne.jvnet.hyperjaxb.ex001.orm;
 
 import java.util.Date;
 
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 
 import org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage;
 import org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable;

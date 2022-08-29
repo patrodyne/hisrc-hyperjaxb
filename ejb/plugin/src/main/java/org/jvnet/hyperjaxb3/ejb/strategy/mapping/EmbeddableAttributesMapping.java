@@ -12,9 +12,9 @@ import org.jvnet.jaxb2_commons.util.FieldAccessorUtils;
 
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
-import com.sun.java.xml.ns.persistence.orm.Basic;
-import com.sun.java.xml.ns.persistence.orm.EmbeddableAttributes;
-import com.sun.java.xml.ns.persistence.orm.Transient;
+import ee.jakarta.xml.ns.persistence.orm.Basic;
+import ee.jakarta.xml.ns.persistence.orm.EmbeddableAttributes;
+import ee.jakarta.xml.ns.persistence.orm.Transient;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CEnumLeafInfo;

@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.patrodyne.jvnet</groupId>
-	<artifactId>hisrc-hyperjaxb-ejb-samples-po-maven-jaxb2-plugin</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-sample-po-maven-jaxb2-plugin</artifactId>
 	<version>${project.version}</version>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB Samples [po-maven-jaxb2-plugin]</name>
@@ -13,22 +13,44 @@
 		<maven.compiler.target>8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<h2database.version>${h2database.version}</h2database.version>
+		<postgresql.version>${postgresql.version}</postgresql.version>
+		<hibernate-core.version>${hibernate-core.version}</hibernate-core.version>
+		<jpa-api.version>${jpa-api.version}</jpa-api.version>
+		<jaxb-api.version>${jaxb-api.version}</jaxb-api.version>
+		<jaxb-imp.version>${jaxb-imp.version}</jaxb-imp.version>
+		<junit.version>${junit.version}</junit.version>
+		<slf4j.version>${slf4j.version}</slf4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
-			<version>${hibernate-jpa-2.1-api.version}</version>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>\${jpa-api.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>${jaxb.version}</version>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>\${jaxb-api.version}</version>
+			<exclusions>
+				<!-- In favor of jakarta.activation:jakarta.activation-api -->
+				<exclusion>
+					<groupId>com.sun.activation</groupId>
+					<artifactId>jakarta.activation</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
-			<version>${jaxb.version}</version>
+			<version>\${jaxb-imp.version}</version>
+			<exclusions>
+				<!-- In favor of jakarta.activation:jakarta.activation-api -->
+				<exclusion>
+					<groupId>com.sun.activation</groupId>
+					<artifactId>jakarta.activation</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
@@ -53,33 +75,33 @@
 		<!-- Hibernate Dependencies -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate-entitymanager.version}</version>
+			<artifactId>hibernate-core-jakarta</artifactId>
+			<version>\${hibernate-core.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- Database -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>${h2database.version}</version>
+			<version>\${h2database.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>${postgresql.version}</version>
+			<version>\${postgresql.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
+			<version>\${slf4j.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4j.version}</version>
+			<version>\${slf4j.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -99,7 +121,6 @@
 				</excludes>
 			</resource>
 		</resources>
-		<testSourceDirectory>${basedir}/target/generated-sources/xjc</testSourceDirectory>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -109,7 +130,7 @@
 						<dependency>
 							<groupId>junit</groupId>
 							<artifactId>junit</artifactId>
-							<version>${junit.version}</version>
+							<version>\${junit.version}</version>
 							<scope>runtime</scope>
 						</dependency>
 						<dependency>
@@ -139,6 +160,11 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>versions-maven-plugin</artifactId>
 					<version>2.9.0</version>
+				</plugin>
+				<plugin>
+				  <groupId>org.codehaus.mojo</groupId>
+				  <artifactId>build-helper-maven-plugin</artifactId>
+				  <version>3.0.0</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -202,6 +228,23 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-xjc-test-source</id>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>\${project.build.directory}/generated-sources/xjc</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-higherjaxb-maven-plugin</artifactId>
 				<version>${hisrc-higherjaxb-maven-plugin.version}</version>
@@ -235,7 +278,7 @@
 				<configuration>
 					<ignoredUnusedDeclaredDependencies>
 						<ignoredUnusedDeclaredDependency>org.glassfish.jaxb:jaxb-runtime:jar:</ignoredUnusedDeclaredDependency>
-						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-entitymanager:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-core-jakarta:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>com.h2database:h2:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-api:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-simple:jar:</ignoredUnusedDeclaredDependency>

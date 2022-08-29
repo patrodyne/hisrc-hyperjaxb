@@ -1,10 +1,13 @@
 package org.jvnet.hyperjaxb3.xjc.model;
 
-import javax.activation.MimeType;
+import jakarta.activation.MimeType;
 import org.jvnet.hyperjaxb3.xml.XMLConstants;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.namespace.QName;
 
+import org.glassfish.jaxb.core.v2.model.annotation.Locatable;
+import org.glassfish.jaxb.core.v2.model.core.ID;
+import org.glassfish.jaxb.core.v2.runtime.Location;
 import org.jvnet.hyperjaxb3.ejb.Constants;
 import org.xml.sax.Locator;
 
@@ -17,9 +20,6 @@ import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.model.nav.NavigatorImpl;
 import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.Outline;
-import com.sun.xml.bind.v2.model.annotation.Locatable;
-import com.sun.xml.bind.v2.model.core.ID;
-import com.sun.xml.bind.v2.runtime.Location;
 import com.sun.xml.xsom.XSComponent;
 import com.sun.xml.xsom.XmlString;
 

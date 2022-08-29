@@ -13,17 +13,32 @@
 		<maven.compiler.target>8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<h2database.version>${h2database.version}</h2database.version>
+		<postgresql.version>${postgresql.version}</postgresql.version>
+		<hibernate-core.version>${hibernate-core.version}</hibernate-core.version>
+		<jpa-api.version>${jpa-api.version}</jpa-api.version>
+		<jaxb-api.version>${jaxb-api.version}</jaxb-api.version>
+		<jaxb-imp.version>${jaxb-imp.version}</jaxb-imp.version>
+		<junit.version>${junit.version}</junit.version>
+		<slf4j.version>${slf4j.version}</slf4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
-			<version>${hibernate-jpa-2.1-api.version}</version>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>\${jpa-api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
-			<version>${jaxb.version}</version>
+			<version>\${jaxb-imp.version}</version>
+			<exclusions>
+				<!-- In favor of jakarta.activation:jakarta.activation-api -->
+				<exclusion>
+					<groupId>com.sun.activation</groupId>
+					<artifactId>jakarta.activation</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
@@ -35,7 +50,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
+			<version>\${junit.version}</version>
 		</dependency>
 
 		<!-- Roundtrip -->
@@ -48,33 +63,33 @@
 		<!-- Hibernate Dependencies -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate-entitymanager.version}</version>
+			<artifactId>hibernate-core-jakarta</artifactId>
+			<version>\${hibernate-core.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- Database -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>${h2database.version}</version>
+			<version>\${h2database.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>${postgresql.version}</version>
+			<version>\${postgresql.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
+			<version>\${slf4j.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4j.version}</version>
+			<version>\${slf4j.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -89,7 +104,7 @@
 						<dependency>
 							<groupId>junit</groupId>
 							<artifactId>junit</artifactId>
-							<version>${junit.version}</version>
+							<version>\${junit.version}</version>
 							<scope>runtime</scope>
 						</dependency>
 						<dependency>
@@ -202,7 +217,7 @@
 				<configuration>
 					<ignoredUnusedDeclaredDependencies>
 						<ignoredUnusedDeclaredDependency>org.glassfish.jaxb:jaxb-runtime:jar:</ignoredUnusedDeclaredDependency>
-						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-entitymanager:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-core-jakarta:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-simple:jar:</ignoredUnusedDeclaredDependency>
 					</ignoredUnusedDeclaredDependencies>
 				</configuration>

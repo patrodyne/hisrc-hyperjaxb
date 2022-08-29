@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<schema
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://example.org/template/basic" 
+	xmlns:tns="http://example.org/template/basic"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	jaxb:version="3.0"
+>
+
+	<annotation>
+		<documentation xml:lang="en">
+			HiSrc HyperJAXB EJB Template Basic
+		</documentation>
+	</annotation>
+
+	<element name="Address">
+		<complexType>
+			<sequence>
+				<element name="Name" type="string"/>
+				<element name="Street" type="string"/>
+				<element name="City" type="string"/>
+				<element name="State" type="string"/>
+				<element name="Zip" type="decimal"/>
+			</sequence>
+			<attribute name="Country" type="NMTOKEN" fixed="USA"/>
+			<attribute name="Stage" type="tns:stage" use="required" />
+		</complexType>
+	</element>
+
+	<simpleType name="stage">
+		<restriction base="string">
+			<enumeration value="Hold" />
+			<enumeration value="Open" />
+			<enumeration value="Active" />
+			<enumeration value="Closed" />
+			<enumeration value="Canceled" />
+		</restriction>
+	</simpleType>
+	
+</schema>

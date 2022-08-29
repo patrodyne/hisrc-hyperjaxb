@@ -2,8 +2,8 @@ package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
 import org.jvnet.jaxb2_commons.util.OutlineUtils;
 
-import com.sun.java.xml.ns.persistence.orm.Attributes;
-import com.sun.java.xml.ns.persistence.orm.MappedSuperclass;
+import ee.jakarta.xml.ns.persistence.orm.Attributes;
+import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 

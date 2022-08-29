@@ -3,20 +3,20 @@ package org.jvnet.hyperjaxb3.ejb.strategy.processor;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import org.jvnet.hyperjaxb3.persistence.jpa3.JPA3Utils;
 
-import org.jvnet.hyperjaxb3.persistence.jpa1.JPA1Utils;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JPackage;
 import com.sun.codemodel.fmt.JTextFile;
-import com.sun.java.xml.ns.persistence.Persistence;
+import ee.jakarta.xml.ns.persistence.Persistence;
 
 public class PersistenceMarshaller {
 
 	protected Marshaller getMarshaller() throws JAXBException {
-		return JPA1Utils.createMarshaller();
+		return JPA3Utils.createMarshaller();
 	}
 
 	public void marshallPersistence(JCodeModel codeModel,

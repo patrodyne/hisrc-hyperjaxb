@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 import javax.xml.transform.dom.DOMResult;
 
@@ -26,20 +26,21 @@ public class Customizations {
 
 	public static final String NAMESPACE_URI = "http://hyperjaxb3.jvnet.org/ejb/schemas/customizations";
 
-	public static final String ORM_NAMESPACE_URI = "http://java.sun.com/xml/ns/persistence/orm";
+	public static final String JPA_NAMESPACE_URI = "https://jakarta.ee/xml/ns/persistence";
+	public static final String ORM_NAMESPACE_URI = "https://jakarta.ee/xml/ns/persistence/orm";
 
 	public static final Set<String> NAMESPACES;
 	static {
 		final Set<String> namespaces = new HashSet<String>(3);
 		namespaces.add(NAMESPACE_URI);
-		namespaces.add("http://java.sun.com/xml/ns/persistence");
+		namespaces.add(JPA_NAMESPACE_URI);
 		namespaces.add(ORM_NAMESPACE_URI);
 		NAMESPACES = Collections.unmodifiableSet(namespaces);
 	}
 
 	public static final String CONTEXT_PATH = ContextUtils.getContextPath(
-			com.sun.java.xml.ns.persistence.ObjectFactory.class,
-			com.sun.java.xml.ns.persistence.orm.ObjectFactory.class,
+			ee.jakarta.xml.ns.persistence.ObjectFactory.class,
+			ee.jakarta.xml.ns.persistence.orm.ObjectFactory.class,
 			org.jvnet.hyperjaxb3.ejb.schemas.customizations.ObjectFactory.class
 
 	);
@@ -186,17 +187,17 @@ public class Customizations {
 		return CustomizationUtils.createCustomization(element);
 	}
 
-	private final static com.sun.java.xml.ns.persistence.ObjectFactory persistenceObjectFactory = new com.sun.java.xml.ns.persistence.ObjectFactory();
+	private final static ee.jakarta.xml.ns.persistence.ObjectFactory persistenceObjectFactory = new ee.jakarta.xml.ns.persistence.ObjectFactory();
 
-	private final static com.sun.java.xml.ns.persistence.orm.ObjectFactory ormObjectFactory = new com.sun.java.xml.ns.persistence.orm.ObjectFactory();
+	private final static ee.jakarta.xml.ns.persistence.orm.ObjectFactory ormObjectFactory = new ee.jakarta.xml.ns.persistence.orm.ObjectFactory();
 	
 	private final static org.jvnet.hyperjaxb3.ejb.schemas.customizations.ObjectFactory customizationsObjectFactory = new org.jvnet.hyperjaxb3.ejb.schemas.customizations.ObjectFactory();
 
-	public static com.sun.java.xml.ns.persistence.ObjectFactory getPersistenceObjectFactory() {
+	public static ee.jakarta.xml.ns.persistence.ObjectFactory getPersistenceObjectFactory() {
 		return persistenceObjectFactory;
 	}
 
-	public static com.sun.java.xml.ns.persistence.orm.ObjectFactory getOrmObjectFactory() {
+	public static ee.jakarta.xml.ns.persistence.orm.ObjectFactory getOrmObjectFactory() {
 		return ormObjectFactory;
 	}
 

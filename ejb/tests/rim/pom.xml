@@ -15,7 +15,7 @@
 		<!-- Test -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
+			<artifactId>hibernate-core-jakarta</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -45,7 +45,7 @@
 						<include>xsd/*.xsd</include>
 					</schemaIncludes>
 					<roundtripTestClassName>org.jvnet.hyperjaxb3.tests.rim.tests.RoundtripTest</roundtripTestClassName>
-					<variant>jpa2</variant>
+					<variant>jpa3</variant>
 				</configuration>
 			</plugin>
 		</plugins>

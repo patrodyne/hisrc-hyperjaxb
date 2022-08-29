@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.glassfish.jaxb.core.v2.model.core.WildcardMode;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Basic;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.CreatePropertyInfos;
@@ -14,13 +14,12 @@ import org.jvnet.hyperjaxb3.xjc.model.CExternalLeafInfo;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.ElementAsString;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 
-import com.sun.java.xml.ns.persistence.orm.Lob;
+import ee.jakarta.xml.ns.persistence.orm.Lob;
 import com.sun.tools.xjc.model.CBuiltinLeafInfo;
 import com.sun.tools.xjc.model.CElement;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
-import com.sun.xml.bind.v2.model.core.WildcardMode;
 
 public class WrapSingleWildcardReference implements CreatePropertyInfos {
 

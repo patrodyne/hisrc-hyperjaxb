@@ -12,9 +12,9 @@
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB - Explore</name>
 	<properties>
-		<hisrc-basicjaxb.version>0.12.2</hisrc-basicjaxb.version>
-		<hisrc-higherjaxb-maven-plugin.version>0.14.2</hisrc-higherjaxb-maven-plugin.version>
-		<hisrc-hyperjaxb.version>0.6.4</hisrc-hyperjaxb.version>
+		<hisrc-basicjaxb.version>0.12.3-SNAPSHOT</hisrc-basicjaxb.version>
+		<hisrc-higherjaxb-maven-plugin.version>0.14.3-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
+		<hisrc-hyperjaxb.version>0.6.5-SNAPSHOT</hisrc-hyperjaxb.version>
 	</properties>
 	<modules>
 		<module>Ex001-JustProduct</module>

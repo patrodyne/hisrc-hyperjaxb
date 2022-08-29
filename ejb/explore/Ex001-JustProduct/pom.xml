@@ -12,38 +12,6 @@
 		<artifactId>hisrc-hyperjaxb-ejb-explore</artifactId>
 		<version>0.6.5-SNAPSHOT</version>
 	</parent>
-	<dependencies>
-		<!--
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.patrodyne.jvnet</groupId>
-			<artifactId>hisrc-basicjaxb-plugins</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.patrodyne.jvnet</groupId>
-			<artifactId>hisrc-basicjaxb-testing</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jaxb</groupId>
-			<artifactId>jaxb-runtime</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.activation</groupId>
-			<artifactId>javax.activation</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jaxb</groupId>
-			<artifactId>jaxb-xjc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-		</dependency>
-		-->
-	</dependencies>
 	<build>
 		<defaultGoal>package</defaultGoal>
 		<finalName>hisrc-hyperjaxb-ex001-${hisrc-hyperjaxb.version}</finalName>

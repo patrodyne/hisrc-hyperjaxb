@@ -6,22 +6,22 @@ import org.jvnet.hyperjaxb3.ejb.strategy.model.GetTypes;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
 import org.springframework.beans.factory.annotation.Required;
 
-import com.sun.java.xml.ns.persistence.orm.Attributes;
-import com.sun.java.xml.ns.persistence.orm.Basic;
-import com.sun.java.xml.ns.persistence.orm.ElementCollection;
-import com.sun.java.xml.ns.persistence.orm.Embeddable;
-import com.sun.java.xml.ns.persistence.orm.EmbeddableAttributes;
-import com.sun.java.xml.ns.persistence.orm.Embedded;
-import com.sun.java.xml.ns.persistence.orm.EmbeddedId;
-import com.sun.java.xml.ns.persistence.orm.Entity;
-import com.sun.java.xml.ns.persistence.orm.Id;
-import com.sun.java.xml.ns.persistence.orm.ManyToMany;
-import com.sun.java.xml.ns.persistence.orm.ManyToOne;
-import com.sun.java.xml.ns.persistence.orm.MappedSuperclass;
-import com.sun.java.xml.ns.persistence.orm.OneToMany;
-import com.sun.java.xml.ns.persistence.orm.OneToOne;
-import com.sun.java.xml.ns.persistence.orm.Transient;
-import com.sun.java.xml.ns.persistence.orm.Version;
+import ee.jakarta.xml.ns.persistence.orm.Attributes;
+import ee.jakarta.xml.ns.persistence.orm.Basic;
+import ee.jakarta.xml.ns.persistence.orm.ElementCollection;
+import ee.jakarta.xml.ns.persistence.orm.Embeddable;
+import ee.jakarta.xml.ns.persistence.orm.EmbeddableAttributes;
+import ee.jakarta.xml.ns.persistence.orm.Embedded;
+import ee.jakarta.xml.ns.persistence.orm.EmbeddedId;
+import ee.jakarta.xml.ns.persistence.orm.Entity;
+import ee.jakarta.xml.ns.persistence.orm.Id;
+import ee.jakarta.xml.ns.persistence.orm.ManyToMany;
+import ee.jakarta.xml.ns.persistence.orm.ManyToOne;
+import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
+import ee.jakarta.xml.ns.persistence.orm.OneToMany;
+import ee.jakarta.xml.ns.persistence.orm.OneToOne;
+import ee.jakarta.xml.ns.persistence.orm.Transient;
+import ee.jakarta.xml.ns.persistence.orm.Version;
 import com.sun.tools.xjc.outline.FieldOutline;
 
 public class Mapping implements Cloneable {

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import javax.xml.namespace.QName;
 
+import org.glassfish.jaxb.core.v2.model.core.PropertyKind;
 import org.jvnet.hyperjaxb3.ejb.Constants;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.GeneratedProperty;
@@ -23,7 +24,6 @@ import com.sun.tools.xjc.model.CPluginCustomization;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.TypeUse;
-import com.sun.xml.bind.v2.model.core.PropertyKind;
 import com.sun.xml.xsom.XSComponent;
 
 public abstract class AbstractAdaptPropertyInfo implements CreatePropertyInfos {

@@ -3,8 +3,8 @@ package org.jvnet.hyperjaxb3.ejb.util;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.persistence.PersistenceException;
-import javax.persistence.RollbackException;
+import jakarta.persistence.PersistenceException;
+import jakarta.persistence.RollbackException;
 
 /**
  * Execute SQL work within a transaction. 

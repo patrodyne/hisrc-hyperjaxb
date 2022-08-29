@@ -8,7 +8,7 @@ import javax.xml.namespace.QName;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.glassfish.jaxb.core.v2.model.core.ID;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Basic;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.JaxbContext;
@@ -22,7 +22,7 @@ import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.ElementAsString;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.jvnet.jaxb2_commons.util.OutlineUtils;
 
-import com.sun.java.xml.ns.persistence.orm.Lob;
+import ee.jakarta.xml.ns.persistence.orm.Lob;
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
@@ -39,7 +39,6 @@ import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.TypeUseFactory;
 import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
 import com.sun.tools.xjc.outline.FieldOutline;
-import com.sun.xml.bind.v2.model.core.ID;
 
 public class WrapSingleHeteroReference implements CreatePropertyInfos {
 

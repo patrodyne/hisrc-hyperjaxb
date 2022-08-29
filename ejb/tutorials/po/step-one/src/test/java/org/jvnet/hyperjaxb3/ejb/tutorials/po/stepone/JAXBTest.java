@@ -8,13 +8,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jvnet.hyperjaxb3.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.ValidationEvent;
-import javax.xml.bind.ValidationEventHandler;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
+import jakarta.xml.bind.ValidationEvent;
+import jakarta.xml.bind.ValidationEventHandler;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -100,10 +100,16 @@ public class JAXBTest extends TestCase {
 		});
 		marshaller.marshal(purchaseOrderElement, new DOMResult());
 
-		assertFalse("List of validation events must not be empty.", events
-				.isEmpty());
-		log.info("No JAXB validation issues.");
-		
-		System.out.println(events.get(0));
+		assertFalse("List of validation events must not be empty.", events.isEmpty());
+		log.info("Validation Events (expected):");
+		for ( int index=0; index < events.size(); ++index )
+		{
+			ValidationEvent event = events.get(index);
+			log.info("  Event #" + index);
+			log.info("    Severity..: " + event.getSeverity());
+			log.info("    Message...: " + event.getMessage());
+			log.info("    Locator...: " + event.getLocator());
+			log.info("    Exception.: " + event.getLinkedException());
+		}
 	}
 }

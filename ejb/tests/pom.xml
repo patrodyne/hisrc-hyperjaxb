@@ -16,7 +16,7 @@
 		<module>ak</module>
 		<module>any</module>
 		<module>bibtexml</module>
-		<module>component-jpa2</module>
+		<module>component-jpa3</module>
 		<module>cu-one</module>
 		<module>custom-naming</module>
 		<module>dc</module>
@@ -27,14 +27,14 @@
 		<module>edxl</module>
 		<module>ek</module>
 		<module>embeddable</module>
-		<module>embeddable-jpa2</module>
+		<module>embeddable-jpa3</module>
 		<module>eminq</module>
 		<module>enum</module>
 		<module>equals-builder</module>
 		<module>ioda</module>
 		<module>issues-pre</module>
 		<module>issues-el</module>
-		<module>issues-jpa2</module>
+		<module>issues-jpa3</module>
 		<module>one</module>
 		<module>onix30</module>
 		<module>pesc</module>

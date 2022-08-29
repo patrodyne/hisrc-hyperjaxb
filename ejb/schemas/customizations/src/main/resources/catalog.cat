@@ -10,4 +10,4 @@
 	  If a storage object identifier specifies a relative path name, the path is
 	  relative to the location of the catalog entry file itself.
 --
-PUBLIC "http://java.sun.com/xml/ns/persistence" "persistence_1_0.xsd"
+PUBLIC "https://jakarta.ee/xml/ns/persistence" "persistence_3_0.xsd"

@@ -3,6 +3,7 @@ package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.glassfish.jaxb.core.v2.model.core.PropertyKind;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 
@@ -10,7 +11,6 @@ import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.outline.FieldOutline;
-import com.sun.xml.bind.v2.model.core.PropertyKind;
 
 public abstract class AbstractAdaptEnumPropertyInfo extends
 		AbstractAdaptPropertyInfo {

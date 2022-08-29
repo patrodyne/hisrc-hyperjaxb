@@ -1,17 +1,3 @@
-/*
- * Copyright [2006] java.net
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 		http://www.apache.org/licenses/LICENSE-2.0 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License. 
- */
-
 package org.jvnet.hyperjaxb3.maven2;
 
 import static org.jvnet.hyperjaxb3.ejb.Constants.TODO_LOG_LEVEL;
@@ -200,7 +186,34 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 		if (generateAnnotation)
 			add(arguments,"-Xannotate");
 
-		if ("ejb".equals(variant)) {
+		if ("jpa3".equals(variant)) {
+			add(arguments,"-Xhyperjaxb3-jpa3");
+
+			if (result != null) {
+				add(arguments,"-Xhyperjaxb3-jpa3-result=" + result);
+			}
+
+			if (roundtripTestClassName != null) {
+				add(arguments,"-Xhyperjaxb3-jpa3-roundtripTestClassName="
+						+ roundtripTestClassName);
+			}
+			if (persistenceUnitName != null) {
+				add(arguments,"-Xhyperjaxb3-jpa3-persistenceUnitName="
+						+ persistenceUnitName);
+			}
+			if (persistenceXml != null) {
+				add(arguments,"-Xhyperjaxb3-jpa3-persistenceXml="
+						+ persistenceXml.getAbsolutePath());
+			}
+		}
+		else
+		{
+			if (!"ejb".equals(variant))
+			{
+				getLog().warn("Variant " + variant + " is obsolete, using 'variant=ejb' instead.");
+				variant = "ejb";
+			}
+
 			add(arguments,"-Xhyperjaxb3-ejb");
 
 			if (result != null) {
@@ -222,46 +235,6 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 
 			if (generateTransientId) {
 				add(arguments,"-Xhyperjaxb3-ejb-generateTransientId=true");
-			}
-
-		} else if ("jpa1".equals(variant)) {
-			arguments.add("-Xhyperjaxb3-jpa1");
-
-			if (result != null) {
-				add(arguments,"-Xhyperjaxb3-jpa1-result=" + result);
-			}
-
-			if (roundtripTestClassName != null) {
-				add(arguments,"-Xhyperjaxb3-jpa1-roundtripTestClassName="
-						+ roundtripTestClassName);
-			}
-			if (persistenceUnitName != null) {
-				add(arguments,"-Xhyperjaxb3-jpa1-persistenceUnitName="
-						+ persistenceUnitName);
-			}
-			if (persistenceXml != null) {
-				add(arguments,"-Xhyperjaxb3-jpa1-persistenceXml="
-						+ persistenceXml.getAbsolutePath());
-			}
-
-		} else if ("jpa2".equals(variant)) {
-			add(arguments,"-Xhyperjaxb3-jpa2");
-
-			if (result != null) {
-				add(arguments,"-Xhyperjaxb3-jpa2-result=" + result);
-			}
-
-			if (roundtripTestClassName != null) {
-				add(arguments,"-Xhyperjaxb3-jpa2-roundtripTestClassName="
-						+ roundtripTestClassName);
-			}
-			if (persistenceUnitName != null) {
-				add(arguments,"-Xhyperjaxb3-jpa2-persistenceUnitName="
-						+ persistenceUnitName);
-			}
-			if (persistenceXml != null) {
-				add(arguments,"-Xhyperjaxb3-jpa2-persistenceXml="
-						+ persistenceXml.getAbsolutePath());
 			}
 		}
 
@@ -355,7 +328,7 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	}
 
 	/**
-	 * Updates XJC's compilePath ans resources and update hyperjaxb2's
+	 * Updates XJC's compilePath and resources and update hyperjaxb2's
 	 * resources, that is, *.hbm.xml files and hibernate.config.xml file.
 	 * 
 	 * @throws MojoExecutionException
@@ -370,6 +343,9 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 		}
 		getProject().addResource(resource);
 
+		// If a round trip class name is configured then
+		// the XJC generation path is added as a test source root.
+		// See also Maven's "testSourceDirectory".
 		if (this.roundtripTestClassName != null) {
 			getProject().addTestCompileSourceRoot(
 					getGenerateDirectory().getPath());

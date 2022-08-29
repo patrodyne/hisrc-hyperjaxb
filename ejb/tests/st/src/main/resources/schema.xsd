@@ -6,11 +6,11 @@
 	attributeFormDefault="unqualified" 
 
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 
 	version="1.0"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-	jaxb:version="1.0"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	jaxb:version="3.0"
 	jaxb:extensionBindingPrefixes="hj orm">
 
 	<xsd:annotation>

@@ -7,8 +7,8 @@ import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersiste
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 import org.junit.Test;
 

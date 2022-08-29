@@ -10,10 +10,10 @@
 	xmlns:inh="http://jaxb2-commons.dev.java.net/basic/inheritance"
 	xmlns:anx="http://annox.dev.java.net"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
 	jaxb:extensionBindingPrefixes="basic xjc inh anx hj orm"
-	jaxb:version="2.1"
+	jaxb:version="3.0"
 >
 	<annotation>
 		<documentation xml:lang="en">

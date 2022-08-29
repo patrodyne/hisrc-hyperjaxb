@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jaxb:bindings
-	version="2.1"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+<jaxb:bindings jaxb:version="3.0"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:uni="http://uniprot.org/uniprot"
+	jaxb:extensionBindingPrefixes="hj orm"
 >
 
 	<!-- Global Bindings -->
@@ -19,6 +21,12 @@
 
 	<!-- Schema Bindings -->
 	<jaxb:bindings schemaLocation="uniprot2008_rev1.xsd" node="/xs:schema">
+
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
 
 		<jaxb:bindings node="//xs:complexType[@name='isoformType']/xs:sequence/xs:element[@name='sequence']/xs:complexType">
 			<jaxb:class name="IsoformSequenceType"/>

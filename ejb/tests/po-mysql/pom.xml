@@ -16,7 +16,7 @@
 		<!-- Test -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
+			<artifactId>hibernate-core-jakarta</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -41,6 +41,7 @@
 					<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tests.po.RoundtripTest</roundtripTestClassName>
 				</configuration>
 			</plugin>
+			<!--
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>hibernate3-maven-plugin</artifactId>
@@ -67,22 +68,15 @@
 					</hibernatetool>
 				</configuration>
 				<dependencies>
-					<!--
 					<dependency>
-						<groupId>org.hibernate.javax.persistence</groupId>
-						<artifactId>hibernate-jpa-2.1-api</artifactId>
-						<version>${hibernate-jpa-2.1-api.version}</version>
-					</dependency>
-					-->
-					<dependency>
-						<groupId>javax.persistence</groupId>
-						<artifactId>javax.persistence-api</artifactId>
-						<version>${javax-persistence-api.version}</version>
+						<groupId>jakarta.persistence</groupId>
+						<artifactId>jakarta.persistence-api</artifactId>
+						<version>${jpa-api.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-entitymanager</artifactId>
-						<version>${hibernate-entitymanager.version}</version>
+						<artifactId>hibernate-core-jakarta</artifactId>
+						<version>${hibernate-core.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>mysql</groupId>
@@ -91,6 +85,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			-->
 		</plugins>
 	</build>
 </project>

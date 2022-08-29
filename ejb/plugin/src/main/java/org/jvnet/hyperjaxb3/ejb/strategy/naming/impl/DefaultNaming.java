@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.Validate;
-
+import org.glassfish.jaxb.core.api.impl.NameConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,6 @@ import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
 import com.sun.tools.xjc.outline.PackageOutline;
-import com.sun.xml.bind.api.impl.NameConverter;
 
 public class DefaultNaming implements Naming, InitializingBean {
 

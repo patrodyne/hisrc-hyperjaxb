@@ -8,7 +8,7 @@ import javax.xml.namespace.QName;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.glassfish.jaxb.core.v2.model.core.ID;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
@@ -30,7 +30,6 @@ import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.outline.FieldOutline;
-import com.sun.xml.bind.v2.model.core.ID;
 
 public class WrapSingleSubstitutedElementReference implements
 		CreatePropertyInfos {

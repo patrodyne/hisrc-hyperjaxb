@@ -181,10 +181,10 @@ The customizations will apply to the anonymous complex type of the `Product` ele
 This project reads its JPA properties from [persistence.properties][15] and one of [persistence-h2.properties][29] or [persistence-pg.properties][30]. These properties include JPA declarations that enable ORM implementations, like [Hibernate][17], to create the database (and DDL scripts) automatically. When *Explorer* is launched, the JPA/ORM will drop the local test database then recreate a fresh set of tables.
 
 ~~~
-javax.persistence.schema-generation.database.action=drop-and-create
-javax.persistence.schema-generation.scripts.action=drop-and-create
-javax.persistence.schema-generation.scripts.create-target=target/test-database-sql/podb-create.sql
-javax.persistence.schema-generation.scripts.drop-target=target/test-database-sql/podb-drop.sql
+jakarta.persistence.schema-generation.database.action=drop-and-create
+jakarta.persistence.schema-generation.scripts.action=drop-and-create
+jakarta.persistence.schema-generation.scripts.create-target=target/test-database-sql/podb-create.sql
+jakarta.persistence.schema-generation.scripts.drop-target=target/test-database-sql/podb-drop.sql
 ~~~
 
 When you exit *Explorer*, the test database is preserved until the next launch. This allows you to inspect the database using the provided script or any other of your SQL tools.
@@ -349,7 +349,7 @@ For a bit of excitement, try to persist the products a second time. JPA refuses 
 
 ~~~
 Caused by:
-  javax.persistence.PersistenceException:
+  jakarta.persistence.PersistenceException:
   detached entity passed to persist:
   org.patrodyne.jvnet.hyperjaxb.ex001.model.Product
 ~~~
@@ -392,7 +392,7 @@ Use the "drum and red eraser" button in the tool bar to clear the second level c
 
 ~~~
 Caused by:
-   javax.persistence.PersistenceException:
+   jakarta.persistence.PersistenceException:
    org.hibernate.exception.ConstraintViolationException: could not execute statement
 Caused by:
     org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException:

@@ -3,11 +3,11 @@ package org.jvnet.hyperjaxb3.ejb.tests.issues.pre;
 import java.io.Serializable;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
-import javax.xml.bind.annotation.XmlElement;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.xml.bind.annotation.XmlElement;
 import org.jvnet.jaxb2_commons.lang.Equals2;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy2;
 import org.jvnet.jaxb2_commons.lang.HashCode2;

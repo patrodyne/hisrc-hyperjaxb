@@ -15,7 +15,7 @@
 		<!-- Test -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
+			<artifactId>hibernate-core-jakarta</artifactId>
 			<scope>test</scope>
 		</dependency>
 
@@ -303,7 +303,7 @@
 						<include>_2008A_XML/OTA_AirAvailRQ.xsd</include>
 					</schemaIncludes>
 					<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tests.ota.RoundtripTest</roundtripTestClassName>
-					<variant>jpa2</variant>
+					<variant>jpa3</variant>
 				</configuration>
 			</plugin>
 		</plugins>

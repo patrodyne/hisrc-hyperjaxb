@@ -22,7 +22,7 @@
 		</property>
 	</bean>
 	
-	<bean name="embeddableAttributesMapping" class="org.jvnet.hyperjaxb3.ejb.jpa1.strategy.mapping.EmbeddableAttributesMapping"/>
+	<bean name="embeddableAttributesMapping" class="org.jvnet.hyperjaxb3.ejb.jpa3.strategy.mapping.EmbeddableAttributesMapping"/>
 	<!-- bean name="embeddableAttributesMapping" class="org.jvnet.hyperjaxb3.ejb.strategy.mapping.EmbeddableAttributesMapping"/-->
 	
 	<bean name="mapping"
@@ -296,7 +296,7 @@
 	<bean name="customizationsContext"
 		class="org.jvnet.hyperjaxb3.beans.factory.JAXBContextFactoryBean">
 		<property name="contextPath"
-			value="com.sun.java.xml.ns.persistence:com.sun.java.xml.ns.persistence.orm:org.jvnet.hyperjaxb3.ejb.schemas.customizations"/>
+			value="ee.jakarta.xml.ns.persistence:ee.jakarta.xml.ns.persistence.orm:org.jvnet.hyperjaxb3.ejb.schemas.customizations"/>
 	</bean>
 	
 	<bean name="abstractCustomizationsUnmarshalledResource"

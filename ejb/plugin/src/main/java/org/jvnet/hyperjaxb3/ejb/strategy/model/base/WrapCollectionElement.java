@@ -9,7 +9,7 @@ import javax.xml.namespace.QName;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.glassfish.jaxb.core.v2.model.core.ID;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.GeneratedClass;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.CreatePropertyInfos;
@@ -42,7 +42,6 @@ import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.reader.Ring;
 import com.sun.tools.xjc.reader.xmlschema.BGMBuilder;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
-import com.sun.xml.bind.v2.model.core.ID;
 
 public class WrapCollectionElement implements CreatePropertyInfos {
 

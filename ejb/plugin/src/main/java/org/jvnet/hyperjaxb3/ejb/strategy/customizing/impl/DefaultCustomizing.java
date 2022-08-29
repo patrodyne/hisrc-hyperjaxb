@@ -49,7 +49,7 @@ import org.jvnet.jaxb2_commons.lang.MergeStrategy2;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.springframework.beans.factory.annotation.Required;
 
-import com.sun.java.xml.ns.persistence.orm.Column;
+import ee.jakarta.xml.ns.persistence.orm.Column;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CCustomizable;
 import com.sun.tools.xjc.model.CPluginCustomization;

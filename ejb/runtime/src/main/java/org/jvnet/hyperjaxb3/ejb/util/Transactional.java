@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.util;
 
-import javax.persistence.EntityManager;
-import javax.persistence.RollbackException;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.RollbackException;
 
 /**
  * Execute JPQL work within a transaction. 

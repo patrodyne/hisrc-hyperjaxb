@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.xml.bind.annotation.W3CDomHandler;
-import javax.xml.bind.annotation.XmlList;
-import javax.xml.bind.annotation.XmlMixed;
-import javax.xml.bind.annotation.XmlNsForm;
-import javax.xml.bind.annotation.XmlValue;
+import jakarta.xml.bind.annotation.W3CDomHandler;
+import jakarta.xml.bind.annotation.XmlList;
+import jakarta.xml.bind.annotation.XmlMixed;
+import jakarta.xml.bind.annotation.XmlNsForm;
+import jakarta.xml.bind.annotation.XmlValue;
 import javax.xml.namespace.QName;
+
+import org.glassfish.jaxb.core.v2.TODO;
 
 import com.sun.codemodel.JAnnotatable;
 import com.sun.codemodel.JClass;
@@ -42,7 +44,6 @@ import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldAccessor;
 import com.sun.tools.xjc.outline.FieldOutline;
-import com.sun.xml.bind.v2.TODO;
 
 /**
  * Useful base class for implementing {@link FieldOutline}.

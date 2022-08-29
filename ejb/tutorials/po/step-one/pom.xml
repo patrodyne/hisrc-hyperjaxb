@@ -13,8 +13,8 @@
 	<name>HiSrc HyperJAXB EJB Tutorial [po:step-one]</name>
 	<dependencies>
 		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
@@ -27,8 +27,8 @@
 
 		<!-- Implementaion of JPA -->
 		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>javax.persistence-api</artifactId>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
 		</dependency>
 
 		<!-- Test dependencies -->
@@ -39,7 +39,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
+			<artifactId>hibernate-core-jakarta</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -93,7 +93,7 @@
 				<configuration>
 					<ignoredUnusedDeclaredDependencies>
 						<ignoredUnusedDeclaredDependency>org.glassfish.jaxb:jaxb-runtime:jar:</ignoredUnusedDeclaredDependency>
-						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-entitymanager:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-core-jakarta:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-simple:jar:</ignoredUnusedDeclaredDependency>
 					</ignoredUnusedDeclaredDependencies>
 				</configuration>

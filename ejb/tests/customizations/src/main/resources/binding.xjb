@@ -1,11 +1,12 @@
-<jaxb:bindings version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings jaxb:version="3.0"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
 	xmlns:hj="http://hyperjaxb2.jvnet.org/customizations"
-
-	jaxb:extensionBindingPrefixes="hj xjc">
+	jaxb:extensionBindingPrefixes="hj xjc"
+>
 
 	<jaxb:bindings schemaLocation="schema.xsd" 
 		node="/xsd:schema">

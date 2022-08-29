@@ -25,7 +25,7 @@
 		<!-- Hibernate Dependencies -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
+			<artifactId>hibernate-core-jakarta</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>

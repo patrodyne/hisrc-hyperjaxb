@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Address xmlns="http://example.org/template/basic" Country="USA" Stage="Open" >
+	<Name>Kimberly U. Nelson</Name>
+	<Street>775 Sixth Terr</Street>
+	<City>Franklin</City>
+	<State>NV</State>
+	<Zip>88978</Zip>
+</Address>

@@ -1,17 +1,6 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="1.0">
+  xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" jaxb:version="3.0">
 
-  <xsd:annotation>
-    <xsd:appinfo>
-      <jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
-        <jaxb:serializable uid="20211201" />
-      </jaxb:globalBindings>
-      <jaxb:schemaBindings>
-        <jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.po"/>
-      </jaxb:schemaBindings>
-    </xsd:appinfo>
-  </xsd:annotation>
-  
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
       Purchase order schema for Example.com.

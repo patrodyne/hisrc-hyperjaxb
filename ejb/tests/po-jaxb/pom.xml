@@ -16,7 +16,7 @@
 		<!-- Test -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
+			<artifactId>hibernate-core-jakarta</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -55,8 +55,8 @@
 				<artifactId>hisrc-higherjaxb-maven-plugin</artifactId>
 				<configuration>
 					<args>
-						<arg>-Xhyperjaxb3-jpa2</arg>
-						<!--arg>-Xhyperjaxb3-jpa2-result=mappingFiles</arg-->
+						<arg>-Xhyperjaxb3-jpa3</arg>
+						<!--arg>-Xhyperjaxb3-jpa3-result=mappingFiles</arg-->
 						<arg>-Xequals</arg>
 						<arg>-XhashCode</arg>
 						<arg>-XtoString</arg>

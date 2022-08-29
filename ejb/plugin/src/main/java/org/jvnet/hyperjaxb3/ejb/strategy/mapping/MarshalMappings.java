@@ -1,12 +1,14 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
+import static org.jvnet.hyperjaxb3.ejb.Constants.ORM_EJB_VERSION;
+
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,15 +16,15 @@ import org.slf4j.LoggerFactory;
 import org.jvnet.hyperjaxb3.ejb.plugin.EjbPlugin;
 import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb3.ejb.strategy.outline.OutlineProcessor;
-import org.jvnet.hyperjaxb3.persistence.jpa1.JPA1Utils;
+import org.jvnet.hyperjaxb3.persistence.jpa3.JPA3Utils;
 import org.jvnet.jaxb2_commons.util.CodeModelUtils;
 import org.jvnet.jaxb2_commons.util.OutlineUtils;
 
 import com.sun.codemodel.fmt.JTextFile;
-import com.sun.java.xml.ns.persistence.orm.Embeddable;
-import com.sun.java.xml.ns.persistence.orm.Entity;
-import com.sun.java.xml.ns.persistence.orm.EntityMappings;
-import com.sun.java.xml.ns.persistence.orm.MappedSuperclass;
+import ee.jakarta.xml.ns.persistence.orm.Embeddable;
+import ee.jakarta.xml.ns.persistence.orm.Entity;
+import ee.jakarta.xml.ns.persistence.orm.EntityMappings;
+import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
@@ -30,7 +32,7 @@ import com.sun.tools.xjc.outline.Outline;
 public class MarshalMappings implements OutlineProcessor<EjbPlugin> {
 
 	protected Marshaller getMarshaller() throws JAXBException {
-		return JPA1Utils.createMarshaller();
+		return JPA3Utils.createMarshaller();
 	}
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -105,7 +107,7 @@ public class MarshalMappings implements OutlineProcessor<EjbPlugin> {
 
 	protected EntityMappings createEntityMappings() {
 		final EntityMappings entityMappings = new EntityMappings();
-		entityMappings.setVersion("1.0");
+		entityMappings.setVersion(ORM_EJB_VERSION);
 		return entityMappings;
 	}
 

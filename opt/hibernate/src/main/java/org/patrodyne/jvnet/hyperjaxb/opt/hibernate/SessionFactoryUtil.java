@@ -97,8 +97,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.cache.CacheManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.SharedCacheMode;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.SharedCacheMode;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;

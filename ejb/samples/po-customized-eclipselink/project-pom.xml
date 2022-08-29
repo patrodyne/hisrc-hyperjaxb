@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.patrodyne.jvnet</groupId>
-	<artifactId>hisrc-hyperjaxb-ejb-samples-po-customized-eclipselink-maven</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-sample-po-customized-eclipselink-maven</artifactId>
 	<version>${project.version}</version>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB Samples [po-customized-eclipselink:maven]</name>
@@ -13,22 +13,44 @@
 		<maven.compiler.target>8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<eclipselink.version>${eclipselink.version}</eclipselink.version>
+		<h2database.version>${h2database.version}</h2database.version>
+		<postgresql.version>${postgresql.version}</postgresql.version>
+		<jpa-api.version>${jpa-api.version}</jpa-api.version>
+		<jaxb-api.version>${jaxb-api.version}</jaxb-api.version>
+		<jaxb-imp.version>${jaxb-imp.version}</jaxb-imp.version>
+		<junit.version>${junit.version}</junit.version>
+		<slf4j.version>${slf4j.version}</slf4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
-			<version>1.0</version>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>\${jpa-api.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>${jaxb.version}</version>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>\${jaxb-api.version}</version>
+			<exclusions>
+				<!-- In favor of jakarta.activation:jakarta.activation-api -->
+				<exclusion>
+					<groupId>com.sun.activation</groupId>
+					<artifactId>jakarta.activation</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
-			<version>${jaxb.version}</version>
+			<version>\${jaxb-imp.version}</version>
+			<exclusions>
+				<!-- In favor of jakarta.activation:jakarta.activation-api -->
+				<exclusion>
+					<groupId>com.sun.activation</groupId>
+					<artifactId>jakarta.activation</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
@@ -45,7 +67,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
+			<version>\${junit.version}</version>
 		</dependency>
 
 		<!-- Roundtrip -->
@@ -59,36 +81,38 @@
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>eclipselink</artifactId>
+			<version>\${eclipselink.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>org.eclipse.persistence.extension</artifactId>
+			<version>\${eclipselink.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- Database -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>${h2database.version}</version>
+			<version>\${h2database.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>${postgresql.version}</version>
+			<version>\${postgresql.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
+			<version>\${slf4j.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4j.version}</version>
+			<version>\${slf4j.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -103,7 +127,7 @@
 						<dependency>
 							<groupId>junit</groupId>
 							<artifactId>junit</artifactId>
-							<version>${junit.version}</version>
+							<version>\${junit.version}</version>
 							<scope>runtime</scope>
 						</dependency>
 						<dependency>

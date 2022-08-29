@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
+import org.glassfish.jaxb.core.v2.model.core.ID;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.GetTypes;
 
 import com.sun.codemodel.JType;
@@ -20,7 +21,6 @@ import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.CValuePropertyInfo;
 import com.sun.tools.xjc.model.TypeUse;
 import com.sun.tools.xjc.model.TypeUseFactory;
-import com.sun.xml.bind.v2.model.core.ID;
 
 public class DefaultGetTypes<C> implements GetTypes<C> {
 

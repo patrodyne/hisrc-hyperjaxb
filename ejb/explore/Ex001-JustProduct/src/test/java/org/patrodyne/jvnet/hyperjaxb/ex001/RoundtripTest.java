@@ -1,6 +1,6 @@
 package org.patrodyne.jvnet.hyperjaxb.ex001;
 
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManagerFactory;
 
 import org.junit.Ignore;
 import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
