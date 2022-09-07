@@ -14,6 +14,7 @@ public abstract class AbstractJDOSamplesTest extends
 	private AbstractSamplesTest samplesTest;
 
 	@Override
+	@BeforeEach
 	public void setUp() throws Exception {
 		super.setUp();
 		samplesTest = createSamplesTest();
@@ -38,6 +39,7 @@ public abstract class AbstractJDOSamplesTest extends
 		};
 	}
 
+	@Test
 	public void testSamples() throws Exception {
 		samplesTest.testSamples();
 	}

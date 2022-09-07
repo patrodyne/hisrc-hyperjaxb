@@ -164,9 +164,9 @@
 		</dependency>
 		<!-- Testing -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${junit-jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -286,7 +286,7 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<configuration>
 					<ignoredUnusedDeclaredDependencies>
-						<ignoredUnusedDeclaredDependency>junit:junit:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>junit-jupiter:junit-jupiter-api:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.apache.cxf:cxf-rt-frontend-jaxws:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.apache.cxf:cxf-rt-transports-http:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-core-jakarta:jar:</ignoredUnusedDeclaredDependency>

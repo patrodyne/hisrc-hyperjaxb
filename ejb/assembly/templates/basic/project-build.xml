@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="hyperjaxb3-ejb-template-basic-ant" default="install">
-	<property name="build.compiler" value="extJavac"/>
-	<property name="artifactId" value="hyperjaxb3-ejb-template-basic-ant"/>
+<project name="${artifactId}" default="test">
+
+	<property name="artifactId" value="${artifactId}"/>
 	<property name="version" value="${project.version}"/>
-	<property file="${basedir}/src/test/resources/jvmsystem.properties"/>
+	<property file="\${basedir}/src/test/resources/jvmsystem.properties"/>
+
+	<fail message="Ant ${ant-atleast.version}+ is required!">
+		<condition>
+			<not>
+				<antversion atleast="${ant-atleast.version}"/>
+			</not>
+		</condition>
+	</fail>
+
 	<path id="compile.path">
-		<fileset dir="${basedir}/lib">
+		<fileset dir="\${basedir}/lib">
 			<include name="jakarta.xml.bind-api-*.jar"/>
 			<include name="jakarta.persistence-api-*.jar"/>
 			<include name="hisrc-basicjaxb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
-			<include name="junit-*.jar"/>
 		</fileset>
 	</path>
+
 	<path id="test-compile.path">
-		<fileset dir="${basedir}/lib">
+		<fileset dir="\${basedir}/lib">
 			<include name="jakarta.xml.bind-api-*.jar"/>
 			<include name="jakarta.persistence-api-*.jar"/>
 			<include name="hisrc-basicjaxb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
-			<include name="junit-*.jar"/>
+			<include name="junit-jupiter-api-*.jar"/>
 		</fileset>
 	</path>
+
 	<path id="test.path">
-		<fileset dir="${basedir}/lib">
+		<pathelement location="\${basedir}/target/classes"/>
+		<pathelement location="\${basedir}/target/test-classes"/>
+		<fileset dir="\${basedir}/lib">
 			<include name="byte-buddy*.jar"/>
 			<include name="classmate*.jar"/>
 			<include name="commons-io-*.jar"/>
@@ -50,38 +62,46 @@
 			<include name="istack-commons-runtime-*.jar"/>
 			<include name="h2-*.jar"/>
 			<include name="slf4j-*.jar"/>
-			<include name="junit-*.jar"/>
+			<include name="junit-jupiter-api-*.jar"/>
 			<include name="xmlunit-*.jar"/>
 		</fileset>
 	</path>
-	<target name="clean">
-		<delete dir="${basedir}/target/"/>
-		<delete dir="${basedir}/target/classes"/>
-		<delete dir="${basedir}/target/test-classes"/>
-	</target>
-	<target name="generate-sources">
-		<taskdef name="xjc" classname="org.jvnet.jaxb2_commons.xjc.XJC2Task">
-			<!-- XJC2 Task classpath -->
-			<classpath>
-				<fileset dir="${basedir}/lib">
-					<include name="jakarta.activation-api-*.jar"/>
-					<include name="jakarta.xml.bind-api-*.jar"/>
-					<include name="jaxb-core-*.jar"/>
-					<include name="jaxb-runtime-*.jar"/>
-					<include name="istack-commons-*.jar"/>
 
-					<include name="codemodel-*.jar"/>
-					<include name="relaxng-datatype-*.jar"/>
-					<include name="rngom-*.jar"/>
-					<include name="txw2-*.jar"/>
-					<include name="xsom-*.jar"/>
-					<include name="jaxb-xjc-*.jar"/>
-					<include name="hisrc-basicjaxb-ant-*.jar"/>
-				</fileset>
-			</classpath>
+	<path id="xjc-task.path">
+		<fileset dir="\${basedir}/lib">
+			<include name="jakarta.activation-api-*.jar"/>
+			<include name="jakarta.xml.bind-api-*.jar"/>
+			<include name="jaxb-core-*.jar"/>
+			<include name="jaxb-runtime-*.jar"/>
+			<include name="istack-commons-*.jar"/>
+
+			<include name="codemodel-*.jar"/>
+			<include name="relaxng-datatype-*.jar"/>
+			<include name="rngom-*.jar"/>
+			<include name="txw2-*.jar"/>
+			<include name="xsom-*.jar"/>
+			<include name="jaxb-xjc-*.jar"/>
+			<include name="hisrc-basicjaxb-ant-*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="clean">
+		<delete dir="target"/>
+	</target>
+
+	<target name="init">
+		<mkdir dir="\${basedir}/target/classes"/>
+		<mkdir dir="\${basedir}/target/test-classes"/>
+		<mkdir dir="\${basedir}/target/junit-reports"/>
+		<mkdir dir="\${basedir}/target/generated-sources/xjc"/>
+	</target>
+
+	<target name="generate-sources" depends="init">
+		<taskdef name="xjc" classname="org.jvnet.jaxb2_commons.xjc.XJC2Task">
+			<classpath refid="xjc-task.path"/>
 		</taskdef>
-		<mkdir dir="${basedir}/target/generated-sources/xjc"/>
-		<xjc destdir="${basedir}/target/generated-sources/xjc" extension="true">
+		<mkdir dir="\${basedir}/target/generated-sources/xjc"/>
+		<xjc destdir="\${basedir}/target/generated-sources/xjc" extension="true">
 			<arg line="
 				-Xhyperjaxb3-ejb
 				-Xhyperjaxb3-ejb-roundtripTestClassName=RoundtripTest
@@ -89,21 +109,20 @@
 				-Xinheritance
 				-XhashCode
 				-XtoString"/>
-			<binding dir="${basedir}/src/main/resources">
-			 	<include name="**/*.xjb"/>
+			<binding dir="\${basedir}/src/main/resources">
+				<include name="**/*.xjb"/>
 			</binding>
-			<schema dir="${basedir}/src/main/resources">
-			 	<include name="**/*.xsd"/>
+			<schema dir="\${basedir}/src/main/resources">
+				<include name="**/*.xsd"/>
 			</schema>
 			<produces dir="target/generated-sources/xjc" includes="**/*.java" />
 			<!-- Plugins -->
 			<classpath>
-				<fileset dir="${basedir}/lib">
+				<fileset dir="\${basedir}/lib">
 					<!-- Common library dependencies -->
 					<include name="javaparser-*.jar"/>
 					<include name="commons-beanutils-*.jar"/>
 					<include name="commons-lang3-*.jar"/>
-					<include name="junit-*.jar"/>
 					<!-- HiSrc BasicJAXB library dependencies -->
 					<include name="hisrc-basicjaxb-*.jar"/>
 					<!-- Jakarta JPA dependencies -->
@@ -120,70 +139,81 @@
 					<include name="spring-*.jar"/>
 					<!-- Logging dependencies -->
 					<include name="slf4j-*.jar"/>
+					<!-- JUnit library dependencies -->
+					<include name="junit-jupiter-api-*.jar"/>
 				</fileset>
 			</classpath>
 		</xjc>
 	</target>
+
 	<target name="compile" depends="generate-sources">
-		<mkdir dir="${basedir}/target/classes"/>
 		<javac
-			destdir="${basedir}/target/classes" 
-			srcdir="${basedir}/src/main/java:${basedir}/target/generated-sources/xjc"
 			classpathref="compile.path"
-			includeantruntime="false">
-		</javac>
-		<copy todir="${basedir}/target/classes">
-			<fileset dir="${basedir}/src/main/resources"/>
-			<fileset dir="${basedir}/target/generated-sources/xjc">
+			destdir="\${basedir}/target/classes" 
+			srcdir="\${basedir}/src/main/java:\${basedir}/target/generated-sources/xjc"
+			includeantruntime="false"
+		/>
+		<copy todir="\${basedir}/target/classes">
+			<fileset dir="\${basedir}/src/main/resources"/>
+			<fileset dir="\${basedir}/target/generated-sources/xjc">
 				<exclude name="**/*.java" />
 			</fileset>
 		</copy>
 	</target>
+
 	<target name="test-compile" depends="compile">
-		<mkdir dir="${basedir}/target/test-classes"/>
 		<javac
-			destdir="${basedir}/target/test-classes" 
-			srcdir="${basedir}/src/test/java:${basedir}/target/generated-sources/xjc"
 			classpathref="test-compile.path"
-			includeantruntime="false">
-		</javac>
-		<copy todir="${basedir}/target/test-classes">
-			<fileset dir="${basedir}/src/test/resources"/>
+			destdir="\${basedir}/target/test-classes" 
+			srcdir="\${basedir}/src/test/java:\${basedir}/target/generated-sources/xjc"
+			includeantruntime="false"/>
+		<copy todir="\${basedir}/target/test-classes">
+			<fileset dir="\${basedir}/src/test/resources"/>
 		</copy>
 	</target>
-	<target name="test" depends="test-compile">
-		<mkdir dir="${basedir}/target/junit-reports"/>
-		<junit printsummary="yes" haltonfailure="yes">
-			<syspropertyset>
-				<!-- See src/test/resources/jvmsystem.properties -->
-				<propertyref prefix="org.jboss.logging"/>
-				<propertyref prefix="org.jvnet.hyperjaxb3"/>
-			</syspropertyset>
-			<classpath>
-				<pathelement location="${basedir}/target/classes"/>
-				<pathelement location="${basedir}/target/test-classes"/>
-				<path refid="test.path"/>
-			</classpath>
 
-			<formatter type="plain"/>
-			<formatter type="xml"/>
-
-			<batchtest fork="yes" todir="${basedir}/target/junit-reports">
-				<fileset dir="${basedir}/src/test/java">
-					<include name="**/*Test*.java"/>
-					<exclude name="**/AllTests.java"/>
+	<!-- https://junit.org/junit5/docs/snapshot/user-guide/#running-tests-build-ant -->
+	<target name="test.junit.launcher" depends="compile">
+		<junitlauncher haltOnFailure="true" printSummary="true">
+			<classpath refid="test.path"/>
+			<testclasses outputdir="\${basedir}/target/junit-reports">
+				<fork>
+					<syspropertyset>
+						<!-- See src/test/resources/jvmsystem.properties -->
+						<propertyref prefix="org.jboss.logging"/>
+						<propertyref prefix="org.jvnet.hyperjaxb3"/>
+					</syspropertyset>
+				</fork>
+				<fileset dir="\${basedir}/target/test-classes">
+					<include name="**/*Test.class"/>
 				</fileset>
-				<fileset dir="${basedir}/target/generated-sources/xjc">
-					<include name="**/*Test*.java"/>
-					<exclude name="**/AllTests.java"/>
-				</fileset>
-			</batchtest>
-		</junit>
+				<listener type="legacy-xml" sendSysOut="true" sendSysErr="true"/>
+				<listener type="legacy-plain" sendSysOut="true" />
+			</testclasses>
+		</junitlauncher>
 	</target>
+
+	<!-- https://ant.apache.org/manual/Tasks/junitlauncher.html -->
+	<target name="test.junit.report" depends="test.junit.launcher">
+		<junitreport todir="\${basedir}/target/junit-reports">
+			<fileset dir="\${basedir}/target/junit-reports">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="\${basedir}/target/junit-reports/html"/>
+		</junitreport>
+	</target>
+
+	<target
+		name="test"
+		depends="test.junit.launcher, test.junit.report"
+		description="Report Unit Tests"
+	/>
+
 	<target name="package" depends="test">
-		<mkdir dir="${basedir}/target"/>
-		<jar destfile="${basedir}/target/${artifactId}.jar"
-			basedir="${basedir}/target/classes"/> 
+		<jar destfile="\${basedir}/target/${artifactId}.jar"
+			basedir="\${basedir}/target/classes"/> 
 	</target>
+
 	<target name="install" depends="package"/>
 </project>
+<!-- vi:set tabstop=4 hardtabs=4 shiftwidth=4 noexpandtab:-->

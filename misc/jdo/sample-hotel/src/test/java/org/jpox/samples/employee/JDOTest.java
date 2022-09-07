@@ -14,7 +14,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import org.jpox.samples.employee.model.Department;
 import org.jpox.samples.employee.model.Employee;
 import org.jpox.samples.employee.model.Project;
 
-public class JDOTest extends TestCase {
+public class JDOTest {
   protected Log logger = LogFactory.getLog(getClass());
 
   protected Class lastTestClass;
@@ -38,6 +38,7 @@ public class JDOTest extends TestCase {
     this.entityManagerFactory = entityManagerFactory;
   }
 
+  @BeforeEach
   public void setUp() throws Exception {
     super.setUp();
     final PersistenceManagerFactory emf = getPersistenceManagerFactory();
@@ -59,6 +60,7 @@ public class JDOTest extends TestCase {
     return emf.getPersistenceManager();
   }
 
+  @Test
   public void testMain() throws Exception
   {
       Department art = new Department();

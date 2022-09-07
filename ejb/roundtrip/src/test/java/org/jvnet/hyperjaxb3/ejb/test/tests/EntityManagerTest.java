@@ -2,10 +2,14 @@ package org.jvnet.hyperjaxb3.ejb.test.tests;
 
 import jakarta.persistence.EntityManager;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb3.ejb.test.AbstractEntityManagerTest;
 
 public class EntityManagerTest extends AbstractEntityManagerTest {
 
+	@Test
 	public void testIt() throws Exception {
 		final A a1 = new A();
 		final B b1 = new B();

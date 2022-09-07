@@ -21,7 +21,7 @@
 		<postgresql.version>${postgresql.version}</postgresql.version>
 		<hisrc-hyperjaxb.version>${hisrc-hyperjaxb.version}</hisrc-hyperjaxb.version>
 		<hibernate-core.version>${hibernate-core.version}</hibernate-core.version>
-		<junit.version>${junit.version}</junit.version>
+		<junit-jupiter.version>${junit-jupiter.version}</junit-jupiter.version>
 		<slf4j.version>${slf4j.version}</slf4j.version>
 	</properties>
 
@@ -97,15 +97,15 @@
 
 		<!-- Unit Test Dependencies -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>\${junit.version}</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>\${junit-jupiter.version}</version>
 		</dependency>
 
 	</dependencies>
 
 	<build>
-		<defaultGoal>test</defaultGoal>
+		<defaultGoal>package</defaultGoal>
 
 		<pluginManagement>
 			<plugins>
@@ -124,6 +124,18 @@
 				<plugin>
 					<artifactId>maven-release-plugin</artifactId>
 					<version>3.0.0-M5</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-surefire-report-plugin</artifactId>
+					<version>3.0.0-M5</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-jxr-plugin</artifactId>
+					<version>3.1.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>3.4.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -201,13 +213,6 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M5</version>
-				<dependencies>
-					<dependency>
-						<groupId>org.apache.maven.surefire</groupId>
-						<artifactId>surefire-junit47</artifactId>
-						<version>3.0.0-M5</version>
-					</dependency>
-				</dependencies>
 				<configuration>
 					<systemPropertiesFile>${basedir}/src/test/resources/jvmsystem.properties</systemPropertiesFile>
 				</configuration>
@@ -317,5 +322,17 @@
 
 		</plugins>
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jxr-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</reporting>
+
 </project>
 <!-- vi:set tabstop=4 hardtabs=4 shiftwidth=4 noexpandtab:-->

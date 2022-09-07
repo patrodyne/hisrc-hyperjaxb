@@ -45,6 +45,7 @@
 							<descriptors>
 								<descriptor>../../src/main/assembly/ant-src.xml</descriptor>
 							</descriptors>
+							<escapeString>\</escapeString>
 						</configuration>
 					</execution>
 				</executions>

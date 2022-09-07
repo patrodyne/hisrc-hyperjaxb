@@ -79,6 +79,7 @@ public class RunEpisodesBPlugin extends AbstractMojoTestCase {
 	 * 
 	 * @throws MojoExecutionException
 	 */
+	@Test
 	public void testExecute() throws Exception {
 
 		final File pom = new File(getBaseDir(), "pom.xml");

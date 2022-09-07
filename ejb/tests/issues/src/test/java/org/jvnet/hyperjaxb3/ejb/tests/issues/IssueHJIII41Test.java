@@ -2,21 +2,25 @@ package org.jvnet.hyperjaxb3.ejb.tests.issues;
 
 import jakarta.persistence.Id;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class IssueHJIII41Test extends TestCase {
+import org.junit.jupiter.api.Test;
 
+public class IssueHJIII41Test {
+
+	@Test
 	public void testEntityAnnotation() throws Exception {
 
-		Assert.assertNotNull(IssueHJIII41ParentType.class.getMethod("getId",
+		assertNotNull(IssueHJIII41ParentType.class.getMethod("getId",
 				new Class[0]).getAnnotation(Id.class));
 
 		try {
 			IssueHJIII41ChildType.class.getMethod("getHjid", new Class[0]);
-			Assert.fail("Expected exception.");
+			fail("Expected exception.");
 		} catch (NoSuchMethodException nsmex) {
-			Assert.assertTrue(true);
+			assertTrue(true);
 		}
 	}
 

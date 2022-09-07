@@ -13,6 +13,9 @@ import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang3.SystemUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb2_commons.test.AbstractSamplesTest;
 import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
 
@@ -47,14 +50,14 @@ public abstract class AbstractEntityManagerSamplesTest extends
 	}
 
 	@Override
+	@BeforeEach
 	public void setUp() throws Exception {
 		super.setUp();
 		setSamplesTest(createSamplesTest());
 	}
 
-	@Override
+	@AfterEach
 	public void tearDown() throws Exception {
-		super.tearDown();
 	}
 
 	protected AbstractSamplesTest createSamplesTest() {
@@ -96,6 +99,7 @@ public abstract class AbstractEntityManagerSamplesTest extends
 		};
 	}
 
+	@Test
 	public void testSamples() throws Exception {
 		getSamplesTest().testSamples();
 	}

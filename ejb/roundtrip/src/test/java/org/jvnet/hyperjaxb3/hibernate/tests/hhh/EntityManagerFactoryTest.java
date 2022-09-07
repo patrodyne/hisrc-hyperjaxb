@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.hibernate.tests.hhh;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
 import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesMoreFile;
 
@@ -10,7 +10,7 @@ import java.util.Properties;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class EntityManagerFactoryTest {
 

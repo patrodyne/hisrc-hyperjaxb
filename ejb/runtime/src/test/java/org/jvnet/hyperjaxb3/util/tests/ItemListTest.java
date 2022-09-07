@@ -1,5 +1,7 @@
 package org.jvnet.hyperjaxb3.util.tests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -8,13 +10,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import org.jvnet.hyperjaxb3.item.DefaultItemList;
 
-public class ItemListTest extends TestCase {
+public class ItemListTest {
 
+	@Test
 	public void testItemList() throws Exception {
 
 		final List<StringItem> items = new ArrayList<StringItem>();
@@ -25,10 +27,10 @@ public class ItemListTest extends TestCase {
 		strings.add("a");
 		strings.add("b");
 
-		Assert.assertEquals("Wrong number of items.", 2, items.size());
+		assertEquals(2, items.size(), "Wrong number of items.");
 		final Iterator<StringItem> iterator = items.iterator();
-		Assert.assertEquals("Wrong value.", "a", iterator.next().getItem());
-		Assert.assertEquals("Wrong value.", "b", iterator.next().getItem());
+		assertEquals("a", iterator.next().getItem(), "Wrong value.");
+		assertEquals("b", iterator.next().getItem(), "Wrong value.");
 
 		final ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
@@ -46,7 +48,7 @@ public class ItemListTest extends TestCase {
 		final List<String> sgnirts = (List<String>) objectInputStream
 				.readObject();
 
-		Assert.assertEquals(strings, sgnirts);
+		assertEquals(strings, sgnirts);
 
 	}
 

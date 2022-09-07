@@ -40,7 +40,7 @@ echo "Maven installed at ${MVN_HOME}"
 echo "Please add 'MAVEN_HOME=${MVN_HOME}' into your OS environment!"
 ~~~
 
-#### Generate man page and set Maven alternative
+### Generate man page and set Maven alternative
 
 > [help2man][7] produces simple manual pages from the `--help` and `--version`
 > output of other commands.
@@ -61,9 +61,13 @@ echo "Maven Man Path: ${MVN_MAN_PATH}"
 mkdir "${MAVEN_HOME}/man"
 help2man -o "${MAVEN_HOME}/man/mvn.1" "${MAVEN_HOME}/bin/mvn"
 gzip "${MAVEN_HOME}/man/mvn.1"
+ln -s "${MAVEN_HOME}/man/mvn.1.gz" "${MAVEN_HOME}/man/mvnDebug.1.gz"
 
-sudo update-alternatives --install "${MVN_BIN_PATH/mvn}" "mvn" "${MAVEN_HOME}/bin/mvn" 500 \
-  --slave "${MVN_MAN_PATH/mvn.1.gz}" "mvn.1.gz" "${MAVEN_HOME}/man/mvn.1.gz"
+sudo update-alternatives \
+  --install "${MVN_BIN_PATH/mvn}" "mvn" "${MAVEN_HOME}/bin/mvn" 500 \
+  --slave "${MVN_BIN_PATH}/mvnDebug" "mvnDebug" "${MAVEN_HOME}/bin/mvnDebug" \
+  --slave "${MVN_MAN_PATH}/mvn.1.gz" "mvn.1.gz" "${MAVEN_HOME}/man/mvn.1.gz" \
+  --slave "${MVN_MAN_PATH}/mvnDebug.1.gz" "mvnDebug.1.gz" "${MAVEN_HOME}/man/mvnDebug.1.gz"
 
 # Optionally, switch Maven alternatives using:
 # sudo update-alternatives --list mvn
@@ -132,8 +136,9 @@ mkdir "${ANT_HOME}/man"
 help2man -o "${ANT_HOME}/man/ant.1" "${ANT_HOME}/bin/ant"
 gzip "${ANT_HOME}/man/ant.1"
 
-sudo update-alternatives --install "${ANT_BIN_PATH/ant}" "ant" "${ANT_HOME}/bin/ant" 500 \
-  --slave "${ANT_MAN_PATH/ant.1.gz}" "ant.1.gz" "${ANT_HOME}/man/ant.1.gz"
+sudo update-alternatives \
+  --install "${ANT_BIN_PATH/ant}" "ant" "${ANT_HOME}/bin/ant" 500 \
+  --slave "${ANT_MAN_PATH}/ant.1.gz" "ant.1.gz" "${ANT_HOME}/man/ant.1.gz"
 
 # Optionally, switch Ant alternatives using:
 # sudo update-alternatives --list ant

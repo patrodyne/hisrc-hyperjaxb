@@ -1,9 +1,11 @@
 package org.jvnet.hyperjaxb3.xsom.tests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.net.URL;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import org.jvnet.hyperjaxb3.xsom.SimpleTypeAnalyzer;
 
@@ -11,7 +13,7 @@ import com.sun.xml.xsom.XSSchemaSet;
 import com.sun.xml.xsom.XSSimpleType;
 import com.sun.xml.xsom.parser.XSOMParser;
 
-public class SimpleTypesAnalyzerTest extends TestCase {
+public class SimpleTypesAnalyzerTest {
 
 	public static final String NS = "urn:org.jvnet.hyperjaxb3.xsom.tests";
 
@@ -41,12 +43,12 @@ public class SimpleTypesAnalyzerTest extends TestCase {
 		return schemaSet;
 	}
 
-	@Override
+	@BeforeEach
 	protected void setUp() throws Exception {
-		super.setUp();
 		schemaSet = parse(SCHEMA_RESOURCE);
 	}
 
+	@Test
 	public void testLength() throws Exception {
 
 		// XSSimpleType simpleType = schema.getSimpleType("length");
@@ -65,37 +67,37 @@ public class SimpleTypesAnalyzerTest extends TestCase {
 		final XSSimpleType totalDigits = schemaSet.getSimpleType(NS, "totalDigits");
 		final XSSimpleType fractionDigits = schemaSet.getSimpleType(NS, "fractionDigits");
 
-		Assert.assertEquals(Long.valueOf(5), SimpleTypeAnalyzer
+		assertEquals(Long.valueOf(5), SimpleTypeAnalyzer
 				.getMinLength(minLength));
-		Assert.assertEquals(null, SimpleTypeAnalyzer.getMaxLength(minLength));
-		Assert.assertEquals(null, SimpleTypeAnalyzer.getLength(minLength));
+		assertEquals(null, SimpleTypeAnalyzer.getMaxLength(minLength));
+		assertEquals(null, SimpleTypeAnalyzer.getLength(minLength));
 
-		Assert.assertEquals(Long.valueOf(5), SimpleTypeAnalyzer
+		assertEquals(Long.valueOf(5), SimpleTypeAnalyzer
 				.getMinLength(maxLength));
-		Assert.assertEquals(Long.valueOf(10), SimpleTypeAnalyzer
+		assertEquals(Long.valueOf(10), SimpleTypeAnalyzer
 				.getMaxLength(maxLength));
-		Assert.assertEquals(null, SimpleTypeAnalyzer.getLength(maxLength));
+		assertEquals(null, SimpleTypeAnalyzer.getLength(maxLength));
 
-		Assert.assertEquals(Long.valueOf(5), SimpleTypeAnalyzer
+		assertEquals(Long.valueOf(5), SimpleTypeAnalyzer
 				.getMinLength(length));
-		Assert.assertEquals(Long.valueOf(10), SimpleTypeAnalyzer
+		assertEquals(Long.valueOf(10), SimpleTypeAnalyzer
 				.getMaxLength(length));
-		Assert.assertEquals(Long.valueOf(8), SimpleTypeAnalyzer
+		assertEquals(Long.valueOf(8), SimpleTypeAnalyzer
 				.getLength(length));
 		
-		Assert.assertEquals(Long.valueOf(5), SimpleTypeAnalyzer
+		assertEquals(Long.valueOf(5), SimpleTypeAnalyzer
 				.getTotalDigits(digits));
-		Assert.assertEquals(Long.valueOf(2), SimpleTypeAnalyzer
+		assertEquals(Long.valueOf(2), SimpleTypeAnalyzer
 				.getFractionDigits(digits));
 		
-		Assert.assertEquals(Long.valueOf(3), SimpleTypeAnalyzer
+		assertEquals(Long.valueOf(3), SimpleTypeAnalyzer
 				.getTotalDigits(totalDigits));
-		Assert.assertEquals(null, SimpleTypeAnalyzer
+		assertEquals(null, SimpleTypeAnalyzer
 				.getFractionDigits(totalDigits));
 
-		Assert.assertEquals(null, SimpleTypeAnalyzer
+		assertEquals(null, SimpleTypeAnalyzer
 				.getTotalDigits(fractionDigits));
-		Assert.assertEquals(Long.valueOf(2), SimpleTypeAnalyzer
+		assertEquals(Long.valueOf(2), SimpleTypeAnalyzer
 				.getFractionDigits(fractionDigits));
 	}
 }

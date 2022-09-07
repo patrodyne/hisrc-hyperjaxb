@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.tests.componentjpa3.tests;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb3.ejb.tests.componentjpa3.tests.JobStream;
 import org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil;
 import org.jvnet.hyperjaxb3.xml.bind.JAXBContextUtils;

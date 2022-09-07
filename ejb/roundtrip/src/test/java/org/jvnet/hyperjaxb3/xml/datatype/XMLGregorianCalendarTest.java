@@ -3,12 +3,12 @@ package org.jvnet.hyperjaxb3.xml.datatype;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class XMLGregorianCalendarTest extends TestCase {
+public class XMLGregorianCalendarTest {
 	
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -25,6 +25,7 @@ public class XMLGregorianCalendarTest extends TestCase {
 		return datatypeFactory;
 	}
 
+	@Test
 	public void testIt() {
 
 		final XMLGregorianCalendar calendar = getDatatypeFactory()

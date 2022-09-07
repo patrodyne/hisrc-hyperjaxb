@@ -10,7 +10,7 @@ package com.example.customerservice.test;
 //import org.hisrc.hifaces20.testing.webappenvironment.annotations.PropertiesWebAppEnvironmentConfig;
 //import org.hisrc.hifaces20.testing.webappenvironment.testing.junit4.WebAppEnvironmentRule;
 //import org.junit.Rule;
-//import org.junit.Test;
+//import org.junit.jupiter.api.Test;
 //import org.junit.rules.MethodRule;
 //
 //public class ApplicationStartsIT {
@@ -24,8 +24,8 @@ package com.example.customerservice.test;
 //	@Test
 //	public void checkApplicationStarts() throws IOException{
 //
-//		Assert.assertTrue(webAppEnvironment.isStarted());
-//		Assert.assertNotNull(URLUtils.getContentAsString(new URL(webAppEnvironment.getBaseUrl() + "/CustomerServicePort?wsdl")));
+//		assertTrue(webAppEnvironment.isStarted());
+//		assertNotNull(URLUtils.getContentAsString(new URL(webAppEnvironment.getBaseUrl() + "/CustomerServicePort?wsdl")));
 //	}
 //}
 public class ApplicationStartsIT {

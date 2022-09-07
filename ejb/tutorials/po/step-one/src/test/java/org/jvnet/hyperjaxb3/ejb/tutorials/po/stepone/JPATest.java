@@ -3,6 +3,7 @@ package org.jvnet.hyperjaxb3.ejb.tutorials.po.stepone;
 import generated.ObjectFactory;
 import generated.PurchaseOrderType;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
 import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesMoreFile;
 
@@ -14,12 +15,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JPATest extends TestCase {
+public class JPATest {
 
 	private static Logger log = LoggerFactory.getLogger(JPATest.class);
 
@@ -27,6 +29,7 @@ public class JPATest extends TestCase {
 
 	private EntityManagerFactory entityManagerFactory;
 
+	@BeforeEach
 	public void setUp() throws Exception {
 
 		objectFactory = new ObjectFactory();
@@ -51,6 +54,7 @@ public class JPATest extends TestCase {
 				"generated", persistenceProperties);
 	}
 
+	@Test
 	public void testSaveAndLoad() {
 		final PurchaseOrderType alpha = objectFactory.createPurchaseOrderType();
 		alpha.setShipTo(objectFactory.createUSAddress());

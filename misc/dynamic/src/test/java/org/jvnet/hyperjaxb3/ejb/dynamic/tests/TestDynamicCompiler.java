@@ -7,7 +7,7 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import org.apache.commons.io.FileUtils;
 
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.jvnet.hyperjaxb3.ejb.dynamic.DynamicCompiler;
 import org.jvnet.hyperjaxb3.ejb.test.RoundtripTest;
 
-public class TestDynamicCompiler extends TestCase {
+public class TestDynamicCompiler {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -43,6 +43,7 @@ public class TestDynamicCompiler extends TestCase {
 		}
 	}
 
+	@Test
 	public void testCompile() throws Exception {
 
 		final File schema = new File(getClass().getResource("schema.xsd")
@@ -90,6 +91,7 @@ public class TestDynamicCompiler extends TestCase {
 		}
 	}
 
+	@Test
 	public void testUnmarshall() throws Exception {
 
 		final File schema = new File(getClass().getResource("schema.xsd")

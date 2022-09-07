@@ -16,7 +16,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Aleksei Valikov
  */
-public abstract class AbstractEntityManagerTest extends TestCase {
+public abstract class AbstractEntityManagerTest {
 
   protected Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -53,14 +54,17 @@ public abstract class AbstractEntityManagerTest extends TestCase {
 	  setEntityManagerFactory(emf);
   }
   
-  public void setUp() throws Exception {
-    super.setUp();
-    final EntityManagerFactory emf = getEntityManagerFactory();
-    if (emf == null || !emf.isOpen() || lastTestClass != getClass()) {
-      setEntityManagerFactory(createEntityManagerFactory());
-      lastTestClass = getClass();
-    }
-  }
+	@BeforeEach
+	public void setUp()
+		throws Exception
+	{
+		final EntityManagerFactory emf = getEntityManagerFactory();
+		if (emf == null || !emf.isOpen() || lastTestClass != getClass())
+		{
+			setEntityManagerFactory(createEntityManagerFactory());
+			lastTestClass = getClass();
+		}
+	}
 
   public String getPersistenceUnitName() {
     final Package _package = getClass().getPackage();

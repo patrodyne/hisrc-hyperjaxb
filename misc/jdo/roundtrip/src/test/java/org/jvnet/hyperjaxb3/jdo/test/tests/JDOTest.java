@@ -6,6 +6,7 @@ import org.jvnet.hyperjaxb3.jdo.test.AbstractJDOTest;
 
 public abstract class JDOTest extends AbstractJDOTest {
 
+	@Test
 	public void testIt() throws Exception {
 //		final A a1 = new A();
 //		final B b1 = new B();

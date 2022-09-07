@@ -3,6 +3,9 @@ package org.jvnet.hyperjaxb3.ejb.tutorials.po.stepone;
 import generated.ObjectFactory;
 import generated.PurchaseOrderType;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,14 +25,15 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.xpath.XPathException;
 import javax.xml.xpath.XPathFactory;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import org.xml.sax.SAXException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JAXBTest extends TestCase {
+public class JAXBTest {
 
 	private static Logger log = LoggerFactory.getLogger(JAXBTest.class);
 
@@ -37,11 +41,13 @@ public class JAXBTest extends TestCase {
 
 	private ObjectFactory objectFactory;
 
+	@BeforeEach
 	protected void setUp() throws Exception {
 		context = JAXBContext.newInstance("generated");
 		objectFactory = new ObjectFactory();
 	}
 
+	@Test
 	public void testUnmarshall() throws JAXBException {
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
 		final Object object = unmarshaller.unmarshal(new File(
@@ -49,10 +55,10 @@ public class JAXBTest extends TestCase {
 		@SuppressWarnings("unchecked")
 		final PurchaseOrderType purchaseOrder = ((JAXBElement<PurchaseOrderType>) object)
 				.getValue();
-		assertEquals("Wrong city", "Mill Valley", purchaseOrder.getShipTo()
-				.getCity());
+		assertEquals("Mill Valley", purchaseOrder.getShipTo().getCity(), "Wrong city");
 	}
 
+	@Test
 	public void testMarshal() throws JAXBException, XPathException {
 		final PurchaseOrderType purchaseOrder = objectFactory
 				.createPurchaseOrderType();
@@ -68,10 +74,11 @@ public class JAXBTest extends TestCase {
 
 		final XPathFactory xPathFactory = XPathFactory.newInstance();
 
-		assertEquals("Wrong city", "New Orleans", xPathFactory.newXPath()
-				.evaluate("/purchaseOrder/shipTo/city", result.getNode()));
+		assertEquals("New Orleans", xPathFactory.newXPath()
+				.evaluate("/purchaseOrder/shipTo/city", result.getNode()), "Wrong city");
 	}
 
+	@Test
 	public void testValidate() throws SAXException, JAXBException {
 
 		final PurchaseOrderType purchaseOrder = objectFactory
@@ -100,7 +107,7 @@ public class JAXBTest extends TestCase {
 		});
 		marshaller.marshal(purchaseOrderElement, new DOMResult());
 
-		assertFalse("List of validation events must not be empty.", events.isEmpty());
+		assertFalse(events.isEmpty(), "List of validation events must not be empty.");
 		log.info("Validation Events (expected):");
 		for ( int index=0; index < events.size(); ++index )
 		{

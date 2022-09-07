@@ -2,7 +2,7 @@ package org.patrodyne.jvnet.hyperjaxb.ex001;
 
 import jakarta.persistence.EntityManagerFactory;
 
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
 
 /**
@@ -13,22 +13,11 @@ import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
  * 
  * @author Rick O'Sullivan
  */
-@Ignore("XML Schema contains default value(s).")
+@Disabled("XML Schema contains default value(s).")
 public class RoundtripTest
 	extends org.jvnet.hyperjaxb3.ejb.test.RoundtripTest
 	implements ContextPathAware
 {
-	public RoundtripTest()
-	{
-		super();
-	}
-
-	public RoundtripTest(EntityManagerFactory emf)
-	{
-		super();
-		setEntityManagerFactory(emf);
-	}
-	  
 	public String getContextPath()
 	{
 		return "org.patrodyne.jvnet.hyperjaxb.ex001.model";

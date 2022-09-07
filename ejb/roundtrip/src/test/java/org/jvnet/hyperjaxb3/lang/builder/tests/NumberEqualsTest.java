@@ -1,11 +1,14 @@
 package org.jvnet.hyperjaxb3.lang.builder.tests;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.math.BigDecimal;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class NumberEqualsTest extends TestCase {
+public class NumberEqualsTest {
 	
+	@Test
 	public void testBigDecimal() throws Exception {
 		
 		final BigDecimal a = new BigDecimal("2.001");

@@ -19,6 +19,7 @@ public class RunPoPlugin extends AbstractMojoTestCase {
 
 	protected MavenProjectBuilder mavenProjectBuilder;
 
+//	@BeforeEach
 	protected void setUp() throws Exception {
 		super.setUp();
 
@@ -41,6 +42,7 @@ public class RunPoPlugin extends AbstractMojoTestCase {
 	 * 
 	 * @throws MojoExecutionException
 	 */
+//	@Test
 	public void testExecute() throws Exception {
 
 		final File pom = new File(getBaseDir(),

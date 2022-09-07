@@ -2,15 +2,19 @@ package org.jvnet.hyperjaxb3.ejb.tests.issuesjpa3;
 
 import jakarta.persistence.OrderColumn;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 import org.jvnet.annox.reflect.AnnotatedElementFactory;
 import org.jvnet.annox.reflect.DualAnnotatedElementFactory;
 import org.jvnet.annox.reflect.ParameterizedAnnotatedElement;
 
-public class HJIII73Test extends TestCase {
+public class HJIII73Test {
 
+	@Test
 	public void testLengthAnnotation() throws Exception {
 
 		final AnnotatedElementFactory aef = new DualAnnotatedElementFactory();
@@ -22,11 +26,10 @@ public class HJIII73Test extends TestCase {
 				.getAnnotatedElement(HJIII73Parent.class
 						.getMethod("getHJIII73ChildManyToMany"));
 
-		Assert.assertNotNull(o2m.getAnnotation(OrderColumn.class));
-		Assert.assertTrue(o2m.getAnnotation(OrderColumn.class).name().length() > 0);
-		Assert.assertNotNull(m2m.getAnnotation(OrderColumn.class));
-		Assert.assertEquals("ORDNUNG", m2m.getAnnotation(OrderColumn.class)
-				.name());
+		assertNotNull(o2m.getAnnotation(OrderColumn.class));
+		assertTrue(o2m.getAnnotation(OrderColumn.class).name().length() > 0);
+		assertNotNull(m2m.getAnnotation(OrderColumn.class));
+		assertEquals("ORDNUNG", m2m.getAnnotation(OrderColumn.class).name());
 	}
 
 }

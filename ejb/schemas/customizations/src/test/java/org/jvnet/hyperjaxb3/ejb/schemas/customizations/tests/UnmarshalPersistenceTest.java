@@ -1,5 +1,9 @@
 package org.jvnet.hyperjaxb3.ejb.schemas.customizations.tests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -8,7 +12,7 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Validate;
@@ -16,7 +20,7 @@ import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Persistence;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.SingleProperty;
 
-public class UnmarshalPersistenceTest extends TestCase {
+public class UnmarshalPersistenceTest {
 
 	protected JAXBContext getContext() {
 		return Customizations.getContext();
@@ -43,6 +47,7 @@ public class UnmarshalPersistenceTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testPersistence0() throws Exception {
 		final Persistence persistence = unmarshal("persistence[0].xml");
 
@@ -53,8 +58,7 @@ public class UnmarshalPersistenceTest extends TestCase {
 
 		final SingleProperty singleProperty = defaultSingleProperties.get(0);
 
-		assertEquals(255, singleProperty.getBasic().getColumn().getLength()
-				.intValue());
+		assertEquals(255, singleProperty.getBasic().getColumn().getLength().intValue());
 	}
 
 }

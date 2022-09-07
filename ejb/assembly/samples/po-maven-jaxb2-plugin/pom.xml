@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-samples-po-maven-jaxb2-plugin</artifactId>
 	<version>0.6.5-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Assembly Sample [po-maven-jaxb2-plugin]</name>
 	<build>
 		<defaultGoal>install</defaultGoal>

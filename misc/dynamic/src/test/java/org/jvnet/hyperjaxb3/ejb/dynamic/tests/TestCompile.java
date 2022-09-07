@@ -12,9 +12,9 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public abstract class TestCompile extends TestCase {
+public abstract class TestCompile {
 
 	protected File getBaseDir() {
 		try {
@@ -34,6 +34,7 @@ public abstract class TestCompile extends TestCase {
 		return new File(getBaseDir(), "target/test-etc-classes");
 	}
 
+	@Test
 	public void testCompile() throws Exception {
 		final JavaCompiler systemJavaCompiler = ToolProvider
 				.getSystemJavaCompiler();
@@ -59,7 +60,7 @@ public abstract class TestCompile extends TestCase {
 				.currentThread().getContextClassLoader());
 		final Class clazz = ucl
 				.loadClass("org.jvnet.hyperjaxb3.tools.tests.Test");
-		Assert.assertEquals("Wrong value.", "This is a test.", clazz
+		assertEquals("Wrong value.", "This is a test.", clazz
 				.newInstance().toString());
 
 	}

@@ -1,5 +1,6 @@
 package org.jvnet.hyperjaxb3.ejb.test;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.jvnet.jaxb2_commons.locator.util.LocatorUtils.item;
 import static org.jvnet.jaxb2_commons.locator.util.LocatorUtils.property;
 
@@ -132,10 +133,10 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest {
 	{
 		final EqualsStrategy strategy = new ExtendedJAXBEqualsStrategy();
 		
-		assertTrue("Objects NOT equal. Use DEBUG for location details.", strategy.equals(
+		assertTrue(strategy.equals(
 				new DefaultRootObjectLocator(leftObject),
 				new DefaultRootObjectLocator(rightObject),
 				leftObject,
-				rightObject));
+				rightObject), "Objects NOT equal. Use DEBUG for location details.");
 	}
 }

@@ -1,14 +1,15 @@
 package org.jvnet.hyperjaxb3.adapters.tests;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReflectionTest extends TestCase {
+public class ReflectionTest {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Test
 	public void testType() throws Exception {
 //
 //		final Class x = XMLGregorianCalendarAsGDayAdapter.class;

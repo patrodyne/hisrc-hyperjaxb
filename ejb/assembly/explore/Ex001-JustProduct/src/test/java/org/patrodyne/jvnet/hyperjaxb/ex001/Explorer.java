@@ -133,7 +133,8 @@ public class Explorer extends AbstractEntityExplorer
 		setInternalContextProperties(gatherInternalProperties());
 		
 		// Initialize RoundtripTest
-		setRoundtripTest(new RoundtripTest(getEntityManagerFactory()));
+		setRoundtripTest(new RoundtripTest());
+		getRoundtripTest().setEntityManagerFactory(getEntityManagerFactory());
 	}
 
 	// Properties: Hibernate Session Factory

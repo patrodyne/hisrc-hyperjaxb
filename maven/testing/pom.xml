@@ -11,8 +11,8 @@
 	<name>HiSrc HyperJAXB Maven Plugin Testing</name>
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -44,7 +44,7 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<configuration>
 					<ignoredUnusedDeclaredDependencies>
-						<ignoredUnusedDeclaredDependency>junit:junit:jar:</ignoredUnusedDeclaredDependency>
+						<ignoredUnusedDeclaredDependency>junit-jupiter:junit-jupiter-api:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-simple:jar:</ignoredUnusedDeclaredDependency>
 					</ignoredUnusedDeclaredDependencies>
 				</configuration>

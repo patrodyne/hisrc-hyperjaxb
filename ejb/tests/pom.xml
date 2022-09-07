@@ -112,16 +112,9 @@
 			<groupId>org.patrodyne.jvnet</groupId>
 			<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
 		</dependency>
-		<!--
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-nop</artifactId>
-			<scope>test</scope>
-		</dependency>
-		-->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

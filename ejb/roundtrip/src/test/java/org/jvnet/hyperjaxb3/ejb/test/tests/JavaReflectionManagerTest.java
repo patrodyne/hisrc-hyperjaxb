@@ -1,23 +1,24 @@
 package org.jvnet.hyperjaxb3.ejb.test.tests;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import org.hibernate.annotations.common.reflection.XClass;
 import org.hibernate.annotations.common.reflection.java.JavaReflectionManager;
 
-public class JavaReflectionManagerTest extends TestCase {
+public class JavaReflectionManagerTest {
 
+	@Test
 	public void testXClass() throws Exception {
 
 		final JavaReflectionManager manager = new JavaReflectionManager();
-		final XClass cClass = manager.toXClass(Test.class);
+		final XClass cClass = manager.toXClass(TestMe.class);
 
 		cClass.getDeclaredProperties(XClass.ACCESS_FIELD);
 		cClass.getDeclaredProperties(XClass.ACCESS_PROPERTY);
 
 	}
 
-	public static class Test {
+	public static class TestMe {
 
 		private Generic<Object[]> e;
 

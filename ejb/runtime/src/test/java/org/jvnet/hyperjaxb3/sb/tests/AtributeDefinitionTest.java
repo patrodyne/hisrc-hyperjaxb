@@ -2,12 +2,14 @@ package org.jvnet.hyperjaxb3.sb.tests;
 
 import jakarta.xml.bind.JAXBContext;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AtributeDefinitionTest extends TestCase {
+import org.junit.jupiter.api.Test;
+
+public class AtributeDefinitionTest {
 
 	@SuppressWarnings("unchecked")
+	@Test
 	public void testUnmarshall() throws Exception {
 		JAXBContext context = JAXBContext
 				.newInstance(AttributeDefinition.class);
@@ -16,10 +18,11 @@ public class AtributeDefinitionTest extends TestCase {
 				.createUnmarshaller().unmarshal(
 						getClass().getResourceAsStream("attribute.xml"));
 
-		Assert.assertEquals(Integer.valueOf(5), attributeDefinition.getValue());
+		assertEquals(Integer.valueOf(5), attributeDefinition.getValue());
 
 	}
 	
+	@Test
 	public void testSimpleUnmarshall() throws Exception {
 		JAXBContext context = JAXBContext
 				.newInstance(SimpleAttributeDefinition.class);
@@ -28,7 +31,7 @@ public class AtributeDefinitionTest extends TestCase {
 				.createUnmarshaller().unmarshal(
 						getClass().getResourceAsStream("simpleAttribute.xml"));
 
-		Assert.assertEquals(Integer.valueOf(5), attributeDefinition.getValue());
+		assertEquals(Integer.valueOf(5), attributeDefinition.getValue());
 
 	}
 	

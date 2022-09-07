@@ -1,5 +1,6 @@
 package org.jvnet.hyperjaxb3.ejb.tutorials.po.stepone;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
 import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesMoreFile;
 
@@ -21,12 +22,13 @@ import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import javax.xml.transform.dom.DOMResult;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JAXBAndJPATest extends TestCase {
+public class JAXBAndJPATest {
 
 	private static Logger log = LoggerFactory.getLogger(JAXBAndJPATest.class);
 
@@ -36,6 +38,7 @@ public class JAXBAndJPATest extends TestCase {
 
 	private JAXBContext context;
 
+	@BeforeEach
 	public void setUp() throws Exception {
 
 		objectFactory = new ObjectFactory();
@@ -63,6 +66,7 @@ public class JAXBAndJPATest extends TestCase {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Test
 	public void testRoundtrip() throws JAXBException {
 
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
@@ -84,7 +88,7 @@ public class JAXBAndJPATest extends TestCase {
 				.createEntityManager();
 		final PurchaseOrderType beta = loadManager.find(
 				PurchaseOrderType.class, id);
-		assertEquals("Objects are not equal.", alpha, beta);
+		assertEquals(alpha, beta, "Objects are not equal.");
 		log.info("JAXB object equals JPA object.");
 		
 		final Marshaller marshaller = context.createMarshaller();

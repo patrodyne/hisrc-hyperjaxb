@@ -1,7 +1,7 @@
 package com.example.customerservice.test;
 
-//import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertNotNull;
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertNotNull;
 //
 //import java.math.BigDecimal;
 //
@@ -11,7 +11,7 @@ package com.example.customerservice.test;
 //import org.hisrc.hifaces20.testing.webappenvironment.annotations.PropertiesWebAppEnvironmentConfig;
 //import org.hisrc.hifaces20.testing.webappenvironment.testing.junit4.WebAppEnvironmentRule;
 //import org.junit.Rule;
-//import org.junit.Test;
+//import org.junit.jupiter.api.Test;
 //import org.junit.rules.MethodRule;
 //
 //import com.example.customerservice.model.Customer;
