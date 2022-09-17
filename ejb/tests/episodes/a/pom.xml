@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-tests-episodes-a</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Test [episodes-a]</name>
+	<properties>
+		<root.basedir>${basedir}/../../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<!-- Test -->
 		<dependency>

@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-tests-idsymbolspace</artifactId>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb2 Tests [idsymbolspace]</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>

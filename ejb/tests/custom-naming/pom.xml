@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-tests-custom-naming</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Test [custom-naming]</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<modules>
 		<module>extension</module>
 		<module>schema</module>

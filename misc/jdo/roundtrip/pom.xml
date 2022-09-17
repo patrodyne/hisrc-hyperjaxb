@@ -6,6 +6,9 @@
 	<artifactId>hisrc-hyperjaxb-jdo-roundtrip</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB JDO Roundtrip</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-jdo</artifactId>

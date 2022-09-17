@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-tests-equals-builder</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Test [equals-builder]</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<modules>
 		<module>builder</module>
 		<module>schema</module>

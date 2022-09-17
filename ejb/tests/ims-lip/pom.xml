@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-tests-ims-lip</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Test [ims-lip]</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<!-- Hibernate Dependencies -->
 		<!-- Test -->

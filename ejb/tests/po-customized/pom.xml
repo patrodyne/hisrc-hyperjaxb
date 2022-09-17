@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-tests-po-customized</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Test [po-customized]</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<!-- Hibernate Dependencies -->
 		<!-- Test -->

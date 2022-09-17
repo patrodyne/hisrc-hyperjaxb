@@ -7,6 +7,9 @@
 	<artifactId>hisrc-hyperjaxb-dynamic</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Hibernate</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-project</artifactId>

@@ -10,6 +10,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB</name>
+	<properties>
+		<root.basedir>${basedir}/..</root.basedir>
+	</properties>
 	<modules>
 		<module>schemas</module>
 		<module>runtime</module>

@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-tests-edxl</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Test [edxl]</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<!-- Test -->
 		<dependency>

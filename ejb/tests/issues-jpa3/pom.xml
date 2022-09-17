@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-jpa3-tests-issues-jpa3</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Test [issues-jpa3]</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<!-- Test -->
 		<dependency>

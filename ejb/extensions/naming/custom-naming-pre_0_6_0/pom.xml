@@ -9,6 +9,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-extensions-custom-naming-pre_0_6_0</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Extensions Naming [custom-naming-pre_0_6_0]</name>
+	<properties>
+		<root.basedir>${basedir}/../../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>

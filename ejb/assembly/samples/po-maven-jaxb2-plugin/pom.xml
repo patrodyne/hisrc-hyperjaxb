@@ -12,6 +12,9 @@
 	<version>0.6.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Assembly Sample [po-maven-jaxb2-plugin]</name>
+	<properties>
+		<root.basedir>${basedir}/../../../..</root.basedir>
+	</properties>
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<plugins>

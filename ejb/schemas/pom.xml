@@ -9,6 +9,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-schemas</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Schemas</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<modules>
 		<module>persistence</module>
 		<module>customizations</module>

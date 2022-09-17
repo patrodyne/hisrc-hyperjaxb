@@ -9,6 +9,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-roundtrip</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Roundtrip</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>commons-io</groupId>

@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-tutorials</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Tutorials</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<modules>
 		<module>po</module>
 	</modules>

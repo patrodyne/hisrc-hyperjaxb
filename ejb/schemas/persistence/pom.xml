@@ -9,6 +9,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-schemas-persistence</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Schemas Persistence</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>

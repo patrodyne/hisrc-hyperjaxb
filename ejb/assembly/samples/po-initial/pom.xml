@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-samples-po-initial</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Assembly Sample [po-initial]</name>
+	<properties>
+		<root.basedir>${basedir}/../../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>

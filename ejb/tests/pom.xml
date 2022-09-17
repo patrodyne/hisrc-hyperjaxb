@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Tests</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<modules>
 		<module>addressbook</module>
 		<module>ak</module>

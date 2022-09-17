@@ -9,6 +9,9 @@
 	<artifactId>hisrc-hyperjaxb-maven</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB Maven</name>
+	<properties>
+		<root.basedir>${basedir}/..</root.basedir>
+	</properties>
 	<modules>
 		<module>plugin</module>
 		<module>testing</module>

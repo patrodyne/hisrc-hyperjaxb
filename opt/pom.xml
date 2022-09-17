@@ -10,6 +10,9 @@
 	<artifactId>hisrc-hyperjaxb-opt</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB Optional: Framework Support</name>
+	<properties>
+		<root.basedir>${basedir}/..</root.basedir>
+	</properties>
 	<modules>
 		<module>hibernate</module>
 		<module>hikaricp</module>

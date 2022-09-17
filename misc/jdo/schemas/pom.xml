@@ -7,6 +7,9 @@
 	<artifactId>hisrc-hyperjaxb-jdo-schemas</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB JDO Schemas</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-jdo</artifactId>

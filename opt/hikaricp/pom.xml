@@ -9,6 +9,9 @@
 	<artifactId>hisrc-hyperjaxb-opt-hikaricp</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB Optional: HikariCP Support</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<dependencies>
 		<!-- HiSrc BasicJAXB Dependencies -->
 		<dependency>

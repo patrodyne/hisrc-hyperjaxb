@@ -22,6 +22,7 @@
 		-->
 		<cxf.version>3.5.3</cxf.version>
 		<jaxws.version>${jaxb-api.version}</jaxws.version>
+		<root.basedir>${basedir}/../../../..</root.basedir>
 	</properties>
 	<dependencies>
 		<dependency>

@@ -4,14 +4,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
 >
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>hisrc-hyperjaxb-ejb-explore-ex001</artifactId>
-	<packaging>pom</packaging>
-	<name>HiSrc HyperJAXB EJB Assembly Explore [Ex001 JustProduct]</name>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb-explore</artifactId>
 		<version>0.6.5-SNAPSHOT</version>
 	</parent>
+	<artifactId>hisrc-hyperjaxb-ejb-explore-ex001</artifactId>
+	<packaging>pom</packaging>
+	<name>HiSrc HyperJAXB EJB Assembly Explore [Ex001 JustProduct]</name>
+	<properties>
+		<root.basedir>${basedir}/../../../..</root.basedir>
+	</properties>
 	<build>
 		<defaultGoal>package</defaultGoal>
 		<finalName>hisrc-hyperjaxb-ex001-${hisrc-hyperjaxb.version}</finalName>

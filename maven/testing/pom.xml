@@ -9,6 +9,9 @@
 	<artifactId>hisrc-hyperjaxb-maven-plugin-testing</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB Maven Plugin Testing</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

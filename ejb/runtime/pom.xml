@@ -9,6 +9,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Runtime</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.commons</groupId>

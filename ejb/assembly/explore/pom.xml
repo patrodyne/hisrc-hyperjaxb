@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-explore</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Assembly Explore</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<modules>
 		<module>Ex001-JustProduct</module>
 		<!--

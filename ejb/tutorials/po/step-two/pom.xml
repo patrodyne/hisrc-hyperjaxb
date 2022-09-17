@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-tutorials-po-step-two</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Tutorial [po:step-two]</name>
+	<properties>
+		<root.basedir>${basedir}/../../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>

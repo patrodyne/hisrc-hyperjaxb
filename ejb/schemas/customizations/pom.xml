@@ -9,6 +9,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-schemas-customizations</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Schemas Customizations</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
@@ -89,33 +92,6 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>site</id>
-						<phase>site</phase>
-						<configuration>
-							<tasks>
-							<echo>Running the XSDDoc task</echo>
-							<taskdef classname="net.sf.xframe.xsddoc.Task" name="xsddoc" />
-							<mkdir dir="${basedir}/target/site/xsddoc" />
-							<xsddoc file="${basedir}/src/main/resources/customizations.xsd" out="${basedir}/target/site/xsddoc" doctitle="HiSrc HyperJAXB Customization schema" verbose="false" />
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>xsddoc</groupId>
-						<artifactId>maven-xsddoc-plugin</artifactId>
-						<version>1.0</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>

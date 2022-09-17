@@ -16,6 +16,7 @@
 		<hisrc-basicjaxb.version>0.12.3-SNAPSHOT</hisrc-basicjaxb.version>
 		<hisrc-higherjaxb-maven-plugin.version>0.14.3-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
 		<hisrc-hyperjaxb.version>0.6.5-SNAPSHOT</hisrc-hyperjaxb.version>
+		<root.basedir>${basedir}/../..</root.basedir>
 	</properties>
 	<modules>
 		<module>explore</module>

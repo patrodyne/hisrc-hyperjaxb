@@ -12,6 +12,9 @@
 		<artifactId>hisrc-hyperjaxb-project</artifactId>
 		<version>0.6.5-SNAPSHOT</version>
 	</parent>
+	<properties>
+		<root.basedir>${basedir}/..</root.basedir>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>

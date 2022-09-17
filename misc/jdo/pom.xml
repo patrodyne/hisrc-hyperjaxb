@@ -6,6 +6,9 @@
 	<artifactId>hisrc-hyperjaxb-jdo</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB JDO</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-project</artifactId>

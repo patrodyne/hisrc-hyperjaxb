@@ -9,6 +9,9 @@
 	<artifactId>hisrc-hyperjaxb-opt-hibernate</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB Optional: Hibernate Support</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<dependencies>
 		<!-- HiSrc BasicJAXB Dependencies -->
 		<dependency>

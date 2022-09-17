@@ -10,6 +10,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-tests-component-jpa3</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Test [component-jpa3]</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<!-- Test -->
 		<dependency>

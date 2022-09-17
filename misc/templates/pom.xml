@@ -8,6 +8,9 @@
 	<version>0.6.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB Templates</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-project</artifactId>

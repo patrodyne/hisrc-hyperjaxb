@@ -25,6 +25,14 @@ with the original `maven-jaxb2-plugin` name.
 
 ![Patrodyne-Highsource Graph][1]
 
+### Build Sequence
+
+1. hisrc-basicjaxb-annox
+2. hisrc-basicjaxb
+3. hisrc-higherjaxb
+4. hisrc-hyperjaxb-annox
+5. hisrc-hyperjaxb
+
 ### Releases
 
 #### GitHub Releases, Demonstrations

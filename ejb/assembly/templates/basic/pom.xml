@@ -11,6 +11,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-template-basic</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Assembly Template [basic]</name>
+	<properties>
+		<root.basedir>${basedir}/../../../..</root.basedir>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>

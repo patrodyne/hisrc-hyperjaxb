@@ -13,6 +13,9 @@
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Assembly Samples</name>
 	<version>0.6.5-SNAPSHOT</version>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
 	<modules>
 		<module>po-initial</module>
 		<module>po-customized-eclipselink</module>

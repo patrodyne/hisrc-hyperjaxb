@@ -9,6 +9,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-extensions</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Extensions</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<modules>
 		<module>naming</module>
 	</modules>

@@ -9,6 +9,9 @@
 	<artifactId>hisrc-hyperjaxb-ejb-plugin</artifactId>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Plugin</name>
+	<properties>
+		<root.basedir>${basedir}/../..</root.basedir>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>jakarta.activation</groupId>
