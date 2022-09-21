@@ -10,7 +10,7 @@ public class RunEmbeddableJPA3Plugin extends RunEjbHyperjaxb3Mojo {
 		// TODO Auto-generated method stub
 		super.configureHyperjaxb3Mojo(mojo);
 		mojo.getArgs().add("-Xannotate");
-		mojo.variant = "jpa3";
+		mojo.setVariant("jpa3");
 	}
 
 }

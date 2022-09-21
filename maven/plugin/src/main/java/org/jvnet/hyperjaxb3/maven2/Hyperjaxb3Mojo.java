@@ -21,102 +21,141 @@ import org.jvnet.mjiip.v_2.XJC2Mojo;
 import com.sun.tools.xjc.Options;
 
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, threadSafe = true)
-public class Hyperjaxb3Mojo extends XJC2Mojo {
+public class Hyperjaxb3Mojo extends XJC2Mojo
+{
+	public static final String HYPERJAXB_MOJO_PREFIX = "org.jvnet.hyperjaxb.mojo.xjc";
 
 	/**
 	 * Target directory for the generated mappings. If left empty, mappings are
 	 * generated together with sources.
 	 */
-	@Parameter(property = "maven.hj3.target")
-	public File target;
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".target")
+	private File target;
+	public File getTarget() { return target; }
+	public void setTarget(File target) { this.target = target; }
 
 	/**
 	 * Name of the roundtrip test case. If omitted, no roundtrip test case is
 	 * generated.
 	 */
-	@Parameter(property = "maven.hj3.roundtripTestClassName")
-	public String roundtripTestClassName;
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".roundtripTestClassName")
+	private String roundtripTestClassName;
+	public String getRoundtripTestClassName() { return roundtripTestClassName; }
+	public void setRoundtripTestClassName(String roundtripTestClassName) { this.roundtripTestClassName = roundtripTestClassName; }
 
 	/**
 	 * Patterns for files to be included as resources.
 	 */
 	@Parameter
-	public String[] resourceIncludes = new String[] { "**/*.hbm.xml",
-			"**/*.orm.xml", "**/*.cfg.xml", "META-INF/persistence.xml" };
+	private String[] resourceIncludes = new String[]
+		{
+		 	"**/*.hbm.xml",
+			"**/*.orm.xml",
+			"**/*.cfg.xml",
+			"META-INF/persistence.xml"
+		};
+	public String[] getResourceIncludes() { return resourceIncludes; }
+	public void setResourceIncludes(String[] resourceIncludes) { this.resourceIncludes = resourceIncludes; }
 
 	/**
 	 * Persistence variant. Switches between various persistence
 	 * implementations. Possible values are "hibernate" and "ejb-hibernate".
 	 */
-	@Parameter(property = "maven.hj3.variant", defaultValue = "ejb")
-	public String variant = "ejb";
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".variant", defaultValue = "ejb")
+	private String variant = "ejb";
+	public String getVariant() { return variant; }
+	public void setVariant(String variant) { this.variant = variant; }
 
 	/**
 	 * Persistence unit name (EJB3 specific).
 	 */
-	@Parameter(property = "maven.hj3.persistenceUnitName")
-	public String persistenceUnitName;
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".persistenceUnitName")
+	private String persistenceUnitName;
+	public String getPersistenceUnitName() { return persistenceUnitName; }
+	public void setPersistenceUnitName(String persistenceUnitName) { this.persistenceUnitName = persistenceUnitName; }
 
 	/**
 	 * Persistence unit name (EJB3 specific).
 	 */
-	@Parameter(property = "maven.hj3.persistenceXml")
-	public File persistenceXml;
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".persistenceXml")
+	private File persistenceXml;
+	public File getPersistenceXml() { return persistenceXml; }
+	public void setPersistenceXml(File persistenceXml) { this.persistenceXml = persistenceXml; }
 
 	/**
 	 * Whether to add or remove arbitrary annotations to/from generated sources.
 	 */
-	@Parameter(property = "maven.hj3.generateAnnotation", defaultValue = "true")
-	public boolean generateAnnotation = true;
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateAnnotation", defaultValue = "true")
+	private boolean generateAnnotation = true;
+	public boolean isGenerateAnnotation() { return generateAnnotation; }
+	public void setGenerateAnnotation(boolean generateAnnotation) { this.generateAnnotation = generateAnnotation; }
 
 	/**
 	 * Whether schema-derived classes extend certain class or implement certain interfaces.
 	 */
-	@Parameter(property = "maven.hj3.generateInheritance", defaultValue = "true")
-	public boolean generateInheritance = true;
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateInheritance", defaultValue = "true")
+	private boolean generateInheritance = true;
+	public boolean isGenerateInheritance() { return generateInheritance; }
+	public void setGenerateInheritance(boolean generateInheritance) { this.generateInheritance = generateInheritance; }
 
 	/**
 	 * Whether the <code>hashCode()</code> method should be generated.
 	 */
-	@Parameter(property = "maven.hj3.generateHashCode", defaultValue = "true")
-	public boolean generateHashCode = true;
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateHashCode", defaultValue = "true")
+	private boolean generateHashCode = true;
+	public boolean isGenerateHashCode() { return generateHashCode; }
+	public void setGenerateHashCode(boolean generateHashCode) { this.generateHashCode = generateHashCode; }
 
 	/**
 	 * Whether the <code>equals(...)</code> methods should be generated.
 	 */
-	@Parameter(property = "maven.hj3.generateEquals", defaultValue = "true")
-	public boolean generateEquals = true;
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateEquals", defaultValue = "true")
+	private boolean generateEquals = true;
+	public boolean isGenerateEquals() { return generateEquals; }
+	public void setGenerateEquals(boolean generateEquals) { this.generateEquals = generateEquals; }
 
 	/**
 	 * Whether the <code>toString()</code> methods should be generated.
 	 */
-	@Parameter(property = "maven.hj3.generateToString", defaultValue = "true")
-	public boolean generateToString = true;
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateToString", defaultValue = "true")
+	private boolean generateToString = true;
+	public boolean isGenerateToString() { return generateToString; }
+	public void setGenerateToString(boolean generateToString) { this.generateToString = generateToString; }
 
 	/**
 	 * Override HashCode, Equals, ToString. Possible values are "strategic", "simple[123]".
 	 */
-	@Parameter(property = "maven.hj3.overrideHET", defaultValue = "strategic")
-	public String overrideHET = "strategic";
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".overrideHET", defaultValue = "strategic")
+	private String overrideHET = "strategic";
+	public String getOverrideHET() { return overrideHET; }
+	public void setOverrideHET(String overrideHET) { this.overrideHET = overrideHET; }
 
 	/**
 	 * Whether the generated id property must be transient.
 	 */
-	@Parameter(property = "maven.hj3.generateTransientId", defaultValue = "false")
-	public boolean generateTransientId = false;
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateTransientId", defaultValue = "false")
+	private boolean generateTransientId = false;
+	public boolean isGenerateTransientId() { return generateTransientId; }
+	public void setGenerateTransientId(boolean generateTransientId) { this.generateTransientId = generateTransientId; }
 
 	/**
 	 * Generation result. Possible values are "annotations", "mappingFiles".
 	 */
-	@Parameter(property = "maven.hj3.result", defaultValue = "annotations")
-	public String result = "annotations";
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".result", defaultValue = "annotations")
+	private String result = "annotations";
+	public String getResult() { return result; }
+	public void setResult(String result) { this.result = result; }
 
 	@Parameter
 	public String[] preArgs = new String[0];
+	public String[] getPreArgs() { return preArgs; }
+	public void setPreArgs(String[] preArgs) { this.preArgs = preArgs; }
 
 	@Parameter
 	public String[] postArgs = new String[0];
-
+	public String[] getPostArgs() { return postArgs; }
+	public void setPostArgs(String[] postArgs) { this.postArgs = postArgs; }
+	
 	/**
 	 * Sets up the verbose and debug mode depending on mvn logging level, and
 	 * sets up hyperjaxb logging.
@@ -141,106 +180,91 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	/**
 	 * Logs options defined directly as mojo parameters.
 	 */
-	protected void logConfiguration() throws MojoExecutionException {
+	protected void logConfiguration() throws MojoExecutionException
+	{
 		super.logConfiguration();
 
-		getLog().info("Configuration: target:" + target);
-		getLog().info("Configuration: roundtripTestClassName:" + roundtripTestClassName);
-		getLog().info("Configuration: resourceIncludes:" + resourceIncludes);
-		getLog().info("Configuration: variant:" + variant);
-		getLog().info("Configuration: persistenceUnitName:" + persistenceUnitName);
-		getLog().info("Configuration: persistenceXml:" + persistenceXml);
-		getLog().info("Configuration: generateInheritance:" + generateInheritance);
-		getLog().info("Configuration: generateAnnotation:" + generateAnnotation);
-		getLog().info("Configuration: generateHashCode:" + generateHashCode);
-		getLog().info("Configuration: generateEquals:" + generateEquals);
-		getLog().info("Configuration: generateToString:" + generateToString);
-		getLog().info("Configuration: generateHET:" + overrideHET);
-		getLog().info("Configuration: generateTransientId:" + generateTransientId);
-		getLog().info("Configuration: result:" + result);
-		getLog().info("Configuration: preArgs:" + Arrays.toString(preArgs));
-		getLog().info("Configuration: postArgs:" + Arrays.toString(postArgs));
-		try {
-			getLog().info(
-					"Configuration: XJC loaded from:"
-							+ Options.class.getResource("Options.class")
-									.toURI().toURL().toExternalForm());
-		} catch (IOException ignored) {
-		} catch (URISyntaxException ignored) {
+		getLog().info("Configuration: target:" + getTarget());
+		getLog().info("Configuration: roundtripTestClassName:" + getRoundtripTestClassName());
+		getLog().info("Configuration: resourceIncludes:" + getResourceIncludes());
+		getLog().info("Configuration: variant:" + getVariant());
+		getLog().info("Configuration: persistenceUnitName:" + getPersistenceUnitName());
+		getLog().info("Configuration: persistenceXml:" + getPersistenceXml());
+		getLog().info("Configuration: generateInheritance:" + isGenerateInheritance());
+		getLog().info("Configuration: generateAnnotation:" + isGenerateAnnotation());
+		getLog().info("Configuration: generateHashCode:" + isGenerateHashCode());
+		getLog().info("Configuration: generateEquals:" + isGenerateEquals());
+		getLog().info("Configuration: generateToString:" + isGenerateToString());
+		getLog().info("Configuration: generateHET:" + getOverrideHET());
+		getLog().info("Configuration: generateTransientId:" + isGenerateTransientId());
+		getLog().info("Configuration: result:" + getResult());
+		getLog().info("Configuration: preArgs:" + Arrays.toString(getPreArgs()));
+		getLog().info("Configuration: postArgs:" + Arrays.toString(getPostArgs()));
+		try
+		{
+			getLog().info("Configuration: XJC loaded from:"
+				+ Options.class.getResource("Options.class").toURI().toURL().toExternalForm());
 		}
-
+		catch (IOException ioex)
+		{
+			getLog().warn(ioex.getClass().getSimpleName()+": "+ioex.getMessage());
+		}
+		catch (URISyntaxException uriex)
+		{
+			getLog().warn(uriex.getClass().getSimpleName()+": "+uriex.getMessage());
+		}
 	}
 
-	protected List<String> getArguments() {
+	protected List<String> getArguments()
+	{
 		final List<String> arguments = new ArrayList<String>();
 
-		if (this.preArgs != null) {
-			addAll(arguments,Arrays.asList(this.preArgs));
-		}
+		if (getPreArgs() != null)
+			addAll(arguments,Arrays.asList(getPreArgs()));
 		
 		addAll(arguments,super.getArguments());
 
-		if (generateInheritance)
+		if (isGenerateInheritance())
 			add(arguments,"-Xinheritance");
-
-		if (generateAnnotation)
+		if (isGenerateAnnotation())
 			add(arguments,"-Xannotate");
 
-		if ("jpa3".equals(variant)) {
+		if ("jpa3".equals(getVariant()))
+		{
 			add(arguments,"-Xhyperjaxb3-jpa3");
-
-			if (result != null) {
-				add(arguments,"-Xhyperjaxb3-jpa3-result=" + result);
-			}
-
-			if (roundtripTestClassName != null) {
-				add(arguments,"-Xhyperjaxb3-jpa3-roundtripTestClassName="
-						+ roundtripTestClassName);
-			}
-			if (persistenceUnitName != null) {
-				add(arguments,"-Xhyperjaxb3-jpa3-persistenceUnitName="
-						+ persistenceUnitName);
-			}
-			if (persistenceXml != null) {
-				add(arguments,"-Xhyperjaxb3-jpa3-persistenceXml="
-						+ persistenceXml.getAbsolutePath());
-			}
+			if (getResult() != null)
+				add(arguments,"-Xhyperjaxb3-jpa3-result=" + getResult());
+			if (getRoundtripTestClassName() != null)
+				add(arguments,"-Xhyperjaxb3-jpa3-roundtripTestClassName=" + getRoundtripTestClassName());
+			if (getPersistenceUnitName() != null)
+				add(arguments,"-Xhyperjaxb3-jpa3-persistenceUnitName=" + getPersistenceUnitName());
+			if (getPersistenceXml() != null)
+				add(arguments,"-Xhyperjaxb3-jpa3-persistenceXml=" + getPersistenceXml().getAbsolutePath());
 		}
 		else
 		{
-			if (!"ejb".equals(variant))
+			if (!"ejb".equals(getVariant()))
 			{
-				getLog().warn("Variant " + variant + " is obsolete, using 'variant=ejb' instead.");
-				variant = "ejb";
+				getLog().warn("Variant " + getVariant() + " is obsolete, using 'variant=ejb' instead.");
+				setVariant("ejb");
 			}
 
 			add(arguments,"-Xhyperjaxb3-ejb");
-
-			if (result != null) {
-				add(arguments,"-Xhyperjaxb3-ejb-result=" + result);
-			}
-
-			if (roundtripTestClassName != null) {
-				arguments.add("-Xhyperjaxb3-ejb-roundtripTestClassName="
-						+ roundtripTestClassName);
-			}
-			if (persistenceUnitName != null) {
-				add(arguments,"-Xhyperjaxb3-ejb-persistenceUnitName="
-						+ persistenceUnitName);
-			}
-			if (persistenceXml != null) {
-				add(arguments,"-Xhyperjaxb3-ejb-persistenceXml="
-						+ persistenceXml.getAbsolutePath());
-			}
-
-			if (generateTransientId) {
+			if (getResult() != null)
+				add(arguments,"-Xhyperjaxb3-ejb-result=" + getResult());
+			if (getRoundtripTestClassName() != null)
+				arguments.add("-Xhyperjaxb3-ejb-roundtripTestClassName=" + getRoundtripTestClassName());
+			if (getPersistenceUnitName() != null)
+				add(arguments,"-Xhyperjaxb3-ejb-persistenceUnitName=" + getPersistenceUnitName());
+			if (getPersistenceXml() != null)
+				add(arguments,"-Xhyperjaxb3-ejb-persistenceXml=" + getPersistenceXml().getAbsolutePath());
+			if (isGenerateTransientId())
 				add(arguments,"-Xhyperjaxb3-ejb-generateTransientId=true");
-			}
 		}
 
-		if (generateEquals)
+		if (isGenerateEquals())
 		{
-			switch (overrideHET)
+			switch (getOverrideHET())
 			{
 				case "strategic":
 					add(arguments,"-Xequals");
@@ -255,9 +279,9 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 					break;
 			}
 		}
-		else if (generateHashCode)
+		else if (isGenerateHashCode())
 		{
-			switch (overrideHET)
+			switch (getOverrideHET())
 			{
 				case "strategic":
 					add(arguments,"-XhashCode");
@@ -270,9 +294,9 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 					break;
 			}
 		}
-		if (generateToString)
+		if (isGenerateToString())
 		{
-			switch (overrideHET)
+			switch (getOverrideHET())
 			{
 				case "strategic":
 					add(arguments,"-XtoString");
@@ -298,9 +322,8 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 			}
 		}
 
-		if (this.postArgs != null) {
-			addAll(arguments,Arrays.asList(this.postArgs));
-		}
+		if (getPostArgs() != null)
+			addAll(arguments,Arrays.asList(getPostArgs()));
 
 		return arguments;
 	}
@@ -333,12 +356,14 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	 * 
 	 * @throws MojoExecutionException
 	 */
-	protected void setupMavenPaths() {
+	protected void setupMavenPaths()
+	{
 		super.setupMavenPaths();
 
 		final Resource resource = new Resource();
 		resource.setDirectory(getGenerateDirectory().getPath());
-		for (String resourceInclude : resourceIncludes) {
+		for (String resourceInclude : getResourceIncludes())
+		{
 			resource.addInclude(resourceInclude);
 		}
 		getProject().addResource(resource);
@@ -346,13 +371,12 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 		// If a round trip class name is configured then
 		// the XJC generation path is added as a test source root.
 		// See also Maven's "testSourceDirectory".
-		if (this.roundtripTestClassName != null) {
-			getProject().addTestCompileSourceRoot(
-					getGenerateDirectory().getPath());
-		}
+		if (getRoundtripTestClassName() != null)
+			getProject().addTestCompileSourceRoot(getGenerateDirectory().getPath());
 	}
 
-    private void todo(Log logger, String comment) {
+    private void todo(Log logger, String comment)
+    {
         String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
         String level = System.getProperty(TODO_LOG_LEVEL);
         if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);

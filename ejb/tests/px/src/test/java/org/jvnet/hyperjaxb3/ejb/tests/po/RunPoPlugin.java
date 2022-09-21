@@ -11,6 +11,6 @@ public class RunPoPlugin extends RunEjbHyperjaxb3Mojo {
 	protected void configureHyperjaxb3Mojo(Hyperjaxb3Mojo mojo) {
 		super.configureHyperjaxb3Mojo(mojo);
 		
-		mojo.persistenceXml = new File(getBaseDir(), "src/main/etc/persistence.xml");
+		mojo.setPersistenceXml(new File(getBaseDir(), "src/main/etc/persistence.xml"));
 	}
 }

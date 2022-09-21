@@ -9,8 +9,8 @@ public class RunIssuesJPA3Plugin extends RunEjbHyperjaxb3Mojo {
 	protected void configureHyperjaxb3Mojo(Hyperjaxb3Mojo mojo) {
 		super.configureHyperjaxb3Mojo(mojo);
 		mojo.setVerbose(true);
-		mojo.variant = "jpa3";
-		mojo.roundtripTestClassName = null;
+		mojo.setVariant("jpa3");
+		mojo.setRoundtripTestClassName(null);
 		mojo.setDebug(false);
 	}
 }

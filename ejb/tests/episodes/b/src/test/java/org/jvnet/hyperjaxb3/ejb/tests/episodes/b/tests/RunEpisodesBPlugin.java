@@ -1,117 +1,99 @@
 package org.jvnet.hyperjaxb3.ejb.tests.episodes.b.tests;
 
+import static com.sun.tools.xjc.Language.XMLSCHEMA;
+
 import java.io.File;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
-import org.apache.maven.artifact.factory.ArtifactFactory;
-import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.repository.DefaultArtifactRepository;
-import org.apache.maven.artifact.repository.layout.ArtifactRepositoryLayout;
-import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
+import org.apache.maven.artifact.factory.DefaultArtifactFactory;
 import org.apache.maven.model.Dependency;
-import org.apache.maven.plugin.Mojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.project.MavenProjectBuilder;
-import org.apache.maven.settings.MavenSettingsBuilder;
-import org.apache.maven.settings.Settings;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb3.maven2.Hyperjaxb3Mojo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class RunEpisodesBPlugin extends AbstractMojoTestCase {
-
-	static {
-		System.setProperty("basedir", getBaseDir().getAbsolutePath());
-	}
-
-	protected MavenProjectBuilder mavenProjectBuilder;
-
-	protected Hyperjaxb3Mojo mojo;
-
-	protected ArtifactRepository localRepository;
-
-	protected void setUp() throws Exception {
-		super.setUp();
-
-		mavenProjectBuilder = (MavenProjectBuilder) getContainer().lookup(
-				MavenProjectBuilder.ROLE);
-		ArtifactFactory artifactFactory = (ArtifactFactory) getContainer()
-				.lookup(ArtifactFactory.ROLE);
-
-		final Map<String, Mojo> mojos = (Map<String, Mojo>) getContainer()
-				.lookupMap(Mojo.ROLE);
-
-		for (Mojo mojo : mojos.values()) {
-			if (mojo instanceof Hyperjaxb3Mojo) {
-				this.mojo = (Hyperjaxb3Mojo) mojo;
-			}
-		}
-
-		MavenSettingsBuilder settingsBuilder = (MavenSettingsBuilder) getContainer()
-				.lookup(MavenSettingsBuilder.ROLE);
-		ArtifactRepositoryLayout repositoryLayout = (ArtifactRepositoryLayout) getContainer()
-				.lookup(ArtifactRepositoryLayout.ROLE, "default");
-
-		Settings settings = settingsBuilder.buildSettings();
-
-		String url = settings.getLocalRepository();
-
-		if (!url.startsWith("file:")) {
-			url = "file://" + url;
-		}
-
-		localRepository = new DefaultArtifactRepository("local", url,
-				new DefaultRepositoryLayout());
-	}
-
-	protected static File getBaseDir() {
-		try {
-			return (new File(RunEpisodesBPlugin.class.getProtectionDomain()
-					.getCodeSource().getLocation().getFile())).getParentFile()
-					.getParentFile().getAbsoluteFile();
-		} catch (Exception ex) {
-			throw new AssertionError(ex);
-		}
-	}
+/**
+ * Run HyperJAXB Mojo to generate Episode B entities.
+ */
+public class RunEpisodesBPlugin
+{
+	private Logger log = LoggerFactory.getLogger(RunEpisodesBPlugin.class);
 
 	/**
-	 * Validate the generation of a java files from purchaseorder.xsd.
-	 * 
-	 * @throws MojoExecutionException
+	 * Validate the generation of a java files from src/main/resources/schema.xsd.
 	 */
 	@Test
-	public void testExecute() throws Exception {
-
-		final File pom = new File(getBaseDir(), "pom.xml");
-
-		final MavenProject mavenProject = mavenProjectBuilder.build(pom,
-				localRepository, null);
-
-		mojo.setSchemaDirectory(new File(getBaseDir(), "src/main/resources/"));
+	@Disabled
+	public void testExecute() throws Exception
+	{
+		final Hyperjaxb3Mojo mojo = new Hyperjaxb3Mojo();
+		
+		mojo.setProject(new MavenProject());
+		mojo.setSchemaDirectory(getDirectory("src/main/resources"));
 		mojo.setSchemaIncludes(new String[] { "*.xsd" });
 		mojo.setBindingIncludes(new String[] { "*.xjb" });
-		mojo.setGenerateDirectory(new File(getBaseDir(),
-				"target/generated-sources/xjc-test"));
+		mojo.setGenerateDirectory(getDirectory("target/generated-test-sources/xjc"));
+		mojo.setArgs(getArgs());
 		mojo.setVerbose(true);
+		mojo.setDebug(true);
+		mojo.setWriteCode(true);
 		mojo.setRemoveOldOutput(true);
-
-		mojo.setProject(mavenProject);
-		mojo.setLocalRepository(localRepository);
-		mojo.setExtension(true);
-		mojo.setDebug(false);
-		// mojo.setSchemaLanguage("XMLSCHEMA");
-		mojo.roundtripTestClassName = getClass().getPackage().getName()
-				+ ".RoundtripTest";
 		mojo.setForceRegenerate(true);
+		mojo.setExtension(true);
+		mojo.setVariant("ejb");
+		mojo.setSchemaLanguage(XMLSCHEMA.name());
+		
+		// mojo.setRoundtripTestClassName(getClass().getPackage().getName() + ".RoundtripTest");
 
+		// TODO: Possible implement ArtifactFactory and Artifact interfaces with
+		//       mockups?
+		mojo.setArtifactFactory(new DefaultArtifactFactory());
+//		mojo.setArtifactFactory(new ProjectArtifactFactory());
+//		mojo.setArtifactResolver(null);
+//		mojo.setLocalRepository(null);
+//		mojo.setArtifactMetadataSource(null);
+		
+		// An "META-INF/sun-jaxb.episode" file is generated by the XJC (XML Schema to Java) compiler.
+		// It is a schema bindings that associates schema types with existing classes.
+		// It is useful when you have one XML schema that is imported by other schemas,
+		// as it prevents the model from being regenerated.
+		// XJC will scan JARs for '*.episode files', then use them as binding files automatically.
 		final Dependency episode = new Dependency();
-
 		episode.setGroupId("org.patrodyne.jvnet");
 		episode.setArtifactId("hisrc-hyperjaxb-ejb-tests-episodes-a");
 		episode.setVersion("0.6.5-SNAPSHOT");
 		mojo.setEpisodes(new Dependency[] { episode });
 
 		mojo.execute();
+		log.info("Executed " + mojo);
+	}
+	
+	private File getDirectory(String path)
+	{
+		return new File(getBaseDir(), path);
 	}
 
+	private List<String> getArgs()
+	{
+		List<String> args = new ArrayList<>();
+		return args;
+	}
+
+	private File getBaseDir()
+	{
+		try
+		{
+			return (new File(RunEpisodesBPlugin.class.getProtectionDomain()
+				.getCodeSource().getLocation().getFile())).getParentFile()
+				.getParentFile().getAbsoluteFile();
+		}
+		catch (Exception ex)
+		{
+			throw new AssertionError(ex);
+		}
+	}
 }

@@ -4,7 +4,8 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	jaxb:extensionBindingPrefixes="xjc"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="xjc hj orm"
 	xmlns:a="a"
 >
 	
@@ -17,9 +18,21 @@
 		</jaxb:globalBindings>
 	</jaxb:bindings>
 
+	<!--
 	<jaxb:bindings scd="x-schema::a">
+	-->
+	<jaxb:bindings schemaLocation="a.xsd" node="/xsd:schema">
+
 		<jaxb:schemaBindings>
 			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.episodes.a.tests"/>
 		</jaxb:schemaBindings>
+
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
+
 	</jaxb:bindings>
+
 </jaxb:bindings>

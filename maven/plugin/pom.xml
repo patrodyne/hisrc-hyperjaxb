@@ -83,15 +83,6 @@
 			<artifactId>hisrc-higherjaxb-maven-plugin-testing</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://dzone.com/articles/maven-plugin-testing-in-a-modern-way-part-i -->
-		<!-- https://khmarbaise.github.io/maven-it-extension/itf-documentation/background/background.html -->
-		<!--
-		<dependency>
-			<groupId>org.apache.maven.plugin-testing</groupId>
-			<artifactId>maven-plugin-testing-harness</artifactId>
-			<scope>test</scope>
-		</dependency>
-		-->
 	</dependencies>
 	<build>
 		<defaultGoal>install</defaultGoal>

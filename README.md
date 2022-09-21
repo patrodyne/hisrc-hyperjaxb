@@ -79,6 +79,9 @@ New goals for the next release are:
     * HyperJAXB Persistence
         * `OLD: http://hyperjaxb3.jvnet.org/ejb/schemas/customizations`
         * `NEW: http://jvnet.org/hyperjaxb/jpa`
+* Rename parameter property prefix:
+    * `OLD: maven.hj3`
+    * `NEW: org.jvnet.hyperjaxb.mojo.xjc`
 
 ### Status
 
@@ -91,7 +94,7 @@ New goals for the next release are:
 
 #### In Progress
 
-* Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
+* Replace Spring DI with Jakarta CDI.
 
 ### Fork History
 
