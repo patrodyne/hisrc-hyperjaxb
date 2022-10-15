@@ -75,7 +75,10 @@ public class Hyperjaxb3Mojo extends XJC2Mojo
 	public void setPersistenceUnitName(String persistenceUnitName) { this.persistenceUnitName = persistenceUnitName; }
 
 	/**
-	 * Persistence unit name (EJB3 specific).
+	 * Persistence XML file defines one or more persistence units.
+	 * The persistence.xml file is a standard configuration file in JPA.
+	 * It has to be included in the META-INF directory inside the JAR file
+	 * that contains the entity beans.
 	 */
 	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".persistenceXml")
 	private File persistenceXml;
@@ -146,15 +149,44 @@ public class Hyperjaxb3Mojo extends XJC2Mojo
 	public String getResult() { return result; }
 	public void setResult(String result) { this.result = result; }
 
+	/**
+	 * A list of extra XJC's command-line arguments (items must include the dash '-')
+	 * to execute before Args.
+	 * Use this argument to enable the JAXB2 plugins you want to use.
+	 * Arguments set here take precedence over other mojo parameters.
+	 */
 	@Parameter
-	public String[] preArgs = new String[0];
+	private String[] preArgs = new String[0];
 	public String[] getPreArgs() { return preArgs; }
 	public void setPreArgs(String[] preArgs) { this.preArgs = preArgs; }
 
+	/**
+	 * A list of extra XJC's command-line arguments (items must include the dash '-')
+	 * to execute after Args.
+	 * Use this argument to enable the JAXB2 plugins you want to use.
+	 * Arguments set here take precedence over other mojo parameters.
+	 */
 	@Parameter
-	public String[] postArgs = new String[0];
+	private String[] postArgs = new String[0];
 	public String[] getPostArgs() { return postArgs; }
 	public void setPostArgs(String[] postArgs) { this.postArgs = postArgs; }
+	
+	/**
+	 * Optional name of a properties file containing custom bean mappings.
+	 * 
+	 * Each property is a key-value pair where the key is a bean name defined by HyperJAXB
+	 * and the value is a class or resource name. Example:
+	 * 
+	 * <p>classpath:/META-INF/beans.properties</p>
+	 * <ul>
+	 *   <li>naming=org.example.CustomNames</li>
+	 *   <li>reservedNames=classpath:/ReservedNames.properties</li>
+	 * </ul>
+	 */
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".beansPropertiesLocator")
+	private String beansPropertiesLocator = null;
+	public String getBeansPropertiesLocator() { return beansPropertiesLocator; }
+	public void setBeansPropertiesLocator(String beansPropertiesLocator) { this.beansPropertiesLocator = beansPropertiesLocator; }
 	
 	/**
 	 * Sets up the verbose and debug mode depending on mvn logging level, and
@@ -184,25 +216,25 @@ public class Hyperjaxb3Mojo extends XJC2Mojo
 	{
 		super.logConfiguration();
 
-		getLog().info("Configuration: target:" + getTarget());
-		getLog().info("Configuration: roundtripTestClassName:" + getRoundtripTestClassName());
-		getLog().info("Configuration: resourceIncludes:" + getResourceIncludes());
-		getLog().info("Configuration: variant:" + getVariant());
-		getLog().info("Configuration: persistenceUnitName:" + getPersistenceUnitName());
-		getLog().info("Configuration: persistenceXml:" + getPersistenceXml());
-		getLog().info("Configuration: generateInheritance:" + isGenerateInheritance());
-		getLog().info("Configuration: generateAnnotation:" + isGenerateAnnotation());
-		getLog().info("Configuration: generateHashCode:" + isGenerateHashCode());
-		getLog().info("Configuration: generateEquals:" + isGenerateEquals());
-		getLog().info("Configuration: generateToString:" + isGenerateToString());
-		getLog().info("Configuration: generateHET:" + getOverrideHET());
-		getLog().info("Configuration: generateTransientId:" + isGenerateTransientId());
-		getLog().info("Configuration: result:" + getResult());
-		getLog().info("Configuration: preArgs:" + Arrays.toString(getPreArgs()));
-		getLog().info("Configuration: postArgs:" + Arrays.toString(getPostArgs()));
+		getLog().info("MOJO Configuration: target:" + getTarget());
+		getLog().info("MOJO Configuration: roundtripTestClassName:" + getRoundtripTestClassName());
+		getLog().info("MOJO Configuration: resourceIncludes:" + getResourceIncludes());
+		getLog().info("MOJO Configuration: variant:" + getVariant());
+		getLog().info("MOJO Configuration: persistenceUnitName:" + getPersistenceUnitName());
+		getLog().info("MOJO Configuration: persistenceXml:" + getPersistenceXml());
+		getLog().info("MOJO Configuration: generateInheritance:" + isGenerateInheritance());
+		getLog().info("MOJO Configuration: generateAnnotation:" + isGenerateAnnotation());
+		getLog().info("MOJO Configuration: generateHashCode:" + isGenerateHashCode());
+		getLog().info("MOJO Configuration: generateEquals:" + isGenerateEquals());
+		getLog().info("MOJO Configuration: generateToString:" + isGenerateToString());
+		getLog().info("MOJO Configuration: generateHET:" + getOverrideHET());
+		getLog().info("MOJO Configuration: generateTransientId:" + isGenerateTransientId());
+		getLog().info("MOJO Configuration: result:" + getResult());
+		getLog().info("MOJO Configuration: preArgs:" + Arrays.toString(getPreArgs()));
+		getLog().info("MOJO Configuration: postArgs:" + Arrays.toString(getPostArgs()));
 		try
 		{
-			getLog().info("Configuration: XJC loaded from:"
+			getLog().info("MOJO Configuration: XJC loaded from:"
 				+ Options.class.getResource("Options.class").toURI().toURL().toExternalForm());
 		}
 		catch (IOException ioex)
@@ -260,6 +292,8 @@ public class Hyperjaxb3Mojo extends XJC2Mojo
 				add(arguments,"-Xhyperjaxb3-ejb-persistenceXml=" + getPersistenceXml().getAbsolutePath());
 			if (isGenerateTransientId())
 				add(arguments,"-Xhyperjaxb3-ejb-generateTransientId=true");
+			if (getBeansPropertiesLocator() != null)
+				add(arguments,"-Xhyperjaxb3-ejb-beansPropertiesLocator=" + getBeansPropertiesLocator());
 		}
 
 		if (isGenerateEquals())

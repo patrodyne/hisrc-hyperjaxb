@@ -1,5 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 
+import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,151 +45,122 @@ import com.sun.tools.xjc.reader.Ring;
 import com.sun.tools.xjc.reader.xmlschema.BGMBuilder;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
 
-public class WrapCollectionElement implements CreatePropertyInfos {
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
 
+@ApplicationScoped
+@Alternative
+@Priority(APPLICATION + 1)
+public class WrapCollectionElement implements CreatePropertyInfos
+{
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	public Collection<CPropertyInfo> process(ProcessModel context,
-			final CPropertyInfo propertyInfo) {
-
+	public Collection<CPropertyInfo> process(ProcessModel context, final CPropertyInfo propertyInfo)
+	{
 		assert propertyInfo instanceof CElementPropertyInfo;
-
 		final CElementPropertyInfo wrappedPropertyInfo = (CElementPropertyInfo) propertyInfo;
-
 		final CClassInfo classInfo = (CClassInfo) wrappedPropertyInfo.parent();
-
 		final String propertyName = wrappedPropertyInfo.getName(true);
-
-		logger.debug("Property [" + propertyName
-				+ "] is a simple homogeneous collection property.");
-
-		final CClassInfoParent parent = Ring.get(BGMBuilder.class)
-				.getGlobalBinding().getFlattenClasses() == LocalScoping.NESTED ? classInfo
-				: classInfo.parent();
-
-		final GeneratedClass generatedClass = context.getCustomizing()
-				.getGeneratedClass(propertyInfo);
-
-		final String className = (generatedClass == null || generatedClass
-				.getClassName() == null) ? (classInfo.shortName + propertyName + "Item")
-				: generatedClass.getClassName();
-
+		logger.debug("Property [" + propertyName + "] is a simple homogeneous collection property.");
+		final CClassInfoParent parent = Ring.get(BGMBuilder.class).getGlobalBinding()
+			.getFlattenClasses() == LocalScoping.NESTED ? classInfo : classInfo.parent();
+		final GeneratedClass generatedClass = context.getCustomizing().getGeneratedClass(propertyInfo);
+		final String className = (generatedClass == null || generatedClass.getClassName() == null)
+			? (classInfo.shortName	+ propertyName + "Item")
+			: generatedClass.getClassName();
 		final CCustomizations customizations;
-		if (generatedClass != null && !generatedClass.getAny().isEmpty()) {
-			final Collection<CPluginCustomization> cPluginCustomizations = new ArrayList<CPluginCustomization>(
-					generatedClass.getAny().size());
-			for (Element element : generatedClass.getAny()) {
-				cPluginCustomizations.add(CustomizationUtils
-						.createCustomization(element));
-			}
+
+		if (generatedClass != null && !generatedClass.getAny().isEmpty())
+		{
+			final Collection<CPluginCustomization> cPluginCustomizations =
+				new ArrayList<CPluginCustomization>(generatedClass.getAny().size());
+			for (Element element : generatedClass.getAny())
+				cPluginCustomizations.add(CustomizationUtils.createCustomization(element));
 			customizations = new CCustomizations(cPluginCustomizations);
-
-		} else {
+		}
+		else
 			customizations = new CCustomizations();
-		}
 
-		final CClassInfo itemClassInfo = new CClassInfo(classInfo.model,
-				parent, className, null, new QName(propertyName), null,
-				propertyInfo.getSchemaComponent(), customizations);
-
+		final CClassInfo itemClassInfo = new CClassInfo(classInfo.model, parent, className, null,
+			new QName(propertyName), null, propertyInfo.getSchemaComponent(), customizations);
 		Customizations.markGenerated(itemClassInfo);
-
-		final CElementPropertyInfo itemPropertyInfo = new CElementPropertyInfo(
-				"Item", CollectionMode.NOT_REPEATED, ID.NONE,
-				wrappedPropertyInfo.getExpectedMimeType(), wrappedPropertyInfo
-						.getSchemaComponent(), new CCustomizations(
-						CustomizationUtils
-								.getCustomizations(wrappedPropertyInfo)),
-				wrappedPropertyInfo.getLocator(), false);
-
-		itemPropertyInfo.getTypes().addAll(
-				context.getGetTypes().getTypes(context, wrappedPropertyInfo)				
-				);
-		if (wrappedPropertyInfo.getAdapter() != null) {
+		final CElementPropertyInfo itemPropertyInfo = new CElementPropertyInfo("Item", CollectionMode.NOT_REPEATED,
+			ID.NONE, wrappedPropertyInfo.getExpectedMimeType(), wrappedPropertyInfo.getSchemaComponent(),
+			new CCustomizations(CustomizationUtils.getCustomizations(wrappedPropertyInfo)),
+			wrappedPropertyInfo.getLocator(), false);
+		itemPropertyInfo.getTypes().addAll(context.getGetTypes().getTypes(context, wrappedPropertyInfo));
+		
+		if (wrappedPropertyInfo.getAdapter() != null)
 			itemPropertyInfo.setAdapter(wrappedPropertyInfo.getAdapter());
-		}
 
-		final FieldRenderer fieldRenderer = new FieldRenderer() {
-			public FieldOutline generate(ClassOutlineImpl classOutline,
-					CPropertyInfo propertyInfo) {
-				final FieldOutline fieldOutline = new SingleField(classOutline,
-						propertyInfo) {
+		final FieldRenderer fieldRenderer = new FieldRenderer()
+		{
+			public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo propertyInfo)
+			{
+				final FieldOutline fieldOutline = new SingleField(classOutline, propertyInfo)
+				{
 					@Override
-					protected String getGetterMethod() {
+					protected String getGetterMethod()
+					{
 						return "get" + prop.getName(true);
 					}
 
-					protected JType getType(Aspect aspect) {
+					protected JType getType(Aspect aspect)
+					{
 						return super.getType(aspect).boxify();
 					}
 				};
-
-				final JClass itemClass = classOutline.implClass.owner().ref(
-						Item.class).narrow(fieldOutline.getRawType().boxify());
+				final JClass itemClass = classOutline.implClass.owner().ref(Item.class)
+					.narrow(fieldOutline.getRawType().boxify());
 				classOutline.implClass._implements(itemClass);
-				if (classOutline.parent().getModel().serializable) {
+				
+				if (classOutline.parent().getModel().serializable)
 					classOutline.implClass._implements(Serializable.class);
-				}
-
-				final JMethod isGetter = FieldAccessorUtils
-						.getter(fieldOutline);
-
-				if (isGetter.name().startsWith("is")) {
-					final JMethod getter = classOutline.implClass.method(
-							JMod.PUBLIC, isGetter.type(),
-
-							"get" + isGetter.name().substring(2));
-
+				
+				final JMethod isGetter = FieldAccessorUtils.getter(fieldOutline);
+				if (isGetter.name().startsWith("is"))
+				{
+					final JMethod getter = classOutline.implClass.method(JMod.PUBLIC, isGetter.type(),
+						"get" + isGetter.name().substring(2));
 					getter.body()._return(JExpr._this().invoke(isGetter));
 				}
-
+				
 				return fieldOutline;
 			}
 		};
-
 		itemPropertyInfo.realization = fieldRenderer;
 		itemClassInfo.addProperty(itemPropertyInfo);
-
 		context.getProcessClassInfo().process(context, itemClassInfo);
-
-		final CElementPropertyInfo wrappingPropertyInfo =
-
-		new CElementPropertyInfo(propertyName + "Items",
-				CollectionMode.REPEATED_ELEMENT, ID.NONE, wrappedPropertyInfo
-						.getExpectedMimeType(), null, new CCustomizations(),
-				null, false);
-
-		for (final CTypeRef typeRef : context.getGetTypes().getTypes(context, wrappedPropertyInfo)) {
-
-			wrappingPropertyInfo.getTypes().add(
-					new CTypeRef(itemClassInfo, new QName(typeRef.getTagName()
-							.getNamespaceURI(), typeRef.getTagName()
-							.getLocalPart()
-							+ "Items"), null, false, null));
+		final CElementPropertyInfo wrappingPropertyInfo = new CElementPropertyInfo(propertyName + "Items",
+			CollectionMode.REPEATED_ELEMENT, ID.NONE, wrappedPropertyInfo.getExpectedMimeType(), null,
+			new CCustomizations(), null, false);
+		for (final CTypeRef typeRef : context.getGetTypes().getTypes(context, wrappedPropertyInfo))
+		{
+			wrappingPropertyInfo.getTypes()
+				.add(new CTypeRef(itemClassInfo,
+					new QName(typeRef.getTagName().getNamespaceURI(), typeRef.getTagName().getLocalPart() + "Items"),
+					null, false, null));
 		}
-
-		wrappingPropertyInfo.realization = new FieldRenderer() {
-			public FieldOutline generate(ClassOutlineImpl outline,
-					CPropertyInfo wrappingPropertyInfo) {
-				return new WrappingCollectionField(outline,
-						wrappedPropertyInfo, wrappingPropertyInfo);
+		wrappingPropertyInfo.realization = new FieldRenderer()
+		{
+			public FieldOutline generate(ClassOutlineImpl outline, CPropertyInfo wrappingPropertyInfo)
+			{
+				return new WrappingCollectionField(outline, wrappedPropertyInfo, wrappingPropertyInfo);
 			}
 		};
-
-		wrappedPropertyInfo.realization = new FieldRenderer() {
-			public FieldOutline generate(ClassOutlineImpl outline,
-					CPropertyInfo wrappedPropertyInfo) {
-				return new WrappedCollectionField(outline, wrappedPropertyInfo,
-						wrappingPropertyInfo);
+		wrappedPropertyInfo.realization = new FieldRenderer()
+		{
+			public FieldOutline generate(ClassOutlineImpl outline, CPropertyInfo wrappedPropertyInfo)
+			{
+				return new WrappedCollectionField(outline, wrappedPropertyInfo, wrappingPropertyInfo);
 			}
 		};
-
 		Customizations.markGenerated(wrappingPropertyInfo);
 		Customizations.markIgnored(wrappedPropertyInfo);
-
-		final List<CPropertyInfo> a = new ArrayList<CPropertyInfo>(1);
-		a.add(wrappingPropertyInfo);
-		a.add(itemPropertyInfo);
-		return a;
+		final List<CPropertyInfo> cPropertyInfoList = new ArrayList<CPropertyInfo>(1);
+		cPropertyInfoList.add(wrappingPropertyInfo);
+		cPropertyInfoList.add(itemPropertyInfo);
+		return cPropertyInfoList;
 	}
 }

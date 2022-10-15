@@ -1,5 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 
+import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -31,84 +33,71 @@ import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.outline.FieldOutline;
 
-public class WrapSingleSubstitutedElementReference implements
-		CreatePropertyInfos {
-	
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+
+@ApplicationScoped
+@Alternative
+@Priority(APPLICATION + 1)
+public class WrapSingleSubstitutedElementReference implements CreatePropertyInfos
+{
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	public Collection<CPropertyInfo> process(ProcessModel context,
-			final CPropertyInfo draftPropertyInfo) {
+	public Collection<CPropertyInfo> process(ProcessModel context, final CPropertyInfo draftPropertyInfo)
+	{
 		assert draftPropertyInfo instanceof CReferencePropertyInfo;
 		final CReferencePropertyInfo propertyInfo = (CReferencePropertyInfo) draftPropertyInfo;
 		final CReferencePropertyInfo referencePropertyInfo = (CReferencePropertyInfo) propertyInfo;
 		assert !referencePropertyInfo.isMixed();
 		assert referencePropertyInfo.getWildcard() == null;
-		final Set<CElement> elements = context.getGetTypes().getElements(
-				context, referencePropertyInfo);
+		final Set<CElement> elements = context.getGetTypes().getElements(context, referencePropertyInfo);
 		assert elements.size() == 1;
-		final CElementInfo elementInfo = getElementInfo(context,
-				referencePropertyInfo);
+		final CElementInfo elementInfo = getElementInfo(context, referencePropertyInfo);
 		final CNonElement type = elementInfo.getContentType();
-
-		final CAttributePropertyInfo name = new CAttributePropertyInfo(
-				referencePropertyInfo.getName(true) + "Name", null,
-				new CCustomizations(), null, new QName("name"),
-				CBuiltinLeafInfo.STRING, new QName(
-						XMLConstants.W3C_XML_SCHEMA_NS_URI, "string"), true);
-
-		final CElementPropertyInfo value = new CElementPropertyInfo(
-
-		referencePropertyInfo.getName(true) + "Value",
-				CollectionMode.NOT_REPEATED, ID.NONE, null,
-				referencePropertyInfo.getSchemaComponent(),
-				new CCustomizations(), referencePropertyInfo.getLocator(), true);
-
-		final CTypeRef typeRef = new CTypeRef(type, new QName(
-				referencePropertyInfo.getName(true) + "Value"),
-				type.getTypeName(), false, null);
-
+		final CAttributePropertyInfo name = new CAttributePropertyInfo(referencePropertyInfo.getName(true) + "Name",
+			null, new CCustomizations(), null, new QName("name"), CBuiltinLeafInfo.STRING,
+			new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "string"), true);
+		final CElementPropertyInfo value = new CElementPropertyInfo(referencePropertyInfo.getName(true) + "Value",
+			CollectionMode.NOT_REPEATED, ID.NONE, null, referencePropertyInfo.getSchemaComponent(),
+			new CCustomizations(), referencePropertyInfo.getLocator(), true);
+		final CTypeRef typeRef = new CTypeRef(type, new QName(referencePropertyInfo.getName(true) + "Value"),
+			type.getTypeName(), false, null);
 		value.getTypes().add(typeRef);
-
-		name.realization = new FieldRenderer() {
-			public FieldOutline generate(ClassOutlineImpl context,
-					CPropertyInfo prop) {
-				final JAXBElementNameField fieldOutline = new JAXBElementNameField(
-						context, prop, propertyInfo, value, type);
-
+		name.realization = new FieldRenderer()
+		{
+			public FieldOutline generate(ClassOutlineImpl context, CPropertyInfo prop)
+			{
+				final JAXBElementNameField fieldOutline = new JAXBElementNameField(context, prop, propertyInfo, value,
+					type);
 				fieldOutline.generateAccessors();
 				return fieldOutline;
 			}
 		};
-
-		value.realization = new FieldRenderer() {
-			public FieldOutline generate(ClassOutlineImpl context,
-					CPropertyInfo prop) {
-				final JAXBElementValueField fieldOutline = new JAXBElementValueField(
-						context, prop, propertyInfo, name, type);
+		value.realization = new FieldRenderer()
+		{
+			public FieldOutline generate(ClassOutlineImpl context, CPropertyInfo prop)
+			{
+				final JAXBElementValueField fieldOutline = new JAXBElementValueField(context, prop, propertyInfo, name,
+					type);
 				fieldOutline.generateAccessors();
 				return fieldOutline;
 			}
 		};
-
 		Customizations.markGenerated(name);
 		Customizations.markGenerated(value);
 		Customizations.markIgnored(propertyInfo);
-
-		final Collection<CPropertyInfo> newProperties = new ArrayList<CPropertyInfo>(
-				2);
+		final Collection<CPropertyInfo> newProperties = new ArrayList<CPropertyInfo>(2);
 		newProperties.add(name);
 		newProperties.add(value);
 		return newProperties;
 	}
 
-	public CElementInfo getElementInfo(ProcessModel context,
-			final CReferencePropertyInfo referencePropertyInfo) {
-		final CElement element = context.getGetTypes()
-				.getElements(context, referencePropertyInfo).iterator().next();
+	public CElementInfo getElementInfo(ProcessModel context, final CReferencePropertyInfo referencePropertyInfo)
+	{
+		final CElement element = context.getGetTypes().getElements(context, referencePropertyInfo).iterator().next();
 		assert element instanceof CElementInfo;
-
 		final CElementInfo elementInfo = (CElementInfo) element;
 		return elementInfo;
 	}
-
 }

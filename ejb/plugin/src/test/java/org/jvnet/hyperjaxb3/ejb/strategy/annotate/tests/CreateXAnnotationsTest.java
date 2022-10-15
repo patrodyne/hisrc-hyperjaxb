@@ -6,14 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.jvnet.hyperjaxb3.ejb.strategy.annotate.CreateXAnnotations;
+import org.jvnet.hyperjaxb3.ejb.strategy.annotate.DefaultCreateXAnnotations;
 
 import ee.jakarta.xml.ns.persistence.orm.AttributeOverride;
 import ee.jakarta.xml.ns.persistence.orm.Column;
 
 public class CreateXAnnotationsTest {
 
-	private final CreateXAnnotations createXAnnotations = new CreateXAnnotations();
+	private final DefaultCreateXAnnotations createXAnnotations = new DefaultCreateXAnnotations();
 	
 	@Test
 	public void createsAttributeOverrides()

@@ -1,5 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 
+import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,6 +43,13 @@ import com.sun.tools.xjc.reader.Ring;
 import com.sun.tools.xjc.reader.xmlschema.BGMBuilder;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
 
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+
+@ApplicationScoped
+@Alternative
+@Priority(APPLICATION + 1)
 public class WrapCollectionValue implements CreatePropertyInfos {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());

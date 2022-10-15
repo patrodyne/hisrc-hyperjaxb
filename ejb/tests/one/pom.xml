@@ -51,6 +51,7 @@
 				<configuration>
 					<!--result>mappingFiles</result-->
 					<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tests.one.RoundtripTest</roundtripTestClassName>
+					<variant>ejb</variant>
 				</configuration>
 			</plugin>
 		</plugins>

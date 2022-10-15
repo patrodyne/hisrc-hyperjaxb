@@ -34,6 +34,8 @@ public class RunEjbHyperjaxb3Mojo extends RunXJC2Mojo
 		//   https://github.com/highsource/maven-jaxb2-plugin/wiki/Do-Not-Use-forceRegenerate
 		//   Consider removing this setting from your plugin configuration.
 		// mojo.setForceRegenerate(true);
+		mojo.setRemoveOldOutput(true);
+		mojo.setForceRegenerate(true);
 	}
 	
 	public boolean isExtension()

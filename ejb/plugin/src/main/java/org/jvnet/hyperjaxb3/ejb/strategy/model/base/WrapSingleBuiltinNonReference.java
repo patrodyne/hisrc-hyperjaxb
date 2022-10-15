@@ -1,5 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 
+import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+
 import java.util.Collection;
 
 import org.slf4j.Logger;
@@ -13,41 +15,37 @@ import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.model.TypeUse;
 
-public class WrapSingleBuiltinNonReference extends AbstractWrapBuiltin {
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
 
-	protected Logger logger = LoggerFactory.getLogger(getClass());
-
-	public CBuiltinLeafInfo getTypeUse(ProcessModel context,
-			CPropertyInfo propertyInfo) {
-		final Collection<? extends CTypeInfo> types = context.getGetTypes().process(
-				context, propertyInfo);
+@ApplicationScoped
+@Alternative
+@Priority(APPLICATION + 1)
+public class WrapSingleBuiltinNonReference extends AbstractWrapBuiltin
+{
+	public CBuiltinLeafInfo getTypeUse(ProcessModel context, CPropertyInfo propertyInfo)
+	{
+		final Collection<? extends CTypeInfo> types = context.getGetTypes().process(context, propertyInfo);
 		return (CBuiltinLeafInfo) types.iterator().next();
 	}
 
 	@Override
-	public CreatePropertyInfos getCreatePropertyInfos(ProcessModel context,
-			CPropertyInfo propertyInfo) {
-
-		final CBuiltinLeafInfo originalTypeUse = getTypeUse(context,
-				propertyInfo);
-
-		final TypeUse adaptingTypeUse = context.getAdaptBuiltinTypeUse()
-				.process(context, propertyInfo);
-
-		if (adaptingTypeUse == originalTypeUse
-				|| adaptingTypeUse.getAdapterUse() == null) {
+	public CreatePropertyInfos getCreatePropertyInfos(ProcessModel context, CPropertyInfo propertyInfo)
+	{
+		final CBuiltinLeafInfo originalTypeUse = getTypeUse(context, propertyInfo);
+		final TypeUse adaptingTypeUse = context.getAdaptBuiltinTypeUse().process(context, propertyInfo);
+		if (adaptingTypeUse == originalTypeUse || adaptingTypeUse.getAdapterUse() == null)
+		{
 			logger.debug("No adaptation required.");
 			return CreateNoPropertyInfos.INSTANCE;
-
-		} else {
-			return new AdaptSingleBuiltinNonReference(adaptingTypeUse);
 		}
+		else
+			return new AdaptSingleBuiltinNonReference(adaptingTypeUse);
 	}
 
-	protected Collection<CPropertyInfo> wrapAnyType(ProcessModel context,
-			CPropertyInfo propertyInfo) {
-		return new AdaptSingleWildcardNonReference(CBuiltinLeafInfo.STRING).process(
-				context, propertyInfo);
+	protected Collection<CPropertyInfo> wrapAnyType(ProcessModel context, CPropertyInfo propertyInfo)
+	{
+		return new AdaptSingleWildcardNonReference(CBuiltinLeafInfo.STRING).process(context, propertyInfo);
 	}
-
 }

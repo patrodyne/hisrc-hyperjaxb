@@ -14,22 +14,14 @@ import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.CValuePropertyInfo;
 import com.sun.tools.xjc.model.TypeUse;
 
-public interface GetTypes<C> extends
-		PropertyInfoProcessor<Collection<? extends CTypeInfo>, C> {
-
-	public Collection<? extends CTypeInfo> ref(C context,
-			CPropertyInfo propertyInfo);
-
-	public Collection<? extends CTypeRef> getTypes(C context,
-			CElementPropertyInfo propertyInfo);
-
+// TODO: WELD-001125 because wildcard "Collection<? extends CTypeInfo>"
+public interface GetTypes<C>
+	extends PropertyInfoProcessor<Collection<? extends CTypeInfo>, C>
+{
+	public Collection<? extends CTypeInfo> ref(C context, CPropertyInfo propertyInfo);
+	public Collection<? extends CTypeRef> getTypes(C context, CElementPropertyInfo propertyInfo);
 	public CNonElement getTarget(C context, CAttributePropertyInfo propertyInfo);
-
 	public CNonElement getTarget(C context, CValuePropertyInfo propertyInfo);
-
 	public TypeUse getTypeUse(C context, CPropertyInfo propertyInfo);
-
-	public Set<CElement> getElements(C context,
-			CReferencePropertyInfo referencePropertyInfo);
-
+	public Set<CElement> getElements(C context, CReferencePropertyInfo referencePropertyInfo);
 }

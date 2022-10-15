@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.sun.tools.xjc.model.CClassInfo;
 
-public interface ProcessClassInfo extends
-		ClassInfoProcessor<Collection<CClassInfo>, ProcessModel> {
-
+public interface ProcessClassInfo
+	extends ClassInfoProcessor<Collection<CClassInfo>, ProcessModel>
+{
 }

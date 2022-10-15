@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
-	
-	
-	<bean name="ignoring" class="org.jvnet.hyperjaxb3.ejb.strategy.ignoring.impl.DefaultIgnoring">
-			<property name="customizing" ref="customizing"/>
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+>
+	<bean name="customizationsContext" class="org.jvnet.hyperjaxb3.beans.factory.JAXBContextFactoryBean">
+		<property name="contextPath" value="ee.jakarta.xml.ns.persistence:ee.jakarta.xml.ns.persistence.orm:org.jvnet.hyperjaxb3.ejb.schemas.customizations"/>
 	</bean>
 	
-	<bean name="naming" class="org.jvnet.hyperjaxb3.ejb.strategy.naming.impl.DefaultNaming">
-		<property name="reservedNames" ref="reservedNames"/>
-		<property name="ignoring" ref="ignoring"/>
+	<bean name="abstractCustomizationsUnmarshalledResource" class="org.jvnet.hyperjaxb3.beans.factory.UnmarshalledResourceFactoryBean" abstract="true">
+		<property name="context" ref="customizationsContext"/>
 	</bean>
 
-	<bean name="customizing"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.customizing.impl.DefaultCustomizing">
+	<bean name="customizing" class="org.jvnet.hyperjaxb3.ejb.strategy.customizing.impl.DefaultCustomizing">
 		<property name="defaultCustomizations">
 			<bean parent="abstractCustomizationsUnmarshalledResource">
 				<property name="resource" value="classpath:org/jvnet/hyperjaxb3/ejb/strategy/customizing/impl/DefaultCustomizations.xml"/>
@@ -22,11 +19,27 @@
 		</property>
 	</bean>
 	
+	<bean name="ignoring" class="org.jvnet.hyperjaxb3.ejb.strategy.ignoring.impl.DefaultIgnoring">
+		<property name="customizing" ref="customizing"/>
+	</bean>
+	
+	<bean name="reservedNames" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath*:org/jvnet/hyperjaxb3/ejb/strategy/naming/impl/ReservedNames.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean name="naming" class="org.jvnet.hyperjaxb3.ejb.strategy.naming.impl.DefaultNaming">
+		<property name="reservedNames" ref="reservedNames"/>
+		<property name="ignoring" ref="ignoring"/>
+	</bean>
+
 	<bean name="embeddableAttributesMapping" class="org.jvnet.hyperjaxb3.ejb.jpa3.strategy.mapping.EmbeddableAttributesMapping"/>
 	<!-- bean name="embeddableAttributesMapping" class="org.jvnet.hyperjaxb3.ejb.strategy.mapping.EmbeddableAttributesMapping"/-->
 	
-	<bean name="mapping"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping">
+	<bean name="mapping" class="org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping">
 		<property name="getTypes" ref="getTypes"/>
 		<property name="customizing" ref="customizing"/>
 		<property name="naming" ref="naming"/>
@@ -34,97 +47,55 @@
 		<property name="embeddableAttributesMapping" ref="embeddableAttributesMapping"/>
 	</bean>
 	
-	<bean name="createXAnnotations" class="org.jvnet.hyperjaxb3.ejb.strategy.annotate.CreateXAnnotations">
-	</bean>
+	<bean name="createXAnnotations" class="org.jvnet.hyperjaxb3.ejb.strategy.annotate.DefaultCreateXAnnotations"/>
 	
-	<bean name="annotateOutline"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.annotate.AnnotateOutline">
+	<bean name="annotateOutline" class="org.jvnet.hyperjaxb3.ejb.strategy.annotate.AnnotateOutline">
 		<property name="mapping" ref="mapping"/>
 		<property name="ignoring" ref="ignoring"/>
 		<property name="createXAnnotations" ref="createXAnnotations"/>
 	</bean>
 	
-	
-	<bean
-		class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
-	
-	<bean name="wrapSingleBuiltinNonReference"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleBuiltinNonReference">
-	</bean>
+	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
 
-	<bean name="wrapSingleEnumNonReference"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleEnumNonReference">
-	</bean>
+	<bean name="processClassInfo" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultProcessClassInfo"/>
+	<bean name="processPropertyInfos" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultProcessPropertyInfos"/>
+	<bean name="createIdClass" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.CreateIdClass"/>
+	<bean name="createDefaultIdPropertyInfos" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultCreateDefaultIdPropertyInfos"/>
+	<bean name="createDefaultVersionPropertyInfos" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultCreateDefaultVersionPropertyInfos"/>
+	<bean name="getIdPropertyInfos" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.GetIdPropertyInfos"/>
+	<bean name="getVersionPropertyInfos" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.GetVersionPropertyInfos"/>
+	<bean name="getTypes" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultGetTypes"/>
+	<bean name="adaptBuiltinTypeUse" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.AdaptBuiltinTypeUse"/>
 	
-	<bean name="wrapSingleHeteroElement"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleHeteroElement">
-	</bean>
-	
-	<bean name="wrapCollectionBuiltinElement"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionElement">
-	</bean>
+	<!-- Wrap NonReference -->
+	<bean name="wrapSingleBuiltinNonReference" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleBuiltinNonReference"/>
+	<bean name="wrapSingleEnumNonReference" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleEnumNonReference"/>
 
-	<bean name="wrapCollectionEnumElement"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionElement">
-	</bean>
+	<!-- Wrap Attribute -->
+	<bean name="wrapCollectionBuiltinAttribute" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionAttribute"/>
+	<bean name="wrapCollectionEnumAttribute" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionAttribute"/>
 
-	<bean name="wrapCollectionEnumAttribute"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionAttribute">
-	</bean>
+	<!-- Wrap Value -->
+	<bean name="wrapCollectionBuiltinValue" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionValue"/>
+	<bean name="wrapCollectionEnumValue" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionValue"/>
 
-	<bean name="wrapCollectionBuiltinAttribute"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionAttribute">
-	</bean>
-	
-	<bean name="wrapCollectionBuiltinValue"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionValue">
-	</bean>
-	
-	<bean name="wrapCollectionEnumValue"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionValue">
-	</bean>
+	<!-- Wrap Element -->
+	<bean name="wrapSingleHeteroElement" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleHeteroElement"/>
+	<bean name="wrapCollectionBuiltinElement" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionElement"/>
+	<bean name="wrapCollectionEnumElement" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionElement"/>
+	<bean name="wrapCollectionHeteroElement" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionHeteroElement"/>
 
-	<bean name="wrapSingleBuiltinReference"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleBuiltinReference">
-	</bean>
-	
-	<bean name="wrapSingleEnumElementReference"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleEnumElementReference">
-	</bean>
-		
-	<bean name="wrapSingleClassElementReference"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleClassElementReference">
-	</bean>
-	
-	<bean name="wrapSingleSubstitutedElementReference"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleSubstitutedElementReference">
-	</bean>
+	<!-- Wrap ElementReference -->
+	<bean name="wrapSingleEnumElementReference" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleEnumElementReference"/>
+	<bean name="wrapSingleClassElementReference" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleClassElementReference"/>
+	<bean name="wrapSingleSubstitutedElementReference" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleSubstitutedElementReference"/>
 
-	<bean name="wrapSingleWildcardReference"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleWildcardReference">
-	</bean>
-	
-	<bean name="wrapSingleHeteroReference"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleHeteroReference">
-	</bean>
-
-	<bean name="wrapCollectionHeteroReference"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionHeteroReference">
-	</bean>
-	
-	<bean name="wrapCollectionWildcardReference"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionHeteroReference">
-	</bean>
-	
-	<bean name="wrapCollectionHeteroElement"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionHeteroElement">
-	</bean>
-
-	<bean name="adaptBuiltinTypeUse"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.AdaptBuiltinTypeUse"/>
-
-	
-	
+	<!-- Wrap Reference -->
+	<bean name="wrapSingleBuiltinReference" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleBuiltinReference"/>
+	<bean name="wrapSingleWildcardReference" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleWildcardReference"/>
+	<bean name="wrapSingleHeteroReference" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleHeteroReference"/>
+	<bean name="wrapCollectionHeteroReference" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionHeteroReference"/>
+	<bean name="wrapCollectionWildcardReference" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionHeteroReference"/>
 	
 	<bean name="processModel" class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultProcessModel">
 		<property name="processClassInfo" ref="processClassInfo"/>
@@ -152,7 +123,6 @@
 		<property name="wrapCollectionBuiltinElement" ref="wrapCollectionBuiltinElement"/>
 		<property name="wrapCollectionEnumElement" ref="wrapCollectionEnumElement"/>
 		<property name="wrapCollectionHeteroElement" ref="wrapCollectionHeteroElement"/>
-
 		
 		<property name="wrapSingleBuiltinElementReference" ref="wrapSingleBuiltinReference"/>
 		<property name="wrapSingleEnumElementReference" ref="wrapSingleEnumElementReference"/>
@@ -169,168 +139,22 @@
 		<property name="ignoring" ref="ignoring"/>
 	</bean>
 	
-	<bean name="getTypes"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultGetTypes">
-	</bean>
-	
-	<bean name="processClassInfo"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultProcessClassInfo">
-	</bean>
-	
-	<bean name="processPropertyInfos"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultProcessPropertyInfos">
-	</bean>
-	
-	<bean name="createIdClass"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.CreateIdClass">
-	</bean>
+	<bean name="persistenceFactory" class="org.jvnet.hyperjaxb3.ejb.strategy.processor.PersistenceFactory"/>
+	<bean name="persistenceMarshaller" class="org.jvnet.hyperjaxb3.ejb.strategy.processor.PersistenceMarshaller"/>
 
-	<bean name="createDefaultIdPropertyInfos"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultCreateDefaultIdPropertyInfos">
-	</bean>
-	
-	<bean name="createDefaultVersionPropertyInfos"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultCreateDefaultVersionPropertyInfos">
-	</bean>
-
-	<bean name="getIdPropertyInfos"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.GetIdPropertyInfos">
-	</bean>
-	
-	<bean name="getVersionPropertyInfos"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.GetVersionPropertyInfos">
-	</bean>
-	
-	
-	<!--bean name="processOutline" class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.DefaultProcessOutline">
-		<property name="processClassOutline" ref="processClassOutline"/>
-		<property name="processFieldOutlines" ref="processFieldOutlines"/>
-		<property name="processFieldOutline" ref="processFieldOutline"/>
-		<property name="annotate" ref="annotate"/>
-		<property name="naming" ref="naming"/>
-		<property name="ignoring" ref="ignoring"/>
-		<property name="customizing" ref="customizing"/>
-	</bean>
-	
-	<bean name="processClassOutline"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.DefaultProcessClassOutline">
-	</bean>
-	
-	<bean name="processFieldOutlines"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.DefaultProcessFieldOutlines">
-	</bean>
-	
-	<bean name="processFieldOutline"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.DefaultProcessFieldOutline">
-	</bean-->
-	
-
-
-	<!-- Annotate -->	
-	<!--bean name="annotate" class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.annotate.DefaultAnnotate">
-		<property name="annotateClassOutlineEntity" ref="annotateClassOutlineEntity"/>
-		<property name="annotateClassOutlineTable" ref="annotateClassOutlineTable"/>
-		<property name="annotateFieldOutlineColumn" ref="annotateFieldOutlineColumn"/>
-		<property name="annotateFieldOutlineId" ref="annotateFieldOutlineId"/>
-		<property name="annotateFieldOutlineVersion" ref="annotateFieldOutlineVersion"/>
-		<property name="annotateFieldOutlineTransient" ref="annotateFieldOutlineTransient"/>
-		<property name="annotateFieldOutlineBasic" ref="annotateFieldOutlineBasic"/>
-		<property name="annotateFieldOutlineTemporal" ref="annotateFieldOutlineTemporal"/>
-		<property name="annotateFieldOutlineEnumerated" ref="annotateFieldOutlineEnumerated"/>
-		<property name="annotateFieldOutlineManyToOne" ref="annotateFieldOutlineManyToOne"/>
-		<property name="annotateFieldOutlineOneToMany" ref="annotateFieldOutlineOneToMany"/>
-	</bean>
-	
-	<bean name="annotateClassOutlineEntity"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.annotate.DefaultAnnotateClassOutlineEntity">
-	</bean>
-	
-	<bean name="annotateClassOutlineTable"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.annotate.AnnotateClassOutlineTable">
-	</bean>
-
-	<bean name="annotateFieldOutlineColumn"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.annotate.AnnotateFieldOutlineColumn">
-	</bean>
-
-	<bean name="annotateFieldOutlineId"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.annotate.DefaultAnnotateFieldOutlineId">
-	</bean>
-	
-	<bean name="annotateFieldOutlineVersion"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.annotate.DefaultAnnotateFieldOutlineVersion">
-	</bean>
-
-	<bean name="annotateFieldOutlineTransient"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.annotate.DefaultAnnotateFieldOutlineTransient">
-	</bean>
-	
-	<bean name="annotateFieldOutlineBasic"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.annotate.DefaultAnnotateFieldOutlineBasic">
-	</bean>
-	
-	<bean name="annotateFieldOutlineTemporal"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.annotate.DefaultAnnotateFieldOutlineTemporal">
-	</bean>
-	
-	<bean name="annotateFieldOutlineEnumerated"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.annotate.DefaultAnnotateFieldOutlineEnumerated">
-	</bean>
-
-	<bean name="annotateFieldOutlineManyToOne"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.annotate.DefaultAnnotateFieldOutlineManyToOne">
-	</bean>
-	
-	<bean name="annotateFieldOutlineOneToMany"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.outline.base.annotate.DefaultAnnotateFieldOutlineOneToMany">
-	</bean-->
-	
-	<bean name="reservedNames" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-		<property name="locations">
-			<list>
-				<value>classpath*:org/jvnet/hyperjaxb3/ejb/strategy/naming/impl/ReservedNames.properties</value>
-			</list>
-		</property>
-	</bean>
-	
-	<bean name="customizationsContext"
-		class="org.jvnet.hyperjaxb3.beans.factory.JAXBContextFactoryBean">
-		<property name="contextPath"
-			value="ee.jakarta.xml.ns.persistence:ee.jakarta.xml.ns.persistence.orm:org.jvnet.hyperjaxb3.ejb.schemas.customizations"/>
-	</bean>
-	
-	<bean name="abstractCustomizationsUnmarshalledResource"
-		abstract="true"
-		class="org.jvnet.hyperjaxb3.beans.factory.UnmarshalledResourceFactoryBean">
-		<property name="context" ref="customizationsContext"/>
-	</bean>
-
-	<bean name="persistenceFactory"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.processor.PersistenceFactory">
-	</bean>
-
-	<bean name="persistenceMarshaller"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.processor.PersistenceMarshaller">
-	</bean>
-
-	<bean name="annotationsProcessor"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.processor.ClassPersistenceProcessor">
+	<bean name="annotationsProcessor" class="org.jvnet.hyperjaxb3.ejb.strategy.processor.ClassPersistenceProcessor">
 		<property name="outlineProcessor" ref="annotateOutline"/>
 		<property name="naming" ref="naming"/>
 		<property name="persistenceFactory" ref="persistenceFactory"/>
 		<property name="persistenceMarshaller" ref="persistenceMarshaller"/>
 	</bean>
 	
-	
-	<bean name="marshalMappings"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.mapping.MarshalMappings">
+	<bean name="marshalMappings" class="org.jvnet.hyperjaxb3.ejb.strategy.mapping.MarshalMappings">
 		<property name="mapping" ref="mapping"/>
 		<property name="ignoring" ref="ignoring"/>
 	</bean>
 	
-	
-	<bean name="mappingFilesProcessor"
-	class="org.jvnet.hyperjaxb3.ejb.strategy.processor.MappingFilePersistenceProcessor">
+	<bean name="mappingFilesProcessor" class="org.jvnet.hyperjaxb3.ejb.strategy.processor.MappingFilePersistenceProcessor">
 		<property name="outlineProcessor" ref="marshalMappings"/>
 		<property name="naming" ref="naming"/>
 		<property name="persistenceFactory" ref="persistenceFactory"/>
@@ -339,19 +163,14 @@
 	
 	<!-- Variants -->
 	
-	
-	<bean name="annotations"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.processor.DefaultModelAndOutlineProcessor">
+	<bean name="annotations" class="org.jvnet.hyperjaxb3.ejb.strategy.processor.DefaultModelAndOutlineProcessor">
 		<property name="modelProcessor" ref="processModel"/>
 		<property name="outlineProcessor" ref="annotationsProcessor"/>
 	</bean>
 	
-	<bean name="mappingFiles"
-		class="org.jvnet.hyperjaxb3.ejb.strategy.processor.DefaultModelAndOutlineProcessor"
-		>
+	<bean name="mappingFiles" class="org.jvnet.hyperjaxb3.ejb.strategy.processor.DefaultModelAndOutlineProcessor">
 		<property name="modelProcessor" ref="processModel"/>
 		<property name="outlineProcessor" ref="mappingFilesProcessor"/>
 	</bean>
-	
 	
 </beans>

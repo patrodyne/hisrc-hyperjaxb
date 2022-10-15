@@ -143,7 +143,7 @@
 					<configuration>
 						<debug>false</debug>
 						<extension>true</extension>
-						<variant>ejb</variant>
+						<variant>jpa3</variant>
 						<!--roundtripTestClassName>RoundtripTest</roundtripTestClassName-->
 					</configuration>
 					<!-- Remove when plugin dependency management is reworked -->

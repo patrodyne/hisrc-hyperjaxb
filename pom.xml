@@ -92,6 +92,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<slf4j.version>1.7.36</slf4j.version>
 		<springframework.version>5.3.22</springframework.version>
+		<weld.version>5.0.1.Final</weld.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -140,7 +141,7 @@
 				<artifactId>hisrc-basicjaxb-ant</artifactId>
 				<version>${hisrc-basicjaxb.version}</version>
 			</dependency>
-			<!-- Hyperjaxb -->
+			<!-- HyperJAXB Maven Plugin-->
 			<dependency>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
@@ -181,7 +182,7 @@
 				<artifactId>hisrc-hyperjaxb-ejb-plugin</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<!-- Maven JAXB2 Plugin -->
+			<!-- HigherJAXB Maven Plugin -->
 			<dependency>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-higherjaxb-maven-plugin</artifactId>
@@ -305,6 +306,35 @@
 				<artifactId>jul-to-slf4j</artifactId>
 				<version>${slf4j.version}</version>
 			</dependency>
+			<!-- Dependency Injection -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${springframework.version}</version>
+				<!--
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+				-->
+			</dependency>
+			<dependency>
+				<groupId>jakarta.enterprise</groupId>
+				<artifactId>jakarta.enterprise.cdi-api</artifactId>
+				<version>4.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.weld.se</groupId>
+				<artifactId>weld-se-core</artifactId>
+				<version>${weld.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss</groupId>
+				<artifactId>jandex</artifactId>
+				<version>2.4.3.Final</version>
+			</dependency>
 			<!-- Hibernate -->
 			<dependency>
 				<groupId>org.javassist</groupId>
@@ -382,20 +412,6 @@
 				<artifactId>org.eclipse.persistence.extension</artifactId>
 				<version>${eclipselink.version}</version>
 			</dependency>
-			<!-- Spring -->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${springframework.version}</version>
-				<!--
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-				-->
-			</dependency>
 			<!-- H2 Database -->
 			<dependency>
 				<groupId>com.h2database</groupId>
@@ -446,12 +462,14 @@
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-artifact</artifactId>
 				<version>${maven.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<!--
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-builder-support</artifactId>
 				<version>${maven.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			-->
 			<dependency>
@@ -464,23 +482,27 @@
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-model</artifactId>
 				<version>${maven.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<!--
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-model-builder</artifactId>
 				<version>${maven.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			-->
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-plugin-api</artifactId>
 				<version>${maven.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-compat</artifactId>
 				<version>${maven.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
@@ -491,11 +513,13 @@
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-settings</artifactId>
 				<version>${maven.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven.plugin-tools</groupId>
 				<artifactId>maven-plugin-annotations</artifactId>
 				<version>${maven-plugin.version}</version>
+				<scope>provided</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -557,24 +581,26 @@
 				<plugin>
 					<artifactId>maven-plugin-plugin</artifactId>
 					<version>${maven-plugin.version}</version>
+					<?m2e ignore?>
 					<executions>
 						<execution>
-							<?m2e ignore?>
 							<id>mojo-descriptor</id>
 							<phase>process-classes</phase>
 							<goals>
+								<!-- Generate META-INF/maven/plugin.xml -->
 								<goal>descriptor</goal>
 							</goals>
 						</execution>
 						<execution>
-							<?m2e ignore?>
 							<id>help-goal</id>
 							<goals>
+								<!-- Generate {package}/HelpMojo.java -->
 								<goal>helpmojo</goal>
 							</goals>
 						</execution>
 					</executions>
 					<configuration>
+						<checkExpectedProvidedScope>false</checkExpectedProvidedScope>
 						<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
 					</configuration>
 				</plugin>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans version="4.0"
+	xmlns="https://jakarta.ee/xml/ns/jakartaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_4_0.xsd"
+	bean-discovery-mode="annotated"
+>
+	<!--
+		When you deploy a Java EE application, CDI looks for beans inside bean archives.
+		A bean archive is any module that contains beans that the CDI runtime can manage and inject. 
+
+		An explicit bean archive is an archive that contains a beans.xml deployment descriptor;
+		optionally, with the bean-discovery-mode attribute set. The mode can have these values:
+
+			all: All java bean/classes will be registered as CDI bean if possible and may be injected.
+				 Their scope will be dependent by default.
+
+			annotated: The container will only register bean/classes with CDI annotations as CDI bean.
+				 Their scope should be explicitly defined; otherwise, they won’t be registered.
+
+		IMPORTANT: When using bean-discovery-mode="annotated" only classes with a bean defining annotation are discovered!
+		Bean defining annotations: @Dependent, @ApplicationScoped, @SessionScoped, @ConversationScoped and @RequestScoped.
+		All other classes are ignored! 
+	-->
+
+	<!--
+        The alternatives that you specify in the beans.xml file apply only to
+        classes in the same archive. Use the @Priority annotation to specify
+        alternatives globally for an application that consists of multiple
+        modules. Example: Two bean archives (i.e. jars) in the same classpath
+        may declare prioritized alternatives for the same class.
+	-->
+	<alternatives>
+		<class>org.jvnet.hyperjaxb3.ejb.jpa3.strategy.mapping.EmbeddableAttributesMapping</class>
+		<class>org.jvnet.hyperjaxb3.ejb.jpa3.strategy.model.base.WrapCollectionBuiltinNonReference</class>
+		<class>org.jvnet.hyperjaxb3.ejb.jpa3.strategy.model.base.WrapCollectionEnumNonReference</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.annotate.AnnotateOutline</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.customizing.impl.DefaultCustomizing</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.ignoring.impl.DefaultIgnoring</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.mapping.EmbeddableAttributesMapping</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.mapping.MarshalMappings</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.AdaptBuiltinTypeUse</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.CreateIdClass</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultCreateDefaultIdPropertyInfos</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultCreateDefaultVersionPropertyInfos</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultGetTypes</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultProcessClassInfo</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultProcessModel</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.DefaultProcessPropertyInfos</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.GetIdPropertyInfos</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.GetVersionPropertyInfos</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionAttribute</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionElement</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionHeteroElement</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionHeteroReference</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionValue</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleBuiltinNonReference</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleBuiltinReference</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleClassElementReference</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleEnumElementReference</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleEnumNonReference</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleHeteroElement</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleHeteroReference</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleSubstitutedElementReference</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapSingleWildcardReference</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.naming.impl.DefaultNaming</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.naming.impl.DefaultReservedNames</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.processor.ClassPersistenceProcessor</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.processor.DefaultModelAndOutlineProcessor</class>
+		<class>org.jvnet.hyperjaxb3.ejb.strategy.processor.MappingFilePersistenceProcessor</class>
+	</alternatives>
+</beans>
+

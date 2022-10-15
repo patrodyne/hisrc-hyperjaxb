@@ -47,6 +47,7 @@
 				<configuration>
 					<!--result>mappingFiles</result-->
 					<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tests.cuone.RoundtripTest</roundtripTestClassName>
+					<variant>ejb</variant>
 					<args>
 						<arg>-Xannotate</arg>
 					</args>

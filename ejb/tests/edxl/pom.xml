@@ -45,6 +45,7 @@
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<roundtripTestClassName>org.jvnet.hyperjaxb3.tests.edxl.tests.RoundtripTest</roundtripTestClassName>
+					<variant>ejb</variant>
 				</configuration>
 			</plugin>
 		</plugins>

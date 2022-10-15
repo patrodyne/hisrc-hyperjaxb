@@ -9,19 +9,20 @@ import org.jvnet.hyperjaxb3.persistence.jpa3.JPA3Utils;
 
 import ee.jakarta.xml.ns.persistence.orm.EntityMappings;
 
-public class MarshalMappings extends
-		org.jvnet.hyperjaxb3.ejb.strategy.mapping.MarshalMappings {
-
+public class MarshalMappings extends org.jvnet.hyperjaxb3.ejb.strategy.mapping.MarshalMappings
+{
 	@Override
-	protected Marshaller getMarshaller() throws JAXBException {
+	protected Marshaller getMarshaller()
+		throws JAXBException
+	{
 		return JPA3Utils.createMarshaller();
 	}
 
 	@Override
-	protected EntityMappings createEntityMappings() {
+	protected EntityMappings createEntityMappings()
+	{
 		final EntityMappings entityMappings = new EntityMappings();
 		entityMappings.setVersion(ORM_JPA3_VERSION);
 		return entityMappings;
 	}
-
 }

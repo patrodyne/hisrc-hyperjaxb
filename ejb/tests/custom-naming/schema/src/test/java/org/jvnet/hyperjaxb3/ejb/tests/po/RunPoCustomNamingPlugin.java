@@ -38,6 +38,9 @@ public class RunPoCustomNamingPlugin
 		mojo.setForceRegenerate(true);
 		mojo.setExtension(true);
 		mojo.setVariant("ejb");
+		mojo.setBeansPropertiesLocator("classpath:/META-INF/beans.properties");
+		mojo.setRoundtripTestClassName("org.jvnet.hyperjaxb3.ejb.tests.po.RoundtripTest");
+		mojo.setResult("annotations"); // annotations | mappingFiles
 		
 		mojo.execute();
 		log.info("Executed " + mojo);

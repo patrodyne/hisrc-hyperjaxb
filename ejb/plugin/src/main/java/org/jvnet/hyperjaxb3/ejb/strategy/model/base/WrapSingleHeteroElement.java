@@ -1,5 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 
+import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -22,78 +24,63 @@ import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
 import com.sun.tools.xjc.outline.FieldOutline;
 
-public class WrapSingleHeteroElement implements CreatePropertyInfos {
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
 
+@ApplicationScoped
+@Alternative
+@Priority(APPLICATION + 1)
+public class WrapSingleHeteroElement implements CreatePropertyInfos
+{
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	public Collection<CPropertyInfo> process(ProcessModel context,
-			CPropertyInfo propertyInfo) {
-
+	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
+	{
 		assert propertyInfo instanceof CElementPropertyInfo;
 		final CElementPropertyInfo elementPropertyInfo = (CElementPropertyInfo) propertyInfo;
-
 		final Collection<CPropertyInfo> newPropertyInfos = new ArrayList<CPropertyInfo>(
-				context.getGetTypes().getTypes(context, elementPropertyInfo).size());
-
+			context.getGetTypes().getTypes(context, elementPropertyInfo).size());
 		final Collection<CPropertyInfo> properties = createTypeProperties(context, elementPropertyInfo);
-
-		if (properties != null) {
-
+		if (properties != null)
 			newPropertyInfos.addAll(properties);
-		}
-
 		Customizations.markIgnored(propertyInfo);
-
 		return newPropertyInfos;
 	}
 
-	protected Collection<CPropertyInfo> createTypeProperties(
-			final ProcessModel context, final CElementPropertyInfo propertyInfo) {
-
+	protected Collection<CPropertyInfo> createTypeProperties(final ProcessModel context,
+		final CElementPropertyInfo propertyInfo)
+	{
 		final Collection<? extends CTypeRef> types = context.getGetTypes().getTypes(context, propertyInfo);
 		// Set<CElement> elements = propertyInfo.getElements();
-
-		final Collection<CPropertyInfo> properties = new ArrayList<CPropertyInfo>(
-				types.size());
-
-		for (final CTypeRef type : types) {
+		final Collection<CPropertyInfo> properties = new ArrayList<CPropertyInfo>(types.size());
+		for (final CTypeRef type : types)
+		{
 			final CElementPropertyInfo itemPropertyInfo = new CElementPropertyInfo(
-					propertyInfo.getName(true)
-							+ ((CClassInfo) propertyInfo.parent()).model
-									.getNameConverter().toPropertyName(
-											type.getTagName().getLocalPart()),
-					CollectionMode.NOT_REPEATED, ID.NONE, propertyInfo
-							.getExpectedMimeType(), propertyInfo
-							.getSchemaComponent(),
-					new CCustomizations(CustomizationUtils
-							.getCustomizations(propertyInfo)), propertyInfo
-							.getLocator(), false);
-
+				propertyInfo.getName(true) + ((CClassInfo) propertyInfo.parent()).model.getNameConverter()
+					.toPropertyName(type.getTagName().getLocalPart()),
+				CollectionMode.NOT_REPEATED, ID.NONE, propertyInfo.getExpectedMimeType(),
+				propertyInfo.getSchemaComponent(),
+				new CCustomizations(CustomizationUtils.getCustomizations(propertyInfo)), propertyInfo.getLocator(),
+				false);
 			itemPropertyInfo.getTypes().add(type);
-
-			itemPropertyInfo.realization = new FieldRenderer() {
-				public FieldOutline generate(ClassOutlineImpl classOutline,
-						CPropertyInfo p) {
-					final SingleWrappingElementField field = new SingleWrappingElementField(
-							classOutline, p, propertyInfo, type);
+			itemPropertyInfo.realization = new FieldRenderer()
+			{
+				public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo p)
+				{
+					final SingleWrappingElementField field = new SingleWrappingElementField(classOutline, p,
+						propertyInfo, type);
 					field.generateAccessors();
 					return field;
 				}
 			};
-
 			Customizations.markGenerated(itemPropertyInfo);
 			properties.add(itemPropertyInfo);
-
-			Collection<CPropertyInfo> newProperties = context
-					.getProcessPropertyInfos().process(context,
-							itemPropertyInfo);
-			if (newProperties != null) {
+			Collection<CPropertyInfo> newProperties = context.getProcessPropertyInfos().process(context,
+				itemPropertyInfo);
+			if (newProperties != null)
 				properties.addAll(newProperties);
-			}
-
 		}
-
 		return properties;
 	}
-
 }

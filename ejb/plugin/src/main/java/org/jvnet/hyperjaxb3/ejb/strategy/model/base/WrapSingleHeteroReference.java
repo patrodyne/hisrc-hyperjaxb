@@ -1,5 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 
+import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -23,6 +25,10 @@ import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.jvnet.jaxb2_commons.util.OutlineUtils;
 
 import ee.jakarta.xml.ns.persistence.orm.Lob;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
@@ -40,227 +46,174 @@ import com.sun.tools.xjc.model.TypeUseFactory;
 import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
 import com.sun.tools.xjc.outline.FieldOutline;
 
-public class WrapSingleHeteroReference implements CreatePropertyInfos {
-
+@ApplicationScoped
+@Alternative
+@Priority(APPLICATION + 1)
+public class WrapSingleHeteroReference implements CreatePropertyInfos
+{
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	public Collection<CPropertyInfo> process(ProcessModel context,
-			CPropertyInfo propertyInfo) {
-
+	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
+	{
 		assert propertyInfo instanceof CReferencePropertyInfo;
 		final CReferencePropertyInfo referencePropertyInfo = (CReferencePropertyInfo) propertyInfo;
 		assert !referencePropertyInfo.isMixed();
-
 		// if (referencePropertyInfo.getElements().isEmpty()) {
 		final CPropertyInfo elementProperty = createElementProperty(referencePropertyInfo);
-
-		final CPropertyInfo objectProperty = createObjectProperty(context,
-				referencePropertyInfo);
-
+		final CPropertyInfo objectProperty = createObjectProperty(context, referencePropertyInfo);
 		final Collection<CPropertyInfo> newPropertyInfos = new ArrayList<CPropertyInfo>(
-				context.getGetTypes()
-						.getElements(context, referencePropertyInfo).size() + 3);
-
-		if (elementProperty != null) {
+			context.getGetTypes().getElements(context, referencePropertyInfo).size() + 3);
+		if (elementProperty != null)
 			newPropertyInfos.add(elementProperty);
-		}
-		if (objectProperty != null) {
+		if (objectProperty != null)
 			newPropertyInfos.add(objectProperty);
-		}
-
-		final Collection<CPropertyInfo> properties = createElementProperties(
-				context, (CReferencePropertyInfo) propertyInfo);
-
-		if (properties != null) {
-
+		final Collection<CPropertyInfo> properties = createElementProperties(context,
+			(CReferencePropertyInfo) propertyInfo);
+		if (properties != null)
 			newPropertyInfos.addAll(properties);
-		}
-
 		Customizations.markIgnored(propertyInfo);
-
 		return newPropertyInfos;
 	}
 
 	protected CPropertyInfo createObjectProperty(final ProcessModel context,
-			final CReferencePropertyInfo referencePropertyInfo) {
+		final CReferencePropertyInfo referencePropertyInfo)
+	{
 		final CPropertyInfo objectProperty;
-		if (referencePropertyInfo.getWildcard() != null
-				&& referencePropertyInfo.getWildcard().allowTypedObject) {
-
-			objectProperty = new CAttributePropertyInfo(
-					referencePropertyInfo.getName(true) + "Object",
-					referencePropertyInfo.getSchemaComponent(),
-					new CCustomizations(), referencePropertyInfo.getLocator(),
-					new QName(referencePropertyInfo.getName(true) + "Object"),
-					CBuiltinLeafInfo.STRING,
-					CBuiltinLeafInfo.STRING.getTypeName(), false);
-
-			objectProperty.realization = new FieldRenderer() {
-				public FieldOutline generate(ClassOutlineImpl classOutline,
-						CPropertyInfo prop) {
-					final JaxbContext jaxbContext = context.getCustomizing()
-							.getJaxbContext(prop);
-
-					final String contextPath = (jaxbContext == null || jaxbContext
-							.getContextPath() == null) ? OutlineUtils
-							.getContextPath(classOutline.parent())
-							: jaxbContext.getContextPath();
-
-					final boolean _final = (jaxbContext == null
-							|| jaxbContext.getField() == null || jaxbContext
-							.getField().isFinal() == null) ? true : jaxbContext
-							.getField().isFinal();
-
+		if (referencePropertyInfo.getWildcard() != null && referencePropertyInfo.getWildcard().allowTypedObject)
+		{
+			objectProperty = new CAttributePropertyInfo(referencePropertyInfo.getName(true) + "Object",
+				referencePropertyInfo.getSchemaComponent(), new CCustomizations(), referencePropertyInfo.getLocator(),
+				new QName(referencePropertyInfo.getName(true) + "Object"), CBuiltinLeafInfo.STRING,
+				CBuiltinLeafInfo.STRING.getTypeName(), false);
+			objectProperty.realization = new FieldRenderer()
+			{
+				public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo prop)
+				{
+					final JaxbContext jaxbContext = context.getCustomizing().getJaxbContext(prop);
+					final String contextPath = (jaxbContext == null	|| jaxbContext.getContextPath() == null)
+						? OutlineUtils.getContextPath(classOutline.parent())
+						: jaxbContext.getContextPath();
+					final boolean _final = (jaxbContext == null || jaxbContext.getField() == null || jaxbContext.getField().isFinal() == null)
+									? true
+									: jaxbContext.getField().isFinal();
 					final SingleWrappingReferenceObjectField fieldOutline = new SingleWrappingReferenceObjectField(
-							classOutline, prop, referencePropertyInfo,
-							contextPath, _final);
+						classOutline, prop, referencePropertyInfo, contextPath, _final);
 					fieldOutline.generateAccessors();
 					return fieldOutline;
 				}
 			};
 			final Basic basic = new Basic();
 			basic.setLob(new Lob());
-
-			CustomizationUtils.addCustomization(objectProperty,
-					Customizations.getContext(),
-					Customizations.BASIC_ELEMENT_NAME, basic);
-
+			CustomizationUtils.addCustomization(objectProperty, Customizations.getContext(),
+				Customizations.BASIC_ELEMENT_NAME, basic);
 			Customizations.markGenerated(objectProperty);
-
-		} else {
-			objectProperty = null;
 		}
+		else
+			objectProperty = null;
 		return objectProperty;
 	}
 
-	protected CPropertyInfo createElementProperty(
-			final CReferencePropertyInfo referencePropertyInfo) {
+	protected CPropertyInfo createElementProperty(final CReferencePropertyInfo referencePropertyInfo)
+	{
 		final CAttributePropertyInfo elementProperty;
-		if (referencePropertyInfo.getWildcard() != null
-				&& referencePropertyInfo.getWildcard().allowDom) {
-
-			elementProperty = new CAttributePropertyInfo(
-					referencePropertyInfo.getName(true) + "Element",
-					referencePropertyInfo.getSchemaComponent(),
-					new CCustomizations(), referencePropertyInfo.getLocator(),
-					new QName(referencePropertyInfo.getName(true) + "Element"),
-
-					TypeUseFactory.adapt(CBuiltinLeafInfo.STRING,
-							ElementAsString.class, false),
-					CBuiltinLeafInfo.STRING.getTypeName(), false);
-
-			elementProperty.realization = new FieldRenderer() {
-				public FieldOutline generate(ClassOutlineImpl context,
-						CPropertyInfo prop) {
-					ElementField fieldOutline = new ElementField(context, prop,
-							referencePropertyInfo);
+		if (referencePropertyInfo.getWildcard() != null && referencePropertyInfo.getWildcard().allowDom)
+		{
+			elementProperty = new CAttributePropertyInfo(referencePropertyInfo.getName(true) + "Element",
+				referencePropertyInfo.getSchemaComponent(), new CCustomizations(), referencePropertyInfo.getLocator(),
+				new QName(referencePropertyInfo.getName(true) + "Element"),
+				TypeUseFactory.adapt(CBuiltinLeafInfo.STRING, ElementAsString.class, false),
+				CBuiltinLeafInfo.STRING.getTypeName(), false);
+			elementProperty.realization = new FieldRenderer()
+			{
+				public FieldOutline generate(ClassOutlineImpl context, CPropertyInfo prop)
+				{
+					ElementField fieldOutline = new ElementField(context, prop, referencePropertyInfo);
 					fieldOutline.generateAccessors();
 					return fieldOutline;
 				}
-
 			};
-
 			final Basic basic = new Basic();
 			basic.setLob(new Lob());
-
-			CustomizationUtils.addCustomization(elementProperty,
-					Customizations.getContext(),
-					Customizations.BASIC_ELEMENT_NAME, basic);
-
+			CustomizationUtils.addCustomization(elementProperty, Customizations.getContext(),
+				Customizations.BASIC_ELEMENT_NAME, basic);
 			Customizations.markGenerated(elementProperty);
-		} else {
-			elementProperty = null;
 		}
+		else
+			elementProperty = null;
 		return elementProperty;
 	}
 
-	protected Collection<CPropertyInfo> createElementProperties(
-			ProcessModel context, final CReferencePropertyInfo propertyInfo) {
-
-		Set<CElement> elements = context.getGetTypes().getElements(context,
-				propertyInfo);
-
-		final Collection<CPropertyInfo> properties = new ArrayList<CPropertyInfo>(
-				elements.size());
-
-		for (CElement element : elements) {
-
+	protected Collection<CPropertyInfo> createElementProperties(ProcessModel context,
+		final CReferencePropertyInfo propertyInfo)
+	{
+		Set<CElement> elements = context.getGetTypes().getElements(context, propertyInfo);
+		final Collection<CPropertyInfo> properties = new ArrayList<CPropertyInfo>(elements.size());
+		for (CElement element : elements)
+		{
 			final CElementPropertyInfo itemPropertyInfo = new CElementPropertyInfo(
-					propertyInfo.getName(true)
-							+ ((CClassInfo) propertyInfo.parent()).model
-									.getNameConverter().toPropertyName(
-											element.getElementName()
-													.getLocalPart()),
-					CollectionMode.NOT_REPEATED, ID.NONE,
-					propertyInfo.getExpectedMimeType(),
-					propertyInfo.getSchemaComponent(),
-					new CCustomizations(CustomizationUtils
-							.getCustomizations(propertyInfo)),
-					propertyInfo.getLocator(), false);
-
-			if (element instanceof CElementInfo) {
+				propertyInfo.getName(true) + ((CClassInfo) propertyInfo.parent()).model.getNameConverter()
+					.toPropertyName(element.getElementName().getLocalPart()),
+				CollectionMode.NOT_REPEATED, ID.NONE, propertyInfo.getExpectedMimeType(),
+				propertyInfo.getSchemaComponent(),
+				new CCustomizations(CustomizationUtils.getCustomizations(propertyInfo)), propertyInfo.getLocator(),
+				false);
+			if (element instanceof CElementInfo)
+			{
 				final CElementInfo elementInfo = (CElementInfo) element;
-				if (!elementInfo.getSubstitutionMembers().isEmpty()) {
+				if (!elementInfo.getSubstitutionMembers().isEmpty())
+				{
 					logger.error("["
-							+ ((CClassInfo) propertyInfo.parent()).getName()
-							+ "."
-							+ propertyInfo.getName(true)
-							+ "] is a single hetero reference containing element ["
-							+ elementInfo.getSqueezedName()
-							+ "] which is a substitution group head. See issue #95.");
-				} else {
-					itemPropertyInfo.getTypes().addAll(
-							context.getGetTypes().getTypes(context,
-									((CElementInfo) element).getProperty()));
-
-					itemPropertyInfo.realization = new FieldRenderer() {
-						public FieldOutline generate(
-								ClassOutlineImpl classOutline, CPropertyInfo p) {
+						+ ((CClassInfo) propertyInfo.parent()).getName()
+						+ "." + propertyInfo.getName(true)
+						+ "] is a single hetero reference containing element [" + elementInfo.getSqueezedName()
+						+ "] which is a substitution group head. See issue #95.");
+				}
+				else
+				{
+					itemPropertyInfo.getTypes()
+						.addAll(context.getGetTypes().getTypes(context, ((CElementInfo) element).getProperty()));
+					itemPropertyInfo.realization = new FieldRenderer()
+					{
+						public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo p)
+						{
 							SingleWrappingReferenceElementInfoField field = new SingleWrappingReferenceElementInfoField(
-									classOutline, p, propertyInfo, elementInfo);
+								classOutline, p, propertyInfo, elementInfo);
 							field.generateAccessors();
 							return field;
 						}
 					};
 					Customizations.markGenerated(itemPropertyInfo);
-
 					properties.add(itemPropertyInfo);
 				}
-			} else if (element instanceof CClassInfo) {
-
+			}
+			else if (element instanceof CClassInfo)
+			{
 				final CClassInfo classInfo = (CClassInfo) element;
-
 				final QName elementName = classInfo.getElementName();
 				final QName typeName = classInfo.getTypeName();
-				final CTypeRef typeRef = new CTypeRef(classInfo, elementName,
-						typeName, false, null);
-
-				itemPropertyInfo.realization = new FieldRenderer() {
-					public FieldOutline generate(ClassOutlineImpl classOutline,
-							CPropertyInfo p) {
-						SingleWrappingClassInfoField field = new SingleWrappingClassInfoField(
-								classOutline, p, propertyInfo, classInfo);
+				final CTypeRef typeRef = new CTypeRef(classInfo, elementName, typeName, false, null);
+				itemPropertyInfo.realization = new FieldRenderer()
+				{
+					public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo p)
+					{
+						SingleWrappingClassInfoField field = new SingleWrappingClassInfoField(classOutline, p,
+							propertyInfo, classInfo);
 						field.generateAccessors();
 						return field;
 					}
 				};
-
 				itemPropertyInfo.getTypes().add(typeRef);
-
 				Customizations.markGenerated(itemPropertyInfo);
 				properties.add(itemPropertyInfo);
-
-			} else if (element instanceof CClassRef) {
+			}
+			else if (element instanceof CClassRef)
+			{
 				final CClassRef classRef = (CClassRef) element;
 				logger.error("CClassRef elements are not supported yet.");
-
 				logger.error("["
-						+ ((CClassInfo) propertyInfo.parent()).getName()
-						+ "."
-						+ propertyInfo.getName(true)
-						+ "] is a single hetero reference containing unsupported CClassRef element ["
-						+ classRef.fullName() + "]. See issue #94.");
-
+					+ ((CClassInfo) propertyInfo.parent()).getName() + "." + propertyInfo.getName(true)
+					+ "] is a single hetero reference containing unsupported CClassRef element ["
+					+ classRef.fullName() + "]. See issue #94.");
 			}
 		}
 		return properties;

@@ -1,9 +1,13 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.processor;
 
+import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+
 import java.util.Collection;
 
 import org.jvnet.hyperjaxb3.ejb.plugin.EjbPlugin;
+import org.jvnet.hyperjaxb3.ejb.strategy.MojoConfigured;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ModelProcessor;
+import org.jvnet.hyperjaxb3.ejb.strategy.model.base.ModelBase;
 import org.jvnet.hyperjaxb3.ejb.strategy.outline.OutlineProcessor;
 import org.springframework.beans.factory.annotation.Required;
 
@@ -13,39 +17,59 @@ import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
-public class DefaultModelAndOutlineProcessor implements
-		ModelAndOutlineProcessor<EjbPlugin> {
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.enterprise.inject.Any;
+import jakarta.inject.Inject;
 
+/**
+ * The default strategy to process the XJC Model and Outline.
+ * 
+ * Note: The outline's is configurable to output to source code or mapping files.
+ * 
+ * Injected: ModelProcessor<EjbPlugin>, OutlineProcessor<EjbPlugin>
+ * Instantiated: none
+ */
+@ApplicationScoped
+@Alternative
+@Priority(APPLICATION + 1)
+public class DefaultModelAndOutlineProcessor implements ModelAndOutlineProcessor<EjbPlugin>
+{
+	@Inject @ModelBase
 	private ModelProcessor<EjbPlugin> modelProcessor;
-
-	@Required
-	public ModelProcessor<EjbPlugin> getModelProcessor() {
+	public ModelProcessor<EjbPlugin> getModelProcessor()
+	{
 		return modelProcessor;
 	}
-
-	public void setModelProcessor(ModelProcessor<EjbPlugin> modelProcessor) {
+	@Required
+	public void setModelProcessor(ModelProcessor<EjbPlugin> modelProcessor)
+	{
 		this.modelProcessor = modelProcessor;
 	}
 
+	@Inject @MojoConfigured
 	private OutlineProcessor<EjbPlugin> outlineProcessor;
-
-	@Required
-	public OutlineProcessor<EjbPlugin> getOutlineProcessor() {
+	public OutlineProcessor<EjbPlugin> getOutlineProcessor()
+	{
 		return outlineProcessor;
 	}
-
-	public void setOutlineProcessor(OutlineProcessor<EjbPlugin> outlineProcessor) {
+	@Required
+	public void setOutlineProcessor(OutlineProcessor<EjbPlugin> outlineProcessor)
+	{
 		this.outlineProcessor = outlineProcessor;
 	}
 
-	public Collection<CClassInfo> process(EjbPlugin context, Model model,
-			Options options) throws Exception {
+	public Collection<CClassInfo> process(EjbPlugin context, Model model, Options options)
+		throws Exception
+	{
 		return getModelProcessor().process(context, model, options);
 	}
 
-	public Collection<ClassOutline> process(EjbPlugin context, Outline outline,
-			Options options) throws Exception {
+	public Collection<ClassOutline> process(EjbPlugin context, Outline outline, Options options)
+		throws Exception
+	{
 		return getOutlineProcessor().process(context, outline, options);
 	}
-
 }
