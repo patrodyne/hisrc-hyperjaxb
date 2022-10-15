@@ -23,8 +23,6 @@ import org.jvnet.hyperjaxb3.ejb.strategy.naming.ReservedNames;
 import org.jvnet.jaxb2_commons.util.CodeModelUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Required;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JType;
@@ -42,7 +40,6 @@ import com.sun.tools.xjc.outline.PackageOutline;
 
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Inject;
 
@@ -55,7 +52,7 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 @Alternative
 @Priority(APPLICATION + 1)
-public class DefaultNaming implements Naming, InitializingBean
+public class DefaultNaming implements Naming
 {
 	protected Logger logger = LoggerFactory.getLogger(Naming.class);
 	private static final Pattern CAMELCASE_PATTERN = Pattern.compile("\\p{Lower}\\p{Upper}|\\D\\d");
@@ -66,29 +63,12 @@ public class DefaultNaming implements Naming, InitializingBean
 	public void setIgnoring(Ignoring ignoring) { this.ignoring = ignoring; }
 	
 	@Inject
-	private ReservedNames reservedNamesCDI;
-	public ReservedNames getReservedNamesCDI()
+	private ReservedNames reservedNames;
+	public ReservedNames getReservedNames()
 	{
-		return reservedNamesCDI;
-	}
-	public void setReservedNamesCDI(ReservedNames reservedNamesCDI)
-	{
-		this.reservedNamesCDI = reservedNamesCDI;
-	}
-
-	private Properties reservedNames;
-	public Properties getReservedNames()
-	{
-		if ( reservedNames == null )
-		{
-			reservedNames = new Properties();
-			for ( Entry<Object, Object> entry : getReservedNamesCDI().entrySet() )
-				reservedNames.put(entry.getKey(), entry.getValue());
-		}
 		return reservedNames;
 	}
-	@Required
-	public void setReservedNames(Properties reservedNames)
+	public void setReservedNames(ReservedNames reservedNames)
 	{
 		this.reservedNames = reservedNames;
 	}

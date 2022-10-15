@@ -39,8 +39,6 @@ import org.jvnet.jaxb2_commons.util.ClassUtils;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.xml.sax.ErrorHandler;
 
 import com.sun.codemodel.JClass;
@@ -69,7 +67,7 @@ import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
 /**
  * Hyperjaxb3 EJB plugin.
  */
-public class EjbPlugin extends AbstractSpringConfigurablePlugin
+public class EjbPlugin extends AbstractWeldCDIPlugin
 {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -116,26 +114,6 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin
 	public File getPersistenceXml() { return persistenceXml; }
 	public void setPersistenceXml(File persistenceXml) { this.persistenceXml = persistenceXml; }
 	
-	@Override
-	protected int getAutowireMode()
-	{
-		return AutowireCapableBeanFactory.AUTOWIRE_NO;
-	}
-
-	@Override
-	protected String[] getDefaultConfigLocations()
-	{
-		return new String[]
-		{
-			"classpath*:"
-				+ getClass().getPackage().getName().replace('.', '/')
-				+ "/applicationContext.xml",
-			"classpath*:"
-				+ getClass().getPackage().getName().replace('.', '/')
-				+ "/custom/applicationContext.xml"
-		};
-	}
-
 	private String result = "annotations";
 	public String getResult() { return result; }
 	public void setResult(String variant) { this.result = variant; }
@@ -326,50 +304,25 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin
 	@Override
 	protected void beforeRun(Outline outline, Options options) throws Exception
 	{
-		// Instantiate FileSystemXmlApplicationContext
+		// Configure Dependency Injection Context
 		super.beforeRun(outline, options);
+		
+		// Wire this XJC plugin into the CDI strategy producer.
 		getStrategyProducer().setPlugin(this);
 
+		// Log context, if enabled.
 		logContext(getStrategyService().getNaming());
 		logContext(getStrategyService().getMappingContext());
 		logContext(getStrategyService().getModelAndOutlineProcessor());
 
-		if (getModelAndOutlineProcessor() == null)
-		{
-			try
-			{
-				final Object bean = getApplicationContext().getBean(getModelAndOutlineProcessorBeanName());
-				if (bean instanceof ModelAndOutlineProcessor)
-					setModelAndOutlineProcessor((ModelAndOutlineProcessor<EjbPlugin>) bean);
-				else
-				{
-					throw new BadCommandLineException("Result bean ["
-						+ getModelAndOutlineProcessorBeanName()
-						+ "] of class [" + bean.getClass()
-						+ "] does not implement ["
-						+ ModelAndOutlineProcessor.class.getName()
-						+ "] interface.");
-				}
-			}
-			catch (BeansException bex)
-			{
-				String msg = "Could not load variant bean [" + getModelAndOutlineProcessorBeanName() + "].";
-				throw new BadCommandLineException(msg , bex);
-			}
-		}
-
-		if (getNaming() == null)
-			setNaming((Naming) getApplicationContext().getBean("naming", Naming.class));
-
-		if (getMapping() == null)
-			setMapping((Mapping) getApplicationContext().getBean("mapping", Mapping.class));
-
-		if (getTargetDir() == null)
-			setTargetDir(options.targetDir);
-		
+		// Configure CDI strategy context.
 		setNaming(getStrategyService().getNaming());
 		setMapping((Mapping) getStrategyService().getMappingContext());
 		setModelAndOutlineProcessor(getStrategyService().getModelAndOutlineProcessor());
+
+		// Set target directory, when needed.
+		if (getTargetDir() == null)
+			setTargetDir(options.targetDir);
 	}
 	
 	@Override

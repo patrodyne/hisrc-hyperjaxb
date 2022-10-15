@@ -4,26 +4,40 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
-	xmlns:hj="http://hyperjaxb2.jvnet.org/customizations"
-	jaxb:extensionBindingPrefixes="hj xjc"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm xjc"
 >
-
-	<jaxb:bindings schemaLocation="schema.xsd" 
-		node="/xsd:schema">
+	<!-- Global Bindings -->
+	<jaxb:bindings>
+		<!-- JPA section 2.1, entities must be top-level classes. -->
+		<!-- JPA section 2.1, entities must implement the serializable interface. -->
 		<jaxb:globalBindings
+			localScoping="toplevel"
 			fixedAttributeAsConstantProperty="false"
 			typesafeEnumBase="xsd:string"
 			typesafeEnumMemberName="generateName" 
 			generateIsSetMethod="true">
+			<jaxb:serializable uid="20211201" />
 			<xjc:noValidator/>
 			<xjc:noValidatingUnmarshaller/>
 		</jaxb:globalBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xsd:schema">
 
 		<jaxb:bindings node="//xs:complexType[@name='BasicContentDescriptionType']/xs:sequence/xs:element[@name='ReleaseInformation']/xs:complexType/xs:sequence/xs:element[@name='ReleaseDate']/xs:complexType">
 			<hj:class>
 				<hj:table name="ReleaseInfo_Date"/>                    
 			</hj:class>
 		</jaxb:bindings> 
+
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
+
 	</jaxb:bindings>
 
 </jaxb:bindings>

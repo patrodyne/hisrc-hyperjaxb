@@ -49,7 +49,6 @@ import org.jvnet.jaxb2_commons.lang.JAXBMergeStrategy;
 import org.jvnet.jaxb2_commons.lang.MergeFrom2;
 import org.jvnet.jaxb2_commons.lang.MergeStrategy2;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
-import org.springframework.beans.factory.annotation.Required;
 
 import ee.jakarta.xml.ns.persistence.orm.Column;
 import jakarta.annotation.Priority;
@@ -92,7 +91,6 @@ public class DefaultCustomizing implements Customizing
 	@Inject
 	private Persistence defaultCustomizations;
 	public Persistence getDefaultCustomizations() { return defaultCustomizations; }
-	@Required
 	public void setDefaultCustomizations(Persistence defaultCustomization) { this.defaultCustomizations = defaultCustomization; }
 	
 	private <T> T findCustomization(Model model, QName name)

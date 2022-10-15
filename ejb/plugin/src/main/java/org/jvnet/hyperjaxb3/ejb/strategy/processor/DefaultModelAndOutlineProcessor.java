@@ -9,7 +9,6 @@ import org.jvnet.hyperjaxb3.ejb.strategy.MojoConfigured;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ModelProcessor;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.base.ModelBase;
 import org.jvnet.hyperjaxb3.ejb.strategy.outline.OutlineProcessor;
-import org.springframework.beans.factory.annotation.Required;
 
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClassInfo;
@@ -43,7 +42,6 @@ public class DefaultModelAndOutlineProcessor implements ModelAndOutlineProcessor
 	{
 		return modelProcessor;
 	}
-	@Required
 	public void setModelProcessor(ModelProcessor<EjbPlugin> modelProcessor)
 	{
 		this.modelProcessor = modelProcessor;
@@ -55,7 +53,6 @@ public class DefaultModelAndOutlineProcessor implements ModelAndOutlineProcessor
 	{
 		return outlineProcessor;
 	}
-	@Required
 	public void setOutlineProcessor(OutlineProcessor<EjbPlugin> outlineProcessor)
 	{
 		this.outlineProcessor = outlineProcessor;

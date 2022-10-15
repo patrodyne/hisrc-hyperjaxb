@@ -15,8 +15,7 @@ import com.sun.tools.xjc.outline.Outline;
  */
 public interface Naming
 {
-	public ReservedNames getReservedNamesCDI();
-	public Properties getReservedNames();
+	public ReservedNames getReservedNames();
 	public Ignoring getIgnoring();
 	
 	public String getColumn$Name$Prefix(Mapping context);

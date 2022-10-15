@@ -23,7 +23,26 @@
 		<cxf.version>3.5.3</cxf.version>
 		<jaxws.version>${jaxb-api.version}</jaxws.version>
 		<root.basedir>${basedir}/../../../..</root.basedir>
+		<springframework.version>5.3.22</springframework.version>
 	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<!-- Dependency Injection -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${springframework.version}</version>
+				<!--
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+				-->
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>

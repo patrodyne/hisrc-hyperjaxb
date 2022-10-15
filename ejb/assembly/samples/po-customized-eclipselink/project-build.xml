@@ -124,8 +124,8 @@
 					<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
 					<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
 					<include name="hisrc-hyperjaxb-ejb-schemas-*.jar"/>
-					<!-- Spring dependencies -->
-					<include name="spring-*.jar"/>
+					<!-- Weld/CDI dependencies -->
+					<include name="weld-*.jar"/>
 					<!-- Logging dependencies -->
 					<include name="slf4j-*.jar"/>
 					<!-- JUnit library dependencies -->

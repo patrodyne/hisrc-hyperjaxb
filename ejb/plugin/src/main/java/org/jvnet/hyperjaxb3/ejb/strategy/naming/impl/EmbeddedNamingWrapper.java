@@ -32,8 +32,7 @@ public class EmbeddedNamingWrapper implements Naming
 		this.parentFieldOutline = fieldOutline;
 	}
 
-	public ReservedNames getReservedNamesCDI() { return naming.getReservedNamesCDI(); }
-	public Properties getReservedNames() { return naming.getReservedNames(); }
+	public ReservedNames getReservedNames() { return naming.getReservedNames(); }
 	public Ignoring getIgnoring() { return naming.getIgnoring(); }
 
 	public Naming createEmbeddedNaming(Mapping context, FieldOutline fieldOutline)

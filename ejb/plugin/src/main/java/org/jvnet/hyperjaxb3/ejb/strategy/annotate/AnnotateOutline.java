@@ -26,7 +26,6 @@ import org.jvnet.hyperjaxb3.persistence.util.AttributesUtils;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.jvnet.jaxb2_commons.util.FieldAccessorUtils;
 import org.jvnet.jaxb2_commons.util.OutlineUtils;
-import org.springframework.beans.factory.annotation.Required;
 
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
@@ -78,7 +77,6 @@ public class AnnotateOutline implements OutlineProcessor<EjbPlugin>
 	{
 		return createXAnnotations;
 	}
-	@Required
 	public void setCreateXAnnotations(CreateXAnnotations createXAnnotations)
 	{
 		this.createXAnnotations = createXAnnotations;

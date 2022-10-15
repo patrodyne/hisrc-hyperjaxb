@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.jvnet.hyperjaxb3.ejb.jpa3.strategy.model.base.WrapCollectionBuiltinNonReference;
@@ -29,11 +28,7 @@ import org.jvnet.jaxb2_commons.config.LocatorProperties;
 import org.jvnet.jaxb2_commons.plugin.AbstractParameterizablePlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.support.AbstractXmlApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.sun.tools.xjc.BadCommandLineException;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -47,100 +42,15 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 
-public abstract class AbstractSpringConfigurablePlugin
+/**
+ * An XJC plugin that can be parameterized using '-X' arguments and is 
+ * customizable via Weld/CDI alternatives.
+ */
+public abstract class AbstractWeldCDIPlugin
 	extends AbstractParameterizablePlugin
 {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	private AbstractXmlApplicationContext applicationContext;
-	public AbstractXmlApplicationContext getApplicationContext()
-	{
-		return applicationContext;
-	}
-	public void setApplicationContext(AbstractXmlApplicationContext applicationContext)
-	{
-		this.applicationContext = applicationContext;
-	}
-
-	protected String[] getDefaultConfigLocations()
-	{
-		return null;
-	}
-
-	private String[] configLocations = getDefaultConfigLocations();
-	public String[] getConfigLocations()
-	{
-		return configLocations;
-	}
-	public void setConfigLocations(String[] configLocations)
-	{
-		this.configLocations = configLocations;
-	}
-
-	protected int getAutowireMode()
-	{
-		return AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE;
-	}
-
-	protected boolean isDependencyCheck()
-	{
-		return false;
-	}
-
-	public void init(Options options) throws Exception
-	{
-
-	}
-
-	@Override
-	protected void beforeRun(Outline outline, Options options) throws Exception
-	{
-		super.beforeRun(outline, options);
-		configureWeldContext();
-		configureSpringContext();
-	}
-	
-	@Override
-	protected void afterRun(Outline outline, Options options) throws Exception
-	{
-		super.afterRun(outline, options);
-		if ( getApplicationContext() != null )
-			getApplicationContext().close();
-		if ( getWeldContainer() != null )
-			getWeldContainer().close();
-	}
-	
-	private void configureSpringContext()
-		throws BadCommandLineException
-	{
-		final String[] configLocations = getConfigLocations();
-		if (!ArrayUtils.isEmpty(configLocations))
-		{
-			final String configLocationsString = ArrayUtils.toString(configLocations);
-			
-			logger.debug("Loading application context from [" + configLocationsString + "].");
-			
-			try
-			{
-				setApplicationContext(new FileSystemXmlApplicationContext(configLocations, false));
-				getApplicationContext().setClassLoader(Thread.currentThread().getContextClassLoader());
-				getApplicationContext().refresh();
-				
-				if (getAutowireMode() != AutowireCapableBeanFactory.AUTOWIRE_NO)
-				{
-					getApplicationContext().getBeanFactory()
-						.autowireBeanProperties(this, getAutowireMode(), isDependencyCheck());
-				}
-			}
-			catch (Exception ex)
-			{
-				String msg = "Error loading applicaion context from [" + configLocationsString + "].";
-				logger.error(msg, ex);
-				throw new BadCommandLineException(msg, ex);
-			}
-		}
-	}
-	
 	private Weld weld;
 	public Weld getWeld() { return weld; }
 	public void setWeld(Weld weld) { this.weld = weld; }
@@ -169,6 +79,21 @@ public abstract class AbstractSpringConfigurablePlugin
 	private JAXBContext jaxbContext;
 	public JAXBContext getJaxbContext() { return jaxbContext; }
 	public void setJaxbContext(JAXBContext jaxbContext) { this.jaxbContext = jaxbContext; }
+
+	@Override
+	protected void beforeRun(Outline outline, Options options) throws Exception
+	{
+		super.beforeRun(outline, options);
+		configureWeldContext();
+	}
+	
+	@Override
+	protected void afterRun(Outline outline, Options options) throws Exception
+	{
+		super.afterRun(outline, options);
+		if ( getWeldContainer() != null )
+			getWeldContainer().close();
+	}
 
 	private void configureWeldContext()
 	{
@@ -317,7 +242,7 @@ public abstract class AbstractSpringConfigurablePlugin
 		if ( logger.isDebugEnabled() )
 		{
 			logger.debug(identify(naming));
-			logger.debug(identify(naming.getReservedNamesCDI()));
+			logger.debug(identify(naming.getReservedNames()));
 			logger.debug(identify(naming.getIgnoring()));
 			logger.debug(identify(naming.getIgnoring().getCustomizing()));
 		}

@@ -8,7 +8,6 @@ import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.GetTypes;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.base.ModelBase;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
-import org.springframework.beans.factory.annotation.Required;
 
 import ee.jakarta.xml.ns.persistence.orm.Attributes;
 import ee.jakarta.xml.ns.persistence.orm.Basic;
@@ -28,7 +27,6 @@ import ee.jakarta.xml.ns.persistence.orm.Transient;
 import ee.jakarta.xml.ns.persistence.orm.Version;
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Inject;
 
@@ -51,7 +49,6 @@ public class Mapping implements MappingContext
 	{
 		return getTypes;
 	}
-	@Required
 	public void setGetTypes(GetTypes<Mapping> getTypes)
 	{
 		this.getTypes = getTypes;
@@ -63,7 +60,6 @@ public class Mapping implements MappingContext
 	{
 		return customizing;
 	}
-	@Required
 	public void setCustomizing(Customizing modelCustomizations)
 	{
 		this.customizing = modelCustomizations;
@@ -75,7 +71,6 @@ public class Mapping implements MappingContext
 	{
 		return naming;
 	}
-	@Required
 	public void setNaming(Naming naming)
 	{
 		this.naming = naming;
@@ -87,7 +82,6 @@ public class Mapping implements MappingContext
 	{
 		return ignoring;
 	}
-	@Required
 	public void setIgnoring(Ignoring ignoring)
 	{
 		this.ignoring = ignoring;
@@ -99,7 +93,6 @@ public class Mapping implements MappingContext
 	{
 		return embeddableAttributesMapping;
 	}
-	@Required
 	public void setEmbeddableAttributesMapping(ClassOutlineMapping<EmbeddableAttributes> embeddableAttributesMapping)
 	{
 		this.embeddableAttributesMapping = embeddableAttributesMapping;

@@ -4,7 +4,6 @@ import org.jvnet.hyperjaxb3.ejb.strategy.customizing.Customizing;
 import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.GetTypes;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
-import org.springframework.beans.factory.annotation.Required;
 
 import com.sun.tools.xjc.outline.FieldOutline;
 

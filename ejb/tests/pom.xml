@@ -22,6 +22,7 @@
 		<module>component-jpa3</module>
 		<module>cu-one</module>
 		<module>custom-naming</module>
+		<module>customizations</module>
 		<module>dc</module>
 		<module>device</module>
 		<module>dom</module>
@@ -96,7 +97,6 @@
 				<module>annox</module>
 				<module>ccr</module>
 				<module>component</module>
-				<module>customizations</module>
 				<module>customType</module>
 				<module>idSymbolSpace</module>
 				<module>ims-eportfolio</module>
