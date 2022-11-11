@@ -3,7 +3,7 @@
 <jaxb:bindings jaxb:version="3.0"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jaxb https://jakarta.ee/xml/ns/jaxb/bindingschema_3_0.xsd"
@@ -21,7 +21,7 @@
 	<!-- Schema Bindings -->
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">        
 		<jaxb:schemaBindings>
-			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.po"/>
+			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.po"/>
 		</jaxb:schemaBindings>
 		<hj:persistence>
 			<hj:default-generated-id>

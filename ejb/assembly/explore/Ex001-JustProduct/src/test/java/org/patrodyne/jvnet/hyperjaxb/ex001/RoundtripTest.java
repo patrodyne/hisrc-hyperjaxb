@@ -3,7 +3,7 @@ package org.patrodyne.jvnet.hyperjaxb.ex001;
 import jakarta.persistence.EntityManagerFactory;
 
 import org.junit.jupiter.api.Disabled;
-import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
+import org.jvnet.basicjaxb.xml.bind.ContextPathAware;
 
 /**
  * Test roundtrip from XML instance to database and back.
@@ -15,7 +15,7 @@ import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
  */
 @Disabled("XML Schema contains default value(s).")
 public class RoundtripTest
-	extends org.jvnet.hyperjaxb3.ejb.test.RoundtripTest
+	extends org.jvnet.hyperjaxb.ejb.test.RoundtripTest
 	implements ContextPathAware
 {
 	public String getContextPath()

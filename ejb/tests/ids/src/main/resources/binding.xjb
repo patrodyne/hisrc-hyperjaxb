@@ -3,7 +3,7 @@
 <jaxb:bindings jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	jaxb:extensionBindingPrefixes="hj orm"
 >
@@ -14,7 +14,7 @@
 			<jaxb:serializable uid="20210901" />
 		</jaxb:globalBindings>
 		<jaxb:schemaBindings>
-			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.ids.tests"/>
+			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.ids.tests"/>
 		</jaxb:schemaBindings>
 	</jaxb:bindings>
 

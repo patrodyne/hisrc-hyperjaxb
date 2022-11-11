@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Header: /cvs/hyperjaxb3/ejb/tests/regrep/src/test/samples/SubmitObjectsRequest_AssociationTypeScheme.xml,v 1.2 2007/06/03 10:34:48 lexi Exp $ -->
 <SubmitObjectsRequest xmlns="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0" xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0  ../schema/lcm.xsd" xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0" xmlns:query21="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" xmlns:rim30="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0  ../schema/lcm.xsd">
   <rs:RequestSlotList>
     <rim:Slot name="urn:oasis:names:tc:ebxml-regrep:rim:RegistryObject:dontVersion">

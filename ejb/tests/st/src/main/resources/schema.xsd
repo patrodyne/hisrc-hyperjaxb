@@ -1,11 +1,11 @@
 <xsd:schema
-	targetNamespace="urn:org.jvnet.hyperjaxb3.ejb.tests.st" 
-	xmlns:test="urn:org.jvnet.hyperjaxb3.ejb.tests.st" 
+	targetNamespace="urn:org.jvnet.hyperjaxb.ejb.tests.st" 
+	xmlns:test="urn:org.jvnet.hyperjaxb.ejb.tests.st" 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	elementFormDefault="qualified" 
 	attributeFormDefault="unqualified" 
 
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 
 	version="1.0"
@@ -16,7 +16,7 @@
 	<xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.st"/>
+				<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.st"/>
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 	</xsd:annotation>

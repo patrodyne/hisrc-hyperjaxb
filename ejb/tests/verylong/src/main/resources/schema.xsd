@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:hj="http://jvnet.org/hyperjaxb/jpa" 
 	jaxb:extensionBindingPrefixes="hj" jaxb:version="3.0">
 	<xs:annotation>
 		<xs:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.verylong"/>
+				<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.verylong"/>
 			</jaxb:schemaBindings>
 		</xs:appinfo>
 	</xs:annotation>

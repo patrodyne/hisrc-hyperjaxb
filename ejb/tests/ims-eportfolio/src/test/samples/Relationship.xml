@@ -5,11 +5,15 @@
 <!-- Date:			27th June, 2005		     											-->
 <!-- Comment:		The relationship PortfolioPart in the Relexion and Assertion		--> 
 <!--				example Portfolio Package.											-->
-<learnerinformation xmlns = "http://www.imsglobal.org/xsd/imslip_v1p0" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation = "http://www.imsglobal.org/xsd/imslip_v1p0 http://www.imsglobal.org/xsd/imslip_v1p0.xsd">
+<learnerinformation
+	xmlns = "http://www.imsglobal.org/xsd/imslip_v1p0"
+	xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation = "http://www.imsglobal.org/xsd/imslip_v1p0 http://www.imsglobal.org/xsd/imslip_v1p0.xsd"
+	xml:lang="en">
 	<relationship>                    
 		<typename>                       
 			<tysource sourcetype = "imsdefault"/>                       
-			<tyvalue>reflections</tyvalue>                    
+			<tyvalue xml:lang="en">reflections</tyvalue>                    
 		</typename>                    
 		<contentype>                       
 			<referential>                           
@@ -22,7 +26,7 @@
 			</tuplesource>                       
 			<tuplerelation>                           
 				<typename>                              
-					<tyvalue>isAnnotadBy</tyvalue>                           
+					<tyvalue xml:lang="en">isAnnotadBy</tyvalue>                           
 				</typename>                       
 			</tuplerelation>                       
 			<tupledest>                           
@@ -33,7 +37,7 @@
 			</tupledest>                    
 		</tuple>                    
 		<description>                       
-			<short>The work is annotated by these comments</short>                    
+			<short xml:lang="en">The work is annotated by these comments</short>                    
 		</description>                
 	</relationship>
 </learnerinformation>

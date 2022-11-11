@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa" 
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	jaxb:extensionBindingPrefixes="hj" jaxb:version="3.0">
 	<xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb3.tests.ak"/>
+				<jaxb:package name="org.jvnet.hyperjaxb.tests.ak"/>
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 	</xsd:annotation>

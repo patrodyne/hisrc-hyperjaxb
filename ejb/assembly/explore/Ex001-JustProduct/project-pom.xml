@@ -265,8 +265,8 @@
 							<bindingIncludes>
 								<bindingInclude>*.xjb</bindingInclude>
 							</bindingIncludes>
-							<!-- variant: ejb | jpa3 -->
-							<variant>jpa3</variant>
+							<!-- variant: ejb | jpa -->
+							<variant>jpa</variant>
 							<noFileHeader>true</noFileHeader>
 							<generateInheritance>true</generateInheritance>
 							<generateAnnotation>true</generateAnnotation>

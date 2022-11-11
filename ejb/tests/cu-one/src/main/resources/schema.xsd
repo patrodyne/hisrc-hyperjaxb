@@ -4,11 +4,11 @@
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 
-	xmlns:annox="http://annox.dev.java.net"
-	xmlns:ha="http://annox.dev.java.net/org.hibernate.annotations"
+	xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox"
+	xmlns:ha="http://jvnet.org/basicjaxb/xjc/annox/org.hibernate.annotations"
 
 	jaxb:extensionBindingPrefixes="hj orm xjc annox"
 	jaxb:version="3.0"
@@ -21,7 +21,7 @@
 	<xs:annotation>
 		<!--xs:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.cuone"/>
+				<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.cuone"/>
 			</jaxb:schemaBindings>
 			<hj:persistence>
 				<hj:default-generated-id name="Myid" transient="true">

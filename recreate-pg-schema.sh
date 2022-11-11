@@ -6,9 +6,9 @@
 # or a remote PostgreSQL database server. The choice is configured using
 # these Java system properties in build.sh, etc.:
 #
-#   -Dorg.jvnet.hyperjaxb3.persistencePropertiesBaseFile=persistence.properties
-#   -Dorg.jvnet.hyperjaxb3.persistencePropertiesMoreFile=persistence-h2.properties
-#   -Dorg.jvnet.hyperjaxb3.persistencePropertiesMoreFile=persistence-pg.properties
+#   -Dorg.jvnet.hyperjaxb.persistencePropertiesBaseFile=persistence.properties
+#   -Dorg.jvnet.hyperjaxb.persistencePropertiesMoreFile=persistence-h2.properties
+#   -Dorg.jvnet.hyperjaxb.persistencePropertiesMoreFile=persistence-pg.properties
 #
 # Choose only one of the 'PropertiesMore' configurations to specify H2 or PostgreSQL.
 # The local H2 databases are auto-created during the Maven build in each target sub-
@@ -35,11 +35,13 @@ SQLFILE="src/test/resources/persistence-pg-recreate-schema.sql"
 # Comment out 'exit' to recreate all schemas!
 #
 exit 0
+${SQLCMD} "ejb/assembly/explore/Ex001-JustProduct/${SQLFILE}" | grep "GRANT ALL"
+${SQLCMD} "ejb/assembly/samples/po-higherjaxb-maven-plugin/${SQLFILE}" | grep "GRANT ALL"
+${SQLCMD} "ejb/assembly/samples/po-customized-eclipselink/${SQLFILE}" | grep "GRANT ALL"
+${SQLCMD} "ejb/assembly/samples/po-initial/${SQLFILE}" | grep "GRANT ALL"
+${SQLCMD} "ejb/assembly/samples/uniprot/${SQLFILE}" | grep "GRANT ALL"
+${SQLCMD} "ejb/assembly/templates/basic/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/roundtrip/${SQLFILE}" | grep "GRANT ALL"
-${SQLCMD} "ejb/samples/po-maven-jaxb2-plugin/${SQLFILE}" | grep "GRANT ALL"
-${SQLCMD} "ejb/samples/po-customized-eclipselink/${SQLFILE}" | grep "GRANT ALL"
-${SQLCMD} "ejb/samples/po-initial/${SQLFILE}" | grep "GRANT ALL"
-${SQLCMD} "ejb/samples/uniprot/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tests/po-mysql/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tests/tp/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tests/custom-naming/schema/${SQLFILE}" | grep "GRANT ALL"
@@ -84,11 +86,11 @@ ${SQLCMD} "ejb/tests/polyform/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tests/annox/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tests/nml/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tests/sml/${SQLFILE}" | grep "GRANT ALL"
-${SQLCMD} "ejb/tests/issues-jpa3/${SQLFILE}" | grep "GRANT ALL"
+${SQLCMD} "ejb/tests/issues-jpa/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tests/sbml/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tests/addressbook/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tests/ak/${SQLFILE}" | grep "GRANT ALL"
-${SQLCMD} "ejb/tests/embeddable-jpa3/${SQLFILE}" | grep "GRANT ALL"
+${SQLCMD} "ejb/tests/embeddable-jpa/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tests/fpml-pretrade/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tests/ioda/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tests/ims-lip/${SQLFILE}" | grep "GRANT ALL"
@@ -112,6 +114,4 @@ ${SQLCMD} "ejb/tests/one/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tutorials/po/step-two/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tutorials/po/step-one/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/tutorials/po/step-three/${SQLFILE}" | grep "GRANT ALL"
-${SQLCMD} "ejb/templates/basic/${SQLFILE}" | grep "GRANT ALL"
-${SQLCMD} "ejb/explore/Ex001-JustProduct/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "misc/dynamic/${SQLFILE}" | grep "GRANT ALL"

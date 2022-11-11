@@ -27,8 +27,8 @@
 	<positiveInteger>15</positiveInteger>
 	<negativeInteger>16</negativeInteger>
 	<boolean>true</boolean>
-	<anyURI>http://hyperjaxb3.dev.java.net</anyURI>
-	<QName xmlns:hj3="http://hyperjaxb3.dev.java.net">hj3:hyperjaxb</QName>
+	<anyURI>https://github.com/patrodyne/hisrc-hyperjaxb</anyURI>
+	<QName xmlns:hj="https://github.com/patrodyne/hisrc-hyperjaxb">hj:hyperjaxb</QName>
 	<string>string</string>
 	<normalizedString>normalized string</normalizedString>
 	<token>token</token>
@@ -69,8 +69,8 @@
 	<positiveIntegerNillable>15</positiveIntegerNillable>
 	<negativeIntegerNillable>16</negativeIntegerNillable>
 	<booleanNillable>true</booleanNillable>
-	<anyURINillable>http://hyperjaxb3.dev.java.net</anyURINillable>
-	<QNameNillable xmlns:hj3="http://hyperjaxb3.dev.java.net">hj3:hyperjaxb</QNameNillable>
+	<anyURINillable>https://github.com/patrodyne/hisrc-hyperjaxb</anyURINillable>
+	<QNameNillable xmlns:hj="https://github.com/patrodyne/hisrc-hyperjaxb">hj:hyperjaxb</QNameNillable>
 	<stringNillable>string</stringNillable>
 	<normalizedStringNillable>normalized string</normalizedStringNillable>
 	<tokenNillable>token</tokenNillable>

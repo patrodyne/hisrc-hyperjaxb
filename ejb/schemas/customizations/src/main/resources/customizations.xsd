@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	elementFormDefault="qualified" attributeFormDefault="unqualified" 
-	targetNamespace="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
+	targetNamespace="http://jvnet.org/hyperjaxb/jpa" 
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm" 
 	xmlns:persistence="https://jakarta.ee/xml/ns/persistence"
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa" 
 
 	jaxb:extensionBindingPrefixes="inheritance"
-	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance">
+	xmlns:inheritance="http://jvnet.org/basicjaxb/xjc/inheritance">
 
 	<xsd:import namespace="https://jakarta.ee/xml/ns/persistence/orm" schemaLocation="orm/orm_3_0.xsd"/>
 	<xsd:import namespace="https://jakarta.ee/xml/ns/persistence" schemaLocation="persistence_3_0.xsd"/>
@@ -17,7 +17,7 @@
 	<xsd:complexType name="persistence">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:sequence>
@@ -64,7 +64,7 @@
 	<xsd:complexType name="entity">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -80,7 +80,7 @@
 	<xsd:complexType name="mapped-superclass">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -95,7 +95,7 @@
 	<xsd:complexType name="id">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -123,7 +123,7 @@
 	<xsd:complexType name="embedded-id">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -138,7 +138,7 @@
 	<xsd:complexType name="version">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -170,7 +170,7 @@
 	<xsd:complexType name="embeddable">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -186,7 +186,7 @@
 	<xsd:complexType name="one-to-many">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -201,7 +201,7 @@
 	<xsd:complexType name="many-to-one">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -216,7 +216,7 @@
 	<xsd:complexType name="one-to-one">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -231,7 +231,7 @@
 	<xsd:complexType name="many-to-many">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -246,7 +246,7 @@
 	<xsd:complexType name="element-collection">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -262,7 +262,7 @@
 	<xsd:complexType name="basic">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -300,7 +300,7 @@
 	<xsd:complexType name="embedded">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexContent>
@@ -365,7 +365,7 @@
 	<xsd:complexType name="jaxb-context">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+				<inheritance:implements>org.jvnet.hyperjaxb.jpa.Mergeable</inheritance:implements>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:sequence>

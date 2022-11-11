@@ -2,14 +2,14 @@
 <xs:schema
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	jaxb:extensionBindingPrefixes="hj"
 	jaxb:version="3.0"
 >
 	<xs:annotation>
 		<xs:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb2.customizations.test"/>
+				<jaxb:package name="org.jvnet.hyperjaxb.customizations.test"/>
 			</jaxb:schemaBindings>
 		</xs:appinfo>
 	</xs:annotation>
@@ -34,7 +34,7 @@
 			</xs:element>
 			<!-- ... -->
 			<xs:element name="simpleSingleProperty" type="xs:string" minOccurs="0">
-				<!-- FIXME: hyperjaxb2
+				<!-- OBSOLETE
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:simpleSingleProperty update="false" insert="false" optimistic-lock="false" lazy="false">
@@ -47,7 +47,7 @@
 			</xs:element>
 			<!-- ... -->
 			<xs:element name="complexSingleProperty" type="cclassType" minOccurs="0">
-				<!-- FIXME: hyperjaxb2
+				<!-- OBSOLETE
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:complexSingleProperty>
@@ -61,7 +61,7 @@
 				-->
 			</xs:element>
 			<xs:element name="complexSinglePropertyOneToOne" type="cclassType" minOccurs="0">
-				<!-- FIXME: hyperjaxb2
+				<!-- OBSOLETE
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:complexSingleProperty>
@@ -85,7 +85,7 @@
 			</xs:any-->
 			<!-- ... -->
 			<xs:element name="simpleCollectionProperty" type="xs:string" minOccurs="0" maxOccurs="unbounded">
-				<!-- FIXME: hyperjaxb2
+				<!-- OBSOLETE
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:simpleCollectionProperty lazy="false" inverse="false" cascade="none" batch-size="3" outer-join="auto" fetch="join" 
@@ -109,7 +109,7 @@
 			</xs:element>
 			<!-- ... -->
 			<xs:element name="complexCollectionProperty" type="cclassType" minOccurs="0" maxOccurs="unbounded">
-				<!-- FIXME: hyperjaxb2
+				<!-- OBSOLETE
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:complexCollectionProperty lazy="false" inverse="false" cascade="none" batch-size="3" outer-join="auto" fetch="join" 
@@ -130,7 +130,7 @@
 			</xs:element>
 			<!-- ... -->
 			<xs:element name="manyToManyCollectionProperty" type="cclassType" minOccurs="0" maxOccurs="unbounded">
-				<!-- FIXME: hyperjaxb2
+				<!-- OBSOLETE
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:complexCollectionProperty lazy="false" inverse="false" cascade="none" batch-size="3" outer-join="auto" fetch="join" 
@@ -152,7 +152,7 @@
 				-->
 			</xs:element>
 			<xs:element name="bagCollectionProperty" type="cclassType" minOccurs="0" maxOccurs="unbounded">
-				<!-- FIXME: hyperjaxb2
+				<!-- OBSOLETE
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:complexCollectionProperty order-by="column1">

@@ -50,7 +50,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="org.h2.Driver" />
 		<property name="url"
-			value="jdbc:h2:file:${org.jvnet.hyperjaxb3.ejb.samples.customerservicecxf.webAppRoot:target/temp}/WEB-INF/database/database" />
+			value="jdbc:h2:file:${org.jvnet.hyperjaxb.ejb.samples.customerservicecxf.webAppRoot:target/temp}/WEB-INF/database/database" />
 		<property name="username" value="tester" />
 		<property name="password" value="123456" />
 	</bean>

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
-		<version>0.6.5-SNAPSHOT</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-issues-el</artifactId>
 	<packaging>jar</packaging>
@@ -50,7 +50,7 @@
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<version>${project.version}</version>
 				<configuration>
-					<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tests.issuesel.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.issuesel.RoundtripTest</roundtripTestClassName>
 				</configuration>
 			</plugin>
 		</plugins>

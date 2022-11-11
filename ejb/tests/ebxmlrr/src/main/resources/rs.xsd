@@ -1,5 +1,5 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
-<!-- $Header: /cvs/hyperjaxb3/ejb/tests/ebxmlrr/src/main/resources/rs.xsd,v 1.1 2007/11/25 12:25:12 lexi Exp $ -->
+<!-- $Header: /cvs/hyperjaxb/ejb/tests/ebxmlrr/src/main/resources/rs.xsd,v 1.1 2007/11/25 12:25:12 lexi Exp $ -->
 <schema targetNamespace="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" 
   xmlns="http://www.w3.org/2001/XMLSchema" 
   xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" 

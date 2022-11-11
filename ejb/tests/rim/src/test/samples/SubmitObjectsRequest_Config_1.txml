@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Header: /cvs/hyperjaxb3/ejb/tests/rim/src/test/samples/SubmitObjectsRequest_Config_1.xml,v 1.1 2007/12/15 17:33:46 lexi Exp $ -->
 <!-- Must be loaded after SubmitObjectsRequest_objectTypesSchemes -->
 <rim:RegistryObject xsi:type="rim:AdhocQueryType" 
                     lid="urn:oasis:names:tc:ebxml-regrep:query:GetClassificationSchemesById" 

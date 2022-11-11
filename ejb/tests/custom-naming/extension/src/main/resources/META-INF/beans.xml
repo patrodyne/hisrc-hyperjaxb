@@ -31,6 +31,6 @@
         may declare prioritized alternatives for the same class.
 	-->
 	<alternatives>
-		<class>org.jvnet.hyperjaxb3.ejb.tests.customnaming.naming.impl.CustomNaming</class>
+		<class>org.jvnet.hyperjaxb.ejb.tests.customnaming.naming.impl.CustomNaming</class>
 	</alternatives>
 </beans>

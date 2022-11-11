@@ -85,8 +85,8 @@
 			<xsd:element ref = "lip:comment" minOccurs = "0"/>
 			<xsd:element ref = "lip:contentype" minOccurs = "0"/>
 			<xsd:element ref = "rdceo:identifier" minOccurs = "0"/>
-			<xsd:element ref = "rdceo:title" minOccurs = "0"/>
-			<xsd:element ref = "rdceo:description" minOccurs = "0" maxOccurs = "unbounded"/>
+			<xsd:element ref = "rdceo:definitionTitle" minOccurs = "0"/>
+			<xsd:element ref = "rdceo:definitionDescription" minOccurs = "0" maxOccurs = "unbounded"/>
 			<xsd:element ref = "rubricOutcome" minOccurs = "0" maxOccurs = "unbounded"/>
 			<xsd:element ref = "dimensionOfQuality" minOccurs = "0" maxOccurs = "unbounded"/>
 			<xsd:element ref = "ext_rubric" minOccurs = "0"/>
@@ -95,9 +95,9 @@
 	<xsd:complexType name = "Outcome.Type">
 		<xsd:sequence>
 			<xsd:element ref = "rdceo:identifier" minOccurs = "0"/>
-			<xsd:element ref = "rdceo:title" minOccurs = "0"/>
-			<xsd:element ref = "rdceo:description" minOccurs = "0" maxOccurs = "unbounded"/>
-			<xsd:element ref = "rdceo:definition" minOccurs = "0" maxOccurs = "unbounded"/>
+			<xsd:element ref = "rdceo:definitionTitle" minOccurs = "0"/>
+			<xsd:element ref = "rdceo:definitionDescription" minOccurs = "0" maxOccurs = "unbounded"/>
+			<xsd:element ref = "rdceo:definitionStructure" minOccurs = "0" maxOccurs = "unbounded"/>
 			<xsd:element ref = "rules" minOccurs = "0" maxOccurs = "unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
@@ -132,8 +132,8 @@
 	<xsd:complexType name = "DimensionOfQuality.Type">
 		<xsd:sequence>
 			<xsd:element ref = "rdceo:identifier" minOccurs = "0"/>
-			<xsd:element ref = "rdceo:title" minOccurs = "0"/>
-			<xsd:element ref = "rdceo:description" minOccurs = "0" maxOccurs = "unbounded"/>
+			<xsd:element ref = "rdceo:definitionTitle" minOccurs = "0"/>
+			<xsd:element ref = "rdceo:definitionDescription" minOccurs = "0" maxOccurs = "unbounded"/>
 			<xsd:element ref = "dimensionOutcome" minOccurs = "0" maxOccurs = "unbounded"/>
 			<xsd:element ref = "dimensionOfQuality" minOccurs = "0" maxOccurs = "unbounded"/>
 		</xsd:sequence>

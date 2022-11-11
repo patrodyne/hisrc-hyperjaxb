@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings jaxb:version="3.0"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	jaxb:extensionBindingPrefixes="xjc orm"
+	xmlns:test="urn:test"
+>
+	
+	<jaxb:globalBindings localScoping="toplevel">
+		<jaxb:serializable uid="20211201" />
+	</jaxb:globalBindings>
+
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xsd:schema">
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+			<hj:default-element-collection fetch="EAGER"/>
+			<!--
+			<hj:default-collection-property type="xsd:string">
+				<hj:element-collection fetch="EAGER">
+					<orm:column length="255"/>
+				</hj:element-collection>
+			</hj:default-collection-property>
+			-->
+		</hj:persistence>
+
+		<jaxb:bindings node="xsd:complexType[@name='HJIII-53-A']//xsd:element[@name='b']">
+			<jaxb:property>
+				<jaxb:baseType name="org.jvnet.hyperjaxb.ejb.tests.issuesjpa.HJIII53B"/>
+			</jaxb:property>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="xsd:complexType[@name='HJIII-53-A']//xsd:element[@name='c']">
+			<jaxb:property>
+				<jaxb:baseType name="org.jvnet.hyperjaxb.ejb.tests.issuesjpa.HJIII53C"/>
+			</jaxb:property>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+</jaxb:bindings>

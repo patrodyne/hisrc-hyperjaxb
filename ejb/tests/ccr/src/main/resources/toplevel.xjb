@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings jaxb:version="3.0"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Patient']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordPatientType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='From']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordFromType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='To']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordToType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Insurance']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyInsuranceType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='AdvanceDirectives']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyAdvanceDirectivesType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Support']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodySupportType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='FunctionalStatus']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyFunctionalStatusType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Problems']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyProblemsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='FamilyHistory']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyFamilyHistoryType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='SocialHistory']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodySocialHistoryType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Alerts']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyAlertsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Medications']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyMedicationsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='MedicalEquipment']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyMedicalEquipmentType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Immunizations']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyImmunizationsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='VitalSigns']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyVitalSignsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Results']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyResultsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Procedures']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyProceduresType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Encounters']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyEncountersType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='PlanOfCare']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyPlanOfCareType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='HealthCareProviders']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyHealthCareProvidersType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordBodyType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Actors']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordActorsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='References']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordReferencesType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Comments']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordCommentsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Signatures']/xs:complexType">
+			<jaxb:class name="ContinuityOfCareRecordSignaturesType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ActorType']/xs:sequence/xs:choice/xs:element[@name='Person']/xs:complexType/xs:sequence/xs:element[@name='Name']/xs:complexType">
+			<jaxb:class name="ActorPersonNameType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ActorType']/xs:sequence/xs:choice/xs:element[@name='Person']/xs:complexType">
+			<jaxb:class name="ActorPersonType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ActorType']/xs:sequence/xs:choice/xs:element[@name='Organization']/xs:complexType">
+			<jaxb:class name="ActorOrganizationType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ActorType']/xs:sequence/xs:choice/xs:element[@name='InformationSystem']/xs:complexType">
+			<jaxb:class name="ActorInformationSystemType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ActorType']/xs:sequence/xs:element[@name='Address']/xs:complexType">
+			<jaxb:class name="ActorAddressType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='CodedDescriptionType']/xs:sequence/xs:element[@name='ObjectAttribute']/xs:complexType/xs:sequence/xs:element[@name='AttributeValue']/xs:complexType">
+			<jaxb:class name="CodedDescriptionObjectAttributeAttributeValueType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='CodedDescriptionType']/xs:sequence/xs:element[@name='ObjectAttribute']/xs:complexType">
+			<jaxb:class name="CodedDescriptionObjectAttributeType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='DateTimeType']/xs:sequence/xs:element[@name='DateTimeRange']/xs:complexType/xs:sequence/xs:element[@name='BeginRange']/xs:complexType">
+			<jaxb:class name="DateTimeDateTimeRangeBeginRangeType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='DateTimeType']/xs:sequence/xs:element[@name='DateTimeRange']/xs:complexType/xs:sequence/xs:element[@name='EndRange']/xs:complexType">
+			<jaxb:class name="DateTimeDateTimeRangeEndRangeType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='DateTimeType']/xs:sequence/xs:element[@name='DateTimeRange']/xs:complexType">
+			<jaxb:class name="DateTimeDateTimeRangeType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='InternalCCRLink']/xs:complexType/xs:sequence/xs:element[@name='Source']/xs:complexType">
+			<jaxb:class name="InternalCCRLinkSourceType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Direction']/xs:complexType/xs:sequence/xs:element[@name='Dose']/xs:complexType">
+			<jaxb:class name="DirectionDoseType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Direction']/xs:complexType/xs:sequence/xs:element[@name='DoseCalculation']/xs:complexType">
+			<jaxb:class name="DirectionDoseCalculationType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Direction']/xs:complexType/xs:sequence/xs:element[@name='DoseRestriction']/xs:complexType">
+			<jaxb:class name="DirectionDoseRestrictionType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Direction']/xs:complexType/xs:sequence/xs:element[@name='Route']/xs:complexType">
+			<jaxb:class name="DirectionRouteType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Agent']/xs:complexType/xs:sequence/xs:element[@name='Products']/xs:complexType">
+			<jaxb:class name="AgentProductsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Agent']/xs:complexType/xs:sequence/xs:element[@name='EnvironmentalAgents']/xs:complexType">
+			<jaxb:class name="AgentEnvironmentalAgentsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Agent']/xs:complexType/xs:sequence/xs:element[@name='Problems']/xs:complexType">
+			<jaxb:class name="AgentProblemsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Agent']/xs:complexType/xs:sequence/xs:element[@name='Results']/xs:complexType">
+			<jaxb:class name="AgentResultsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Reaction']/xs:complexType/xs:sequence/xs:element[@name='Interventions']/xs:complexType/xs:sequence/xs:element[@name='Intervention']/xs:complexType">
+			<jaxb:class name="ReactionInterventionsInterventionType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@name='Reaction']/xs:complexType/xs:sequence/xs:element[@name='Interventions']/xs:complexType">
+			<jaxb:class name="ReactionInterventionsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='AuthorizationType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Immunizations']/xs:complexType">
+			<jaxb:class name="AuthorizationImmunizationsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='DoseCalculationType']/xs:sequence/xs:element[@name='Variable']/xs:complexType">
+			<jaxb:class name="DoseCalculationVariableType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='FamilyHistoryType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='FamilyMember']/xs:complexType">
+			<jaxb:class name="FamilyHistoryFamilyMemberType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='FamilyHistoryType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Problem']/xs:complexType">
+			<jaxb:class name="FamilyHistoryProblemType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='GoalType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Milestones']/xs:complexType">
+			<jaxb:class name="GoalMilestonesType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='IndicationType']/xs:sequence/xs:element[@name='PhysiologicalParameter']/xs:complexType">
+			<jaxb:class name="IndicationPhysiologicalParameterType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='InsuranceType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Authorizations']/xs:complexType">
+			<jaxb:class name="InsuranceAuthorizationsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='InterventionType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Medications']/xs:complexType">
+			<jaxb:class name="InterventionMedicationsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='InterventionType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Immunizations']/xs:complexType">
+			<jaxb:class name="InterventionImmunizationsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='InterventionType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Authorizatons']/xs:complexType">
+			<jaxb:class name="InterventionAuthorizatonsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='ProcedureType']/xs:sequence/xs:sequence/xs:element[@name='Products']/xs:complexType">
+			<jaxb:class name="ProcedureProductsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Strength']/xs:complexType">
+			<jaxb:class name="StructuredProductProductStrengthType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Form']/xs:complexType">
+			<jaxb:class name="StructuredProductProductFormType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Concentration']/xs:complexType">
+			<jaxb:class name="StructuredProductProductConcentrationType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Size']/xs:complexType/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Dimensions']/xs:complexType/xs:sequence/xs:element[@name='Dimension']/xs:complexType">
+			<jaxb:class name="StructuredProductProductSizeDimensionsDimensionType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Size']/xs:complexType/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Dimensions']/xs:complexType">
+			<jaxb:class name="StructuredProductProductSizeDimensionsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Size']/xs:complexType">
+			<jaxb:class name="StructuredProductProductSizeType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Product']/xs:complexType">
+			<jaxb:class name="StructuredProductProductType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='PatientInstructions']/xs:complexType">
+			<jaxb:class name="StructuredProductPatientInstructionsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='FulfillmentInstructions']/xs:complexType">
+			<jaxb:class name="StructuredProductFulfillmentInstructionsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Refills']/xs:complexType/xs:sequence/xs:element[@name='Refill']/xs:complexType">
+			<jaxb:class name="StructuredProductRefillsRefillType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Refills']/xs:complexType">
+			<jaxb:class name="StructuredProductRefillsType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='FulfillmentHistory']/xs:complexType">
+			<jaxb:class name="StructuredProductFulfillmentHistoryType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='TestType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='NormalResult']/xs:complexType">
+			<jaxb:class name="TestNormalResultType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='VehicleType']/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Strength']/xs:complexType">
+			<jaxb:class name="VehicleProductStrengthType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='VehicleType']/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Form']/xs:complexType">
+			<jaxb:class name="VehicleProductFormType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='VehicleType']/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Concentration']/xs:complexType">
+			<jaxb:class name="VehicleProductConcentrationType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='VehicleType']/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Size']/xs:complexType">
+			<jaxb:class name="VehicleProductSizeType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='VehicleType']/xs:sequence/xs:element[@name='Product']/xs:complexType">
+			<jaxb:class name="VehicleProductType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:complexType[@name='VehicleType']/xs:sequence/xs:element[@name='Quantity']/xs:complexType">
+			<jaxb:class name="VehicleQuantityType"/>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+</jaxb:bindings>

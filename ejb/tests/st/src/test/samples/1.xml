@@ -1,4 +1,4 @@
-<root xmlns="urn:org.jvnet.hyperjaxb3.ejb.tests.st">
+<root xmlns="urn:org.jvnet.hyperjaxb.ejb.tests.st">
 	<minLength>123456</minLength>
 	<maxLength>1234567890</maxLength>
 	<length>12345678</length>

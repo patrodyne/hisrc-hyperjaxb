@@ -5,7 +5,7 @@
 	<xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.any"/>
+				<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.any"/>
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 	</xsd:annotation>

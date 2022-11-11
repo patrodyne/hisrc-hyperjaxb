@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
-		<version>0.6.5-SNAPSHOT</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-star</artifactId>
 	<packaging>jar</packaging>
@@ -55,7 +55,7 @@
 						<include>STAR/Rev5.1.4/BODs/Developer/*.xsd</include>
 						<!--include>STAR/Rev5.1.4/BODs/Standalone/AcknowledgeCreditApplication.xsd</include-->
 					</schemaIncludes>
-					<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tests.star.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.star.RoundtripTest</roundtripTestClassName>
 				</configuration>
 			</plugin>
 		</plugins>

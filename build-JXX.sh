@@ -38,7 +38,7 @@ else
 fi
 
 # mvn -DskipTests=true clean install
-# mvn -DskipTests=true -Dorg.jvnet.hyperjaxb3.todoLogLevel=DEBUG -Pnexus-deploy clean deploy
-# mvn -DskipTests=true -Dorg.jvnet.hyperjaxb3.todoLogLevel=DEBUG -DdryRun=false release:clean
-# mvn -DskipTests=true -Dorg.jvnet.hyperjaxb3.todoLogLevel=DEBUG -DdryRun=true release:prepare
-# mvn -DskipTests=true -Dorg.jvnet.hyperjaxb3.todoLogLevel=DEBUG -DdryRun=true release:perform
+# mvn -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -Pnexus-deploy clean deploy
+# mvn -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -DdryRun=false release:clean
+# mvn -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -DdryRun=true release:prepare
+# mvn -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -DdryRun=true release:perform

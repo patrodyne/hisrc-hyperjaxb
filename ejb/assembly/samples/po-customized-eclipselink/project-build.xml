@@ -89,13 +89,13 @@
 	</target>
 
 	<target name="generate-sources" depends="init">
-		<taskdef name="xjc" classname="org.jvnet.jaxb2_commons.xjc.XJC2Task">
+		<taskdef name="xjc" classname="org.jvnet.basicjaxb.xjc.XJC2Task">
 			<classpath refid="xjc-task.path"/>
 		</taskdef>
 		<xjc destdir="\${basedir}/target/generated-sources/xjc" extension="true">
 			<arg line="
-				-Xhyperjaxb3-ejb
-				-Xhyperjaxb3-ejb-roundtripTestClassName=RoundtripTest
+				-Xhyperjaxb-ejb
+				-Xhyperjaxb-ejb-roundtripTestClassName=RoundtripTest
 				-Xequals
 				-XhashCode
 				-Xinheritance
@@ -169,7 +169,7 @@
 				<fork>
 					<syspropertyset>
 						<!-- See src/test/resources/jvmsystem.properties -->
-						<propertyref prefix="org.jvnet.hyperjaxb3"/>
+						<propertyref prefix="org.jvnet.hyperjaxb"/>
 					</syspropertyset>
 				</fork>
 				<fileset dir="\${basedir}/target/test-classes">

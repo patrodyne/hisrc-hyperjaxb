@@ -1,2 +1,2 @@
-org.jvnet.hyperjaxb3.ejb.plugin.EjbPlugin
-org.jvnet.hyperjaxb3.ejb.jpa3.plugin.JPA3Plugin
+org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin
+org.jvnet.hyperjaxb.ejb.jpa.plugin.JPAPlugin

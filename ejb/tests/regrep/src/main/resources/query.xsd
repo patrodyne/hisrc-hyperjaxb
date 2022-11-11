@@ -1,5 +1,5 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
-<!-- $Header: /cvs/hyperjaxb3/ejb/tests/regrep/src/main/resources/query.xsd,v 1.1 2007/06/02 08:00:13 lexi Exp $ -->
+<!-- $Header: /cvs/hyperjaxb/ejb/tests/regrep/src/main/resources/query.xsd,v 1.1 2007/06/02 08:00:13 lexi Exp $ -->
 <schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" xmlns:tns="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0">
   <!-- Import the rim.xsd file with XML schema mappaing from RIM -->
   <import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" schemaLocation="rim.xsd"/>

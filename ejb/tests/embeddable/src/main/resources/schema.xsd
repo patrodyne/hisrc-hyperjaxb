@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-	xmlns:annox="http://annox.dev.java.net"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa" xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox"
 	jaxb:extensionBindingPrefixes="hj orm annox" jaxb:version="3.0">
 	<xs:annotation>
 		<xs:appinfo>
@@ -9,7 +9,7 @@
 				<jaxb:serializable uid="20211201" />
 			</jaxb:globalBindings>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.embeddable"/>
+				<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.embeddable"/>
 			</jaxb:schemaBindings>
 		</xs:appinfo>
 	</xs:annotation>

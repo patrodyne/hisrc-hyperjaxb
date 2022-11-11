@@ -7,7 +7,7 @@
 	elementFormDefault="qualified" 
 	attributeFormDefault="unqualified"
 
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 
@@ -18,7 +18,7 @@
 	<xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.issues"/>
+				<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.issues"/>
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 	</xsd:annotation>
@@ -377,7 +377,7 @@
 				<xsd:appinfo>
 					<jaxb:property>
 						<jaxb:baseType>
-							<xjc:javaType name="java.util.Calendar" adapter="org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.TimeStringAsCalendar"/>
+							<xjc:javaType name="java.util.Calendar" adapter="org.jvnet.hyperjaxb.xml.bind.annotation.adapters.TimeStringAsCalendar"/>
 						</jaxb:baseType>
 					</jaxb:property>
 					<hj:basic>
@@ -544,7 +544,7 @@
 					<orm:query>SELECT
 x
 FROM
-org.jvnet.hyperjaxb3.ejb.tests.issues.IssueHJIII14Type						
+org.jvnet.hyperjaxb.ejb.tests.issues.IssueHJIII14Type						
 x
 </orm:query>
 					</orm:named-query>
@@ -676,11 +676,13 @@ x
 		<xsd:annotation>
 			<xsd:appinfo>
 				<hj:generated-property name="AnyElement" propertyName="Anything">
-					<hj:jaxb-context contextPath="org.jvnet.hyperjaxb3.ejb.tests.po"/>
+					<hj:jaxb-context contextPath="org.jvnet.hyperjaxb.ejb.tests.po"/>
+					<!-- FIXME: Not in correct place.
 					<hj:basic merged="false">
 						<orm:column name="EVERYTHING" length="1024000"/>
 						<orm:lob/>
 					</hj:basic>
+					-->
 				</hj:generated-property>
 			</xsd:appinfo>
 		</xsd:annotation>
@@ -701,10 +703,12 @@ x
 		<xsd:annotation>
 			<xsd:appinfo>
 				<hj:generated-property name="AnyElement" propertyName="Anything">
+					<!-- FIXME: Not in correct place.
 					<hj:basic merged="false">
 						<orm:column name="ANYTHING" length="1024000"/>
 						<orm:lob/>
 					</hj:basic>
+					-->
 				</hj:generated-property>
 			</xsd:appinfo>
 		</xsd:annotation>
@@ -727,11 +731,13 @@ x
 				<xsd:annotation>
 					<xsd:appinfo>
 						<hj:generated-property propertyName="Anything">
-							<hj:jaxb-context contextPath="org.jvnet.hyperjaxb3.ejb.tests.po"/>
+							<hj:jaxb-context contextPath="org.jvnet.hyperjaxb.ejb.tests.po"/>
+							<!-- FIXME: Not in correct place.
 							<hj:basic merged="false">
 								<orm:column name="EVERYTHING" length="1024000"/>
 								<orm:lob/>
 							</hj:basic>
+							-->
 						</hj:generated-property>
 					</xsd:appinfo>
 				</xsd:annotation>
@@ -755,9 +761,9 @@ x
 				<xsd:element ref="test:issueHJIII40B">
 					<xsd:annotation>
 						<xsd:appinfo>
-							<jaxb:property name="Second"/>
+							<jaxb:property name="Secondo"/>
 							<hj:many-to-one>
-								<orm:join-column name="SECOND" />
+								<orm:join-column name="SECONDO" />
 							</hj:many-to-one>
 						</xsd:appinfo>
 					</xsd:annotation>

@@ -13,7 +13,7 @@ import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.hikaricp.internal.HikariCPConnectionProvider;
 import org.hibernate.hikaricp.internal.HikariConfigurationUtil;
-import org.jvnet.jaxb2_commons.reflection.util.FieldAccessor;
+import org.jvnet.basicjaxb.reflection.util.FieldAccessor;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.util.PropertyElf;

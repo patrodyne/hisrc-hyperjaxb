@@ -2,23 +2,44 @@
 <jaxb:bindings jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:hj="http://hyperjaxb2.jvnet.org/customizations"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-	jaxb:extensionBindingPrefixes="hj xjc"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm xjc"
 >
+	<!-- Global Bindings -->
+	<jaxb:bindings>
+		<!-- JPA section 2.1, entities must be top-level classes. -->
+		<!-- JPA section 2.1, entities must implement the serializable interface. -->
+		<jaxb:globalBindings localScoping="toplevel" choiceContentProperty="true">
+			<jaxb:serializable uid="20211201" />
+		</jaxb:globalBindings>
+	</jaxb:bindings>
+
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
-		<jaxb:globalBindings bindingStyle="modelGroupBinding" choiceContentProperty="true"/>
+
 		<jaxb:schemaBindings>
 			<jaxb:package name="org.astm.ccr"/>
 			<jaxb:nameXmlTransform>
 				<jaxb:elementName suffix="Element"/>
 			</jaxb:nameXmlTransform>
 		</jaxb:schemaBindings>
+
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='From']">
 			<hj:complexSingleProperty>
 				<hj:column name="ccr_from"/>
 			</hj:complexSingleProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='From']/xs:complexType/xs:sequence/xs:element[@name='ActorLink']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -26,11 +47,17 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='To']">
 			<hj:complexSingleProperty>
 				<hj:column name="ccr_to"/>
 			</hj:complexSingleProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='To']/xs:complexType/xs:sequence/xs:element[@name='ActorLink']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -38,11 +65,17 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='References']">
 			<hj:complexSingleProperty>
 				<hj:column name="ccr_reference"/>
 			</hj:complexSingleProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='HealthCareProviders']/xs:complexType/xs:sequence/xs:element[@name='Provider']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -50,6 +83,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='AdvanceDirectives']/xs:complexType/xs:sequence/xs:element[@name='AdvanceDirective']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -57,6 +93,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Procedures']/xs:complexType/xs:sequence/xs:element[@name='Procedure']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -64,6 +103,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Insurance']/xs:complexType/xs:sequence/xs:element[@name='Payer']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -71,27 +113,39 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
-				<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Support']/xs:complexType/xs:sequence/xs:element[@name='SupportProvider']">
+		-->
+
+		<!-- OBSOLETE
+		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Support']/xs:complexType/xs:sequence/xs:element[@name='SupportProvider']">
 			<hj:complexCollectionProperty>
 				<hj:key>
 					<hj:column name="ccr_supportprovider"/>
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
-						<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='FunctionalStatus']/xs:complexType/xs:sequence/xs:element[@name='Function']">
+		-->
+
+		<!-- OBSOLETE
+		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='FunctionalStatus']/xs:complexType/xs:sequence/xs:element[@name='Function']">
 			<hj:complexCollectionProperty>
 				<hj:key>
 					<hj:column name="ccr_funcstatus_function"/>
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
-								<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Problems']/xs:complexType/xs:sequence/xs:element[@name='Problem']">
+		-->
+
+		<!-- OBSOLETE
+		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Problems']/xs:complexType/xs:sequence/xs:element[@name='Problem']">
 			<hj:complexCollectionProperty>
 				<hj:key>
 					<hj:column name="ccr_Problem"/>
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='FamilyHistory']/xs:complexType/xs:sequence/xs:element[@name='FamilyProblemHistory']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -99,6 +153,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='SocialHistory']/xs:complexType/xs:sequence/xs:element[@name='RiskFactorHistory']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -106,6 +163,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Alerts']/xs:complexType/xs:sequence/xs:element[@name='Alert']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -113,6 +173,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Medications']/xs:complexType/xs:sequence/xs:element[@name='Medication']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -120,6 +183,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='MedicalEquipment']/xs:complexType/xs:sequence/xs:element[@name='Equipment']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -127,6 +193,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Immunizations']/xs:complexType/xs:sequence/xs:element[@name='Immunization']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -134,6 +203,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='VitalSigns']/xs:complexType/xs:sequence/xs:element[@name='Result']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -141,6 +213,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Results']/xs:complexType/xs:sequence/xs:element[@name='Result']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -148,6 +223,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='Encounters']/xs:complexType/xs:sequence/xs:element[@name='Encounter']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -155,6 +233,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='PlanOfCare']/xs:complexType/xs:sequence/xs:element[@name='Plan']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -162,6 +243,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:element[@name='ContinuityOfCareRecord']/xs:complexType/xs:sequence/xs:element[@name='Body']/xs:complexType/xs:sequence/xs:element[@name='PlanOfCare']/xs:complexType/xs:sequence/xs:element[@name='Plan']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -169,7 +253,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
 	
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Product']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -177,6 +263,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='FulfillmentInstructions']/xs:complexType/xs:sequence/xs:element[@name='Instruction']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -184,6 +273,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='PatientInstructions']/xs:complexType/xs:sequence/xs:element[@name='Instruction']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -191,6 +283,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
+
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:complexType[@name='CodedDescriptionType']/xs:sequence/xs:element[@name='ObjectAttribute']/xs:complexType/xs:sequence/xs:element[@name='AttributeValue']/xs:complexType/xs:sequence/xs:element[@name='Code']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -198,7 +293,9 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
+		-->
 
+		<!-- OBSOLETE
 		<jaxb:bindings node="xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Size']/xs:complexType/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Dimensions']/xs:complexType/xs:sequence/xs:element[@name='Dimension']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -206,6 +303,7 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>		
+		-->
 
 		<jaxb:bindings node="xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Size']/xs:complexType/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Dimensions']/xs:complexType/xs:sequence/xs:element[@name='Dimension']/xs:complexType">
 			<hj:class>
@@ -213,6 +311,6 @@
 			</hj:class>
 		</jaxb:bindings>		
 		
-		
 	</jaxb:bindings>
+
 </jaxb:bindings>

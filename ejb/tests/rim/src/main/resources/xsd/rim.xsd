@@ -14,8 +14,12 @@
   <annotation>
     <documentation xml:lang="en">The schema for OASIS ebXML Registry Information Model</documentation>
   </annotation>
+  
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
-  <import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://schemas.opengis.net/gml/2.1.2/xlinks.xsd"/>
+  
+  <!-- http://schemas.opengis.net/gml/2.1.2/xlinks.xsd -->
+  <import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+  
   <import namespace="http://www.w3.org/2005/08/addressing" schemaLocation="http://www.w3.org/2006/03/addressing/ws-addr.xsd"/>
   
   <!-- Begin information model mapping from ebRIM. -->
@@ -103,7 +107,7 @@
   <element name="ValueList" type="tns:ValueListType"/>
   
   <!--
-  TODO: add abstract="true" when issue fixed: https://hyperjaxb3.dev.java.net/issues/show_bug.cgi?id=122
+  TODO: add abstract="true" when issue fixed: https://hyperjaxb.dev.java.net/issues/show_bug.cgi?id=122
   -->
   <complexType name="ValueType" >
   </complexType>
@@ -669,7 +673,7 @@
   <element name="QueryInvocation" type="tns:QueryInvocationType"/>
   
   <!--
-  TODO: add abstract="true" when issue fixed: https://hyperjaxb3.dev.java.net/issues/show_bug.cgi?id=122
+  TODO: add abstract="true" when issue fixed: https://hyperjaxb.dev.java.net/issues/show_bug.cgi?id=122
   -->
   <complexType name="QueryExpressionType">
     <complexContent>

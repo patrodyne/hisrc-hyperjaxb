@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings jaxb:version="3.0"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	xmlns:imsrdceo="http://www.imsglobal.org/xsd/imsrdceo_rootv1p0"
+	jaxb:extensionBindingPrefixes="hj orm"
+>
+
+	<!-- Global Bindings -->
+
+	<jaxb:bindings>
+		<!-- JPA section 2.1, entities must be top-level classes. -->
+		<!-- JPA section 2.1, entities must implement the serializable interface. -->
+		<jaxb:globalBindings localScoping="toplevel">
+			<jaxb:serializable uid="20211201" />
+		</jaxb:globalBindings>
+
+	</jaxb:bindings>
+
+	<!-- Schema Bindings -->
+
+	<jaxb:bindings schemaLocation="imsparticipation_v1p0.xsd" node="/xs:schema">
+		<!-- Default Generated Id Stratagy -->
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+			<hj:default-basic>
+				<orm:column length="2048"/>
+			</hj:default-basic>
+		</hj:persistence>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="imsassert_v1p0.xsd" node="/xs:schema">
+		<jaxb:bindings node="//xs:complexType[@name='LangString.Type']">
+			<jaxb:class name="AssertLangString.Type"/>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="imsreflex_v1p0.xsd" node="/xs:schema">
+		<jaxb:bindings node="//xs:complexType[@name='LangString.Type']">
+			<jaxb:class name="ReflexLangString.Type"/>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+</jaxb:bindings>

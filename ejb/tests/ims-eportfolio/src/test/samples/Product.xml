@@ -5,7 +5,11 @@
 <!-- Date:			27th June, 2005		     											-->
 <!-- Comment:		The product PortfolioPart in the Relexion and Assertion				--> 
 <!--				example Portfolio Package.											-->
-<learnerinformation xmlns = "http://www.imsglobal.org/xsd/imslip_v1p0" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation = "http://www.imsglobal.org/xsd/imslip_v1p0 http://www.imsglobal.org/xsd/imslip_v1p0.xsd">
+<learnerinformation
+	xmlns = "http://www.imsglobal.org/xsd/imslip_v1p0"
+	xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation = "http://www.imsglobal.org/xsd/imslip_v1p0 http://www.imsglobal.org/xsd/imslip_v1p0.xsd"
+	xml:lang="en">
 	<activity>
 		<product>
 			<typename>

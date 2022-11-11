@@ -6,7 +6,7 @@
 >
     <persistence-unit name="##generated" transaction-type="RESOURCE_LOCAL">
 	<description>Purchase Order Persistence Unit</description>
-	<mapping-file>org/jvnet/hyperjaxb3/ejb/tests/po/orm.xml</mapping-file>
-        <!--class>org.jvnet.hyperjaxb3.ejb.tests.po.USAddress1111</class-->
+	<mapping-file>org/jvnet/hyperjaxb/ejb/tests/po/orm.xml</mapping-file>
+        <!--class>org.jvnet.hyperjaxb.ejb.tests.po.USAddress1111</class-->
     </persistence-unit>
 </persistence>

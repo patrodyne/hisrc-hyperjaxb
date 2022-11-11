@@ -7,7 +7,8 @@
 <!--				example Portfolio Package.											-->
 <learnerinformation xmlns = "http://www.imsglobal.org/xsd/imslip_v1p0" 
 	xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"  
-	xsi:schemaLocation = "http://www.imsglobal.org/xsd/imslip_v1p0 http://www.imsglobal.org/xsd/imslip_v1p0.xsd">
+	xsi:schemaLocation = "http://www.imsglobal.org/xsd/imslip_v1p0 http://www.imsglobal.org/xsd/imslip_v1p0.xsd"
+	xml:lang="en">
 	<identification>                     
 		<contentype>                        
 			<referential>                            
@@ -17,14 +18,14 @@
 		<formname>                        
 			<typename>                            
 				<tysource sourcetype = "imsdefault"/>                            
-				<tyvalue>Contact</tyvalue>                        
+				<tyvalue xml:lang="en">Contact</tyvalue>                        
 			</typename>                        
 			<contentype>                            
 				<referential>                               
 					<indexid>formname_02</indexid>                            
 				</referential>                        
 			</contentype>                        
-			<text>Gayle Benneville</text>                     
+			<text xml:lang="en">Gayle Benneville</text>                     
 		</formname>                 
 	</identification>
 </learnerinformation>

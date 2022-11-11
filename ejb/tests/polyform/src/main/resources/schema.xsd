@@ -5,7 +5,7 @@
 	targetNamespace="urn:test"
 	xmlns="urn:test"
 
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
@@ -15,7 +15,7 @@
 	<xs:annotation>
 		<xs:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.polyform"/>
+				<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.polyform"/>
 			</jaxb:schemaBindings>
 		</xs:appinfo>
 	</xs:annotation>

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb</artifactId>
-		<version>0.6.5-SNAPSHOT</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
 	<packaging>pom</packaging>
@@ -19,9 +19,11 @@
 		<module>ak</module>
 		<module>any</module>
 		<module>bibtexml</module>
-		<module>component-jpa3</module>
+		<module>ccr</module>
+		<module>component-jpa</module>
 		<module>cu-one</module>
 		<module>custom-naming</module>
+		<module>customType</module>
 		<module>customizations</module>
 		<module>dc</module>
 		<module>device</module>
@@ -31,14 +33,17 @@
 		<module>edxl</module>
 		<module>ek</module>
 		<module>embeddable</module>
-		<module>embeddable-jpa3</module>
+		<module>embeddable-jpa</module>
 		<module>eminq</module>
 		<module>enum</module>
 		<module>equals-builder</module>
+		<module>idSymbolSpace</module>
+		<module>ims-eportfolio</module>
 		<module>ioda</module>
 		<module>issues-pre</module>
+		<module>issues</module>
 		<module>issues-el</module>
-		<module>issues-jpa3</module>
+		<module>issues-jpa</module>
 		<module>one</module>
 		<module>onix30</module>
 		<module>pesc</module>
@@ -73,6 +78,7 @@
 				<module>nokis</module>
 				<module>ows</module>
 				<module>regrep</module>
+				<module>rim</module>
 				<module>uniprot</module>
 				<module>xacml</module>
 			</modules>
@@ -82,6 +88,7 @@
 			<id>tests-1</id>
 			<modules>
 				<module>cda</module>
+				<module>component</module>
 				<module>episodes</module> <!-- package=SUCCESS; WARNINGS -->
 				<module>fpml-pretrade</module>
 				<module>ota</module>
@@ -95,14 +102,7 @@
 			<id>tests-2</id>
 			<modules>
 				<module>annox</module>
-				<module>ccr</module>
-				<module>component</module>
-				<module>customType</module>
-				<module>idSymbolSpace</module>
-				<module>ims-eportfolio</module>
-				<module>issues</module>
 				<module>po-mysql</module>
-				<module>rim</module>
 			</modules>
 		</profile>
 	</profiles>
@@ -143,7 +143,7 @@
 					<configuration>
 						<debug>false</debug>
 						<extension>true</extension>
-						<variant>jpa3</variant>
+						<variant>jpa</variant>
 						<!--roundtripTestClassName>RoundtripTest</roundtripTestClassName-->
 					</configuration>
 					<!-- Remove when plugin dependency management is reworked -->

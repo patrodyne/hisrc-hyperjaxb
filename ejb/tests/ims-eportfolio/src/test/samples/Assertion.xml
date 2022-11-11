@@ -25,12 +25,12 @@
 	<lip:date>                     
 		<lip:typename>                       
 			<lip:tysource sourcetype = "standard">UKLeaP</lip:tysource>                       
-			<lip:tyvalue>Create</lip:tyvalue>                     
+			<lip:tyvalue xml:lang="en">Create</lip:tyvalue>                     
 		</lip:typename>                     
 		<lip:datetime>2004-05-31T12:25:43</lip:datetime>                   
 	</lip:date>                   
 	<lip:description>                     
-		<lip:short>Gayle Benneville's History Essay</lip:short>                     
-		<lip:long>I supervised Gayle's work on this and can verify that the work has been all of her own.  This work shows exceptional talent.</lip:long>                   
+		<lip:short xml:lang="en">Gayle Benneville's History Essay</lip:short>                     
+		<lip:long xml:lang="en">I supervised Gayle's work on this and can verify that the work has been all of her own.  This work shows exceptional talent.</lip:long>                   
 	</lip:description>                
 </assertion>

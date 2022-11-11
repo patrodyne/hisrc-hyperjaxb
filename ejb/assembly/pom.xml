@@ -6,16 +6,16 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb</artifactId>
-		<version>0.6.5-SNAPSHOT</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-assembly</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Assembly</name>
 	<properties>
 		<ant-atleast.version>1.10.4</ant-atleast.version>
-		<hisrc-basicjaxb.version>0.12.3-SNAPSHOT</hisrc-basicjaxb.version>
-		<hisrc-higherjaxb-maven-plugin.version>0.14.3-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
-		<hisrc-hyperjaxb.version>0.6.5-SNAPSHOT</hisrc-hyperjaxb.version>
+		<hisrc-basicjaxb.version>2.0.0-SNAPSHOT</hisrc-basicjaxb.version>
+		<hisrc-higherjaxb-maven-plugin.version>2.0.0-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
+		<hisrc-hyperjaxb.version>2.0.0-SNAPSHOT</hisrc-hyperjaxb.version>
 		<root.basedir>${basedir}/../..</root.basedir>
 	</properties>
 	<modules>

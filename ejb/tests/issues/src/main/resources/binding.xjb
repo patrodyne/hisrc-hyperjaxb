@@ -4,16 +4,32 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
-	jaxb:extensionBindingPrefixes="xjc orm inheritance"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:inheritance="http://jvnet.org/basicjaxb/xjc/inheritance"
+	jaxb:extensionBindingPrefixes="hj orm xjc inheritance"
 	xmlns:test="urn:test"
 >
+	<!-- Global Bindings -->
+
+	<jaxb:bindings>
+		<!-- JPA section 2.1, entities must be top-level classes. -->
+		<!-- JPA section 2.1, entities must implement the serializable interface. -->
+		<jaxb:globalBindings localScoping="toplevel">
+			<jaxb:serializable uid="20211201" />
+		</jaxb:globalBindings>
+
+	</jaxb:bindings>
+
+	<!-- Schema Bindings -->
 	
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xsd:schema">
-		<jaxb:globalBindings localScoping="toplevel">
-			<jaxb:serializable/>
-		</jaxb:globalBindings>
+
+		<!-- Default Generated Id Stratagy -->
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
 
 		<jaxb:bindings
 			node="xsd:complexType[@name='issue121Type']//xsd:element[@name='simpleCollection']">
@@ -34,13 +50,13 @@
 
 		<jaxb:bindings
 			scd="~test:issueXXXType">
-			<jaxb:class ref="org.jvnet.hyperjaxb3.ejb.tests.issues.MyIssueXXXType"/>
+			<jaxb:class ref="org.jvnet.hyperjaxb.ejb.tests.issues.MyIssueXXXType"/>
 		</jaxb:bindings>
 
 		<jaxb:bindings
 			node="xsd:complexType[@name='issueHJIII48BType']">
 			<hj:generated-property name="Any">
-				<hj:jaxb-context contextPath="org.jvnet.hyperjaxb3.ejb.tests.po"/>
+				<hj:jaxb-context contextPath="org.jvnet.hyperjaxb.ejb.tests.po"/>
 			</hj:generated-property>
 		</jaxb:bindings>
 
@@ -74,7 +90,7 @@
 	        </jaxb:bindings>        
 
 	        <jaxb:bindings node="xsd:complexType[@name='issueHJIII45SuperType']">
-			<jaxb:class ref="org.jvnet.hyperjaxb3.ejb.tests.issues.pre.IssueHJIII45SuperClass"/>
+			<jaxb:class ref="org.jvnet.hyperjaxb.ejb.tests.issues.pre.IssueHJIII45SuperClass"/>
 	        </jaxb:bindings>        
 
 
@@ -82,8 +98,8 @@
 
 	<jaxb:bindings schemaLocation="schema-ignored.xsd" node="/xsd:schema">
 		<jaxb:schemaBindings>
-			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.issuesignored"/>
+			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.issuesignored"/>
 		</jaxb:schemaBindings>
-		<hj:ignored-package name="org.jvnet.hyperjaxb3.ejb.tests.issuesignored"/>
+		<hj:ignored-package name="org.jvnet.hyperjaxb.ejb.tests.issuesignored"/>
 	</jaxb:bindings>
 </jaxb:bindings>

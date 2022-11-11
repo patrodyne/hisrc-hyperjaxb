@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by Steven (Personal) -->
-<xs:schema xmlns="urn:astm-org:CCR" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ccr="urn:astm-org:CCR" targetNamespace="urn:astm-org:CCR" elementFormDefault="qualified" attributeFormDefault="unqualified"
-  xmlns:hj="http://hyperjaxb2.jvnet.org/customizations"
-  xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
-  jaxb:extensionBindingPrefixes="hj">
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="urn:astm-org:CCR"
+	xmlns:ccr="urn:astm-org:CCR"
+	targetNamespace="urn:astm-org:CCR"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
+	jaxb:extensionBindingPrefixes="hj"
+>
+
 	<!--Draft Version 1.0 (V1.0) Released for review and comment June 14, 2005 by ASTM E31.28 CCR Subcommittee.-->
 	<!--Copyright 2004-2005 ASTM, 100 Barr Harbor Drive, West Conshohocken, PA 19428-2959. All rights reserved.-->
 	<xs:element name="ContinuityOfCareRecord">
@@ -30,9 +36,11 @@
 				<xs:element name="To" minOccurs="0">
 					<xs:annotation>
 						<xs:appinfo>
+							<!-- OBSOLETE
 							<hj:complexSingleProperty>
 								<hj:column name="ccr_to"/>
 							</hj:complexSingleProperty>
+							-->
 						</xs:appinfo>
 					</xs:annotation>
 					<xs:complexType>
@@ -40,11 +48,13 @@
 							<xs:element name="ActorLink" type="ActorReferenceType" maxOccurs="unbounded">
 								<xs:annotation>
 									<xs:appinfo>
+										<!-- OBSOLETE
 										<hj:complexCollectionProperty>
 											<hj:key>
 												<hj:column name="ccr_to_al"/>
 											</hj:key>
 										</hj:complexCollectionProperty>
+										-->
 									</xs:appinfo>
 								</xs:annotation>
 							</xs:element>

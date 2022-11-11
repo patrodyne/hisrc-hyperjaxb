@@ -4,9 +4,9 @@ import static java.lang.Integer.toHexString;
 import static java.lang.System.identityHashCode;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static jakarta.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
-import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.filterProperties;
-import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
-import static org.jvnet.hyperjaxb3.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesMoreFile;
+import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.filterProperties;
+import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
+import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesMoreFile;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -37,7 +37,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.jvnet.hyperjaxb3.ejb.util.Transactional.CacheOption;
+import org.jvnet.hyperjaxb.ejb.util.Transactional.CacheOption;
 import org.patrodyne.jvnet.basicjaxb.explore.AbstractExplorer;
 import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputDomResolver;
 import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputStringResolver;

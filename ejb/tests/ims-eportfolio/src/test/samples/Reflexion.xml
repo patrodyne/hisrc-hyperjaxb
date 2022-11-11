@@ -21,12 +21,12 @@
 	<lip:date>                     
 		<lip:typename>                       
 			<lip:tysource sourcetype = "standard">UKLeaP</lip:tysource>                       
-			<lip:tyvalue>Create</lip:tyvalue>                     
+			<lip:tyvalue xml:lang="en">Create</lip:tyvalue>                     
 		</lip:typename>                     
 		<lip:datetime>2004-02-13T18:12:45</lip:datetime>                   
 	</lip:date>                   
 	<lip:description>                     
-		<lip:short>My Thoughts on the essay</lip:short>                     
-		<lip:long>Could be improved with discussion of relationship with Norse Culture</lip:long>                   
+		<lip:short xml:lang="en">My Thoughts on the essay</lip:short>                     
+		<lip:long xml:lang="en">Could be improved with discussion of relationship with Norse Culture</lip:long>                   
 	</lip:description>                
 </reflexion>

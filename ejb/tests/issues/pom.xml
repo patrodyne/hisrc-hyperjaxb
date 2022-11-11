@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
-		<version>0.6.5-SNAPSHOT</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-issues</artifactId>
 	<packaging>jar</packaging>
@@ -63,28 +63,40 @@
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
-				<version>${project.version}</version>
 				<configuration>
+					<!--
 					<args>
 						<arg>-Xannotate</arg>
 						<arg>-Xinheritance</arg>
 					</args>
+					-->
 					<plugins>
+						<!--
 						<plugin>
 							<groupId>org.patrodyne.jvnet</groupId>
-							<artifactId>hisrc-basicjaxb</artifactId>
+							<artifactId>hisrc-basicjaxb-plugins</artifactId>
+							<version>${hisrc-basicjaxb.version}</version>
 						</plugin>
 						<plugin>
 							<groupId>org.patrodyne.jvnet</groupId>
 							<artifactId>hisrc-hyperjaxb-ejb-tests-issues-pre</artifactId>
+							<version>${project.version}</version>
 						</plugin>
+						-->
 					</plugins>
 				</configuration>
 				<dependencies>
+					<!--
 					<dependency>
 						<groupId>org.hibernate</groupId>
 						<artifactId>hibernate-search</artifactId>
 						<version>3.4.0.Final</version>
+					</dependency>
+					-->
+					<dependency>
+						<groupId>org.patrodyne.jvnet</groupId>
+						<artifactId>hisrc-hyperjaxb-ejb-tests-issues-pre</artifactId>
+						<version>${project.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -105,11 +117,11 @@
 						<component>
 							<name>hbm2ddl</name>
 							<implementation>jpaconfiguration</implementation>
-							<outputDirectory>target/generated-resources/hbm2ddl/org/jvnet/hyperjaxb3/ejb/tests/issues</outputDirectory>
+							<outputDirectory>target/generated-resources/hbm2ddl/org/jvnet/hyperjaxb/ejb/tests/issues</outputDirectory>
 						</component>
 					</components>
 					<componentProperties>
-						<persistenceunit>org.jvnet.hyperjaxb3.ejb.tests.issues</persistenceunit>
+						<persistenceunit>org.jvnet.hyperjaxb.ejb.tests.issues</persistenceunit>
 						<propertyfile>src/test/resources/persistence.properties</propertyfile>
 						<outputfilename>schema.ddl</outputfilename>
 						<drop>false</drop>
@@ -122,7 +134,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.4.2</version>
 				<executions>
 					<execution>
 						<phase>prepare-package</phase>

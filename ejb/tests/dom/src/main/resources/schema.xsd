@@ -1,5 +1,5 @@
-<xsd:schema targetNamespace="http://hyperjaxb3.jvnet.org/ejb/tests/dom" 
-	xmlns:tests="http://hyperjaxb3.jvnet.org/ejb/tests/dom" 
+<xsd:schema targetNamespace="http://jvnet.org/hyperjaxb/ejb/tests/dom" 
+	xmlns:tests="http://jvnet.org/hyperjaxb/ejb/tests/dom" 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" 
 	attributeFormDefault="unqualified" 
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 

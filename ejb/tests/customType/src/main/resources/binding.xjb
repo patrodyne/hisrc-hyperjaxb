@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jaxb:bindings version="3.0"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<jaxb:bindings jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	xmlns:hj="http://hyperjaxb2.jvnet.org/customizations"
-	jaxb:extensionBindingPrefixes="hj"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm"
 >
-	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
-		<jaxb:globalBindings typesafeEnumBase="xs:string">
+	<!-- Global Bindings -->
+	<jaxb:bindings>
+		<!-- JPA section 2.1, entities must be top-level classes. -->
+		<!-- JPA section 2.1, entities must implement the serializable interface. -->
+		<jaxb:globalBindings localScoping="toplevel" typesafeEnumBase="xs:string">
+			<jaxb:serializable uid="20211201" />
 			<jaxb:javaType name="long" xmlType="xs:unsignedLong" parseMethod="java.lang.Long.parseLong" printMethod="java.lang.Long.toString"/>
 		</jaxb:globalBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+
 		<jaxb:schemaBindings>
 			<jaxb:package name="com.typetest"/>
 		</jaxb:schemaBindings>
+
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
+
 		<jaxb:bindings node="//xs:complexType[@name='TypeTestType']/xs:sequence/xs:element[@name='Value']">
+			<!-- OBSOLETE
 			<hj:simpleSingleProperty>
 				<hj:column name="k"/>
 				<hj:type name="org.hibernate.type.LongType"/>
 			</hj:simpleSingleProperty>
+			-->
 		</jaxb:bindings>
+
 	</jaxb:bindings>
+
 </jaxb:bindings>

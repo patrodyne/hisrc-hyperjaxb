@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog
+    PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
+           "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<!-- See https://www.oasis-open.org/committees/entity/spec.html -->
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+	<public publicId="-//W3C//DTD XMLSCHEMA 200102//EN" uri="XMLSchema.dtd" />
+	<public publicId="datatypes" uri="datatypes.dtd" />
+	<public publicId="http://www.w3.org/XML/1998/namespace" uri="xml.xsd" />
+
+	<system systemId="http://www.imsglobal.org/xsd/imslip_v1p0.xsd" uri="imslip_v1p0.xsd" />
+
+	<public publicId="http://www.imsglobal.org/services/gms/xsd/imsGroupManDataSchema_v1p0" uri="imsGroupManDataSchema_v1p0.xsd" />
+	<public publicId="http://www.imsglobal.org/services/common/imsCommonSchema_v1p0" uri="imsCommonSchema_v1p0.xsd" />
+
+    <system systemId="http://www.imsglobal.org/xsd/imsrdceo_rootv1p0.xsd" uri="imsrdceo_rootv1p0.xsd" />
+
+	<!--
+	<public publicId="http://www.imsglobal.org/xsd/imslip_v1p0" uri="imslip_v1p0.xsd" />
+	<system systemId="https://www.imsglobal.org/xsd/w3/2001/xml.xsd" uri="xml.xsd" />
+
+	<system systemId="http://www.imsglobal.org/xsd/imslip_v1p0.xsd" uri="imslip_v1p0.xsd" />
+
+	<system systemId="http://www.imsglobal.org/services/gms/xsd/imsGroupManDataSchema_v1p0.xsd" uri="imsGroupManDataSchema_v1p0.xsd" />
+	<system systemId="http://www.imsglobal.org/services/common/imsCommonSchema_v1p0.xsd" uri="imsCommonSchema_v1p0.xsd" />
+
+    <system systemId="http://www.imsglobal.org/xsd/imsrdceo_rootv1p0.xsd" uri="imsrdceo_rootv1p0.xsd" />
+	<public publicId="http://www.imsglobal.org/xsd/imsrdceo_rootv1p0" uri="imsrdceo_rootv1p0.xsd" />
+	-->
+
+</catalog>

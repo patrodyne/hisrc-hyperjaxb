@@ -1,5 +1,5 @@
 <xsd:schema
-	targetNamespace="http://hyperjaxb3.jvnet.org/ejb/tests/tp" xmlns:tp="http://hyperjaxb3.jvnet.org/ejb/tests/tp" 
+	targetNamespace="http://hyperjaxb.jvnet.org/ejb/tests/tp" xmlns:tp="http://hyperjaxb.jvnet.org/ejb/tests/tp" 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	jaxb:version="3.0" 
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
@@ -7,7 +7,7 @@
 	elementFormDefault="qualified" 
 	attributeFormDefault="unqualified"
 
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 
@@ -26,7 +26,7 @@
 				<jaxb:serializable uid="20211201" />
 			</jaxb:globalBindings>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.tp"/>
+				<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.tp"/>
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 	</xsd:annotation>

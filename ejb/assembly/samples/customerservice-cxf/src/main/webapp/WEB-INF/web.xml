@@ -9,7 +9,7 @@
 
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>org.jvnet.hyperjaxb3.ejb.samples.customerservicecxf.webAppRoot</param-value>
+		<param-value>org.jvnet.hyperjaxb.ejb.samples.customerservicecxf.webAppRoot</param-value>
 	</context-param>
 
 	<listener>

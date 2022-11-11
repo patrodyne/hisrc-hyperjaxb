@@ -7,7 +7,7 @@
 	elementFormDefault="qualified" 
 	attributeFormDefault="unqualified"
 
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 
@@ -16,9 +16,9 @@
 	<!--xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.issuesignored"/>
+				<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.issuesignored"/>
 			</jaxb:schemaBindings>
-			<hj:ignored-package name="org.jvnet.hyperjaxb3.ejb.tests.issuesignored"/>
+			<hj:ignored-package name="org.jvnet.hyperjaxb.ejb.tests.issuesignored"/>
 		</xsd:appinfo>
 	</xsd:annotation-->
 
