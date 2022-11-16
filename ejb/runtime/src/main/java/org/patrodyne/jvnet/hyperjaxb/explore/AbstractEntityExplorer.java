@@ -152,7 +152,7 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 				getUnmarshaller().setSchema(schemaValidator);
 				
 				getValidateButton().setSelected(true);
-				println("Schema Validation is ON.");
+				println("Schema Validation of XML is ON.");
 			}
 			else
 				errorln("Please create marshaller and unmarshaller!");
@@ -422,12 +422,12 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 	{
 		getToolBar().addSeparator();
 		
-		// Toggle schema validation
+		// Toggle schema validation of XML
 		String validateOffPath = OILPATH+"/actions/flag-red.png";
 		String validateOnPath = OILPATH+"/actions/flag-green.png";
 		setValidateButton(createImageToggleButton(AbstractEntityExplorer.class, validateOffPath, validateOnPath));
-		getValidateButton().addActionListener((event) -> toggleValidateSchema(event));
-		getValidateButton().setToolTipText("Toggle schema validation");
+		getValidateButton().addActionListener((event) -> toggleValidateXml(event));
+		getValidateButton().setToolTipText("Toggle schema validation of XML");
 		getToolBar().add(getValidateButton());
 		
 		// Toggle clean first level cache
@@ -467,7 +467,7 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 		getEntityManagerFactory().getCache().evictAll();
 	}
 	
-	private void toggleValidateSchema(ActionEvent event)
+	private void toggleValidateXml(ActionEvent event)
 	{
 		JToggleButton toggleButton = (JToggleButton) event.getSource();
 		if ( toggleButton.isSelected() )
@@ -476,7 +476,7 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 		{
 			setMarshaller(createMarshaller(getJaxbContext()));
 			setUnmarshaller(createUnmarshaller(getJaxbContext()));
-			println("Schema Validation is OFF.");
+			println("Schema Validation of XML is OFF.");
 		}
 	}
 

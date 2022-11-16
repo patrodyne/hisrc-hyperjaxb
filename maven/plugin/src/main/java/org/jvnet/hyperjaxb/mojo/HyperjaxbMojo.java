@@ -35,6 +35,14 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	public void setTarget(File target) { this.target = target; }
 
 	/**
+	 * Option to enable/disable schema validation of xml.
+	 */
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".validateXml")
+	private Boolean validateXml = null;
+	public Boolean isValidateXml() { return validateXml; }
+	public void setValidateXml(Boolean validateXml) { this.validateXml = validateXml; }
+
+	/**
 	 * Name of the roundtrip test case. If omitted, no roundtrip test case is
 	 * generated.
 	 */
@@ -217,6 +225,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 		super.logConfiguration();
 
 		getLog().info("MOJO Configuration: target:" + getTarget());
+		getLog().info("MOJO Configuration: validateXml:" + isValidateXml());
 		getLog().info("MOJO Configuration: roundtripTestClassName:" + getRoundtripTestClassName());
 		getLog().info("MOJO Configuration: resourceIncludes:" + getResourceIncludes());
 		getLog().info("MOJO Configuration: variant:" + getVariant());
@@ -266,6 +275,8 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 			add(arguments,"-Xhyperjaxb-jpa");
 			if (getResult() != null)
 				add(arguments,"-Xhyperjaxb-jpa-result=" + getResult());
+			if (isValidateXml() != null)
+				add(arguments,"-Xhyperjaxb-jpa-validateXml=" + isValidateXml());
 			if (getRoundtripTestClassName() != null)
 				add(arguments,"-Xhyperjaxb-jpa-roundtripTestClassName=" + getRoundtripTestClassName());
 			if (getPersistenceUnitName() != null)
@@ -284,6 +295,8 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 			add(arguments,"-Xhyperjaxb-ejb");
 			if (getResult() != null)
 				add(arguments,"-Xhyperjaxb-ejb-result=" + getResult());
+			if (isValidateXml() != null)
+				add(arguments,"-Xhyperjaxb-ejb-validateXml=" + isValidateXml());
 			if (getRoundtripTestClassName() != null)
 				arguments.add("-Xhyperjaxb-ejb-roundtripTestClassName=" + getRoundtripTestClassName());
 			if (getPersistenceUnitName() != null)

@@ -97,7 +97,11 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 	{
 		return "  -Xhyperjaxb-ejb: Hyperjaxb EJB plugin";
 	}
-
+	
+	private Boolean validateXml = null;
+	public Boolean isValidateXml() { return validateXml; }
+	public void setValidateXml(Boolean validateXml) { this.validateXml = validateXml; }
+	
 	private String roundtripTestClassName;
 	public String getRoundtripTestClassName() { return roundtripTestClassName; } 
 	public void setRoundtripTestClassName(String rt) { this.roundtripTestClassName = rt; }
@@ -190,22 +194,37 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		return result;
 	}
 	
+	/**
+	 * Generate a code model for a context-path aware JDefinedClass and
+	 * add methods to configure the persistence unit name and the
+	 * schema validation mode.
+	 * 
+	 * @param outline Captures the generated code for the current model root.
+	 */
 	private void generateRoundtripTestClass(Outline outline)
 	{
 		if (getRoundtripTestClassName() != null)
 		{
+			// Add 'public String getContextPath()' 
 			final JDefinedClass roundtripTestClass =
 				generateContextPathAwareClass(outline, getRoundtripTestClassName(), RoundtripTest.class);
 
+			// Add 'public String getPersistenceUnitName()' 
 			final String persistenceUnitName =
 				( getPersistenceUnitName() != null )
 				? getPersistenceUnitName()
 				: getNaming().getPersistenceUnitName(getMapping(), outline);
-			
 			JMethod getPersistenceUnitName = roundtripTestClass.method(
 				JMod.PUBLIC, outline.getCodeModel().ref(String.class), "getPersistenceUnitName");
-			
 			getPersistenceUnitName.body()._return(JExpr.lit(persistenceUnitName));
+			
+			// Add 'public boolean isValidateXml()'
+			if ( isValidateXml() != null )
+			{
+				JMethod isValidateXml = roundtripTestClass.method(
+					JMod.PUBLIC, outline.getCodeModel().ref(Boolean.class), "isValidateXml");
+				isValidateXml.body()._return(JExpr.lit(isValidateXml()));
+			}
 		}
 	}
 
