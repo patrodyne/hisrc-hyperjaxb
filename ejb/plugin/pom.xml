@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb</artifactId>
-		<version>2.0.0</version>
+		<version>2.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-plugin</artifactId>
 	<packaging>jar</packaging>
@@ -99,8 +99,4 @@
 	<build>
 		<defaultGoal>install</defaultGoal>
 	</build>
-
-  <scm>
-    <tag>2.0.0</tag>
-  </scm>
 </project>
