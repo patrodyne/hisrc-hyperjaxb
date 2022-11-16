@@ -66,6 +66,7 @@
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
+					<validateXml>false</validateXml>
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.device.tests.RoundtripTest</roundtripTestClassName>
 				</configuration>
 			</plugin>

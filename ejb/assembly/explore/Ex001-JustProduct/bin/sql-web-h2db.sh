@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# sql-cli-podb.sh: SQL command line tool using H2 Shell.
+# sql-web-h2db.sh: SQL command line tool using H2 Shell.
 #
-#	Usage: ./sql-web-podb.sh [h2|pg]
+#	Usage: ./sql-web-h2db.sh [h2|pg]
 #	h2	H2 local database (default)
 #	pg	PostgreSQL network database
 #
@@ -39,7 +39,7 @@ fi
 JDBC_TYPE=${1:-h2}
 case "${JDBC_TYPE}" in
 	h2)
-		JDBC_URL="jdbc:h2:file:./target/test-database/podb"
+		JDBC_URL="jdbc:h2:file:./target/test-database/h2db"
 		JDBC_OPT=";MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1"
 		JDBC_USER="tester"
 		JDBC_PASS="123456"

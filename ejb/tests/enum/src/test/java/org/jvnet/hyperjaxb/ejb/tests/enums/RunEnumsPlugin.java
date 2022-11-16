@@ -9,5 +9,6 @@ public class RunEnumsPlugin extends RunEjbHyperjaxbMojo {
 	protected void configureHyperjaxbMojo(HyperjaxbMojo mojo) {
 		super.configureHyperjaxbMojo(mojo);
 		mojo.setVerbose(true);
+		mojo.setValidateXml(false);
 	}
 }

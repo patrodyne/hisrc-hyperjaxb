@@ -46,6 +46,7 @@
 				<configuration>
 					<variant>jpa</variant>
 					<!--result>mappingFiles</result-->
+					<validateXml>false</validateXml>
 				</configuration>
 			</plugin>
 			<!--plugin>

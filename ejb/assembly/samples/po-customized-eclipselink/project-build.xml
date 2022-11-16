@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="${artifactId}" default="test">
 
-	<property name="artifactId" value="${artifactId}/>
+	<property name="artifactId" value="${artifactId}"/>
 	<property name="version" value="${project.version}"/>
 	<property file="\${basedir}/src/test/resources/jvmsystem.properties"/>
 
@@ -54,6 +54,7 @@
 			<include name="jaxb-runtime-*.jar"/>
 			<include name="h2-*.jar"/>
 			<include name="slf4j-*.jar"/>
+			<include name="txw2-*.jar"/>
 			<include name="junit-jupiter-api-*.jar"/>
 			<include name="xmlunit-*.jar"/>
 		</fileset>
@@ -61,19 +62,51 @@
 
 	<path id="xjc-task.path">
 		<fileset dir="\${basedir}/lib">
+			<include name="codemodel-*.jar"/>
+			<include name="commons-lang3-*.jar"/>
+			<include name="hisrc-basicjaxb-ant-*.jar"/>
+			<include name="istack-commons-runtime-*.jar"/>
+			<include name="istack-commons-tools-*.jar"/>
+
+			<include name="jakarta.activation-*.jar"/>
 			<include name="jakarta.activation-api-*.jar"/>
+			<include name="jakarta.annotation-api-*.jar"/>
+			<include name="jakarta.el-api-*.jar"/>
+			<include name="jakarta.enterprise.cdi-api-*.jar"/>
+			<include name="jakarta.enterprise.lang-model-*.jar"/>
+			<include name="jakarta.inject-api-*.jar"/>
+			<include name="jakarta.interceptor-api-*.jar"/>
+			<include name="jakarta.persistence-api-*.jar"/>
 			<include name="jakarta.xml.bind-api-*.jar"/>
+
+			<include name="jandex-*.jar"/>
+			<include name="javaparser-*.jar"/>
+
 			<include name="jaxb-core-*.jar"/>
 			<include name="jaxb-runtime-*.jar"/>
-			<include name="istack-commons-*.jar"/>
+			<include name="jaxb-xjc-*.jar"/>
 
-			<include name="codemodel-*.jar"/>
+			<include name="jboss-classfilewriter-*.jar"/>
+			<include name="jboss-logging-*.jar"/>
+			<include name="jboss-logging-annotations-*.jar"/>
+			<include name="jboss-logging-processor-*.jar"/>
+
+			<include name="jcl-over-slf4j-*.jar"/>
 			<include name="relaxng-datatype-*.jar"/>
 			<include name="rngom-*.jar"/>
+			<include name="slf4j-api-*.jar"/>
+			<include name="slf4j-simple-*.jar"/>
 			<include name="txw2-*.jar"/>
+
+			<include name="weld-api-*.jar"/>
+			<include name="weld-core-impl-*.jar"/>
+			<include name="weld-environment-common-*.jar"/>
+			<include name="weld-lite-extension-translator-*.jar"/>
+			<include name="weld-probe-core-*.jar"/>
+			<include name="weld-se-core-*.jar"/>
+			<include name="weld-spi-*.jar"/>
+
 			<include name="xsom-*.jar"/>
-			<include name="jaxb-xjc-*.jar"/>
-			<include name="hisrc-basicjaxb-ant-*.jar"/>
 		</fileset>
 	</path>
 
@@ -93,13 +126,13 @@
 			<classpath refid="xjc-task.path"/>
 		</taskdef>
 		<xjc destdir="\${basedir}/target/generated-sources/xjc" extension="true">
-			<arg line="
-				-Xhyperjaxb-ejb
-				-Xhyperjaxb-ejb-roundtripTestClassName=RoundtripTest
-				-Xequals
-				-XhashCode
-				-Xinheritance
-				-XtoString"/>
+			<arg line="-Xinheritance"/>
+			<arg line="-Xhyperjaxb-ejb"/>
+			<arg line="-Xhyperjaxb-ejb-validateXml=true"/>
+			<arg line="-Xhyperjaxb-ejb-roundtripTestClassName=RoundtripTest"/>
+			<arg line="-Xequals"/>
+			<arg line="-XhashCode"/>
+			<arg line="-XtoString"/>
 			<binding dir="\${basedir}/src/main/resources">
 			 	<include name="**/*.xjb"/>
 			</binding>
@@ -110,26 +143,9 @@
 			<!-- Plugins -->
 			<classpath>
 				<fileset dir="\${basedir}/lib">
-					<!-- Common library dependencies -->
-					<include name="javaparser-*.jar"/>
-					<include name="commons-beanutils-*.jar"/>
-					<include name="commons-lang3-*.jar"/>
-					<!-- HiSrc BasicJAXB library dependencies -->
 					<include name="hisrc-basicjaxb-*.jar"/>
-					<!-- Jakarta JPA dependencies -->
-					<include name="jakarta.persistence-*.jar"/>
-					<!-- HiSrc HyperJAXB library dependencies -->
-					<include name="hisrc-hyperjaxb-annox-plugin-*.jar"/>
-					<include name="hisrc-hyperjaxb-ejb-plugin-*.jar"/>
-					<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
-					<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
-					<include name="hisrc-hyperjaxb-ejb-schemas-*.jar"/>
-					<!-- Weld/CDI dependencies -->
-					<include name="weld-*.jar"/>
-					<!-- Logging dependencies -->
-					<include name="slf4j-*.jar"/>
-					<!-- JUnit library dependencies -->
-					<include name="junit-jupiter-api-*.jar"/>
+					<include name="hisrc-hyperjaxb-*.jar"/>
+					<include name="commons-beanutils-*.jar"/>
 				</fileset>
 			</classpath>
 		</xjc>
@@ -162,13 +178,14 @@
 	</target>
 
 	<!-- https://junit.org/junit5/docs/snapshot/user-guide/#running-tests-build-ant -->
-	<target name="test.junit.launcher" depends="compile">
+	<target name="test.junit.launcher" depends="test-compile">
 		<junitlauncher haltOnFailure="true" printSummary="true">
 			<classpath refid="test.path"/>
 			<testclasses outputdir="\${basedir}/target/junit-reports">
 				<fork>
 					<syspropertyset>
 						<!-- See src/test/resources/jvmsystem.properties -->
+						<propertyref prefix="org.jboss.logging"/>
 						<propertyref prefix="org.jvnet.hyperjaxb"/>
 					</syspropertyset>
 				</fork>
@@ -198,9 +215,10 @@
 	/>
 
 	<target name="package" depends="test">
-		<jar destfile="\${basedir}/target/${artifactId}.jar"
+		<jar destfile="\${basedir}/target/\${artifactId}.jar"
 			basedir="\${basedir}/target/classes"/> 
 	</target>
 
 	<target name="install" depends="package"/>
 </project>
+<!-- vi:set tabstop=4 hardtabs=4 shiftwidth=4 noexpandtab:-->

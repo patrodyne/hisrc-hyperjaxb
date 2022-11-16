@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Address xmlns="http://example.org/template/basic" Country="USA" Stage="Open" >
+<tns:Address xmlns:tns="http://example.org/template/basic" Country="USA" Stage="Open" >
 	<Name>Joseph N. D'Entremont</Name>
 	<Street>914 Oak Dr</Street>
 	<City>Manchester</City>
 	<State>VT</State>
 	<Zip>08484</Zip>
-</Address>
+</tns:Address>

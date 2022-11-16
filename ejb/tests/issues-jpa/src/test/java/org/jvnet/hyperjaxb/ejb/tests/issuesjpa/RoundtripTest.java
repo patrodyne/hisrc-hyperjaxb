@@ -13,4 +13,8 @@ public class RoundtripTest extends org.jvnet.hyperjaxb.ejb.test.RoundtripTest
 		return "org.jvnet.hyperjaxb.ejb.tests.issuesjpa";
 	}
 
+    public Boolean isValidateXml() {
+        return false;
+    }
+
 }

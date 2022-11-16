@@ -1,8 +1,8 @@
-# HiSrc HyperJAXB Ex001 - Product Model
+# HiSrc HyperJAXB Ex001: Product Model
 
-This project is the first exploration of the **HiSrc HyperJAXB Maven Plug-in**. It generates Java source code containing JAXB and JPA annotations and shows you how to design a data model (for products) and implement a persistence JAR by focusing primarily on your XML [schema][3] and associated [bindings][4]. This is an example of *Schema Driven Design*.
+This project is the first exploration of the **HiSrc HyperJAXB Maven Plug-in**. It generates Java source code with JAXB and JPA annotations that shows you how to design a data model (for products) and implement a persistence JAR by focusing primarily on your XML [schema][3] and associated [bindings][4]. This is an example of *Schema Driven Design*.
 
-There is a lot to learn in this exploration. *HyperJAXB* is a powerful plug-in that generates Java code that can synchronize your data with almost any SQL database. The same code can read and write XML instances, too. It is XML Schema driven and supports customizations. It includes data caching and connection pooling, too. That is a lot. The key to using this plug-in is to learn XML Schema grammar well. It will help if you have experience with it. But if you don't, this exploration will show you how it works and it let's you can learn as you go.
+There is a lot to learn in this exploration. *HyperJAXB* is a powerful plug-in that generates Java code to synchronize your data with almost any SQL database. The same code can read and write XML instances, too. It is XML Schema driven and supports customizations. It includes data caching and connection pooling. *That's a lot!* The key to using this plug-in is to learn XML Schema grammar well. It will help if you have experience with it. But if you don't, this exploration will show you how it works and you can learn as you go.
 
 > This project includes a Swing application named *Explorer* to demonstrate features of the *HiSrc HyperJAXB* plug-in. This *Explorer* application presents a lesson with actions for real-time experimentation. Feel free to modify your copy of the [Explorer.java][7] source file by adding or modifying the action methods with your own investigative code. The `Explorer` class is an extension of `AbstractEntityExplorer` which contains the more boring mechanics of this implementation. Feel free to create an `Explorer` class in your own projects to help explain the purpose of your work too.
 
@@ -91,7 +91,7 @@ The [Product.xjb][13] XJC [binding][4] declares:
 + Global bindings that apply to all elements.
     + `generateElementProperty` - setting to `false` reduces the use of JAXBElement for better interoperability.
     + `generateIsSetMethod` - setting to `false` (default) avoids some NPE issues.
-    + `localScoping` - setting to `false` conforms to JPA section 2.1.
+    + `localScoping` - setting to `toplevel` conforms to JPA section 2.1.
     + `serializable uid` - a numeric value like `YYYYMMDD` conforms to JPA section 2.1.
 + Local bindings that apply to *selected* elements and/or types.
 
@@ -114,14 +114,17 @@ Next, start the `xmllint` shell (`rlwrap` is optional) and navigate as shown. Th
 
 ~~~
 $ rlwrap xmllint --shell Product.xsd
+> / help
+  ...
 
 > / setns xsd=http://www.w3.org/2001/XMLSchema
-cd /xsd:schema
+> / cd /xsd:schema
 
 schema > cat //xsd:complexType[@name='Stageable']
+ -------
 <complexType name="Stageable">
     ...
-    </complexType>
+</complexType>
 
 schema > cat //xsd:complexType[not(@name='Stageable')]
  -------
@@ -143,7 +146,7 @@ Here is what the listing did:
 + Next, you used the `cat` command to view the contents of the complex type named `Stageable`.
 + Finally, you used an *xpath* that displays all complex types that do not have that name. 
 
-Now, take a look at [Product.xjb][13] and you will see a section that uses and *xpath* to select complex types that do not have the name `Stageable`.
+Now, take a look at [Product.xjb][13] and you will see a section that uses an *xpath* to select complex types that *do not* have the name `Stageable`.
 
 + First, the section locates `Product.xsd` to be a file in the same sub-directory and the XJB file.
 + Second, it sets *xpath* to focus on the node at `/xsd:schema`.
@@ -159,7 +162,7 @@ Now, take a look at [Product.xjb][13] and you will see a section that uses and *
 
 OK, that's the hard part and learning *xpath* is a matter of some trial and error. The benefit is that the customizations in an XJB file give you a powerful way to tailor the generated JPA / JAXB classes to your needs without changing the XSD file, itself. However, you can apply customizations in the XSD file, too. You can use the approach that best meets your needs.
 
-One more thing, after selecting complex types that do not have the name `Stageable` or having a name that contains the text "Join", The binding declares these customizations:
+One more thing, after selecting complex types that do not have the name `Stageable` or having a name that contains the text `"Join"`, The binding declares these customizations:
 
 ~~~
 <inh:extends>org.patrodyne.jvnet.hyperjaxb.ex001.model.Stageable</inh:extends>
@@ -178,19 +181,19 @@ The customizations will apply to the anonymous complex type of the `Product` ele
 
 ### Drop/Create Database Automatically
 
-This project reads its JPA properties from [persistence.properties][15] and one of [persistence-h2.properties][29] or [persistence-pg.properties][30]. These properties include JPA declarations that enable ORM implementations, like [Hibernate][17], to create the database (and DDL scripts) automatically. When *Explorer* is launched, the JPA/ORM will drop the local test database then recreate a fresh set of tables.
+This project reads its JPA properties from the files: [persistence.properties][15] and one of [persistence-h2.properties][29] or [persistence-pg.properties][30]. These properties include JPA declarations that enable ORM implementations, like [Hibernate][17], to create the database (and DDL scripts) automatically. When *Explorer* is launched, the JPA/ORM will drop the local test database then recreate a fresh set of tables.
 
 ~~~
 jakarta.persistence.schema-generation.database.action=drop-and-create
 jakarta.persistence.schema-generation.scripts.action=drop-and-create
-jakarta.persistence.schema-generation.scripts.create-target=target/test-database-sql/podb-create.sql
-jakarta.persistence.schema-generation.scripts.drop-target=target/test-database-sql/podb-drop.sql
+jakarta.persistence.schema-generation.scripts.create-target=target/test-database-sql/ddl-create.sql
+jakarta.persistence.schema-generation.scripts.drop-target=target/test-database-sql/ddl-drop.sql
 ~~~
 
 When you exit *Explorer*, the test database is preserved until the next launch. This allows you to inspect the database using the provided script or any other of your SQL tools.
 
 ~~~
-$ ./sql-cli-podb.sh
+$ ./sql-cli-h2db.sh
 
 Welcome to H2 Shell 2.1.210 (2022-01-17)
 
@@ -210,9 +213,9 @@ sql> exit
 Connection closed
 ~~~
 
-This project uses the [H2 Database Engine][18] for testing. *H2* is a small, pure Java SQL database server that can *simulate* more advanced databases like [PostgreSQL][19]. Thus, you can develop with *H2* then deploy to your shared application servers in QA or production (using *PostgreSQL*, etc.) later. This project contains a shell script, `sql-cli-podb.sh`, to run the *H2* SQL tool to explore your local database, as shown above.
+This project uses the [H2 Database Engine][18] for testing. *H2* is a small, pure Java SQL database server that can *simulate* more advanced databases like [PostgreSQL][19]. Thus, you can develop with *H2* then deploy to your shared application servers in QA or production (using *PostgreSQL*, etc.) later. This project contains a shell script, `sql-cli-h2db.sh`, to run the *H2* SQL tool to explore your local database, as shown above.
 
-> Note: Your *H2* local database is at `target/test-database/podb.mv.db`. It is created after you run *Explorer*. It is a single-user MVStore database so you must exit *Explorer* before running the SQL tool.
+> Note: Your *H2* local database is at `target/test-database/h2db.mv.db`. It is created after you run *Explorer*. It is a single-user MVStore database so you must exit *Explorer* before running the SQL tool.
 
 ## Exploration
 
@@ -245,7 +248,7 @@ When your *Explorer* application launches, it reads the configuration files from
     + [persistence-pg.properties][30] - JPA Persistence [PostgreSQL][19] configuration.
 + [simplelogger.properties][16] - [SLF4J][2] Logging configuration.
 
-Take a look at your `src/test/resources/persistence*.properties`. These files have two sections: *JPA* and *Hibernate*. The JPA section contains properties that apply to all ORM implementations while the *Hibernate* section contains ORM specific properties. Overall, this file provides the configuration for these components:
+Take a look at your `src/test/resources/persistence*.properties`. These files have two sections: *JPA* and *Hibernate*. The JPA section contains properties that apply to *all* ORM implementations while the *Hibernate* section contains ORM specific properties. Overall, this file provides the configuration for these components:
 
 + JDBC database connection ([H2][18]).
 + Database schema generation ([PostgreSQL][19] dialect).
@@ -256,19 +259,19 @@ The Maven build for *Explorer* reads the [Product.xsd][12] and [Product.xjb][13]
 
 #### Initialize JAXB
 
-The *Explorer* application invokes its `initialLession()` method to create a Java `JAXBContext` instance. The `JAXBContext` object is used to create an `Unmarshaller` and `Marshaller` to convert XML data to/from Java objects. The `JAXBContext` object is created from the classes generated by the *HyperJAXB* plug-in which is based on your [Product.xsd][12] and [Product.xjb][13] files. You can use the `JAXBContext` object to display its internal representation of the XML Schema using either [Generate XML Schema From String](!generateXmlSchemaFromString) or [Generate XML Schema From Dom](!generateXmlSchemaFromDom).
+The *Explorer* application invokes its `initializeLesson()` method to create a Java `JAXBContext` instance. The `JAXBContext` object is used to create an `Unmarshaller` and `Marshaller` to convert XML data to/from Java objects. The `JAXBContext` object is created from the classes generated by the *HyperJAXB* plug-in which is based on your [Product.xsd][12] and [Product.xjb][13] files. You can use the `JAXBContext` object to display its internal representation of the XML Schema using either [Generate XML Schema From String](!generateXmlSchemaFromString) or [Generate XML Schema From Dom](!generateXmlSchemaFromDom).
 
 > Note: The second DOM based representation provides a way to create an unmarshaller/marshaller that can validate the XML data agasinst the schema.
 
 #### Initialize JPA
 
-Also in the `initialLession()` method, *Explorer* loads the `EntityManagerFactory` (EMF) properties, resolves the *Persistence Unit Name*, creates the EMF and creates an initial `EntityManager`.
+Also in the `initializeLesson()` method, *Explorer* loads the `EntityManagerFactory` (EMF) properties, resolves the *Persistence Unit Name*, creates the EMF and creates an initial `EntityManager`.
 
 > Note: When the *Explorer* initializes the EMF, several JPA activities are triggered. Take a moment to browse the *error* console (right side, bottom panel, scroll to the top) to review logged events. You will see events related to Hibernate, HikariCP, JPA, EhCache  and SQL. This application uses [SLF4J][2] as its logging framework and logging is configured using [simplelogger.properties][16].
 
 #### Collect All Context Properties
 
-Also in the `initialLession()` method, *Explorer* collects the external configuration properties from your files plus the internal *default* properties from the component services. You can review all these properties using [Display EntityManagerFactory Properties](!displayEntityManagerFactoryProperties).
+Also in the `initializeLesson()` method, *Explorer* collects the external configuration properties from your files plus the internal *default* properties from the component services. You can review all these properties using [Display EntityManagerFactory Properties](!displayEntityManagerFactoryProperties).
 
 > Hint: Carefully review all of the EMF properties. The *external* properties are set in this project's configuration files. The *internal* properties extend the list by including all the possible properties that can be configured together with the current values determined by the related service. Generally, the internal default values are optimal. But you should know what the default values are!
 
@@ -276,7 +279,7 @@ Also in the `initialLession()` method, *Explorer* collects the external configur
 
 #### Create JPA RoundtripTest
 
-Also in the `initialLession()` method, *Explorer* creates an instance of the *HyperJAXB* `RoundtripTest` case. This is a JUnit test that is used during the Maven build to verify that the sample XML data can be unmarshalled, persisted, loaded and marshalled back to the same XML data. *Explorer* creates an instance for your direct experimentation.
+Also in the `initializeLesson()` method, *Explorer* creates an instance of the *HyperJAXB* `RoundtripTest` case. This is a JUnit test that is used during the Maven build to verify that the sample XML data can be unmarshalled, persisted, loaded and marshalled back to the same XML data. *Explorer* creates an instance for your direct experimentation.
 
 > Hint: In your new projects, you can uncomment this line from your `pom.xml` to cause the *HyperJAXB* plug-in to generate the `RoundtripTest.java` class; however, this project has its own copy with a few customizations.
 
@@ -293,7 +296,7 @@ These actions can be invoked from this list, as links, or from the menu bar, as 
 + [Unmarshal Products](!unmarshalProducts)
 + [Marshal Products](!marshalProducts)
 
-This project includes examples of XML instances of *Product* data. These examples can be found in the `src/test/example/products` sub-directory. To load these examples into the *Explorer*, [unmarshal products](!unmarshalProducts) will use the `JAXBContext` to read and parse the XML instances into a property  holding a `Set<Product>` within the application.
+This project includes examples of XML instances of *Product* data. These examples can be found in the `src/test/example/products` sub-directory. To load these examples into the *Explorer*, [unmarshal products](!unmarshalProducts) uses the `JAXBContext` to read and parse the XML instances into a property  holding a `Set<Product>` within the application.
 
 > Hint: You can clear the output and error consoles using the first button in the toolbar.
 
@@ -319,7 +322,7 @@ initialized
 : Simple entities are always initialized; otherwise, the ORM determines when a proxied or collection entity has been initialized.
 
 proxy
-: A proxy in the ORM world is an automatically generated instance that substitutes for your entity object. The proxy represents an instance which has not been populated with data from the database yet, but only knows its own primary key. In other words, the proxy is *lazily* loaded. Whenever a property is accessed, *then* the proxy instance will try to *eagerly* load the data from the database. The catch is the property can only be loaded within the same managed context; otherwise, a LazyInitializationException is thrown.
+: A proxy in the ORM world is an automatically generated instance that substitutes for your entity object. The proxy represents an instance which has not been populated with data from the database yet, but only knows its own primary key. In other words, the proxy is *lazily* loaded. Whenever a property is accessed, *then* the proxy instance will try to *eagerly* load the data from the database. The catch is the property can only be loaded within the same managed context; otherwise, a `LazyInitializationException` is thrown.
 
 ### Persistence Menu
 
@@ -413,7 +416,7 @@ Restart *Explorer* or [remove products](!removeProducts) and toggle the "reuse 1
 
 After [unmarshalling products](!unmarshalProducts) into this application, you can [Merge Products](!mergeProducts) to the local test database. The logging console shows the SQL used to SELECT then INSERT each product into the database, scroll the contents to review.
 
-In JPA, the *merge* action returns a managed instance. It will use the supplied entity, and return a managed copy. *Merge* compares the supplied entity with the value from the database, if any. If the supplied entity is new and does exist in the database then the supplied entity will be persisted; if not new, *merge* copies the supplied entity onto the managed entity. In either case, a second managed entity is returned and the supplied entity is not affected. Normally, the managed entity should be used instead of the original (supplied) entity.
+In JPA, the *merge* action returns a managed instance. It uses the supplied entity, and return a managed copy. *Merge* compares the supplied entity with the value from the database, if any. If the supplied entity is new and does exist in the database then the supplied entity will be persisted; if not new, *merge* copies the supplied entity onto the managed entity. In either case, a second managed entity is returned and the supplied entity is not affected. Normally, the managed entity should be used instead of the original (supplied) entity.
 
 *Merge* selects the entity from the database or uses the cached entity before copying the supplied entity onto a new or existing managed entity. *Persist* verifies the cache does not contain the supplied entity then attempts to insert the supplied entity into the database. The original entity becomes managed when the insert succeeds; otherwise an exception is thrown. *Persist* is more efficient when you know that data has not yet been stored.
 
@@ -553,8 +556,6 @@ These actions can be invoked from this list, as links, or from the menu bar, as 
 
 The XJC compiler from JAXB does the actual code generation using extensions from the [HiSrc BasicJAXB][20] framework. Then JAXB can be used to unmarshal/marshal XML instances to/from Java objects.
 
-> Note: 
-
 XJC generates POJO classes with the standard Java `Object` methods:
 
 + `hashCode()` - numeric value used for object identification or indexing. 
@@ -671,7 +672,7 @@ This action loops over the set of 'Product's and marshalls *productA* into its X
 
 After [unmarshalling products](!unmarshalProducts), you can review the [Roundtrip JAXB Invalid](!roundtripJAXBInvalid) action.
 
-This action is mischievous. It picks the first `Product` instance from the set (*product1A*) and marshalls it into *product1A-xml*. It renames the `Price` tag to `Cost` into *product1B-xml and unmarshalls that into *product1B*. The results are marshalled for display here and in the output console.
+This action is mischievous. It picks the first `Product` instance from the set (*product1A*) and marshalls it into *product1A-xml*. It renames the `Price` tag to `Cost` into *product1B-xml* and unmarshalls that into *product1B*. The results are marshalled for display here and in the output console.
 
 **BEFORE: Product1A vs Product1B**
 
@@ -700,7 +701,7 @@ This action is mischievous. It picks the first `Product` instance from the set (
 </Product>
 ~~~
 
-Look closely and you will see that unmarshalling 'product1B-xml' failed to parse the `Cost` tag. You should not be surprised because that tag name is not defined in your [Product.xsd][12]. The logging console detects the issue, too. In one case, *price* is set but not in the other case!
+Look closely and you will see that unmarshalling *product1B-xml* failed to parse the `Cost` tag. You should not be surprised because that tag name is not defined in your [Product.xsd][12]. The logging console detects the issue, too. In one case, *price* is set but not in the other case!
 
 ~~~
 14:40:00:044 TRACE DefaultEqualsStrategy - Objects are NOT equal!
@@ -988,16 +989,16 @@ Experiment with the toolbar and different sequences of the chaos to see the effe
 [4]: https://docs.oracle.com/cd/E17802_01/webservices/webservices/docs/1.5/tutorial/doc/JAXBUsing4.html
 [5]: https://en.wikipedia.org/wiki/ISO_8601
 [6]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/runtime/src/main/java/org/patrodyne/jvnet/hyperjaxb/explore/AbstractEntityExplorer.java?ts=4
-[7]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/test/java/org/patrodyne/jvnet/hyperjaxb/ex001/Explorer.java?ts=4
-[8]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/project-pom.xml?ts=4
+[7]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/src/test/java/org/patrodyne/jvnet/hyperjaxb/ex001/Explorer.java?ts=4
+[8]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/project-pom.xml?ts=4
 [9]: https://github.com/patrodyne/hisrc-hyperjaxb#readme
 [10]: https://github.com/patrodyne/hisrc-higherjaxb#readme
-[11]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/explore/Ex001-JustProduct/src/main/resources/Product.svg
-[12]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/main/resources/Product.xsd?ts=4
-[13]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/main/resources/Product.xjb?ts=4
-[14]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/test/resources/jvmsystem.properties?ts=4
-[15]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/test/resources/persistence.properties?ts=4
-[16]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/test/resources/simplelogger.properties?ts=4
+[11]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/explore/Ex001-JustProduct/src/main/resources/Product.svg
+[12]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/src/main/resources/Product.xsd?ts=4
+[13]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/src/main/resources/Product.xjb?ts=4
+[14]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/src/test/resources/jvmsystem.properties?ts=4
+[15]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/src/test/resources/persistence.properties?ts=4
+[16]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/src/test/resources/simplelogger.properties?ts=4
 [17]: https://hibernate.org/orm/
 [18]: https://www.h2database.com/
 [19]: https://www.postgresql.org/
@@ -1006,9 +1007,9 @@ Experiment with the toolbar and different sequences of the chaos to see the effe
 [22]: https://manpages.ubuntu.com/manpages/bionic/man1/rlwrap.1.html
 [23]: https://github.com/brettwooldridge/HikariCP#readme
 [24]: https://www.ehcache.org/
-[25]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/main/resources/ehcache-podb.xml?ts=4
+[25]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/src/main/resources/ehcache-podb.xml?ts=4
 [26]: https://www.ironmountain.com/blogs/2020/7-data-destruction-best-practices
 [27]: https://www.w3.org/TR/xmlschema-0/#OccurrenceConstraints
 [28]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/opt/hikaricp/src/main/java/org/patrodyne/jvnet/hyperjaxb/opt/hikaricp/HikariCPHyperConnectionProvider.java?ts=4
-[29]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/test/resources/persistence-h2.properties?ts=4
-[30]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/explore/Ex001-JustProduct/src/test/resources/persistence-pg.properties?ts=4
+[29]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/src/test/resources/persistence-h2.properties?ts=4
+[30]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/src/test/resources/persistence-pg.properties?ts=4

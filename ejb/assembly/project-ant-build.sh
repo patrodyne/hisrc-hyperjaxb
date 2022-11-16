@@ -9,6 +9,8 @@
 
 #export ANT_OPTS="-verbose -Dcom.sun.tools.xjc.Options.findServices=true -Dcom.sun.tools.internal.xjc.Options.findServices=true"
 BASEDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source ${BASEDIR}/build-inc.sh
+export ANT_OPTS="${JVM_SYS_PROPS}"
 BUILDER="output ant"
 FGTITLE="$(basename $(pwd))"
 BGTITLE="$(date --rfc-3339=sec) $(pwd)"
