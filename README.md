@@ -37,6 +37,7 @@ with the original `maven-jaxb2-plugin` name.
 
 #### GitHub Releases, Demonstrations
 
+* [HiSrc HyperJAXB v2.0.0, Explorations][32]
 * [HiSrc HyperJAXB v0.6.4, Explorations][31]
 
 #### Maven Central Repository
@@ -48,12 +49,22 @@ with the original `maven-jaxb2-plugin` name.
 
 New goals for the next release are:
 
-* Update version to 2.0.0 due to jakarta and other name changes.
+* Clean up Java compiler _lint_ warnings.
 * Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
 
 ### Status
 
-#### Completed
+#### In Progress
+
+* Clean up Java compiler _lint_ warnings.
+
+#### Future
+
+* Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
+
+### Fork History
+
+#### Version 2.0.0
 
 * Update dependencies with newer versions *including* the Jakarta namespace.
 * Replace 'eclipse-only' lifecyle profile with 'm2e' XML directive.
@@ -89,12 +100,7 @@ New goals for the next release are:
 * Rename parameter property prefix:
     * `OLD: maven.hj3`
     * `NEW: org.jvnet.hyperjaxb.mojo.xjc`
-
-#### Future
-
-* Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
-
-### Fork History
+* Update version to 2.0.0 due to jakarta and other name changes.
 
 #### Version 0.6.4
 
@@ -128,3 +134,4 @@ New goals for the next release are:
   [24]: https://github.com/highsource/jaxb2-annotate-plugin#readme
   [25]: https://github.com/highsource/hyperjaxb3#readme
   [31]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/0.6.4
+  [32]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/2.0.0
