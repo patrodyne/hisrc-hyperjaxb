@@ -8,9 +8,9 @@
 		<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
 		<version>2.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>hisrc-hyperjaxb-tests-idsymbolspace</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-tests-idsymbolspace</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb Tests [idsymbolspace]</name>
+	<name>HiSrc Hyperjaxb EJB Test [idsymbolspace]</name>
 	<properties>
 		<root.basedir>${basedir}/../../..</root.basedir>
 	</properties>
