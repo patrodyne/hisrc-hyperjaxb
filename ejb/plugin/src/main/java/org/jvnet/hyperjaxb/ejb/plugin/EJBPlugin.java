@@ -102,6 +102,10 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 	public Boolean isValidateXml() { return validateXml; }
 	public void setValidateXml(Boolean validateXml) { this.validateXml = validateXml; }
 	
+	private Integer maxIdentifierLength = null;
+	public Integer getMaxIdentifierLength() { return maxIdentifierLength; }
+	public void setMaxIdentifierLength(Integer maxIdentifierLength) { this.maxIdentifierLength = maxIdentifierLength; }
+
 	private String roundtripTestClassName;
 	public String getRoundtripTestClassName() { return roundtripTestClassName; } 
 	public void setRoundtripTestClassName(String rt) { this.roundtripTestClassName = rt; }
@@ -169,7 +173,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 			Customizations.NAMESPACES.contains(namespace);
 	}
 
-	// Represents the root of the XML Schema binder (Bean Generater Model).
+	// Represents the root of the XML Schema binder (Bean Generator Model).
 	private BGMBuilder bgmBuilder;
 	public BGMBuilder getBgmBuilder() { return bgmBuilder; }
 	public void setBgmBuilder(BGMBuilder bgmBuilder) { this.bgmBuilder = bgmBuilder; }
@@ -342,6 +346,11 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		// Set target directory, when needed.
 		if (getTargetDir() == null)
 			setTargetDir(options.targetDir);
+
+		// Configure XJC Plugin properties from XJC parameter(s)
+		// and/or from Maven Mojo settings.
+		if ( getMaxIdentifierLength() != null )
+			getNaming().setMaxIdentifierLength(getMaxIdentifierLength());
 	}
 	
 	@Override

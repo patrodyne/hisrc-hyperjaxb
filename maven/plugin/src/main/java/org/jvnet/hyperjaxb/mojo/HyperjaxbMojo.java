@@ -43,6 +43,14 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	public void setValidateXml(Boolean validateXml) { this.validateXml = validateXml; }
 
 	/**
+	 * Option to configure the maximum identifier length (SQL, etc.).
+	 */
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".maxIdentifierLength")
+	private Integer maxIdentifierLength = null;
+	public Integer getMaxIdentifierLength() { return maxIdentifierLength; }
+	public void setMaxIdentifierLength(Integer maxIdentifierLength) { this.maxIdentifierLength = maxIdentifierLength; }
+
+	/**
 	 * Name of the roundtrip test case. If omitted, no roundtrip test case is
 	 * generated.
 	 */
@@ -226,6 +234,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 
 		getLog().info("MOJO Configuration: target:" + getTarget());
 		getLog().info("MOJO Configuration: validateXml:" + isValidateXml());
+		getLog().info("MOJO Configuration: maxIdentifierLength:" + getMaxIdentifierLength());
 		getLog().info("MOJO Configuration: roundtripTestClassName:" + getRoundtripTestClassName());
 		getLog().info("MOJO Configuration: resourceIncludes:" + getResourceIncludes());
 		getLog().info("MOJO Configuration: variant:" + getVariant());
@@ -277,6 +286,8 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 				add(arguments,"-Xhyperjaxb-jpa-result=" + getResult());
 			if (isValidateXml() != null)
 				add(arguments,"-Xhyperjaxb-jpa-validateXml=" + isValidateXml());
+			if (getMaxIdentifierLength() != null)
+				add(arguments,"-Xhyperjaxb-jpa-maxIdentifierLength=" + getMaxIdentifierLength());
 			if (getRoundtripTestClassName() != null)
 				add(arguments,"-Xhyperjaxb-jpa-roundtripTestClassName=" + getRoundtripTestClassName());
 			if (getPersistenceUnitName() != null)
@@ -297,6 +308,8 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 				add(arguments,"-Xhyperjaxb-ejb-result=" + getResult());
 			if (isValidateXml() != null)
 				add(arguments,"-Xhyperjaxb-ejb-validateXml=" + isValidateXml());
+			if (getMaxIdentifierLength() != null)
+				add(arguments,"-Xhyperjaxb-ejb-maxIdentifierLength=" + getMaxIdentifierLength());
 			if (getRoundtripTestClassName() != null)
 				arguments.add("-Xhyperjaxb-ejb-roundtripTestClassName=" + getRoundtripTestClassName());
 			if (getPersistenceUnitName() != null)

@@ -25,6 +25,9 @@ public class EmbeddedNamingWrapper implements Naming
 	private final Naming naming;
 	private final FieldOutline parentFieldOutline;
 
+	public int getMaxIdentifierLength() { return naming.getMaxIdentifierLength(); }
+	public void setMaxIdentifierLength(int maxIdentifierLength) { naming.setMaxIdentifierLength(maxIdentifierLength); }
+
 	public EmbeddedNamingWrapper(Naming naming, FieldOutline fieldOutline)
 	{
 		super();

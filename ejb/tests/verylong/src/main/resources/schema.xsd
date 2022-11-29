@@ -8,7 +8,8 @@
 			</jaxb:schemaBindings>
 		</xs:appinfo>
 	</xs:annotation>
-	<!-- ... -->
+
+	<!-- Length 36 -->
 	<xs:element name="a_abcdefghijklmnopqrstvuw12345678910" type="a_abcdefghijklmnopqrstvuw12345678910_type"/>
 	<xs:complexType name="a_abcdefghijklmnopqrstvuw12345678910_type">
 		<xs:sequence>
@@ -47,6 +48,50 @@
 			<xs:extension base="c_abcdefghijklmnopqrstvuw12345678910_type">
 				<xs:sequence>
 					<xs:element name="h_abcdefghijklmnopqrstvuw12345678910" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- Length 70 -->
+	<xs:element name="a_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789" type="a_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789_type"/>
+	<xs:complexType name="a_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789_type">
+		<xs:sequence>
+			<xs:element name="b_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789" type="b_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789_type" minOccurs="0"/>
+			<xs:element name="b1_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789" type="b_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789_type" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="c_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789" type="c_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789_type" minOccurs="0">
+			</xs:element>
+			<xs:element name="d_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789" type="d_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789_type" minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="b_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789_type">
+		<xs:sequence>
+			<xs:element name="d_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789" type="xs:string" minOccurs="0"/>
+			<xs:element name="e_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="c_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789_type">
+		<xs:annotation>
+			<xs:appinfo>
+				<!--hj:embeddable/-->
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="f_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789" type="xs:long" minOccurs="0"/>
+			<xs:element name="g_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789" type="xs:anyURI" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="d_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789_type">
+		<xs:annotation>
+			<xs:appinfo>
+				<!--hj:embeddable/-->
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="c_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789_type">
+				<xs:sequence>
+					<xs:element name="h_abcdefghijklmnopqrstvuwxyz_12345678910_123456789_123456789_123456789" type="xs:string" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>

@@ -15,9 +15,12 @@ import com.sun.tools.xjc.outline.Outline;
  */
 public interface Naming
 {
+	public int getMaxIdentifierLength();
+	public void setMaxIdentifierLength(int maxIdentifierLength);
+
 	public ReservedNames getReservedNames();
 	public Ignoring getIgnoring();
-	
+
 	public String getColumn$Name$Prefix(Mapping context);
 	public String getPropertyName(Mapping context, FieldOutline fieldOutline);
 	public String getEntityClass(Mapping context, Outline outline, NType type);

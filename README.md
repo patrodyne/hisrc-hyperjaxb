@@ -49,10 +49,15 @@ with the original `maven-jaxb2-plugin` name.
 
 New goals for the next release are:
 
+* Make `maxIdentifierLength` configurable from Maven Mojo and XJX Plugin.
 * Clean up Java compiler _lint_ warnings.
 * Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
 
 ### Status
+
+#### Completed
+
+* Make `maxIdentifierLength` configurable from Maven Mojo and XJX Plugin.
 
 #### In Progress
 
