@@ -80,8 +80,7 @@ import static org.hibernate.cfg.AvailableSettings.USE_SCROLLABLE_RESULTSET;
 import static org.hibernate.cfg.AvailableSettings.USE_SECOND_LEVEL_CACHE;
 import static org.hibernate.cfg.AvailableSettings.USE_SQL_COMMENTS;
 import static org.hibernate.cfg.AvailableSettings.USE_STRUCTURED_CACHE;
-import static org.hibernate.cfg.AvailableSettings.WRAP_RESULT_SETS;
-import static org.hibernate.jpa.AvailableSettings.PERSISTENCE_UNIT_NAME;
+import static org.hibernate.cfg.AvailableSettings.PERSISTENCE_UNIT_NAME;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -375,7 +374,6 @@ public class SessionFactoryUtil
 		putSetting(hcoMap, sf, USE_SQL_COMMENTS, etc);
 		putSetting(hcoMap, sf, USE_STRUCTURED_CACHE, etc);
 		putSetting(hcoMap, sf, USER, etc);
-		putSetting(hcoMap, sf, WRAP_RESULT_SETS, etc);
 		putSetting(hcoMap, sf, ConfigSettings.PROVIDER, etc);
 		putSetting(hcoMap, sf, ConfigSettings.CONFIG_URI, etc);
 		putSetting(hcoMap, sf, ConfigSettings.MISSING_CACHE_STRATEGY, etc);
@@ -525,7 +523,6 @@ public class SessionFactoryUtil
 			case USE_SQL_COMMENTS: value = sfo.isCommentsEnabled(); break;
 			case USE_STRUCTURED_CACHE: value = sfo.isStructuredCacheEntriesEnabled(); break;
 			case USER: value = etc.get(USER); break;
-			case WRAP_RESULT_SETS: value = sfo.isWrapResultSetsEnabled(); break;
 			case ConfigSettings.PROVIDER: value = etc.get(ConfigSettings.PROVIDER); break;
 			case ConfigSettings.CONFIG_URI: value = etc.get(ConfigSettings.CONFIG_URI); break;
 			case ConfigSettings.MISSING_CACHE_STRATEGY: value = etc.get(ConfigSettings.MISSING_CACHE_STRATEGY); break;

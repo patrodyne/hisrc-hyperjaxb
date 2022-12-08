@@ -1,9 +1,10 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
-import ee.jakarta.xml.ns.persistence.orm.Column;
-import ee.jakarta.xml.ns.persistence.orm.Version;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
+
+import ee.jakarta.xml.ns.persistence.orm.Column;
+import ee.jakarta.xml.ns.persistence.orm.Version;
 
 public class VersionMapping implements FieldOutlineMapping<Version> {
 

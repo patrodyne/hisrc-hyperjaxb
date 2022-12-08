@@ -50,9 +50,11 @@
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<!--result>mappingFiles</result-->
+					<variant>ejb</variant>
+					<noFileHeader>true</noFileHeader>
+					<maxIdentifierLength>60</maxIdentifierLength>
 					<validateXml>false</validateXml>
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.one.RoundtripTest</roundtripTestClassName>
-					<variant>ejb</variant>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -1,25 +1,22 @@
 package org.jvnet.hyperjaxb.ejb.tutorials.po.stepone;
 
-import generated.ObjectFactory;
-import generated.PurchaseOrderType;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
 import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesMoreFile;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import generated.ObjectFactory;
+import generated.PurchaseOrderType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class JPATest {
 

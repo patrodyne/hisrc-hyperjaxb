@@ -12,10 +12,12 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.Validate;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import org.jvnet.basicjaxb.lang.JAXBMergeStrategy;
+import org.jvnet.basicjaxb.lang.MergeFrom2;
+import org.jvnet.basicjaxb.lang.MergeStrategy2;
+import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.hyperjaxb.basicjaxb.lang.MergeableMergeStrategy;
+import org.jvnet.hyperjaxb.ejb.strategy.customizing.Customizing;
 import org.jvnet.hyperjaxb.jpa.Basic;
 import org.jvnet.hyperjaxb.jpa.CollectionProperty;
 import org.jvnet.hyperjaxb.jpa.Customizations;
@@ -41,21 +43,10 @@ import org.jvnet.hyperjaxb.jpa.SingleProperty;
 import org.jvnet.hyperjaxb.jpa.ToMany;
 import org.jvnet.hyperjaxb.jpa.ToOne;
 import org.jvnet.hyperjaxb.jpa.Version;
-import org.jvnet.hyperjaxb.ejb.strategy.customizing.Customizing;
-import org.jvnet.hyperjaxb.basicjaxb.lang.MergeableMergeStrategy;
 import org.jvnet.hyperjaxb.xsom.SimpleTypeAnalyzer;
 import org.jvnet.hyperjaxb.xsom.TypeUtils;
-import org.jvnet.basicjaxb.lang.JAXBMergeStrategy;
-import org.jvnet.basicjaxb.lang.MergeFrom2;
-import org.jvnet.basicjaxb.lang.MergeStrategy2;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
-
-import ee.jakarta.xml.ns.persistence.orm.Column;
-import jakarta.annotation.Priority;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Dependent;
-import jakarta.enterprise.inject.Alternative;
-import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CCustomizable;
@@ -66,6 +57,12 @@ import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.xml.xsom.XSComponent;
+
+import ee.jakarta.xml.ns.persistence.orm.Column;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.inject.Inject;
 
 /**
  * The default strategy to implement HyperJAXB customizations.
@@ -1212,8 +1209,7 @@ public class DefaultCustomizing implements Customizing
 		return jaxbContext;
 	}
 
-	private final static MergeStrategy2 MERGE_STRATEGY = new MergeableMergeStrategy(JAXBMergeStrategy.INSTANCE2);
-
+	private final static MergeStrategy2 MERGE_STRATEGY = new MergeableMergeStrategy(JAXBMergeStrategy.getInstance());
 	private <T extends Mergeable & MergeFrom2> void mergeFrom(T value, T defaultValue)
 	{
 		value.mergeFrom(null, null, value, defaultValue, MERGE_STRATEGY);

@@ -1,9 +1,10 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
-import ee.jakarta.xml.ns.persistence.orm.Basic;
-import ee.jakarta.xml.ns.persistence.orm.Column;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
+
+import ee.jakarta.xml.ns.persistence.orm.Basic;
+import ee.jakarta.xml.ns.persistence.orm.Column;
 
 public class BasicMapping implements FieldOutlineMapping<Basic> {
 

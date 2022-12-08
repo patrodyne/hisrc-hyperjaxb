@@ -8,16 +8,15 @@ import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.jvnet.hyperjaxb.jpa.Customizations;
-import org.jvnet.hyperjaxb.jpa.IgnoredPackage;
+import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.ejb.strategy.customizing.Customizing;
 import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.hyperjaxb.jpa.Customizations;
+import org.jvnet.hyperjaxb.jpa.IgnoredPackage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CClassInfoParent;
@@ -33,7 +32,6 @@ import com.sun.tools.xjc.outline.PackageOutline;
 
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Inject;
 

@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -16,11 +15,11 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.Validate;
 import org.glassfish.jaxb.core.api.impl.NameConverter;
+import org.jvnet.basicjaxb.util.CodeModelUtils;
 import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb.ejb.strategy.naming.Naming;
 import org.jvnet.hyperjaxb.ejb.strategy.naming.ReservedNames;
-import org.jvnet.basicjaxb.util.CodeModelUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

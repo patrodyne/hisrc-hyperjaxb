@@ -1,14 +1,9 @@
 package org.jvnet.hyperjaxb.beans.factory;
 
-import java.io.IOException;
-
 import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBElement;
 
-import org.xml.sax.InputSource;
-
-public class UnmarshalledResourceFactoryBean {
-
+public class UnmarshalledResourceFactoryBean
+{
 	private JAXBContext context;
 	public JAXBContext getContext() { return context; }
 	public void setContext(JAXBContext context) { this.context = context; }
@@ -17,11 +12,13 @@ public class UnmarshalledResourceFactoryBean {
 //	public Resource getResource() { return resource; }
 //	public void setResource(Resource resource) { this.resource = resource; }
 
-	public Class<?> getObjectType() {
+	public Class<?> getObjectType()
+	{
 		return Object.class;
 	}
 
-	public boolean isSingleton() {
+	public boolean isSingleton()
+	{
 		return false;
 	}
 

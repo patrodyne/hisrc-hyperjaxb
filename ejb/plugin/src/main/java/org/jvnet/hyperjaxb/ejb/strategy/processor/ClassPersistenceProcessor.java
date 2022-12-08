@@ -6,24 +6,24 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
 
-import jakarta.annotation.Priority;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Alternative;
-import jakarta.inject.Inject;
-import jakarta.xml.bind.JAXBException;
-
+import org.jvnet.basicjaxb.lang.JAXBMergeCollectionsStrategy;
 import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.annotate.StrategyAnnotate;
 import org.jvnet.hyperjaxb.ejb.strategy.naming.Naming;
 import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
 import org.jvnet.hyperjaxb.persistence.util.PersistenceUtils;
-import org.jvnet.basicjaxb.lang.JAXBMergeCollectionsStrategy;
 
-import ee.jakarta.xml.ns.persistence.Persistence;
-import ee.jakarta.xml.ns.persistence.Persistence.PersistenceUnit;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
+
+import ee.jakarta.xml.ns.persistence.Persistence;
+import ee.jakarta.xml.ns.persistence.Persistence.PersistenceUnit;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.inject.Inject;
+import jakarta.xml.bind.JAXBException;
 
 /**
  * The default strategy to generate annotated Java source code.
@@ -103,18 +103,6 @@ public class ClassPersistenceProcessor implements OutlineProcessor<EJBPlugin>
 		return includedClasses;
 	}
 
-	// private OutlineProcessor<EJBPlugin> outlineProcessor;
-	//
-	// public OutlineProcessor<EJBPlugin> getOutlineProcessor() {
-	// return outlineProcessor;
-	// }
-	//
-	// @Required
-	// public void setOutlineProcessor(
-	// OutlineProcessor<EJBPlugin> outlineProcessor) {
-	// this.outlineProcessor = outlineProcessor;
-	// }
-	//
 	protected Persistence createPersistence(EJBPlugin plugin, PersistenceUnit persistenceUnit, String persistenceUnitName)
 		throws JAXBException
 	{
@@ -158,14 +146,15 @@ public class ClassPersistenceProcessor implements OutlineProcessor<EJBPlugin>
 			targetPersistenceUnit = new PersistenceUnit();
 			persistence.getPersistenceUnit().add(targetPersistenceUnit);
 		}
-		// targetPersistenceUnit.mergeFrom(persistenceUnit,
-		// targetPersistenceUnit);
+		
+		// targetPersistenceUnit.mergeFrom(persistenceUnit, targetPersistenceUnit);
 		targetPersistenceUnit.mergeFrom(null, null, persistenceUnit, targetPersistenceUnit,
-			JAXBMergeCollectionsStrategy.INSTANCE2);
+			JAXBMergeCollectionsStrategy.getInstance());
 		// persistenceUnit.copyTo(targetPersistenceUnit);
 		targetPersistenceUnit.setName(persistenceUnitName);
+		Collections.sort(targetPersistenceUnit.getMappingFile());
 		Collections.sort(targetPersistenceUnit.getClazz());
-		Collections.sort(targetPersistenceUnit.getClazz());
+		
 		return persistence;
 	}
 }

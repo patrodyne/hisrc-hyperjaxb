@@ -8,21 +8,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import jakarta.annotation.Priority;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Alternative;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.MappedSuperclass;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.jvnet.hyperjaxb.ejb.Constants;
-import org.jvnet.hyperjaxb.jpa.Customizations;
+import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessPropertyInfos;
+import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.model.CClassifier;
 import org.jvnet.hyperjaxb.xjc.model.CClassifyingVisitor;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import com.sun.tools.xjc.model.CClassInfo;
@@ -31,6 +24,12 @@ import com.sun.tools.xjc.model.CElementPropertyInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CValuePropertyInfo;
+
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.MappedSuperclass;
 
 @ApplicationScoped
 @Alternative

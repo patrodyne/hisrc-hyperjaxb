@@ -3,11 +3,9 @@ package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 import java.util.Collection;
 import java.util.Collections;
 
-import jakarta.xml.bind.annotation.adapters.XmlAdapter;
-
 import org.glassfish.jaxb.core.v2.model.core.PropertyKind;
-import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
+import org.jvnet.hyperjaxb.jpa.Customizations;
 
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;
@@ -15,6 +13,8 @@ import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.TypeUse;
 import com.sun.tools.xjc.model.TypeUseFactory;
 import com.sun.tools.xjc.outline.FieldOutline;
+
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 public abstract class AbstractAdaptBuiltinPropertyInfo extends
 		AbstractAdaptPropertyInfo {

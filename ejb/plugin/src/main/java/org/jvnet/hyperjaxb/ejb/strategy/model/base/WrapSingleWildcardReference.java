@@ -5,27 +5,27 @@ import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import java.util.Collection;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.glassfish.jaxb.core.v2.model.core.WildcardMode;
-import org.jvnet.hyperjaxb.jpa.Basic;
-import org.jvnet.hyperjaxb.jpa.Customizations;
+import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
+import org.jvnet.hyperjaxb.jpa.Basic;
+import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.model.CExternalLeafInfo;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.ElementAsString;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
-
-import ee.jakarta.xml.ns.persistence.orm.Lob;
-import jakarta.annotation.Priority;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Alternative;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CBuiltinLeafInfo;
 import com.sun.tools.xjc.model.CElement;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
+
+import ee.jakarta.xml.ns.persistence.orm.Lob;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
 
 @ApplicationScoped
 @Alternative

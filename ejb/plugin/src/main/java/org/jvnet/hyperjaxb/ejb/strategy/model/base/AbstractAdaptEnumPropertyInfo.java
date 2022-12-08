@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.glassfish.jaxb.core.v2.model.core.PropertyKind;
-import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
+import org.jvnet.hyperjaxb.jpa.Customizations;
 
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;

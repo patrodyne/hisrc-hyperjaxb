@@ -52,7 +52,7 @@
 			<xs:element name="one-to-many-join-table" type="test:two" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:appinfo>
-						<hj:one-to-many>
+						<hj:one-to-many orphan-removal="true">
 							<orm:join-table name="ONE_O2MJT_TWO">
 								<orm:join-column name="ONE_ID"/>
 								<orm:inverse-join-column name="TWO_ID"/>
@@ -62,9 +62,12 @@
 								</orm:unique-constraint>
 							</orm:join-table>
 						</hj:one-to-many>
+						<!--
+						DEPRECATED: Hibernate originally handled orphan removal as a specialized cascade.
 						<annox:annotate>
 							<ha:Cascade value="DELETE_ORPHAN"/>
 						</annox:annotate>
+						-->
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>

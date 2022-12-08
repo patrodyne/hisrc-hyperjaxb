@@ -9,17 +9,17 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.glassfish.jaxb.core.v2.model.core.ID;
-import org.jvnet.hyperjaxb.jpa.Customizations;
+import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.basicjaxb.util.FieldAccessorUtils;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.item.Item;
+import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.WrappedCollectionField;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.WrappingCollectionField;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
-import org.jvnet.basicjaxb.util.FieldAccessorUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JExpr;
@@ -33,10 +33,10 @@ import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CClassInfoParent;
 import com.sun.tools.xjc.model.CCustomizations;
 import com.sun.tools.xjc.model.CElementPropertyInfo;
+import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.CValuePropertyInfo;
-import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
 import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.reader.Ring;

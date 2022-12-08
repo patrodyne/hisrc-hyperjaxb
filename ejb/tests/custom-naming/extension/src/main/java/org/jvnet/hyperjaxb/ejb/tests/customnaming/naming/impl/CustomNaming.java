@@ -7,7 +7,6 @@ import org.jvnet.hyperjaxb.ejb.strategy.naming.impl.DefaultNaming;
 
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Alternative;
 
 @ApplicationScoped

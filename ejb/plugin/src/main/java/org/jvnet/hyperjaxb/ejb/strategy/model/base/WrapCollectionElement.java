@@ -9,18 +9,18 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.glassfish.jaxb.core.v2.model.core.ID;
-import org.jvnet.hyperjaxb.jpa.Customizations;
-import org.jvnet.hyperjaxb.jpa.GeneratedClass;
+import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.basicjaxb.util.FieldAccessorUtils;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.item.Item;
+import org.jvnet.hyperjaxb.jpa.Customizations;
+import org.jvnet.hyperjaxb.jpa.GeneratedClass;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.WrappedCollectionField;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.WrappingCollectionField;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
-import org.jvnet.basicjaxb.util.FieldAccessorUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
 import com.sun.codemodel.JClass;

@@ -1,9 +1,10 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
-import ee.jakarta.xml.ns.persistence.orm.ManyToMany;
-import ee.jakarta.xml.ns.persistence.orm.OneToMany;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
+
+import ee.jakarta.xml.ns.persistence.orm.ManyToMany;
+import ee.jakarta.xml.ns.persistence.orm.OneToMany;
 
 public class ToManyMapping implements FieldOutlineMapping<Object> {
 

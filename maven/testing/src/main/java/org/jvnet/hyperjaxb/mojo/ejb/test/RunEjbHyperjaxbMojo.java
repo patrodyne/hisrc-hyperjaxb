@@ -8,13 +8,13 @@ import org.jvnet.hyperjaxb.mojo.HyperjaxbMojo;
 public class RunEjbHyperjaxbMojo extends RunHigherjaxbMojo
 {
 	@Override
-	protected AbstractHigherjaxbParmMojo createMojo()
+	protected AbstractHigherjaxbParmMojo<?> createMojo()
 	{
 		return new HyperjaxbMojo();
 	}
 
 	@Override
-	protected void configureMojo(AbstractHigherjaxbParmMojo mojo)
+	protected void configureMojo(AbstractHigherjaxbParmMojo<?> mojo)
 	{
 		super.configureMojo(mojo);
 		configureHyperjaxbMojo((HyperjaxbMojo) mojo);

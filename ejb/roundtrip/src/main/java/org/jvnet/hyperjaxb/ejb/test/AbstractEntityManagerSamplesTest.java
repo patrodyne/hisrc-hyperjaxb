@@ -12,35 +12,21 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.jvnet.basicjaxb.test.AbstractSamplesTest;
 import org.jvnet.basicjaxb.xml.bind.ContextPathAware;
 
-public abstract class AbstractEntityManagerSamplesTest extends
-		AbstractEntityManagerTest implements ContextPathAware {
-
-	private final static IOFileFilter JAVA_1_5_SAMPLES = FileFilterUtils
-			.andFileFilter(FileFilterUtils.suffixFileFilter(".xml"),
-					FileFilterUtils.notFileFilter(
-
-					FileFilterUtils.suffixFileFilter("1.6.xml")));
-
-	private final static IOFileFilter JAVA_1_6_SAMPLES = FileFilterUtils
-			.andFileFilter(FileFilterUtils.suffixFileFilter(".xml"),
-					FileFilterUtils.notFileFilter(
-
-					FileFilterUtils.suffixFileFilter("1.5.xml")));
-
-	private final static IOFileFilter SAMPLES = SystemUtils.IS_JAVA_1_5 ? JAVA_1_5_SAMPLES
-			: JAVA_1_6_SAMPLES;
+public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityManagerTest implements ContextPathAware
+{
+	public static final String DEFAULT_SAMPLES_DIRECTORY_NAME = "src/test/samples";
+	private final static IOFileFilter SAMPLE_FILTER = FileFilterUtils.suffixFileFilter(".xml");
 
 	private AbstractSamplesTest samplesTest;
 	public AbstractSamplesTest getSamplesTest()
 	{
-		if ( samplesTest == null )
+		if (samplesTest == null)
 			setSamplesTest(createSamplesTest());
 		return samplesTest;
 	}
@@ -49,113 +35,129 @@ public abstract class AbstractEntityManagerSamplesTest extends
 		this.samplesTest = samplesTest;
 	}
 
+	public String getContextPath()
+	{
+		return getClass().getPackage().getName();
+	}
+
+	@Override
+	public String getPersistenceUnitName()
+	{
+		return getContextPath();
+	}
+
 	@Override
 	@BeforeEach
-	public void setUp() throws Exception {
+	public void setUp() throws Exception
+	{
 		super.setUp();
 		setSamplesTest(createSamplesTest());
 	}
 
 	@AfterEach
-	public void tearDown() throws Exception {
+	public void tearDown() throws Exception
+	{
 	}
 
-	protected AbstractSamplesTest createSamplesTest() {
-		return new AbstractSamplesTest() {
-
+	@Test
+	public void testSamples()
+		throws Exception
+	{
+		getSamplesTest().testSamples();
+	}
+	
+	protected AbstractSamplesTest createSamplesTest()
+	{
+		return new AbstractSamplesTest()
+		{
 			@Override
-			protected void checkSample(File sample) throws Exception {
+			protected void checkSample(File sample)
+				throws Exception
+			{
 				AbstractEntityManagerSamplesTest.this.checkSample(sample);
 			}
 
 			@Override
-			protected String getContextPath() {
+			protected String getContextPath()
+			{
 				return AbstractEntityManagerSamplesTest.this.getContextPath();
 			}
 
 			@Override
-			protected Class<? extends Object> getTestClass() {
+			protected Class<? extends Object> getTestClass()
+			{
 				return AbstractEntityManagerSamplesTest.this.getClass();
 			}
 
 			@Override
-			@SuppressWarnings("unchecked")
-			protected File[] getSampleFiles() {
+			protected File[] getSampleFiles()
+			{
 				return AbstractEntityManagerSamplesTest.this.getSampleFiles();
 			}
 
 			@Override
-			protected File getSamplesDirectory() {
-				return AbstractEntityManagerSamplesTest.this
-						.getSamplesDirectory();
+			protected File getSamplesDirectory()
+			{
+				return AbstractEntityManagerSamplesTest.this.getSamplesDirectory();
 			}
 
 			@Override
-			protected ClassLoader getContextClassLoader() {
-				return AbstractEntityManagerSamplesTest.this
-						.getContextClassLoader();
+			protected ClassLoader getContextClassLoader()
+			{
+				return AbstractEntityManagerSamplesTest.this.getContextClassLoader();
 			}
-
 		};
 	}
 
-	@Test
-	public void testSamples() throws Exception {
-		getSamplesTest().testSamples();
-	}
-
-	protected JAXBContext createContext() throws JAXBException {
+	protected JAXBContext createContext()
+		throws JAXBException
+	{
 		return getSamplesTest().createContext();
 	}
 
-	@Override
-	public String getPersistenceUnitName() {
-		return getContextPath();
-	}
+	protected abstract void checkSample(File sample)
+		throws Exception;
 
-	protected abstract void checkSample(File sample) throws Exception;
-
-	public String getContextPath() {
-		return getClass().getPackage().getName();
-	}
-
-	protected File getBaseDir() {
-		try {
-			return (new File(getClass().getProtectionDomain().getCodeSource()
-					.getLocation().getFile())).getParentFile().getParentFile()
-					.getAbsoluteFile();
-		} catch (Exception ex) {
+	protected File getBaseDir()
+	{
+		try
+		{
+			File codeSourceLocation = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getFile());
+			return codeSourceLocation.getParentFile().getParentFile().getAbsoluteFile();
+		}
+		catch (Exception ex)
+		{
 			throw new AssertionError(ex);
 		}
 	}
 
-	protected File getSamplesDirectory() {
+	protected String getSamplesDirectoryName()
+	{
+		return DEFAULT_SAMPLES_DIRECTORY_NAME;
+	}
+	
+	protected File getSamplesDirectory()
+	{
 		return new File(getBaseDir(), getSamplesDirectoryName());
 	}
 
-	protected File[] getSampleFiles() {
+	protected File[] getSampleFiles()
+	{
 		File samplesDirectory = getSamplesDirectory();
-		logger.info("Testing directory [" + samplesDirectory.getAbsolutePath()
-				+ "].");
-		if (samplesDirectory == null || !samplesDirectory.isDirectory()) {
+		logger.info("Testing directory [" + samplesDirectory.getAbsolutePath() + "].");
+		if (samplesDirectory == null || !samplesDirectory.isDirectory())
 			return new File[] {};
-		} else {
-
-			final Collection<File> files = FileUtils.listFiles(
-					samplesDirectory, SAMPLES, TrueFileFilter.INSTANCE);
+		else
+		{
+			final Collection<File> files = FileUtils.listFiles(samplesDirectory, SAMPLE_FILTER, TrueFileFilter.INSTANCE);
 			File[] fileArray = files.toArray(new File[files.size()]);
 			sort(fileArray);
 			return fileArray;
 		}
 	}
 
-	public static final String DEFAULT_SAMPLES_DIRECTORY_NAME = "src/test/samples";
-
-	protected String getSamplesDirectoryName() {
-		return DEFAULT_SAMPLES_DIRECTORY_NAME;
-	}
-
-	protected ClassLoader getContextClassLoader() {
+	protected ClassLoader getContextClassLoader()
+	{
 		return getClass().getClassLoader();
 	}
 }

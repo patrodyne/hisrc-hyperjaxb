@@ -9,32 +9,27 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.glassfish.jaxb.core.v2.model.core.ID;
 import org.glassfish.jaxb.core.v2.model.core.WildcardMode;
-import org.jvnet.hyperjaxb.jpa.Basic;
-import org.jvnet.hyperjaxb.jpa.Customizations;
+import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.basicjaxb.util.FieldAccessorUtils;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.item.Item;
 import org.jvnet.hyperjaxb.item.MixedItem;
+import org.jvnet.hyperjaxb.jpa.Basic;
+import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.SingleField;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.WrappedCollectionField;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.WrappingCollectionField;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
-import org.jvnet.basicjaxb.util.FieldAccessorUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
 import com.sun.codemodel.JType;
-import ee.jakarta.xml.ns.persistence.orm.Lob;
-import jakarta.annotation.Priority;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Alternative;
-
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
@@ -43,15 +38,20 @@ import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CClassInfoParent;
 import com.sun.tools.xjc.model.CCustomizations;
 import com.sun.tools.xjc.model.CElementPropertyInfo;
+import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CTypeRef;
-import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
 import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.reader.Ring;
 import com.sun.tools.xjc.reader.xmlschema.BGMBuilder;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
+
+import ee.jakarta.xml.ns.persistence.orm.Lob;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
 
 @ApplicationScoped
 @Alternative

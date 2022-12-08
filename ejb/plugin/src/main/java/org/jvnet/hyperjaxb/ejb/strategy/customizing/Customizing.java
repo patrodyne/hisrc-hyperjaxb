@@ -21,7 +21,6 @@ import org.jvnet.hyperjaxb.jpa.ManyToOne;
 import org.jvnet.hyperjaxb.jpa.MappedSuperclass;
 import org.jvnet.hyperjaxb.jpa.OneToMany;
 import org.jvnet.hyperjaxb.jpa.OneToOne;
-import org.jvnet.hyperjaxb.jpa.Persistence;
 import org.jvnet.hyperjaxb.jpa.Version;
 
 import com.sun.tools.xjc.model.CClassInfo;

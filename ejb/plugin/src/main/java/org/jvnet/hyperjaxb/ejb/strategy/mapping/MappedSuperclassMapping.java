@@ -2,10 +2,11 @@ package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import org.jvnet.basicjaxb.util.OutlineUtils;
 
-import ee.jakarta.xml.ns.persistence.orm.Attributes;
-import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
+
+import ee.jakarta.xml.ns.persistence.orm.Attributes;
+import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
 
 public class MappedSuperclassMapping implements
 		ClassOutlineMapping<MappedSuperclass> {

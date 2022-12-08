@@ -8,15 +8,15 @@ import java.util.Set;
 
 import javax.xml.namespace.QName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.glassfish.jaxb.core.v2.model.core.ID;
-import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
+import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.JAXBElementNameField;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.JAXBElementValueField;
 import org.jvnet.hyperjaxb.xml.XMLConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;

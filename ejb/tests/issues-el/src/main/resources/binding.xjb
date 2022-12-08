@@ -11,7 +11,7 @@
 	
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xsd:schema">
 		<jaxb:globalBindings localScoping="toplevel">
-			<jaxb:serializable/>
+			<jaxb:serializable uid="20211201" />
 		</jaxb:globalBindings>
 
 		<jaxb:schemaBindings>

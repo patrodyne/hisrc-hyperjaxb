@@ -1,9 +1,9 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
-import org.jvnet.hyperjaxb.jpa.JaxbContext;
-import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
-import org.jvnet.hyperjaxb.xjc.generator.bean.field.SingleMarshallingReferenceField;
 import org.jvnet.basicjaxb.util.OutlineUtils;
+import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
+import org.jvnet.hyperjaxb.jpa.JaxbContext;
+import org.jvnet.hyperjaxb.xjc.generator.bean.field.SingleMarshallingReferenceField;
 
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.model.CPropertyInfo;

@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.hyperjaxb.jpa.Customizations;
+
+import com.sun.tools.xjc.model.CPropertyInfo;
+import com.sun.tools.xjc.outline.ClassOutline;
+import com.sun.tools.xjc.outline.FieldOutline;
 
 import ee.jakarta.xml.ns.persistence.orm.AssociationOverride;
 import ee.jakarta.xml.ns.persistence.orm.JoinColumn;
 import ee.jakarta.xml.ns.persistence.orm.JoinTable;
 import ee.jakarta.xml.ns.persistence.orm.OrderColumn;
 import ee.jakarta.xml.ns.persistence.orm.PrimaryKeyJoinColumn;
-import com.sun.tools.xjc.model.CPropertyInfo;
-import com.sun.tools.xjc.outline.ClassOutline;
-import com.sun.tools.xjc.outline.FieldOutline;
 
 public class EmbeddedAssociationMappingWrapper implements AssociationMapping {
 

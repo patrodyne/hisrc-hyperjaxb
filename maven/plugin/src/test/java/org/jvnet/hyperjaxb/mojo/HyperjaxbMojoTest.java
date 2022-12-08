@@ -9,12 +9,12 @@ import org.jvnet.higherjaxb.mojo.test.RunHigherjaxbMojo;
 public class HyperjaxbMojoTest extends RunHigherjaxbMojo {
 
 	@Override
-	protected AbstractHigherjaxbParmMojo createMojo() {
+	protected AbstractHigherjaxbParmMojo<?> createMojo() {
 		return new HyperjaxbMojo();
 	}
 
 	@Override
-	protected void configureMojo(AbstractHigherjaxbParmMojo mojo) {
+	protected void configureMojo(AbstractHigherjaxbParmMojo<?> mojo) {
 		super.configureMojo(mojo);
 		configureHyperjaxbMojo((HyperjaxbMojo) mojo);
 

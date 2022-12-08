@@ -1,16 +1,16 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
-import jakarta.persistence.InheritanceType;
-
-import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.hyperjaxb.jpa.Customizations;
+
+import com.sun.tools.xjc.Options;
+import com.sun.tools.xjc.outline.ClassOutline;
 
 import ee.jakarta.xml.ns.persistence.orm.Attributes;
 import ee.jakarta.xml.ns.persistence.orm.Entity;
 import ee.jakarta.xml.ns.persistence.orm.Inheritance;
 import ee.jakarta.xml.ns.persistence.orm.Table;
-import com.sun.tools.xjc.Options;
-import com.sun.tools.xjc.outline.ClassOutline;
+import jakarta.persistence.InheritanceType;
 
 public class EntityMapping implements ClassOutlineMapping<Entity> {
 

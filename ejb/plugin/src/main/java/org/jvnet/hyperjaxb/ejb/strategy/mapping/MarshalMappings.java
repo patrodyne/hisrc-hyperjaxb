@@ -8,31 +8,30 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.jvnet.basicjaxb.util.CodeModelUtils;
+import org.jvnet.basicjaxb.util.OutlineUtils;
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
+import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
+import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
+import org.jvnet.hyperjaxb.persistence.jpa.JPAUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.sun.codemodel.fmt.JTextFile;
+import com.sun.tools.xjc.Options;
+import com.sun.tools.xjc.outline.ClassOutline;
+import com.sun.tools.xjc.outline.Outline;
+
+import ee.jakarta.xml.ns.persistence.orm.Embeddable;
+import ee.jakarta.xml.ns.persistence.orm.Entity;
+import ee.jakarta.xml.ns.persistence.orm.EntityMappings;
+import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Inject;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
-import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
-import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
-import org.jvnet.hyperjaxb.persistence.jpa.JPAUtils;
-import org.jvnet.basicjaxb.util.CodeModelUtils;
-import org.jvnet.basicjaxb.util.OutlineUtils;
-
-import com.sun.codemodel.fmt.JTextFile;
-import ee.jakarta.xml.ns.persistence.orm.Embeddable;
-import ee.jakarta.xml.ns.persistence.orm.Entity;
-import ee.jakarta.xml.ns.persistence.orm.EntityMappings;
-import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
-import com.sun.tools.xjc.Options;
-import com.sun.tools.xjc.outline.ClassOutline;
-import com.sun.tools.xjc.outline.Outline;
 
 @ApplicationScoped
 @Alternative

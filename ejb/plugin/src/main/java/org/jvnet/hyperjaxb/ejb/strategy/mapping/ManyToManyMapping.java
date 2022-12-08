@@ -4,12 +4,13 @@ import java.util.Collection;
 
 import org.jvnet.hyperjaxb.xjc.model.CTypeInfoUtils;
 
-import ee.jakarta.xml.ns.persistence.orm.ManyToMany;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.outline.FieldOutline;
+
+import ee.jakarta.xml.ns.persistence.orm.ManyToMany;
 
 public class ManyToManyMapping implements FieldOutlineMapping<ManyToMany> {
 

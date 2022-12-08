@@ -51,9 +51,17 @@
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<!--result>mappingFiles</result-->
+					<bindingIncludes>
+						<include>STAR/Rev5.1.4/BODs/Developer/bindings.xjb</include>
+						<!--
+						<include>STAR/Rev5.1.4/BODs/Standalone/*.xjb</include>
+						-->
+					</bindingIncludes>
 					<schemaIncludes>
 						<include>STAR/Rev5.1.4/BODs/Developer/*.xsd</include>
-						<!--include>STAR/Rev5.1.4/BODs/Standalone/AcknowledgeCreditApplication.xsd</include-->
+						<!--
+						<include>STAR/Rev5.1.4/BODs/Standalone/*.xsd</include>
+						-->
 					</schemaIncludes>
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.star.RoundtripTest</roundtripTestClassName>
 				</configuration>

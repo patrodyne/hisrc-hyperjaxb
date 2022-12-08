@@ -1,6 +1,5 @@
 package org.jvnet.hyperjaxb.ejb.plugin;
 
-import static org.jvnet.basicjaxb.util.ClassUtils.identify;
 import static org.jvnet.basicjaxb.util.GeneratorContextUtils.generateContextPathAwareClass;
 
 import java.io.File;
@@ -14,29 +13,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.jvnet.hyperjaxb.jpa.Customizations;
-import org.jvnet.hyperjaxb.jpa.Persistence;
-import org.jvnet.hyperjaxb.ejb.jpa.strategy.model.base.WrapCollectionBuiltinNonReference;
-import org.jvnet.hyperjaxb.ejb.strategy.annotate.AnnotateOutline;
-import org.jvnet.hyperjaxb.ejb.strategy.customizing.Customizing;
-import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
+import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.Mapping;
-import org.jvnet.hyperjaxb.ejb.strategy.mapping.MappingContext;
-import org.jvnet.hyperjaxb.ejb.strategy.mapping.MarshalMappings;
-import org.jvnet.hyperjaxb.ejb.strategy.model.ModelProcessor;
-import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessPropertyInfos;
-import org.jvnet.hyperjaxb.ejb.strategy.model.base.DefaultProcessModel;
-import org.jvnet.hyperjaxb.ejb.strategy.model.base.DefaultProcessPropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.naming.Naming;
-import org.jvnet.hyperjaxb.ejb.strategy.naming.ReservedNames;
-import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
-import org.jvnet.hyperjaxb.ejb.strategy.processor.ClassPersistenceProcessor;
-import org.jvnet.hyperjaxb.ejb.strategy.processor.MappingFilePersistenceProcessor;
 import org.jvnet.hyperjaxb.ejb.strategy.processor.ModelAndOutlineProcessor;
 import org.jvnet.hyperjaxb.ejb.test.RoundtripTest;
+import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.UntypedListFieldRenderer;
-import org.jvnet.basicjaxb.util.ClassUtils;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.ErrorHandler;
@@ -323,7 +306,6 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		options.setFieldRendererFactory(fieldRendererFactory, this);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void beforeRun(Outline outline, Options options) throws Exception
 	{

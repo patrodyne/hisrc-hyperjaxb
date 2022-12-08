@@ -11,7 +11,7 @@
       typesafeEnumBase="xsd:string"
       localScoping="toplevel">
 
-      <jaxb:javaType name="java.lang.Float" xmlType="xsd:float" parseMethod="new" printMethod="toString" />
+      <jaxb:javaType name="java.lang.Float" xmlType="xsd:float" parseMethod="parseFloat" printMethod="toString" />
       <jaxb:serializable uid="20211201" />
   </jaxb:globalBindings>
 

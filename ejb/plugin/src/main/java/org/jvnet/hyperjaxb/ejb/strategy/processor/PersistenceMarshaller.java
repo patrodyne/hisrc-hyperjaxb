@@ -5,14 +5,14 @@ import java.io.Writer;
 
 import org.jvnet.hyperjaxb.persistence.jpa.JPAUtils;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.Marshaller;
-
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JPackage;
 import com.sun.codemodel.fmt.JTextFile;
+
 import ee.jakarta.xml.ns.persistence.Persistence;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 
 @ApplicationScoped
 public class PersistenceMarshaller

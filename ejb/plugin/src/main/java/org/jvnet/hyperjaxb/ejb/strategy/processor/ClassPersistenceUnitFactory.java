@@ -4,8 +4,9 @@ import java.util.Collection;
 
 import org.jvnet.basicjaxb.util.OutlineUtils;
 
-import ee.jakarta.xml.ns.persistence.Persistence.PersistenceUnit;
 import com.sun.tools.xjc.outline.ClassOutline;
+
+import ee.jakarta.xml.ns.persistence.Persistence.PersistenceUnit;
 
 public class ClassPersistenceUnitFactory implements PersistenceUnitFactory{
 

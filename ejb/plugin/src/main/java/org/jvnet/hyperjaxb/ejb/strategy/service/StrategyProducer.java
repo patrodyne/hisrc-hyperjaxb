@@ -1,14 +1,15 @@
 package org.jvnet.hyperjaxb.ejb.strategy.service;
 
-import java.io.IOException;
-
 import static org.jvnet.hyperjaxb.ejb.strategy.Variant.Type.EJB;
 import static org.jvnet.hyperjaxb.ejb.strategy.Variant.Type.JPA;
 
+import java.io.IOException;
+
+import org.jvnet.basicjaxb.config.LocatorProperties;
+import org.jvnet.basicjaxb.config.LocatorUnmarshaller;
 import org.jvnet.hyperjaxb.ejb.jpa.strategy.model.base.WrapCollectionBuiltinNonReference;
 import org.jvnet.hyperjaxb.ejb.jpa.strategy.model.base.WrapCollectionEnumNonReference;
 import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
-import org.jvnet.hyperjaxb.jpa.Persistence;
 import org.jvnet.hyperjaxb.ejb.strategy.MojoConfigured;
 import org.jvnet.hyperjaxb.ejb.strategy.Variant;
 import org.jvnet.hyperjaxb.ejb.strategy.annotate.CreateXAnnotations;
@@ -36,8 +37,7 @@ import org.jvnet.hyperjaxb.ejb.strategy.naming.impl.DefaultReservedNames;
 import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
 import org.jvnet.hyperjaxb.ejb.strategy.processor.ClassPersistence;
 import org.jvnet.hyperjaxb.ejb.strategy.processor.MappingFilePersistence;
-import org.jvnet.basicjaxb.config.LocatorProperties;
-import org.jvnet.basicjaxb.config.LocatorUnmarshaller;
+import org.jvnet.hyperjaxb.jpa.Persistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

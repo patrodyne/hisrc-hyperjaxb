@@ -13,24 +13,16 @@
 	See https://jakarta.ee/xml/ns/jaxb/bindingschema_3_0.xsd
  -->
 
-	<!--  Global Bindings -->
-	<jaxb:bindings>
-
-		<!--
-			When processing a WCF service WSDL, it is recommended that the generateElementProperty
-			customization be set to 'false' in globalBindings.
-			See http://docs.oracle.com/cd/E19159-01/820-1072/ahiid/index.html
-		-->
-
-		<!-- Hint: To increase EnumMemberSizeCap above 256 use typesafeEnumMaxMembers="512". -->
-
-		<!-- JPA section 2.1, entities must be top-level classes (see localScoping). -->
-		<jaxb:globalBindings generateElementProperty="false" generateIsSetMethod="false" localScoping="toplevel">
-			<!-- JPA section 2.1, entities must implement the serializable interface. -->
-			<jaxb:serializable uid="20220501" />
-		</jaxb:globalBindings>
-			
-	</jaxb:bindings>
+	<!--  Global Bindings
+		* JPA section 2.1, entities must be top-level classes.
+		* JPA section 2.1, entities must implement the serializable interface.
+		* When processing a Microsoft WCF service WSDL, it is recommended that the
+		  generateElementProperty customization be set to 'false' in globalBindings.
+		* Hint: Increase EnumMemberSizeCap above 256 with typesafeEnumMaxMembers="512".
+	-->
+	<jaxb:globalBindings generateElementProperty="false" generateIsSetMethod="false" localScoping="toplevel">
+		<jaxb:serializable uid="20220501" />
+	</jaxb:globalBindings>
 
 	<!-- Warning: Bindings in the XSD override bindings defined here! -->
 	<jaxb:bindings schemaLocation="Product.xsd" node="/xsd:schema" >

@@ -5,11 +5,10 @@ import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.jvnet.hyperjaxb.jpa.Customizations;
-import org.jvnet.hyperjaxb.ejb.strategy.model.ClassInfoProcessor;
+import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.ejb.strategy.model.GetIdPropertyInfoProcessor;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.hyperjaxb.jpa.Customizations;
 
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;

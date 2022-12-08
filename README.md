@@ -40,27 +40,33 @@ with the original `maven-jaxb2-plugin` name.
 * [HiSrc HyperJAXB v2.0.0, Explorations][32]
 * [HiSrc HyperJAXB v0.6.4, Explorations][31]
 
-#### Maven Central Repository
+#### Maven Repositories
 
-* [Maven Central Repository Search](https://search.maven.org/search?q=g:org.patrodyne.jvnet)
-* [Maven Central Repository Index](https://repo1.maven.org/maven2/org/patrodyne/jvnet/)
+* Search
+	* [MVN Repository](https://mvnrepository.com/artifact/org.patrodyne.jvnet?sort=popular)
+	* [Central Repository](https://search.maven.org/search?q=g:org.patrodyne.jvnet)
+* Index
+	* [Central Repository](https://repo1.maven.org/maven2/org/patrodyne/jvnet/)
 
 ### Goals
 
 New goals for the next release are:
 
-* Make `maxIdentifierLength` configurable from Maven Mojo and XJX Plugin.
-* Clean up Java compiler _lint_ warnings.
+* Make `maxIdentifierLength` configurable from Maven Mojo and XJC Plugin.
+* Replace deprecated plugin strategies v1 with v2.
+* Recheck Dependency Management for newer versions.
 * Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
 
 ### Status
 
-#### Completed
-
-* Make `maxIdentifierLength` configurable from Maven Mojo and XJX Plugin.
-
 #### In Progress
 
+* Replace deprecated plugin strategies v1 with v2.
+* Recheck Dependency Management for newer versions.
+
+#### Completed
+
+* Make `maxIdentifierLength` configurable from Maven Mojo and XJC Plugin.
 * Clean up Java compiler _lint_ warnings.
 
 #### Future

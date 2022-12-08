@@ -1,61 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings jaxb:version="3.0"
-  xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
-  xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-  xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox" 
-  jaxb:extensionBindingPrefixes="hj orm annox"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox" 
+	jaxb:extensionBindingPrefixes="hj orm annox"
 >
 
-  <!-- Global Bindings -->
-  <jaxb:bindings>
-    <!-- JPA section 2.1, entities must be top-level classes. -->
-    <!-- JPA section 2.1, entities must implement the serializable interface. -->
-    <jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
-      <jaxb:serializable uid="20211201" />
-    </jaxb:globalBindings>
-  </jaxb:bindings>
+	<!--	Global Bindings
+		* JPA section 2.1, entities must be top-level classes.
+		* JPA section 2.1, entities must implement the serializable interface.
+		* When processing a Microsoft WCF service WSDL, it is recommended that the
+			generateElementProperty customization be set to 'false' in globalBindings.
+		* Hint: Increase EnumMemberSizeCap above 256 with typesafeEnumMaxMembers="512".
+	-->
+	<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
+		<jaxb:serializable uid="20211201" />
+	</jaxb:globalBindings>
 
-  <jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
-    <jaxb:schemaBindings>
-      <jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.annox"/>
-    </jaxb:schemaBindings>
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.annox"/>
+		</jaxb:schemaBindings>
 
-    <jaxb:bindings node="xs:complexType[@name='Items']/xs:sequence/xs:element[@name='item']">
-      <jaxb:bindings node="xs:complexType">
-        <annox:annotate>
-          <annox:annotate annox:class="org.hibernate.search.annotations.Indexed" index="target/test-index"/>
-        </annox:annotate>
-        <jaxb:bindings node="xs:sequence">
-          <jaxb:bindings node="xs:element[@name='productName']">
-            <annox:annotate>
-              <annox:annotate
-                annox:class="org.hibernate.search.annotations.FieldBridge"
-                impl="org.jvnet.hyperjaxb.ejb.tests.annox.Items">
-                <annox:annotate annox:field="params">
-                  <annox:annotate annox:class="org.hibernate.search.annotations.Parameter"
-                    name="foo"
-                    value="bar"/>
-                </annox:annotate>
-              </annox:annotate>
-            </annox:annotate>
-            <annox:annotate>
-              <annox:annotate annox:class="org.hibernate.search.annotations.Field" name="item"/>
-            </annox:annotate>
-          </jaxb:bindings>
-        </jaxb:bindings>
-      </jaxb:bindings>
-    </jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='Items']/xs:sequence/xs:element[@name='item']">
+			<jaxb:bindings node="xs:complexType">
+				<annox:annotate>
+					<annox:annotate annox:class="org.hibernate.search.annotations.Indexed" index="target/test-index"/>
+				</annox:annotate>
+				<jaxb:bindings node="xs:sequence">
+					<jaxb:bindings node="xs:element[@name='productName']">
+						<annox:annotate>
+							<annox:annotate
+								annox:class="org.hibernate.search.annotations.FieldBridge"
+								impl="org.jvnet.hyperjaxb.ejb.tests.annox.Items">
+								<annox:annotate annox:field="params">
+									<annox:annotate annox:class="org.hibernate.search.annotations.Parameter"
+										name="foo"
+										value="bar"/>
+								</annox:annotate>
+							</annox:annotate>
+						</annox:annotate>
+						<annox:annotate>
+							<annox:annotate annox:class="org.hibernate.search.annotations.Field" name="item"/>
+						</annox:annotate>
+					</jaxb:bindings>
+				</jaxb:bindings>
+			</jaxb:bindings>
+		</jaxb:bindings>
 
-    <jaxb:bindings node="xs:complexType[@name='HYPERJAXB3_149_Type']/xs:attribute[@name='timestamp1']">
-      <hj:generated-property propertyName="Ts1">
-        <annox:annotate>
-          <annox:annotate
-            annox:class="org.hibernate.annotations.Index"
-            name="HYPERJAXB3_149_TYPE_INDEX_TS1" columnNames="TS1"/>
-        </annox:annotate>
-      </hj:generated-property>
-    </jaxb:bindings>
-  </jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='HYPERJAXB3_149_Type']/xs:attribute[@name='timestamp1']">
+			<hj:generated-property propertyName="Ts1">
+				<annox:annotate>
+					<annox:annotate
+						annox:class="org.hibernate.annotations.Index"
+						name="HYPERJAXB3_149_TYPE_INDEX_TS1" columnNames="TS1"/>
+				</annox:annotate>
+			</hj:generated-property>
+		</jaxb:bindings>
+	</jaxb:bindings>
 </jaxb:bindings>

@@ -12,7 +12,6 @@
 	<artifactId>hisrc-hyperjaxb-ejb-samples</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Assembly Samples</name>
-	<version>2.0.1-SNAPSHOT</version>
 	<properties>
 		<root.basedir>${basedir}/../../..</root.basedir>
 	</properties>

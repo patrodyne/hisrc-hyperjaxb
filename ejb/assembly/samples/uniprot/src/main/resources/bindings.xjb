@@ -8,16 +8,18 @@
 	jaxb:extensionBindingPrefixes="hj orm"
 >
 
-	<!-- Global Bindings -->
-	<jaxb:bindings>
-		<!-- JPA section 2.1, entities must be top-level classes. -->
-		<!-- JPA section 2.1, entities must implement the serializable interface. -->
-		<!-- See https://github.com/javaee/jaxb-v2/issues/667 -->
-		<!-- See https://github.com/javaee/jaxb-v2/issues/679 -->
-		<jaxb:globalBindings localScoping="toplevel" generateIsSetMethod="true" optionalProperty="wrapper">
-			<jaxb:serializable uid="20211201" />
-		</jaxb:globalBindings>
-	</jaxb:bindings>
+	<!--  Global Bindings
+		* JPA section 2.1, entities must be top-level classes.
+		* JPA section 2.1, entities must implement the serializable interface.
+		* When processing a Microsoft WCF service WSDL, it is recommended that the
+		  generateElementProperty customization be set to 'false' in globalBindings.
+		* Hint: Increase EnumMemberSizeCap above 256 with typesafeEnumMaxMembers="512".
+	-->
+	<!-- See https://github.com/javaee/jaxb-v2/issues/667 -->
+	<!-- See https://github.com/javaee/jaxb-v2/issues/679 -->
+	<jaxb:globalBindings localScoping="toplevel" generateIsSetMethod="true" optionalProperty="wrapper">
+		<jaxb:serializable uid="20211201" />
+	</jaxb:globalBindings>
 
 	<!-- Schema Bindings -->
 	<jaxb:bindings schemaLocation="uniprot2008_rev1.xsd" node="/xs:schema">

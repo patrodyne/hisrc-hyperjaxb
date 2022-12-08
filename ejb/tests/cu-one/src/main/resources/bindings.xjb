@@ -8,14 +8,16 @@
 	jaxb:extensionBindingPrefixes="hj orm annox"
 >
 
-	<!-- Global Bindings -->
-	<jaxb:bindings>
-		<!-- JPA section 2.1, entities must be top-level classes. -->
-		<!-- JPA section 2.1, entities must implement the serializable interface. -->
-		<jaxb:globalBindings localScoping="toplevel">
-			<jaxb:serializable uid="20211201" />
-		</jaxb:globalBindings>
-	</jaxb:bindings>
+	<!--  Global Bindings
+		* JPA section 2.1, entities must be top-level classes.
+		* JPA section 2.1, entities must implement the serializable interface.
+		* When processing a Microsoft WCF service WSDL, it is recommended that the
+		  generateElementProperty customization be set to 'false' in globalBindings.
+		* Hint: Increase EnumMemberSizeCap above 256 with typesafeEnumMaxMembers="512".
+	-->
+	<jaxb:globalBindings localScoping="toplevel">
+		<jaxb:serializable uid="20211201" />
+	</jaxb:globalBindings>
 
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
 		<jaxb:schemaBindings>
@@ -31,9 +33,12 @@
 			</hj:default-one-to-many>
 		</hj:persistence>
 		<jaxb:bindings node="xs:complexType[@name='one']/xs:sequence/xs:element[@name='many-to-many-join-table']">
+			<!--
+			DEPRECATED: Hibernate originally handled orphan removal as a specialized cascade.
 			<annox:annotate>
 				<annox:annotate annox:class="org.hibernate.annotations.Cascade" value="DELETE_ORPHAN"/>
 			</annox:annotate>
+			-->
 		</jaxb:bindings>
 
 		<jaxb:bindings node="xs:element[@name='ten']/xs:complexType">

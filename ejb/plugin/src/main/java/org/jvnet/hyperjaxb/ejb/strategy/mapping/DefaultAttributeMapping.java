@@ -6,24 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.persistence.EnumType;
 import javax.xml.namespace.QName;
 
+import org.jvnet.basicjaxb.util.FieldAccessorUtils;
 import org.jvnet.hyperjaxb.codemodel.util.JTypeUtils;
 import org.jvnet.hyperjaxb.xsd.util.XMLSchemaConstrants;
 import org.jvnet.hyperjaxb.xsom.SimpleTypeAnalyzer;
 import org.jvnet.hyperjaxb.xsom.TypeUtils;
-import org.jvnet.basicjaxb.util.FieldAccessorUtils;
 
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
-import ee.jakarta.xml.ns.persistence.orm.AttributeOverride;
-import ee.jakarta.xml.ns.persistence.orm.Basic;
-import ee.jakarta.xml.ns.persistence.orm.Column;
-import ee.jakarta.xml.ns.persistence.orm.EmbeddableAttributes;
-import ee.jakarta.xml.ns.persistence.orm.Embedded;
-import ee.jakarta.xml.ns.persistence.orm.Lob;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CEnumLeafInfo;
@@ -33,6 +26,14 @@ import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
 import com.sun.xml.xsom.XSComponent;
+
+import ee.jakarta.xml.ns.persistence.orm.AttributeOverride;
+import ee.jakarta.xml.ns.persistence.orm.Basic;
+import ee.jakarta.xml.ns.persistence.orm.Column;
+import ee.jakarta.xml.ns.persistence.orm.EmbeddableAttributes;
+import ee.jakarta.xml.ns.persistence.orm.Embedded;
+import ee.jakarta.xml.ns.persistence.orm.Lob;
+import jakarta.persistence.EnumType;
 
 public final class DefaultAttributeMapping implements AttributeMapping {
 

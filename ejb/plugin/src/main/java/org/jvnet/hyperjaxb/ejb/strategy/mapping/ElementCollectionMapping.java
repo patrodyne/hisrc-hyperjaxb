@@ -2,12 +2,13 @@ package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import java.util.Collection;
 
+import com.sun.tools.xjc.Options;
+import com.sun.tools.xjc.outline.FieldOutline;
+
 import ee.jakarta.xml.ns.persistence.orm.CollectionTable;
 import ee.jakarta.xml.ns.persistence.orm.Column;
 import ee.jakarta.xml.ns.persistence.orm.ElementCollection;
 import ee.jakarta.xml.ns.persistence.orm.OrderColumn;
-import com.sun.tools.xjc.Options;
-import com.sun.tools.xjc.outline.FieldOutline;
 
 public class ElementCollectionMapping implements
 		FieldOutlineMapping<ElementCollection> {

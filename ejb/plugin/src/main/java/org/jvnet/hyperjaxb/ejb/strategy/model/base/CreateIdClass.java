@@ -6,12 +6,26 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.jvnet.hyperjaxb.jpa.Customizations;
-import org.jvnet.hyperjaxb.ejb.strategy.model.CreateIdClassProcessor;
-import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessClassInfo;
-import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.basicjaxb.util.ClassUtils;
+import org.jvnet.hyperjaxb.ejb.strategy.model.CreateIdClassProcessor;
+import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
+import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.xml.sax.Locator;
+
+import com.sun.tools.xjc.model.CAttributePropertyInfo;
+import com.sun.tools.xjc.model.CClassInfo;
+import com.sun.tools.xjc.model.CClassInfoParent;
+import com.sun.tools.xjc.model.CCustomizations;
+import com.sun.tools.xjc.model.CElementPropertyInfo;
+import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
+import com.sun.tools.xjc.model.CPropertyInfo;
+import com.sun.tools.xjc.model.CPropertyVisitor;
+import com.sun.tools.xjc.model.CReferencePropertyInfo;
+import com.sun.tools.xjc.model.CValuePropertyInfo;
+import com.sun.tools.xjc.reader.Ring;
+import com.sun.tools.xjc.reader.xmlschema.BGMBuilder;
+import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
+import com.sun.xml.xsom.XSComponent;
 
 import ee.jakarta.xml.ns.persistence.orm.Entity;
 import ee.jakarta.xml.ns.persistence.orm.IdClass;
@@ -19,21 +33,6 @@ import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Alternative;
-
-import com.sun.tools.xjc.model.CAttributePropertyInfo;
-import com.sun.tools.xjc.model.CClassInfo;
-import com.sun.tools.xjc.model.CClassInfoParent;
-import com.sun.tools.xjc.model.CCustomizations;
-import com.sun.tools.xjc.model.CElementPropertyInfo;
-import com.sun.tools.xjc.model.CPropertyInfo;
-import com.sun.tools.xjc.model.CPropertyVisitor;
-import com.sun.tools.xjc.model.CReferencePropertyInfo;
-import com.sun.tools.xjc.model.CValuePropertyInfo;
-import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
-import com.sun.tools.xjc.reader.Ring;
-import com.sun.tools.xjc.reader.xmlschema.BGMBuilder;
-import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
-import com.sun.xml.xsom.XSComponent;
 
 @ApplicationScoped
 @Alternative

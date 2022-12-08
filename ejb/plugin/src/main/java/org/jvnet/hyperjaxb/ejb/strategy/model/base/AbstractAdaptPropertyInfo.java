@@ -6,13 +6,13 @@ import java.util.LinkedList;
 import javax.xml.namespace.QName;
 
 import org.glassfish.jaxb.core.v2.model.core.PropertyKind;
+import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.ejb.Constants;
-import org.jvnet.hyperjaxb.jpa.Customizations;
-import org.jvnet.hyperjaxb.jpa.GeneratedProperty;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
+import org.jvnet.hyperjaxb.jpa.Customizations;
+import org.jvnet.hyperjaxb.jpa.GeneratedProperty;
 import org.jvnet.hyperjaxb.xjc.model.DefaultTypeUse;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.w3c.dom.Element;
 
 import com.sun.tools.xjc.model.CAttributePropertyInfo;

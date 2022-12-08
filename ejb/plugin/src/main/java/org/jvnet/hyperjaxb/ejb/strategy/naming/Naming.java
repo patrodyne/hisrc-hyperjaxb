@@ -1,7 +1,5 @@
 package org.jvnet.hyperjaxb.ejb.strategy.naming;
 
-import java.util.Properties;
-
 import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.Mapping;
 

@@ -9,9 +9,6 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.jvnet.hyperjaxb.ejb.strategy.model.AdaptTypeUse;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.xjc.model.CExternalLeafInfo;
@@ -27,6 +24,8 @@ import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsGY
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsGYearMonth;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsTime;
 import org.jvnet.hyperjaxb.xsom.TypeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CBuiltinLeafInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;

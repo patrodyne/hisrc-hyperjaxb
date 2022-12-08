@@ -40,14 +40,12 @@
 		<module>idSymbolSpace</module>
 		<module>ims-eportfolio</module>
 		<module>ioda</module>
-		<module>issues-pre</module>
-		<module>issues</module>
 		<module>issues-el</module>
 		<module>issues-jpa</module>
+		<module>issues-po</module>
 		<module>one</module>
 		<module>onix30</module>
 		<module>pesc</module>
-		<module>po</module>
 		<module>po-customized</module>
 		<module>po-el-customized</module>
 		<module>po-jaxb</module>

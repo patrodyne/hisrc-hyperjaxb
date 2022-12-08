@@ -5,17 +5,10 @@ import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import jakarta.annotation.Priority;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Alternative;
-import jakarta.inject.Inject;
-import jakarta.persistence.Transient;
-
 import org.apache.commons.lang3.ArrayUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.basicjaxb.util.FieldAccessorUtils;
+import org.jvnet.basicjaxb.util.OutlineUtils;
 import org.jvnet.basicjaxb_annox.model.XAnnotation;
 import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.MojoConfigured;
@@ -23,23 +16,27 @@ import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
 import org.jvnet.hyperjaxb.persistence.util.AttributesUtils;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
-import org.jvnet.basicjaxb.util.FieldAccessorUtils;
-import org.jvnet.basicjaxb.util.OutlineUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
+import com.sun.tools.xjc.Options;
+import com.sun.tools.xjc.model.CPluginCustomization;
+import com.sun.tools.xjc.outline.ClassOutline;
+import com.sun.tools.xjc.outline.FieldOutline;
+import com.sun.tools.xjc.outline.Outline;
+
 import ee.jakarta.xml.ns.persistence.orm.Attributes;
 import ee.jakarta.xml.ns.persistence.orm.Embeddable;
 import ee.jakarta.xml.ns.persistence.orm.EmbeddableAttributes;
 import ee.jakarta.xml.ns.persistence.orm.Entity;
 import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
-import com.sun.tools.xjc.Options;
-import com.sun.tools.xjc.model.CCustomizations;
-import com.sun.tools.xjc.model.CPluginCustomization;
-import com.sun.tools.xjc.outline.ClassOutline;
-import com.sun.tools.xjc.outline.FieldOutline;
-import com.sun.tools.xjc.outline.Outline;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.inject.Inject;
+import jakarta.persistence.Transient;
 
 @ApplicationScoped
 @Alternative

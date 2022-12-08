@@ -465,7 +465,9 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+
 	<!-- The following is the type definition for the top-level element in an SBML document.-->
+	<!-- 
 	<xsd:complexType name="Sbml">
 		<xsd:complexContent>
 			<xsd:extension base="SBase">
@@ -477,7 +479,30 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	 -->
 	<!--The following is the (only) top-level element allowed in an SBML document.-->
+	<!-- 
 	<xsd:element name="sbml" type="Sbml"/>
+	 -->
+
+	<!-- 
+		The following is the (only) top-level element allowed in an SBML document.
+		Using an anonymous complex type signals XJC to add '@XmlRootElement(name = "sbml")'
+		to the 'Sbml' class.
+	 -->	
+	<xsd:element name="sbml">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="SBase">
+					<xsd:sequence>
+						<xsd:element name="model" type="Model"/>
+					</xsd:sequence>
+					<xsd:attribute name="level" type="xsd:positiveInteger" use="required" fixed="2"/>
+					<xsd:attribute name="version" type="xsd:positiveInteger" use="required" fixed="1"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
 	<!--The end.-->
 </xsd:schema>

@@ -2,12 +2,13 @@ package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import java.util.Collection;
 
-import ee.jakarta.xml.ns.persistence.orm.OneToOne;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.outline.FieldOutline;
+
+import ee.jakarta.xml.ns.persistence.orm.OneToOne;
 
 public class OneToOneMapping implements FieldOutlineMapping<OneToOne> {
 

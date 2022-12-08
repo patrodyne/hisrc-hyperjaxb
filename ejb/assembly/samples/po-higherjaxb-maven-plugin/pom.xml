@@ -9,7 +9,6 @@
 		<version>2.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-samples-po-higherjaxb-maven-plugin</artifactId>
-	<version>2.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Assembly Sample [po-higherjaxb-maven-plugin]</name>
 	<properties>

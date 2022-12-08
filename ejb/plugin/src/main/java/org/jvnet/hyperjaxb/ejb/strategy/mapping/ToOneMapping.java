@@ -1,10 +1,11 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
+import com.sun.tools.xjc.Options;
+import com.sun.tools.xjc.outline.FieldOutline;
+
 import ee.jakarta.xml.ns.persistence.orm.Embedded;
 import ee.jakarta.xml.ns.persistence.orm.ManyToOne;
 import ee.jakarta.xml.ns.persistence.orm.OneToOne;
-import com.sun.tools.xjc.Options;
-import com.sun.tools.xjc.outline.FieldOutline;
 
 public class ToOneMapping implements FieldOutlineMapping<Object> {
 

@@ -1,12 +1,10 @@
 package org.jvnet.hyperjaxb.ejb.strategy.naming.impl;
 
-import java.util.Properties;
-
-import org.jvnet.hyperjaxb.jpa.Embedded;
 import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb.ejb.strategy.naming.Naming;
 import org.jvnet.hyperjaxb.ejb.strategy.naming.ReservedNames;
+import org.jvnet.hyperjaxb.jpa.Embedded;
 
 import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.ClassOutline;

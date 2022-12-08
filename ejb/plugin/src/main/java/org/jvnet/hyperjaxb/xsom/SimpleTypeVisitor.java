@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import org.jvnet.hyperjaxb.ejb.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

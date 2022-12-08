@@ -1,9 +1,8 @@
 package org.jvnet.hyperjaxb.ejb.strategy.naming.impl;
 
-import org.jvnet.hyperjaxb.ejb.strategy.naming.ReservedNames;
 import org.jvnet.basicjaxb.config.LocatorProperties;
+import org.jvnet.hyperjaxb.ejb.strategy.naming.ReservedNames;
 
-import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Alternative;
 
 /**

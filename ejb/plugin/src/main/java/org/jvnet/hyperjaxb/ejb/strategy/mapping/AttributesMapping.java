@@ -4,18 +4,26 @@ import static org.jvnet.hyperjaxb.ejb.Constants.TODO_LOG_LEVEL;
 
 import java.util.Collection;
 
+import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.basicjaxb.util.FieldAccessorUtils;
+import org.jvnet.hyperjaxb.codemodel.util.JTypeUtils;
+import org.jvnet.hyperjaxb.jpa.Customizations;
+import org.jvnet.hyperjaxb.xjc.model.CTypeInfoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.jvnet.hyperjaxb.codemodel.util.JTypeUtils;
-import org.jvnet.hyperjaxb.ejb.Constants;
-import org.jvnet.hyperjaxb.jpa.Customizations;
-import org.jvnet.hyperjaxb.xjc.model.CTypeInfoUtils;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
-import org.jvnet.basicjaxb.util.FieldAccessorUtils;
-
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
+import com.sun.tools.xjc.Options;
+import com.sun.tools.xjc.model.CClass;
+import com.sun.tools.xjc.model.CClassInfo;
+import com.sun.tools.xjc.model.CEnumLeafInfo;
+import com.sun.tools.xjc.model.CPropertyInfo;
+import com.sun.tools.xjc.model.CTypeInfo;
+import com.sun.tools.xjc.outline.Aspect;
+import com.sun.tools.xjc.outline.ClassOutline;
+import com.sun.tools.xjc.outline.FieldOutline;
+
 import ee.jakarta.xml.ns.persistence.orm.Attributes;
 import ee.jakarta.xml.ns.persistence.orm.Basic;
 import ee.jakarta.xml.ns.persistence.orm.ElementCollection;
@@ -28,15 +36,6 @@ import ee.jakarta.xml.ns.persistence.orm.OneToMany;
 import ee.jakarta.xml.ns.persistence.orm.OneToOne;
 import ee.jakarta.xml.ns.persistence.orm.Transient;
 import ee.jakarta.xml.ns.persistence.orm.Version;
-import com.sun.tools.xjc.Options;
-import com.sun.tools.xjc.model.CClass;
-import com.sun.tools.xjc.model.CClassInfo;
-import com.sun.tools.xjc.model.CEnumLeafInfo;
-import com.sun.tools.xjc.model.CPropertyInfo;
-import com.sun.tools.xjc.model.CTypeInfo;
-import com.sun.tools.xjc.outline.Aspect;
-import com.sun.tools.xjc.outline.ClassOutline;
-import com.sun.tools.xjc.outline.FieldOutline;
 
 public class AttributesMapping implements ClassOutlineMapping<Attributes> {
 

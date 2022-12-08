@@ -4,11 +4,11 @@ import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 
 import java.util.Collection;
 
-import org.jvnet.hyperjaxb.codemodel.util.JTypeUtils;
-import org.jvnet.hyperjaxb.jpa.Customizations;
-import org.jvnet.hyperjaxb.ejb.strategy.Variant;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.basicjaxb.util.FieldAccessorUtils;
+import org.jvnet.hyperjaxb.codemodel.util.JTypeUtils;
+import org.jvnet.hyperjaxb.ejb.strategy.Variant;
+import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

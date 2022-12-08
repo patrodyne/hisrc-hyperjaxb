@@ -18,9 +18,7 @@ import com.sun.tools.xjc.outline.Outline;
 
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Alternative;
-import jakarta.enterprise.inject.Any;
 import jakarta.inject.Inject;
 
 /**

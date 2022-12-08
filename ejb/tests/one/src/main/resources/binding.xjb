@@ -8,6 +8,13 @@
 	jaxb:extensionBindingPrefixes="xjc hj orm"
 >
 	
+	<!--  Global Bindings
+		* JPA section 2.1, entities must be top-level classes.
+		* JPA section 2.1, entities must implement the serializable interface.
+		* When processing a Microsoft WCF service WSDL, it is recommended that the
+		  generateElementProperty customization be set to 'false' in globalBindings.
+		* Hint: Increase EnumMemberSizeCap above 256 with typesafeEnumMaxMembers="512".
+	-->
 	<jaxb:globalBindings fixedAttributeAsConstantProperty="false"
 		typesafeEnumBase="xs:string" typesafeEnumMemberName="generateName"
 		generateIsSetMethod="true" localScoping="toplevel">
@@ -23,7 +30,7 @@
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
 		</hj:persistence>
-
+		
 		<!--
 		<jaxb:bindings node="xs:element[@name='anotherIgnoredRoot']">
 			<hj:ignored/>

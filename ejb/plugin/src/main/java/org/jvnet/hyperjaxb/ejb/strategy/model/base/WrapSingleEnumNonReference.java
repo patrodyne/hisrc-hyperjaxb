@@ -4,9 +4,9 @@ import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 
 import java.util.Collection;
 
-import org.jvnet.hyperjaxb.jpa.Basic;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
+import org.jvnet.hyperjaxb.jpa.Basic;
 
 import com.sun.tools.xjc.model.CEnumLeafInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;

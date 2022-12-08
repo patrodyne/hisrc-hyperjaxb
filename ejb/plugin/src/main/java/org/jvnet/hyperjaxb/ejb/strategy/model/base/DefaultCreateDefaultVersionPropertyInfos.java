@@ -5,20 +5,15 @@ import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import java.util.Collection;
 import java.util.Collections;
 
-import jakarta.annotation.Priority;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Alternative;
-import jakarta.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.Validate;
 import org.jvnet.basicjaxb_annox.util.ClassUtils;
+import org.jvnet.hyperjaxb.ejb.strategy.model.CreateDefaultVersionPropertyInfos;
+import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.jpa.GeneratedVersion;
 import org.jvnet.hyperjaxb.jpa.Version;
-import org.jvnet.hyperjaxb.ejb.strategy.model.ClassInfoProcessor;
-import org.jvnet.hyperjaxb.ejb.strategy.model.CreateDefaultVersionPropertyInfos;
-import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.TransientSingleField;
 import org.jvnet.hyperjaxb.xjc.model.CExternalLeafInfo;
 
@@ -29,6 +24,11 @@ import com.sun.tools.xjc.model.CCustomizations;
 import com.sun.tools.xjc.model.CNonElement;
 import com.sun.tools.xjc.model.CPluginCustomization;
 import com.sun.tools.xjc.model.CPropertyInfo;
+
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.xml.bind.JAXBElement;
 
 @ApplicationScoped
 @Alternative

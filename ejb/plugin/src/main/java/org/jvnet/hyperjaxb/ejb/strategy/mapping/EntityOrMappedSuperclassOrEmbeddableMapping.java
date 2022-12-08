@@ -1,10 +1,11 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
+import com.sun.tools.xjc.Options;
+import com.sun.tools.xjc.outline.ClassOutline;
+
 import ee.jakarta.xml.ns.persistence.orm.Embeddable;
 import ee.jakarta.xml.ns.persistence.orm.Entity;
 import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
-import com.sun.tools.xjc.Options;
-import com.sun.tools.xjc.outline.ClassOutline;
 
 public class EntityOrMappedSuperclassOrEmbeddableMapping implements
 		ClassOutlineMapping<Object> {

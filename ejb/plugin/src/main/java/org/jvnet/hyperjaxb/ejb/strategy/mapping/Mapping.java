@@ -9,6 +9,8 @@ import org.jvnet.hyperjaxb.ejb.strategy.model.GetTypes;
 import org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelBase;
 import org.jvnet.hyperjaxb.ejb.strategy.naming.Naming;
 
+import com.sun.tools.xjc.outline.FieldOutline;
+
 import ee.jakarta.xml.ns.persistence.orm.Attributes;
 import ee.jakarta.xml.ns.persistence.orm.Basic;
 import ee.jakarta.xml.ns.persistence.orm.ElementCollection;
@@ -29,8 +31,6 @@ import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Inject;
-
-import com.sun.tools.xjc.outline.FieldOutline;
 
 /**
  * A context of injected and instantiated mappings for strategic processing.

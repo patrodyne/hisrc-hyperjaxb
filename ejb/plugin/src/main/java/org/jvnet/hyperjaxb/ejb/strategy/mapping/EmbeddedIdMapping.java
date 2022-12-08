@@ -1,8 +1,9 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
-import ee.jakarta.xml.ns.persistence.orm.EmbeddedId;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
+
+import ee.jakarta.xml.ns.persistence.orm.EmbeddedId;
 
 public class EmbeddedIdMapping implements FieldOutlineMapping<EmbeddedId> {
 

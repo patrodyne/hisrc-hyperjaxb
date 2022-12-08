@@ -12,12 +12,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.jvnet.hyperjaxb.ejb.Constants;
+import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.model.CTypeInfoUtils;
-import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.sun.tools.xjc.Options;
+import com.sun.tools.xjc.model.CClass;
+import com.sun.tools.xjc.model.CClassInfo;
+import com.sun.tools.xjc.model.CPropertyInfo;
+import com.sun.tools.xjc.model.CTypeInfo;
+import com.sun.tools.xjc.outline.ClassOutline;
+import com.sun.tools.xjc.outline.FieldOutline;
+import com.sun.tools.xjc.outline.Outline;
 
 import ee.jakarta.xml.ns.persistence.orm.AssociationOverride;
 import ee.jakarta.xml.ns.persistence.orm.ElementCollection;
@@ -31,14 +39,6 @@ import ee.jakarta.xml.ns.persistence.orm.OneToMany;
 import ee.jakarta.xml.ns.persistence.orm.OneToOne;
 import ee.jakarta.xml.ns.persistence.orm.OrderColumn;
 import ee.jakarta.xml.ns.persistence.orm.PrimaryKeyJoinColumn;
-import com.sun.tools.xjc.Options;
-import com.sun.tools.xjc.model.CClass;
-import com.sun.tools.xjc.model.CClassInfo;
-import com.sun.tools.xjc.model.CPropertyInfo;
-import com.sun.tools.xjc.model.CTypeInfo;
-import com.sun.tools.xjc.outline.ClassOutline;
-import com.sun.tools.xjc.outline.FieldOutline;
-import com.sun.tools.xjc.outline.Outline;
 
 public class DefaultAssociationMapping implements AssociationMapping {
 

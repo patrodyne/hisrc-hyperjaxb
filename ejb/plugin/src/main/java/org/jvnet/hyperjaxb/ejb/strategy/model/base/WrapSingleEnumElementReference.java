@@ -5,9 +5,9 @@ import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import java.util.Collection;
 import java.util.Set;
 
-import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
+import org.jvnet.hyperjaxb.jpa.Customizations;
 
 import com.sun.tools.xjc.model.CElement;
 import com.sun.tools.xjc.model.CElementInfo;

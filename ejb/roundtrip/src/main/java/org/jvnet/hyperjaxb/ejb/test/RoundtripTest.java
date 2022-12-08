@@ -10,7 +10,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.jvnet.basicjaxb.lang.ContextUtils;
-import org.jvnet.basicjaxb.lang.EqualsStrategy;
+import org.jvnet.basicjaxb.lang.EqualsStrategy2;
 import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
 import org.jvnet.hyperjaxb.ejb.util.EntityUtils;
 import org.jvnet.hyperjaxb.lang.builder.ExtendedJAXBEqualsStrategy;
@@ -20,6 +20,7 @@ import org.xml.sax.SAXException;
 import jakarta.persistence.EntityManager;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 
 public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
@@ -29,98 +30,72 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 	public void setValidateXml(Boolean validateXml) { this.validateXml = validateXml; }
 
 	@Override
-	protected void checkSample(File sample)
+	protected void checkSample(File sampleFile)
 		throws Exception
 	{
 		final JAXBContext context = createContext();
-		logger.debug("Unmarshalling.");
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
 		
 		if ( isValidateXml() )
 			generateXmlSchemaValidatorFromDom(context, unmarshaller);
 		
-		final JAXBElement unmarshalledElement;
-		final Object unmarshalledObject;
-		final Object unmarshalledDraft = unmarshaller.unmarshal(sample);
+		logger.debug("Unmarshalling sample.");
+		Sample initialSample = new Sample(unmarshaller, sampleFile);
 		
-		if (unmarshalledDraft instanceof JAXBElement)
-		{
-			unmarshalledElement = (JAXBElement) unmarshalledDraft;
-			unmarshalledObject = unmarshalledElement.getValue();
-		}
-		else
-		{
-			unmarshalledElement = null;
-			unmarshalledObject = unmarshalledDraft;
-		}
+		logger.debug("Unmarshalling etalon.");
+		Sample etalonSample = new Sample(unmarshaller, sampleFile);
 		
-		final JAXBElement etalonElement;
-		final Object etalonObject;
-		final Object etalonDraft = unmarshaller.unmarshal(sample);
-		
-		if (etalonDraft instanceof JAXBElement)
-		{
-			etalonElement = (JAXBElement) etalonDraft;
-			etalonObject = etalonElement.getValue();
-		}
-		else
-		{
-			etalonElement = null;
-			etalonObject = etalonDraft;
-		}
-		
-		logger.debug("Opening session.");
-		// Open the session, save object into the database
-		logger.debug("Saving the object.");
+		logger.debug("Persisting the unmarshalled sample.");
 		final EntityManager saveManager = createEntityManager();
 		saveManager.getTransaction().begin();
-		// final Object merged = saveSession.merge(object);
-		// saveSession.replicate(object, ReplicationMode.OVERWRITE);
-		// saveSession.get
-		// final Serializable id =
-		final Object mergedObject = saveManager.merge(unmarshalledObject);
+		final Object mergedEntity = saveManager.merge(initialSample.getValue());
 		saveManager.getTransaction().commit();
-		final Object id = EntityUtils.getId(saveManager, mergedObject);
-		// saveSession.getIdentifier(object);
+		final Object mergedId = EntityUtils.getId(saveManager, mergedEntity);
+		// Close the save session
 		saveManager.clear();
-		// Close the session
 		saveManager.close();
-		logger.debug("Opening session.");
-		// Open the session, load the object
-		final EntityManager loadManager = createEntityManager();
-		logger.debug("Loading the object.");
-		final Object loadedObject = loadManager.find(mergedObject.getClass(), id);
-		logger.debug("Closing the session.");
 		
-		if (unmarshalledElement != null)
+		logger.debug("Loading the persisted sample.");
+		final EntityManager loadManager = createEntityManager();
+		final Object loadedEntity = loadManager.find(mergedEntity.getClass(), mergedId);
+		
+		if (etalonSample.getElement() != null)
 		{
-			final JAXBElement<Object> mergedElement = new JAXBElement(unmarshalledElement.getName(),
-				unmarshalledElement.getDeclaredType(), mergedObject);
-			final JAXBElement loadedElement = new JAXBElement(unmarshalledElement.getName(),
-				unmarshalledElement.getDeclaredType(), loadedObject);
-			logger.debug("Initial object:\n" + ContextUtils.toString(context, etalonElement));
-			logger.debug("Source object:\n" + ContextUtils.toString(context, mergedElement));
-			logger.debug("Result object:\n" + ContextUtils.toString(context, loadedElement));
+			final JAXBElement<Object> etalonElement = etalonSample.getElement();
+			final JAXBElement<Object> mergedElement = wrap(etalonElement, mergedEntity);
+			final JAXBElement<Object> loadedElement = wrap(etalonElement, loadedEntity);
+			logger.debug("Etalon element:\n" + ContextUtils.toString(context, etalonElement));
+			logger.debug("Merged element:\n" + ContextUtils.toString(context, mergedElement));
+			logger.debug("Loaded element:\n" + ContextUtils.toString(context, loadedElement));
 		}
 		else
 		{
-			logger.debug("Initial object:\n" + ContextUtils.toString(context, etalonObject));
-			logger.debug("Source object:\n" + ContextUtils.toString(context, mergedObject));
-			logger.debug("Result object:\n" + ContextUtils.toString(context, loadedObject));
+			logger.debug("Etalon object:\n" + ContextUtils.toString(context, etalonSample.getValue()));
+			logger.debug("Merged object:\n" + ContextUtils.toString(context, mergedEntity));
+			logger.debug("Loaded object:\n" + ContextUtils.toString(context, loadedEntity));
 		}
 		
 		logger.debug("Checking the sample object identity: Merged vs Loaded.");
-		checkObjects(mergedObject, loadedObject);
+		checkObjects(mergedEntity, loadedEntity);
+		
 		logger.debug("Checking the sample object identity: Etalon vs Loaded.");
-		checkObjects(etalonObject, loadedObject);
+		checkObjects(etalonSample.getValue(), loadedEntity);
+		
+		// Close the load session
+		loadManager.clear();
 		loadManager.close();
 	}
 
+	private JAXBElement<Object> wrap(JAXBElement<Object> element, Object obj)
+	{
+		return new JAXBElement<Object>(element.getName(), element.getDeclaredType(), obj);
+	}
+	
 	protected void checkObjects(final Object leftObject, final Object rightObject)
 	{
-		final EqualsStrategy strategy = new ExtendedJAXBEqualsStrategy();
+		final EqualsStrategy2 strategy = new ExtendedJAXBEqualsStrategy();
 		assertTrue(strategy.equals(new DefaultRootObjectLocator(leftObject), new DefaultRootObjectLocator(rightObject),
-			leftObject, rightObject), "Objects NOT equal. Use DEBUG for location details.");
+			leftObject, rightObject, true, true), "Objects NOT equal. Use DEBUG for location details.");
 	}
 	
 	protected void generateXmlSchemaValidatorFromDom(JAXBContext context, Unmarshaller unmarshaller)
@@ -134,4 +109,40 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
         // Configure Marshaller / unmarshaller to use validator.
         unmarshaller.setSchema(schemaValidator);
     }
+	
+	/**
+	 * This local class represents a sample file's unmarshalled value and optional JAXBElement.
+	 */
+	private class Sample
+	{
+		private JAXBElement<Object> element;
+		public JAXBElement<Object> getElement() { return element; }
+		public void setElement(JAXBElement<Object> element) { this.element = element; }
+
+		private Object value;
+		public Object getValue() { return value; }
+		public void setValue(Object value) { this.value = value; }
+		
+		/**
+		 * Construct with a JAXB unmarshaller and sample file.
+		 * @param unmarshaller A JAXB unmarshaller.
+		 * @param sampleFile A sample file.
+		 * @throws JAXBException When the sample file cannot be unmarshalled.
+		 */
+		@SuppressWarnings("unchecked")
+		private Sample(Unmarshaller unmarshaller, File sampleFile) throws JAXBException
+		{
+			Object unmarshalledDraft = unmarshaller.unmarshal(sampleFile);
+			if (unmarshalledDraft instanceof JAXBElement)
+			{
+				setElement((JAXBElement<Object>) unmarshalledDraft);
+				setValue(getElement().getValue());
+			}
+			else
+			{
+				setElement(null);
+				setValue(unmarshalledDraft);
+			}
+		}
+	}
 }

@@ -3,12 +3,13 @@ package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 import java.util.Collection;
 import java.util.List;
 
+import com.sun.tools.xjc.outline.FieldOutline;
+
 import ee.jakarta.xml.ns.persistence.orm.AssociationOverride;
 import ee.jakarta.xml.ns.persistence.orm.JoinColumn;
 import ee.jakarta.xml.ns.persistence.orm.JoinTable;
 import ee.jakarta.xml.ns.persistence.orm.OrderColumn;
 import ee.jakarta.xml.ns.persistence.orm.PrimaryKeyJoinColumn;
-import com.sun.tools.xjc.outline.FieldOutline;
 
 public interface AssociationMapping {
 

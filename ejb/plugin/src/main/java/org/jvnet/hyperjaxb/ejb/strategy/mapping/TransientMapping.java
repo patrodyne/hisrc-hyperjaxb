@@ -1,8 +1,9 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
-import ee.jakarta.xml.ns.persistence.orm.Transient;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
+
+import ee.jakarta.xml.ns.persistence.orm.Transient;
 
 public class TransientMapping implements FieldOutlineMapping<Transient> {
 
