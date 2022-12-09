@@ -2,14 +2,14 @@ package org.jvnet.hyperjaxb.basicjaxb.lang;
 
 import org.apache.commons.lang3.Validate;
 import org.jvnet.hyperjaxb.jpa.Mergeable;
-import org.jvnet.basicjaxb.lang.MergeStrategy2;
+import org.jvnet.basicjaxb.lang.MergeStrategy;
 import org.jvnet.basicjaxb.locator.ObjectLocator;
 
-public class MergeableMergeStrategy implements MergeStrategy2 {
+public class MergeableMergeStrategy implements MergeStrategy {
 
-	private final MergeStrategy2 mergeStrategy;
+	private final MergeStrategy mergeStrategy;
 
-	public MergeableMergeStrategy(MergeStrategy2 mergeStrategy) {
+	public MergeableMergeStrategy(MergeStrategy mergeStrategy) {
 		Validate.notNull(mergeStrategy);
 		this.mergeStrategy = mergeStrategy;
 	}

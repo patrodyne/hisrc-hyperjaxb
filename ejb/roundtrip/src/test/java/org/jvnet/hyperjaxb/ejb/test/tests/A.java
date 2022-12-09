@@ -39,8 +39,8 @@ import org.jvnet.hyperjaxb.xml.bind.JAXBContextUtils;
 import org.jvnet.hyperjaxb.xml.bind.JAXBElementUtils;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsDateTime;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XmlAdapterUtils;
-import org.jvnet.basicjaxb.lang.Equals2;
-import org.jvnet.basicjaxb.lang.EqualsStrategy2;
+import org.jvnet.basicjaxb.lang.Equals;
+import org.jvnet.basicjaxb.lang.EqualsStrategy;
 import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
 import org.jvnet.basicjaxb.locator.ObjectLocator;
 
@@ -48,7 +48,7 @@ import org.jvnet.basicjaxb.locator.ObjectLocator;
 @XmlType(name = "A", propOrder = { "id", "b", "b1", "b2", "d", "e", "eNillable", "f", "fNillable", "g", "h" })
 @Entity
 @Table(name = "table_a")
-public class A implements Equals2
+public class A implements Equals
 {
 	@XmlAttribute
 	private String id;
@@ -243,7 +243,7 @@ public class A implements Equals2
 		return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
 	}
 
-	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy2 strategy)
+	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy)
 	{
 		if (!(object instanceof A))
 			return false;
@@ -388,7 +388,7 @@ public class A implements Equals2
 	@Entity
 	@Table(name = "A_G")
 	@Inheritance(strategy = InheritanceType.JOINED)
-	public static class G implements Equals2
+	public static class G implements Equals
 	{
 		@XmlAttribute
 		protected Long hjid;
@@ -411,7 +411,7 @@ public class A implements Equals2
 		}
 
 		public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
-			Object object, EqualsStrategy2 strategy)
+			Object object, EqualsStrategy strategy)
 		{
 			if (!(object instanceof G))
 				return false;
@@ -443,7 +443,7 @@ public class A implements Equals2
 			return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
 		}
 
-		public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy2 strategy)
+		public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy)
 		{
 			if (!(object instanceof G1))
 				return false;
@@ -477,7 +477,7 @@ public class A implements Equals2
 		}
 
 		public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
-			Object object, EqualsStrategy2 strategy)
+			Object object, EqualsStrategy strategy)
 		{
 			if (!(object instanceof G2))
 				return false;
@@ -495,7 +495,7 @@ public class A implements Equals2
 	@XmlType(name = "GItem")
 	@Entity
 	@Table(name = "A_GITEM")
-	public static class GItem implements Item<JAXBElement<? extends G>>, Equals2
+	public static class GItem implements Item<JAXBElement<? extends G>>, Equals
 	{
 		@XmlAttribute
 		protected Long hjid;
@@ -546,7 +546,7 @@ public class A implements Equals2
 		}
 
 		public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
-			Object object, EqualsStrategy2 strategy)
+			Object object, EqualsStrategy strategy)
 		{
 			if (!(object instanceof GItem))
 				return false;

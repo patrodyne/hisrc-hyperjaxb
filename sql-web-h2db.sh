@@ -3,6 +3,9 @@
 # sql-web-h2db.sh: SQL command line tool using H2 Shell.
 #
 #	Usage: ./sql-web-h2db.sh [h2|pg]
+#	       ../sql-web-h2db.sh [h2|pg]
+#	       ../../sql-web-h2db.sh [h2|pg]
+#	       ../../../sql-web-h2db.sh [h2|pg]
 #	h2	H2 local database (default)
 #	pg	PostgreSQL network database
 #

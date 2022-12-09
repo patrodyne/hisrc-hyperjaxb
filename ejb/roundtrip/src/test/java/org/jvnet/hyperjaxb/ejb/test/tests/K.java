@@ -14,8 +14,8 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.jvnet.basicjaxb.lang.Equals2;
-import org.jvnet.basicjaxb.lang.EqualsStrategy2;
+import org.jvnet.basicjaxb.lang.Equals;
+import org.jvnet.basicjaxb.lang.EqualsStrategy;
 import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
 import org.jvnet.basicjaxb.locator.ObjectLocator;
 
@@ -24,7 +24,7 @@ import org.jvnet.basicjaxb.locator.ObjectLocator;
 @Entity
 @Table(name = "table_kl")
 @SecondaryTable(name = "table_k", pkJoinColumns = { @PrimaryKeyJoinColumn(name = "id") })
-public class K implements Equals2
+public class K implements Equals
 {
 	@XmlAttribute
 	private String id;
@@ -64,7 +64,7 @@ public class K implements Equals2
 	}
 
 	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
-		Object object, EqualsStrategy2 strategy)
+		Object object, EqualsStrategy strategy)
 	{
 		if (!(object instanceof K))
 			return false;

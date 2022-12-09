@@ -18,10 +18,10 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.jvnet.basicjaxb.lang.Equals2;
-import org.jvnet.basicjaxb.lang.EqualsStrategy2;
-import org.jvnet.basicjaxb.lang.HashCode2;
-import org.jvnet.basicjaxb.lang.HashCodeStrategy2;
+import org.jvnet.basicjaxb.lang.Equals;
+import org.jvnet.basicjaxb.lang.EqualsStrategy;
+import org.jvnet.basicjaxb.lang.HashCode;
+import org.jvnet.basicjaxb.lang.HashCodeStrategy;
 import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
 import org.jvnet.basicjaxb.lang.JAXBHashCodeStrategy;
 import org.jvnet.basicjaxb.locator.ObjectLocator;
@@ -52,7 +52,7 @@ import org.jvnet.basicjaxb.locator.util.LocatorUtils;
 @Entity(name = "org.jvnet.hyperjaxb.ejb.tests.issues.MyIssueXXXType")
 @Table(name = "MYISSUEXXXTYPE")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class MyIssueXXXType implements Serializable, Equals2, HashCode2
+public class MyIssueXXXType implements Serializable, Equals, HashCode
 {
 	private static final long serialVersionUID = 20221201L;
 	
@@ -118,7 +118,7 @@ public class MyIssueXXXType implements Serializable, Equals2, HashCode2
 	}
 
 	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
-			Object object, EqualsStrategy2 strategy) {
+			Object object, EqualsStrategy strategy) {
 		if (!(object instanceof MyIssueXXXType)) {
 			return false;
 		}
@@ -141,7 +141,7 @@ public class MyIssueXXXType implements Serializable, Equals2, HashCode2
 	}
 
 	public boolean equals(Object object) {
-		final EqualsStrategy2 strategy = JAXBEqualsStrategy.getInstance();
+		final EqualsStrategy strategy = JAXBEqualsStrategy.getInstance();
 		return equals(null, null, object, strategy);
 	}
 
@@ -149,7 +149,7 @@ public class MyIssueXXXType implements Serializable, Equals2, HashCode2
 		hashCodeBuilder.append(this.getValue());
 	}
 
-	public int hashCode(ObjectLocator locator, HashCodeStrategy2 strategy) {
+	public int hashCode(ObjectLocator locator, HashCodeStrategy strategy) {
 		int currentHashCode = 1;
 		{
 			String theValue = this.getValue();
@@ -162,7 +162,7 @@ public class MyIssueXXXType implements Serializable, Equals2, HashCode2
 	}
 
 	public int hashCode() {
-		final HashCodeStrategy2 strategy = JAXBHashCodeStrategy.getInstance();
+		final HashCodeStrategy strategy = JAXBHashCodeStrategy.getInstance();
 		return this.hashCode(null, strategy);
 	}
 

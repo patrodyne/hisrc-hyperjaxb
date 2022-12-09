@@ -10,7 +10,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.jvnet.basicjaxb.lang.ContextUtils;
-import org.jvnet.basicjaxb.lang.EqualsStrategy2;
+import org.jvnet.basicjaxb.lang.EqualsStrategy;
 import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
 import org.jvnet.hyperjaxb.ejb.util.EntityUtils;
 import org.jvnet.hyperjaxb.lang.builder.ExtendedJAXBEqualsStrategy;
@@ -93,7 +93,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 	
 	protected void checkObjects(final Object leftObject, final Object rightObject)
 	{
-		final EqualsStrategy2 strategy = new ExtendedJAXBEqualsStrategy();
+		final EqualsStrategy strategy = new ExtendedJAXBEqualsStrategy();
 		assertTrue(strategy.equals(new DefaultRootObjectLocator(leftObject), new DefaultRootObjectLocator(rightObject),
 			leftObject, rightObject, true, true), "Objects NOT equal. Use DEBUG for location details.");
 	}

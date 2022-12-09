@@ -6,17 +6,17 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
 
 import org.jvnet.hyperjaxb.item.Item;
-import org.jvnet.basicjaxb.lang.Equals2;
-import org.jvnet.basicjaxb.lang.EqualsStrategy2;
-import org.jvnet.basicjaxb.lang.HashCode2;
-import org.jvnet.basicjaxb.lang.HashCodeStrategy2;
+import org.jvnet.basicjaxb.lang.Equals;
+import org.jvnet.basicjaxb.lang.EqualsStrategy;
+import org.jvnet.basicjaxb.lang.HashCode;
+import org.jvnet.basicjaxb.lang.HashCodeStrategy;
 import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
 import org.jvnet.basicjaxb.lang.JAXBHashCodeStrategy;
 import org.jvnet.basicjaxb.locator.ObjectLocator;
 import org.jvnet.basicjaxb.locator.util.LocatorUtils;
 
 @MappedSuperclass
-public abstract class PrimitiveItem<T, V> implements Equals2, HashCode2, Item<V>
+public abstract class PrimitiveItem<T, V> implements Equals, HashCode, Item<V>
 {
 	private T value;
 	// Note: "value" renamed to "content" because it is an SQL keyword.
@@ -27,7 +27,7 @@ public abstract class PrimitiveItem<T, V> implements Equals2, HashCode2, Item<V>
 	@Transient
 	private boolean isValueSet() { return (value != null); }
 
-	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy2 strategy)
+	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy)
 	{
 		if (!(object instanceof PrimitiveItem))
 			return false;
@@ -52,11 +52,11 @@ public abstract class PrimitiveItem<T, V> implements Equals2, HashCode2, Item<V>
 
 	public boolean equals(Object object)
 	{
-		final EqualsStrategy2 strategy = JAXBEqualsStrategy.getInstance();
+		final EqualsStrategy strategy = JAXBEqualsStrategy.getInstance();
 		return equals(null, null, object, strategy);
 	}
 
-	public int hashCode(ObjectLocator locator, HashCodeStrategy2 hashCodeStrategy)
+	public int hashCode(ObjectLocator locator, HashCodeStrategy hashCodeStrategy)
 	{
 		T theValue = this.getValue();
 		ObjectLocator theValueLocator = LocatorUtils.property(locator, "value", theValue);

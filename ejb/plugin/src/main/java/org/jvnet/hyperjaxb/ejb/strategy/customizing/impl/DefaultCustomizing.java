@@ -13,8 +13,8 @@ import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.Validate;
 import org.jvnet.basicjaxb.lang.JAXBMergeStrategy;
-import org.jvnet.basicjaxb.lang.MergeFrom2;
-import org.jvnet.basicjaxb.lang.MergeStrategy2;
+import org.jvnet.basicjaxb.lang.MergeFrom;
+import org.jvnet.basicjaxb.lang.MergeStrategy;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.basicjaxb.lang.MergeableMergeStrategy;
 import org.jvnet.hyperjaxb.ejb.strategy.customizing.Customizing;
@@ -1209,8 +1209,8 @@ public class DefaultCustomizing implements Customizing
 		return jaxbContext;
 	}
 
-	private final static MergeStrategy2 MERGE_STRATEGY = new MergeableMergeStrategy(JAXBMergeStrategy.getInstance());
-	private <T extends Mergeable & MergeFrom2> void mergeFrom(T value, T defaultValue)
+	private final static MergeStrategy MERGE_STRATEGY = new MergeableMergeStrategy(JAXBMergeStrategy.getInstance());
+	private <T extends Mergeable & MergeFrom> void mergeFrom(T value, T defaultValue)
 	{
 		value.mergeFrom(null, null, value, defaultValue, MERGE_STRATEGY);
 	}
@@ -1220,7 +1220,7 @@ public class DefaultCustomizing implements Customizing
 		public void merge(M value, M defaultValue);
 	}
 
-	private <M extends Mergeable & MergeFrom2> Merge<M> merge()
+	private <M extends Mergeable & MergeFrom> Merge<M> merge()
 	{
 		return new Merge<M>()
 		{

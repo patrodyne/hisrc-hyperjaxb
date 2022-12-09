@@ -8,10 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.xml.bind.annotation.XmlElement;
-import org.jvnet.basicjaxb.lang.Equals2;
-import org.jvnet.basicjaxb.lang.EqualsStrategy2;
-import org.jvnet.basicjaxb.lang.HashCode2;
-import org.jvnet.basicjaxb.lang.HashCodeStrategy2;
+import org.jvnet.basicjaxb.lang.Equals;
+import org.jvnet.basicjaxb.lang.EqualsStrategy;
+import org.jvnet.basicjaxb.lang.HashCode;
+import org.jvnet.basicjaxb.lang.HashCodeStrategy;
 import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
 import org.jvnet.basicjaxb.lang.JAXBHashCodeStrategy;
 import org.jvnet.basicjaxb.locator.ObjectLocator;
@@ -19,7 +19,7 @@ import org.jvnet.basicjaxb.locator.util.LocatorUtils;
 
 
 @MappedSuperclass
-public abstract class IssueHJIII45SuperClass implements Serializable, Equals2, HashCode2{
+public abstract class IssueHJIII45SuperClass implements Serializable, Equals, HashCode{
 
     private static final long serialVersionUID = 7724857660567518243L;
 
@@ -49,7 +49,7 @@ public abstract class IssueHJIII45SuperClass implements Serializable, Equals2, H
 	
 	
 	
-    public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy2 strategy) {
+    public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
         if (!(object instanceof IssueHJIII45SuperClass)) {
             return false;
         }
@@ -72,11 +72,11 @@ public abstract class IssueHJIII45SuperClass implements Serializable, Equals2, H
     }
 
     public boolean equals(Object object) {
-        final EqualsStrategy2 strategy = JAXBEqualsStrategy.getInstance();
+        final EqualsStrategy strategy = JAXBEqualsStrategy.getInstance();
         return equals(null, null, object, strategy);
     }
 
-    public int hashCode(ObjectLocator locator, HashCodeStrategy2 strategy) {
+    public int hashCode(ObjectLocator locator, HashCodeStrategy strategy) {
         int currentHashCode = 1;
         {
             String theId;
@@ -88,7 +88,7 @@ public abstract class IssueHJIII45SuperClass implements Serializable, Equals2, H
     }
 
     public int hashCode() {
-        final HashCodeStrategy2 strategy = JAXBHashCodeStrategy.getInstance();
+        final HashCodeStrategy strategy = JAXBHashCodeStrategy.getInstance();
         return this.hashCode(null, strategy);
     }
 

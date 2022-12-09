@@ -15,8 +15,8 @@ import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.jvnet.basicjaxb.lang.Equals2;
-import org.jvnet.basicjaxb.lang.EqualsStrategy2;
+import org.jvnet.basicjaxb.lang.Equals;
+import org.jvnet.basicjaxb.lang.EqualsStrategy;
 import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
 import org.jvnet.basicjaxb.locator.ObjectLocator;
 
@@ -25,7 +25,7 @@ import org.jvnet.basicjaxb.locator.ObjectLocator;
 @XmlType(name = "M", propOrder = { "id", "one", "two", "mthree" })
 @Entity
 @Table(name = "table_m")
-public class M implements Equals2
+public class M implements Equals
 {
 	private String id;
 	@Id
@@ -85,7 +85,7 @@ public class M implements Equals2
 	}
 
 	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
-		Object object, EqualsStrategy2 strategy)
+		Object object, EqualsStrategy strategy)
 	{
 		if (!(object instanceof M))
 			return false;

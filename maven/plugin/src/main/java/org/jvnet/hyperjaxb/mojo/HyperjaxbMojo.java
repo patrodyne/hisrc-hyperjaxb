@@ -432,7 +432,12 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 		// the XJC generation path is added as a test source root.
 		// See also Maven's "testSourceDirectory".
 		if (getRoundtripTestClassName() != null)
-			getProject().addTestCompileSourceRoot(getGenerateDirectory().getPath());
+		{
+			String genPath = getGenerateDirectory().getPath();
+			getProject().addTestCompileSourceRoot(genPath);
+			getLog().info("Found roundtripTestClassName ("+getRoundtripTestClassName()+
+				"), setting addTestCompileSourceRoot to " + genPath);
+		}
 	}
 
     private void todo(Log logger, String comment)
