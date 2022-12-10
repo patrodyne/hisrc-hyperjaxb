@@ -53,21 +53,18 @@ with the original `maven-jaxb2-plugin` name.
 New goals for the next release are:
 
 * Make `maxIdentifierLength` configurable from Maven Mojo and XJC Plugin.
-* Replace deprecated plugin strategies v1 with v2.
+* Replace deprecated XJC plugin strategies v1 with v2.
 * Recheck Dependency Management for newer versions.
 * Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
 
 ### Status
 
-#### In Progress
-
-* Replace deprecated plugin strategies v1 with v2.
-* Recheck Dependency Management for newer versions.
-
 #### Completed
 
 * Make `maxIdentifierLength` configurable from Maven Mojo and XJC Plugin.
 * Clean up Java compiler _lint_ warnings.
+* Replace deprecated XJC plugin strategies v1 with v2.
+* Recheck Dependency Management for newer versions.
 
 #### Future
 

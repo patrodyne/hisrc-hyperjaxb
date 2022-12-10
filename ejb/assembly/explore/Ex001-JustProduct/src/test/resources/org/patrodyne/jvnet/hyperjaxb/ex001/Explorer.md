@@ -195,7 +195,7 @@ When you exit *Explorer*, the test database is preserved until the next launch. 
 ~~~
 $ ./sql-cli-h2db.sh
 
-Welcome to H2 Shell 2.1.210 (2022-01-17)
+Welcome to H2 Shell 2.1.214 (2022-01-17)
 
 sql> show columns from product;
 
