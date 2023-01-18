@@ -142,6 +142,8 @@
 						<debug>false</debug>
 						<extension>true</extension>
 						<variant>jpa</variant>
+						<generateCopyable>true</generateCopyable>
+						<generateMergeable>false</generateMergeable>
 						<!--roundtripTestClassName>RoundtripTest</roundtripTestClassName-->
 					</configuration>
 					<!-- Remove when plugin dependency management is reworked -->

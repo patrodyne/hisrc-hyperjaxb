@@ -10,8 +10,8 @@
 		<payout_limit>1.23</payout_limit>
 		<customer_id>3</customer_id>
 		<role_id>4</role_id>
-		<user_name>scott</user_name>
-		<password>tiger</password>
+		<user_name>scott2</user_name>
+		<password>tiger2</password>
 		<email>none@nowhere.com</email>
 		<status>ACTIVE</status>
 	</User>

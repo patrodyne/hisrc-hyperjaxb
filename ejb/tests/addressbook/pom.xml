@@ -44,6 +44,11 @@
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
+					<generateHashCode>true</generateHashCode>
+					<generateEquals>true</generateEquals>
+					<generateToString>true</generateToString>
+					<generateCopyable>true</generateCopyable>
+					<generateMergeable>true</generateMergeable>
 					<roundtripTestClassName>com.pps.schema.tests.RoundtripTest</roundtripTestClassName>
 				</configuration>
 			</plugin>

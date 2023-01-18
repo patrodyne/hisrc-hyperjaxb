@@ -1,17 +1,13 @@
 package org.jvnet.hyperjaxb.ejb.tests.componentjpa.tests;
 
-import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
-
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb.xml.bind.JAXBContextUtils;
@@ -87,48 +83,5 @@ public class TestHyperJaxb
 	private String getPersistenceUnitName()
 	{
 		return "org.jvnet.hyperjaxb.ejb.tests.componentjpa.tests";
-	}
-
-	public Properties getEntityManagerFactoryProperties()
-	{
-		try
-		{
-			final Enumeration<URL> resources = getClass().getClassLoader()
-				.getResources(getPersistencePropertiesBaseFile());
-			if (!resources.hasMoreElements())
-			{
-				System.out.println("Entity manager factory properties are not set.");
-				return null;
-			}
-			else
-			{
-				System.out.println("Loading entity manager factory properties.");
-				final Properties properties = new Properties();
-				while (resources.hasMoreElements())
-				{
-					final URL resource = resources.nextElement();
-					System.out.println("Loading entity manager factory properties from [" + resource + "].");
-					if (resource == null)
-						return null;
-					else
-					{
-						try ( InputStream is = resource.openStream() )
-						{
-							properties.load(is);
-							return properties;
-						}
-						catch (IOException ex)
-						{
-							return null;
-						}
-					}
-				}
-				return properties;
-			}
-		}
-		catch (IOException ex)
-		{
-			return null;
-		}
 	}
 }
