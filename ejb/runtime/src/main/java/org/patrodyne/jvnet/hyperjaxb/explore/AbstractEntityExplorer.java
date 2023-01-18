@@ -1,37 +1,23 @@
 package org.patrodyne.jvnet.hyperjaxb.explore;
 
+import static jakarta.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
 import static java.lang.Integer.toHexString;
 import static java.lang.System.identityHashCode;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
-import static jakarta.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
 import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.filterProperties;
-import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
-import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesMoreFile;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Properties;
 import java.util.Random;
-import java.util.stream.Collectors;
 
-import jakarta.persistence.Cache;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.Marshaller;
-import jakarta.xml.bind.Unmarshaller;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -42,6 +28,15 @@ import org.patrodyne.jvnet.basicjaxb.explore.AbstractExplorer;
 import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputDomResolver;
 import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputStringResolver;
 import org.xml.sax.SAXException;
+
+import jakarta.persistence.Cache;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 
 /**
  * An abstract Swing JFrame to support exploration of HiSrc HyperJAXB libraries.
@@ -194,51 +189,6 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 	protected CacheOption reuseCache()
 	{
 		return getClean1stLevelCacheButton().isSelected() ? CacheOption.REUSE : CacheOption.CLEAN;
-	}
-	
-	protected Map<String, String> loadEntityManagerFactoryProperties()
-	{
-		final String propertiesBaseFile = getPersistencePropertiesBaseFile();
-		final Properties persistenceProperties = new Properties();
-		try ( InputStream is = getClass().getClassLoader().getResourceAsStream(propertiesBaseFile) )
-		{
-			if ( is != null )
-				persistenceProperties.load(is);
-			else
-				errorln("Load error: " + propertiesBaseFile);
-		}
-		catch (IOException ex)
-		{
-			errorln(ex);
-		}
-		
-		final String propertiesMoreFile = getPersistencePropertiesMoreFile(PERSISTENCE_H2_PROPERTIES);
-		final Properties persistencePropertiesMore = new Properties();
-		try ( InputStream is = getClass().getClassLoader().getResourceAsStream(propertiesMoreFile) )
-		{
-			if ( is != null )
-			{
-				persistencePropertiesMore.load(is);
-				persistenceProperties.putAll(persistencePropertiesMore);
-			}
-			else
-				println("Not found: " + propertiesMoreFile);
-		}
-		catch (IOException ex)
-		{
-			errorln(ex);
-		}
-
-		// Convert Properties to Map<String, String>
-		return persistenceProperties.entrySet().stream().collect
-		(
-			Collectors.toMap
-			(
-				e -> String.valueOf(e.getKey()),
-				e -> String.valueOf(e.getValue()),
-				(prev, next) -> next, HashMap::new
-			)
-		);
 	}
 
 	// Properties: JPA Entity Manager Factory

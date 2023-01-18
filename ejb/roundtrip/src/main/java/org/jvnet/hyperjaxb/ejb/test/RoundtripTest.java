@@ -10,6 +10,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.jvnet.basicjaxb.lang.ContextUtils;
+import org.jvnet.basicjaxb.lang.CopyTo;
 import org.jvnet.basicjaxb.lang.EqualsStrategy;
 import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
 import org.jvnet.hyperjaxb.ejb.util.EntityUtils;
@@ -39,13 +40,13 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		if ( isValidateXml() )
 			generateXmlSchemaValidatorFromDom(context, unmarshaller);
 		
-		logger.debug("Unmarshalling sample.");
+		getLogger().debug("Unmarshalling sample.");
 		Sample initialSample = new Sample(unmarshaller, sampleFile);
 		
-		logger.debug("Unmarshalling etalon.");
+		getLogger().debug("Unmarshalling etalon.");
 		Sample etalonSample = new Sample(unmarshaller, sampleFile);
 		
-		logger.debug("Persisting the unmarshalled sample.");
+		getLogger().debug("Persisting the unmarshalled sample.");
 		final EntityManager saveManager = createEntityManager();
 		saveManager.getTransaction().begin();
 		final Object mergedEntity = saveManager.merge(initialSample.getValue());
@@ -55,7 +56,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		saveManager.clear();
 		saveManager.close();
 		
-		logger.debug("Loading the persisted sample.");
+		getLogger().debug("Loading the persisted sample.");
 		final EntityManager loadManager = createEntityManager();
 		final Object loadedEntity = loadManager.find(mergedEntity.getClass(), mergedId);
 		
@@ -64,26 +65,51 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			final JAXBElement<Object> etalonElement = etalonSample.getElement();
 			final JAXBElement<Object> mergedElement = wrap(etalonElement, mergedEntity);
 			final JAXBElement<Object> loadedElement = wrap(etalonElement, loadedEntity);
-			logger.debug("Etalon element:\n" + ContextUtils.toString(context, etalonElement));
-			logger.debug("Merged element:\n" + ContextUtils.toString(context, mergedElement));
-			logger.debug("Loaded element:\n" + ContextUtils.toString(context, loadedElement));
+			getLogger().debug("Etalon element:\n" + ContextUtils.toString(context, etalonElement));
+			getLogger().debug("Merged element:\n" + ContextUtils.toString(context, mergedElement));
+			getLogger().debug("Loaded element:\n" + ContextUtils.toString(context, loadedElement));
 		}
 		else
 		{
-			logger.debug("Etalon object:\n" + ContextUtils.toString(context, etalonSample.getValue()));
-			logger.debug("Merged object:\n" + ContextUtils.toString(context, mergedEntity));
-			logger.debug("Loaded object:\n" + ContextUtils.toString(context, loadedEntity));
+			getLogger().debug("Etalon object:\n" + ContextUtils.toString(context, etalonSample.getValue()));
+			getLogger().debug("Merged object:\n" + ContextUtils.toString(context, mergedEntity));
+			getLogger().debug("Loaded object:\n" + ContextUtils.toString(context, loadedEntity));
 		}
 		
-		logger.debug("Checking the sample object identity: Merged vs Loaded.");
+		getLogger().debug("Checking the sample object identity: Merged vs Loaded.");
 		checkObjects(mergedEntity, loadedEntity);
 		
-		logger.debug("Checking the sample object identity: Etalon vs Loaded.");
+		getLogger().debug("Checking the sample object identity: Etalon vs Loaded.");
 		checkObjects(etalonSample.getValue(), loadedEntity);
 		
 		// Close the load session
 		loadManager.clear();
 		loadManager.close();
+		
+		// Check Copyable (CopyTo / Cloneable), when present.
+		if ( getLogger().isDebugEnabled() )
+		{
+			getLogger().debug("Checking the sample object identity: Etalon vs Etalon clone.");
+			checkCopyable(etalonSample.getValue());
+		}
+		if ( getLogger().isTraceEnabled() )
+		{
+			getLogger().trace("Checking the sample object identity: Merged vs Merged clone.");
+			checkCopyable(mergedEntity);
+			
+			getLogger().trace("Checking the sample object identity: Loaded vs Loaded clone.");
+			checkCopyable(loadedEntity);
+		}
+	}
+	
+	private void checkCopyable(Object value)
+	{
+		if ( value instanceof CopyTo )
+		{
+			CopyTo valueCopyTo = (CopyTo) value;
+			Object valueClone = valueCopyTo.clone();
+			checkObjects(valueCopyTo, valueClone);
+		}
 	}
 
 	private JAXBElement<Object> wrap(JAXBElement<Object> element, Object obj)

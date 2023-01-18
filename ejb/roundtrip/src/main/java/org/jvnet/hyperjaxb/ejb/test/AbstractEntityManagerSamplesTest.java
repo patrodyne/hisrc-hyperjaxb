@@ -144,7 +144,7 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 	protected File[] getSampleFiles()
 	{
 		File samplesDirectory = getSamplesDirectory();
-		logger.info("Testing directory [" + samplesDirectory.getAbsolutePath() + "].");
+		getLogger().info("Testing directory [" + samplesDirectory.getAbsolutePath() + "].");
 		if (samplesDirectory == null || !samplesDirectory.isDirectory())
 			return new File[] {};
 		else

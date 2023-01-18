@@ -1,31 +1,24 @@
 package org.jvnet.hyperjaxb.hibernate.tests.hhh;
 
+import static jakarta.persistence.Persistence.createEntityManagerFactory;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesBaseFile;
-import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.getPersistencePropertiesMoreFile;
+import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.createEntityManagerFactoryProperties;
 
 import java.io.IOException;
-import java.util.Properties;
-
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
+import jakarta.persistence.EntityManagerFactory;
 
 public class EntityManagerFactoryTest {
 
 	@Test
-	public void entityManagerFactoryCreated() throws IOException {
-
-		final Properties properties = new Properties();
-		properties.load(getClass().getClassLoader().getResourceAsStream(getPersistencePropertiesBaseFile()));
-		Properties propertiesMore = new Properties();
-		propertiesMore.load(getClass().getClassLoader().getResourceAsStream(getPersistencePropertiesMoreFile()));
-		properties.putAll(propertiesMore);
-
-		final String persistenceUnitName = getClass().getPackage().getName();
-		final EntityManagerFactory entityManagerFactory = Persistence
-				.createEntityManagerFactory(persistenceUnitName, properties);
+	public void entityManagerFactoryCreated() throws IOException
+	{
+		Map<String, String> properties = createEntityManagerFactoryProperties(getClass());
+		String persistenceUnitName = getClass().getPackage().getName();
+		EntityManagerFactory entityManagerFactory =	createEntityManagerFactory(persistenceUnitName, properties);
 		assertNotNull(entityManagerFactory);
 	}
 
