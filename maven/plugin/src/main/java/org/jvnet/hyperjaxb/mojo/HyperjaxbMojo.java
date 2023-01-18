@@ -158,6 +158,22 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	public void setGenerateTransientId(boolean generateTransientId) { this.generateTransientId = generateTransientId; }
 
 	/**
+	 * Whether the <code>copyTo(...)</code> methods should be generated.
+	 */
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateCopyable", defaultValue = "false")
+	private boolean generateCopyable = true;
+	public boolean isGenerateCopyable() { return generateCopyable; }
+	public void setGenerateCopyable(boolean generateCopyable) { this.generateCopyable = generateCopyable; }
+
+	/**
+	 * Whether the <code>mergeFrom(...)</code> methods should be generated.
+	 */
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateMergeable", defaultValue = "false")
+	private boolean generateMergeable = true;
+	public boolean isGenerateMergeable() { return generateMergeable; }
+	public void setGenerateMergeable(boolean generateMergeable) { this.generateMergeable = generateMergeable; }
+
+	/**
 	 * Generation result. Possible values are "annotations", "mappingFiles".
 	 */
 	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".result", defaultValue = "annotations")
@@ -247,6 +263,8 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 		getLog().info("MOJO Configuration: generateToString:" + isGenerateToString());
 		getLog().info("MOJO Configuration: generateHET:" + getOverrideHET());
 		getLog().info("MOJO Configuration: generateTransientId:" + isGenerateTransientId());
+		getLog().info("MOJO Configuration: generateCopyable:" + isGenerateCopyable());
+		getLog().info("MOJO Configuration: generateMergeable" + isGenerateMergeable());
 		getLog().info("MOJO Configuration: result:" + getResult());
 		getLog().info("MOJO Configuration: preArgs:" + Arrays.toString(getPreArgs()));
 		getLog().info("MOJO Configuration: postArgs:" + Arrays.toString(getPostArgs()));
@@ -381,6 +399,11 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 					break;
 			}
 		}
+		
+		if (isGenerateCopyable())
+			add(arguments,"-Xcopyable");
+		if (isGenerateMergeable())
+			add(arguments,"-Xmergeable");
 
 		if (getPostArgs() != null)
 			addAll(arguments,Arrays.asList(getPostArgs()));

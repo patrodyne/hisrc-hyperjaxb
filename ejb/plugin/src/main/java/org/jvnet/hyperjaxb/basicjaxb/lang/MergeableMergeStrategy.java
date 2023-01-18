@@ -2,11 +2,29 @@ package org.jvnet.hyperjaxb.basicjaxb.lang;
 
 import org.apache.commons.lang3.Validate;
 import org.jvnet.hyperjaxb.jpa.Mergeable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jvnet.basicjaxb.lang.MergeStrategy;
 import org.jvnet.basicjaxb.locator.ObjectLocator;
 
 public class MergeableMergeStrategy implements MergeStrategy {
 
+	private Logger logger = LoggerFactory.getLogger(MergeStrategy.class);
+	public Logger getLogger()
+	{
+		return logger;
+	}
+	
+	public boolean isDebugEnabled()
+	{
+		return logger.isDebugEnabled();
+	}
+	
+	public boolean isTraceEnabled()
+	{
+		return logger.isTraceEnabled();
+	}
+	
 	private final MergeStrategy mergeStrategy;
 
 	public MergeableMergeStrategy(MergeStrategy mergeStrategy) {

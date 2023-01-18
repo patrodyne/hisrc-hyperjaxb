@@ -55,6 +55,12 @@ New goals for the next release are:
 * Make `maxIdentifierLength` configurable from Maven Mojo and XJC Plugin.
 * Replace deprecated XJC plugin strategies v1 with v2.
 * Recheck Dependency Management for newer versions.
+* Configure menu, log and Maven options from build-CFG.sh.
+* Include JVM system arguments from 'src/test/resources/jvmsystem.arguments'.
+* Restored integration tests in 'assembly' folder.
+* Set log levels for basic strategies in simplelogger.properties.
+* Centralized createEntityManagerFactoryProperties method.
+* Added HyperjaxbMojo properties for Copyable and Mergeable.
 * Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
 
 ### Status
@@ -65,6 +71,12 @@ New goals for the next release are:
 * Clean up Java compiler _lint_ warnings.
 * Replace deprecated XJC plugin strategies v1 with v2.
 * Recheck Dependency Management for newer versions.
+* Configure menu, log and Maven options from build-CFG.sh.
+* Include JVM system arguments from 'src/test/resources/jvmsystem.arguments'.
+* Restored integration tests in 'assembly' folder.
+* Set log levels for basic strategies in simplelogger.properties.
+* Centralized createEntityManagerFactoryProperties method.
+* Added HyperjaxbMojo properties for Copyable and Mergeable.
 
 #### Future
 
