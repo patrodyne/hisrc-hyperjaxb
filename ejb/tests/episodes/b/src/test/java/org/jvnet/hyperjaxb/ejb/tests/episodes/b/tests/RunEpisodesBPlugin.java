@@ -42,7 +42,7 @@ public class RunEpisodesBPlugin
 		mojo.setDebug(true);
 		mojo.setWriteCode(true);
 		mojo.setRemoveOldOutput(true);
-		mojo.setForceRegenerate(true);
+		mojo.setForceRegenerate(false);
 		mojo.setExtension(true);
 		mojo.setVariant("ejb");
 		mojo.setSchemaLanguage(XMLSCHEMA.name());

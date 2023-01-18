@@ -35,7 +35,7 @@ public class RunPoCustomNamingPlugin
 		mojo.setDebug(true);
 		mojo.setWriteCode(true);
 		mojo.setRemoveOldOutput(true);
-		mojo.setForceRegenerate(true);
+		mojo.setForceRegenerate(false);
 		mojo.setExtension(true);
 		mojo.setVariant("ejb");
 		mojo.setBeansPropertiesLocator("classpath:/META-INF/beans.properties");

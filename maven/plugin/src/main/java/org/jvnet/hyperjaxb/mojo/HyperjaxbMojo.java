@@ -12,6 +12,7 @@ import java.util.List;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -231,13 +232,16 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 		final Log log = getLog();
 		if (this.getDebug())
 		{
-			if ( !log.isDebugEnabled() )
-				todo(log, "Logger level not set to [debug] because not supported.");
+			if ( !(log instanceof SystemStreamLog) )
+			{
+				if ( !log.isDebugEnabled() )
+					todo(log, "Logger level not set to [debug] because build debug mode is off.");
+			}
 		}
 		else if (this.getVerbose())
 		{
 			if ( !log.isInfoEnabled() )
-				todo(log, "Logger level not set to [info] because not supported.");
+				todo(log, "Logger level not set to [info] because build info mode is off.");
 		}
 	}
 

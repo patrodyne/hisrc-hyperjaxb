@@ -32,6 +32,7 @@ public class HyperjaxbMojoTest extends RunHigherjaxbMojo {
 		//   Consider removing this setting from your plugin configuration.
 		//
 		// mojo.setForceRegenerate(true);
+		mojo.setForceRegenerate(false);
 	}
 
 	@Override

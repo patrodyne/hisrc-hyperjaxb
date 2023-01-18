@@ -35,7 +35,7 @@ public class RunEjbHyperjaxbMojo extends RunHigherjaxbMojo
 		//   Consider removing this setting from your plugin configuration.
 		// mojo.setForceRegenerate(true);
 		mojo.setRemoveOldOutput(true);
-		mojo.setForceRegenerate(true);
+		mojo.setForceRegenerate(false);
 	}
 	
 	public boolean isExtension()
