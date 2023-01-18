@@ -1,7 +1,5 @@
 package org.patrodyne.jvnet.hyperjaxb.ex001;
 
-import jakarta.persistence.EntityManagerFactory;
-
 import org.junit.jupiter.api.Disabled;
 import org.jvnet.basicjaxb.xml.bind.ContextPathAware;
 

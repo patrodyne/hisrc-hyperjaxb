@@ -25,7 +25,7 @@
 	</build>
 	<profiles>
 		<profile>
-			<id>samples</id>
+			<id>assembly</id>
 			<modules>
 				<module>assembly</module>
 			</modules>

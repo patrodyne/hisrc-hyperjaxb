@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="${artifactId}" default="test">
+<project name="${project.artifactId}" default="test">
 
-	<property name="artifactId" value="${artifactId}"/>
-	<property name="version" value="${project.version}"/>
+	<property name="artifactId" value="${project.artifactId}"/>
+	<property name="artifactVer" value="${hisrc-hyperjaxb.version}"/>
 	<property file="\${basedir}/src/test/resources/jvmsystem.properties"/>
 
     <fail message="Ant ${ant-atleast.version}+ is required!">
@@ -190,7 +190,7 @@
         <junitlauncher haltOnFailure="true" printSummary="true">
             <classpath refid="test.path"/>
             <testclasses outputdir="\${basedir}/target/junit-reports">
-				<fork>
+				<fork dir="\${basedir}">
 					<syspropertyset>
 						<!-- See src/test/resources/jvmsystem.properties -->
 						<propertyref prefix="org.jboss.logging"/>
@@ -223,7 +223,7 @@
 	/>
 
 	<target name="package" depends="test">
-		<jar destfile="\${basedir}/target/\${artifactId}.jar"
+		<jar destfile="\${basedir}/target/\${artifactId}-\${artifactVer}.jar"
 			basedir="\${basedir}/target/classes"/> 
 	</target>
 

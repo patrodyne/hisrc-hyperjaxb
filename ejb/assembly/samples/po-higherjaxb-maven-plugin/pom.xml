@@ -15,7 +15,7 @@
 		<root.basedir>${basedir}/../../../..</root.basedir>
 	</properties>
 	<build>
-		<defaultGoal>install</defaultGoal>
+		<defaultGoal>package</defaultGoal>
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>

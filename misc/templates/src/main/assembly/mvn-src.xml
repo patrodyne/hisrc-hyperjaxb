@@ -1,5 +1,5 @@
 <assembly>
-	<id>maven-src</id>
+	<id>mvn-src</id>
 	<formats>
 		<format>zip</format>
 	</formats>

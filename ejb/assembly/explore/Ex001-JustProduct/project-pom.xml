@@ -111,7 +111,7 @@
 			<plugins>
 				<plugin>
 					<artifactId>maven-antrun-plugin</artifactId>
-					<version>3.0.0</version>
+					<version>3.1.0</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-assembly-plugin</artifactId>
@@ -275,6 +275,8 @@
 							<generateToString>true</generateToString>
 							<!-- overrideHET: strategic | simple[123] -->
 							<overrideHET>strategic</overrideHET>
+							<generateCopyable>true</generateCopyable>
+							<generateMergeable>true</generateMergeable>
 							<!-- Generates RoundtripTest.java for unit testing.
 							<roundtripTestClassName>RoundtripTest</roundtripTestClassName>
 							-->

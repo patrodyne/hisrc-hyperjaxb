@@ -26,7 +26,7 @@
 					<configuration>
 						<descriptors>
 							<descriptor>../src/main/assembly/ant-src.xml</descriptor>
-							<descriptor>../src/main/assembly/maven-src.xml</descriptor>
+							<descriptor>../src/main/assembly/mvn-src.xml</descriptor>
 						</descriptors>
 						<outputDirectory>${basedir}/target</outputDirectory>
 					</configuration>
@@ -70,7 +70,7 @@
 							<configuration>
 								<tasks>
 									<unzip src="${basedir}/target/${project.artifactId}-${project.version}-ant-src.zip" dest="${basedir}/target/test-ant-assembly"/>
-									<unzip src="${basedir}/target/${project.artifactId}-${project.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly"/>
+									<unzip src="${basedir}/target/${project.artifactId}-${project.version}-mvn-src.zip" dest="${basedir}/target/test-maven-assembly"/>
 									<mkdir dir="${basedir}/target/test-repository"/>
 									<copy todir="${basedir}/target/test-maven-assembly/${project.artifactId}-${project.version}/src/main/java">
 										<fileset dir="src/it/java">

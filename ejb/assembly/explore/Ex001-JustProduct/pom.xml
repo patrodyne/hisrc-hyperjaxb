@@ -26,10 +26,6 @@
 						<id>maven-assembly</id>
 						<phase>package</phase>
 					</execution>
-					<execution>
-						<id>ant-assembly</id>
-						<phase>package</phase>
-					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -38,14 +34,6 @@
 					<execution>
 						<id>maven-unpack</id>
 						<phase>pre-integration-test</phase>
-					</execution>
-					<execution>
-						<id>ant-unpack</id>
-						<phase>pre-integration-test</phase>
-					</execution>
-					<execution>
-						<id>ant-integration-test</id>
-						<phase>integration-test</phase>
 					</execution>
 				</executions>
 			</plugin>

@@ -1,5 +1,5 @@
 <assembly>
-	<id>maven-src</id>
+	<id>mvn-src</id>
 	<formats>
 		<format>zip</format>
 	</formats>
@@ -40,7 +40,13 @@
 	</fileSets>
 	<files>
 		<file>
-			<source>${basedir}/../../project-build-inc.sh</source>
+			<source>${basedir}/../../project-pom-build-cfg.sh</source>
+			<destName>build-cfg.sh</destName>
+			<filtered>false</filtered>
+			<fileMode>0774</fileMode>
+		</file>
+		<file>
+			<source>${basedir}/../../project-pom-build-inc.sh</source>
 			<destName>build-inc.sh</destName>
 			<filtered>false</filtered>
 			<fileMode>0774</fileMode>

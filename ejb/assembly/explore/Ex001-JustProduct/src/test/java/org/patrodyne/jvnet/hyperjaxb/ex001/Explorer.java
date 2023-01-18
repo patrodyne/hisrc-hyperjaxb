@@ -2,6 +2,7 @@ package org.patrodyne.jvnet.hyperjaxb.ex001;
 
 import static java.lang.System.nanoTime;
 import static java.util.Arrays.sort;
+import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.createEntityManagerFactoryProperties;
 import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.ACTIVE;
 import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.CANCELED;
 import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.CLOSED;
@@ -123,7 +124,7 @@ public class Explorer extends AbstractEntityExplorer
 		setUnmarshaller(createUnmarshaller(getJaxbContext()));
 		
 		// Initialize JPA
-		setEntityManagerFactoryProperties(loadEntityManagerFactoryProperties());
+		setEntityManagerFactoryProperties(createEntityManagerFactoryProperties(getClass()));
 		setPersistenceUnitName(resolvePerstenceUnitName(ObjectFactory.class));
 		setEntityManagerFactory(createEntityManagerFactory());
 		setEntityManager(createEntityManager());

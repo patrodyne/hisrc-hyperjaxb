@@ -72,7 +72,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<defaultGoal>install</defaultGoal>
+		<defaultGoal>package</defaultGoal>
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -90,18 +90,18 @@
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
-					<!--execution>
-						<id>ant-unpack</id>
-						<phase>pre-integration-test</phase>
-					</execution-->
 					<execution>
 						<id>maven-unpack</id>
 						<phase>pre-integration-test</phase>
 					</execution>
-					<!--execution>
+					<execution>
+						<id>ant-unpack</id>
+						<phase>pre-integration-test</phase>
+					</execution>
+					<execution>
 						<id>ant-integration-test</id>
 						<phase>integration-test</phase>
-					</execution-->
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>

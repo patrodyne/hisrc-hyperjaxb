@@ -20,7 +20,7 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>hisrc-hyperjaxb-ejb-samples-po-initial</artifactId>
 			<type>zip</type>
-			<classifier>maven-src</classifier>
+			<classifier>mvn-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
@@ -34,7 +34,7 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>hisrc-hyperjaxb-ejb-samples-po-customized-eclipselink</artifactId>
 			<type>zip</type>
-			<classifier>maven-src</classifier>
+			<classifier>mvn-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
@@ -48,7 +48,7 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>hisrc-hyperjaxb-ejb-samples-uniprot</artifactId>
 			<type>zip</type>
-			<classifier>maven-src</classifier>
+			<classifier>mvn-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
@@ -62,14 +62,14 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>hisrc-hyperjaxb-ejb-samples-po-higherjaxb-maven-plugin</artifactId>
 			<type>zip</type>
-			<classifier>maven-src</classifier>
+			<classifier>mvn-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>hisrc-hyperjaxb-ejb-template-basic</artifactId>
 			<type>zip</type>
-			<classifier>maven-src</classifier>
+			<classifier>mvn-src</classifier>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

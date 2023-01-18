@@ -586,7 +586,7 @@ The *HiSrc HyperJAXB Maven Plug-in* in your [pom.xml][8] is configured to genera
 </plugin>
 ~~~
 
-In the *strategic* approach, each generated class implements these three interfaces: `Equals`, `HashCode`, `ToString`. The implementations include all fields in the class, unless a given field is annotated to be ignored by *BasicJAXB* in the XML schema. Logging for the `Equals` interface is [configurable][16]. At the `TRACE` level, "field not equal" messages are generated in the log. These messages are verbose and should only be enabled for testing or deep trouble-shooting. Also, logging for the `ToString` interface is [configurable][16]. It has three levels of detail corresponding to the `INFO`, `DEBUG` and `TRACE` log levels. The *strategic* approach provides for customization and runtime tuning.
+In the *strategic* approach, each generated class implements these three interfaces: `Equals`, `HashCode`, `ToString`. The implementations include all fields in the class, unless a given field is annotated to be ignored by *BasicJAXB* in the XML schema. Logging for the `Equals` interface is [configurable][16]. At the `DEBUG` level, "field not equal" messages are generated in the log. These messages are verbose and should only be enabled for testing or deep trouble-shooting. Also, logging for the `ToString` interface is [configurable][16]. It has three levels of detail corresponding to the `INFO`, `DEBUG` and `TRACE` log levels. The *strategic* approach provides for customization and runtime tuning.
 
 Alternatively, `overrideHET` can be set to *simple*, *simple1*, *simple2* or *simple3*. In the *simple* implementations, no interfaces are used; instead, the override is in-lined in the class at build time. The choice for *simple[123]* affects the details for the *toString()* override, only. The *equals(...)* override does not log the "field not equal" messages. The *simple* approach does not provide customization or runtime tuning and but can be configured during the build.
 
@@ -620,13 +620,13 @@ Comparing index: 7
 
 The *equals* extension tests each field in your generated JAXB/JPA class for equality, unless annotated to be ignored. The listing above searches for a randomly selected `Product` instance by iterating over the full set and testing all fields for equality.
 
-In *strategic* mode when logging is set to `...DefaultEqualsStrategy=TRACE`, the log console contains every non-equal comparison. This is great for trouble-shooting but should be disabled in production.
+In *strategic* mode when logging is set to `...EqualsStrategy=DEBUG`, the log console contains every non-equal comparison. This is great for trouble-shooting but should be disabled in production.
 
 ~~~
 ...
-13:03:00:922 TRACE DefaultEqualsStrategy - Objects are NOT equal!
-13:03:00:922 TRACE DefaultEqualsStrategy - LHS: {(Product@5fe4b426).picture} -> 🍵
-13:03:00:957 TRACE DefaultEqualsStrategy - RHS: {(Product@4f3445f).picture} -> 🍫
+13:03:00:922 DEBUG EqualsStrategy - Objects are NOT equal!
+13:03:00:922 DEBUG EqualsStrategy - LHS: {(Product@5fe4b426).picture} -> 🍵
+13:03:00:957 DEBUG EqualsStrategy - RHS: {(Product@4f3445f).picture} -> 🍫
 ...
 ~~~
 
@@ -640,7 +640,7 @@ Product@77c9356e[OPEN, 🍈, melon, 16.83, ZHRN-U1F348]
 Product@3f7175ea[OPEN, 🍜, steaming bowl, 76.16, ZHRN-U1F35C]
 ~~~
 
-The *to string* extension generates a human-readable string for your generated JAXB/JPA class, unless annotated to be ignored. The listing above shows the representation when `DefaultToStringStrategy=INFO` in *strategic* mode. These log levels produce different details:
+The *to string* extension generates a human-readable string for your generated JAXB/JPA class, unless annotated to be ignored. The listing above shows the representation when `ToStringStrategy=INFO` in *strategic* mode. These log levels produce different details:
 
 + `INFO` - immediate field values only.
 + `DEBUG` - above plus field names.
@@ -704,9 +704,9 @@ This action is mischievous. It picks the first `Product` instance from the set (
 Look closely and you will see that unmarshalling *product1B-xml* failed to parse the `Cost` tag. You should not be surprised because that tag name is not defined in your [Product.xsd][12]. The logging console detects the issue, too. In one case, *price* is set but not in the other case!
 
 ~~~
-14:40:00:044 TRACE DefaultEqualsStrategy - Objects are NOT equal!
-14:40:00:044 TRACE DefaultEqualsStrategy - LHS: {(Product@5b874bff).price.isSet} -> true
-14:40:00:045 TRACE DefaultEqualsStrategy - RHS: {(Product@6f79f9a4).price.isSet} -> false
+14:40:00:044 DEBUG EqualsStrategy - Objects are NOT equal!
+14:40:00:044 DEBUG EqualsStrategy - LHS: {(Product@5b874bff).price.isSet} -> true
+14:40:00:045 DEBUG EqualsStrategy - RHS: {(Product@6f79f9a4).price.isSet} -> false
 ~~~
 
 **Next**, toggle the *flag* button in your tool bar to enable "Schema Validation is ON" and invoke [Roundtrip JAXB Invalid](!roundtripJAXBInvalid) again. This time an exception is thrown to notify you of the problem.
@@ -744,9 +744,9 @@ Restart *Explorer* to trigger a rebuild and return to this point in the lesson. 
 This time the JPA `RoundtripTest` fails because the `UOM` is not *set* on the left hand side!
 
 ~~~
-15:07:18:037 TRACE DefaultEqualsStrategy - Objects are NOT equal!
-15:07:18:037 TRACE DefaultEqualsStrategy - LHS: {(Product@2b265333).uom.isSet} -> false
-15:07:18:037 TRACE DefaultEqualsStrategy - RHS: {(Product@6fcb9b0f).uom.isSet} -> true
+15:07:18:037 DEBUG EqualsStrategy - Objects are NOT equal!
+15:07:18:037 DEBUG EqualsStrategy - LHS: {(Product@2b265333).uom.isSet} -> false
+15:07:18:037 DEBUG EqualsStrategy - RHS: {(Product@6fcb9b0f).uom.isSet} -> true
 15:07:18:039 ERROR RoundtripTest - Testing sample [Product01.xml] failed the check.
 junit.framework.AssertionFailedError: Objects NOT equal. Use DEBUG for location details.
 15:07:18:041 INFO RoundtripTest - Testing sample, FAILURE [Product01.xml].
@@ -784,9 +784,9 @@ OK, JAXB has a clever approach to handling its default values, but outside of JA
 And this difference explains why ...
 
 ~~~
-15:07:18:037 TRACE DefaultEqualsStrategy - Objects are NOT equal!
-15:07:18:037 TRACE DefaultEqualsStrategy - LHS: {(Product@2b265333).uom.isSet} -> false
-15:07:18:037 TRACE DefaultEqualsStrategy - RHS: {(Product@6fcb9b0f).uom.isSet} -> true
+15:07:18:037 DEBUG EqualsStrategy - Objects are NOT equal!
+15:07:18:037 DEBUG EqualsStrategy - LHS: {(Product@2b265333).uom.isSet} -> false
+15:07:18:037 DEBUG EqualsStrategy - RHS: {(Product@6fcb9b0f).uom.isSet} -> true
 ~~~
 
 **And now for something completely different, more cleverness**

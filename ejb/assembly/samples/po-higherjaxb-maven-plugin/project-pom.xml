@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.patrodyne.jvnet</groupId>
 	<artifactId>hisrc-hyperjaxb-ejb-sample-po-higherjaxb-maven-plugin</artifactId>
-	<version>${project.version}</version>
+	<version>${hisrc-hyperjaxb.version}</version>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB Samples [po-higherjaxb-maven-plugin]</name>
 	<properties>
@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
 			<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
-			<version>${project.version}</version>
+			<version>${hisrc-hyperjaxb.version}</version>
 		</dependency>
 
 		<!-- Test dependencies -->
@@ -69,7 +69,7 @@
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
 			<artifactId>hisrc-hyperjaxb-ejb-roundtrip</artifactId>
-			<version>${project.version}</version>
+			<version>${hisrc-hyperjaxb.version}</version>
 		</dependency>
 
 		<!-- Hibernate Dependencies -->
@@ -125,7 +125,7 @@
 			<plugins>
 				<plugin>
 					<artifactId>maven-antrun-plugin</artifactId>
-					<version>3.0.0</version>
+					<version>3.1.0</version>
 					<dependencies>
 						<dependency>
 							<groupId>org.junit.jupiter</groupId>
@@ -274,7 +274,7 @@
 								<plugin>
 									<groupId>org.patrodyne.jvnet</groupId>
 									<artifactId>hisrc-hyperjaxb-ejb-plugin</artifactId>
-									<version>${project.version}</version>
+									<version>${hisrc-hyperjaxb.version}</version>
 								</plugin>
 							</plugins>
 							<args>

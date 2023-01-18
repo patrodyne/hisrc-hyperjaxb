@@ -4,11 +4,11 @@
 # Example: build-J08.sh clean install
 #
 # Profile Id: none - default, install common jars to local repository.
-# Profile Id: samples - package sample plus default projects.
 # Profile Id: tests - package test plus default projects.
 # Profile Id: tests,tests-0 - successful tests plus packagable, failing tests.
 # Profile Id: tests,tests-1 - successful tests plus longer packagable, failing tests.
 # Profile Id: tests,tests-2 - successful tests plus unpackagable, failing tests.
+# Profile Id: assembly - integration-test assemblies plus default projects.
 # Profile Id: all - package the above plus templates and tutorials.
 # Profile Id: sonatype-oss-release - upload default artifacts to central repository.
 #
@@ -19,8 +19,8 @@
 #   3) build-J08.sh -DskipTests=false -Pall test
 #   Notes:
 #     Step #1 installs the shared libraries to your local maven repository.
-#     Step #2 packages the shared, test and sample projects.
-#     Step #3 unit test the shared, test and sample projects.
+#     Step #2 packages the shared, test and assembly projects.
+#     Step #3 unit test the shared, test and assembly projects.
 #
 
 JAVA08_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
@@ -40,8 +40,8 @@ else
 fi
 
 # mvn ${JVM_SYS_PROPS} install
-# mvn ${JVM_SYS_PROPS} -Psamples package
 # mvn ${JVM_SYS_PROPS} -Ptests package
 # mvn ${JVM_SYS_PROPS} -Ptests,tests-all package
-# mvn ${JVM_SYS_PROPS} -Psamples,tests package
+# mvn ${JVM_SYS_PROPS} -Passembly,tests package
+# mvn ${JVM_SYS_PROPS} -Passembly integration-test
 # mvn ${JVM_SYS_PROPS} -Pall package
