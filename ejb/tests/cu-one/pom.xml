@@ -46,7 +46,7 @@
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<!--result>mappingFiles</result-->
-					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.cuone.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.cu_one.RoundtripTest</roundtripTestClassName>
 					<variant>ejb</variant>
 					<args>
 						<arg>-Xannotate</arg>

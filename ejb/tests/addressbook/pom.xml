@@ -49,7 +49,7 @@
 					<generateToString>true</generateToString>
 					<generateCopyable>true</generateCopyable>
 					<generateMergeable>true</generateMergeable>
-					<roundtripTestClassName>com.pps.schema.tests.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.addressbook.RoundtripTest</roundtripTestClassName>
 				</configuration>
 			</plugin>
 		</plugins>

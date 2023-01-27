@@ -58,7 +58,7 @@
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<beansPropertiesLocator>classpath:/META-INF/beans.properties</beansPropertiesLocator>
-					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.po.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.custom_naming.schema.RoundtripTest</roundtripTestClassName>
 				</configuration>
 				<dependencies>
 					<!-- Custom Naming Dependencies (mojo)-->

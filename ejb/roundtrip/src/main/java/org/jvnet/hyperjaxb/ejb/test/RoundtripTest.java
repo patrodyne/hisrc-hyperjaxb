@@ -12,6 +12,7 @@ import javax.xml.validation.SchemaFactory;
 import org.jvnet.basicjaxb.lang.ContextUtils;
 import org.jvnet.basicjaxb.lang.CopyTo;
 import org.jvnet.basicjaxb.lang.EqualsStrategy;
+import org.jvnet.basicjaxb.lang.MergeFrom;
 import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
 import org.jvnet.hyperjaxb.ejb.util.EntityUtils;
 import org.jvnet.hyperjaxb.lang.builder.ExtendedJAXBEqualsStrategy;
@@ -99,6 +100,9 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			
 			getLogger().trace("Checking the sample object identity: Loaded vs Loaded clone.");
 			checkCopyable(loadedEntity);
+
+			getLogger().trace("Checking the sample object identity: Etalon vs Merged vs Loaded merge.");
+			checkMergeable(etalonSample.getValue(), mergedEntity, loadedEntity);
 		}
 	}
 	
@@ -109,6 +113,23 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			CopyTo valueCopyTo = (CopyTo) value;
 			Object valueClone = valueCopyTo.clone();
 			checkObjects(valueCopyTo, valueClone);
+		}
+	}
+
+	private void checkMergeable(Object value1, Object value2, Object value3)
+	{
+		if ( (value1 instanceof MergeFrom) && (value2 instanceof MergeFrom) && (value3 instanceof MergeFrom) )
+		{
+			MergeFrom value1MergeFrom = (MergeFrom) value1;
+			MergeFrom value2MergeFrom = (MergeFrom) value2;
+			MergeFrom lhsValueMergeFrom = (MergeFrom) value1MergeFrom.createNewInstance();
+			lhsValueMergeFrom.mergeFrom(value1MergeFrom, value2MergeFrom);
+			
+			MergeFrom value3MergeFrom = (MergeFrom) value3;
+			MergeFrom rhsValueMergeFrom = (MergeFrom) value1MergeFrom.createNewInstance();
+			rhsValueMergeFrom.mergeFrom(value1MergeFrom, value3MergeFrom);
+			
+			checkObjects(lhsValueMergeFrom, rhsValueMergeFrom);
 		}
 	}
 

@@ -50,7 +50,7 @@
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<validateXml>false</validateXml>
-					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.issuesel.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.issues_el.RoundtripTest</roundtripTestClassName>
 				</configuration>
 			</plugin>
 		</plugins>

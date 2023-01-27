@@ -65,34 +65,11 @@
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<!--
-					<args>
-						<arg>-Xannotate</arg>
-						<arg>-Xinheritance</arg>
-					</args>
+					See src/test/java/org/jvnet/hyperjaxb/ejb/tests/issues/RoundtripTest.java
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.issues_po.issues.RoundtripTest</roundtripTestClassName>
 					-->
-					<plugins>
-						<!--
-						<plugin>
-							<groupId>org.patrodyne.jvnet</groupId>
-							<artifactId>hisrc-basicjaxb-plugins</artifactId>
-							<version>${hisrc-basicjaxb.version}</version>
-						</plugin>
-						<plugin>
-							<groupId>org.patrodyne.jvnet</groupId>
-							<artifactId>hisrc-hyperjaxb-ejb-tests-issues-po-issues-pre</artifactId>
-							<version>${project.version}</version>
-						</plugin>
-						-->
-					</plugins>
 				</configuration>
 				<dependencies>
-					<!--
-					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-search</artifactId>
-						<version>3.4.0.Final</version>
-					</dependency>
-					-->
 					<dependency>
 						<groupId>org.patrodyne.jvnet</groupId>
 						<artifactId>hisrc-hyperjaxb-ejb-tests-issues-po-issues-pre</artifactId>
@@ -100,37 +77,6 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<!--plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>hibernate3-maven-plugin</artifactId>
-				<version>2.2</version>
-				<executions>
-					<execution>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>hbm2ddl</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<components>
-						<component>
-							<name>hbm2ddl</name>
-							<implementation>jpaconfiguration</implementation>
-							<outputDirectory>target/generated-resources/hbm2ddl/org/jvnet/hyperjaxb/ejb/tests/issues</outputDirectory>
-						</component>
-					</components>
-					<componentProperties>
-						<persistenceunit>org.jvnet.hyperjaxb.ejb.tests.issues</persistenceunit>
-						<propertyfile>src/test/resources/persistence.properties</propertyfile>
-						<outputfilename>schema.ddl</outputfilename>
-						<drop>false</drop>
-						<create>true</create>
-						<export>false</export>
-						<format>true</format>
-					</componentProperties>
-				</configuration>
-			</plugin-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>

@@ -60,6 +60,7 @@
 					<postArgs>
 						<arg>-Xannotate</arg>
 					</postArgs>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.annox.RoundtripTest</roundtripTestClassName>
 				</configuration>
 				<dependencies>
 					<dependency>

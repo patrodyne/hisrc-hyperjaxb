@@ -20,12 +20,23 @@
 			<artifactId>jakarta.xml.bind-api</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
 			<artifactId>hisrc-basicjaxb-runtime</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
 			<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
+		</dependency>
+
+		<!-- Roundtrip -->
+		<dependency>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-roundtrip</artifactId>
 		</dependency>
 
 		<!-- Implementaion of JPA -->
@@ -35,11 +46,6 @@
 		</dependency>
 
 		<!-- Test dependencies -->
-		<dependency>
-			<groupId>org.glassfish.jaxb</groupId>
-			<artifactId>jaxb-runtime</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core-jakarta</artifactId>
@@ -87,6 +93,7 @@
 						</goals>
 						<configuration>
 							<extension>true</extension>
+							<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tutorials.po.step_one.RoundtripTest</roundtripTestClassName>
 						</configuration>
 					</execution>
 				</executions>

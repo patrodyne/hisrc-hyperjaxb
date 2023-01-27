@@ -83,7 +83,7 @@
 							<debug>false</debug>
 							<extension>true</extension>
 							<variant>ejb</variant>
-							<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tutorials.po.steptwo.RoundtripTest</roundtripTestClassName>
+							<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tutorials.po.step_two.RoundtripTest</roundtripTestClassName>
 						</configuration>
 					</execution>
 				</executions>

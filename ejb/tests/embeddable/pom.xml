@@ -45,7 +45,7 @@
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<validateXml>false</validateXml>
-					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.embeddable.tests.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.embeddable.RoundtripTest</roundtripTestClassName>
 					<persistenceUnitName>foo</persistenceUnitName>
 					<args>
 						<arg>-Xannotate</arg>

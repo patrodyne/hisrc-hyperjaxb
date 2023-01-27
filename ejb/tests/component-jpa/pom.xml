@@ -46,6 +46,9 @@
 				</executions>
 				<configuration>
 					<variant>jpa</variant>
+					<!--
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.component_jpa.RoundtripTest</roundtripTestClassName>
+					-->
 				</configuration>
 			</plugin>
 		</plugins>

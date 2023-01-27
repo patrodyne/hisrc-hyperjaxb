@@ -47,7 +47,7 @@
 					<schemaIncludes>
 						<value>ows/*/owsAll.xsd</value>
 					</schemaIncludes>
-					<roundtripTestClassName>org.jvnet.hyperjaxb.tests.ows.tests.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.ows.RoundtripTest</roundtripTestClassName>
 				</configuration>
 			</plugin>
 		</plugins>

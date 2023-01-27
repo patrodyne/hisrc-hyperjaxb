@@ -47,7 +47,7 @@
 					<schemaIncludes>
 						<include>web-app_2_4.xsd</include>
 					</schemaIncludes>
-					<roundtripTestClassName>org.jvnet.hyperjaxb.tests.web.tests.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.web.RoundtripTest</roundtripTestClassName>
 				</configuration>
 			</plugin>
 		</plugins>

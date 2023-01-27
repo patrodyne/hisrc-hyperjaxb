@@ -245,7 +245,7 @@
 						</goals>
 						<configuration>
 							<extension>true</extension>
-							<roundtripTestClassName>RoundtripTest</roundtripTestClassName>
+							<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.assembly.samples.po_customized_eclipselink.RoundtripTest</roundtripTestClassName>
 						</configuration>
 					</execution>
 				</executions>

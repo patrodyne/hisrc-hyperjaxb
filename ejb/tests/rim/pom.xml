@@ -47,7 +47,7 @@
 					<schemaIncludes>
 						<include>xsd/*.xsd</include>
 					</schemaIncludes>
-					<roundtripTestClassName>org.jvnet.hyperjaxb.tests.rim.tests.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.rim.RoundtripTest</roundtripTestClassName>
 					<variant>jpa</variant>
 				</configuration>
 			</plugin>

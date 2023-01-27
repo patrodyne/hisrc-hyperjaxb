@@ -250,7 +250,7 @@
 						</goals>
 						<configuration>
 							<extension>true</extension>
-							<roundtripTestClassName>RoundtripTest</roundtripTestClassName>
+							<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.assembly.samples.po_initial.RoundtripTest</roundtripTestClassName>
 						</configuration>
 					</execution>
 				</executions>

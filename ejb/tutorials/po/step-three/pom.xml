@@ -96,7 +96,7 @@
 						</goals>
 						<configuration>
 							<extension>true</extension>
-							<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tutorials.po.stepthree.RoundtripTest</roundtripTestClassName>
+							<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tutorials.po.step_three.RoundtripTest</roundtripTestClassName>
 						</configuration>
 					</execution>
 				</executions>

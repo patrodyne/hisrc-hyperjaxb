@@ -52,7 +52,7 @@
 					<strict>false</strict>
 					<catalog>src/main/catalog/catalog.xml</catalog>
 					<validateXml>false</validateXml>
-					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.imseportfolio.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.ims_eportfolio.RoundtripTest</roundtripTestClassName>
 				</configuration>
 			</plugin>
 

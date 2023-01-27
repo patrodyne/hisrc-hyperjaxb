@@ -249,7 +249,7 @@
 						</goals>
 						<configuration>
 							<extension>true</extension>
-							<roundtripTestClassName>RoundtripTest</roundtripTestClassName>
+							<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.assembly.samples.uniprot.RoundtripTest</roundtripTestClassName>
 						</configuration>
 					</execution>
 				</executions>

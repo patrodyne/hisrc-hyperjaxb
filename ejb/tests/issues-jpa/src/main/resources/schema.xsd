@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xsd:schema
 	targetNamespace="urn:test" xmlns:test="urn:test" 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -61,7 +62,9 @@
 			<!-- xsd:element name="base64BinaryElements" type="xsd:base64Binary" minOccurs="0" maxOccurs="unbounded"/ -->
 			<xsd:element name="decimalElements" type="xsd:decimal" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element name="stringsElement" type="test:HJIII-63-Strings" minOccurs="0"/>
+			<!-- Class is a raw type. References to generic type Class<T> should be parameterized
 			<xsd:element name="stringsElements" type="test:HJIII-63-Strings" minOccurs="0" maxOccurs="unbounded"/>
+			 -->
 		</xsd:sequence>
 		<xsd:attribute name="stringsAttribute" type="test:HJIII-63-Strings" use="optional"/>
 	</xsd:complexType>
@@ -99,7 +102,9 @@
 		<xsd:sequence>
 			<xsd:element name="enumElements" type="test:HJIII-63-StringEnum" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element name="enumsElement" type="test:HJIII-63-StringEnums" minOccurs="0"/>
+			<!-- Class is a raw type. References to generic type Class<T> should be parameterized
 			<xsd:element name="enumsElements" type="test:HJIII-63-StringEnums" minOccurs="0" maxOccurs="unbounded"/>
+			 -->
 		</xsd:sequence>
 		<xsd:attribute name="enumsAttribute" type="test:HJIII-63-StringEnums" use="optional"/>
 	</xsd:complexType>
@@ -109,7 +114,9 @@
 		<xsd:sequence>
 			<xsd:element name="qnameElements" type="xsd:QName" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element name="qnamesElement" type="test:HJIII-63-QNames" minOccurs="0"/>
+			<!-- Class is a raw type. References to generic type Class<T> should be parameterized
 			<xsd:element name="qnamesElements" type="test:HJIII-63-QNames" minOccurs="0" maxOccurs="unbounded"/>
+			 -->
 		</xsd:sequence>
 		<xsd:attribute name="qnamesAttribute" type="test:HJIII-63-QNames" use="optional"/>
 	</xsd:complexType>

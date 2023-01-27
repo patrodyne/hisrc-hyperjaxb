@@ -58,7 +58,7 @@
 				</dependencies>
 				<configuration>
 					<extension>true</extension>
-					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.episodes.b.tests.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.episodes.b.RoundtripTest</roundtripTestClassName>
 					<persistenceXml>src/main/resources/persistence.xml</persistenceXml>
 					<episodes>
 						<episode>
