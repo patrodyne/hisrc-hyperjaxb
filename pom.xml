@@ -81,8 +81,8 @@
 		<junit-jupiter.version>5.9.1</junit-jupiter.version>
 		<junit-platform.version>1.9.1</junit-platform.version>
 		<m2e.jpa.activation>false</m2e.jpa.activation>
-		<maven.compiler.source>8</maven.compiler.source>
-		<maven.compiler.target>8</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 		<maven.version>3.8.6</maven.version>
 		<maven-plugin-plugin.version>3.7.0</maven-plugin-plugin.version>
 		<maven-plugin-testing.version>3.3.0</maven-plugin-testing.version>
