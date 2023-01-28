@@ -87,11 +87,7 @@
 			<artifactId>weld-se-core</artifactId>
 		</dependency>
 		<dependency>
-			<!--
-			java.lang.NoSuchMethodError: 'java.util.Map org.jboss.jandex.ClassInfo.annotationsMap()'
 			<groupId>io.smallrye</groupId>
-			-->
-			<groupId>org.jboss</groupId>
 			<artifactId>jandex</artifactId>
 		</dependency>
 		<dependency>

@@ -47,6 +47,11 @@
 
 		<!-- Test dependencies -->
 		<dependency>
+			<groupId>io.smallrye</groupId>
+			<artifactId>jandex</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core-jakarta</artifactId>
 			<scope>test</scope>

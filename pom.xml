@@ -315,11 +315,7 @@
 				<version>${weld.version}</version>
 			</dependency>
 			<dependency>
-				<!--
-				java.lang.NoSuchMethodError: 'java.util.Map org.jboss.jandex.ClassInfo.annotationsMap()'
 				<groupId>io.smallrye</groupId>
-				-->
-				<groupId>org.jboss</groupId>
 				<artifactId>jandex</artifactId>
 				<version>3.0.5</version>
 			</dependency>
@@ -340,6 +336,13 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core-jakarta</artifactId>
 				<version>${hibernate-core.version}</version>
+				<exclusions>
+					<!-- In favor of io.smallrye:jandex -->
+					<exclusion>
+						<groupId>org.jboss</groupId>
+						<artifactId>jandex</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
