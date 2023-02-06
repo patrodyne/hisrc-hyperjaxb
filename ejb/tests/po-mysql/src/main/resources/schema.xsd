@@ -2,15 +2,6 @@
   xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" jaxb:version="3.0">
 
   <xsd:annotation>
-    <xsd:appinfo>
-      <jaxb:globalBindings generateIsSetMethod="true"/>
-      <jaxb:schemaBindings>
-        <jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.po"/>
-      </jaxb:schemaBindings>
-    </xsd:appinfo>
-  </xsd:annotation>
-  
-  <xsd:annotation>
     <xsd:documentation xml:lang="en">
       Purchase order schema for Example.com.
       Copyright 2000 Example.com. All rights reserved.

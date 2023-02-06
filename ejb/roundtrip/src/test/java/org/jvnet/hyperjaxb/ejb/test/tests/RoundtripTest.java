@@ -4,7 +4,6 @@ import java.io.File;
 
 public class RoundtripTest extends org.jvnet.hyperjaxb.ejb.test.RoundtripTest
 {
-	
 	@Override
 	protected void checkSample(File sample)
 		throws Exception

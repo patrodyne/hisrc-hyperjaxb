@@ -95,11 +95,11 @@ public class JDOTest {
         Hotel hotel = (Hotel) pm.getObjectById(id);
         hotel.setDescription("changed");
 
-        System.out.println("Persistent : " + JDOHelper.isPersistent(hotel));
-        System.out.println("Dirty : " + JDOHelper.isDirty(hotel));
-        System.out.println("New : " + JDOHelper.isNew(hotel));
-        System.out.println("Transactional : " + JDOHelper.isTransactional(hotel));
-        System.out.println("Deleted : " + JDOHelper.isDeleted(hotel));
+        logger.debug("Persistent : " + JDOHelper.isPersistent(hotel));
+        logger.debug("Dirty : " + JDOHelper.isDirty(hotel));
+        logger.debug("New : " + JDOHelper.isNew(hotel));
+        logger.debug("Transactional : " + JDOHelper.isTransactional(hotel));
+        logger.debug("Deleted : " + JDOHelper.isDeleted(hotel));
 
         tx.commit();
       }

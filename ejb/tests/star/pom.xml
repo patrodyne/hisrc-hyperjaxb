@@ -46,6 +46,8 @@
 	<build>
 		<defaultGoal>test</defaultGoal>
 		<plugins>
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
@@ -63,7 +65,9 @@
 						<include>STAR/Rev5.1.4/BODs/Standalone/*.xsd</include>
 						-->
 					</schemaIncludes>
+					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.star.RoundtripTest</roundtripTestClassName>
+					-->
 				</configuration>
 			</plugin>
 		</plugins>

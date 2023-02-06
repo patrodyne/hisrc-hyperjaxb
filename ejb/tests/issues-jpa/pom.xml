@@ -40,6 +40,8 @@
 	<build>
 		<defaultGoal>test</defaultGoal>
 		<plugins>
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
@@ -47,7 +49,9 @@
 					<variant>jpa</variant>
 					<!--result>mappingFiles</result-->
 					<validateXml>false</validateXml>
+					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.issues_jpa.RoundtripTest</roundtripTestClassName>
+					-->
 				</configuration>
 			</plugin>
 		</plugins>

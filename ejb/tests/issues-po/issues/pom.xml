@@ -33,15 +33,15 @@
 		</dependency>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
-			<artifactId>hisrc-hyperjaxb-ejb-tests-issues-po-po</artifactId>
-			<version>${project.version}</version>
-			<scope>runtime</scope>
-		</dependency>	
-		<dependency>
-			<groupId>org.patrodyne.jvnet</groupId>
 			<artifactId>hisrc-hyperjaxb-ejb-tests-issues-po-issues-pre</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
+		</dependency>	
+		<dependency>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-tests-issues-po-po</artifactId>
+			<version>${project.version}</version>
+			<scope>runtime</scope>
 		</dependency>	
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -50,16 +50,10 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-			<resource>
-				<directory>target/generated-resources/hbm2ddl</directory>
-			</resource>
-		</resources>
 		<defaultGoal>test</defaultGoal>
 		<plugins>
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
@@ -76,27 +70,6 @@
 						<version>${project.version}</version>
 					</dependency>
 				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
-							<resources>          
-								<resource>
-									<directory>target/generated-resources/hbm2ddl</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>              
-						</configuration> 
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

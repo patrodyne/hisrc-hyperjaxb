@@ -26,7 +26,7 @@ import jakarta.inject.Inject;
  * 
  * Note: The outline's is configurable to output to source code or mapping files.
  * 
- * Injected: ModelProcessor<EJBPlugin>, OutlineProcessor<EJBPlugin>
+ * Injected: ModelProcessor&lt;EJBPlugin&gt;, OutlineProcessor&lt;EJBPlugin&gt;
  * Instantiated: none
  */
 @ApplicationScoped

@@ -25,6 +25,12 @@
 			<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
 		</dependency>
 
+		<!-- CDI Java class file indexer. -->
+		<dependency>
+			<groupId>io.smallrye</groupId>
+			<artifactId>jandex</artifactId>
+		</dependency>
+
 		<!-- Hibernate Dependencies -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

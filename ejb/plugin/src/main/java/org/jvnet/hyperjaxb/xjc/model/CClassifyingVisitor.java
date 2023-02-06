@@ -107,8 +107,7 @@ public class CClassifyingVisitor<U> implements CPropertyVisitor<U> {
 
 					if (contentType instanceof CBuiltinLeafInfo) {
 						assert referencePropertyInfo.getWildcard() == null;
-						assert referencePropertyInfo.isMixed()
-								^ elements.isEmpty();
+						assert referencePropertyInfo.isMixed() ^ elements.isEmpty();
 						return onBuiltinElementReference(referencePropertyInfo);
 					} else if (contentType instanceof CEnumLeafInfo) {
 						assert !elements.isEmpty();

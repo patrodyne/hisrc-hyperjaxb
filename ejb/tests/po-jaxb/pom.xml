@@ -53,7 +53,8 @@
 			</resource>
 		</resources>        
 		<plugins>
-			<!--arg>-Xhyperjaxb-jpa-result=mappingFiles</arg-->
+			<!-- mvn hisrc-higherjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-higherjaxb:generate -->
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-higherjaxb-maven-plugin</artifactId>
@@ -65,6 +66,7 @@
 						<arg>-Xequals</arg>
 						<arg>-XhashCode</arg>
 						<arg>-XtoString</arg>
+						<!--arg>-Xhyperjaxb-jpa-result=mappingFiles</arg-->
 					</args>
 					<plugins>
 						<plugin>

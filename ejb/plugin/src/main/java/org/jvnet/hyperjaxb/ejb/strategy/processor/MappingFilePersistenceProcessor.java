@@ -28,7 +28,7 @@ import jakarta.xml.bind.JAXBException;
 /**
  * The default strategy to marshal ORM mapping file.
  * 
- * Injected: OutlineProcessor<EJBPlugin>, Naming, PersistenceFactory, PersistenceMarshaller
+ * Injected: OutlineProcessor&lt;EJBPlugin&gt;, Naming, PersistenceFactory, PersistenceMarshaller
  * Instantiated: MappingFilePersistenceUnitFactory
  */
 @ApplicationScoped

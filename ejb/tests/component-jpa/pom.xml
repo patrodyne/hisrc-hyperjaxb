@@ -34,11 +34,14 @@
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>default</id>
 						<goals>
 							<goal>generate</goal>
 						</goals>

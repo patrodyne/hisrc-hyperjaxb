@@ -13,20 +13,6 @@
         <xs:documentation>
             BTO DWH
         </xs:documentation>
-        <!-- Global JAXB directives -->
-        <xs:appinfo>
-            <jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
-                <jaxb:serializable/>
-            </jaxb:globalBindings>
-            <jaxb:schemaBindings>
-                <jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.componentjpa.tests" />
-            </jaxb:schemaBindings>
-            <hj:persistence>
-                <hj:default-one-to-many>
-                    <orm:join-column/>
-                </hj:default-one-to-many>
-            </hj:persistence>
-        </xs:appinfo>
     </xs:annotation>
     <xs:element name="JobStream">
         <xs:annotation>

@@ -40,6 +40,8 @@
 	<build>
 		<defaultGoal>test</defaultGoal>
 		<plugins>
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
@@ -47,7 +49,9 @@
 					<schemaIncludes>
 						<include>sportsml/1.8/specification/schema/sportsml.xsd</include>
 					</schemaIncludes>
+					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.sml.RoundtripTest</roundtripTestClassName>
+					-->
 				</configuration>
 			</plugin>
 		</plugins>

@@ -62,12 +62,16 @@
 					</systemProperties>
 				</configuration>
 			</plugin>
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<validateXml>false</validateXml>
+					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.device.RoundtripTest</roundtripTestClassName>
+					-->
 				</configuration>
 			</plugin>
 		</plugins>

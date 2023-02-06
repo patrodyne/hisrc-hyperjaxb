@@ -51,6 +51,8 @@
 	<build>
 		<defaultGoal>test</defaultGoal>
 		<plugins>
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
@@ -305,7 +307,9 @@
 						<include>_2008A_XML/OTA_AirAvailRS.xsd</include>
 						<include>_2008A_XML/OTA_AirAvailRQ.xsd</include>
 					</schemaIncludes>
+					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.ota.RoundtripTest</roundtripTestClassName>
+					-->
 					<variant>jpa</variant>
 				</configuration>
 			</plugin>

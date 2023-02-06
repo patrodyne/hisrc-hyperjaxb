@@ -440,8 +440,6 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	/**
 	 * Updates XJC's compilePath and resources and update hyperjaxb's
 	 * resources, that is, *.hbm.xml files and hibernate.config.xml file.
-	 * 
-	 * @throws MojoExecutionException
 	 */
 	protected void setupMavenPaths()
 	{
@@ -462,8 +460,13 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 		{
 			String genPath = getGenerateDirectory().getPath();
 			getProject().addTestCompileSourceRoot(genPath);
-			getLog().info("Found roundtripTestClassName ("+getRoundtripTestClassName()+
-				"), setting addTestCompileSourceRoot to " + genPath);
+			if ( getLog().isWarnEnabled() )
+			{
+				getLog().warn("Found roundtripTestClassName: " + getRoundtripTestClassName());
+				getLog().warn("Adding testCompileSourceRoot: " + genPath);
+				getLog().warn("MONITORY: Adding a CompileSourceRoot as a TestCompileSourceRoot may cause issues (M2E, etc.)!");
+				getLog().warn("GUIDANCE: Move the generated round trip source code to your source test folder and unset roundtripTestClassName.");
+			}
 		}
 	}
 

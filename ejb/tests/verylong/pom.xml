@@ -47,7 +47,9 @@
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<maxIdentifierLength>60</maxIdentifierLength>
+					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.verylong.RoundtripTest</roundtripTestClassName>
+					-->
 				</configuration>
 			</plugin>
 		</plugins>

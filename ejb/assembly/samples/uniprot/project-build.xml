@@ -137,7 +137,9 @@
 			<arg line="-Xinheritance"/>
 			<arg line="-Xhyperjaxb-ejb"/>
 			<arg line="-Xhyperjaxb-ejb-validateXml=true"/>
-			<arg line="-Xhyperjaxb-ejb-roundtripTestClassName=RoundtripTest"/>
+			<!--
+			<arg line="-Xhyperjaxb-ejb-roundtripTestClassName=org.uniprot.uniprot.RoundtripTest"/>
+			-->
 			<arg line="-Xequals"/>
 			<arg line="-XhashCode"/>
 			<arg line="-XtoString"/>

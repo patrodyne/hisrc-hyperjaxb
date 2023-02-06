@@ -129,7 +129,9 @@
 			<arg line="-Xinheritance"/>
 			<arg line="-Xhyperjaxb-ejb"/>
 			<arg line="-Xhyperjaxb-ejb-validateXml=true"/>
-			<arg line="-Xhyperjaxb-ejb-roundtripTestClassName=RoundtripTest"/>
+			<!--
+			<arg line="-Xhyperjaxb-ejb-roundtripTestClassName=org.jvnet.hyperjaxb.ejb.samples.poctl.RoundtripTest"/>
+			-->
 			<arg line="-Xequals"/>
 			<arg line="-XhashCode"/>
 			<arg line="-XtoString"/>

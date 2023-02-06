@@ -41,6 +41,8 @@
 	<build>
 		<defaultGoal>test</defaultGoal>
 		<plugins>
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
@@ -48,7 +50,9 @@
 					<schemaIncludes>
 						<schemaInclude>CDASchemas/cda/Schemas/CDA.xsd</schemaInclude>
 					</schemaIncludes>
+					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.cda.RoundtripTest</roundtripTestClassName>
+					-->
 				</configuration>
 			</plugin>
 		</plugins>

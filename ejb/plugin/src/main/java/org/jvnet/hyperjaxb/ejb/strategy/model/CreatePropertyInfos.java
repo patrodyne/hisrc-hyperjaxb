@@ -17,7 +17,7 @@ public interface CreatePropertyInfos
 	 * @param propertyInfo Property to be processed.
 	 * 
 	 * @return Collection of properties created for the given property.
-	 *         Must not be <code><code>null</code>, if nothing is created,
+	 *         Must not be &lt;code&gt;null&lt;/code&gt;, if nothing is created,
 	 *         return an empty collection instead.
 	 */
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo);

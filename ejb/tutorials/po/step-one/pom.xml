@@ -87,18 +87,23 @@
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<version>${project.version}</version>
 				<executions>
 					<execution>
+						<id>generate</id>
 						<goals>
 							<goal>generate</goal>
 						</goals>
 						<configuration>
 							<extension>true</extension>
+							<!--
 							<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tutorials.po.step_one.RoundtripTest</roundtripTestClassName>
+							-->
 						</configuration>
 					</execution>
 				</executions>

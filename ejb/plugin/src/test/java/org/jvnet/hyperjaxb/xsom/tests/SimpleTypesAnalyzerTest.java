@@ -37,7 +37,7 @@ public class SimpleTypesAnalyzerTest
 //		 XSSimpleType simpleType = schema.getSimpleType("length");
 //		 simpleType.toString();
 //		 for (Entry<String, XSType> entry : schemaSet.getSimpleType(arg0, arg1)getTypes().entrySet())
-//			 System.out.println(entry.getKey());
+//			 log.debug(entry.getKey());
 		
 		final XSSimpleType minLength = getSchemaSet().getSimpleType(NS, "minLength");
 		final XSSimpleType maxLength = getSchemaSet().getSimpleType(NS, "maxLength");

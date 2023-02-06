@@ -44,6 +44,8 @@
 
 			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
 			<!-- mvn hisrc-hyperjaxb:generate -->
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
@@ -52,7 +54,9 @@
 					<strict>false</strict>
 					<catalog>src/main/catalog/catalog.xml</catalog>
 					<validateXml>false</validateXml>
+					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.ims_eportfolio.RoundtripTest</roundtripTestClassName>
+					-->
 				</configuration>
 			</plugin>
 
