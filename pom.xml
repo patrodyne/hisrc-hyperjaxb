@@ -88,8 +88,8 @@
 		<plantuml-generator-maven-plugin.version>2.0.0</plantuml-generator-maven-plugin.version>
 		<versions-maven-plugin.version>2.14.2</versions-maven-plugin.version>
 
-		<activation-api.version>2.1.0</activation-api.version>
-		<activation-imp.version>1.0.0</activation-imp.version>
+		<activation-api.version>2.1.1</activation-api.version>
+		<activation-imp.version>2.0.0</activation-imp.version>
 		<annotation.version>2.1.1</annotation.version>
 		<derby.version>10.16.1.1</derby.version>
 		<eclipselink.version>4.0.0</eclipselink.version>
@@ -105,15 +105,15 @@
 		<jpa-api.version>3.1.0</jpa-api.version>
 		<jaxb-api.version>3.0.1</jaxb-api.version>
 		<jaxb-imp.version>3.0.2</jaxb-imp.version>
-		<junit-jupiter.version>5.9.1</junit-jupiter.version>
-		<junit-platform.version>1.9.1</junit-platform.version>
+		<junit-jupiter.version>5.9.2</junit-jupiter.version>
+		<junit-platform.version>1.9.2</junit-platform.version>
 		<m2e.jpa.activation>false</m2e.jpa.activation>
 		<maven.compiler.release>11</maven.compiler.release>
 		<maven-min.version>3.8.4</maven-min.version>
 		<maven.version>3.8.6</maven.version>
 		<maven-plugin-plugin.version>3.7.1</maven-plugin-plugin.version>
 		<maven-plugin-testing.version>3.3.0</maven-plugin-testing.version>
-		<postgresql.version>42.5.1</postgresql.version>
+		<postgresql.version>42.5.3</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<slf4j.version>2.0.6</slf4j.version>
@@ -552,12 +552,12 @@
 						<dependency>
 							<groupId>org.apache.ant</groupId>
 							<artifactId>ant-junitlauncher</artifactId>
-							<version>1.10.12</version>
+							<version>1.10.13</version>
 						</dependency>
 						<dependency>
 							<groupId>org.apache.ant</groupId>
 							<artifactId>ant-apache-xalan2</artifactId>
-							<version>1.10.12</version>
+							<version>1.10.13</version>
 						</dependency>
 						<dependency>
 							<groupId>ant</groupId>
@@ -616,9 +616,17 @@
 					<configuration>
 						<ruleSet>
 							<ignoreVersions>
+                                <ignoreVersion>
+                                    <type>regex</type>
+                                    <version>(.+\.Alpha\d|.+-alpha-\d)</version>
+                                </ignoreVersion>
 								<ignoreVersion>
 									<type>regex</type>
 									<version>.+-M\d</version>
+								</ignoreVersion>
+								<ignoreVersion>
+									<type>regex</type>
+									<version>.+[\.-](CR|RC)\d</version>
 								</ignoreVersion>
 							</ignoreVersions>
 						</ruleSet>
