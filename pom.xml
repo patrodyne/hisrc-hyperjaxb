@@ -113,7 +113,7 @@
 		<m2e.jpa.activation>false</m2e.jpa.activation>
 		<maven.compiler.release>11</maven.compiler.release>
 		<maven-min.version>3.8.4</maven-min.version>
-		<maven.version>3.8.6</maven.version>
+		<maven-api.version>3.9.0</maven-api.version>
 		<maven-plugin-plugin.version>3.7.1</maven-plugin-plugin.version>
 		<maven-plugin-testing.version>3.3.0</maven-plugin-testing.version>
 		<postgresql.version>42.5.3</postgresql.version>
@@ -487,14 +487,14 @@
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-artifact</artifactId>
-				<version>${maven.version}</version>
+				<version>${maven-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<!--
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-builder-support</artifactId>
-				<version>${maven.version}</version>
+				<version>${maven-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			-->
@@ -507,38 +507,38 @@
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-model</artifactId>
-				<version>${maven.version}</version>
+				<version>${maven-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<!--
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-model-builder</artifactId>
-				<version>${maven.version}</version>
+				<version>${maven-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			-->
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-plugin-api</artifactId>
-				<version>${maven.version}</version>
+				<version>${maven-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-compat</artifactId>
-				<version>${maven.version}</version>
+				<version>${maven-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-core</artifactId>
-				<version>${maven.version}</version>
+				<version>${maven-api.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-settings</artifactId>
-				<version>${maven.version}</version>
+				<version>${maven-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
