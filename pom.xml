@@ -94,8 +94,11 @@
 		<derby.version>10.16.1.1</derby.version>
 		<eclipselink.version>4.0.0</eclipselink.version>
 		<ehcache.version>3.10.8</ehcache.version>
-		<!-- See https://hibernate.org/orm/releases/ (5.6 for JVM 8, 11, 17 or 18; 6.1 for JVM 11, 17 or 18) -->
-		<hibernate-core.version>5.6.14.Final</hibernate-core.version>
+		<hibernate-series.version>5.6.15.Final</hibernate-series.version>
+		<!--
+		<hibernate-series.version>6.1.7.Final</hibernate-series.version>
+		-->
+		<HikariCP.version>5.0.1</HikariCP.version>
 		<hisrc-basicjaxb-annox-parser.version>2.0.1-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
 		<hisrc-basicjaxb.version>2.0.1-SNAPSHOT</hisrc-basicjaxb.version>
 		<hisrc-higherjaxb-maven-plugin.version>2.0.1-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
@@ -362,7 +365,7 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core-jakarta</artifactId>
-				<version>${hibernate-core.version}</version>
+				<version>${hibernate-series.version}</version>
 				<exclusions>
 					<!-- In favor of io.smallrye:jandex -->
 					<exclusion>
@@ -374,7 +377,7 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-jcache</artifactId>
-				<version>${hibernate-core.version}</version>
+				<version>${hibernate-series.version}</version>
 				<exclusions>
 					<exclusion>
 						<groupId>org.hibernate</groupId>
@@ -383,9 +386,14 @@
 				</exclusions>
 			</dependency>
 			<dependency>
+				<groupId>com.zaxxer</groupId>
+				<artifactId>HikariCP</artifactId>
+				<version>${HikariCP.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-hikaricp</artifactId>
-				<version>${hibernate-core.version}</version>
+				<version>${hibernate-series.version}</version>
 				<exclusions>
 					<exclusion>
 						<groupId>org.hibernate</groupId>
@@ -784,6 +792,7 @@
 				<executions>
 					<execution>
 						<id>enforce-java-maven</id>
+						<?m2e ignore?>
 						<goals>
 							<goal>enforce</goal>
 						</goals>

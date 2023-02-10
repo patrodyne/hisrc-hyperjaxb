@@ -22,7 +22,6 @@ import static org.hibernate.cfg.AvailableSettings.CUSTOM_ENTITY_DIRTINESS_STRATE
 import static org.hibernate.cfg.AvailableSettings.DEFAULT_BATCH_FETCH_SIZE;
 import static org.hibernate.cfg.AvailableSettings.DEFAULT_CACHE_CONCURRENCY_STRATEGY;
 import static org.hibernate.cfg.AvailableSettings.DEFAULT_CATALOG;
-import static org.hibernate.cfg.AvailableSettings.DEFAULT_ENTITY_MODE;
 import static org.hibernate.cfg.AvailableSettings.DEFAULT_SCHEMA;
 import static org.hibernate.cfg.AvailableSettings.DIALECT;
 import static org.hibernate.cfg.AvailableSettings.DRIVER;
@@ -35,7 +34,6 @@ import static org.hibernate.cfg.AvailableSettings.HBM2DDL_DATABASE_ACTION;
 import static org.hibernate.cfg.AvailableSettings.HBM2DDL_SCRIPTS_ACTION;
 import static org.hibernate.cfg.AvailableSettings.HBM2DDL_SCRIPTS_CREATE_TARGET;
 import static org.hibernate.cfg.AvailableSettings.HBM2DDL_SCRIPTS_DROP_TARGET;
-import static org.hibernate.cfg.AvailableSettings.HQL_BULK_ID_STRATEGY;
 import static org.hibernate.cfg.AvailableSettings.INTERCEPTOR;
 import static org.hibernate.cfg.AvailableSettings.ISOLATION;
 import static org.hibernate.cfg.AvailableSettings.JPAQL_STRICT_COMPLIANCE;
@@ -58,10 +56,7 @@ import static org.hibernate.cfg.AvailableSettings.PASS;
 import static org.hibernate.cfg.AvailableSettings.POOL_SIZE;
 import static org.hibernate.cfg.AvailableSettings.PREFER_USER_TRANSACTION;
 import static org.hibernate.cfg.AvailableSettings.QUERY_CACHE_FACTORY;
-import static org.hibernate.cfg.AvailableSettings.QUERY_PLAN_CACHE_MAX_SIZE;
-import static org.hibernate.cfg.AvailableSettings.QUERY_PLAN_CACHE_PARAMETER_METADATA_MAX_SIZE;
 import static org.hibernate.cfg.AvailableSettings.QUERY_STARTUP_CHECKING;
-import static org.hibernate.cfg.AvailableSettings.QUERY_SUBSTITUTIONS;
 import static org.hibernate.cfg.AvailableSettings.SESSION_FACTORY_NAME;
 import static org.hibernate.cfg.AvailableSettings.SESSION_FACTORY_NAME_IS_JNDI;
 import static org.hibernate.cfg.AvailableSettings.SESSION_SCOPED_INTERCEPTOR;
@@ -110,7 +105,6 @@ import org.hibernate.cache.spi.RegionFactory;
 import org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.engine.jdbc.spi.JdbcServices;
-import org.hibernate.engine.query.spi.QueryPlanCache;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform;
 import org.hibernate.engine.transaction.jta.platform.internal.StandardJtaPlatformResolver;
@@ -241,11 +235,6 @@ public class SessionFactoryUtil
 			etc.put(HBM2DDL_SCRIPTS_CREATE_TARGET, emfProperties.get(HBM2DDL_SCRIPTS_CREATE_TARGET));
 		if ( emfProperties.containsKey(HBM2DDL_SCRIPTS_DROP_TARGET))
 			etc.put(HBM2DDL_SCRIPTS_DROP_TARGET, emfProperties.get(HBM2DDL_SCRIPTS_DROP_TARGET));
-
-		if ( !emfProperties.containsKey(QUERY_PLAN_CACHE_MAX_SIZE) )
-			etc.put(QUERY_PLAN_CACHE_MAX_SIZE, QueryPlanCache.DEFAULT_QUERY_PLAN_MAX_COUNT);
-		if ( !emfProperties.containsKey(QUERY_PLAN_CACHE_PARAMETER_METADATA_MAX_SIZE) )
-			etc.put(QUERY_PLAN_CACHE_PARAMETER_METADATA_MAX_SIZE, QueryPlanCache.DEFAULT_PARAMETER_METADATA_MAX_COUNT);
 		
 		JdbcServices jdb = ssr.getService(JdbcServices.class);
 		etc.put(DEFAULT_CATALOG, jdb.getJdbcEnvironment().getCurrentCatalog());
@@ -319,7 +308,6 @@ public class SessionFactoryUtil
 		putSetting(hcoMap, sf, DEFAULT_BATCH_FETCH_SIZE, etc);
 		putSetting(hcoMap, sf, DEFAULT_CACHE_CONCURRENCY_STRATEGY, etc);
 		putSetting(hcoMap, sf, DEFAULT_CATALOG, etc);
-		putSetting(hcoMap, sf, DEFAULT_ENTITY_MODE, etc);
 		putSetting(hcoMap, sf, DEFAULT_SCHEMA, etc);
 		putSetting(hcoMap, sf, DIALECT, etc);
 		putSetting(hcoMap, sf, DRIVER, etc);
@@ -333,7 +321,6 @@ public class SessionFactoryUtil
 		putSetting(hcoMap, sf, HBM2DDL_SCRIPTS_ACTION, etc);
 		putSetting(hcoMap, sf, HBM2DDL_SCRIPTS_CREATE_TARGET, etc);
 		putSetting(hcoMap, sf, HBM2DDL_SCRIPTS_DROP_TARGET, etc);
-		putSetting(hcoMap, sf, HQL_BULK_ID_STRATEGY, etc);
 		putSetting(hcoMap, sf, INTERCEPTOR, etc);
 		putSetting(hcoMap, sf, ISOLATION, etc);
 		putSetting(hcoMap, sf, JPA_SHARED_CACHE_MODE, etc);
@@ -356,7 +343,6 @@ public class SessionFactoryUtil
 		putSetting(hcoMap, sf, PREFER_USER_TRANSACTION, etc);
 		putSetting(hcoMap, sf, QUERY_CACHE_FACTORY, etc);
 		putSetting(hcoMap, sf, QUERY_STARTUP_CHECKING, etc);
-		putSetting(hcoMap, sf, QUERY_SUBSTITUTIONS, etc);
 		putSetting(hcoMap, sf, SESSION_FACTORY_NAME, etc);
 		putSetting(hcoMap, sf, SESSION_FACTORY_NAME_IS_JNDI, etc);
 		putSetting(hcoMap, sf, SESSION_SCOPED_INTERCEPTOR, etc);
@@ -468,7 +454,6 @@ public class SessionFactoryUtil
 			case DEFAULT_BATCH_FETCH_SIZE: value = sfo.getDefaultBatchFetchSize(); break;
 			case DEFAULT_CACHE_CONCURRENCY_STRATEGY: value = etc.get(DEFAULT_CACHE_CONCURRENCY_STRATEGY); break;
 			case DEFAULT_CATALOG: value = etc.get(DEFAULT_CATALOG); break;
-			case DEFAULT_ENTITY_MODE: value = sfo.getDefaultEntityMode(); break;
 			case DEFAULT_SCHEMA: value = etc.get(DEFAULT_SCHEMA); break;
 			case DIALECT: value = etc.get(DIALECT); break;
 			case DRIVER: value = etc.get(DRIVER); break;
@@ -481,7 +466,6 @@ public class SessionFactoryUtil
 			case HBM2DDL_SCRIPTS_ACTION: value = etc.get(HBM2DDL_SCRIPTS_ACTION); break;
 			case HBM2DDL_SCRIPTS_CREATE_TARGET: value = etc.get(HBM2DDL_SCRIPTS_CREATE_TARGET); break;
 			case HBM2DDL_SCRIPTS_DROP_TARGET: value = etc.get(HBM2DDL_SCRIPTS_DROP_TARGET); break;
-			case HQL_BULK_ID_STRATEGY: value = sfo.getMultiTableBulkIdStrategy().getClass().getName(); break;
 			case INTERCEPTOR: value = sfo.getInterceptor().getClass().getName(); break;
 			case ISOLATION: value = etc.get(ISOLATION); break;
 			case JPA_SHARED_CACHE_MODE: value = etc.get(JPA_SHARED_CACHE_MODE); break;
@@ -504,7 +488,6 @@ public class SessionFactoryUtil
 			case PREFER_USER_TRANSACTION: value = sfo.isPreferUserTransaction(); break;
 			case QUERY_CACHE_FACTORY: value = sfo.getTimestampsCacheFactory().getClass().getName(); break;
 			case QUERY_STARTUP_CHECKING: value = sfo.isNamedQueryStartupCheckingEnabled(); break;
-			case QUERY_SUBSTITUTIONS: value = sfo.getQuerySubstitutions(); break;
 			case SESSION_FACTORY_NAME: value = sfo.getSessionFactoryName(); break;
 			case SESSION_FACTORY_NAME_IS_JNDI: value = sfo.isSessionFactoryNameAlsoJndiName(); break;
 			case SESSION_SCOPED_INTERCEPTOR: value = sfo.getStatelessInterceptorImplementorSupplier(); break;

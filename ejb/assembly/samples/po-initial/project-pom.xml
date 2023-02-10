@@ -15,7 +15,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<h2database.version>${h2database.version}</h2database.version>
 		<postgresql.version>${postgresql.version}</postgresql.version>
-		<hibernate-core.version>${hibernate-core.version}</hibernate-core.version>
+		<hibernate-series.version>${hibernate-series.version}</hibernate-series.version>
 		<jpa-api.version>${jpa-api.version}</jpa-api.version>
 		<jaxb-api.version>${jaxb-api.version}</jaxb-api.version>
 		<jaxb-imp.version>${jaxb-imp.version}</jaxb-imp.version>
@@ -91,7 +91,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core-jakarta</artifactId>
-			<version>\${hibernate-core.version}</version>
+			<version>\${hibernate-series.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- Database -->

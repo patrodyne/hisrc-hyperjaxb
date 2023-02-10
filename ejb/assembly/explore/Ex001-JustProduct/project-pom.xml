@@ -21,7 +21,7 @@
 		<h2database.version>${h2database.version}</h2database.version>
 		<postgresql.version>${postgresql.version}</postgresql.version>
 		<hisrc-hyperjaxb.version>${hisrc-hyperjaxb.version}</hisrc-hyperjaxb.version>
-		<hibernate-core.version>${hibernate-core.version}</hibernate-core.version>
+		<hibernate-series.version>${hibernate-series.version}</hibernate-series.version>
 		<junit-jupiter.version>${junit-jupiter.version}</junit-jupiter.version>
 		<slf4j.version>${slf4j.version}</slf4j.version>
 	</properties>
@@ -244,7 +244,7 @@
 						<path>
 							<groupId>org.hibernate</groupId>
 							<artifactId>hibernate-jpamodelgen-jakarta</artifactId>
-							<version>\${hibernate-core.version}</version>
+							<version>\${hibernate-series.version}</version>
 						</path>
 					</annotationProcessorPaths>
 					<!-- In Eclipse, Enable: Preferences / Maven / Annotation Processing / Auto-configure JDT APT. -->
