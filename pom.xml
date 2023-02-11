@@ -106,8 +106,8 @@
 		<h2database.version>2.1.214</h2database.version>
 		<javassist.version>3.29.2-GA</javassist.version>
 		<jpa-api.version>3.1.0</jpa-api.version>
-		<jaxb-api.version>3.0.1</jaxb-api.version>
-		<jaxb-imp.version>3.0.2</jaxb-imp.version>
+		<jaxb-api.version>4.0.0</jaxb-api.version>
+		<jaxb-imp.version>4.0.2</jaxb-imp.version>
 		<junit-jupiter.version>5.9.2</junit-jupiter.version>
 		<junit-platform.version>1.9.2</junit-platform.version>
 		<m2e.jpa.activation>false</m2e.jpa.activation>

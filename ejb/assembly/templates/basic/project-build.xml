@@ -62,7 +62,7 @@
 			<include name="istack-commons-runtime-*.jar"/>
 			<include name="h2-*.jar"/>
 			<include name="slf4j-*.jar"/>
-			<include name="txw2-3.0.2.jar"/>
+			<include name="txw2-*.jar"/>
 			<include name="junit-jupiter-api-*.jar"/>
 			<include name="xmlunit-*.jar"/>
 		</fileset>
