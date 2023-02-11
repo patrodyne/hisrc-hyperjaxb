@@ -64,6 +64,7 @@ New goals for the next release are:
 * Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
 * Compile sources and generate classes for Java release v11 using JDK 17.
 * Replaced `maven.compiler.source/target="11"` with `maven.compiler.release="11"`.
+* Update JAXB dependencies from 3.x to 4.x.
 
 ### Status
 
@@ -81,6 +82,7 @@ New goals for the next release are:
 * Added HyperjaxbMojo properties for Copyable and Mergeable.
 * Compile sources and generate classes for Java release v11 using JDK 17.
 * Replaced `maven.compiler.source/target="11"` with `maven.compiler.release="11"`.
+* Update JAXB dependencies from 3.x to 4.x.
 
 #### Future
 

@@ -16,7 +16,9 @@
 	<properties>
 		<ant-atleast.version>1.10.4</ant-atleast.version>
 		<hisrc-basicjaxb.version>2.0.1-SNAPSHOT</hisrc-basicjaxb.version>
+		<hisrc-basicjaxb-annox-parser.version>2.0.1-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
 		<hisrc-higherjaxb-maven-plugin.version>2.0.1-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
+		<hisrc-hyperjaxb-annox-plugin.version>2.0.1-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
 		<hisrc-hyperjaxb.version>2.0.1-SNAPSHOT</hisrc-hyperjaxb.version>
 		<root.basedir>${basedir}/../..</root.basedir>
 	</properties>
@@ -27,6 +29,17 @@
 	</modules>
 	<dependencyManagement>
 		<dependencies>
+			<!-- HiSrc Annox Parser and Plugin -->
+			<dependency>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-basicjaxb-annox-parser</artifactId>
+				<version>${hisrc-basicjaxb-annox-parser.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-annox-plugin</artifactId>
+				<version>${hisrc-hyperjaxb-annox-plugin.version}</version>
+			</dependency>
 			<!-- HiSrc HigherJAXB Maven Plugin -->
 			<dependency>
 				<groupId>org.patrodyne.jvnet</groupId>
@@ -42,6 +55,32 @@
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-higherjaxb-maven-plugin-testing</artifactId>
 				<version>${hisrc-higherjaxb-maven-plugin.version}</version>
+			</dependency>
+			<!-- HiSrc HyperJAXB -->
+			<dependency>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-ejb-plugin</artifactId>
+				<version>${hisrc-hyperjaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-ejb-roundtrip</artifactId>
+				<version>${hisrc-hyperjaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
+				<version>${hisrc-hyperjaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-ejb-schemas-customizations</artifactId>
+				<version>${hisrc-hyperjaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-ejb-schemas-persistence</artifactId>
+				<version>${hisrc-hyperjaxb.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
