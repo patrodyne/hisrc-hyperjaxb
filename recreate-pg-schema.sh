@@ -2,7 +2,7 @@
 #
 # recreate-pg-schema.sh - Drop / Create PostgreSQL HyperJAXB Table Schemas
 #
-# The HyperJAXB project creates test tables to either a local H2 database
+# The HyperJAXB project creates test tables on either a local H2 database
 # or a remote PostgreSQL database server. The choice is configured using
 # these Java system properties in build.sh, etc.:
 #

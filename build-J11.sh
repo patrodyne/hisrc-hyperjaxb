@@ -40,9 +40,9 @@ else
   mvn ${JVM_SYS_PROPS} "$@"
 fi
 
-# mvn ${JVM_SYS_PROPS} install
-# mvn ${JVM_SYS_PROPS} -Ptests package
-# mvn ${JVM_SYS_PROPS} -Ptests,tests-all package
-# mvn ${JVM_SYS_PROPS} -Passembly,tests package
-# mvn ${JVM_SYS_PROPS} -Passembly integration-test
-# mvn ${JVM_SYS_PROPS} -Pall package
+# ./build-J11.sh ${JVM_SYS_PROPS} install
+# ./build-J11.sh ${JVM_SYS_PROPS} -Ptests package
+# ./build-J11.sh ${JVM_SYS_PROPS} -Ptests,tests-all package
+# ./build-J11.sh ${JVM_SYS_PROPS} -Passembly,tests package
+# ./build-J11.sh ${JVM_SYS_PROPS} -Passembly integration-test
+# ./build-J11.sh ${JVM_SYS_PROPS} -Pall package

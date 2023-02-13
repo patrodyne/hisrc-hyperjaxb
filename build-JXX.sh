@@ -38,8 +38,8 @@ else
   mvn ${JVM_SYS_PROPS} "$@"
 fi
 
-# mvn -DskipTests=true clean install
-# mvn -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -Pnexus-deploy clean deploy
-# mvn -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -DdryRun=false release:clean
-# mvn -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -DdryRun=true release:prepare
-# mvn -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -DdryRun=true release:perform
+# ./build-JXX.sh -DskipTests=true clean install
+# ./build-JXX.sh -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -Pnexus-deploy clean deploy
+# ./build-JXX.sh -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -DdryRun=false release:clean
+# ./build-JXX.sh -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -DdryRun=false release:prepare
+# ./build-JXX.sh -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -DdryRun=false release:perform
