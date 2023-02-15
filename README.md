@@ -52,43 +52,37 @@ with the original `maven-jaxb2-plugin` name.
 
 New goals for the next release are:
 
-* Make `maxIdentifierLength` configurable from Maven Mojo and XJC Plugin.
-* Replace deprecated XJC plugin strategies v1 with v2.
-* Recheck Dependency Management for newer versions.
-* Configure menu, log and Maven options from build-CFG.sh.
-* Include JVM system arguments from 'src/test/resources/jvmsystem.arguments'.
-* Restored integration tests in 'assembly' folder.
-* Set log levels for basic strategies in simplelogger.properties.
-* Centralized createEntityManagerFactoryProperties method.
-* Added HyperjaxbMojo properties for Copyable and Mergeable.
 * Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
-* Compile sources and generate classes for Java release v11 using JDK 17.
-* Replaced `maven.compiler.source/target="11"` with `maven.compiler.release="11"`.
-* Update JAXB dependencies from 3.x to 4.x.
 
 ### Status
 
+* Review in progress.
+
 #### Completed
 
-* Make `maxIdentifierLength` configurable from Maven Mojo and XJC Plugin.
-* Clean up Java compiler _lint_ warnings.
-* Replace deprecated XJC plugin strategies v1 with v2.
-* Recheck Dependency Management for newer versions.
-* Configure menu, log and Maven options from build-CFG.sh.
-* Include JVM system arguments from 'src/test/resources/jvmsystem.arguments'.
-* Restored integration tests in 'assembly' folder.
-* Set log levels for basic strategies in simplelogger.properties.
-* Centralized createEntityManagerFactoryProperties method.
-* Added HyperjaxbMojo properties for Copyable and Mergeable.
-* Compile sources and generate classes for Java release v11 using JDK 17.
-* Replaced `maven.compiler.source/target="11"` with `maven.compiler.release="11"`.
-* Update JAXB dependencies from 3.x to 4.x.
+* Review in progress.
 
 #### Future
 
 * Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
 
 ### Fork History
+
+#### Version 2.1.0
+
+* Make `maxIdentifierLength` configurable from Maven Mojo and XJC Plugin.
+* Clean up Java compiler _lint_ warnings.
+* Replace deprecated XJC plugin strategies v1 with v2.
+* Recheck Dependency Management for newer versions.
+* Configure menu, log and Maven options from build-CFG.sh.
+* Include JVM system arguments from `src/test/resources/jvmsystem.arguments`.
+* Restored integration tests in 'assembly' folder.
+* Set log levels for basic strategies in simplelogger.properties.
+* Centralized createEntityManagerFactoryProperties method.
+* Added HyperjaxbMojo properties for Copyable and Mergeable.
+* Compile sources and generate classes for Java release v11 using JDK 17.
+* Replaced `maven.compiler.source/target="11"` with `maven.compiler.release="11"`.
+* Update JAXB dependencies from 3.x to 4.x.
 
 #### Version 2.0.0
 
