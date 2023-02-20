@@ -432,6 +432,13 @@
 				<groupId>org.eclipse.persistence</groupId>
 				<artifactId>eclipselink</artifactId>
 				<version>${eclipselink.version}</version>
+				<exclusions>
+					<!-- In favor of org.glassfish.jaxb:jaxb-xjc -->
+					<exclusion>
+						<groupId>com.sun.xml.bind</groupId>
+						<artifactId>jaxb-xjc</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.eclipse.persistence</groupId>
