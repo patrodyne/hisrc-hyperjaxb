@@ -242,7 +242,8 @@ These actions can be invoked from this list, as links, or from the menu bar, as 
 
 When your *Explorer* application launches, it reads the configuration files from your `src/test/resources` path. These links show the original distribution versions:
 
-+ [jvmsystem.properties][14] - JVM System configuration.
++ [jvmsystem.arguments][31] - JVM System arguments.
++ [jvmsystem.properties][14] - JVM System properties.
 + [persistence.properties][15] - JPA Persistence configuration.
     + [persistence-h2.properties][29] - JPA Persistence [H2Database][18] configuration.
     + [persistence-pg.properties][30] - JPA Persistence [PostgreSQL][19] configuration.
@@ -1013,3 +1014,4 @@ Experiment with the toolbar and different sequences of the chaos to see the effe
 [28]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/opt/hikaricp/src/main/java/org/patrodyne/jvnet/hyperjaxb/opt/hikaricp/HikariCPHyperConnectionProvider.java?ts=4
 [29]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/src/test/resources/persistence-h2.properties?ts=4
 [30]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/src/test/resources/persistence-pg.properties?ts=4
+[31]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/explore/Ex001-JustProduct/src/test/resources/jvmsystem.arguments?ts=4
