@@ -160,6 +160,7 @@
 						<variant>jpa</variant>
 						<generateCopyable>true</generateCopyable>
 						<generateMergeable>true</generateMergeable>
+						<generateValueConstructor>false</generateValueConstructor>
 						<!--roundtripTestClassName>RoundtripTest</roundtripTestClassName-->
 					</configuration>
 					<!-- TODO: Remove when plugin dependency management is reworked -->

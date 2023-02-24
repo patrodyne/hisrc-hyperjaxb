@@ -24,7 +24,7 @@
 #
 JAVA_CMD="rlwrap java"
 H2JAR="${M2_REPO}/com/h2database/h2/2.1.214/h2-2.1.214.jar"
-PGJAR="${M2_REPO}/org/postgresql/postgresql/42.5.1/postgresql-42.5.1.jar"
+PGJAR="${M2_REPO}/org/postgresql/postgresql/42.5.3/postgresql-42.5.3.jar"
 if [ -r "${H2JAR}" ]; then
 	echo ""
 else

@@ -31,7 +31,7 @@
 # See also https://h2database.com/javadoc/org/h2/tools/Console.html
 #
 H2JAR="${M2_REPO}/com/h2database/h2/2.1.214/h2-2.1.214.jar"
-PGJAR="${M2_REPO}/org/postgresql/postgresql/42.5.1/postgresql-42.5.1.jar"
+PGJAR="${M2_REPO}/org/postgresql/postgresql/42.5.3/postgresql-42.5.3.jar"
 if [ ! -r "${H2JAR}" ]; then
 	echo "Please configure H2JAR location in this script."
 	exit 1

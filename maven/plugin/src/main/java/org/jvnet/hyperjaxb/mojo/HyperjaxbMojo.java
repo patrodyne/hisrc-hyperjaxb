@@ -175,6 +175,14 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	public void setGenerateMergeable(boolean generateMergeable) { this.generateMergeable = generateMergeable; }
 
 	/**
+	 * Whether to generate a constructor to initialize (non-ignored) classes and/or fields.
+	 */
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateValueConstructor", defaultValue = "false")
+	private boolean generateValueConstructor = true;
+	public boolean isGenerateValueConstructor() { return generateValueConstructor; }
+	public void setGenerateValueConstructor(boolean generateValueConstructor) { this.generateValueConstructor = generateValueConstructor; }
+
+	/**
 	 * Generation result. Possible values are "annotations", "mappingFiles".
 	 */
 	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".result", defaultValue = "annotations")
@@ -269,6 +277,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 		getLog().info("MOJO Configuration: generateTransientId:" + isGenerateTransientId());
 		getLog().info("MOJO Configuration: generateCopyable:" + isGenerateCopyable());
 		getLog().info("MOJO Configuration: generateMergeable" + isGenerateMergeable());
+		getLog().info("MOJO Configuration: generateValueConstructor" + isGenerateValueConstructor());
 		getLog().info("MOJO Configuration: result:" + getResult());
 		getLog().info("MOJO Configuration: preArgs:" + Arrays.toString(getPreArgs()));
 		getLog().info("MOJO Configuration: postArgs:" + Arrays.toString(getPostArgs()));
@@ -408,6 +417,8 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 			add(arguments,"-Xcopyable");
 		if (isGenerateMergeable())
 			add(arguments,"-Xmergeable");
+		if (isGenerateValueConstructor())
+			add(arguments,"-Xvalue-constructor");
 
 		if (getPostArgs() != null)
 			addAll(arguments,Arrays.asList(getPostArgs()));
