@@ -418,7 +418,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 		if (isGenerateMergeable())
 			add(arguments,"-Xmergeable");
 		if (isGenerateValueConstructor())
-			add(arguments,"-Xvalue-constructor");
+			add(arguments,"-XvalueConstructor");
 
 		if (getPostArgs() != null)
 			addAll(arguments,Arrays.asList(getPostArgs()));
