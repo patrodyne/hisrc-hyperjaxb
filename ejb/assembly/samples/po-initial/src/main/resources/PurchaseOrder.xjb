@@ -15,14 +15,10 @@
 		* Hint: Increase EnumMemberSizeCap above 256 with typesafeEnumMaxMembers="512".
 	-->
 	<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
-		<jaxb:serializable uid="20211201" />
+		<jaxb:serializable uid="20230301" />
 	</jaxb:globalBindings>
 
-	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
-
-		<jaxb:schemaBindings>
-			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.po"/>
-		</jaxb:schemaBindings>
+	<jaxb:bindings schemaLocation="PurchaseOrder.xsd" node="/xs:schema">
 
 		<hj:persistence>
 			<hj:default-generated-id>

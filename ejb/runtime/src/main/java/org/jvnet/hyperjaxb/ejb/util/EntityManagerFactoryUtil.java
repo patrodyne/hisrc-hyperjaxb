@@ -167,6 +167,7 @@ public class EntityManagerFactoryUtil
 		}
 		catch (IOException ex)
 		{
+			logger.warn("Entity manager factory properties are not loadable.", ex);
 			return null;
 		}
 	}

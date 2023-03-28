@@ -1,4 +1,4 @@
-package org.jvnet.hyperjaxb.ejb.samples.poctl;
+package org.example.po;
 
 import org.jvnet.basicjaxb.xml.bind.ContextPathAware;
 
@@ -8,11 +8,11 @@ public class RoundtripTest
 {
     public String getContextPath()
 	{
-        return "org.jvnet.hyperjaxb.ejb.samples.poctl";
+        return "org.example.po";
     }
 
     public String getPersistenceUnitName()
 	{
-        return "org.jvnet.hyperjaxb.ejb.samples.poctl";
+        return "org.example.po";
     }
 }

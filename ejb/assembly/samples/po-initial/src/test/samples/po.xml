@@ -1,4 +1,9 @@
-<purchaseOrder orderDate="1999-10-20">
+<?xml version="1.0" encoding="utf-8"?>
+<purchaseOrder orderDate="1999-10-20T13:15:05.000Z"
+	xmlns="http://example.org/po"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://example.org/po ../../main/resources/PurchaseOrder.xsd"
+>
   <shipTo country="US">
     <name>Alice Smith</name>
     <street>123 Maple Street</street>
@@ -25,7 +30,7 @@
       <productName>Baby Monitor</productName>
       <quantity>1</quantity>
       <USPrice>39.98</USPrice>
-      <shipDate>1999-05-21</shipDate>
+      <shipDate>1999-05-21T09:45:15.000Z</shipDate>
     </item>
   </items>
 </purchaseOrder>

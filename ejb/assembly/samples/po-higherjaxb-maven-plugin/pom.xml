@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb-samples</artifactId>
 		<version>2.1.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>hisrc-hyperjaxb-ejb-samples-po-higherjaxb-maven-plugin</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-sample-po-higherjaxb-maven-plugin</artifactId>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB EJB Assembly Sample [po-higherjaxb-maven-plugin]</name>
 	<properties>
@@ -16,6 +17,7 @@
 	</properties>
 	<build>
 		<defaultGoal>package</defaultGoal>
+		<finalName>${project.artifactId}-${hisrc-hyperjaxb.version}</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>

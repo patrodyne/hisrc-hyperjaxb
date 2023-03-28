@@ -295,7 +295,7 @@
 						<configuration>
 							<extension>true</extension>
 							<!--
-							<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.samples.poctl.RoundtripTest</roundtripTestClassName>
+							<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.sample.poctl.RoundtripTest</roundtripTestClassName>
 							-->
 						</configuration>
 					</execution>

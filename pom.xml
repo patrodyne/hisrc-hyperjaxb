@@ -92,7 +92,7 @@
 		<activation-imp.version>2.0.0</activation-imp.version>
 		<annotation.version>2.1.1</annotation.version>
 		<derby.version>10.16.1.1</derby.version>
-		<eclipselink.version>4.0.0</eclipselink.version>
+		<eclipselink.version>4.0.1</eclipselink.version>
 		<ehcache.version>3.10.8</ehcache.version>
 		<hibernate-series.version>5.6.15.Final</hibernate-series.version>
 		<!--
@@ -116,10 +116,10 @@
 		<maven-api.version>3.9.0</maven-api.version>
 		<maven-plugin-plugin.version>3.7.1</maven-plugin-plugin.version>
 		<maven-plugin-testing.version>3.3.0</maven-plugin-testing.version>
-		<postgresql.version>42.5.3</postgresql.version>
+		<postgresql.version>42.6.0</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<slf4j.version>2.0.6</slf4j.version>
+		<slf4j.version>2.0.7</slf4j.version>
 		<weld.version>5.1.0.Final</weld.version>
 	</properties>
 	<dependencyManagement>
@@ -408,6 +408,11 @@
 				<version>${hibernate-commons-annotations.version}</version>
 			</dependency>
 			-->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-jpamodelgen-jakarta</artifactId>
+				<version>${hibernate-series.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.ehcache</groupId>
 				<artifactId>ehcache</artifactId>
@@ -896,6 +901,12 @@
 			<modules>
 				<module>ejb</module>
 			</modules>
+		</profile>
+		<profile>
+			<id>hibernate</id>
+			<dependencies>
+				<!-- Future Use -->
+			</dependencies>
 		</profile>
 	</profiles>
 </project>

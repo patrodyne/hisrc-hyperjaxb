@@ -12,7 +12,7 @@
 			<jaxb:serializable uid="20211201" />
 		</jaxb:globalBindings>
 		<jaxb:schemaBindings>
-			<jaxb:package name="org.jvnet.hyperjaxb.ejb.samples.poctl"/>
+			<jaxb:package name="org.jvnet.hyperjaxb.ejb.sample.poctl"/>
 		</jaxb:schemaBindings>
 
 		<hj:persistence>

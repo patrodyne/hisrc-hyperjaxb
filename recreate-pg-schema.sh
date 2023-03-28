@@ -18,7 +18,7 @@
 # "src/test/resources" in each sub-project.
 #
 # This script is not needed for the (default) H2 option. For the PostgreSQL option,
-# you must run this script to initially to create the database schemas where the test
+# you must run this script to initially create the database schemas where the test
 # tables are generated during the Maven test phase.
 #
 # See also: src/test/resources/pg-create-hyperjaxb-database.sql

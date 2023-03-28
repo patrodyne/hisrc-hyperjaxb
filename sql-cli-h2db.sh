@@ -60,6 +60,7 @@ case "${JDBC_TYPE}" in
 		if [ -r "${PGJAR}" ]; then
 			echo "Hints: sql>"
 			echo "	select schema_name from information_schema.schemata;"
+			echo "	set search_path to SCHEMANAME;"
 			echo "	select table_schema, table_name, table_type from information_schema.tables where table_schema = 'SCHEMANAME';"
 			echo "	select column_name, udt_name, character_maximum_length max, numeric_precision n_prec, numeric_scale n_scale, datetime_precision d_prec, is_nullable nullable from information_schema.columns where table_name = 'TABLE' and table_schema = 'SCHEMA';"
 			echo "	show all;"
@@ -69,6 +70,7 @@ case "${JDBC_TYPE}" in
 		fi
 		;;
 esac
+echo "	select current_schema();"
 while IFS='=' read -r key value
 do
 	if [[ ! "$key" =~ ^[[:space:]]*# ]]; then

@@ -1,6 +1,9 @@
 #!/bin/bash
 # Read JVM System Properties from configuration file.
-JVM_SYS_PROP_FILE="src/test/resources/jvmsystem.properties"
+JVM_SYS_PROP_FILE="src/main/resources/jvmsystem.properties"
+if [ ! -r "${JVM_SYS_PROP_FILE}" ] ; then
+	JVM_SYS_PROP_FILE="src/test/resources/jvmsystem.properties"
+fi
 if [ -r "${JVM_SYS_PROP_FILE}" ] ; then
 	while read -r JVM_SYS_PROP
 	do

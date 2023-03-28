@@ -3,7 +3,7 @@
 
 	<property name="artifactId" value="${project.artifactId}"/>
 	<property name="artifactVer" value="${hisrc-hyperjaxb.version}"/>
-	<property file="\${basedir}/src/test/resources/jvmsystem.properties"/>
+	<property file="\${basedir}/src/main/resources/jvmsystem.properties"/>
 
     <fail message="Ant ${ant-atleast.version}+ is required!">
         <condition>
@@ -17,9 +17,11 @@
 		<fileset dir="\${basedir}/lib">
 			<include name="jakarta.xml.bind-api-*.jar"/>
 			<include name="jakarta.persistence-api-*.jar"/>
+			<include name="hibernate-jpamodelgen-jakarta-*.jar"/>
 			<include name="hisrc-basicjaxb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
+			<include name="slf4j-*.jar"/>
 		</fileset>
 	</path>
 
@@ -138,7 +140,7 @@
 			<arg line="-Xhyperjaxb-ejb"/>
 			<arg line="-Xhyperjaxb-ejb-validateXml=true"/>
 			<!--
-			<arg line="-Xhyperjaxb-ejb-roundtripTestClassName=org.jvnet.hyperjaxb.ejb.tests.po.RoundtripTest"/>
+			<arg line="-Xhyperjaxb-ejb-roundtripTestClassName=org.example.po.RoundtripTest"/>
 			-->
 			<arg line="-Xequals"/>
 			<arg line="-XhashCode"/>
@@ -169,7 +171,9 @@
 			destdir="\${basedir}/target/classes" 
 			srcdir="\${basedir}/src/main/java:\${basedir}/target/generated-sources/xjc"
 			includeantruntime="false"
-		/>
+		>
+			<compilerarg line="-s \${basedir}/target/generated-sources/apt"/>
+		</javac>
 		<copy todir="\${basedir}/target/classes">
 			<fileset dir="\${basedir}/src/main/resources"/>
 			<fileset dir="\${basedir}/target/generated-sources/xjc">
@@ -197,7 +201,7 @@
             <testclasses outputdir="\${basedir}/target/junit-reports">
 				<fork dir="\${basedir}">
 					<syspropertyset>
-						<!-- See src/test/resources/jvmsystem.properties -->
+						<!-- See src/main/resources/jvmsystem.properties -->
 						<propertyref prefix="org.jboss.logging"/>
 						<propertyref prefix="org.jvnet.hyperjaxb"/>
 					</syspropertyset>

@@ -233,7 +233,7 @@ public class Explorer extends AbstractEntityExplorer
 		// Always perform EntityManager actions within a transaction!
 		Transactional<List<Product>> tx = (em) ->
 		{
-			CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaQuery<Product> cq = cb.createQuery(Product.class);
 			Root<Product> queryRoot = cq.from(Product.class);
 			
