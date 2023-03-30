@@ -11,9 +11,9 @@ This Maven project demonstrates the generation of JPA Entities from an XML Schem
 
 Yes, [Eclipselink][15] is a viable approach for mapping between certain properties of existing complex JAXB types and ideally designed RDBMS schemas. 
 
-> To demonstrate, [HiSrc HyperJAXB Maven Plugin][9] is used to read your XML Schema (xsd) file(s) and XML Schema Binding (xjb) file(s) to generate Java Entity classes with JPA and JAXB annotations. **Note:** The source/target (release) compatibility for *HyperJAXB* is at Java 11, up from Java 8. And, JDK 17 is used for the build. JAXB dependencies are at version 4.x for [Jakarta EE 10][12]. JPA dependencies are at 2.1.
+> To demonstrate, the [HiSrc HyperJAXB Maven Plugin][9] is used to read sample XML Schema (xsd) file(s) and XML Schema Binding (xjb) file(s) to generate Java Entity classes with JPA and JAXB annotations. **Note:** The source/target (release) compatibility for *HyperJAXB* is at Java 11, up from Java 8. And, JDK 17 is used for the build. JAXB dependencies are at version 4.x for [Jakarta EE 10][12]. JPA dependencies are at 2.1.
 
-Special cases are handled using XML *appinfo* annotations in the XSD file(s) *and/or* schema bindings in the XJB file(s). The JAXB XJC compiler accepts plugins to customize how it generates the entities and these plugins provide XML namespaces for use in your XSD and XJB file(s). Here is a list of typical XJC plugins:
+**Special cases** are handled using XML *appinfo* annotations in the XSD file(s) *and/or* schema bindings in the XJB file(s). The JAXB XJC compiler accepts plugins to customize how it generates the entities and these plugins provide XML namespaces for use in your XSD and XJB file(s). Here is a list of typical XJC plugins:
 
 + `xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox"`
 + `xmlns:basic="http://jvnet.org/basicjaxb/xjc"`
@@ -192,7 +192,7 @@ mvn -Phibernate   clean compile exec:java -Dexec.args="src/test/samples/po.xml"
 
 <!-- References -->
 
-[1]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/download/2.1.0/hisrc-hyperjaxb-sample-po-initial-2.1.0-mvn-src.zip
+[1]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/download/2.1.0/hisrc-hyperjaxb-ejb-sample-po-initial-2.1.0-mvn-src.zip
 [2]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/po-initial/OUTPUT.txt
 [3]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/po-initial/project-pom.xml
 [4]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/po-initial/src/main/resources/PurchaseOrder.xsd
@@ -212,3 +212,4 @@ mvn -Phibernate   clean compile exec:java -Dexec.args="src/test/samples/po.xml"
 [18]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/po-initial/src/main/resources/jvmsystem.properties
 [19]: https://github.com/patrodyne/hisrc-hyperjaxb/tree/master/ejb/assembly/samples/po-initial/src/main/resources
 [20]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/po-initial/src/main/resources/META-INF/orm.xml
+[21]: https://github.com/patrodyne/hisrc-hyperjaxb/tree/master/ejb/assembly/samples/po-initial#readme
