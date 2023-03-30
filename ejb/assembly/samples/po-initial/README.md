@@ -11,9 +11,9 @@ This Maven project demonstrates the generation of JPA Entities from an XML Schem
 
 Yes, [Eclipselink][15] is a viable approach for mapping between certain properties of existing complex JAXB types and ideally designed RDBMS schemas. 
 
-> [HiSrc HyperJAXB Maven Plugin][9] is used to read your XML Schema (xsd) file(s) and XML Schema Binding (xjb) file(s) to generate Java Entity classes having JPA and JAXB annotations. **Note:** The source/target (release) compatibility for the above is at Java 11, up from Java 8. And, JDK 17 is used for the build. JAXB dependencies are at version 4.x for [Jakarta EE 10][12]. JPA dependencies are at 2.1.
+> To demonstrate, [HiSrc HyperJAXB Maven Plugin][9] is used to read your XML Schema (xsd) file(s) and XML Schema Binding (xjb) file(s) to generate Java Entity classes with JPA and JAXB annotations. **Note:** The source/target (release) compatibility for *HyperJAXB* is at Java 11, up from Java 8. And, JDK 17 is used for the build. JAXB dependencies are at version 4.x for [Jakarta EE 10][12]. JPA dependencies are at 2.1.
 
-Special cases are handled using XML *appinfo* annotations in the XSD file(s) *and/or* schema bindings in the XJB file(s). The JAXB XJC compiler accepts plugins to customize how it generates the entities and these plugins provide XML namespaces for use in your XSD and XJB file(s). Here is a list of common XJC plugins:
+Special cases are handled using XML *appinfo* annotations in the XSD file(s) *and/or* schema bindings in the XJB file(s). The JAXB XJC compiler accepts plugins to customize how it generates the entities and these plugins provide XML namespaces for use in your XSD and XJB file(s). Here is a list of typical XJC plugins:
 
 + `xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox"`
 + `xmlns:basic="http://jvnet.org/basicjaxb/xjc"`
@@ -73,6 +73,9 @@ target/generated-sources
                 ├── PurchaseOrder.java
                 └── USAddress.java
 
+target/test-database-sql
+├── ddl-create.sql
+└── ddl-drop.sql
 ~~~
 
 [Here (zip)][1] is a Maven project named **po-initial** with the standard layout. This project includes:
@@ -80,9 +83,9 @@ target/generated-sources
 + The Maven POM file with `hisrc-hyperjaxb-maven-plugin`
 + A [Main][11] class to demonstrate a simple use case.
 + Resources
-    + `jvmsystem.properties` to select an *H2* or *PostgreSQL* database.
-    + `persistence*.properties` to configure the `EntityManagerFactory`.
-    + `META-INF/orm.xml` to configure the database schema name.
+    + [jvmsystem.properties][18] to select an *H2* or *PostgreSQL* database.
+    + [persistence\*.properties][19] to configure the `EntityManagerFactory`.
+    + [META-INF/orm.xml][20] to configure the database schema name.
     + An XML Schema file [PurchaseOrder.xsd][4] for the `PurchaseOrder` model
     + A JAXB *binding* file [PurchaseOrder.xjb][6] for configuration
 + A JUnit test class [RoundtripTest.java][7] to verify unmarshalling, persistence and marshaling.
@@ -153,9 +156,9 @@ Alternatively, this project can be re-configured to use your own [PostgreSQL][14
 
 The [hisrc-hyperjaxb-maven-plugin][9] is configured to generate **JPA/JAXB** classes using the provided [PurchaseOrder.xsd][4] schema. The schema provides the namespace `"http://org.example/po"` which **JAXB** uses to create the Java `package` name using its own naming convention.
 
-As an option, a more advanced implementation of Java's built-in `Object` methods are generated using these **XJC** [hisrc-basicjaxb-plugins][10]. In particular, the sample project uses the `toString` plugin to display *human-readable* representations of the unmarshaled `PurchaseOrder` objects.
+As the default option, a more advanced implementation of Java's built-in `Object` methods are generated using these **XJC** [hisrc-basicjaxb-plugins][10]. In particular, the sample project uses the `toString` plugin to display *human-readable* representations of the unmarshaled `PurchaseOrder` objects.
 
-> *Note:* The [hisrc-hyperjaxb-maven-plugin][9] extends the [hisrc-higherjaxb-maven-plugin][17] but pre-configures several of the **XJC** [hisrc-basicjaxb-plugins][10], the [hisrc-basicjaxb-runtime][10] dependency is required on the run-time class path. For configuration details, see ...
+> *Note:* The [hisrc-hyperjaxb-maven-plugin][9] extends the [hisrc-higherjaxb-maven-plugin][17] but *pre-configures* several of the **XJC** [hisrc-basicjaxb-plugins][10]; thus, the [hisrc-basicjaxb-runtime][10] dependency is required on the run-time class path. For more help on the configuration details, see ...
 
 ~~~
 mvn hisrc-hyperjaxb:help -Ddetail=true
@@ -172,7 +175,7 @@ The JUnit test class, [RoundtripTest.java][7], scans for the sample files and in
 + The JPA transaction is committed
 + A new JPA `EntityManager`, *em*, instance is created
     + The new *em* is used to load the persisted PO by id
-    + The etalon, merged and loaded PO objects are asserted for equality
+    + The etalon, merged and loaded PO objects are compared for equality
 + The *em* is closed and each PO object is marshaled for review in the logs
 
 When successful, each object is *marshaled* for logging and your [review][2].
@@ -206,3 +209,6 @@ mvn -Phibernate   clean compile exec:java -Dexec.args="src/test/samples/po.xml"
 [15]: https://www.eclipse.org/eclipselink/
 [16]: https://hibernate.org/orm/
 [17]: https://github.com/patrodyne/hisrc-higherjaxb#readme
+[18]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/po-initial/src/main/resources/jvmsystem.properties
+[19]: https://github.com/patrodyne/hisrc-hyperjaxb/tree/master/ejb/assembly/samples/po-initial/src/main/resources
+[20]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/po-initial/src/main/resources/META-INF/orm.xml
