@@ -1,5 +1,6 @@
 package org.example.po;
 
+import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static jakarta.persistence.Persistence.createEntityManagerFactory;
 import static jakarta.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
 import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.createEntityManagerFactoryProperties;
@@ -9,9 +10,14 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Map;
 
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+
 import org.jvnet.basicjaxb.config.LocatorProperties;
+import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputDomResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -175,6 +181,24 @@ abstract public class Context
             }
         }
         return xml;
+    }
+
+	protected void generateXmlSchemaValidatorFromDom() throws JAXBException, IOException, SAXException
+	{
+		if ( (getMarshaller() != null) && (getUnmarshaller() != null) )
+		{
+			// Generate a Schema Validator from given the JAXB context.
+			SchemaOutputDomResolver sodr = new SchemaOutputDomResolver();
+			getJaxbContext().generateSchema(sodr);
+			SchemaFactory schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
+			Schema schemaValidator = schemaFactory.newSchema(sodr.getDomSource());
+			
+			// Configure Marshaller / unmarshaller to use validator.
+			getMarshaller().setSchema(schemaValidator);
+			getUnmarshaller().setSchema(schemaValidator);
+		}
+		else
+			getLogger().error("Please create marshaller and unmarshaller!");
     }
 }
 // vi:set tabstop=4 hardtabs=4 shiftwidth=4:

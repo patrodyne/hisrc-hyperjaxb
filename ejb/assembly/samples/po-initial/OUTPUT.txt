@@ -1,0 +1,86 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --< org.patrodyne.jvnet:hisrc-hyperjaxb-ejb-sample-po-initial-maven >---
+[INFO] Building HiSrc HyperJAXB EJB Assembly Sample [po-initial] 2.1.0
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hisrc-hyperjaxb-ejb-sample-po-initial-maven ---
+[INFO] Deleting test-maven-assembly-it/hisrc-hyperjaxb-ejb-sample-po-initial-2.1.0/target
+[INFO] 
+[INFO] --- hisrc-hyperjaxb-maven-plugin:2.1.0:generate (generate) @ hisrc-hyperjaxb-ejb-sample-po-initial-maven ---
+[INFO] Sources are not up-to-date, XJC will be executed.
+[INFO] WELD-000900: 5.1.0 (Final)
+[INFO] WELD-ENV-000020: Using jandex for bean discovery
+[INFO] WELD-000101: Transactional services not available. Injection of @Inject UserTransaction not available. Transactional observers will be invoked synchronously.
+[INFO] WELD-001125: Illegal bean type interface org.jvnet.hyperjaxb.ejb.strategy.model.PropertyInfoProcessor<java.util.Collection<? extends com.sun.tools.xjc.model.CTypeInfo>,C> ignored on [EnhancedAnnotatedTypeImpl] public @ModelBase @Alternative @Dependent @Priority class org.jvnet.hyperjaxb.ejb.strategy.model.base.DefaultGetTypes
+[INFO] WELD-ENV-002003: Weld SE container 607600e7-aaba-4df0-b8f0-3f33965a6f48 initialized
+[INFO] WELD-ENV-002001: Weld SE container 607600e7-aaba-4df0-b8f0-3f33965a6f48 shut down
+[INFO] Episode file [test-maven-assembly-it/hisrc-hyperjaxb-ejb-sample-po-initial-2.1.0/target/generated-sources/xjc/META-INF/sun-jaxb.episode] was augmented with if-exists="true" attributes.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ hisrc-hyperjaxb-ejb-sample-po-initial-maven ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 8 resources
+[INFO] Copying 1 resource
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ hisrc-hyperjaxb-ejb-sample-po-initial-maven ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 8 source files with javac [debug release 11] to target/classes
+[INFO] Hibernate JPA 2 Static-Metamodel Generator 5.6.15.Final
+[INFO] 
+[INFO] --- maven-antrun-plugin:3.1.0:run (runtime) @ hisrc-hyperjaxb-ejb-sample-po-initial-maven ---
+[INFO] Executing tasks
+[INFO]     [mkdir] Created dir: test-maven-assembly-it/hisrc-hyperjaxb-ejb-sample-po-initial-2.1.0/target/test-database-sql
+[INFO] Executed tasks
+[INFO] 
+[INFO] --- exec-maven-plugin:3.1.0:java (default-cli) @ hisrc-hyperjaxb-ejb-sample-po-initial-maven ---
+16:05:26:503 INFO PurchaseOrder: 1999-10-20T13:15:05.000Z
+
+PurchaseOrder@29262b7f[USAddress@6ccc6fea[Alice Smith, 123 Maple Street, Mill Valley, CA, 90952, US], USAddress@598b63c[Robert Smith, 8 Oak Avenue, Old Town, PA, 95819, US], Hurry, my lawn is going wild!, Items@6d71931f[<size=2>], 1999-10-20T13:15:05.000Z]
+
+16:05:26:512 DEBUG Loading entity manager factory properties.
+16:05:26:513 INFO EMF: Loading [file:test-maven-assembly-it/hisrc-hyperjaxb-ejb-sample-po-initial-2.1.0/target/classes/persistence.properties].
+16:05:26:513 DEBUG Loading more entity manager factory properties.
+16:05:26:513 INFO EMF: Loading [file:test-maven-assembly-it/hisrc-hyperjaxb-ejb-sample-po-initial-2.1.0/target/classes/persistence-h2.properties].
+16:05:27:218 INFO Persisted 1 PurchaseOrder(s)
+16:05:27:232 INFO PurchaseOrder:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<purchaseOrder orderDate="1999-10-20T09:15:05.000" Hjid="1" xmlns="http://example.org/po">
+    <shipTo country="US" Hjid="2">
+        <name>Alice Smith</name>
+        <street>123 Maple Street</street>
+        <city>Mill Valley</city>
+        <state>CA</state>
+        <zip>90952</zip>
+    </shipTo>
+    <billTo country="US" Hjid="1">
+        <name>Robert Smith</name>
+        <street>8 Oak Avenue</street>
+        <city>Old Town</city>
+        <state>PA</state>
+        <zip>95819</zip>
+    </billTo>
+    <comment>Hurry, my lawn is going wild!</comment>
+    <items Hjid="1">
+        <item partNum="872-AA" Hjid="1">
+            <productName>Lawnmower</productName>
+            <quantity>1</quantity>
+            <USPrice>148.95</USPrice>
+            <comment>Confirm this is electric</comment>
+        </item>
+        <item partNum="926-AA" Hjid="2">
+            <productName>Baby Monitor</productName>
+            <quantity>1</quantity>
+            <USPrice>39.98</USPrice>
+            <shipDate>1999-05-21T05:45:15.000</shipDate>
+        </item>
+    </items>
+</purchaseOrder>
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.025 s
+[INFO] Finished at: 2023-03-28T16:05:27-04:00
+[INFO] ------------------------------------------------------------------------

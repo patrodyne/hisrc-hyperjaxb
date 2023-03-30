@@ -18,14 +18,31 @@
 		<jaxb:serializable uid="20230301" />
 	</jaxb:globalBindings>
 
+	<!--  Schema Bindings -->
 	<jaxb:bindings schemaLocation="PurchaseOrder.xsd" node="/xs:schema">
 
 		<hj:persistence>
+
 			<hj:default-generated-id>
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
+
+            <hj:default-one-to-one fetch="EAGER"/>
+            <hj:default-one-to-many fetch="EAGER"/>
+            <hj:default-many-to-many fetch="LAZY"/>
+            <hj:default-many-to-one merge="false" fetch="EAGER">
+                <orm:join-column/>
+                <orm:cascade>
+                    <orm:cascade-refresh />
+                    <orm:cascade-persist />
+                    <orm:cascade-merge />
+                    <orm:cascade-detach />
+                </orm:cascade>
+            </hj:default-many-to-one>
+
 		</hj:persistence>
 
 	</jaxb:bindings>
 
 </jaxb:bindings>
+<!-- vi:set tabstop=4 hardtabs=4 shiftwidth=4 noexpandtab:-->

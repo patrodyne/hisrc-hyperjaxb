@@ -7,6 +7,7 @@ import java.util.List;
 import org.jvnet.hyperjaxb.ejb.util.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -43,7 +44,7 @@ public class Main extends Context
 			Main main = new Main();
 			main.execute(xmlFileName);
 		}
-		catch (JAXBException | IOException ex)
+		catch (JAXBException | IOException | SAXException ex)
 		{
 			getLogger().error("Aborting " + Main.class.getName(), ex);
 		}
@@ -56,9 +57,13 @@ public class Main extends Context
 	 * 
 	 * @throws JAXBException When a JAXB action fails.
 	 * @throws IOException When an I/O actions fails.
+	 * @throws SAXException When XmlSchemaValidator cannot be generated from DOM.
 	 */
-	public void execute(String xmlFileName) throws JAXBException, IOException
+	public void execute(String xmlFileName) throws JAXBException, IOException, SAXException
 	{
+		// Enable JAXB schema validation on XML instances.
+		generateXmlSchemaValidatorFromDom();
+		
 		// JAXB: unmarshal XML file by path name.
         setPurchaseOrder(unmarshal(xmlFileName, PurchaseOrder.class));
         getLogger().info("PurchaseOrder: {}\n\n{}\n", getPurchaseOrder().getOrderDate(), getPurchaseOrder());
@@ -92,10 +97,10 @@ public class Main extends Context
 		{
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaQuery<PurchaseOrder> cq = cb.createQuery(PurchaseOrder.class);
-			Root<PurchaseOrder> queryRoot = cq.from(PurchaseOrder.class);
+			Root<PurchaseOrder> fromPurchaseOrder = cq.from(PurchaseOrder.class);
 			
-			cq.select(queryRoot)
-				.where(cb.equal(queryRoot.get(PurchaseOrder_.ORDER_DATE_ITEM), orderDate));
+			cq.select(fromPurchaseOrder)
+				.where(cb.equal(fromPurchaseOrder.get(PurchaseOrder_.ORDER_DATE_ITEM), orderDate));
 			
 			TypedQuery<PurchaseOrder> query = em.createQuery(cq);
 			query.setHint("org.hibernate.cacheable", false);
@@ -106,7 +111,12 @@ public class Main extends Context
 
 			return entities;
 		};
-		List<PurchaseOrder> purchaseOrderList = tx.transact(createEntityManager());
+		// Auto-close transactional session.
+		List<PurchaseOrder> purchaseOrderList;
+		try ( EntityManager em = createEntityManager() )
+		{
+			purchaseOrderList = tx.transact(em);
+		}
 		return purchaseOrderList;
 	}
 	
