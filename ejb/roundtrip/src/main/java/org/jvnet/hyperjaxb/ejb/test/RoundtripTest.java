@@ -1,13 +1,8 @@
 package org.jvnet.hyperjaxb.ejb.test;
 
-import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
-import java.io.IOException;
-
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 
 import org.jvnet.basicjaxb.lang.ContextUtils;
 import org.jvnet.basicjaxb.lang.CopyTo;
@@ -16,8 +11,6 @@ import org.jvnet.basicjaxb.lang.MergeFrom;
 import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
 import org.jvnet.hyperjaxb.ejb.util.EntityUtils;
 import org.jvnet.hyperjaxb.lang.builder.ExtendedJAXBEqualsStrategy;
-import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputDomResolver;
-import org.xml.sax.SAXException;
 
 import jakarta.persistence.EntityManager;
 import jakarta.xml.bind.JAXBContext;
@@ -39,7 +32,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
 		
 		if ( isValidateXml() )
-			generateXmlSchemaValidatorFromDom(context, unmarshaller);
+			ContextUtils.enableXmlSchemaValidator(unmarshaller, null, context);
 		
 		getLogger().debug("Unmarshalling sample.");
 		Sample initialSample = new Sample(unmarshaller, sampleFile);
@@ -144,18 +137,6 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		assertTrue(strategy.equals(new DefaultRootObjectLocator(leftObject), new DefaultRootObjectLocator(rightObject),
 			leftObject, rightObject, true, true), "Objects NOT equal. Use DEBUG for location details.");
 	}
-	
-	protected void generateXmlSchemaValidatorFromDom(JAXBContext context, Unmarshaller unmarshaller)
-		throws IOException, SAXException
-    {
-        // Generate a Schema Validator from given the JAXB context.
-        SchemaOutputDomResolver sodr = new SchemaOutputDomResolver();
-        context.generateSchema(sodr);
-        SchemaFactory schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
-        Schema schemaValidator = schemaFactory.newSchema(sodr.getDomSource());
-        // Configure Marshaller / unmarshaller to use validator.
-        unmarshaller.setSchema(schemaValidator);
-    }
 	
 	/**
 	 * This local class represents a sample file's unmarshalled value and optional JAXBElement.

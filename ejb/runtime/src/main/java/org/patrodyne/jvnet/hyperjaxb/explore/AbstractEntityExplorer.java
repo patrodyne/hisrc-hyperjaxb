@@ -1,17 +1,13 @@
 package org.patrodyne.jvnet.hyperjaxb.explore;
 
-import static jakarta.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
 import static java.lang.Integer.toHexString;
 import static java.lang.System.identityHashCode;
-import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.filterProperties;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -19,10 +15,8 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 
+import org.jvnet.basicjaxb.lang.ContextUtils;
 import org.jvnet.hyperjaxb.ejb.util.Transactional.CacheOption;
 import org.patrodyne.jvnet.basicjaxb.explore.AbstractExplorer;
 import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputDomResolver;
@@ -106,8 +100,7 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 	{
 		try
 		{
-			SchemaOutputStringResolver sosr = new SchemaOutputStringResolver();
-			getJaxbContext().generateSchema(sosr);
+			SchemaOutputStringResolver sosr = ContextUtils.createSchemaOutputStringResolver(jaxbContext);
 			println("Xml Schema from String:\n\n" + sosr.getSchemaString());
 		}
 		catch ( IOException ex )
@@ -120,8 +113,7 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 	{
 		try
 		{
-			SchemaOutputDomResolver sodr = new SchemaOutputDomResolver();
-			getJaxbContext().generateSchema(sodr);
+			SchemaOutputDomResolver sodr = ContextUtils.createSchemaOutputDomResolver(jaxbContext);
 			println("Xml Schema from DOM:\n\n" + sodr.getSchemaDomNodeString());
 		}
 		catch ( IOException | TransformerException ex )
@@ -136,16 +128,7 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 		{
 			if ( (getMarshaller() != null) && (getUnmarshaller() != null) )
 			{
-				// Generate a Schema Validator from given the JAXB context.
-				SchemaOutputDomResolver sodr = new SchemaOutputDomResolver();
-				getJaxbContext().generateSchema(sodr);
-				SchemaFactory schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
-				Schema schemaValidator = schemaFactory.newSchema(sodr.getDomSource());
-				
-				// Configure Marshaller / unmarshaller to use validator.
-				getMarshaller().setSchema(schemaValidator);
-				getUnmarshaller().setSchema(schemaValidator);
-				
+				ContextUtils.enableXmlSchemaValidator(getUnmarshaller(), getMarshaller(), getJaxbContext());
 				getValidateButton().setSelected(true);
 				println("Schema Validation of XML is ON.");
 			}
@@ -237,13 +220,7 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 		Marshaller marshaller = null;
 		try
 		{
-			if ( jaxbContext != null )
-			{
-				marshaller = jaxbContext.createMarshaller();
-				marshaller.setProperty(JAXB_FORMATTED_OUTPUT, true);
-			}
-			else
-				errorln("Cannot create marshaller because JAXB context is null!");
+			marshaller = ContextUtils.createMarshaller(jaxbContext, true);
 		}
 		catch ( JAXBException ex )
 		{
@@ -257,12 +234,7 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 		Unmarshaller unmarshaller = null;
 		try
 		{
-			if ( jaxbContext != null )
-			{
-				unmarshaller = jaxbContext.createUnmarshaller();
-			}
-			else
-				errorln("Cannot create unmarshaller because JAXB context is null!");
+			unmarshaller = ContextUtils.createUnmarshaller(jaxbContext);
 		}
 		catch ( JAXBException ex )
 		{
@@ -283,17 +255,13 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 	protected String marshalToString(Object instance)
 	{
 		String xml = null;
-		if ( instance != null)
+		try 
 		{
-			try ( StringWriter writer = new StringWriter() )
-			{
-				getMarshaller().marshal(instance, writer);
-				xml = writer.toString();
-			}
-			catch (JAXBException | IOException ex)
-			{
-				errorln(ex);
-			}
+			xml = ContextUtils.toString(getMarshaller(), instance);
+		}
+		catch (JAXBException ex)
+		{
+			errorln(ex);
 		}
 		return xml;
 	}
@@ -313,13 +281,12 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 		return instance;
 	}
 	
-	@SuppressWarnings("unchecked")
 	protected <T> T unmarshalFromString(String xml, Class<?> clazz)
 	{
 		T instance = null;
-		try ( StringReader reader = new StringReader(xml) )
+		try 
 		{
-			instance = (T) getUnmarshaller().unmarshal(new StreamSource(reader), clazz).getValue();
+			instance = ContextUtils.fromString(getUnmarshaller(), xml, clazz);
 		}
 		catch (JAXBException ex)
 		{
