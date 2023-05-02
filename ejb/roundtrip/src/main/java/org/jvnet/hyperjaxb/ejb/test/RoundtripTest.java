@@ -54,20 +54,23 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		final EntityManager loadManager = createEntityManager();
 		final Object loadedEntity = loadManager.find(mergedEntity.getClass(), mergedId);
 		
-		if (etalonSample.getElement() != null)
+		if ( getLogger().isTraceEnabled() )
 		{
-			final JAXBElement<Object> etalonElement = etalonSample.getElement();
-			final JAXBElement<Object> mergedElement = wrap(etalonElement, mergedEntity);
-			final JAXBElement<Object> loadedElement = wrap(etalonElement, loadedEntity);
-			getLogger().debug("Etalon element:\n" + ContextUtils.toString(context, etalonElement));
-			getLogger().debug("Merged element:\n" + ContextUtils.toString(context, mergedElement));
-			getLogger().debug("Loaded element:\n" + ContextUtils.toString(context, loadedElement));
-		}
-		else
-		{
-			getLogger().debug("Etalon object:\n" + ContextUtils.toString(context, etalonSample.getValue()));
-			getLogger().debug("Merged object:\n" + ContextUtils.toString(context, mergedEntity));
-			getLogger().debug("Loaded object:\n" + ContextUtils.toString(context, loadedEntity));
+			if (etalonSample.getElement() != null)
+			{
+				final JAXBElement<Object> etalonElement = etalonSample.getElement();
+				final JAXBElement<Object> mergedElement = wrap(etalonElement, mergedEntity);
+				final JAXBElement<Object> loadedElement = wrap(etalonElement, loadedEntity);
+				getLogger().trace("Etalon element:\n" + ContextUtils.toString(context, etalonElement));
+				getLogger().trace("Merged element:\n" + ContextUtils.toString(context, mergedElement));
+				getLogger().trace("Loaded element:\n" + ContextUtils.toString(context, loadedElement));
+			}
+			else
+			{
+				getLogger().trace("Etalon object:\n" + ContextUtils.toString(context, etalonSample.getValue()));
+				getLogger().trace("Merged object:\n" + ContextUtils.toString(context, mergedEntity));
+				getLogger().trace("Loaded object:\n" + ContextUtils.toString(context, loadedEntity));
+			}
 		}
 		
 		getLogger().debug("Checking the sample object identity: Merged vs Loaded.");
@@ -86,6 +89,8 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			getLogger().debug("Checking the sample object identity: Etalon vs Etalon clone.");
 			checkCopyable(etalonSample.getValue());
 		}
+		
+		// Deeper check Copyable (CopyTo / Cloneable) and Mergeable, when present.
 		if ( getLogger().isTraceEnabled() )
 		{
 			getLogger().trace("Checking the sample object identity: Merged vs Merged clone.");
