@@ -126,7 +126,7 @@
 					<artifactId>maven-invoker-plugin</artifactId>
 					<inherited>true</inherited>
 					<configuration>
-						<debug>true</debug>
+						<debug>false</debug>
 						<projectsDirectory>${basedir}/target/test-maven-assembly</projectsDirectory>
 						<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
 						<!--localRepositoryPath>${basedir}/target/test-repository</localRepositoryPath-->

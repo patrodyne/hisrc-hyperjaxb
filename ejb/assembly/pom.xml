@@ -195,7 +195,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<debug>true</debug>
+							<debug>false</debug>
 							<projectsDirectory>${project.build.directory}/test-maven-assembly</projectsDirectory>
 							<!-- Note: Cloning is required to filter of parent/child POMs. -->
 							<cloneProjectsTo>${project.build.directory}/test-maven-assembly-it</cloneProjectsTo>

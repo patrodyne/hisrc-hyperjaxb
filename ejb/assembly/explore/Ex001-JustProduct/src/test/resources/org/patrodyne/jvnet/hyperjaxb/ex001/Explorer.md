@@ -114,11 +114,11 @@ Next, start the `xmllint` shell (`rlwrap` is optional) and navigate as shown. Th
 
 ~~~
 $ rlwrap xmllint --shell Product.xsd
-> / help
+/ > help
   ...
 
-> / setns xsd=http://www.w3.org/2001/XMLSchema
-> / cd /xsd:schema
+/ > setns xsd=http://www.w3.org/2001/XMLSchema
+/ > cd /xsd:schema
 
 schema > cat //xsd:complexType[@name='Stageable']
  -------

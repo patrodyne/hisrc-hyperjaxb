@@ -50,7 +50,7 @@
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
-					<debug>true</debug>
+					<debug>false</debug>
 					<strict>false</strict>
 					<catalog>src/main/catalog/catalog.xml</catalog>
 					<validateXml>false</validateXml>
