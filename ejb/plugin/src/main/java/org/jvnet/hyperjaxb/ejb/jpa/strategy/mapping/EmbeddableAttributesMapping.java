@@ -6,14 +6,13 @@ import org.jvnet.hyperjaxb.ejb.strategy.Variant;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.ClassOutlineMapping;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.Mapping;
 
+import com.sun.tools.xjc.outline.ClassOutline;
+
 import ee.jakarta.xml.ns.persistence.orm.Attributes;
 import ee.jakarta.xml.ns.persistence.orm.EmbeddableAttributes;
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Alternative;
-
-import com.sun.tools.xjc.Options;
-import com.sun.tools.xjc.outline.ClassOutline;
 
 @ApplicationScoped
 @Alternative
@@ -21,9 +20,9 @@ import com.sun.tools.xjc.outline.ClassOutline;
 @Variant(type = Variant.Type.JPA)
 public class EmbeddableAttributesMapping implements ClassOutlineMapping<EmbeddableAttributes>
 {
-	public EmbeddableAttributes process(Mapping context, ClassOutline classOutline, Options options)
+	public EmbeddableAttributes process(Mapping context, ClassOutline classOutline)
 	{
-		final Attributes attributes = context.getAttributesMapping().process(context, classOutline, options);
+		final Attributes attributes = context.getAttributesMapping().process(context, classOutline);
 		final EmbeddableAttributes embeddableAttributes = new EmbeddableAttributes();
 		embeddableAttributes.getBasic().addAll(attributes.getBasic());
 		embeddableAttributes.getManyToOne().addAll(attributes.getManyToOne());

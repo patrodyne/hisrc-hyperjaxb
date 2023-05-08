@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CEnumLeafInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
@@ -43,14 +42,15 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	public EmbeddableAttributes process(Mapping context, ClassOutline classOutline, Options options)
+	@Override
+	public EmbeddableAttributes process(Mapping context, ClassOutline classOutline)
 	{
 		final EmbeddableAttributes attributes = new EmbeddableAttributes();
 		final FieldOutline[] fieldOutlines = classOutline.getDeclaredFields();
 		for (final FieldOutline fieldOutline : fieldOutlines)
 		{
 			final Object attributeMapping =
-				getAttributeMapping(context, fieldOutline, options).process(context, fieldOutline, options);
+				getAttributeMapping(context, fieldOutline).process(context, fieldOutline);
 			if (attributeMapping instanceof Basic)
 				attributes.getBasic().add((Basic) attributeMapping);
 			else if (attributeMapping instanceof Transient)
@@ -59,7 +59,7 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 		return attributes;
 	}
 
-	public FieldOutlineMapping<?> getAttributeMapping(Mapping context, FieldOutline fieldOutline, Options options)
+	public FieldOutlineMapping<?> getAttributeMapping(Mapping context, FieldOutline fieldOutline)
 	{
 		if (context.getIgnoring().isFieldOutlineIgnored(context, fieldOutline))
 		{

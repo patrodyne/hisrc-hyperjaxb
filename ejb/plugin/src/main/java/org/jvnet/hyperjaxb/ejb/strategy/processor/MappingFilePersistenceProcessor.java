@@ -13,7 +13,6 @@ import org.jvnet.hyperjaxb.ejb.strategy.naming.Naming;
 import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
 import org.jvnet.hyperjaxb.persistence.util.PersistenceUtils;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -91,10 +90,10 @@ public class MappingFilePersistenceProcessor implements OutlineProcessor<EJBPlug
 		this.persistenceUnitFactory = persistenceUnitFactory;
 	}
 	
-	public Collection<ClassOutline> process(EJBPlugin plugin, Outline outline, Options options)
+	public Collection<ClassOutline> process(EJBPlugin plugin, Outline outline)
 		throws Exception
 	{
-		Collection<ClassOutline> includedClasses = getOutlineProcessor().process(plugin, outline, options);
+		Collection<ClassOutline> includedClasses = getOutlineProcessor().process(plugin, outline);
 		final String pun = plugin.getPersistenceUnitName();
 		final String persistenceUnitName = pun != null ? pun : getNaming().getPersistenceUnitName(plugin.getMapping(),
 			outline);

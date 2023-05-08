@@ -1,14 +1,12 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
 
 import ee.jakarta.xml.ns.persistence.orm.Transient;
 
 public class TransientMapping implements FieldOutlineMapping<Transient> {
 
-	public Transient process(Mapping context, FieldOutline fieldOutline,
-			Options options) {
+	public Transient process(Mapping context, FieldOutline fieldOutline) {
 
 		// TODO
 		final Transient _transient = new Transient();

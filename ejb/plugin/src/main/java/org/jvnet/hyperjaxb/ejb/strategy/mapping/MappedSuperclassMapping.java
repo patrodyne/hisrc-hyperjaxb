@@ -2,7 +2,6 @@ package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import org.jvnet.basicjaxb.util.OutlineUtils;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 
 import ee.jakarta.xml.ns.persistence.orm.Attributes;
@@ -11,8 +10,8 @@ import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
 public class MappedSuperclassMapping implements
 		ClassOutlineMapping<MappedSuperclass> {
 
-	public MappedSuperclass process(Mapping context, ClassOutline classOutline,
-			Options options) {
+	@Override
+	public MappedSuperclass process(Mapping context, ClassOutline classOutline) {
 		final MappedSuperclass entity = context.getCustomizing()
 				.getMappedSuperclass(classOutline);
 		createMappedSuperclass(context, classOutline, entity);
@@ -41,8 +40,8 @@ public class MappedSuperclassMapping implements
 
 	public void createMappedSuperclass$Attributes(Mapping context,
 			ClassOutline classOutline, final MappedSuperclass mappedSuperclass) {
-		final Attributes attributes = context.getAttributesMapping().process(
-				context, classOutline, null);
+		final Attributes attributes =
+			context.getAttributesMapping().process(context, classOutline);
 		mappedSuperclass.setAttributes(attributes);
 	}
 

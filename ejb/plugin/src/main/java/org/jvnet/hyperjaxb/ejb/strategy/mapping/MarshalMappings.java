@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.fmt.JTextFile;
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -68,7 +67,8 @@ public class MarshalMappings implements OutlineProcessor<EJBPlugin>
 		return JPAUtils.createMarshaller();
 	}
 
-	public Collection<ClassOutline> process(EJBPlugin context, Outline outline, Options options)
+	@Override
+	public Collection<ClassOutline> process(EJBPlugin context, Outline outline)
 		throws Exception
 	{
 		logger.debug("Processing outline with context path [" + OutlineUtils.getContextPath(outline) + "].");
@@ -78,7 +78,7 @@ public class MarshalMappings implements OutlineProcessor<EJBPlugin>
 		{
 			if (!getIgnoring().isClassOutlineIgnored(getMapping(), classOutline))
 			{
-				final ClassOutline processedClassOutline = process(this, classOutline, options);
+				final ClassOutline processedClassOutline = process(this, classOutline);
 				if (processedClassOutline != null)
 					processedClassOutlines.add(processedClassOutline);
 			}
@@ -86,7 +86,7 @@ public class MarshalMappings implements OutlineProcessor<EJBPlugin>
 		return processedClassOutlines;
 	}
 
-	public ClassOutline process(MarshalMappings context, ClassOutline classOutline, Options options)
+	public ClassOutline process(MarshalMappings context, ClassOutline classOutline)
 		throws Exception
 	{
 		logger.debug("Processing class outline [" + OutlineUtils.getClassName(classOutline) + "].");
@@ -95,7 +95,7 @@ public class MarshalMappings implements OutlineProcessor<EJBPlugin>
 		classOutline._package()._package().addResourceFile(classOrmXmlFile);
 		final EntityMappings entityMappings = createEntityMappings();
 		final Object draftEntityOrMappedSuperclassOrEmbeddable = context.getMapping()
-			.getEntityOrMappedSuperclassOrEmbeddableMapping().process(context.getMapping(), classOutline, options);
+			.getEntityOrMappedSuperclassOrEmbeddableMapping().process(context.getMapping(), classOutline);
 		
 		if (draftEntityOrMappedSuperclassOrEmbeddable instanceof Entity)
 		{

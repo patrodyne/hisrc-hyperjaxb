@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import org.jvnet.hyperjaxb.xjc.model.CTypeInfoUtils;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
@@ -14,8 +13,7 @@ import ee.jakarta.xml.ns.persistence.orm.OneToMany;
 
 public class OneToManyMapping implements FieldOutlineMapping<OneToMany> {
 
-	public OneToMany process(Mapping context, FieldOutline fieldOutline,
-			Options options) {
+	public OneToMany process(Mapping context, FieldOutline fieldOutline) {
 
 		final OneToMany oneToMany = context.getCustomizing().getOneToMany(
 				fieldOutline);

@@ -1,6 +1,5 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
 
 import ee.jakarta.xml.ns.persistence.orm.Column;
@@ -8,8 +7,8 @@ import ee.jakarta.xml.ns.persistence.orm.Version;
 
 public class VersionMapping implements FieldOutlineMapping<Version> {
 
-	public Version process(Mapping context, FieldOutline fieldOutline,
-			Options options) {
+	@Override
+	public Version process(Mapping context, FieldOutline fieldOutline) {
 
 		final Version version = context.getCustomizing().getVersion(
 				fieldOutline);

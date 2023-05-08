@@ -1,6 +1,5 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
 
 import ee.jakarta.xml.ns.persistence.orm.Column;
@@ -8,8 +7,7 @@ import ee.jakarta.xml.ns.persistence.orm.Id;
 
 public class IdMapping implements FieldOutlineMapping<Id> {
 
-	public Id process(Mapping context, FieldOutline fieldOutline,
-			Options options) {
+	public Id process(Mapping context, FieldOutline fieldOutline) {
 
 		final Id id = context.getCustomizing().getId(fieldOutline);
 

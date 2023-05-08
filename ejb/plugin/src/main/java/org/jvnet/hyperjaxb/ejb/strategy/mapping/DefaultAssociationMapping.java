@@ -18,7 +18,6 @@ import org.jvnet.hyperjaxb.xjc.model.CTypeInfoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
@@ -396,8 +395,6 @@ public class DefaultAssociationMapping implements AssociationMapping {
 
 		final ClassOutline classOutline = outline.getClazz(classInfo);
 
-		final Options options = outline.getModel().options;
-
 		final Map<String, AssociationOverride> associationOverridesMap = new HashMap<String, AssociationOverride>();
 		for (final AssociationOverride associationOverride : associationOverrides) {
 			associationOverridesMap.put(associationOverride.getName(),
@@ -407,7 +404,7 @@ public class DefaultAssociationMapping implements AssociationMapping {
 
 		final EmbeddableAttributes embeddableAttributes = embeddedMapping
 				.getEmbeddableAttributesMapping().process(embeddedMapping,
-						classOutline, options);
+						classOutline);
 
 		for (final ManyToOne source : embeddableAttributes.getManyToOne()) {
 			final String name = source.getName();

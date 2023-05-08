@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CPluginCustomization;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
@@ -89,8 +88,8 @@ public class AnnotateOutline implements OutlineProcessor<EJBPlugin>
 		this.applyXAnnotations = annotator;
 	}
 
-	
-	public Collection<ClassOutline> process(EJBPlugin context, Outline outline, Options options)
+	@Override
+	public Collection<ClassOutline> process(EJBPlugin context, Outline outline)
 		throws Exception
 	{
 		logger.debug("Processing outline with context path [" + OutlineUtils.getContextPath(outline) + "].");
@@ -100,7 +99,7 @@ public class AnnotateOutline implements OutlineProcessor<EJBPlugin>
 		{
 			if (!getIgnoring().isClassOutlineIgnored(getMapping(), classOutline))
 			{
-				final ClassOutline processedClassOutline = process(this, classOutline, options);
+				final ClassOutline processedClassOutline = process(this, classOutline);
 				if (processedClassOutline != null)
 					processedClassOutlines.add(processedClassOutline);
 			}
@@ -108,12 +107,12 @@ public class AnnotateOutline implements OutlineProcessor<EJBPlugin>
 		return processedClassOutlines;
 	}
 
-	public ClassOutline process(AnnotateOutline context, ClassOutline classOutline, Options options)
+	public ClassOutline process(AnnotateOutline context, ClassOutline classOutline)
 		throws Exception
 	{
 		logger.debug("Processing class outline [" + OutlineUtils.getClassName(classOutline) + "].");
 		final Object entityOrMappedSuperclassOrEmbeddable = context.getMapping()
-			.getEntityOrMappedSuperclassOrEmbeddableMapping().process(context.getMapping(), classOutline, options);
+			.getEntityOrMappedSuperclassOrEmbeddableMapping().process(context.getMapping(), classOutline);
 		final Object attributes;
 		final Collection<XAnnotation<?>> annotations;
 
@@ -157,7 +156,7 @@ public class AnnotateOutline implements OutlineProcessor<EJBPlugin>
 
 		final FieldOutline[] fieldOutlines = classOutline.getDeclaredFields();
 		for (final FieldOutline fieldOutline : fieldOutlines)
-			process(context, fieldOutline, options, attributes);
+			process(context, fieldOutline, attributes);
 		return classOutline;
 	}
 
@@ -177,7 +176,7 @@ public class AnnotateOutline implements OutlineProcessor<EJBPlugin>
 			getOtherAttributesMethod.annotate(Transient.class);
 	}
 
-	public FieldOutline process(AnnotateOutline context, FieldOutline fieldOutline, Options options, Object attributes)
+	public FieldOutline process(AnnotateOutline context, FieldOutline fieldOutline, Object attributes)
 	{
 		final String name = context.getMapping().getNaming().getPropertyName(context.getMapping(), fieldOutline);
 		logger.debug("Processing field [" + name + "].");

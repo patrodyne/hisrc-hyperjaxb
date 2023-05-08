@@ -38,27 +38,26 @@ public class StrategyService
 	public void setModelAndOutlineProcessor(ModelAndOutlineProcessor<EJBPlugin> modelAndOutlineProcessor) { this.modelAndOutlineProcessor = modelAndOutlineProcessor; }
 
 	/**
-	 * Process the XJC plugin context, the schema model, and configuration options.
+	 * Process the XJC plugin context and the schema model.
 	 * 
 	 * @param context The XJC plugin context.
 	 * @param model The XJC language-neutral representation of the schema.
-	 * @param options The XJC plugin configuration options.
 	 * @return A collection of CClassInfo representing the JAXB bound type/element.
 	 * 
 	 * @throws Exception May be a processing issue.
 	 */
-	public Collection<CClassInfo> process(EJBPlugin context, Model model, Options options)
+	public Collection<CClassInfo> process(EJBPlugin context, Model model)
 		throws Exception
 	{
-		return getModelAndOutlineProcessor().process(context, model, options);
+		return getModelAndOutlineProcessor().process(context, model);
 	}
 	
 	/**
-	 * Process the XJC plugin context, the model outline, and configuration options.
+	 * Process the XJC plugin context and the model outline.
 	 * 
 	 * @param context The XJC plugin context.
 	 * @param outline The XJC outline captures which code is generated for which model component.
-	 * @param options The XJC plugin configuration options.
+	 * 
 	 * @return A collection of CClassInfo representing the JAXB bound type/element.
 	 * 
 	 * @throws Exception May be a processing issue.
@@ -66,6 +65,6 @@ public class StrategyService
 	public Collection<ClassOutline> process(EJBPlugin context, Outline outline,	Options options)
 		throws Exception
 	{
-		return getModelAndOutlineProcessor().process(context, outline, options);
+		return getModelAndOutlineProcessor().process(context, outline);
 	}
 }

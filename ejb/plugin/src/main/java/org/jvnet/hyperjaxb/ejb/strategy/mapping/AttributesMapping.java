@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CEnumLeafInfo;
@@ -41,40 +40,33 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes> {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	public Attributes process(Mapping context, ClassOutline classOutline,
-			Options options) {
+	@Override
+	public Attributes process(Mapping context, ClassOutline classOutline) {
 
 		final Attributes attributes = new Attributes();
 
 		final FieldOutline[] fieldOutlines = classOutline.getDeclaredFields();
 		for (final FieldOutline fieldOutline : fieldOutlines) {
 
-			final Object attributeMapping = getAttributeMapping(context,
-					fieldOutline, options).process(context, fieldOutline,
-					options);
+			final Object attributeMapping =
+				getAttributeMapping(context, fieldOutline).process(context, fieldOutline);
 
 			if (attributeMapping instanceof Id) {
 				if (attributes.getEmbeddedId() == null) {
 					attributes.getId().add((Id) attributeMapping);
 				} else {
 					logger.error("Could not add an id element to the attributes of the class ["
-							+
-
-							fieldOutline.parent().target.getName()
+							+ fieldOutline.parent().target.getName()
 							+ "] because they already contain an embedded-id element.");
 				}
 			} else if (attributeMapping instanceof EmbeddedId) {
 				if (!attributes.getId().isEmpty()) {
 					logger.error("Could not add an embedded-id element to the attributes of the class ["
-							+
-
-							fieldOutline.parent().target.getName()
+							+ fieldOutline.parent().target.getName()
 							+ "] because they already contain an id element.");
 				} else if (attributes.getEmbeddedId() != null) {
 					logger.error("Could not add an embedded-id element to the attributes of the class ["
-							+
-
-							fieldOutline.parent().target.getName()
+							+ fieldOutline.parent().target.getName()
 							+ "] because they already contain an embedded-id element.");
 				} else {
 					attributes.setEmbeddedId((EmbeddedId) attributeMapping);
@@ -104,7 +96,7 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes> {
 	}
 
 	public FieldOutlineMapping<?> getAttributeMapping(Mapping context,
-			FieldOutline fieldOutline, Options options) {
+			FieldOutline fieldOutline) {
 		if (context.getIgnoring().isFieldOutlineIgnored(context, fieldOutline)) {
 			return context.getTransientMapping();
 		} else if (isFieldOutlineId(fieldOutline)) {

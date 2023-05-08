@@ -2,7 +2,6 @@ package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import java.util.Collection;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
@@ -12,8 +11,7 @@ import ee.jakarta.xml.ns.persistence.orm.OneToOne;
 
 public class OneToOneMapping implements FieldOutlineMapping<OneToOne> {
 
-	public OneToOne process(Mapping context, FieldOutline fieldOutline,
-			Options options) {
+	public OneToOne process(Mapping context, FieldOutline fieldOutline) {
 
 		final OneToOne oneToOne = context.getCustomizing().getOneToOne(
 				fieldOutline);

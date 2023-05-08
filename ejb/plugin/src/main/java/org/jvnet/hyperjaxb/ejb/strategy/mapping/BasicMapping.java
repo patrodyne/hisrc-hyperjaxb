@@ -1,6 +1,5 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
 
 import ee.jakarta.xml.ns.persistence.orm.Basic;
@@ -8,8 +7,8 @@ import ee.jakarta.xml.ns.persistence.orm.Column;
 
 public class BasicMapping implements FieldOutlineMapping<Basic> {
 
-	public Basic process(Mapping context, FieldOutline fieldOutline,
-			Options options) {
+	@Override
+	public Basic process(Mapping context, FieldOutline fieldOutline) {
 
 		final Basic basic = context.getCustomizing().getBasic(fieldOutline);
 

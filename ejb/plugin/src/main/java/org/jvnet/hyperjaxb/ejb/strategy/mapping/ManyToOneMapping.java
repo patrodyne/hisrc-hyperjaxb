@@ -2,7 +2,6 @@ package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import java.util.Collection;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
@@ -13,8 +12,7 @@ import ee.jakarta.xml.ns.persistence.orm.ManyToOne;
 
 public class ManyToOneMapping implements FieldOutlineMapping<ManyToOne> {
 
-	public ManyToOne process(Mapping context, FieldOutline fieldOutline,
-			Options options) {
+	public ManyToOne process(Mapping context, FieldOutline fieldOutline) {
 
 		final ManyToOne manyToOne = context.getCustomizing().getManyToOne(
 				fieldOutline);

@@ -17,7 +17,6 @@ import org.jvnet.hyperjaxb.xsom.TypeUtils;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CEnumLeafInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
@@ -247,8 +246,6 @@ public final class DefaultAttributeMapping implements AttributeMapping {
 
 		final ClassOutline classOutline = outline.getClazz(classInfo);
 
-		final Options options = outline.getModel().options;
-
 		final Map<String, AttributeOverride> attributeOverridesMap = new HashMap<String, AttributeOverride>();
 		for (final AttributeOverride attributeOverride : attributeOverrides) {
 			attributeOverridesMap.put(attributeOverride.getName(),
@@ -259,7 +256,7 @@ public final class DefaultAttributeMapping implements AttributeMapping {
 
 		final EmbeddableAttributes embeddableAttributes = embeddedMapping
 				.getEmbeddableAttributesMapping().process(embeddedMapping,
-						classOutline, options);
+						classOutline);
 
 		for (final Basic basic : embeddableAttributes.getBasic()) {
 			final String name = basic.getName();

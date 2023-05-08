@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import org.jvnet.hyperjaxb.xjc.model.CTypeInfoUtils;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
@@ -14,16 +13,16 @@ import ee.jakarta.xml.ns.persistence.orm.ManyToMany;
 
 public class ManyToManyMapping implements FieldOutlineMapping<ManyToMany> {
 
-	public ManyToMany process(Mapping context, FieldOutline fieldOutline,
-			Options options) {
+	public ManyToMany process(Mapping context, FieldOutline fieldOutline) {
 
-		final ManyToMany manyToMany = context.getCustomizing().getManyToMany(
-				fieldOutline);
+		final ManyToMany manyToMany =
+			context.getCustomizing().getManyToMany(fieldOutline);
 
 		createManyToMany$Name(context, fieldOutline, manyToMany);
 		createManyToMany$OrderColumn(context, fieldOutline, manyToMany);
 		createManyToMany$TargetEntity(context, fieldOutline, manyToMany);
 		createManyToMany$JoinTable(context, fieldOutline, manyToMany);
+		
 		return manyToMany;
 	}
 

@@ -3,7 +3,6 @@ package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 
 import ee.jakarta.xml.ns.persistence.orm.Attributes;
@@ -16,8 +15,8 @@ public class EntityMapping implements ClassOutlineMapping<Entity> {
 
 	// private static Log logger = LogFactory.getLog(EntityMapping.class);
 
-	public Entity process(Mapping context, ClassOutline classOutline,
-			Options options) {
+	@Override
+	public Entity process(Mapping context, ClassOutline classOutline) {
 		final Entity entity = context.getCustomizing().getEntity(classOutline);
 		createEntity(context, classOutline, entity);
 		return entity;
@@ -114,8 +113,8 @@ public class EntityMapping implements ClassOutlineMapping<Entity> {
 
 	public void createEntity$Attributes(Mapping context,
 			ClassOutline classOutline, final Entity entity) {
-		final Attributes attributes = context.getAttributesMapping().process(
-				context, classOutline, null);
+		final Attributes attributes =
+			context.getAttributesMapping().process(context, classOutline);
 		entity.setAttributes(attributes);
 	}
 

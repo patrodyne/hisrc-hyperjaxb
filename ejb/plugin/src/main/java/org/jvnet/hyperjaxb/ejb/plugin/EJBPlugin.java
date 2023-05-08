@@ -336,7 +336,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 	}
 	
 	@Override
-	public boolean run(Outline outline, Options options) throws Exception
+	public boolean run(Outline outline) throws Exception
 	{
 		final Ring ring = Ring.begin();
 
@@ -344,7 +344,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		{
 			Ring.add(getBgmBuilder());
 			Ring.add(outline.getModel());
-			getModelAndOutlineProcessor().process(this, outline.getModel(), options);
+			getModelAndOutlineProcessor().process(this, outline.getModel());
 		}
 		catch (Exception ex)
 		{
@@ -378,7 +378,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 			}
 		}
 
-		getModelAndOutlineProcessor().process(this, outline, options);
+		getModelAndOutlineProcessor().process(this, outline);
 		generateRoundtripTestClass(outline);
 		checkCustomizations(outline);
 		

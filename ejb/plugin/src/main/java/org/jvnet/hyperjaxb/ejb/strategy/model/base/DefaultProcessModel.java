@@ -28,7 +28,6 @@ import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.Model;
 
@@ -452,7 +451,8 @@ public class DefaultProcessModel implements ProcessModel
 
 	// Process
 	
-	public Collection<CClassInfo> process(EJBPlugin context, Model model, Options options)
+	@Override
+	public Collection<CClassInfo> process(EJBPlugin context, Model model)
 		throws Exception
 	{
 		CustomizationUtils.findCustomization(model, Customizations.PERSISTENCE_ELEMENT_NAME);

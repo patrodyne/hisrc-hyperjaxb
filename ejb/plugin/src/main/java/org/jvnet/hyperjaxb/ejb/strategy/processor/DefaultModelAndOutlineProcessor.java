@@ -10,7 +10,6 @@ import org.jvnet.hyperjaxb.ejb.strategy.model.ModelProcessor;
 import org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelBase;
 import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.outline.ClassOutline;
@@ -56,15 +55,15 @@ public class DefaultModelAndOutlineProcessor implements ModelAndOutlineProcessor
 		this.outlineProcessor = outlineProcessor;
 	}
 
-	public Collection<CClassInfo> process(EJBPlugin context, Model model, Options options)
+	public Collection<CClassInfo> process(EJBPlugin context, Model model)
 		throws Exception
 	{
-		return getModelProcessor().process(context, model, options);
+		return getModelProcessor().process(context, model);
 	}
 
-	public Collection<ClassOutline> process(EJBPlugin context, Outline outline, Options options)
+	public Collection<ClassOutline> process(EJBPlugin context, Outline outline)
 		throws Exception
 	{
-		return getOutlineProcessor().process(context, outline, options);
+		return getOutlineProcessor().process(context, outline);
 	}
 }

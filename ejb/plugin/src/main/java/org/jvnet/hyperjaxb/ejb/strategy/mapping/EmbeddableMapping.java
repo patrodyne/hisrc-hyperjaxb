@@ -2,7 +2,6 @@ package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import org.jvnet.basicjaxb.util.OutlineUtils;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 
 import ee.jakarta.xml.ns.persistence.orm.Embeddable;
@@ -12,8 +11,8 @@ public class EmbeddableMapping implements ClassOutlineMapping<Embeddable> {
 
 	// private static Log logger = LogFactory.getLog(EntityMapping.class);
 
-	public Embeddable process(Mapping context, ClassOutline classOutline,
-			Options options) {
+	@Override
+	public Embeddable process(Mapping context, ClassOutline classOutline) {
 		final Embeddable entity = context.getCustomizing().getEmbeddable(
 				classOutline);
 		createEmbeddable(context, classOutline, entity);
@@ -37,8 +36,7 @@ public class EmbeddableMapping implements ClassOutlineMapping<Embeddable> {
 	public void createEmbeddable$Attributes(Mapping context,
 			ClassOutline classOutline, final Embeddable entity) {
 		final EmbeddableAttributes attributes = context
-				.getEmbeddableAttributesMapping().process(context,
-						classOutline, null);
+				.getEmbeddableAttributesMapping().process(context, classOutline);
 		entity.setAttributes(attributes);
 	}
 

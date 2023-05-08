@@ -2,7 +2,6 @@ package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import java.util.Collection;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
 
 import ee.jakarta.xml.ns.persistence.orm.CollectionTable;
@@ -13,8 +12,9 @@ import ee.jakarta.xml.ns.persistence.orm.OrderColumn;
 public class ElementCollectionMapping implements
 		FieldOutlineMapping<ElementCollection> {
 
+	@Override
 	public ElementCollection process(Mapping context,
-			FieldOutline fieldOutline, Options options) {
+			FieldOutline fieldOutline) {
 
 		final ElementCollection elementCollection = context.getCustomizing()
 				.getElementCollection(fieldOutline);
