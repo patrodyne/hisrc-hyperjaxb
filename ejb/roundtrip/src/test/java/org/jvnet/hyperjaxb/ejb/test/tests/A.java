@@ -243,6 +243,7 @@ public class A implements Equals
 		return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
 	}
 
+	@Override
 	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy)
 	{
 		if (!(object instanceof A))
@@ -283,8 +284,10 @@ public class A implements Equals
 		public Long getHjid() { return hjid; }
 		public void setHjid(Long value) { this.hjid = value; }
 
+		@Override
 		@Transient
 		public String getItem() { return getValue(); }
+		@Override
 		public void setItem(String value) { setValue(value); }
 	}
 
@@ -301,11 +304,13 @@ public class A implements Equals
 		public Long getHjid() { return hjid; }
 		public void setHjid(Long value) { this.hjid = value; }
 
+		@Override
 		@Transient
 		public JAXBElement<String> getItem()
 		{
 			return XmlAdapterUtils.marshallJAXBElement(String.class, new QName("eNillable"), A.class, getValue());
 		}
+		@Override
 		public void setItem(JAXBElement<String> value)
 		{
 			setValue(XmlAdapterUtils.unmarshallJAXBElement(value));
@@ -335,11 +340,13 @@ public class A implements Equals
 			this.setItem(XmlAdapterUtils.marshall(XMLGregorianCalendarAsDateTime.class, target));
 		}
 
+		@Override
 		@Transient
 		public XMLGregorianCalendar getItem()
 		{
 			return XmlAdapterUtils.marshall(XMLGregorianCalendarAsDateTime.class, getValue());
 		}
+		@Override
 		public void setItem(XMLGregorianCalendar value)
 		{
 			setValue(XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDateTime.class, value));
@@ -370,12 +377,14 @@ public class A implements Equals
 				XMLGregorianCalendar.class, new QName("fNillable"), A.class, target));
 		}
 
+		@Override
 		@Transient
 		public JAXBElement<XMLGregorianCalendar> getItem()
 		{
 			return XmlAdapterUtils.marshallJAXBElement(XMLGregorianCalendarAsDateTime.class, XMLGregorianCalendar.class,
 				new QName("fNillable"), A.class, getValue());
 		}
+		@Override
 		public void setItem(JAXBElement<XMLGregorianCalendar> value)
 		{
 			setValue(XmlAdapterUtils.unmarshallJAXBElement(XMLGregorianCalendarAsDateTime.class, value));
@@ -410,6 +419,7 @@ public class A implements Equals
 			return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
 		}
 
+		@Override
 		public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
 			Object object, EqualsStrategy strategy)
 		{
@@ -443,6 +453,7 @@ public class A implements Equals
 			return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
 		}
 
+		@Override
 		public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy)
 		{
 			if (!(object instanceof G1))
@@ -476,6 +487,7 @@ public class A implements Equals
 			return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
 		}
 
+		@Override
 		public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
 			Object object, EqualsStrategy strategy)
 		{
@@ -517,6 +529,7 @@ public class A implements Equals
 		private boolean isItemValueSet() { return (itemValue != null); }
 
 		private JAXBElement<? extends G> item;
+		@Override
 		@Transient
 		public JAXBElement<? extends G> getItem()
 		{
@@ -524,6 +537,7 @@ public class A implements Equals
 				item = JAXBElementUtils.wrap(item, itemName, itemValue);
 			return item;
 		}
+		@Override
 		public void setItem(JAXBElement<? extends G> value)
 		{
 			this.itemName = value.getName().toString();
@@ -545,6 +559,7 @@ public class A implements Equals
 			return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
 		}
 
+		@Override
 		public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
 			Object object, EqualsStrategy strategy)
 		{

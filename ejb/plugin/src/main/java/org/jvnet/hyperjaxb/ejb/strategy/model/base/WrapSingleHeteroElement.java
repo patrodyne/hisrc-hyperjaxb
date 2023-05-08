@@ -35,6 +35,7 @@ public class WrapSingleHeteroElement implements CreatePropertyInfos
 {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		assert propertyInfo instanceof CElementPropertyInfo;
@@ -66,6 +67,7 @@ public class WrapSingleHeteroElement implements CreatePropertyInfos
 			itemPropertyInfo.getTypes().add(type);
 			itemPropertyInfo.realization = new FieldRenderer()
 			{
+				@Override
 				public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo p)
 				{
 					final SingleWrappingElementField field = new SingleWrappingElementField(classOutline, p,

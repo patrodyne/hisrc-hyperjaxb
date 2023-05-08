@@ -21,10 +21,12 @@ public class DefaultMixedItemList<EffectiveListType, ListType extends EffectiveL
 		return itemClass;
 	}
 	
+	@Override
 	public ItemType create(ListType item) {
 		return MixedItemUtils.create(getItemClass(), item);
 	}
 
+	@Override
 	public ItemType create(String item) {
 		return MixedItemUtils.create(getItemClass(), item);
 	}

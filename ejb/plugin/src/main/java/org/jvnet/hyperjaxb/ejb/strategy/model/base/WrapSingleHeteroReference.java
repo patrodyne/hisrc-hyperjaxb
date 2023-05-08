@@ -53,6 +53,7 @@ public class WrapSingleHeteroReference implements CreatePropertyInfos
 {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		assert propertyInfo instanceof CReferencePropertyInfo;
@@ -87,6 +88,7 @@ public class WrapSingleHeteroReference implements CreatePropertyInfos
 				CBuiltinLeafInfo.STRING.getTypeName(), false);
 			objectProperty.realization = new FieldRenderer()
 			{
+				@Override
 				public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo prop)
 				{
 					final JaxbContext jaxbContext = context.getCustomizing().getJaxbContext(prop);
@@ -125,6 +127,7 @@ public class WrapSingleHeteroReference implements CreatePropertyInfos
 				CBuiltinLeafInfo.STRING.getTypeName(), false);
 			elementProperty.realization = new FieldRenderer()
 			{
+				@Override
 				public FieldOutline generate(ClassOutlineImpl context, CPropertyInfo prop)
 				{
 					ElementField fieldOutline = new ElementField(context, prop, referencePropertyInfo);
@@ -174,6 +177,7 @@ public class WrapSingleHeteroReference implements CreatePropertyInfos
 						.addAll(context.getGetTypes().getTypes(context, ((CElementInfo) element).getProperty()));
 					itemPropertyInfo.realization = new FieldRenderer()
 					{
+						@Override
 						public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo p)
 						{
 							SingleWrappingReferenceElementInfoField field = new SingleWrappingReferenceElementInfoField(
@@ -194,6 +198,7 @@ public class WrapSingleHeteroReference implements CreatePropertyInfos
 				final CTypeRef typeRef = new CTypeRef(classInfo, elementName, typeName, false, null);
 				itemPropertyInfo.realization = new FieldRenderer()
 				{
+					@Override
 					public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo p)
 					{
 						SingleWrappingClassInfoField field = new SingleWrappingClassInfoField(classOutline, p,

@@ -28,12 +28,14 @@ public abstract class AbstractAdaptBuiltinPropertyInfo extends
 		this.propertyType = propertyType;
 	}
 
+	@Override
 	public Collection<CPropertyInfo> process(final ProcessModel context,
 			final CPropertyInfo core) {
 		final CPropertyInfo newPropertyInfo = createPropertyInfo(context, core);
 
 		newPropertyInfo.realization = new FieldRenderer() {
 
+			@Override
 			public FieldOutline generate(ClassOutlineImpl classOutline,
 					CPropertyInfo propertyInfo) {
 				return generateField(context, core, classOutline, propertyInfo);

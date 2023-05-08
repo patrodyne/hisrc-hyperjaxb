@@ -62,6 +62,7 @@ public class WrapCollectionHeteroReference
 {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, final CPropertyInfo propertyInfo)
 	{
 		assert propertyInfo instanceof CReferencePropertyInfo;
@@ -156,6 +157,7 @@ public class WrapCollectionHeteroReference
 			.add(new CTypeRef(itemClassInfo, new QName(propertyName + "Items"), null, false, null));
 		wrappingPropertyInfo.realization = new FieldRenderer()
 		{
+			@Override
 			public FieldOutline generate(ClassOutlineImpl outline, CPropertyInfo wrappingPropertyInfo)
 			{
 				return new WrappingCollectionField(outline, wrappedPropertyInfo, wrappingPropertyInfo);
@@ -163,6 +165,7 @@ public class WrapCollectionHeteroReference
 		};
 		wrappedPropertyInfo.realization = new FieldRenderer()
 		{
+			@Override
 			public FieldOutline generate(ClassOutlineImpl outline, CPropertyInfo wrappedPropertyInfo)
 			{
 				return new WrappedCollectionField(outline, wrappedPropertyInfo, wrappingPropertyInfo);
@@ -187,6 +190,7 @@ public class WrapCollectionHeteroReference
 			// this.core = core;
 		}
 
+		@Override
 		public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo propertyInfo)
 		{
 			final FieldOutline fieldOutline =
@@ -199,6 +203,7 @@ public class WrapCollectionHeteroReference
 						return "get" + prop.getName(true);
 					}
 
+					@Override
 					protected JType getType(Aspect aspect)
 					{
 						return super.getType(aspect).boxify();
@@ -231,6 +236,7 @@ public class WrapCollectionHeteroReference
 			// this.core = core;
 		}
 
+		@Override
 		public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo propertyInfo)
 		{
 			final FieldOutline fieldOutline =
@@ -243,6 +249,7 @@ public class WrapCollectionHeteroReference
 						return "get" + prop.getName(true);
 					}
 
+					@Override
 					protected JType getType(Aspect aspect)
 					{
 						return super.getType(aspect).boxify();

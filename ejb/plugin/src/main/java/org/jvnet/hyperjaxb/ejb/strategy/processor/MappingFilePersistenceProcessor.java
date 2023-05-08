@@ -90,6 +90,7 @@ public class MappingFilePersistenceProcessor implements OutlineProcessor<EJBPlug
 		this.persistenceUnitFactory = persistenceUnitFactory;
 	}
 	
+	@Override
 	public Collection<ClassOutline> process(EJBPlugin plugin, Outline outline)
 		throws Exception
 	{

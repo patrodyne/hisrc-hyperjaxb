@@ -7,6 +7,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class XMLGregorianCalendarAsTime extends
 		AbstractXMLGregorianCalendarAdapter {
 
+	@Override
 	public Date createDate(XMLGregorianCalendar calendar) {
 		final java.sql.Time time = new java.sql.Time(calendar.normalize()
 				.toGregorianCalendar(/* timeZone, Locale.UK, null */)

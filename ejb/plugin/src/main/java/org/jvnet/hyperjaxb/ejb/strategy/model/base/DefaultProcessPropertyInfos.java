@@ -39,6 +39,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CClassInfo classInfo)
 	{
 		logger.debug("Processing property infos for class info [" + classInfo.getName() + "].");
@@ -116,6 +117,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		return newPropertyInfos;
 	}
 
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		final CClassifyingVisitor<Collection<CPropertyInfo>> classifyingVisitor =
@@ -219,16 +221,19 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		// / Attribute
 		// Single
 
+		@Override
 		public Collection<CPropertyInfo> onSingleBuiltinAttribute(CAttributePropertyInfo attributePropertyInfo)
 		{
 			return context.getWrapSingleBuiltinAttribute().process(context, attributePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleEnumAttribute(CAttributePropertyInfo attributePropertyInfo)
 		{
 			return context.getWrapSingleEnumAttribute().process(context, attributePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleOtherAttribute(CAttributePropertyInfo attributePropertyInfo)
 		{
 			todo("[" + attributePropertyInfo.getName(true) + "] is a single other attribute. See issue #56.");
@@ -237,16 +242,19 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		
 		// Collection
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionBuiltinAttribute(CAttributePropertyInfo attributePropertyInfo)
 		{
 			return context.getWrapCollectionBuiltinAttribute().process(context, attributePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionEnumAttribute(CAttributePropertyInfo attributePropertyInfo)
 		{
 			return context.getWrapCollectionEnumAttribute().process(context, attributePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionOtherAttribute(CAttributePropertyInfo attributePropertyInfo)
 		{
 			todo("[" + attributePropertyInfo.getName(true) + "] is a collection other attribute. See issue #59.");
@@ -256,16 +264,19 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		// / Value
 		// Single
 
+		@Override
 		public Collection<CPropertyInfo> onSingleBuiltinValue(CValuePropertyInfo valuePropertyInfo)
 		{
 			return context.getWrapSingleBuiltinValue().process(context, valuePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleEnumValue(CValuePropertyInfo valuePropertyInfo)
 		{
 			return context.getWrapSingleEnumValue().process(context, valuePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleOtherValue(CValuePropertyInfo valuePropertyInfo)
 		{
 			todo("[" + valuePropertyInfo.getName(true) + "] is a single other value. See issue #60.");
@@ -274,16 +285,19 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		
 		// Collection
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionBuiltinValue(CValuePropertyInfo valuePropertyInfo)
 		{
 			return context.getWrapCollectionBuiltinValue().process(context, valuePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionEnumValue(CValuePropertyInfo valuePropertyInfo)
 		{
 			return context.getWrapCollectionEnumValue().process(context, valuePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionOtherValue(CValuePropertyInfo valuePropertyInfo)
 		{
 			todo("[" + valuePropertyInfo.getName(true) + "] is a collection other value. See issue #63.");
@@ -293,26 +307,31 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		// Element
 		// Single
 
+		@Override
 		public Collection<CPropertyInfo> onSingleBuiltinElement(CElementPropertyInfo elementPropertyInfo)
 		{
 			return context.getWrapSingleBuiltinElement().process(context, elementPropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleEnumElement(CElementPropertyInfo elementPropertyInfo)
 		{
 			return context.getWrapSingleEnumElement().process(context, elementPropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleArrayElement(CElementPropertyInfo elementPropertyInfo)
 		{
 			throw new UnsupportedOperationException("Arrays are not supported.");
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleClassElement(CElementPropertyInfo elementPropertyInfo)
 		{
 			return Collections.emptyList();
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleHeteroElement(CElementPropertyInfo elementPropertyInfo)
 		{
 			return context.getWrapSingleHeteroElement().process(context, elementPropertyInfo);
@@ -320,26 +339,31 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		
 		// Collection
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionBuiltinElement(CElementPropertyInfo elementPropertyInfo)
 		{
 			return context.getWrapCollectionBuiltinElement().process(context, elementPropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionEnumElement(CElementPropertyInfo elementPropertyInfo)
 		{
 			return context.getWrapCollectionEnumElement().process(context, elementPropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionArrayElement(CElementPropertyInfo elementPropertyInfo)
 		{
 			throw new UnsupportedOperationException("Arrays are not supported.");
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionClassElement(CElementPropertyInfo elementPropertyInfo)
 		{
 			return Collections.emptyList();
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionHeteroElement(CElementPropertyInfo elementPropertyInfo)
 		{
 			return context.getWrapCollectionHeteroElement().process(context, elementPropertyInfo);
@@ -348,16 +372,19 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		// / Reference
 		// Single
 
+		@Override
 		public Collection<CPropertyInfo> onSingleBuiltinElementReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			return context.getWrapSingleBuiltinElementReference().process(context, referencePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleEnumElementReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			return context.getWrapSingleEnumElementReference().process(context, referencePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleArrayElementReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			throw new UnsupportedOperationException("Arrays are not supported.");
@@ -370,6 +397,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		// return Collections.emptyList();
 		// }
 
+		@Override
 		public Collection<CPropertyInfo> onSingleClassReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			// todo("[" + referencePropertyInfo.getName(true)
@@ -378,21 +406,25 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 			return context.getWrapSingleClassReference().process(context, referencePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleWildcardReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			return context.getWrapSingleWildcardReference().process(context, referencePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleHeteroReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			return context.getWrapSingleHeteroReference().process(context, referencePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleClassElementReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			return context.getWrapSingleClassElementReference().process(context, referencePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onSingleSubstitutedElementReference(
 			CReferencePropertyInfo referencePropertyInfo)
 		{
@@ -401,6 +433,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		
 		// Collection
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionBuiltinElementReference(
 			CReferencePropertyInfo referencePropertyInfo)
 		{
@@ -409,6 +442,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 			return Collections.emptyList();
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionEnumElementReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			todo("["	+ referencePropertyInfo.getName(true)
@@ -416,6 +450,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 			return Collections.emptyList();
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionArrayElementReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			throw new UnsupportedOperationException("Arrays are not supported.");
@@ -428,17 +463,20 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		// return Collections.emptyList();
 		// }
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionClassReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			todo("[" + referencePropertyInfo.getName(true) + "] is a collection class reference. See issue #70.");
 			return Collections.emptyList();
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionWildcardReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			return context.getWrapCollectionWildcardReference().process(context, referencePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionClassElementReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			todo("["	+ referencePropertyInfo.getName(true)
@@ -446,12 +484,14 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 			return Collections.emptyList();
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionSubstitutedElementReference(
 			CReferencePropertyInfo referencePropertyInfo)
 		{
 			return context.getWrapCollectionHeteroReference().process(context, referencePropertyInfo);
 		}
 
+		@Override
 		public Collection<CPropertyInfo> onCollectionHeteroReference(CReferencePropertyInfo referencePropertyInfo)
 		{
 			return context.getWrapCollectionHeteroReference().process(context, referencePropertyInfo);

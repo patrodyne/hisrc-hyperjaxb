@@ -6,6 +6,7 @@ import ee.jakarta.xml.ns.persistence.orm.Transient;
 
 public class TransientMapping implements FieldOutlineMapping<Transient> {
 
+	@Override
 	public Transient process(Mapping context, FieldOutline fieldOutline) {
 
 		// TODO

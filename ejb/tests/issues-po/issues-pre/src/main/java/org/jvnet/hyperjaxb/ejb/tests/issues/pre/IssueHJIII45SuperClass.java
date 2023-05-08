@@ -49,7 +49,8 @@ public abstract class IssueHJIII45SuperClass implements Serializable, Equals, Ha
 	
 	
 	
-    public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
+    @Override
+	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
         if (!(object instanceof IssueHJIII45SuperClass)) {
             return false;
         }
@@ -71,12 +72,14 @@ public abstract class IssueHJIII45SuperClass implements Serializable, Equals, Ha
         return true;
     }
 
-    public boolean equals(Object object) {
+    @Override
+	public boolean equals(Object object) {
         final EqualsStrategy strategy = JAXBEqualsStrategy.getInstance();
         return equals(null, null, object, strategy);
     }
 
-    public int hashCode(ObjectLocator locator, HashCodeStrategy strategy) {
+    @Override
+	public int hashCode(ObjectLocator locator, HashCodeStrategy strategy) {
         int currentHashCode = 1;
         {
             String theId;
@@ -87,7 +90,8 @@ public abstract class IssueHJIII45SuperClass implements Serializable, Equals, Ha
         return currentHashCode;
     }
 
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         final HashCodeStrategy strategy = JAXBHashCodeStrategy.getInstance();
         return this.hashCode(null, strategy);
     }

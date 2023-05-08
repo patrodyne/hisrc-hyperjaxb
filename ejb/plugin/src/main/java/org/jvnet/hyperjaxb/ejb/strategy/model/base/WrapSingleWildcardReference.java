@@ -34,6 +34,7 @@ public class WrapSingleWildcardReference implements CreatePropertyInfos
 {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		assert propertyInfo instanceof CReferencePropertyInfo;

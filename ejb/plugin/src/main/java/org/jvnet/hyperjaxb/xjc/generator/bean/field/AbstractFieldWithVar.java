@@ -57,7 +57,8 @@ public abstract class AbstractFieldWithVar extends AbstractField {
 
     protected JFieldVar ref() { return field; }
 
-    public final JType getRawType() {
+    @Override
+	public final JType getRawType() {
         return exposedType;
     }
     
@@ -73,11 +74,13 @@ public abstract class AbstractFieldWithVar extends AbstractField {
          */
         protected final JFieldRef $ref;
 
-        public final void toRawValue(JBlock block, JVar $var) {
+        @Override
+		public final void toRawValue(JBlock block, JVar $var) {
             block.assign($var,$target.invoke(getGetterMethod()));
         }
 
-        public final void fromRawValue(JBlock block, String uniqueName, JExpression $var) {
+        @Override
+		public final void fromRawValue(JBlock block, String uniqueName, JExpression $var) {
             block.invoke($target,("set"+prop.getName(true))).arg($var);
         }
     }

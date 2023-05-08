@@ -52,6 +52,7 @@ public class AdaptingWrappingCollectionField extends
 										.dotclass()));
 	}
 
+	@Override
 	protected JFieldRef createField() {
 
 		final JFieldVar field = outline.implClass.field(JMod.PROTECTED

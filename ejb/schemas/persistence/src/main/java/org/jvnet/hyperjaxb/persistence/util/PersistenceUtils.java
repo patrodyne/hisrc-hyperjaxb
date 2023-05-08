@@ -31,6 +31,7 @@ public class PersistenceUtils
 	
 	public static final NamespacePrefixMapper NAMESPACE_PREFIX_MAPPER = new NamespacePrefixMapper()
 	{
+		@Override
 		public String getPreferredPrefix(String namespaceUri, String suggestion, boolean requirePrefix)
 		{
 			if (PersistenceConstants.ORM_NAMESPACE_URI.equals(namespaceUri))

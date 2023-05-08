@@ -40,72 +40,89 @@ public class SimpleTypeVisitor implements XSVisitor {
 		return typeNames;
 	}
 
+	@Override
 	public void annotation(XSAnnotation ann) {
 		// todo("Annotation.");
 	}
 
+	@Override
 	public void attGroupDecl(XSAttGroupDecl decl) {
 		todo("Attribute group declaration [" + decl.getName() + "].");
 	}
 
+	@Override
 	public void attributeDecl(XSAttributeDecl decl) {
 		decl.getType().visit(this);
 	}
 
+	@Override
 	public void attributeUse(XSAttributeUse use) {
 		use.getDecl().visit(this);
 	}
 
+	@Override
 	public void complexType(XSComplexType type) {
 		// todo("Complex type [" + type.getName() + "].");
 	}
 
+	@Override
 	public void facet(XSFacet facet) {
 		todo("Facet.");
 	}
 
+	@Override
 	public void identityConstraint(XSIdentityConstraint decl) {
 		todo("Identity constraint.");
 	}
 
+	@Override
 	public void notation(XSNotation notation) {
 		todo("Notation.");
 	}
 
+	@Override
 	public void schema(XSSchema schema) {
 		todo("Schema.");
 	}
 
+	@Override
 	public void xpath(XSXPath xp) {
 		todo("XPath.");
 	}
 
+	@Override
 	public void elementDecl(XSElementDecl decl) {
 		decl.getType().visit(this);
 	}
 
+	@Override
 	public void modelGroup(XSModelGroup group) {
 		for (XSParticle child : group.getChildren()) {
 			child.visit(this);
 		}
 	}
 
+	@Override
 	public void modelGroupDecl(XSModelGroupDecl decl) {
 		todo("Model group declaration.");
 	}
 
+	@Override
 	public void wildcard(XSWildcard wc) {
 		todo("Wildcard.");
 	}
 
+	@Override
 	public void empty(XSContentType empty) {
 		todo("Empty.");
 	}
 
+	@Override
 	public void particle(XSParticle particle) {
 		particle.getTerm().visit(this);
 	}
 
+	@Override
 	public void simpleType(XSSimpleType simpleType) {
 		if (simpleType.getName() != null) {
 			typeNames.add(new QName(simpleType.getTargetNamespace(), simpleType

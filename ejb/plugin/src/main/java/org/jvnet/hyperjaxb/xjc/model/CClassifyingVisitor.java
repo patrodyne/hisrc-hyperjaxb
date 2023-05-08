@@ -31,6 +31,7 @@ public class CClassifyingVisitor<U> implements CPropertyVisitor<U> {
 		this.classifier = classifier;
 	}
 
+	@Override
 	public U onAttribute(CAttributePropertyInfo attributePropertyInfo) {
 
 		final CNonElement type = context.getGetTypes().getTarget(context,
@@ -44,6 +45,7 @@ public class CClassifyingVisitor<U> implements CPropertyVisitor<U> {
 		}
 	}
 
+	@Override
 	public U onValue(CValuePropertyInfo valuePropertyInfo) {
 		final CNonElement type = context.getGetTypes().getTarget(context,
 				valuePropertyInfo);
@@ -56,6 +58,7 @@ public class CClassifyingVisitor<U> implements CPropertyVisitor<U> {
 		}
 	}
 
+	@Override
 	public U onElement(CElementPropertyInfo elementPropertyInfo) {
 		final Collection<? extends CTypeInfo> types = context.getGetTypes()
 				.process(context, elementPropertyInfo);
@@ -77,6 +80,7 @@ public class CClassifyingVisitor<U> implements CPropertyVisitor<U> {
 		}
 	}
 
+	@Override
 	public U onReference(CReferencePropertyInfo referencePropertyInfo) {
 
 		final Collection<? extends CTypeInfo> types = context.getGetTypes()

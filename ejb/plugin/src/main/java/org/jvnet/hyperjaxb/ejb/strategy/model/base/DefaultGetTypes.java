@@ -47,11 +47,13 @@ import jakarta.enterprise.inject.Alternative;
 @ModelBase
 public class DefaultGetTypes<C> implements GetTypes<C>
 {
+	@Override
 	public Collection<? extends CTypeInfo> process(C context, CPropertyInfo propertyInfo)
 	{
 		return ref(context, propertyInfo);
 	}
 
+	@Override
 	public Collection<? extends CTypeInfo> ref(C context, CPropertyInfo propertyInfo)
 	{
 		final Collection<? extends CTypeInfo> types = propertyInfo.ref();
@@ -75,26 +77,31 @@ public class DefaultGetTypes<C> implements GetTypes<C>
 		return types;
 	}
 
+	@Override
 	public Collection<? extends CTypeRef> getTypes(C context, CElementPropertyInfo propertyInfo)
 	{
 		return propertyInfo.getTypes();
 	}
 
+	@Override
 	public CNonElement getTarget(C context, CAttributePropertyInfo propertyInfo)
 	{
 		return propertyInfo.getTarget();
 	}
 
+	@Override
 	public CNonElement getTarget(C context, CValuePropertyInfo propertyInfo)
 	{
 		return propertyInfo.getTarget();
 	}
 
+	@Override
 	public Set<com.sun.tools.xjc.model.CElement> getElements(C context, CReferencePropertyInfo referencePropertyInfo)
 	{
 		return referencePropertyInfo.getElements();
 	}
 
+	@Override
 	public TypeUse getTypeUse(C context, CPropertyInfo propertyInfo)
 	{
 		if (propertyInfo instanceof CValuePropertyInfo)

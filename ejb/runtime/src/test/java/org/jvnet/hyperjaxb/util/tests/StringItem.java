@@ -10,10 +10,12 @@ public class StringItem implements Item<String>, Serializable {
 
 	private String value;
 
+	@Override
 	public void setItem(String value) {
 		this.value = value;
 	}
 
+	@Override
 	public String getItem() {
 		return this.value;
 	}

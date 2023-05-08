@@ -23,6 +23,7 @@ import jakarta.enterprise.inject.Alternative;
 @ModelBase
 public class GetVersionPropertyInfos implements GetVersionPropertyInfoProcessor
 {
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CClassInfo classInfo)
 	{
 		final Collection<CPropertyInfo> version = new LinkedList<CPropertyInfo>();

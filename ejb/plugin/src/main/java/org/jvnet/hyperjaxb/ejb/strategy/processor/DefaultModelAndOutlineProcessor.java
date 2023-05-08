@@ -35,6 +35,7 @@ public class DefaultModelAndOutlineProcessor implements ModelAndOutlineProcessor
 {
 	@Inject @ModelBase
 	private ModelProcessor<EJBPlugin> modelProcessor;
+	@Override
 	public ModelProcessor<EJBPlugin> getModelProcessor()
 	{
 		return modelProcessor;
@@ -46,6 +47,7 @@ public class DefaultModelAndOutlineProcessor implements ModelAndOutlineProcessor
 
 	@Inject @MojoConfigured
 	private OutlineProcessor<EJBPlugin> outlineProcessor;
+	@Override
 	public OutlineProcessor<EJBPlugin> getOutlineProcessor()
 	{
 		return outlineProcessor;
@@ -55,12 +57,14 @@ public class DefaultModelAndOutlineProcessor implements ModelAndOutlineProcessor
 		this.outlineProcessor = outlineProcessor;
 	}
 
+	@Override
 	public Collection<CClassInfo> process(EJBPlugin context, Model model)
 		throws Exception
 	{
 		return getModelProcessor().process(context, model);
 	}
 
+	@Override
 	public Collection<ClassOutline> process(EJBPlugin context, Outline outline)
 		throws Exception
 	{

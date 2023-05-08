@@ -21,6 +21,7 @@ import jakarta.enterprise.inject.Alternative;
 @Priority(APPLICATION + 1)
 public class WrapSingleBuiltinNonReference extends AbstractWrapBuiltin
 {
+	@Override
 	public CBuiltinLeafInfo getTypeUse(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		final Collection<? extends CTypeInfo> types = context.getGetTypes().process(context, propertyInfo);
@@ -41,6 +42,7 @@ public class WrapSingleBuiltinNonReference extends AbstractWrapBuiltin
 			return new AdaptSingleBuiltinNonReference(adaptingTypeUse);
 	}
 
+	@Override
 	protected Collection<CPropertyInfo> wrapAnyType(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		return new AdaptSingleWildcardNonReference(CBuiltinLeafInfo.STRING).process(context, propertyInfo);

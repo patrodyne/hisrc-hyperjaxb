@@ -129,11 +129,13 @@ public abstract class AbstractWrappingField extends AbstractField
 		return implType;
 	}
 
+	@Override
 	public FieldAccessor create(JExpression targetObject)
 	{
 		return new Accessor(targetObject);
 	}
 
+	@Override
 	public final JType getRawType()
 	{
 		return exposedType;
@@ -158,21 +160,25 @@ public abstract class AbstractWrappingField extends AbstractField
 			this.coreField = $target.ref(core.getName(false));
 		}
 
+		@Override
 		public void unsetValues(JBlock body)
 		{
 			body.assign(coreField, JExpr._null());
 		}
 
+		@Override
 		public JExpression hasSetValue()
 		{
 			return coreField.ne(JExpr._null());
 		}
 
+		@Override
 		public final void toRawValue(JBlock block, JVar $var)
 		{
 			block.assign($var, $target.invoke(getter));
 		}
 
+		@Override
 		public final void fromRawValue(JBlock block, String uniqueName, JExpression $var)
 		{
 			block.invoke($target, setter).arg($var);

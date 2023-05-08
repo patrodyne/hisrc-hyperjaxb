@@ -22,6 +22,7 @@ public class AdaptSingleBuiltinReference extends AbstractAdaptBuiltinPropertyInf
 		super(propertyType);
 	}
 
+	@Override
 	protected FieldOutline generateField(final ProcessModel context,
 			final CPropertyInfo core, ClassOutlineImpl classOutline,
 			CPropertyInfo propertyInfo) {

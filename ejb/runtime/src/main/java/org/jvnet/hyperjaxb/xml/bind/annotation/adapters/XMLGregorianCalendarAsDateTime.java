@@ -7,6 +7,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class XMLGregorianCalendarAsDateTime extends
 		AbstractXMLGregorianCalendarAdapter {
 
+	@Override
 	public Date createDate(XMLGregorianCalendar calendar) {
 		final java.sql.Timestamp timestamp = new java.sql.Timestamp(calendar
 				.normalize().toGregorianCalendar().getTimeInMillis());

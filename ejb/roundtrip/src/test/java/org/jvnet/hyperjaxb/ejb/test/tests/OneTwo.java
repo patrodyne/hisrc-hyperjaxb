@@ -53,6 +53,7 @@ public class OneTwo implements Equals
 		return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
 	}
 
+	@Override
 	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
 		Object object, EqualsStrategy strategy)
 	{

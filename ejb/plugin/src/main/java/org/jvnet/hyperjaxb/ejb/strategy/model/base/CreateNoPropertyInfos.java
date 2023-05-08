@@ -30,6 +30,7 @@ public class CreateNoPropertyInfos implements CreatePropertyInfos {
 	 *            ignored.
 	 * @return An empty collection.
 	 */
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context,
 			CPropertyInfo propertyInfo) {
 		return Collections.emptyList();

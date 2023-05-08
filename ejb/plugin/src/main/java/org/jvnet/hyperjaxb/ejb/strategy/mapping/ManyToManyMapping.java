@@ -13,6 +13,7 @@ import ee.jakarta.xml.ns.persistence.orm.ManyToMany;
 
 public class ManyToManyMapping implements FieldOutlineMapping<ManyToMany> {
 
+	@Override
 	public ManyToMany process(Mapping context, FieldOutline fieldOutline) {
 
 		final ManyToMany manyToMany =

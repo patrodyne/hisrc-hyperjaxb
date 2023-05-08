@@ -6,11 +6,13 @@ public class RoundtripTest
     extends org.jvnet.hyperjaxb.ejb.test.RoundtripTest
     implements ContextPathAware
 {
+	@Override
 	public String getContextPath()
 	{
 		return "org.imsglobal.xsd.imslip_v1p0";
 	}
 
+	@Override
 	public String getPersistenceUnitName()
 	{
 		return "org.imsglobal.xsd.imslip_v1p0";

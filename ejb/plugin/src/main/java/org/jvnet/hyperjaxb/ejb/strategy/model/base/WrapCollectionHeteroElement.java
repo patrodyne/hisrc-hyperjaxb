@@ -57,6 +57,7 @@ public class WrapCollectionHeteroElement implements CreatePropertyInfos
 {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, final CPropertyInfo propertyInfo)
 	{
 		assert propertyInfo instanceof CElementPropertyInfo;
@@ -110,6 +111,7 @@ public class WrapCollectionHeteroElement implements CreatePropertyInfos
 		wrappingPropertyInfo.getTypes().add(new CTypeRef(itemClassInfo, wrappingPropertyQName, null, false, null));
 		wrappingPropertyInfo.realization = new FieldRenderer()
 		{
+			@Override
 			public FieldOutline generate(ClassOutlineImpl outline, CPropertyInfo wrappingPropertyInfo)
 			{
 				return new WrappingCollectionField(outline, wrappedPropertyInfo, wrappingPropertyInfo);
@@ -117,6 +119,7 @@ public class WrapCollectionHeteroElement implements CreatePropertyInfos
 		};
 		wrappedPropertyInfo.realization = new FieldRenderer()
 		{
+			@Override
 			public FieldOutline generate(ClassOutlineImpl outline, CPropertyInfo wrappedPropertyInfo)
 			{
 				return new WrappedCollectionField(outline, wrappedPropertyInfo, wrappingPropertyInfo);
@@ -139,6 +142,7 @@ public class WrapCollectionHeteroElement implements CreatePropertyInfos
 			// this.core = core;
 		}
 
+		@Override
 		public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo propertyInfo)
 		{
 			// final FieldOutline coreFieldOutline =

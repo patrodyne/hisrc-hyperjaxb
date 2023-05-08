@@ -44,6 +44,7 @@ public class WrapSingleSubstitutedElementReference implements CreatePropertyInfo
 {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, final CPropertyInfo draftPropertyInfo)
 	{
 		assert draftPropertyInfo instanceof CReferencePropertyInfo;
@@ -66,6 +67,7 @@ public class WrapSingleSubstitutedElementReference implements CreatePropertyInfo
 		value.getTypes().add(typeRef);
 		name.realization = new FieldRenderer()
 		{
+			@Override
 			public FieldOutline generate(ClassOutlineImpl context, CPropertyInfo prop)
 			{
 				final JAXBElementNameField fieldOutline = new JAXBElementNameField(context, prop, propertyInfo, value,
@@ -76,6 +78,7 @@ public class WrapSingleSubstitutedElementReference implements CreatePropertyInfo
 		};
 		value.realization = new FieldRenderer()
 		{
+			@Override
 			public FieldOutline generate(ClassOutlineImpl context, CPropertyInfo prop)
 			{
 				final JAXBElementValueField fieldOutline = new JAXBElementValueField(context, prop, propertyInfo, name,

@@ -233,6 +233,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	 * Sets up the verbose and debug mode depending on mvn logging level, and
 	 * sets up hyperjaxb logging.
 	 */
+	@Override
 	protected void setupLogging()
 	{
 		super.setupLogging();
@@ -256,6 +257,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	/**
 	 * Logs options defined directly as mojo parameters.
 	 */
+	@Override
 	protected void logConfiguration() throws MojoExecutionException
 	{
 		super.logConfiguration();
@@ -296,6 +298,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 		}
 	}
 
+	@Override
 	protected List<String> getArguments()
 	{
 		final List<String> arguments = new ArrayList<String>();
@@ -452,6 +455,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	 * Updates XJC's compilePath and resources and update hyperjaxb's
 	 * resources, that is, *.hbm.xml files and hibernate.config.xml file.
 	 */
+	@Override
 	protected void setupMavenPaths()
 	{
 		super.setupMavenPaths();

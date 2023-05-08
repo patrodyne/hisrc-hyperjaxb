@@ -27,6 +27,7 @@ public abstract class PrimitiveItem<T, V> implements Equals, HashCode, Item<V>
 	@Transient
 	private boolean isValueSet() { return (value != null); }
 
+	@Override
 	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy)
 	{
 		if (!(object instanceof PrimitiveItem))
@@ -50,12 +51,14 @@ public abstract class PrimitiveItem<T, V> implements Equals, HashCode, Item<V>
 		return strategy.equals(lhsValueLocator, rhsValueLocator, lhsValue, rhsValue, lhsValueSet, rhsValueSet);
 	}
 
+	@Override
 	public boolean equals(Object object)
 	{
 		final EqualsStrategy strategy = JAXBEqualsStrategy.getInstance();
 		return equals(null, null, object, strategy);
 	}
 
+	@Override
 	public int hashCode(ObjectLocator locator, HashCodeStrategy hashCodeStrategy)
 	{
 		T theValue = this.getValue();
@@ -64,6 +67,7 @@ public abstract class PrimitiveItem<T, V> implements Equals, HashCode, Item<V>
 		return hashCodeStrategy.hashCode(theValueLocator, 0, theValue, theValueSet);
 	}
 
+	@Override
 	public int hashCode()
 	{
 		return hashCode(null, JAXBHashCodeStrategy.getInstance());

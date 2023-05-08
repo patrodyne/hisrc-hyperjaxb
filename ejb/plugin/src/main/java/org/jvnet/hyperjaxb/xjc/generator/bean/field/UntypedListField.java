@@ -73,7 +73,8 @@ public class UntypedListField extends AbstractListField {
         generate();
     }
 
-    protected final JClass getCoreListType() {
+    @Override
+	protected final JClass getCoreListType() {
         return coreList;
     }
 
@@ -115,7 +116,8 @@ public class UntypedListField extends AbstractListField {
             .append(listPossibleTypes(prop));
     }
 
-    public Accessor create(JExpression targetObject) {
+    @Override
+	public Accessor create(JExpression targetObject) {
         return new Accessor(targetObject);
     }
 
@@ -124,7 +126,8 @@ public class UntypedListField extends AbstractListField {
             super($target);
         }
 
-        public void toRawValue(JBlock block, JVar $var) {
+        @Override
+		public void toRawValue(JBlock block, JVar $var) {
             // [RESULT]
             // $<var>.addAll(bean.getLIST());
             // list.toArray( array );
@@ -133,7 +136,8 @@ public class UntypedListField extends AbstractListField {
             ));
         }
 
-        public void fromRawValue(JBlock block, String uniqueName, JExpression $var) {
+        @Override
+		public void fromRawValue(JBlock block, String uniqueName, JExpression $var) {
             // [RESULT]
             // bean.getLIST().addAll($<var>);
             JVar $list = block.decl(listT,uniqueName+'l',$target.invoke($get));

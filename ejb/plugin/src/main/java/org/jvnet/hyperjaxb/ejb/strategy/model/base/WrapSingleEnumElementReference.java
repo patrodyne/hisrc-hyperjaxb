@@ -25,6 +25,7 @@ import jakarta.enterprise.inject.Alternative;
 @Priority(APPLICATION + 1)
 public class WrapSingleEnumElementReference implements CreatePropertyInfos
 {
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		assert propertyInfo instanceof CReferencePropertyInfo;

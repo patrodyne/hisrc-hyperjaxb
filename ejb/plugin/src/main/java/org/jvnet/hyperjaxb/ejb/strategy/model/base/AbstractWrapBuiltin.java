@@ -25,6 +25,7 @@ public abstract class AbstractWrapBuiltin implements CreatePropertyInfos
 
 	public abstract CreatePropertyInfos getCreatePropertyInfos(ProcessModel context, CPropertyInfo propertyInfo);
 	
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		// Single

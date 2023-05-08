@@ -50,6 +50,7 @@ public class DefaultIgnoring implements Ignoring
 
 	@Inject
 	private Customizing customizing;
+	@Override
 	public Customizing getCustomizing() { return customizing; }
 	public void setCustomizing(Customizing customizing) { this.customizing = customizing; }
 
@@ -58,6 +59,7 @@ public class DefaultIgnoring implements Ignoring
 		return getCustomizing().findCustomizations(model, name);
 	}
 	
+	@Override
 	public boolean isPackageOutlineIgnored(Mapping context, Outline outline, PackageOutline packageOutline)
 	{
 		for (IgnoredPackage ignoredPackage : findCustomizations(outline.getModel(), IGNORED_PACKAGE_ELEMENT_NAME))
@@ -68,6 +70,7 @@ public class DefaultIgnoring implements Ignoring
 		return false;
 	}
 
+	@Override
 	public boolean isPackageInfoIgnored(ProcessModel context, Model model, Package packageInfo)
 	{
 		for (IgnoredPackage ignoredPackage : findCustomizations(model, IGNORED_PACKAGE_ELEMENT_NAME))
@@ -78,6 +81,7 @@ public class DefaultIgnoring implements Ignoring
 		return false;
 	}
 	
+	@Override
 	public boolean isClassOutlineIgnored(Mapping context, ClassOutline classOutline)
 	{
 		if (isPackageOutlineIgnored(context, classOutline.parent(), classOutline._package()))
@@ -102,6 +106,7 @@ public class DefaultIgnoring implements Ignoring
 			return false;
 	}
 
+	@Override
 	public boolean isFieldOutlineIgnored(Mapping context, FieldOutline fieldOutline)
 	{
 		if (isClassOutlineIgnored(context, fieldOutline.parent()))
@@ -160,6 +165,7 @@ public class DefaultIgnoring implements Ignoring
 		Customizations.markAsAcknowledged(classInfo);
 	}
 	
+	@Override
 	public boolean isClassInfoIgnored(ProcessModel context, CClassInfo classInfo)
 	{
 		if (isPackageInfoIgnored(context, classInfo.model, getPackageInfo(classInfo)))
@@ -189,6 +195,7 @@ public class DefaultIgnoring implements Ignoring
 		Customizations.markAsAcknowledged(propertyInfo);
 	}
 	
+	@Override
 	public boolean isPropertyInfoIgnored(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		if (propertyInfo.parent() instanceof CClassInfo	&& isClassInfoIgnored(context, (CClassInfo) propertyInfo.parent()))

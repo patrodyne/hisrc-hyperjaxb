@@ -358,6 +358,7 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 		return transform(MapKeyJoinColumns.class, jakarta.persistence.MapKeyJoinColumn.class, source,
 			new Transformer<MapKeyJoinColumn, XAnnotation<jakarta.persistence.MapKeyJoinColumn>>()
 			{
+				@Override
 				public XAnnotation<jakarta.persistence.MapKeyJoinColumn> transform(MapKeyJoinColumn input)
 				{
 					return createMapKeyJoinColumn(input);
@@ -428,6 +429,7 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 				new XEnumAnnotationValue<EnumType>(jakarta.persistence.EnumType.valueOf(source))));
 	}
 
+	@Override
 	public Collection<XAnnotation<?>> createAttributeAnnotations(Object attribute)
 	{
 		if (attribute instanceof ElementCollection)

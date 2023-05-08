@@ -27,12 +27,14 @@ public abstract class AbstractAdaptEnumPropertyInfo extends
 		return propertyInfo.getName(true) + "Item";
 	}
 
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context,
 			final CPropertyInfo core) {
 		final CPropertyInfo newPropertyInfo = createPropertyInfo(context, core);
 
 		newPropertyInfo.realization = new FieldRenderer() {
 
+			@Override
 			public FieldOutline generate(ClassOutlineImpl classOutline,
 					CPropertyInfo propertyInfo) {
 				return generateField(core, classOutline, propertyInfo);

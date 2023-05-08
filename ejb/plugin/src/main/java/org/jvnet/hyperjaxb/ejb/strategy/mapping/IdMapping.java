@@ -7,6 +7,7 @@ import ee.jakarta.xml.ns.persistence.orm.Id;
 
 public class IdMapping implements FieldOutlineMapping<Id> {
 
+	@Override
 	public Id process(Mapping context, FieldOutline fieldOutline) {
 
 		final Id id = context.getCustomizing().getId(fieldOutline);

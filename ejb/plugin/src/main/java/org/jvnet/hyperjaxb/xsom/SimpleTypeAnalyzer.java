@@ -77,56 +77,69 @@ public class SimpleTypeAnalyzer {
 	public static abstract class FacetAnalyzer<T> implements XSFunction<T>,
 			XSSimpleTypeFunction<T> {
 
+		@Override
 		public T annotation(XSAnnotation arg0) {
 			return null;
 		}
 
+		@Override
 		public T attGroupDecl(XSAttGroupDecl arg0) {
 			return null;
 		}
 
+		@Override
 		public T attributeDecl(XSAttributeDecl attributeDecl) {
 			return attributeDecl.getType()
 					.apply((XSSimpleTypeFunction<T>) this);
 		}
 
+		@Override
 		public T attributeUse(XSAttributeUse attributeUse) {
 			return attributeUse.getDecl().apply(this);
 		}
 
+		@Override
 		public T complexType(XSComplexType arg0) {
 			return null;
 		}
 
+		@Override
 		public T identityConstraint(XSIdentityConstraint arg0) {
 			return null;
 		}
 
+		@Override
 		public T notation(XSNotation arg0) {
 			return null;
 		}
 
+		@Override
 		public T schema(XSSchema arg0) {
 			return null;
 		}
 
+		@Override
 		public T xpath(XSXPath arg0) {
 			return null;
 		}
 
+		@Override
 		public T empty(XSContentType arg0) {
 			return null;
 		}
 
+		@Override
 		public T particle(XSParticle particle) {
 			return particle.getTerm().apply(this);
 		}
 
+		@Override
 		public T simpleType(XSSimpleType simpleType) {
 
 			return simpleType.apply((XSSimpleTypeFunction<T>) this);
 		}
 
+		@Override
 		public T restrictionSimpleType(
 				XSRestrictionSimpleType restrictionSimpleType) {
 
@@ -147,11 +160,13 @@ public class SimpleTypeAnalyzer {
 			return aggregate(values);
 		}
 
+		@Override
 		public T listSimpleType(XSListSimpleType listSimpleType) {
 			return listSimpleType.getItemType().apply(
 					(XSSimpleTypeFunction<T>) this);
 		}
 
+		@Override
 		public T unionSimpleType(XSUnionSimpleType unionSimpleType) {
 			final List<T> values = new ArrayList<T>(unionSimpleType
 					.getMemberSize());
@@ -162,18 +177,22 @@ public class SimpleTypeAnalyzer {
 			return aggregate(values);
 		}
 
+		@Override
 		public T elementDecl(XSElementDecl elementDecl) {
 			return elementDecl.getType().apply(this);
 		}
 
+		@Override
 		public T modelGroup(XSModelGroup arg0) {
 			return null;
 		}
 
+		@Override
 		public T modelGroupDecl(XSModelGroupDecl arg0) {
 			return null;
 		}
 
+		@Override
 		public T wildcard(XSWildcard arg0) {
 			return null;
 		}
@@ -206,6 +225,7 @@ public class SimpleTypeAnalyzer {
 		protected abstract T aggregateNonNulls(final T currentValue,
 				final T value);
 
+		@Override
 		public abstract T facet(XSFacet facet);
 	}
 
@@ -236,6 +256,7 @@ public class SimpleTypeAnalyzer {
 	}
 
 	public static class MinLengthAnalyzer extends AbstractLongFacetAnalyzer {
+		@Override
 		public Long facet(XSFacet facet) {
 			if (XSFacet.FACET_MINLENGTH.equals(facet.getName())) {
 				return getValue(facet);
@@ -253,6 +274,7 @@ public class SimpleTypeAnalyzer {
 	}
 
 	public static class MaxLengthAnalyzer extends AbstractLongFacetAnalyzer {
+		@Override
 		public Long facet(XSFacet facet) {
 			if (XSFacet.FACET_MAXLENGTH.equals(facet.getName())
 
@@ -272,6 +294,7 @@ public class SimpleTypeAnalyzer {
 	}
 
 	public static class LengthAnalyzer extends AbstractLongFacetAnalyzer {
+		@Override
 		public Long facet(XSFacet facet) {
 			if (XSFacet.FACET_LENGTH.equals(facet.getName())
 

@@ -30,6 +30,7 @@ public class EmbeddedAssociationMappingWrapper implements AssociationMapping {
 		this.parentFieldOutline = parentFieldOutline;
 	}
 
+	@Override
 	public Collection<FieldOutline> getSourceIdFieldsOutline(Mapping context,
 			FieldOutline fieldOutline) {
 		final ClassOutline classOutline = parentFieldOutline.parent();
@@ -37,12 +38,14 @@ public class EmbeddedAssociationMappingWrapper implements AssociationMapping {
 		return getIdFieldsOutline(classOutline);
 	}
 
+	@Override
 	public Collection<FieldOutline> getTargetIdFieldsOutline(Mapping context,
 			FieldOutline fieldOutline) {
 		return associationMapping.getTargetIdFieldsOutline(context,
 				fieldOutline);
 	}
 
+	@Override
 	public void createPrimaryKeyJoinColumns(Mapping context,
 			FieldOutline fieldOutline,
 			Collection<FieldOutline> idFieldOutlines,
@@ -51,6 +54,7 @@ public class EmbeddedAssociationMappingWrapper implements AssociationMapping {
 				idFieldOutlines, primaryKeyJoinColumns);
 	}
 
+	@Override
 	public void createJoinColumns(Mapping context, FieldOutline fieldOutline,
 			Collection<FieldOutline> idFieldOutlines,
 			List<JoinColumn> joinColumns) {
@@ -58,6 +62,7 @@ public class EmbeddedAssociationMappingWrapper implements AssociationMapping {
 				idFieldOutlines, joinColumns);
 	}
 
+	@Override
 	public void createJoinTable(Mapping context, FieldOutline fieldOutline,
 			Collection<FieldOutline> sourceIdFieldOutlines,
 			Collection<FieldOutline> targetIdFieldOutlines, JoinTable joinTable) {
@@ -65,6 +70,7 @@ public class EmbeddedAssociationMappingWrapper implements AssociationMapping {
 				sourceIdFieldOutlines, targetIdFieldOutlines, joinTable);
 	}
 
+	@Override
 	public void createOrderColumn(Mapping context, FieldOutline fieldOutline,
 			OrderColumn orderColumn) {
 		associationMapping
@@ -96,6 +102,7 @@ public class EmbeddedAssociationMappingWrapper implements AssociationMapping {
 		return idFieldOutlines;
 	}
 
+	@Override
 	public void createElementCollection$CollectionTable$JoinColumns(
 			Mapping context, FieldOutline fieldOutline,
 			Collection<FieldOutline> idFieldOutlines,
@@ -104,6 +111,7 @@ public class EmbeddedAssociationMappingWrapper implements AssociationMapping {
 				context, fieldOutline, idFieldOutlines, joinColumns);
 	}
 
+	@Override
 	public void createElementCollection$OrderColumn(Mapping context,
 			FieldOutline fieldOutline, OrderColumn orderColumn) {
 		associationMapping.createElementCollection$OrderColumn(context,
@@ -111,6 +119,7 @@ public class EmbeddedAssociationMappingWrapper implements AssociationMapping {
 
 	}
 
+	@Override
 	public void createAssociationOverride(Mapping context,
 			FieldOutline fieldOutline,
 			List<AssociationOverride> associationOverrides) {
@@ -118,6 +127,7 @@ public class EmbeddedAssociationMappingWrapper implements AssociationMapping {
 				associationOverrides);
 	}
 
+	@Override
 	public AssociationMapping createEmbeddedAssociationMapping(
 			FieldOutline fieldOutline) {
 		return new EmbeddedAssociationMappingWrapper(this, parentFieldOutline);

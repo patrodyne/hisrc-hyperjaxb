@@ -14,6 +14,7 @@ public class XmlAdapterConverter<I, O> implements Converter<I, O> {
 		this.adapter = adapter;
 	}
 
+	@Override
 	public I direct(O outer) {
 		if (outer == null) {
 			return null;
@@ -26,6 +27,7 @@ public class XmlAdapterConverter<I, O> implements Converter<I, O> {
 		}
 	}
 
+	@Override
 	public O inverse(I inner) {
 		if (inner == null) {
 			return null;

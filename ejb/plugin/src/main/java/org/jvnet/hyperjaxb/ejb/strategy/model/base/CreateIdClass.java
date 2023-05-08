@@ -40,6 +40,7 @@ import jakarta.enterprise.inject.Alternative;
 @ModelBase
 public class CreateIdClass implements CreateIdClassProcessor
 {
+	@Override
 	public Collection<CClassInfo> process(final ProcessModel context, CClassInfo classInfo)
 	{
 		final XSComponent component = classInfo.getSchemaComponent();
@@ -65,6 +66,7 @@ public class CreateIdClass implements CreateIdClassProcessor
 			{
 				idClassInfo.addProperty(propertyInfo.accept(new CPropertyVisitor<CPropertyInfo>()
 				{
+					@Override
 					public CPropertyInfo onAttribute(CAttributePropertyInfo propertyInfo)
 					{
 						return new CAttributePropertyInfo(propertyInfo.getName(true), propertyInfo.getSchemaComponent(),
@@ -73,6 +75,7 @@ public class CreateIdClass implements CreateIdClassProcessor
 							false);
 					}
 
+					@Override
 					public CPropertyInfo onElement(CElementPropertyInfo propertyInfo)
 					{
 						final CElementPropertyInfo elementPropertyInfo = new CElementPropertyInfo(
@@ -84,6 +87,7 @@ public class CreateIdClass implements CreateIdClassProcessor
 						return elementPropertyInfo;
 					}
 
+					@Override
 					public CPropertyInfo onReference(CReferencePropertyInfo propertyInfo)
 					{
 						final CReferencePropertyInfo referencePropertyInfo = new CReferencePropertyInfo(
@@ -95,6 +99,7 @@ public class CreateIdClass implements CreateIdClassProcessor
 						return referencePropertyInfo;
 					}
 
+					@Override
 					public CPropertyInfo onValue(CValuePropertyInfo propertyInfo)
 					{
 						return new CValuePropertyInfo(propertyInfo.getName(true), propertyInfo.getSchemaComponent(),

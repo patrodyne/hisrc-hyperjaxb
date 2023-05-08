@@ -6,6 +6,7 @@ import ee.jakarta.xml.ns.persistence.orm.Embedded;
 
 public class EmbeddedMapping implements FieldOutlineMapping<Embedded>
 {
+	@Override
 	public Embedded process(Mapping context, FieldOutline fieldOutline)
 	{
 		final Embedded embedded = context.getCustomizing().getEmbedded(fieldOutline);

@@ -156,6 +156,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 		return transform(NamedQueries.class, jakarta.persistence.NamedQuery.class, cNamedQueries,
 			new Transformer<NamedQuery, XAnnotation<jakarta.persistence.NamedQuery>>()
 			{
+				@Override
 				public XAnnotation<jakarta.persistence.NamedQuery> transform(NamedQuery input)
 				{
 					return createNamedQuery(input);
@@ -174,6 +175,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 	{
 		return transform(cQueryHints, new Transformer<QueryHint, XAnnotation<jakarta.persistence.QueryHint>>()
 		{
+			@Override
 			public XAnnotation<jakarta.persistence.QueryHint> transform(QueryHint input)
 			{
 				return createQueryHint(input);
@@ -199,6 +201,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 		return transform(NamedNativeQueries.class, jakarta.persistence.NamedNativeQuery.class, cNamedNativeQueries,
 			new Transformer<NamedNativeQuery, XAnnotation<jakarta.persistence.NamedNativeQuery>>()
 			{
+				@Override
 				public XAnnotation<jakarta.persistence.NamedNativeQuery> transform(NamedNativeQuery input)
 				{
 					return createNamedNativeQuery(input);
@@ -224,6 +227,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 			cSqlResultSetMappings,
 			new Transformer<SqlResultSetMapping, XAnnotation<jakarta.persistence.SqlResultSetMapping>>()
 			{
+				@Override
 				public XAnnotation<jakarta.persistence.SqlResultSetMapping> transform(SqlResultSetMapping input)
 				{
 					return createSqlResultSetMapping(input);
@@ -246,6 +250,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 	{
 		return transform(cEntityResults, new Transformer<EntityResult, XAnnotation<jakarta.persistence.EntityResult>>()
 		{
+			@Override
 			public XAnnotation<jakarta.persistence.EntityResult> transform(EntityResult cEntityResult)
 			{
 				return createEntityResult(cEntityResult);
@@ -264,6 +269,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 	{
 		return transform(cFieldResults, new Transformer<FieldResult, XAnnotation<jakarta.persistence.FieldResult>>()
 		{
+			@Override
 			public XAnnotation<jakarta.persistence.FieldResult> transform(FieldResult cFieldResult)
 			{
 				return createFieldResult(cFieldResult);
@@ -281,6 +287,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 	{
 		return transform(cColumnResults, new Transformer<ColumnResult, XAnnotation<jakarta.persistence.ColumnResult>>()
 		{
+			@Override
 			public XAnnotation<jakarta.persistence.ColumnResult> transform(ColumnResult cColumnResult)
 			{
 				return createColumnResult(cColumnResult);
@@ -321,6 +328,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 		return transform(SecondaryTables.class, jakarta.persistence.SecondaryTable.class, cSecondaryTables,
 			new Transformer<SecondaryTable, XAnnotation<jakarta.persistence.SecondaryTable>>()
 			{
+				@Override
 				public XAnnotation<jakarta.persistence.SecondaryTable> transform(SecondaryTable input)
 				{
 					return createSecondaryTable(input);
@@ -341,6 +349,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 		return transform(cUniqueConstraints,
 			new Transformer<UniqueConstraint, XAnnotation<jakarta.persistence.UniqueConstraint>>()
 			{
+				@Override
 				public XAnnotation<jakarta.persistence.UniqueConstraint> transform(UniqueConstraint input)
 				{
 					return createUniqueConstraint(input);
@@ -380,6 +389,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 	{
 		return transform(cJoinColumns, new Transformer<JoinColumn, XAnnotation<jakarta.persistence.JoinColumn>>()
 		{
+			@Override
 			public XAnnotation<jakarta.persistence.JoinColumn> transform(JoinColumn input)
 			{
 				return createJoinColumn(input);
@@ -393,6 +403,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 		return transform(JoinColumns.class, jakarta.persistence.JoinColumn.class, cJoinColumns,
 			new Transformer<JoinColumn, XAnnotation<jakarta.persistence.JoinColumn>>()
 			{
+				@Override
 				public XAnnotation<jakarta.persistence.JoinColumn> transform(JoinColumn input)
 				{
 					return createJoinColumn(input);
@@ -400,6 +411,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 			});
 	}
 
+	@Override
 	public Collection<XAnnotation<?>> createAttributeAnnotations(Object attribute)
 	{
 		if (attribute == null)
@@ -489,6 +501,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 		return transform(cAttributeOverrides,
 			new Transformer<AttributeOverride, XAnnotation<jakarta.persistence.AttributeOverride>>()
 			{
+				@Override
 				public XAnnotation<jakarta.persistence.AttributeOverride> transform(AttributeOverride input)
 				{
 					return createAttributeOverride(input);
@@ -503,6 +516,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 			cAttributeOverrides,
 			new Transformer<AttributeOverride, XAnnotation<jakarta.persistence.AttributeOverride>>()
 			{
+				@Override
 				public XAnnotation<jakarta.persistence.AttributeOverride> transform(AttributeOverride input)
 				{
 					return createAttributeOverride(input);
@@ -527,6 +541,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 			cAssociationOverrides,
 			new Transformer<AssociationOverride, XAnnotation<jakarta.persistence.AssociationOverride>>()
 			{
+				@Override
 				public XAnnotation<jakarta.persistence.AssociationOverride> transform(AssociationOverride input)
 				{
 					return createAssociationOverride(input);
@@ -722,6 +737,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 		return transform(cPrimaryKeyJoinColumn,
 			new Transformer<PrimaryKeyJoinColumn, XAnnotation<jakarta.persistence.PrimaryKeyJoinColumn>>()
 			{
+				@Override
 				public XAnnotation<jakarta.persistence.PrimaryKeyJoinColumn> transform(PrimaryKeyJoinColumn input)
 				{
 					return createPrimaryKeyJoinColumn(input);
@@ -736,6 +752,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 			cPrimaryKeyJoinColumn,
 			new Transformer<PrimaryKeyJoinColumn, XAnnotation<jakarta.persistence.PrimaryKeyJoinColumn>>()
 			{
+				@Override
 				public XAnnotation<jakarta.persistence.PrimaryKeyJoinColumn> transform(PrimaryKeyJoinColumn input)
 				{
 					return createPrimaryKeyJoinColumn(input);
@@ -798,6 +815,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 	// ==================================================================
 
 	// JSR220-EJB30: 10.1.3
+	@Override
 	public Collection<XAnnotation<?>> createEntityAnnotations(Entity cEntity)
 	{
 		return cEntity == null ? Collections.<XAnnotation<?>> emptyList() : annotations(createEntity(cEntity),
@@ -907,6 +925,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 	}
 
 	// JSR220-EJB30: 10.1.4
+	@Override
 	public Collection<XAnnotation<?>> createMappedSuperclassAnnotations(MappedSuperclass cMappedSuperclass)
 	{
 		return cMappedSuperclass == null ? Collections.<XAnnotation<?>> emptyList() : annotations(
@@ -925,6 +944,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 	}
 
 	// JSR220-EJB30: 10.1.4
+	@Override
 	public Collection<XAnnotation<?>> createEmbeddableAnnotations(Embeddable cEmbeddable)
 	{
 		return cEmbeddable == null	? Collections.<XAnnotation<?>> emptyList()

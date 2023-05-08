@@ -21,6 +21,7 @@ public class DefaultItemList<ListType, ItemType extends Item<ListType>>
 		return itemClass;
 	}
 
+	@Override
 	public ItemType create(ListType item)
 	{
 		return ItemUtils.create(getItemClass(), item);

@@ -41,67 +41,83 @@ public class CExternalLeafInfo implements CNonElement, Location {
 		this.adapter = adapter;
 	}
 
+	@Override
 	public JType toType(Outline o, Aspect aspect) {
 		return type.toType(o, aspect);
 	}
 
+	@Override
 	public boolean isCollection() {
 		return false;
 	}
 
+	@Override
 	public ID idUse() {
 		return ID.NONE;
 	}
 
+	@Override
 	public MimeType getExpectedMimeType() {
 		return null;
 	}
 
+	@Override
 	public final CAdapter getAdapterUse() {
 		return adapter;
 	}
 
+	@Override
 	public final CExternalLeafInfo getInfo() {
 		return this;
 	}
 
+	@Override
 	public Locator getLocator() {
 		return Constants.EMPTY_LOCATOR;
 	}
 
+	@Override
 	public final XSComponent getSchemaComponent() {
 		throw new UnsupportedOperationException(
 				"TODO. If you hit this, let us know.");
 	}
 
+	@Override
 	public QName getTypeName() {
 		return typeName;
 	}
 
+	@Override
 	public boolean isSimpleType() {
 		return true;
 	}
 
+	@Override
 	public boolean canBeReferencedByIDREF() {
 		return false;
 	}
 
+	@Override
 	public NType getType() {
 		return type;
 	}
 
+	@Override
 	public Location getLocation() {
 		return this;
 	}
 
+	@Override
 	public Locatable getUpstream() {
 		return null;
 	}
 
+	@Override
 	public JExpression createConstant(Outline arg0, XmlString arg1) {
 		return null;
 	}
 
+	@Override
 	public CCustomizations getCustomizations() {
 		return CCustomizations.EMPTY;
 	}

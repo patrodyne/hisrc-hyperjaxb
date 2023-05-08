@@ -20,6 +20,7 @@ import jakarta.enterprise.inject.Alternative;
 @Variant(type = Variant.Type.JPA)
 public class EmbeddableAttributesMapping implements ClassOutlineMapping<EmbeddableAttributes>
 {
+	@Override
 	public EmbeddableAttributes process(Mapping context, ClassOutline classOutline)
 	{
 		final Attributes attributes = context.getAttributesMapping().process(context, classOutline);

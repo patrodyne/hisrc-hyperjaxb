@@ -10,6 +10,7 @@ import ee.jakarta.xml.ns.persistence.Persistence.PersistenceUnit;
 
 public class ClassPersistenceUnitFactory implements PersistenceUnitFactory{
 
+	@Override
 	public PersistenceUnit createPersistenceUnit(
 			final Collection<ClassOutline> includedClasses) {
 		final PersistenceUnit persistenceUnit = new PersistenceUnit();

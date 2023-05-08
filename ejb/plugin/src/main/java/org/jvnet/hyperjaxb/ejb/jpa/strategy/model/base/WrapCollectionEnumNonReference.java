@@ -21,6 +21,7 @@ import jakarta.enterprise.inject.Alternative;
 @Priority(APPLICATION + 1)
 public class WrapCollectionEnumNonReference implements CreatePropertyInfos
 {
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		// Single

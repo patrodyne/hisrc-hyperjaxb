@@ -57,6 +57,7 @@ public class AdaptBuiltinTypeUse implements AdaptTypeUse
 	 * TypeUse is returned; otherwise, the current TypeUse from the context is
 	 * returned.
 	 */
+	@Override
 	public TypeUse process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		// propertyInfo.g

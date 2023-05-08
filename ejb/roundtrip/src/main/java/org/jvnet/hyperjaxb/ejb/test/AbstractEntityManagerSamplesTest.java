@@ -35,6 +35,7 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 		this.samplesTest = samplesTest;
 	}
 
+	@Override
 	public String getContextPath()
 	{
 		return getClass().getPackage().getName();

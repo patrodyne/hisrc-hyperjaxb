@@ -20,6 +20,7 @@ public class AnnotatingVisitor implements
 		this.annotationUse = annotationUse;
 	}
 
+	@Override
 	public JAnnotationUse visitSingleAnnotationField(
 			XSingleAnnotationField<?> field) {
 		final XAnnotationValue<?> annotationValue = field.getAnnotationValue();
@@ -28,6 +29,7 @@ public class AnnotatingVisitor implements
 		return this.annotationUse;
 	}
 
+	@Override
 	public JAnnotationUse visitArrayAnnotationField(
 			XArrayAnnotationField<?> field) {
 

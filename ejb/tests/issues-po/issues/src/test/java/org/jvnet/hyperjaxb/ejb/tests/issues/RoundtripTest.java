@@ -12,16 +12,19 @@ public class RoundtripTest
 //		return poObjectFactory.getClassLoader();
 //	}
 	
+	@Override
 	public String getContextPath()
 	{
 		return "org.jvnet.hyperjaxb.ejb.tests.issuesignored:org.jvnet.hyperjaxb.ejb.tests.issues:org.jvnet.hyperjaxb.ejb.tests.po";
 	}
 
+	@Override
 	public String getPersistenceUnitName()
 	{
 		return "org.jvnet.hyperjaxb.ejb.tests.issues";
 	}
 
+	@Override
 	public Boolean isValidateXml()
 	{
 		return false;

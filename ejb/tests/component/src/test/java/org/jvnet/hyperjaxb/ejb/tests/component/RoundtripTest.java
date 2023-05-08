@@ -6,12 +6,14 @@ public class RoundtripTest
     extends org.jvnet.hyperjaxb.ejb.test.RoundtripTest
     implements ContextPathAware
 {
-    public String getContextPath()
+    @Override
+	public String getContextPath()
 	{
         return "org.jvnet.hyperjaxb.tests.component";
     }
 
-    public String getPersistenceUnitName()
+    @Override
+	public String getPersistenceUnitName()
 	{
         return "org.jvnet.hyperjaxb.tests.component";
     }

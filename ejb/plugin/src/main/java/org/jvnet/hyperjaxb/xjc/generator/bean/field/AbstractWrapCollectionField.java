@@ -140,10 +140,12 @@ public abstract class AbstractWrapCollectionField extends AbstractField {
 		return implType;
 	}
 
+	@Override
 	public FieldAccessor create(JExpression targetObject) {
 		return new Accessor(targetObject);
 	}
 
+	@Override
 	public final JType getRawType() {
 		return propertyExposedType;
 	}
@@ -154,19 +156,23 @@ public abstract class AbstractWrapCollectionField extends AbstractField {
 			super($target);
 		}
 
+		@Override
 		public void unsetValues(JBlock body) {
 			body.assign(propertyField, JExpr._null());
 		}
 
+		@Override
 		public JExpression hasSetValue() {
 			return propertyField.ne(JExpr._null()).cand(
 					propertyField.invoke("isEmpty").not());
 		}
 
+		@Override
 		public final void toRawValue(JBlock block, JVar $var) {
 			block.assign($var, $target.invoke(getter));
 		}
 
+		@Override
 		public final void fromRawValue(JBlock block, String uniqueName,
 				JExpression $var) {
 			block.invoke($target, setter).arg($var);

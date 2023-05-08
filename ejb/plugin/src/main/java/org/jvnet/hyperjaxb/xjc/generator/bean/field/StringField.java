@@ -18,6 +18,7 @@ public class StringField extends SingleWrappingField {
 		return source._instanceof(codeModel.ref(String.class));
 	}
 
+	@Override
 	public JExpression wrapCondifiton(JExpression source) {
 		return source.ne(JExpr._null());
 	}

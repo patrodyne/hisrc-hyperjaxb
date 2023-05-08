@@ -245,7 +245,8 @@ public class TypeUtil {
      * Compares {@link JType} objects by their names.
      */
     private static final Comparator<JType> typeComparator = new Comparator<JType>() {
-        public int compare(JType t1, JType t2) {
+        @Override
+		public int compare(JType t1, JType t2) {
             return t1.fullName().compareTo(t2.fullName());
         }
     };

@@ -82,11 +82,13 @@ public abstract class AbstractField implements FieldOutline {
         this.exposedType = getType(Aspect.EXPOSED);
     }
 
-    public final ClassOutline parent() {
+    @Override
+	public final ClassOutline parent() {
         return outline;
     }
 
-    public final CPropertyInfo getPropertyInfo() {
+    @Override
+	public final CPropertyInfo getPropertyInfo() {
         return prop;
     }
 
@@ -320,11 +322,13 @@ public abstract class AbstractField implements FieldOutline {
             this.$target = $target;
         }
 
-        public final FieldOutline owner() {
+        @Override
+		public final FieldOutline owner() {
             return AbstractField.this;
         }
 
-        public final CPropertyInfo getPropertyInfo() {
+        @Override
+		public final CPropertyInfo getPropertyInfo() {
             return prop;
         }
     }

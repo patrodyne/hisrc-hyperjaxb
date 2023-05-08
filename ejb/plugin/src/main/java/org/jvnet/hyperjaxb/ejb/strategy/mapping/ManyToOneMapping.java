@@ -12,6 +12,7 @@ import ee.jakarta.xml.ns.persistence.orm.ManyToOne;
 
 public class ManyToOneMapping implements FieldOutlineMapping<ManyToOne> {
 
+	@Override
 	public ManyToOne process(Mapping context, FieldOutline fieldOutline) {
 
 		final ManyToOne manyToOne = context.getCustomizing().getManyToOne(

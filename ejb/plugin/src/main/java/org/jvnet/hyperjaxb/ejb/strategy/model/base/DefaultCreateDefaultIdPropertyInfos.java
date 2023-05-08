@@ -37,15 +37,18 @@ import jakarta.xml.bind.JAXBElement;
 public class DefaultCreateDefaultIdPropertyInfos implements CreateDefaultIdPropertyInfos
 {
 	private boolean transientField;
+	@Override
 	public boolean isTransient()
 	{
 		return transientField;
 	}
+	@Override
 	public void setTransient(boolean transientField)
 	{
 		this.transientField = transientField;
 	}
 
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CClassInfo classInfo)
 	{
 		final CPropertyInfo propertyInfo = createPropertyInfo(context, classInfo);

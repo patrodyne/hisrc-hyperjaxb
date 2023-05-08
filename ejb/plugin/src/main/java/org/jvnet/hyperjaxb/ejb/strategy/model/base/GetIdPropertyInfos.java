@@ -23,6 +23,7 @@ import jakarta.enterprise.inject.Alternative;
 @ModelBase
 public class GetIdPropertyInfos implements GetIdPropertyInfoProcessor
 {
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CClassInfo classInfo)
 	{
 		final Collection<CPropertyInfo> ids = new LinkedList<CPropertyInfo>();

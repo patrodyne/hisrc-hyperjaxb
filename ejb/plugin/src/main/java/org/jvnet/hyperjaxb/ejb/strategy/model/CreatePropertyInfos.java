@@ -20,5 +20,6 @@ public interface CreatePropertyInfos
 	 *         Must not be &lt;code&gt;null&lt;/code&gt;, if nothing is created,
 	 *         return an empty collection instead.
 	 */
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo);
 }

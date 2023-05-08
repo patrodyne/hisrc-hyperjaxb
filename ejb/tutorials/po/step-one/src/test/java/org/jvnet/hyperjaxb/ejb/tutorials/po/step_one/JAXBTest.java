@@ -100,6 +100,7 @@ public class JAXBTest {
 		final List<ValidationEvent> events = new LinkedList<ValidationEvent>();
 
 		marshaller.setEventHandler(new ValidationEventHandler() {
+			@Override
 			public boolean handleEvent(ValidationEvent event) {
 				events.add(event);
 				return true;

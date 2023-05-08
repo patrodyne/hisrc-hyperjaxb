@@ -13,6 +13,7 @@ import ee.jakarta.xml.ns.persistence.orm.OneToMany;
 
 public class OneToManyMapping implements FieldOutlineMapping<OneToMany> {
 
+	@Override
 	public OneToMany process(Mapping context, FieldOutline fieldOutline) {
 
 		final OneToMany oneToMany = context.getCustomizing().getOneToMany(

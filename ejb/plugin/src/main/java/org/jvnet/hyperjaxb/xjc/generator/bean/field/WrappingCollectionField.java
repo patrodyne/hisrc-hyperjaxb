@@ -14,6 +14,7 @@ public class WrappingCollectionField extends AbstractWrapCollectionField {
 		super(context, wrappingProperty, wrappedProperty, wrappingProperty);
 	}
 
+	@Override
 	protected JFieldRef createField() {
 
 		final JFieldVar field = outline.implClass.field(JMod.PROTECTED

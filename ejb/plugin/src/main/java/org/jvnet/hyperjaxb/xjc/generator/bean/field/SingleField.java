@@ -113,10 +113,12 @@ public class SingleField extends AbstractFieldWithVar {
 				possibleTypes);
 	}
 
+	@Override
 	public final JType getFieldType() {
 		return implType;
 	}
 
+	@Override
 	public FieldAccessor create(JExpression targetObject) {
 		return new Accessor(targetObject);
 	}
@@ -126,10 +128,12 @@ public class SingleField extends AbstractFieldWithVar {
 			super($target);
 		}
 
+		@Override
 		public void unsetValues(JBlock body) {
 			body.assign($ref, JExpr._null());
 		}
 
+		@Override
 		public JExpression hasSetValue() {
 			return $ref.ne(JExpr._null());
 		}

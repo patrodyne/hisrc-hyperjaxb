@@ -21,6 +21,7 @@ import jakarta.enterprise.inject.Alternative;
 @ModelBase
 public class DefaultProcessClassInfo implements ProcessClassInfo
 {
+	@Override
 	public Collection<CClassInfo> process(ProcessModel context, CClassInfo classInfo)
 	{
 		final Collection<CPropertyInfo> newProperties = context.getProcessPropertyInfos().process(context, classInfo);

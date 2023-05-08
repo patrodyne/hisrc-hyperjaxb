@@ -19,10 +19,12 @@ public class ConvertedList<O, I> extends AbstractList<O> {
 		return converter.inverse(inner.get(index));
 	}
 
+	@Override
 	public O set(int index, O element) {
 		return converter.inverse(inner.set(index, converter.direct(element)));
 	}
 
+	@Override
 	public void add(int index, O element) {
 		inner.add(index, converter.direct(element));
 	}

@@ -36,6 +36,7 @@ import jakarta.xml.bind.JAXBElement;
 @ModelBase
 public class DefaultCreateDefaultVersionPropertyInfos implements CreateDefaultVersionPropertyInfos
 {
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CClassInfo classInfo)
 	{
 		final GeneratedVersion cversion = context.getCustomizing().getGeneratedVersion(classInfo);

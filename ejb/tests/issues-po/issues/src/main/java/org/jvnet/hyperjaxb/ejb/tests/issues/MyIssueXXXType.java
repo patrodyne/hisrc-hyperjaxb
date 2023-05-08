@@ -117,6 +117,7 @@ public class MyIssueXXXType implements Serializable, Equals, HashCode
 		this.hjid = value;
 	}
 
+	@Override
 	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
 			Object object, EqualsStrategy strategy) {
 		if (!(object instanceof MyIssueXXXType)) {
@@ -140,6 +141,7 @@ public class MyIssueXXXType implements Serializable, Equals, HashCode
 		return true;
 	}
 
+	@Override
 	public boolean equals(Object object) {
 		final EqualsStrategy strategy = JAXBEqualsStrategy.getInstance();
 		return equals(null, null, object, strategy);
@@ -149,6 +151,7 @@ public class MyIssueXXXType implements Serializable, Equals, HashCode
 		hashCodeBuilder.append(this.getValue());
 	}
 
+	@Override
 	public int hashCode(ObjectLocator locator, HashCodeStrategy strategy) {
 		int currentHashCode = 1;
 		{
@@ -161,6 +164,7 @@ public class MyIssueXXXType implements Serializable, Equals, HashCode
 		return currentHashCode;
 	}
 
+	@Override
 	public int hashCode() {
 		final HashCodeStrategy strategy = JAXBHashCodeStrategy.getInstance();
 		return this.hashCode(null, strategy);

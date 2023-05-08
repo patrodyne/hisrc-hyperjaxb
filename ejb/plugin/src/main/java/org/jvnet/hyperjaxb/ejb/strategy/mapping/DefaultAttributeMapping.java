@@ -36,6 +36,7 @@ import jakarta.persistence.EnumType;
 
 public final class DefaultAttributeMapping implements AttributeMapping {
 
+	@Override
 	public final Column createColumn(Mapping context,
 			FieldOutline fieldOutline, Column column) {
 
@@ -148,12 +149,14 @@ public final class DefaultAttributeMapping implements AttributeMapping {
 		return finalLength;
 	}
 
+	@Override
 	public boolean isTemporal(Mapping context, FieldOutline fieldOutline) {
 		final JMethod getter = FieldAccessorUtils.getter(fieldOutline);
 		final JType type = getter.type();
 		return JTypeUtils.isTemporalType(type);
 	}
 
+	@Override
 	public String createTemporalType(Mapping context, FieldOutline fieldOutline) {
 		final JMethod getter = FieldAccessorUtils.getter(fieldOutline);
 		final JType type = getter.type();
@@ -200,14 +203,17 @@ public final class DefaultAttributeMapping implements AttributeMapping {
 		}
 	}
 
+	@Override
 	public final boolean isLob(Mapping context, FieldOutline fieldOutline) {
 		return false;
 	}
 
+	@Override
 	public final Lob createLob(Mapping context, FieldOutline fieldOutline) {
 		return new Lob();
 	}
 
+	@Override
 	public final boolean isEnumerated(Mapping context, FieldOutline fieldOutline) {
 		final CPropertyInfo propertyInfo = fieldOutline.getPropertyInfo();
 
@@ -221,10 +227,12 @@ public final class DefaultAttributeMapping implements AttributeMapping {
 		return type instanceof CEnumLeafInfo;
 	}
 
+	@Override
 	public String createEnumerated(Mapping context, FieldOutline fieldOutline) {
 		return EnumType.STRING.name();
 	}
 
+	@Override
 	public void createAttributeOverride(Mapping context,
 			FieldOutline fieldOutline,
 			final List<AttributeOverride> attributeOverrides) {

@@ -11,6 +11,7 @@ import ee.jakarta.xml.ns.persistence.orm.OneToOne;
 
 public class OneToOneMapping implements FieldOutlineMapping<OneToOne> {
 
+	@Override
 	public OneToOne process(Mapping context, FieldOutline fieldOutline) {
 
 		final OneToOne oneToOne = context.getCustomizing().getOneToOne(

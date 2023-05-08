@@ -13,6 +13,7 @@ public class SingleWrappingField extends AdaptingWrappingField {
 		super(context, prop, core);
 	}
 
+	@Override
 	protected JExpression wrap(final JExpression target) {
 
 		if (xmlAdapterClass == null) {

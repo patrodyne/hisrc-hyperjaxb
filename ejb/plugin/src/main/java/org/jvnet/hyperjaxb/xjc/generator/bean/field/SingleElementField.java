@@ -106,18 +106,22 @@ public class SingleElementField extends AbstractField {
 			super($target);
 		}
 
+		@Override
 		public void unsetValues(JBlock body) {
 			body.assign(field, JExpr._null());
 		}
 
+		@Override
 		public JExpression hasSetValue() {
 			return JOp.ne(field, JExpr._null());
 		}
 
+		@Override
 		public final void toRawValue(JBlock block, JVar $var) {
 			block.assign($var, $target.invoke(getter));
 		}
 
+		@Override
 		public final void fromRawValue(JBlock block, String uniqueName,
 				JExpression $var) {
 			block.invoke($target, setter).arg($var);
@@ -125,12 +129,14 @@ public class SingleElementField extends AbstractField {
 	}
 
 
+	@Override
 	public FieldAccessor create(JExpression targetObject) {
 		return new Accessor(targetObject);
 	}
 	
 	
 
+	@Override
 	public JType getRawType() {
 		return exposedType;
 	}

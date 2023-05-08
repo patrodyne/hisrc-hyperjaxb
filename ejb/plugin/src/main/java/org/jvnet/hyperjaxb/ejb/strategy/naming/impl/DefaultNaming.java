@@ -58,11 +58,13 @@ public class DefaultNaming implements Naming
 
 	@Inject
 	private Ignoring ignoring;
+	@Override
 	public Ignoring getIgnoring() { return ignoring; }
 	public void setIgnoring(Ignoring ignoring) { this.ignoring = ignoring; }
 	
 	@Inject
 	private ReservedNames reservedNames;
+	@Override
 	public ReservedNames getReservedNames()
 	{
 		return reservedNames;
@@ -73,7 +75,9 @@ public class DefaultNaming implements Naming
 	}
 
 	private int maxIdentifierLength = 30;
+	@Override
 	public int getMaxIdentifierLength() { return maxIdentifierLength; }
+	@Override
 	public void setMaxIdentifierLength(int maxIdentifierLength) { this.maxIdentifierLength = maxIdentifierLength; }
 
 	private boolean updated = false;
@@ -114,6 +118,7 @@ public class DefaultNaming implements Naming
 		}
 	}
 
+	@Override
 	public String getName(Mapping context, final String draftName)
 	{
 		Validate.notNull(draftName, "Name must not be null.");
@@ -155,18 +160,21 @@ public class DefaultNaming implements Naming
 			return name;
 	}
 
+	@Override
 	public String getColumn$Name(Mapping context, FieldOutline fieldOutline)
 	{
 		final String fieldName = fieldOutline.getPropertyInfo().getName(true);
 		return getName(context, context.getNaming().getColumn$Name$Prefix(context) + fieldName);
 	}
 
+	@Override
 	public String getOrderColumn$Name(Mapping context, FieldOutline fieldOutline)
 	{
 		final String fieldColumnName = getColumn$Name(context, fieldOutline);
 		return getName(context, fieldColumnName + "_" + "HJORDER");
 	}
 
+	@Override
 	public String getJoinTable$Name(Mapping context, FieldOutline fieldOutline)
 	{
 		final String targetEntityTableName = getTargetEntityTable$Name(context, fieldOutline);
@@ -175,11 +183,13 @@ public class DefaultNaming implements Naming
 		return getName(context, entityTableName + "_" + fieldColumnName + "_" + targetEntityTableName);
 	}
 
+	@Override
 	public String getEntityTable$Name(Mapping context, FieldOutline fieldOutline)
 	{
 		return getEntityTable$Name(context, fieldOutline.parent());
 	}
 
+	@Override
 	public String getEntityTable$Name(Mapping context, ClassOutline classOutline)
 	{
 		return getEntityTableName(context, classOutline.target);
@@ -243,6 +253,7 @@ public class DefaultNaming implements Naming
 		return getEntityTableName(context, childClassInfo);
 	}
 
+	@Override
 	public String getJoinColumn$Name(Mapping context, FieldOutline fieldOutline,
 		FieldOutline idFieldOutline)
 	{
@@ -253,6 +264,7 @@ public class DefaultNaming implements Naming
 			+ fieldColumnName + "_" + entityTableName + "_" + idFieldColumnName);
 	}
 
+	@Override
 	public String getJoinTable$JoinColumn$Name(Mapping context, FieldOutline fieldOutline,
 		FieldOutline idFieldOutline)
 	{
@@ -261,6 +273,7 @@ public class DefaultNaming implements Naming
 		return getName(context, "PARENT_" + entityTableName + "_" + idFieldColumnName);
 	}
 
+	@Override
 	public String getJoinTable$InverseJoinColumn$Name(Mapping context, FieldOutline fieldOutline,
 		FieldOutline idFieldOutline)
 	{
@@ -270,6 +283,7 @@ public class DefaultNaming implements Naming
 			+ "_" + idFieldColumnName);
 	}
 
+	@Override
 	public String getPersistenceUnitName(Mapping context, Outline outline)
 	{
 		final StringBuffer sb = new StringBuffer();
@@ -291,6 +305,7 @@ public class DefaultNaming implements Naming
 		return sb.toString();
 	}
 
+	@Override
 	public String getEntityName(Mapping context, Outline outline, NType type)
 	{
 		final JType theType = type.toType(outline, Aspect.EXPOSED);
@@ -299,6 +314,7 @@ public class DefaultNaming implements Naming
 		return CodeModelUtils.getLocalClassName(theClass);
 	}
 
+	@Override
 	public String getEntityClass(Mapping context, Outline outline, NType type)
 	{
 		final JType theType = type.toType(outline, Aspect.EXPOSED);
@@ -307,21 +323,25 @@ public class DefaultNaming implements Naming
 		return CodeModelUtils.getPackagedClassName(theClass);
 	}
 
+	@Override
 	public String getPropertyName(Mapping context, FieldOutline fieldOutline)
 	{
 		return NameConverter.standard.toVariableName(fieldOutline.getPropertyInfo().getName(true));
 	}
 
+	@Override
 	public Naming createEmbeddedNaming(Mapping context, FieldOutline fieldOutline)
 	{
 		return new EmbeddedNamingWrapper(this, fieldOutline);
 	}
 
+	@Override
 	public String getColumn$Name$Prefix(Mapping context)
 	{
 		return "";
 	}
 
+	@Override
 	public String getElementCollection$CollectionTable$Name(Mapping context, FieldOutline fieldOutline)
 	{
 		final String entityTableName = getEntityTable$Name(context, fieldOutline.parent());
@@ -329,6 +349,7 @@ public class DefaultNaming implements Naming
 		return getName(context, entityTableName + "_" + fieldColumnName);
 	}
 
+	@Override
 	public String getElementCollection$CollectionTable$JoinColumn$Name(
 			Mapping context, FieldOutline fieldOutline,
 			FieldOutline idFieldOutline)
@@ -341,6 +362,7 @@ public class DefaultNaming implements Naming
 			+ idFieldColumnName);
 	}
 
+	@Override
 	public String getElementCollection$OrderColumn$Name(Mapping context, FieldOutline fieldOutline)
 	{
 		final String columnName = /* collectionTableName + "_" + */
@@ -348,6 +370,7 @@ public class DefaultNaming implements Naming
 		return getName(context, columnName);
 	}
 
+	@Override
 	public String getElementCollection$Column$Name(Mapping context, FieldOutline fieldOutline)
 	{
 		final String columnName = /* collectionTableName + "_" + */

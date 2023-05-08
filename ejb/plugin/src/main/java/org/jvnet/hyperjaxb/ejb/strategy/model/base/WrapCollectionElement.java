@@ -56,6 +56,7 @@ public class WrapCollectionElement implements CreatePropertyInfos
 {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, final CPropertyInfo propertyInfo)
 	{
 		assert propertyInfo instanceof CElementPropertyInfo;
@@ -96,6 +97,7 @@ public class WrapCollectionElement implements CreatePropertyInfos
 
 		final FieldRenderer fieldRenderer = new FieldRenderer()
 		{
+			@Override
 			public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo propertyInfo)
 			{
 				final FieldOutline fieldOutline = new SingleField(classOutline, propertyInfo)
@@ -106,6 +108,7 @@ public class WrapCollectionElement implements CreatePropertyInfos
 						return "get" + prop.getName(true);
 					}
 
+					@Override
 					protected JType getType(Aspect aspect)
 					{
 						return super.getType(aspect).boxify();
@@ -144,6 +147,7 @@ public class WrapCollectionElement implements CreatePropertyInfos
 		}
 		wrappingPropertyInfo.realization = new FieldRenderer()
 		{
+			@Override
 			public FieldOutline generate(ClassOutlineImpl outline, CPropertyInfo wrappingPropertyInfo)
 			{
 				return new WrappingCollectionField(outline, wrappedPropertyInfo, wrappingPropertyInfo);
@@ -151,6 +155,7 @@ public class WrapCollectionElement implements CreatePropertyInfos
 		};
 		wrappedPropertyInfo.realization = new FieldRenderer()
 		{
+			@Override
 			public FieldOutline generate(ClassOutlineImpl outline, CPropertyInfo wrappedPropertyInfo)
 			{
 				return new WrappedCollectionField(outline, wrappedPropertyInfo, wrappingPropertyInfo);

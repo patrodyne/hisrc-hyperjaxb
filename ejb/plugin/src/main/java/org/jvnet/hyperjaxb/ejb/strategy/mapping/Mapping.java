@@ -45,6 +45,7 @@ public class Mapping implements MappingContext
 {
 	@Inject @ModelBase
 	private GetTypes<Mapping> getTypes;
+	@Override
 	public GetTypes<Mapping> getGetTypes()
 	{
 		return getTypes;
@@ -56,6 +57,7 @@ public class Mapping implements MappingContext
 
 	@Inject
 	private Customizing customizing;
+	@Override
 	public Customizing getCustomizing()
 	{
 		return customizing;
@@ -67,6 +69,7 @@ public class Mapping implements MappingContext
 
 	@Inject
 	private Naming naming;
+	@Override
 	public Naming getNaming()
 	{
 		return naming;
@@ -78,6 +81,7 @@ public class Mapping implements MappingContext
 
 	@Inject
 	private Ignoring ignoring;
+	@Override
 	public Ignoring getIgnoring()
 	{
 		return ignoring;
@@ -89,6 +93,7 @@ public class Mapping implements MappingContext
 	
 	@Inject @MojoConfigured
 	private ClassOutlineMapping<EmbeddableAttributes> embeddableAttributesMapping;
+	@Override
 	public ClassOutlineMapping<EmbeddableAttributes> getEmbeddableAttributesMapping()
 	{
 		return embeddableAttributesMapping;
@@ -99,6 +104,7 @@ public class Mapping implements MappingContext
 	}
 
 	private ClassOutlineMapping<Object> entityOrMappedSuperclassOrEmbeddableMapping = new EntityOrMappedSuperclassOrEmbeddableMapping();
+	@Override
 	public ClassOutlineMapping<Object> getEntityOrMappedSuperclassOrEmbeddableMapping()
 	{
 		return entityOrMappedSuperclassOrEmbeddableMapping;
@@ -109,6 +115,7 @@ public class Mapping implements MappingContext
 	}
 
 	private ClassOutlineMapping<Entity> entityMapping = new EntityMapping();
+	@Override
 	public ClassOutlineMapping<Entity> getEntityMapping()
 	{
 		return entityMapping;
@@ -119,6 +126,7 @@ public class Mapping implements MappingContext
 	}
 
 	private ClassOutlineMapping<MappedSuperclass> mappedSuperclassMapping = new MappedSuperclassMapping();
+	@Override
 	public ClassOutlineMapping<MappedSuperclass> getMappedSuperclassMapping()
 	{
 		return mappedSuperclassMapping;
@@ -129,6 +137,7 @@ public class Mapping implements MappingContext
 	}
 
 	private ClassOutlineMapping<Embeddable> embeddableMapping = new EmbeddableMapping();
+	@Override
 	public ClassOutlineMapping<Embeddable> getEmbeddableMapping()
 	{
 		return embeddableMapping;
@@ -139,6 +148,7 @@ public class Mapping implements MappingContext
 	}
 
 	private ClassOutlineMapping<Attributes> attributesMapping = new AttributesMapping();
+	@Override
 	public ClassOutlineMapping<Attributes> getAttributesMapping()
 	{
 		return attributesMapping;
@@ -149,6 +159,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<Id> idMapping = new IdMapping();
+	@Override
 	public FieldOutlineMapping<Id> getIdMapping()
 	{
 		return idMapping;
@@ -159,6 +170,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<EmbeddedId> embeddedIdMapping = new EmbeddedIdMapping();
+	@Override
 	public FieldOutlineMapping<EmbeddedId> getEmbeddedIdMapping()
 	{
 		return embeddedIdMapping;
@@ -169,6 +181,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<Basic> basicMapping = new BasicMapping();
+	@Override
 	public FieldOutlineMapping<Basic> getBasicMapping()
 	{
 		return basicMapping;
@@ -179,6 +192,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<Version> versionMapping = new VersionMapping();
+	@Override
 	public FieldOutlineMapping<Version> getVersionMapping()
 	{
 		return versionMapping;
@@ -190,6 +204,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<Embedded> embeddedMapping = new EmbeddedMapping();
+	@Override
 	public FieldOutlineMapping<Embedded> getEmbeddedMapping()
 	{
 		return embeddedMapping;
@@ -200,6 +215,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<?> toOneMapping = new ToOneMapping();
+	@Override
 	public FieldOutlineMapping<?> getToOneMapping()
 	{
 		return toOneMapping;
@@ -210,6 +226,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<ElementCollection> elementCollectionMapping = new ElementCollectionMapping();
+	@Override
 	public FieldOutlineMapping<ElementCollection> getElementCollectionMapping()
 	{
 		return elementCollectionMapping;
@@ -220,6 +237,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<ManyToOne> manyToOneMapping = new ManyToOneMapping();
+	@Override
 	public FieldOutlineMapping<ManyToOne> getManyToOneMapping()
 	{
 		return manyToOneMapping;
@@ -230,6 +248,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<OneToOne> oneToOneMapping = new OneToOneMapping();
+	@Override
 	public FieldOutlineMapping<OneToOne> getOneToOneMapping()
 	{
 		return oneToOneMapping;
@@ -240,6 +259,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<?> toManyMapping = new ToManyMapping();
+	@Override
 	public FieldOutlineMapping<?> getToManyMapping()
 	{
 		return toManyMapping;
@@ -250,6 +270,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<OneToMany> oneToManyMapping = new OneToManyMapping();
+	@Override
 	public FieldOutlineMapping<OneToMany> getOneToManyMapping()
 	{
 		return oneToManyMapping;
@@ -260,6 +281,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<ManyToMany> manyToManyMapping = new ManyToManyMapping();
+	@Override
 	public FieldOutlineMapping<ManyToMany> getManyToManyMapping()
 	{
 		return manyToManyMapping;
@@ -271,6 +293,7 @@ public class Mapping implements MappingContext
 	}
 
 	private FieldOutlineMapping<Transient> transientMapping = new TransientMapping();
+	@Override
 	public FieldOutlineMapping<Transient> getTransientMapping()
 	{
 		return transientMapping;
@@ -281,6 +304,7 @@ public class Mapping implements MappingContext
 	}
 
 	private AssociationMapping associationMapping = new DefaultAssociationMapping();
+	@Override
 	public AssociationMapping getAssociationMapping()
 	{
 		return associationMapping;
@@ -291,6 +315,7 @@ public class Mapping implements MappingContext
 	}
 
 	private AttributeMapping defaultAttributeMapping = new DefaultAttributeMapping();
+	@Override
 	public AttributeMapping getAttributeMapping()
 	{
 		return defaultAttributeMapping;
@@ -300,6 +325,7 @@ public class Mapping implements MappingContext
 		this.defaultAttributeMapping = defaultAttributeMapping;
 	}
 
+	@Override
 	public Mapping createEmbeddedMapping(Mapping context, FieldOutline fieldOutline)
 	{
 		// TODO Rework with wrappers

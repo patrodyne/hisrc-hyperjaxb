@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 public class HelloWorldEqualsStrategy extends JAXBEqualsStrategy
 {
 	private Logger logger = LoggerFactory.getLogger(HelloWorldEqualsStrategy.class);
+	@Override
 	public Logger getLogger() { return logger; }
 	
 	@Override

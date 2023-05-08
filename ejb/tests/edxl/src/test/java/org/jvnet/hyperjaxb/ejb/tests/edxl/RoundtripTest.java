@@ -6,11 +6,13 @@ public class RoundtripTest
     extends org.jvnet.hyperjaxb.ejb.test.RoundtripTest
     implements ContextPathAware
 {
+	@Override
 	public String getContextPath()
 	{
 		return "net.opengis.gml:oasis.names.tc.ciq.xal._3:oasis.names.tc.ciq.xnl._3:oasis.names.tc.ciq.xpil._3:oasis.names.tc.emergency.edxl.have._1:oasis.names.tc.emergency.edxl.have._1_0.geo_oasis:oasis.names.tc.ciq.ct._3";
 	}
 
+	@Override
 	public String getPersistenceUnitName()
 	{
 		return "oasis.names.tc.ciq.xal._3:oasis.names.tc.ciq.xnl._3:oasis.names.tc.ciq.xpil._3:oasis.names.tc.emergency.edxl.have._1:oasis.names.tc.emergency.edxl.have._1_0.geo_oasis:oasis.names.tc.ciq.ct._3";

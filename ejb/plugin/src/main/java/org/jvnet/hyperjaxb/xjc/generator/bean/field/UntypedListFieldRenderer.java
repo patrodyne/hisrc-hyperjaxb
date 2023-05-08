@@ -14,7 +14,8 @@ public final class UntypedListFieldRenderer implements FieldRenderer {
         this.coreList = coreList;
     }
     
-    public FieldOutline generate(ClassOutlineImpl context, CPropertyInfo prop) {
+    @Override
+	public FieldOutline generate(ClassOutlineImpl context, CPropertyInfo prop) {
         return new UntypedSettableListField(context,prop,coreList);
     }
 }

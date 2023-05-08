@@ -6,5 +6,6 @@ import com.sun.tools.xjc.outline.ClassOutline;
 
 public interface ClassOutlineMapping<T> extends ClassOutlineProcessor<T, Mapping>
 {
+	@Override
 	public T process(Mapping context, ClassOutline classOutline);
 }

@@ -36,6 +36,7 @@ public class WrapCollectionBuiltinNonReference extends AbstractWrapBuiltin
 		this.fallback = fallback;
 	}
 
+	@Override
 	public CBuiltinLeafInfo getTypeUse(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		return (CBuiltinLeafInfo) context.getGetTypes().process(context, propertyInfo).iterator().next();
@@ -57,6 +58,7 @@ public class WrapCollectionBuiltinNonReference extends AbstractWrapBuiltin
 		}
 	}
 
+	@Override
 	protected Collection<CPropertyInfo> wrapAnyType(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		todo("Element collections of any type is not supported. See issue #HJIII-89 (http://jira.highsource.org/browse/HJIII-89)");

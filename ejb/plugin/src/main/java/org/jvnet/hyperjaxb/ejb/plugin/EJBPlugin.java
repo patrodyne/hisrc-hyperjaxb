@@ -71,11 +71,13 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 
 	private List<URL> episodeURLs = new LinkedList<URL>();
 
+	@Override
 	public String getOptionName()
 	{
 		return "Xhyperjaxb-ejb";
 	}
 
+	@Override
 	public String getUsage()
 	{
 		return "  -Xhyperjaxb-ejb: Hyperjaxb EJB plugin";
@@ -297,6 +299,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 
 		final FieldRendererFactory fieldRendererFactory = new FieldRendererFactory()
 		{
+			@Override
 			public FieldRenderer getList(JClass coreList)
 			{
 				return new UntypedListFieldRenderer(coreList);

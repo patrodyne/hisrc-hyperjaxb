@@ -34,6 +34,7 @@ public class SingleMarshallingField extends AbstractWrappingField {
 		return isElement;
 	}
 
+	@Override
 	protected JExpression wrap(final JExpression target) {
 
 		return codeModel.ref(JAXBContextUtils.class).staticInvoke("unmarshal")
