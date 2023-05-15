@@ -1,0 +1,725 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --< org.patrodyne.jvnet:hisrc-hyperjaxb-ejb-sample-publication-maven >--
+[INFO] Building HiSrc HyperJAXB EJB Assembly Sample [publication] 2.1.0
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hisrc-hyperjaxb-ejb-sample-publication-maven ---
+[INFO] Deleting hisrc-hyperjaxb-ejb-sample-publication-2.1.0/target
+[INFO] 
+[INFO] --- hisrc-hyperjaxb-maven-plugin:2.1.0:generate (generate) @ hisrc-hyperjaxb-ejb-sample-publication-maven ---
+[INFO] Sources are not up-to-date, XJC will be executed.
+[INFO] WELD-000900: 5.1.0 (Final)
+[INFO] WELD-ENV-000020: Using jandex for bean discovery
+[INFO] WELD-000101: Transactional services not available. Injection of @Inject UserTransaction not available. Transactional observers will be invoked synchronously.
+[INFO] WELD-001125: Illegal bean type interface org.jvnet.hyperjaxb.ejb.strategy.model.PropertyInfoProcessor<java.util.Collection<? extends com.sun.tools.xjc.model.CTypeInfo>,C> ignored on [EnhancedAnnotatedTypeImpl] public @ModelBase @Dependent @Alternative @Priority class org.jvnet.hyperjaxb.ejb.strategy.model.base.DefaultGetTypes
+[INFO] WELD-ENV-002003: Weld SE container f1c79dbb-d554-41e3-a2f4-87837e900cba initialized
+[INFO] WELD-ENV-002001: Weld SE container f1c79dbb-d554-41e3-a2f4-87837e900cba shut down
+[INFO] Episode file [hisrc-hyperjaxb-ejb-sample-publication-2.1.0/target/generated-sources/xjc/META-INF/sun-jaxb.episode] was augmented with if-exists="true" attributes.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ hisrc-hyperjaxb-ejb-sample-publication-maven ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 9 resources
+[INFO] Copying 1 resource
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ hisrc-hyperjaxb-ejb-sample-publication-maven ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 9 source files with javac [debug release 11] to target/classes
+[INFO] Hibernate JPA 2 Static-Metamodel Generator 5.6.15.Final
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ hisrc-hyperjaxb-ejb-sample-publication-maven ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:testCompile (default-testCompile) @ hisrc-hyperjaxb-ejb-sample-publication-maven ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 2 source files with javac [debug release 11] to target/test-classes
+[INFO] Hibernate JPA 2 Static-Metamodel Generator 5.6.15.Final
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M8:test (default-test) @ hisrc-hyperjaxb-ejb-sample-publication-maven ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running org.example.pub.PublicationTest
+17:41:50:684 INFO EMF: Detected [file:hisrc-hyperjaxb-ejb-sample-publication-2.1.0/target/classes/META-INF/persistence.xml].
+17:41:50:686 DEBUG Loading entity manager factory properties.
+17:41:50:687 INFO EMF: Loading [file:hisrc-hyperjaxb-ejb-sample-publication-2.1.0/target/classes/persistence.properties].
+17:41:50:687 DEBUG Loading more entity manager factory properties.
+17:41:50:687 INFO EMF: Loading [file:hisrc-hyperjaxb-ejb-sample-publication-2.1.0/target/classes/persistence-h2.properties].
+17:41:51:591 INFO h2db:database opening hisrc-hyperjaxb-ejb-sample-publication-2.1.0/target/test-database/h2db (build 214)
+17:41:51:674 INFO h2db:database opened hisrc-hyperjaxb-ejb-sample-publication-2.1.0/target/test-database/h2db
+17:41:51:677 INFO h2db:database connecting session #3 to hisrc-hyperjaxb-ejb-sample-publication-2.1.0/target/test-database/h2db
+17:41:51:739 INFO h2db:jdbc[3] 
+/*SQL */SET TRACE_LEVEL_FILE 4;
+17:41:51:740 INFO h2db:jdbc[3] 
+/*SQL */CREATE SCHEMA IF NOT EXISTS ejb_samples_publication;
+17:41:51:741 INFO h2db:jdbc[3] 
+/**/Connection conn0 = DriverManager.getConnection("jdbc:h2:file:./target/test-database/h2db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;TRACE_LEVEL_FILE=4;INIT=CREATE SCHEMA IF NOT EXISTS ejb_samples_publication", "TESTER", "");
+17:41:51:773 INFO h2db:jdbc[3] 
+/*SQL #:1*/CALL DATABASE();
+17:41:51:778 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:263 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:264 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:265 INFO h2db:jdbc[3] 
+/*SQL */alter table if exists ejb_samples_publication.BLOG drop constraint if exists FKnl4ts4mvv6sie6fn1yhocwck9;
+17:41:52:266 INFO h2db:jdbc[3] 
+/*SQL */alter table if exists ejb_samples_publication.BOOK drop constraint if exists FKp393e3tj66woow233pemvecwg;
+17:41:52:266 INFO h2db:jdbc[3] 
+/*SQL */alter table if exists ejb_samples_publication.PUBLICATION_AUTHOR_JOIN drop constraint if exists FKacptsa1bndinw9t1kec7a1ohl;
+17:41:52:266 INFO h2db:jdbc[3] 
+/*SQL */alter table if exists ejb_samples_publication.PUBLICATION_AUTHOR_JOIN drop constraint if exists FKmbyjud5mk7t9pw4gvchm479b4;
+17:41:52:267 INFO h2db:jdbc[3] 
+/*SQL */drop table if exists ejb_samples_publication.AUTHOR cascade;
+17:41:52:267 INFO h2db:jdbc[3] 
+/*SQL */drop table if exists ejb_samples_publication.BLOG cascade;
+17:41:52:267 INFO h2db:jdbc[3] 
+/*SQL */drop table if exists ejb_samples_publication.BOOK cascade;
+17:41:52:267 INFO h2db:jdbc[3] 
+/*SQL */drop table if exists ejb_samples_publication.PUBLICATION cascade;
+17:41:52:268 INFO h2db:jdbc[3] 
+/*SQL */drop table if exists ejb_samples_publication.PUBLICATION_AUTHOR_JOIN cascade;
+17:41:52:268 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:268 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:268 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:275 INFO h2db:jdbc[3] 
+/*SQL t:4*/create table ejb_samples_publication.AUTHOR (id  bigserial not null, FIRST_NAME varchar(255), LAST_NAME varchar(255), VERSION int8, primary key (id));
+17:41:52:276 INFO h2db:jdbc[3] 
+/*SQL */create table ejb_samples_publication.BLOG (URL varchar(255), id int8 not null, primary key (id));
+17:41:52:277 INFO h2db:jdbc[3] 
+/*SQL */create table ejb_samples_publication.BOOK (PAGES int4, id int8 not null, primary key (id));
+17:41:52:278 INFO h2db:jdbc[3] 
+/*SQL */create table ejb_samples_publication.PUBLICATION (id  bigserial not null, PUBLISHING_DATE_ITEM timestamp, TITLE varchar(255), VERSION int8, primary key (id));
+17:41:52:279 INFO h2db:jdbc[3] 
+/*SQL */create table ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID int8 not null, AUTHOR_ID int8 not null);
+17:41:52:288 INFO h2db:jdbc[3] 
+/*SQL t:8*/alter table if exists ejb_samples_publication.BLOG add constraint FKnl4ts4mvv6sie6fn1yhocwck9 foreign key (id) references ejb_samples_publication.PUBLICATION;
+17:41:52:290 INFO h2db:jdbc[3] 
+/*SQL t:1*/alter table if exists ejb_samples_publication.BOOK add constraint FKp393e3tj66woow233pemvecwg foreign key (id) references ejb_samples_publication.PUBLICATION;
+17:41:52:293 INFO h2db:jdbc[3] 
+/*SQL t:2*/alter table if exists ejb_samples_publication.PUBLICATION_AUTHOR_JOIN add constraint FKacptsa1bndinw9t1kec7a1ohl foreign key (AUTHOR_ID) references ejb_samples_publication.AUTHOR;
+17:41:52:295 INFO h2db:jdbc[3] 
+/*SQL t:1*/alter table if exists ejb_samples_publication.PUBLICATION_AUTHOR_JOIN add constraint FKmbyjud5mk7t9pw4gvchm479b4 foreign key (PUBLICATION_ID) references ejb_samples_publication.PUBLICATION;
+17:41:52:295 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:359 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1 t:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Andrew', 2: 'Sanchez', 3: CAST(0 AS BIGINT)};
+17:41:52:373 INFO h2db:jdbc[3] 
+/*SQL l:74 #:1 t:3*/SELECT SETTING_VALUE FROM INFORMATION_SCHEMA.SETTINGS WHERE SETTING_NAME=? {1: 'QUERY_TIMEOUT'};
+17:41:52:383 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:384 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:385 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Steven', 2: 'Harris', 3: CAST(0 AS BIGINT)};
+17:41:52:386 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:387 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:387 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Nancy', 2: 'Smith', 3: CAST(0 AS BIGINT)};
+17:41:52:388 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:389 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:390 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Emily', 2: 'Perez', 3: CAST(0 AS BIGINT)};
+17:41:52:391 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:391 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:392 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Mark', 2: 'Hernandez', 3: CAST(0 AS BIGINT)};
+17:41:52:393 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:394 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:394 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Betty', 2: 'D''Entremont', 3: CAST(0 AS BIGINT)};
+17:41:52:396 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:396 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:397 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Sandra', 2: 'O''Neill', 3: CAST(0 AS BIGINT)};
+17:41:52:398 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:398 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:399 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Betty', 2: 'Nguyen', 3: CAST(0 AS BIGINT)};
+17:41:52:401 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:401 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:402 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Sarah', 2: 'D''Entremont', 3: CAST(0 AS BIGINT)};
+17:41:52:403 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:403 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:404 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Nancy', 2: 'Nguyen', 3: CAST(0 AS BIGINT)};
+17:41:52:405 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:405 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:417 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.41', 2: 'Mystery of 68 Elm St', 3: CAST(0 AS BIGINT)};
+17:41:52:419 INFO h2db:jdbc[3] 
+/*SQL l:64 #:1*/insert into ejb_samples_publication.BLOG (URL, id) values (?, ?) {1: 'https://example.org/blog/uhpplr', 2: CAST(1 AS BIGINT)};
+17:41:52:420 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Steven', 2: 'Baker', 3: CAST(0 AS BIGINT)};
+17:41:52:420 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Sarah', 2: 'D''Hemecourt', 3: CAST(0 AS BIGINT)};
+17:41:52:425 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(1 AS BIGINT), 2: CAST(11 AS BIGINT)};
+17:41:52:425 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(1 AS BIGINT), 2: CAST(12 AS BIGINT)};
+17:41:52:426 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:426 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:427 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.426', 2: 'Mystery of 311 Pine Rd', 3: CAST(0 AS BIGINT)};
+17:41:52:427 INFO h2db:jdbc[3] 
+/*SQL l:64 #:1*/insert into ejb_samples_publication.BLOG (URL, id) values (?, ?) {1: 'https://example.org/blog/pclbmd', 2: CAST(2 AS BIGINT)};
+17:41:52:428 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'John', 2: 'Walker', 3: CAST(0 AS BIGINT)};
+17:41:52:431 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(2 AS BIGINT), 2: CAST(13 AS BIGINT)};
+17:41:52:432 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:432 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:433 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.432', 2: 'Mystery of 20 View Dr', 3: CAST(0 AS BIGINT)};
+17:41:52:434 INFO h2db:jdbc[3] 
+/*SQL l:64 #:1*/insert into ejb_samples_publication.BLOG (URL, id) values (?, ?) {1: 'https://example.org/blog/hmjwbf', 2: CAST(3 AS BIGINT)};
+17:41:52:434 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Linda', 2: 'O''Shea', 3: CAST(0 AS BIGINT)};
+17:41:52:434 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'William', 2: 'Wright', 3: CAST(0 AS BIGINT)};
+17:41:52:443 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(3 AS BIGINT), 2: CAST(14 AS BIGINT)};
+17:41:52:443 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(3 AS BIGINT), 2: CAST(15 AS BIGINT)};
+17:41:52:444 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:444 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:447 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.444', 2: 'Mystery of 513 First Terr', 3: CAST(0 AS BIGINT)};
+17:41:52:447 INFO h2db:jdbc[3] 
+/*SQL l:64 #:1*/insert into ejb_samples_publication.BLOG (URL, id) values (?, ?) {1: 'https://example.org/blog/vvdler', 2: CAST(4 AS BIGINT)};
+17:41:52:449 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Daniel', 2: 'Green', 3: CAST(0 AS BIGINT)};
+17:41:52:457 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(4 AS BIGINT), 2: CAST(16 AS BIGINT)};
+17:41:52:458 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:458 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:459 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.458', 2: 'Mystery of 328 Cedar Dr', 3: CAST(0 AS BIGINT)};
+17:41:52:460 INFO h2db:jdbc[3] 
+/*SQL l:64 #:1*/insert into ejb_samples_publication.BLOG (URL, id) values (?, ?) {1: 'https://example.org/blog/qegzem', 2: CAST(5 AS BIGINT)};
+17:41:52:461 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Emily', 2: 'Gonzalez', 3: CAST(0 AS BIGINT)};
+17:41:52:461 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'John', 2: 'Green', 3: CAST(0 AS BIGINT)};
+17:41:52:468 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(5 AS BIGINT), 2: CAST(17 AS BIGINT)};
+17:41:52:469 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(5 AS BIGINT), 2: CAST(18 AS BIGINT)};
+17:41:52:469 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:469 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:471 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.47', 2: 'Mystery of 466 Maple Ave', 3: CAST(0 AS BIGINT)};
+17:41:52:472 INFO h2db:jdbc[3] 
+/*SQL l:64 #:1*/insert into ejb_samples_publication.BLOG (URL, id) values (?, ?) {1: 'https://example.org/blog/pchtya', 2: CAST(6 AS BIGINT)};
+17:41:52:472 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Daniel', 2: 'Brown', 3: CAST(0 AS BIGINT)};
+17:41:52:478 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(6 AS BIGINT), 2: CAST(19 AS BIGINT)};
+17:41:52:479 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:479 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:481 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.479', 2: 'Mystery of 80 Seventh Terr', 3: CAST(0 AS BIGINT)};
+17:41:52:481 INFO h2db:jdbc[3] 
+/*SQL l:66 #:1*/insert into ejb_samples_publication.BOOK (PAGES, id) values (?, ?) {1: 233, 2: CAST(7 AS BIGINT)};
+17:41:52:482 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Emily', 2: 'D''Ippolito', 3: CAST(0 AS BIGINT)};
+17:41:52:487 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(7 AS BIGINT), 2: CAST(20 AS BIGINT)};
+17:41:52:488 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:488 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:489 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.488', 2: 'Mystery of 368 Sixth Ave', 3: CAST(0 AS BIGINT)};
+17:41:52:490 INFO h2db:jdbc[3] 
+/*SQL l:66 #:1*/insert into ejb_samples_publication.BOOK (PAGES, id) values (?, ?) {1: 389, 2: CAST(8 AS BIGINT)};
+17:41:52:490 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Andrew', 2: 'O''Neill', 3: CAST(0 AS BIGINT)};
+17:41:52:496 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(8 AS BIGINT), 2: CAST(21 AS BIGINT)};
+17:41:52:497 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(8 AS BIGINT), 2: CAST(12 AS BIGINT)};
+17:41:52:498 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:498 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:499 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.498', 2: 'Mystery of 239 Fifth Ave', 3: CAST(0 AS BIGINT)};
+17:41:52:499 INFO h2db:jdbc[3] 
+/*SQL l:66 #:1*/insert into ejb_samples_publication.BOOK (PAGES, id) values (?, ?) {1: 337, 2: CAST(9 AS BIGINT)};
+17:41:52:500 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'William', 2: 'Flores', 3: CAST(0 AS BIGINT)};
+17:41:52:500 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Mark', 2: 'Baker', 3: CAST(0 AS BIGINT)};
+17:41:52:508 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(9 AS BIGINT), 2: CAST(22 AS BIGINT)};
+17:41:52:508 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(9 AS BIGINT), 2: CAST(23 AS BIGINT)};
+17:41:52:509 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:509 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:511 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.51', 2: 'Mystery of 13 Park St', 3: CAST(0 AS BIGINT)};
+17:41:52:511 INFO h2db:jdbc[3] 
+/*SQL l:66 #:1*/insert into ejb_samples_publication.BOOK (PAGES, id) values (?, ?) {1: 134, 2: CAST(10 AS BIGINT)};
+17:41:52:512 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Mary', 2: 'Rodriguez', 3: CAST(0 AS BIGINT)};
+17:41:52:512 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Thomas', 2: 'O''Neill', 3: CAST(0 AS BIGINT)};
+17:41:52:517 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(10 AS BIGINT), 2: CAST(24 AS BIGINT)};
+17:41:52:517 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(10 AS BIGINT), 2: CAST(25 AS BIGINT)};
+17:41:52:517 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:518 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:519 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.518', 2: 'Mystery of 689 Lake Terr', 3: CAST(0 AS BIGINT)};
+17:41:52:519 INFO h2db:jdbc[3] 
+/*SQL l:66 #:1*/insert into ejb_samples_publication.BOOK (PAGES, id) values (?, ?) {1: 359, 2: CAST(11 AS BIGINT)};
+17:41:52:519 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Thomas', 2: 'Clark', 3: CAST(0 AS BIGINT)};
+17:41:52:524 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(11 AS BIGINT), 2: CAST(26 AS BIGINT)};
+17:41:52:524 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:524 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:525 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.525', 2: 'Mystery of 941 First Rd', 3: CAST(0 AS BIGINT)};
+17:41:52:526 INFO h2db:jdbc[3] 
+/*SQL l:66 #:1*/insert into ejb_samples_publication.BOOK (PAGES, id) values (?, ?) {1: 145, 2: CAST(12 AS BIGINT)};
+17:41:52:530 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(12 AS BIGINT), 2: CAST(11 AS BIGINT)};
+17:41:52:530 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:530 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:531 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.531', 2: 'Mystery of 309 View Rd', 3: CAST(0 AS BIGINT)};
+17:41:52:532 INFO h2db:jdbc[3] 
+/*SQL l:66 #:1*/insert into ejb_samples_publication.BOOK (PAGES, id) values (?, ?) {1: 454, 2: CAST(13 AS BIGINT)};
+17:41:52:532 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'William', 2: 'O''Shea', 3: CAST(0 AS BIGINT)};
+17:41:52:537 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(13 AS BIGINT), 2: CAST(23 AS BIGINT)};
+17:41:52:537 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(13 AS BIGINT), 2: CAST(27 AS BIGINT)};
+17:41:52:538 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:538 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:539 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.538', 2: 'Mystery of 724 First Rd', 3: CAST(0 AS BIGINT)};
+17:41:52:539 INFO h2db:jdbc[3] 
+/*SQL l:66 #:1*/insert into ejb_samples_publication.BOOK (PAGES, id) values (?, ?) {1: 259, 2: CAST(14 AS BIGINT)};
+17:41:52:540 INFO h2db:jdbc[3] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Matthew', 2: 'Robinson', 3: CAST(0 AS BIGINT)};
+17:41:52:544 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(14 AS BIGINT), 2: CAST(28 AS BIGINT)};
+17:41:52:545 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:545 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:546 INFO h2db:jdbc[3] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2023-05-15 17:41:52.545', 2: 'Mystery of 654 Park Rd', 3: CAST(0 AS BIGINT)};
+17:41:52:547 INFO h2db:jdbc[3] 
+/*SQL l:66 #:1*/insert into ejb_samples_publication.BOOK (PAGES, id) values (?, ?) {1: 382, 2: CAST(15 AS BIGINT)};
+17:41:52:552 INFO h2db:jdbc[3] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(15 AS BIGINT), 2: CAST(14 AS BIGINT)};
+17:41:52:552 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:552 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:650 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 68 Elm St'};
+17:41:52:659 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:659 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:663 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:1*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 941 First Rd'};
+17:41:52:667 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:667 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:671 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 68 Elm St'};
+17:41:52:674 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:675 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:679 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 368 Sixth Ave'};
+17:41:52:682 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:682 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:687 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:1*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 311 Pine Rd'};
+17:41:52:690 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:691 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:694 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 20 View Dr'};
+17:41:52:697 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:697 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:701 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:1*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 654 Park Rd'};
+17:41:52:703 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:704 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:707 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 20 View Dr'};
+17:41:52:709 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:709 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:712 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:1*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 513 First Terr'};
+17:41:52:715 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:715 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:718 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 328 Cedar Dr'};
+17:41:52:720 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:720 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:722 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 328 Cedar Dr'};
+17:41:52:724 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:724 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:727 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:1*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 466 Maple Ave'};
+17:41:52:729 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:729 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:731 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:1*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 80 Seventh Terr'};
+17:41:52:733 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:733 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:735 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 368 Sixth Ave'};
+17:41:52:737 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:737 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:739 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 239 Fifth Ave'};
+17:41:52:741 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:741 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:743 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 239 Fifth Ave'};
+17:41:52:745 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:745 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:747 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 309 View Rd'};
+17:41:52:749 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:749 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:751 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 13 Park St'};
+17:41:52:753 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:753 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:755 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 13 Park St'};
+17:41:52:756 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:756 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:758 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:1*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 689 Lake Terr'};
+17:41:52:760 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:760 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:762 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:2*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 309 View Rd'};
+17:41:52:764 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:764 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:766 INFO h2db:jdbc[3] 
+/*SQL l:1073 #:1*/select publicatio0_.id as id1_3_0_, author2_.id as id1_0_1_, publicatio0_.PUBLISHING_DATE_ITEM as publishi2_3_0_, publicatio0_.TITLE as title3_3_0_, publicatio0_.VERSION as version4_3_0_, publicatio0_1_.URL as url1_1_0_, publicatio0_2_.PAGES as pages1_2_0_, case when publicatio0_1_.id is not null then 1 when publicatio0_2_.id is not null then 2 when publicatio0_.id is not null then 0 end as clazz_0_, author2_.FIRST_NAME as first_na2_0_1_, author2_.LAST_NAME as last_nam3_0_1_, author2_.VERSION as version4_0_1_, authors1_.PUBLICATION_ID as publicat1_4_0__, authors1_.AUTHOR_ID as author_i2_4_0__ from ejb_samples_publication.PUBLICATION publicatio0_ left outer join ejb_samples_publication.BLOG publicatio0_1_ on publicatio0_.id=publicatio0_1_.id left outer join ejb_samples_publication.BOOK publicatio0_2_ on publicatio0_.id=publicatio0_2_.id inner join ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors1_ on publicatio0_.id=authors1_.PUBLICATION_ID inner join ejb_samples_publication.AUTHOR author2_ on authors1_.AUTHOR_ID=author2_.id where publicatio0_.TITLE=? {1: 'Mystery of 724 First Rd'};
+17:41:52:767 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+17:41:52:767 INFO h2db:jdbc[3] 
+/*SQL */COMMIT;
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.194 s - in org.example.pub.PublicationTest
+[INFO] Running org.example.pub.RoundtripTest
+17:41:52:795 INFO EMF: Detected [file:hisrc-hyperjaxb-ejb-sample-publication-2.1.0/target/classes/META-INF/persistence.xml].
+17:41:52:796 DEBUG Loading entity manager factory properties.
+17:41:52:796 INFO EMF: Loading [file:hisrc-hyperjaxb-ejb-sample-publication-2.1.0/target/classes/persistence.properties].
+17:41:52:796 DEBUG Loading more entity manager factory properties.
+17:41:52:796 INFO EMF: Loading [file:hisrc-hyperjaxb-ejb-sample-publication-2.1.0/target/classes/persistence-h2.properties].
+17:41:52:858 INFO h2db:database connecting session #4 to hisrc-hyperjaxb-ejb-sample-publication-2.1.0/target/test-database/h2db
+17:41:52:858 INFO h2db:jdbc[4] 
+/*SQL */SET DEFAULT_NULL_ORDERING HIGH;
+17:41:52:859 INFO h2db:jdbc[4] 
+/*SQL */SET MODE PostgreSQL;
+17:41:52:859 INFO h2db:jdbc[4] 
+/*SQL */SET TRACE_LEVEL_FILE 4;
+17:41:52:859 INFO h2db:jdbc[4] 
+/*SQL */CREATE SCHEMA IF NOT EXISTS ejb_samples_publication;
+17:41:52:859 INFO h2db:jdbc[4] 
+/**/Connection conn1 = DriverManager.getConnection("jdbc:h2:file:./target/test-database/h2db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;TRACE_LEVEL_FILE=4;INIT=CREATE SCHEMA IF NOT EXISTS ejb_samples_publication", "TESTER", "");
+17:41:52:860 INFO h2db:jdbc[4] 
+/*SQL #:1*/CALL DATABASE();
+17:41:52:860 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:52:927 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:52:927 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:52:927 INFO h2db:jdbc[4] 
+/*SQL */alter table if exists ejb_samples_publication.BLOG drop constraint if exists FKnl4ts4mvv6sie6fn1yhocwck9;
+17:41:52:928 INFO h2db:jdbc[4] 
+/*SQL */alter table if exists ejb_samples_publication.BOOK drop constraint if exists FKp393e3tj66woow233pemvecwg;
+17:41:52:928 INFO h2db:jdbc[4] 
+/*SQL */alter table if exists ejb_samples_publication.PUBLICATION_AUTHOR_JOIN drop constraint if exists FKacptsa1bndinw9t1kec7a1ohl;
+17:41:52:929 INFO h2db:jdbc[4] 
+/*SQL */alter table if exists ejb_samples_publication.PUBLICATION_AUTHOR_JOIN drop constraint if exists FKmbyjud5mk7t9pw4gvchm479b4;
+17:41:52:930 INFO h2db:jdbc[4] 
+/*SQL */drop table if exists ejb_samples_publication.AUTHOR cascade;
+17:41:52:930 INFO h2db:jdbc[4] 
+/*SQL */drop table if exists ejb_samples_publication.BLOG cascade;
+17:41:52:931 INFO h2db:jdbc[4] 
+/*SQL */drop table if exists ejb_samples_publication.BOOK cascade;
+17:41:52:931 INFO h2db:jdbc[4] 
+/*SQL */drop table if exists ejb_samples_publication.PUBLICATION cascade;
+17:41:52:932 INFO h2db:jdbc[4] 
+/*SQL */drop table if exists ejb_samples_publication.PUBLICATION_AUTHOR_JOIN cascade;
+17:41:52:932 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:52:932 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:52:932 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:52:933 INFO h2db:jdbc[4] 
+/*SQL */create table ejb_samples_publication.AUTHOR (id  bigserial not null, FIRST_NAME varchar(255), LAST_NAME varchar(255), VERSION int8, primary key (id));
+17:41:52:934 INFO h2db:jdbc[4] 
+/*SQL */create table ejb_samples_publication.BLOG (URL varchar(255), id int8 not null, primary key (id));
+17:41:52:934 INFO h2db:jdbc[4] 
+/*SQL */create table ejb_samples_publication.BOOK (PAGES int4, id int8 not null, primary key (id));
+17:41:52:935 INFO h2db:jdbc[4] 
+/*SQL */create table ejb_samples_publication.PUBLICATION (id  bigserial not null, PUBLISHING_DATE_ITEM timestamp, TITLE varchar(255), VERSION int8, primary key (id));
+17:41:52:936 INFO h2db:jdbc[4] 
+/*SQL */create table ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID int8 not null, AUTHOR_ID int8 not null);
+17:41:52:937 INFO h2db:jdbc[4] 
+/*SQL */alter table if exists ejb_samples_publication.BLOG add constraint FKnl4ts4mvv6sie6fn1yhocwck9 foreign key (id) references ejb_samples_publication.PUBLICATION;
+17:41:52:939 INFO h2db:jdbc[4] 
+/*SQL */alter table if exists ejb_samples_publication.BOOK add constraint FKp393e3tj66woow233pemvecwg foreign key (id) references ejb_samples_publication.PUBLICATION;
+17:41:52:940 INFO h2db:jdbc[4] 
+/*SQL t:1*/alter table if exists ejb_samples_publication.PUBLICATION_AUTHOR_JOIN add constraint FKacptsa1bndinw9t1kec7a1ohl foreign key (AUTHOR_ID) references ejb_samples_publication.AUTHOR;
+17:41:52:941 INFO h2db:jdbc[4] 
+/*SQL t:1*/alter table if exists ejb_samples_publication.PUBLICATION_AUTHOR_JOIN add constraint FKmbyjud5mk7t9pw4gvchm479b4 foreign key (PUBLICATION_ID) references ejb_samples_publication.PUBLICATION;
+17:41:52:942 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:52:944 DEBUG Testing samples, start
+17:41:52:944 INFO Testing directory [hisrc-hyperjaxb-ejb-sample-publication-2.1.0/src/test/samples].
+17:41:52:950 DEBUG Testing sample, start [Blog01.xml].
+17:41:53:010 DEBUG Unmarshalling sample.
+17:41:53:018 DEBUG Unmarshalling etalon.
+17:41:53:019 DEBUG Persisting the unmarshalled sample.
+17:41:53:025 INFO h2db:jdbc[4] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2020-10-20 09:15:05', 2: 'Taylor Made (Blog)', 3: CAST(0 AS BIGINT)};
+17:41:53:026 INFO h2db:jdbc[4] 
+/*SQL l:74 #:1*/SELECT SETTING_VALUE FROM INFORMATION_SCHEMA.SETTINGS WHERE SETTING_NAME=? {1: 'QUERY_TIMEOUT'};
+17:41:53:026 INFO h2db:jdbc[4] 
+/*SQL l:64 #:1*/insert into ejb_samples_publication.BLOG (URL, id) values (?, ?) {1: 'https://example.org/blog01', 2: CAST(1 AS BIGINT)};
+17:41:53:028 INFO h2db:jdbc[4] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Mark', 2: 'Taylor, Jr.', 3: CAST(0 AS BIGINT)};
+17:41:53:031 INFO h2db:jdbc[4] 
+/*SQL l:114 #:1*/update ejb_samples_publication.PUBLICATION set PUBLISHING_DATE_ITEM=?, TITLE=?, VERSION=? where id=? and VERSION=? {1: TIMESTAMP '2020-10-20 09:15:05', 2: 'Taylor Made (Blog)', 3: CAST(1 AS BIGINT), 4: CAST(1 AS BIGINT), 5: CAST(0 AS BIGINT)};
+17:41:53:033 INFO h2db:jdbc[4] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(1 AS BIGINT), 2: CAST(1 AS BIGINT)};
+17:41:53:033 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:53:034 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:53:035 DEBUG Loading the persisted sample.
+17:41:53:040 INFO h2db:jdbc[4] 
+/*SQL l:308 #:1*/select blog0_.id as id1_3_0_, blog0_1_.PUBLISHING_DATE_ITEM as publishi2_3_0_, blog0_1_.TITLE as title3_3_0_, blog0_1_.VERSION as version4_3_0_, blog0_.URL as url1_1_0_ from ejb_samples_publication.BLOG blog0_ inner join ejb_samples_publication.PUBLICATION blog0_1_ on blog0_.id=blog0_1_.id where blog0_.id=? {1: CAST(1 AS BIGINT)};
+17:41:53:045 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:53:053 DEBUG Etalon element:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Blog xmlns="http://example.org/pub">
+    <title>Taylor Made (Blog)</title>
+    <authors>
+        <firstName>Mark</firstName>
+        <lastName>Taylor, Jr.</lastName>
+    </authors>
+    <publishingDate>2020-10-20T13:15:05.000Z</publishingDate>
+    <url>https://example.org/blog01</url>
+</Blog>
+
+17:41:53:054 DEBUG Merged element:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Blog xmlns="http://example.org/pub">
+    <title>Taylor Made (Blog)</title>
+    <authors>
+        <firstName>Mark</firstName>
+        <lastName>Taylor, Jr.</lastName>
+    </authors>
+    <publishingDate>2020-10-20T09:15:05.000</publishingDate>
+    <url>https://example.org/blog01</url>
+</Blog>
+
+17:41:53:055 INFO h2db:jdbc[4] 
+/*SQL l:407 #:1*/select authors0_.PUBLICATION_ID as publicat1_4_0_, authors0_.AUTHOR_ID as author_i2_4_0_, author1_.id as id1_0_1_, author1_.FIRST_NAME as first_na2_0_1_, author1_.LAST_NAME as last_nam3_0_1_, author1_.VERSION as version4_0_1_ from ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors0_ inner join ejb_samples_publication.AUTHOR author1_ on authors0_.AUTHOR_ID=author1_.id where authors0_.PUBLICATION_ID=? {1: CAST(1 AS BIGINT)};
+17:41:53:056 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:53:057 DEBUG Loaded element:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Blog xmlns="http://example.org/pub">
+    <title>Taylor Made (Blog)</title>
+    <authors>
+        <firstName>Mark</firstName>
+        <lastName>Taylor, Jr.</lastName>
+    </authors>
+    <publishingDate>2020-10-20T09:15:05.000</publishingDate>
+    <url>https://example.org/blog01</url>
+</Blog>
+
+17:41:53:057 DEBUG Checking the sample object identity: Merged vs Loaded.
+17:41:53:059 DEBUG Checking the sample object identity: Etalon vs Loaded.
+17:41:53:060 INFO Testing sample, SUCCESS [Blog01.xml].
+17:41:53:060 DEBUG Testing sample, start [Book01.xml].
+17:41:53:070 DEBUG Unmarshalling sample.
+17:41:53:072 DEBUG Unmarshalling etalon.
+17:41:53:073 DEBUG Persisting the unmarshalled sample.
+17:41:53:074 INFO h2db:jdbc[4] 
+/*SQL l:103 #:1*/insert into ejb_samples_publication.PUBLICATION (PUBLISHING_DATE_ITEM, TITLE, VERSION) values (?, ?, ?) {1: TIMESTAMP '2020-10-21 10:30:10', 2: 'Taylor Made (Book)', 3: CAST(0 AS BIGINT)};
+17:41:53:075 INFO h2db:jdbc[4] 
+/*SQL l:66 #:1*/insert into ejb_samples_publication.BOOK (PAGES, id) values (?, ?) {1: 199, 2: CAST(2 AS BIGINT)};
+17:41:53:076 INFO h2db:jdbc[4] 
+/*SQL l:92 #:1*/insert into ejb_samples_publication.AUTHOR (FIRST_NAME, LAST_NAME, VERSION) values (?, ?, ?) {1: 'Mark', 2: 'Taylor, Sr.', 3: CAST(0 AS BIGINT)};
+17:41:53:078 INFO h2db:jdbc[4] 
+/*SQL l:114 #:1*/update ejb_samples_publication.PUBLICATION set PUBLISHING_DATE_ITEM=?, TITLE=?, VERSION=? where id=? and VERSION=? {1: TIMESTAMP '2020-10-21 10:30:10', 2: 'Taylor Made (Book)', 3: CAST(1 AS BIGINT), 4: CAST(2 AS BIGINT), 5: CAST(0 AS BIGINT)};
+17:41:53:079 INFO h2db:jdbc[4] 
+/*SQL l:101 #:1*/insert into ejb_samples_publication.PUBLICATION_AUTHOR_JOIN (PUBLICATION_ID, AUTHOR_ID) values (?, ?) {1: CAST(2 AS BIGINT), 2: CAST(2 AS BIGINT)};
+17:41:53:079 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:53:079 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:53:080 DEBUG Loading the persisted sample.
+17:41:53:080 INFO h2db:jdbc[4] 
+/*SQL l:312 #:1*/select book0_.id as id1_3_0_, book0_1_.PUBLISHING_DATE_ITEM as publishi2_3_0_, book0_1_.TITLE as title3_3_0_, book0_1_.VERSION as version4_3_0_, book0_.PAGES as pages1_2_0_ from ejb_samples_publication.BOOK book0_ inner join ejb_samples_publication.PUBLICATION book0_1_ on book0_.id=book0_1_.id where book0_.id=? {1: CAST(2 AS BIGINT)};
+17:41:53:081 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:53:082 DEBUG Etalon element:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Book xmlns="http://example.org/pub">
+    <title>Taylor Made (Book)</title>
+    <authors>
+        <firstName>Mark</firstName>
+        <lastName>Taylor, Sr.</lastName>
+    </authors>
+    <publishingDate>2020-10-21T14:30:10.000Z</publishingDate>
+    <pages>199</pages>
+</Book>
+
+17:41:53:082 DEBUG Merged element:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Book xmlns="http://example.org/pub">
+    <title>Taylor Made (Book)</title>
+    <authors>
+        <firstName>Mark</firstName>
+        <lastName>Taylor, Sr.</lastName>
+    </authors>
+    <publishingDate>2020-10-21T10:30:10.000</publishingDate>
+    <pages>199</pages>
+</Book>
+
+17:41:53:083 INFO h2db:jdbc[4] 
+/*SQL l:407 #:1*/select authors0_.PUBLICATION_ID as publicat1_4_0_, authors0_.AUTHOR_ID as author_i2_4_0_, author1_.id as id1_0_1_, author1_.FIRST_NAME as first_na2_0_1_, author1_.LAST_NAME as last_nam3_0_1_, author1_.VERSION as version4_0_1_ from ejb_samples_publication.PUBLICATION_AUTHOR_JOIN authors0_ inner join ejb_samples_publication.AUTHOR author1_ on authors0_.AUTHOR_ID=author1_.id where authors0_.PUBLICATION_ID=? {1: CAST(2 AS BIGINT)};
+17:41:53:084 INFO h2db:jdbc[4] 
+/*SQL */COMMIT;
+17:41:53:085 DEBUG Loaded element:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Book xmlns="http://example.org/pub">
+    <title>Taylor Made (Book)</title>
+    <authors>
+        <firstName>Mark</firstName>
+        <lastName>Taylor, Sr.</lastName>
+    </authors>
+    <publishingDate>2020-10-21T10:30:10.000</publishingDate>
+    <pages>199</pages>
+</Book>
+
+17:41:53:085 DEBUG Checking the sample object identity: Merged vs Loaded.
+17:41:53:085 DEBUG Checking the sample object identity: Etalon vs Loaded.
+17:41:53:085 INFO Testing sample, SUCCESS [Book01.xml].
+17:41:53:085 DEBUG Testing samples, finish
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.302 s - in org.example.pub.RoundtripTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.341 s
+[INFO] Finished at: 2023-05-15T17:41:53-04:00
+[INFO] ------------------------------------------------------------------------

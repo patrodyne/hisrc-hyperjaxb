@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Book
+	xmlns="http://example.org/pub"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://example.org/pub ../../main/resources/Publication.xsd"
+>
+	<title>Taylor Made (Book)</title>
+	<authors>
+		<firstName>Mark</firstName>
+		<lastName>Taylor, Sr.</lastName>
+	</authors>
+	<publishingDate>2020-10-21T14:30:10.000Z</publishingDate>
+	<pages>199</pages>
+</Book>
