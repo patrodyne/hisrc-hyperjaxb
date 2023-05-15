@@ -311,7 +311,10 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 		if (isGenerateInheritance())
 			add(arguments,"-Xinheritance");
 		if (isGenerateAnnotation())
+		{
 			add(arguments,"-Xannotate");
+			add(arguments,"-XremoveAnnotation");
+		}
 
 		if ("jpa".equals(getVariant()))
 		{
