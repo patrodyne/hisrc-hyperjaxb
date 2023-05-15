@@ -136,11 +136,11 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		return new JAXBElement<Object>(element.getName(), element.getDeclaredType(), obj);
 	}
 	
-	protected void checkObjects(final Object leftObject, final Object rightObject)
+	protected void checkObjects(final Object lhsObject, final Object rhsObject)
 	{
 		final EqualsStrategy strategy = new ExtendedJAXBEqualsStrategy();
-		assertTrue(strategy.equals(new DefaultRootObjectLocator(leftObject), new DefaultRootObjectLocator(rightObject),
-			leftObject, rightObject, true, true), "Objects NOT equal. Use DEBUG for location details.");
+		assertTrue(strategy.equals(new DefaultRootObjectLocator(lhsObject), new DefaultRootObjectLocator(rhsObject),
+			lhsObject, rhsObject, true, true), "Objects NOT equal. Use DEBUG for location details.");
 	}
 	
 	/**
