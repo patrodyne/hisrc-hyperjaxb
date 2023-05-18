@@ -311,10 +311,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 		if (isGenerateInheritance())
 			add(arguments,"-Xinheritance");
 		if (isGenerateAnnotation())
-		{
 			add(arguments,"-Xannotate");
-			add(arguments,"-XremoveAnnotation");
-		}
 
 		if ("jpa".equals(getVariant()))
 		{
@@ -425,6 +422,9 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 			add(arguments,"-Xmergeable");
 		if (isGenerateValueConstructor())
 			add(arguments,"-XvalueConstructor");
+
+		if (isGenerateAnnotation())
+			add(arguments,"-XremoveAnnotation");
 
 		if (getPostArgs() != null)
 			addAll(arguments,Arrays.asList(getPostArgs()));

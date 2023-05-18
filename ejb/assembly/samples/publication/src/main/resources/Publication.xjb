@@ -24,6 +24,13 @@
 	<jaxb:bindings schemaLocation="Publication.xsd" node="/xs:schema">
 
 		<jaxb:bindings node="xs:complexType[@name='Publication']">
+			<!--
+			<anx:annotate target="class">@jakarta.persistence.DiscriminatorColumn</anx:annotate>
+			<anx:removeAnnotation target="class" class="jakarta.persistence.Inheritance"/>
+			<anx:annotate target="class">@jakarta.persistence.Inheritance(strategy = jakarta.persistence.InheritanceType.JOINED)</anx:annotate>
+			<anx:annotate target="class">@jakarta.persistence.Inheritance(strategy = jakarta.persistence.InheritanceType.SINGLE_TABLE)</anx:annotate>
+			<anx:annotate target="class">@jakarta.persistence.Inheritance(strategy = jakarta.persistence.InheritanceType.TABLE_PER_CLASS)</anx:annotate>
+			-->
 			<jaxb:bindings node="//xs:element[@name='authors']">
 				<hj:many-to-many>
 					<orm:join-table name="PUBLICATION_AUTHOR_JOIN">
@@ -35,6 +42,13 @@
 		</jaxb:bindings>
 	
         <jaxb:bindings node="xs:complexType[@name='Author']">
+			<!--
+			<anx:annotate target="class">@jakarta.persistence.DiscriminatorColumn</anx:annotate>
+			<anx:removeAnnotation target="class" class="jakarta.persistence.Inheritance"/>
+			<anx:annotate target="class">@jakarta.persistence.Inheritance(strategy = jakarta.persistence.InheritanceType.JOINED)</anx:annotate>
+			<anx:annotate target="class">@jakarta.persistence.Inheritance(strategy = jakarta.persistence.InheritanceType.SINGLE_TABLE)</anx:annotate>
+			<anx:annotate target="class">@jakarta.persistence.Inheritance(strategy = jakarta.persistence.InheritanceType.TABLE_PER_CLASS)</anx:annotate>
+			-->
 			<anx:annotate target="class">@jakarta.xml.bind.annotation.XmlType(name = "Author", propOrder = { "firstName", "lastName" })</anx:annotate>
 	        <jaxb:bindings node="//xs:element[@name='publications']">
 	            <anx:removeAnnotation target="getter" class="jakarta.persistence.OneToMany"/>

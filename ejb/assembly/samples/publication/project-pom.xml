@@ -185,6 +185,13 @@
 					<groupId>org.eclipse.persistence</groupId>
 					<artifactId>org.eclipse.persistence.extension</artifactId>
 					<version>\${eclipselink.version}</version>
+					<exclusions>
+						<!-- In favor of org.eclipse.persistence:eclipselink -->
+						<exclusion>
+							<groupId>org.eclipse.persistence</groupId>
+							<artifactId>org.eclipse.persistence.core</artifactId>
+						</exclusion>
+					</exclusions>
 				</dependency>
 			</dependencies>
 			<build>
