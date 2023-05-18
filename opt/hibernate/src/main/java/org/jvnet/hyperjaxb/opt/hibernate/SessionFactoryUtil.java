@@ -1,4 +1,4 @@
-package org.patrodyne.jvnet.hyperjaxb.opt.hibernate;
+package org.jvnet.hyperjaxb.opt.hibernate;
 
 import static java.sql.Connection.TRANSACTION_NONE;
 import static java.sql.Connection.TRANSACTION_READ_COMMITTED;

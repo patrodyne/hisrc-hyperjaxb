@@ -1,4 +1,4 @@
-package org.patrodyne.jvnet.hyperjaxb.opt.hikaricp;
+package org.jvnet.hyperjaxb.opt.hikaricp;
 
 import static org.hibernate.cfg.AvailableSettings.DEFAULT_CATALOG;
 import static org.hibernate.cfg.AvailableSettings.DEFAULT_SCHEMA;

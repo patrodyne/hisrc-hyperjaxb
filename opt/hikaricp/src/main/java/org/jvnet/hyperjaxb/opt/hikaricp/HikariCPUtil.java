@@ -1,4 +1,4 @@
-package org.patrodyne.jvnet.hyperjaxb.opt.hikaricp;
+package org.jvnet.hyperjaxb.opt.hikaricp;
 
 import java.util.HashMap;
 import java.util.Map;
