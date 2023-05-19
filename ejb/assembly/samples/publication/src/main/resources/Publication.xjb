@@ -51,10 +51,9 @@
 			-->
 			<anx:annotate target="class">@jakarta.xml.bind.annotation.XmlType(name = "Author", propOrder = { "firstName", "lastName" })</anx:annotate>
 	        <jaxb:bindings node="//xs:element[@name='publications']">
-	            <anx:removeAnnotation target="getter" class="jakarta.persistence.OneToMany"/>
-	            <anx:removeAnnotation target="getter" class="jakarta.persistence.JoinColumn"/>
+				<hj:many-to-many mapped-by="authors"/>
+	            <anx:removeAnnotation target="getter" class="jakarta.persistence.JoinTable"/>
 	            <anx:annotate target="field">@jakarta.xml.bind.annotation.XmlTransient</anx:annotate>
-	            <anx:annotate target="getter">@jakarta.persistence.ManyToMany(mappedBy = "authors")</anx:annotate>
 	            <bas:ignored/>
 			</jaxb:bindings>
         </jaxb:bindings>
