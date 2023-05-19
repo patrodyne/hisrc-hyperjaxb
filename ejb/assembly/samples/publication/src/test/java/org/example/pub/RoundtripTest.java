@@ -12,6 +12,7 @@ import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 
+//@org.junit.jupiter.api.Disabled
 public class RoundtripTest
     extends org.jvnet.hyperjaxb.ejb.test.RoundtripTest
     implements ContextPathAware

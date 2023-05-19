@@ -52,7 +52,6 @@
 			<anx:annotate target="class">@jakarta.xml.bind.annotation.XmlType(name = "Author", propOrder = { "firstName", "lastName" })</anx:annotate>
 	        <jaxb:bindings node="//xs:element[@name='publications']">
 				<hj:many-to-many mapped-by="authors"/>
-	            <anx:removeAnnotation target="getter" class="jakarta.persistence.JoinTable"/>
 	            <anx:annotate target="field">@jakarta.xml.bind.annotation.XmlTransient</anx:annotate>
 	            <bas:ignored/>
 			</jaxb:bindings>
@@ -85,7 +84,6 @@
 
             <hj:default-one-to-one fetch="EAGER"/>
             <hj:default-one-to-many fetch="EAGER"/>
-            <hj:default-many-to-many fetch="LAZY"/>
             <hj:default-many-to-one merge="false" fetch="EAGER">
                 <orm:join-column/>
                 <orm:cascade>
@@ -95,6 +93,14 @@
                     <orm:cascade-detach />
                 </orm:cascade>
             </hj:default-many-to-one>
+            <hj:default-many-to-many merge="false" fetch="LAZY">
+                <orm:cascade>
+                    <orm:cascade-refresh />
+                    <orm:cascade-persist />
+                    <orm:cascade-merge />
+                    <orm:cascade-detach />
+                </orm:cascade>
+			</hj:default-many-to-many>
 
 		</hj:persistence>
 
