@@ -1,7 +1,9 @@
 package org.example.pub;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jvnet.hyperjaxb.ejb.util.Transactional;
 import org.slf4j.Logger;
@@ -80,21 +82,96 @@ public class Main extends Context
             publicationList = selectPublications(0, 1, getPublication().getTitle());
         }
 
-        // Display Publication(s).
+        // Display Publication(s) outside transaction,
+        // authors were eager loaded using an inner join.
+        Set<Author> authorSet = new HashSet<>();
         for ( Publication publication : publicationList )
         {
+        	// Build set of authors.
+        	authorSet.addAll(publication.getAuthors());
 			// JAXB: marshal Publication.
-        	String xmlPublication = null;
-        	
-        	if ( publication instanceof Blog )
-                xmlPublication = marshalToString(OF.createBlog((Blog) publication));
-        	else if ( publication instanceof Book )
-                xmlPublication = marshalToString(OF.createBook((Book) publication));
-        	
+        	String xmlPublication = marshalToString(publication);
 			getLogger().info("Publication:\n\n{}", xmlPublication);
         }
+        
+        // Display Author(s) in a transaction to avoid LazyInitializationException.
+        int count = displayAuthors(authorSet);
+        getLogger().info("Authors displayed: {}", count);
 	}
 	
+	protected String marshalToString(Publication publication) throws JAXBException, IOException
+	{
+    	String xmlPublication = null;
+    	if ( publication instanceof Blog )
+            xmlPublication = marshalToString(OF.createBlog((Blog) publication));
+    	else if ( publication instanceof Book )
+            xmlPublication = marshalToString(OF.createBook((Book) publication));
+		return xmlPublication;
+	}
+	
+	
+	/**
+	 * Display authors for the given detached set of authors.
+	 * 
+	 * @param authorSet A detached set of authors.
+	 * 
+	 * @return The count of authors displayed.
+	 */
+	protected int displayAuthors(Set<Author> authorSet) throws IOException
+	{
+		Transactional<Integer> tx = displayAuthorsTX(authorSet);
+		// Auto-close transactional session.
+		try ( EntityManager em = createEntityManager() )
+		{
+			return tx.transact(em);
+		}
+	}
+
+	private Transactional<Integer> displayAuthorsTX(Set<Author> authorSet)
+	{
+		// Always perform EntityManager actions within a transaction!
+		Transactional<Integer> tx = (em) ->
+		{
+			Integer count = 0;
+			try
+			{
+		        count = authorSet.size();
+		        for ( Author author : authorSet )
+		        {
+		        	// Find the managed author using the current EM.
+		        	Author emAuthor = em.find(Author.class, author.getId());
+		        	
+		        	String xmlAuthor = marshalToString(OF.createAuthor(emAuthor));
+					getLogger().info("Author:\n\n{}", xmlAuthor);
+			        // Note: Author.publications is XML transient, by design!!!
+					for ( Publication publication : emAuthor.getPublications() )
+					{
+			        	String xmlPublication = marshalToString(publication);
+						getLogger().info("Publication:\n\n{}", xmlPublication);
+					}
+		        }
+			}
+			catch (JAXBException | IOException ex)
+			{
+				count = -1;
+				getLogger().error("displayAuthorsTX cannot be marshaled", ex);
+			}
+			return count;
+		};
+		return tx;
+	}
+	
+	/**
+	 * Select a limited list of publications for the given title.
+	 * 
+	 * @param start The starting offset.
+	 * @param count The count limit.
+	 * @param title The publication title.
+	 * 
+	 * @return A list of publications.
+	 * 
+	 * @throws IOException When the list cannot be selected.
+	 */
 	protected List<Publication> selectPublications(Integer start, Integer count, String title)
 		throws IOException
 	{
@@ -115,10 +192,10 @@ public class Main extends Context
 		{
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaQuery<Publication> cq = cb.createQuery(Publication.class);
-			Root<Publication> fromPublication = cq.from(Publication.class);
 			
 			// Force eager loading of authors using an inner join.
 			// See https://thorben-janssen.com/5-ways-to-initialize-lazy-relations-and-when-to-use-them/
+			Root<Publication> fromPublication = cq.from(Publication.class);
 			fromPublication.fetch(Publication_.AUTHORS, JoinType.INNER);
 			
 			cq.select(fromPublication)

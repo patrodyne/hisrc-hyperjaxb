@@ -143,6 +143,7 @@ public class PublicationTest extends AbstractEntityManagerTest
 					Transactional<List<Publication>> tx = Main.selectPublicationsTX(0, 1, title);
 					List<Publication> publicationList = tx.transact(entityManager, REUSE);
 					assertTrue(publicationList.size() > 0, "Publication with '" + title + "' should exist.");
+					assertTrue(pub.getAuthors().size() > 0, "There must be at least 1 author per publication.");
 				}
 			}
 		}
