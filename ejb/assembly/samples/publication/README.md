@@ -137,7 +137,38 @@ public List<Publication> getPublications()
 
 ### Solution (in progress)
 
+This [demonstration (zip)][20] confirms the observations reported in this [issue][7] and provides some approaches to address it; but, a full resolution will require some review and changes to a future release.
 
+#### Change the Inheritance Strategy
+
+Currently in v2.1.0, **HyperJAXB** implements the inheritance strategy in [EntityMapping#getInheritanceStrategy(...)][80] as a non-configurable default:
+
+~~~
+...
+return jakarta.persistence.InheritanceType.JOINED;
+...
+~~~
+
+However, [**HyperJAXB Annox**][14] can be used to remove the `@Inheritance` annotation in post-processing. To explore this approach, edit your copy of [Publication.xjb][39] to enable this commented binding for the two root elements: `Publication` and `Author`.
+
+**Publication.xjb**
+~~~
+...
+<anx:removeAnnotation target="class" class="jakarta.persistence.Inheritance"/>
+...
+~~~
+
+Use Maven's test goal to generate the JPA/JAXB classes for your review. You can use a pre-configured Maven profile to select the JPA provider: [eclipselink][5] or [hibernate][6].
+
+~~~
+mvn -Peclipselink clean test
+OR
+mvn -Phibernate clean test
+~~~
+
+#### Omit `@Inheritance` from Childless Roots
+
+TBD
 
 ##### Demonstration
 
