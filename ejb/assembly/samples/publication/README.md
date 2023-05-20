@@ -3,10 +3,10 @@
 
 This Maven project demonstrates the generation of JPA Entities from an XML Schema file (xsd) using the [HiSrc HyperJAXB Maven Plugin][13]. The generated code include [JPA][1] and [JAXB][2] annotations to support JDBC persistence and XML marshaling/unmarshaling. Further, it uses [HiSrc BasicJAXB XJC Plugins][10] plugins to add custom `hashCode`, `equals`, and `toString` implementations to each generated entity.
 
-The XML Schema file, [Publication.xsd][36], is based a fine article, [Inheritance Strategies with JPA and Hibernate – The Complete Guide](https://thorben-janssen.com/complete-guide-inheritance-strategies-jpa-hibernate/). The schema defines these entities:
+The XML Schema file, [Publication.xsd][36], is based on this fine article, [Inheritance Strategies with JPA and Hibernate – The Complete Guide](https://thorben-janssen.com/complete-guide-inheritance-strategies-jpa-hibernate/). The schema defines these entities:
 
-+ `Author` associates with many `Publication`s
-+ `Publication` associates to many `Author`s
++ `Author` associates with many `Publication(s)`
++ `Publication` associates to many `Author(s)`
 + `Blog` inherits from `Publication`
 + `Book` inherits from `Publication`
 
@@ -27,25 +27,27 @@ import jakarta.persistence.InheritanceType;
 
 As of v2.1.0, **HyperJAXB** ...
 
-+ does not provide a configuration option for alternative [JPA][1] strategies: `SINGLE_TABLE`, `JOINED`, `TABLE_PER_CLASS`.
-+ does add the `@Inheritance` annotation on *every* root class, even if the base has no inherited classes in the XML Schema.
-+ does return JOINED as the default inheritance strategy, see [EntityMapping#getInheritanceStrategy(...)][80].
++ *does not* provide a configuration option for alternative [JPA][1] strategies: `SINGLE_TABLE`, `JOINED`, `TABLE_PER_CLASS`.
++ *does* add the `@Inheritance` annotation on *every* root class, even if the base has no inherited classes in the XML Schema.
++ *does* return `JOINED` as the default inheritance strategy, see [EntityMapping#getInheritanceStrategy(...)][80].
 
 The [JPA][1] specifies how the *persistence provider* should implement the [11.1.12. DiscriminatorColumn Annotation](https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0.html#a14530) to:
 
-+ define the discriminator column for the SINGLE_TABLE and JOINED inheritance mapping strategies.
-+ defaults the name of the discriminator column defaults to `"DTYPE"` and the discriminator type to `STRING`.
++ define the discriminator column for the `SINGLE_TABLE` and `JOINED` inheritance mapping strategies.
++ default the name of the discriminator column defaults to `"DTYPE"` and the discriminator type to `STRING`.
 
-> **Note:** The discriminator column can be configured explicitly by adding a `@jakarta.persistence.DiscriminatorColumn` annotation to any root entity. For example, the column length can be changed from the default `31` to another length.
+> **Note:** The discriminator column can be configured *explicitly* by adding a `@jakarta.persistence.DiscriminatorColumn` annotation to any root entity. For example, the column length can be changed from the default `31` to another length.
 
 Two well-known *persistence provider*s are [EclipseLink][4] and [Hibernate][5] and each provides a different approach:
 
 + As of v4.0.1, [EclipseLink][5] always adds a `DTYPE` column for each root table.
 + As of v5.6.15.Final, [Hibernate][6] only adds a `DTYPE` column on root tables with sub-tables.
 
+This [demonstration (zip)][20] can be executed using either provider.
+
 #### Many To Many
 
-> Although this [GitHub issue][7] does not reference a `many-to-many` relationship, the sample here includes an example of one (`Publication`-`Author`) to provide a richer context for the *inheritance* issue. Plus, this sample reveals that **HyperJAXB** support for `many-to-many` needs some review.
+> Although the [GitHub issue][7] does not reference a `many-to-many` relationship, the sample here includes an example of one (`Publication`-`Author`) to provide a richer context for the *inheritance* issue. Plus, this sample reveals that **HyperJAXB** support for `many-to-many` may need some review.
 
 With regard to [JPA][1] `many-to-many` relationships, **HyperJAXB** extends [JAXB][2] to specify the `many-to-many` *owner* side relationship, this way:
 
@@ -76,8 +78,8 @@ The above binding declares the `Publication` entity to be the *owner* of the rel
     fetch = FetchType.LAZY)
 @JoinTable(
     name = "PUBLICATION_AUTHOR_JOIN",
-	joinColumns = { @JoinColumn(name = "PUBLICATION_ID") },
-	inverseJoinColumns = { @JoinColumn(name = "AUTHOR_ID") } )
+    joinColumns = { @JoinColumn(name = "PUBLICATION_ID") },
+    inverseJoinColumns = { @JoinColumn(name = "AUTHOR_ID") } )
 public List<Author> getAuthors()
 {
     if (authors == null)
@@ -105,7 +107,7 @@ public List<Author> getAuthors()
 
 The above binding declares the `Author` entity to be the *target* of the relationship and the `Publication#authors` field to be the owner.
 
-In order to avoid cyclic references during marshaling/unmarshaling, a few additional bindings are required:
+In order to avoid cyclic references during marshaling/unmarshaling, a few additional bindings are required on the target side:
 
 + [BasicJAXB][10] is used to *ignore* the `publications` field during hash, equals and toString operations
 + [HyperJAXB-Annox][14] is used to:
