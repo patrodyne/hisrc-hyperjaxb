@@ -25,20 +25,7 @@
 	<xs:complexType name="Publication">
 		<xs:sequence>
 			<xs:element name="title" type="xs:string" />
-			<xs:element name="authors" type="tns:Author" minOccurs="0" maxOccurs="unbounded" >
-			<!--
-				<xs:annotation>
-					<xs:appinfo>
-						<hj:many-to-many>
-							<orm:join-table name="PUBLICATION_AUTHOR_JOIN">
-								<orm:join-column name="PUBLICATION_ID"/>
-								<orm:inverse-join-column name="AUTHOR_ID"/>
-							</orm:join-table>
-						</hj:many-to-many>
-					</xs:appinfo>
-				</xs:annotation>
-				-->
-			</xs:element>
+			<xs:element name="authors" type="tns:Author" minOccurs="0" maxOccurs="unbounded" />
 			<xs:element name="publishingDate" type="xs:dateTime" />
 		</xs:sequence>
 	</xs:complexType>
