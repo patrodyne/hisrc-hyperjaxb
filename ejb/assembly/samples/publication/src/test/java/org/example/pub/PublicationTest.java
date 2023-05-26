@@ -1,5 +1,6 @@
 package org.example.pub;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.jvnet.basicjaxb.test.Bogus.RANDOM;
 import static org.jvnet.basicjaxb.test.Bogus.alpha;
@@ -8,15 +9,42 @@ import static org.jvnet.basicjaxb.test.Bogus.lastName;
 import static org.jvnet.basicjaxb.test.Bogus.streetAddress;
 import static org.jvnet.hyperjaxb.ejb.util.Transactional.CacheOption.REUSE;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import org.example.pub.model.Author;
+import org.example.pub.model.Blog;
+import org.example.pub.model.Book;
+import org.example.pub.model.ObjectFactory;
+import org.example.pub.model.Publication;
 import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb.ejb.test.AbstractEntityManagerTest;
 import org.jvnet.hyperjaxb.ejb.util.Transactional;
 
 import jakarta.persistence.EntityManager;
+import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 /**
  * Unit tests for Publication persistence.
@@ -29,6 +57,19 @@ public class PublicationTest extends AbstractEntityManagerTest
 	private static final int BLOG_COUNT_MAX = 10;
 	private static final int BOOK_COUNT_MAX = 10;
 	private static final String TITLE_PREFIX = "Mystery of ";
+	private static final String CATALOG_SCHEMA = "ejb_samples_publication";
+	private static final String OUTFILE_PATH = "./target/generated-docs";
+	private static final String OUTFILE_NAME1 = "Publication";
+	private static final String OUTFILE_NAME2 = "Tables";
+	private static final String OUTFILE_NAME3 = "HB-H2-JOINED";
+	private static final String SCHEMA_TITLE = OUTFILE_NAME1 + ": " + OUTFILE_NAME3;
+	private static final String OUTFILE_NAME = OUTFILE_NAME1 + OUTFILE_NAME2 + "-" + OUTFILE_NAME3;
+	
+	@Override
+	public String getPersistenceUnitName()
+	{
+		return ObjectFactory.class.getPackageName();
+	}
 	
 	/**
 	 * <p>Test persistence of many-to-many relationship and entity inheritance.
@@ -163,5 +204,99 @@ public class PublicationTest extends AbstractEntityManagerTest
 			author.setLastName(lastName());
 		}
 		return author;
+	}
+	
+	@Test
+	public void testSchemaCrawler1() throws Exception
+	{
+		try ( DatabaseConnectionSource dataSource = newDatabaseConnectionSource(getEntityManagerFactoryProperties()) )
+		{
+		    final SchemaCrawlerOptions scOptions = newSchemaCrawlerOptions();
+			final Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource, scOptions);
+			
+			assertEquals(1, catalog.getSchemas().size(), "Schema(s) are limited by config");
+
+			if ( getLogger().isDebugEnabled() )
+			{
+				StringBuilder sb = new StringBuilder();
+				for (final Schema schema : catalog.getSchemas())
+				{
+					sb.append("Catalog Schema\n\n" + schema.getFullName()+"\n");
+					for (final Table table : catalog.getTables(schema))
+					{
+						sb.append("    " + table.getName()+"\n");
+						for (final Column column : table.getColumns())
+							sb.append("        " + column.getName() + " (" + column.getColumnDataType() + ")\n");
+					}
+				}
+				getLogger().debug(sb.toString());
+			}
+		}
+	}
+
+	@Test
+	public void testSchemaCrawler2() throws Exception
+	{
+	    final SchemaCrawlerOptions scOptions = newSchemaCrawlerOptions();
+	    
+	    final DiagramOutputFormat dof = DiagramOutputFormat.svg;
+	    final Path outputFile = getOutputFile(OUTFILE_PATH, OUTFILE_NAME, dof);
+//	    final OutputOptions outputOptions =
+//	    	OutputOptionsBuilder.newOutputOptions(dof, outputFile);
+	    
+	    final OutputOptions outputOptions = OutputOptionsBuilder.builder()
+			.withOutputFormat(dof)
+			.withOutputFile(outputFile)
+			.title(SCHEMA_TITLE)
+			.toOptions();
+
+	    final Config config = new Config();
+	    config.put("no-info", true);
+	    config.put("no-remarks", true);
+	    config.put("portable-names", true);
+
+	    final String command = "schema";
+	    
+		try ( DatabaseConnectionSource dataSource = newDatabaseConnectionSource(getEntityManagerFactoryProperties()) )
+		{
+			final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+			executable.setSchemaCrawlerOptions(scOptions);
+			executable.setOutputOptions(outputOptions);
+			executable.setDataSource(dataSource);
+			executable.setAdditionalConfiguration(config);
+			executable.execute();
+		}
+	}
+
+	private static Path getOutputFile(String path, String name, DiagramOutputFormat dof)
+	{
+		String outputfile = path + "/" + name + "." + dof.name();
+		return Paths.get(outputfile).toAbsolutePath().normalize();
+	}
+	
+	private DatabaseConnectionSource newDatabaseConnectionSource(Map<String, String> props)
+	{
+		String jdbcURL = props.get("jakarta.persistence.jdbc.url");
+		String jdbcUser = props.get("jakarta.persistence.jdbc.user");
+		String jdbcPass = props.get("jakarta.persistence.jdbc.password");
+		MultiUseUserCredentials muuc = new MultiUseUserCredentials(jdbcUser, jdbcPass);
+		return DatabaseConnectionSources.newDatabaseConnectionSource( jdbcURL, muuc );
+	}
+
+	private SchemaCrawlerOptions newSchemaCrawlerOptions()
+	{
+		// Create the options
+		final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
+			.includeSchemas(new RegularExpressionInclusionRule(".*"+CATALOG_SCHEMA));
+		
+		// Set what details are required in the schema - this affects the
+		// time taken to crawl the schema
+		final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+			.withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
+		
+		final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+			.withLimitOptions(limitOptionsBuilder.toOptions())
+			.withLoadOptions(loadOptionsBuilder.toOptions());
+		return options;
 	}
 }

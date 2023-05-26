@@ -36,6 +36,7 @@
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
 			<include name="junit-jupiter-api-*.jar"/>
+			<include name="schemacrawler-*.jar"/>
 			<include name="slf4j-*.jar"/>
 		</fileset>
 	</path>
@@ -68,6 +69,7 @@
 			<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
 			<include name="istack-commons-runtime-*.jar"/>
 			<include name="h2-*.jar"/>
+			<include name="schemacrawler-*.jar"/>
 			<include name="slf4j-*.jar"/>
 			<include name="txw2-*.jar"/>
 			<include name="junit-jupiter-api-*.jar"/>
@@ -107,6 +109,7 @@
 			<include name="jboss-logging-processor-*.jar"/>
 
 			<include name="jcl-over-slf4j-*.jar"/>
+			<include name="jul-to-slf4j-*.jar"/>
 			<include name="relaxng-datatype-*.jar"/>
 			<include name="rngom-*.jar"/>
 			<include name="slf4j-api-*.jar"/>
@@ -133,6 +136,7 @@
         <mkdir dir="\${basedir}/target/classes"/>
         <mkdir dir="\${basedir}/target/test-classes"/>
         <mkdir dir="\${basedir}/target/junit-reports"/>
+		<mkdir dir="\${basedir}/target/generated-docs"/>
 		<mkdir dir="\${basedir}/target/generated-sources/xjc"/>
     </target>
 

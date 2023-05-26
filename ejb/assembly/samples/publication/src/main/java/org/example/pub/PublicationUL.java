@@ -1,5 +1,8 @@
 package org.example.pub;
 
+import org.example.pub.model.Author;
+import org.example.pub.model.Publication;
+
 import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.Unmarshaller.Listener;
 

@@ -5,6 +5,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.example.pub.model.Author;
+import org.example.pub.model.Blog;
+import org.example.pub.model.Book;
+import org.example.pub.model.Publication;
+import org.example.pub.model.Publication_;
 import org.jvnet.hyperjaxb.ejb.util.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

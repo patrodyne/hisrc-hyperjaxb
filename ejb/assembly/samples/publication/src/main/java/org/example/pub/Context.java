@@ -1,8 +1,8 @@
 package org.example.pub;
 
-import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static jakarta.persistence.Persistence.createEntityManagerFactory;
 import static jakarta.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
+import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.createEntityManagerFactoryProperties;
 
 import java.io.File;
@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import org.example.pub.model.ObjectFactory;
 import org.jvnet.basicjaxb.config.LocatorProperties;
 import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputDomResolver;
 import org.slf4j.Logger;
@@ -28,7 +29,7 @@ import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 
 /**
- * JAXB and JPA context for {@link org.example.po.ObjectFactory}
+ * JAXB and JPA context for {@link org.example.pub.model.ObjectFactory}
  */
 abstract public class Context
 {

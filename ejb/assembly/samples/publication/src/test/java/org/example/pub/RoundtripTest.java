@@ -20,13 +20,13 @@ public class RoundtripTest
 	@Override
     public String getContextPath()
 	{
-        return "org.example.pub";
+        return "org.example.pub.model";
     }
 
 	@Override
     public String getPersistenceUnitName()
 	{
-        return "org.example.pub";
+        return "org.example.pub.model";
     }
 	
 	@Override

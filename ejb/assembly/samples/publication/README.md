@@ -139,6 +139,20 @@ public List<Publication> getPublications()
 
 This [demonstration (zip)][20] confirms the observations reported in this [issue][7] and provides some approaches to address it; but, a full resolution will require some review and changes to a future release.
 
+#### [JPA][1] Inheritance Strategy
+
+The *[Inheritance][8]* annotation defines the inheritance strategy to be used for an entity class hierarchy. It is specified on the entity class that is the root of the entity class hierarchy.
+
+> **Note:** If the *[Inheritance][8]* annotation is not specified or if no inheritance type is specified for an entity class hierarchy, the `SINGLE_TABLE` mapping strategy is used.
+
+There are three basic strategies that are used when mapping a class or class hierarchy to a relational database:
+
++ a single table per class hierarchy
+
++ a joined subclass strategy, in which fields that are specific to a subclass are mapped to a separate table than the fields that are common to the parent class, and a join is performed to instantiate the subclass.
+
++ a table per concrete entity class
+
 #### Change the Inheritance Strategy
 
 Currently in v2.1.0, **HyperJAXB** implements the inheritance strategy in [EntityMapping#getInheritanceStrategy(...)][80] as a non-configurable default:
@@ -149,9 +163,13 @@ return jakarta.persistence.InheritanceType.JOINED;
 ...
 ~~~
 
-However, [**HyperJAXB Annox**][14] can be used to remove the `@Inheritance` annotation in post-processing. To explore this approach, edit your copy of [Publication.xjb][39] to enable this commented binding for the two root elements: `Publication` and `Author`.
+> **Note:** The **JPA** default inheritance strategy is `SINGLE_TABLE`; however, **HyperJAXB** customizes **JPA** to use `JOINED` when no other strategy is declared.
 
-**Publication.xjb**
+Although v2.1.0 of **HyperJAXB** does not expose a configuration option for its default inheritance strategy, you can leverage the difference between the **JPA** and **HyperJAXB** implementations to use the former over the latter.
+
+[**HyperJAXB Annox**][14] can be used to remove the **HyperJAXB** generated `@Inheritance` annotation in post-processing. To explore this approach, edit your copy of [Publication.xjb][39] to enable this (commented) binding in the two root elements: `Publication` and `Author`.
+
+`Publication.xjb`
 ~~~
 ...
 <anx:removeAnnotation target="class" class="jakarta.persistence.Inheritance"/>
@@ -189,6 +207,7 @@ mvn -Phibernate   clean compile exec:java -Dexec.args="src/test/samples/Blog01.x
 [5]: https://www.eclipse.org/eclipselink/
 [6]: https://hibernate.org/orm/
 [7]: https://github.com/patrodyne/hisrc-hyperjaxb/issues/1
+[8]: https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0.html#a14891
 [10]: https://github.com/patrodyne/hisrc-basicjaxb#readme
 [11]: https://github.com/patrodyne/hisrc-basicjaxb-annox#readme
 [12]: https://github.com/patrodyne/hisrc-higherjaxb#readme

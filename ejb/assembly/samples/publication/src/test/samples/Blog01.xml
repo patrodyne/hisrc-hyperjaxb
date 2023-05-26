@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Blog
-	xmlns="http://example.org/pub"
+	xmlns="http://example.org/pub/model"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://example.org/pub ../../main/resources/Publication.xsd"
+	xsi:schemaLocation="http://example.org/pub/model ../../main/resources/Publication.xsd"
 >
 	<title>Taylor Made (Blog)</title>
 	<authors>
