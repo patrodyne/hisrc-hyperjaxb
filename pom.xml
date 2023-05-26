@@ -119,6 +119,7 @@
 		<postgresql.version>42.6.0</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<schemacrawler.version>16.19.10</schemacrawler.version>
 		<slf4j.version>2.0.7</slf4j.version>
 		<weld.version>5.1.0.Final</weld.version>
 	</properties>
@@ -469,6 +470,7 @@
 				<artifactId>postgresql</artifactId>
 				<version>${postgresql.version}</version>
 			</dependency>
+			<!-- Derby Database -->
 			<dependency>
 				<groupId>org.apache.derby</groupId>
 				<artifactId>derby</artifactId>
@@ -484,6 +486,19 @@
 				<groupId>net.sf.saxon</groupId>
 				<artifactId>saxon-dom</artifactId>
 				<version>8.7</version>
+			</dependency>
+			<!-- SchemaCrawler -->
+			<dependency>
+				<groupId>us.fatehi</groupId>
+				<artifactId>schemacrawler</artifactId>
+				<version>${schemacrawler.version}</version>
+				<exclusions>
+					<!-- In favor of org.slf4j:slf4j-simple -->
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-nop</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<!-- XMLUnit -->
 			<dependency>
