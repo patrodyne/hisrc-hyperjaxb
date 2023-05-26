@@ -62,6 +62,10 @@
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>us.fatehi</groupId>
+			<artifactId>schemacrawler-postgresql</artifactId>
+		</dependency>
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
