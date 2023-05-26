@@ -63,14 +63,27 @@ public abstract class AbstractEntityManagerTest
 		}
 	}
 
+	/**
+	 * Get the persistence unit name for testing the EMF.
+	 * 
+	 * Note: Sub-classes must override this method for custom PUNs.
+	 * 
+	 * @return A persistence unit name derived from this class/sub-class.
+	 */
 	public String getPersistenceUnitName()
 	{
 		final Package _package = getClass().getPackage();
 		final String name = _package.getName();
 		if (name == null)
+		{
+			getLogger().debug("PUN, default to root.");
 			return "root";
+		}
 		else
+		{
+			getLogger().debug("PUN: derive from current class: {}", name);
 			return name;
+		}
 	}
 
 	public Map<String, String> getEntityManagerProperties()
