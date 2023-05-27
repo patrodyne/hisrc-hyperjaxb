@@ -190,15 +190,17 @@ The [PublicationTest#testSchemaCrawler2()][74] method generates a diagram of the
 
 **Joined Tables**
 
-| EclipseLink         | Hibernate           |
-| ------------------- | ------------------- |
-| ![EL-H2-JOINED][82] | ![HB-H2-JOINED][86] |
+| DB | EclipseLink         | Hibernate           |
+| -- | ------------------- | ------------------- |
+| H2 | ![EL-H2-JOINED][82] | ![HB-H2-JOINED][86] |
+| PG | ![EL-PG-JOINED][84] | ![HB-PG-JOINED][88] |
 
 **Single Table**
 
-| EclipseLink               | Hibernate                 |
-| ------------------------- | ------------------------- |
-| ![EL-H2-SINGLE_TABLE][83] | ![HB-H2-SINGLE_TABLE][87] |
+| DB | EclipseLink               | Hibernate                 |
+| -- | ------------------------- | ------------------------- |
+| H2 | ![EL-H2-SINGLE_TABLE][83] | ![HB-H2-SINGLE_TABLE][87] |
+| PG | ![EL-PG-SINGLE_TABLE][85] | ![HB-Pg-SINGLE_TABLE][89] |
 
 
 #### Omit `@Inheritance` from Childless Roots
