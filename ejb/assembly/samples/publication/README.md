@@ -153,7 +153,7 @@ There are three basic strategies that are used when mapping a class or class hie
 
 + a table per concrete entity class
 
-#### Change the Inheritance Strategy
+#### Changing the Inheritance Strategy (or not)
 
 Currently in v2.1.0, **HyperJAXB** implements the inheritance strategy in [EntityMapping#getInheritanceStrategy(...)][80] as a non-configurable default:
 
@@ -176,6 +176,8 @@ Although v2.1.0 of **HyperJAXB** does not expose a configuration option for its 
 ...
 ~~~
 
+#### Inheritance Strategy Diagrams
+
 Use Maven's test goal to generate the JPA/JAXB classes for your review. You can use a pre-configured Maven profile to select the JPA provider: [eclipselink][5] or [hibernate][6].
 
 ~~~
@@ -184,14 +186,27 @@ OR
 mvn -Phibernate clean test
 ~~~
 
-+ ![PublicationTables-EL-H2-JOINED][82]
-+ ![PublicationTables-EL-H2-SINGLE_TABLE][83]
-+ ![PublicationTables-EL-PG-JOINED][84]
-+ ![PublicationTables-EL-PG-SINGLE_TABLE][85]
-+ ![PublicationTables-HB-H2-JOINED][86]
-+ ![PublicationTables-HB-H2-SINGLE_TABLE][87]
-+ ![PublicationTables-HB-PG-JOINED][88]
-+ ![PublicationTables-HB-PG-SINGLE_TABLE][89]
+The [PublicationTest#testSchemaCrawler2()][74] method generates a diagram of the database tables in your `target/generated-docs` sub-directory. Here are the diagrams for the options available in v2.1.0 of **HyperJAXB**.
+
+| EclipseLink | Hibernate |
+| ----------- | --------- |
+| ![PublicationTables-EL-H2-JOINED][82] | ![PublicationTables-HB-H2-JOINED][86] |
+
+**EclipseLink Joined Tables**
+![PublicationTables-EL-H2-JOINED][82]
+
+**Hibernate Joined Tables**
+![PublicationTables-HB-H2-JOINED][86]
+
+| EclipseLink | Hibernate |
+| ----------- | --------- |
+| ![PublicationTables-EL-H2-SINGLE_TABLE][83] | ![PublicationTables-HB-H2-SINGLE_TABLE][87] |
+
+**EclipseLink Single Table**
+![PublicationTables-EL-H2-SINGLE_TABLE][83]
+
+**Hibernate Single Table**
+![PublicationTables-HB-H2-SINGLE_TABLE][87]
 
 
 #### Omit `@Inheritance` from Childless Roots
@@ -269,10 +284,10 @@ mvn -Phibernate   clean compile exec:java -Dexec.args="src/test/samples/Blog01.x
 [80]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/2.1.0/ejb/plugin/src/main/java/org/jvnet/hyperjaxb/ejb/strategy/mapping/EntityMapping.java
 [81]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationClasses.svg
 [82]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-H2-JOINED.png
-[83]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-H2-SINGLE_TABLE.png
+[83]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-H2-SINGLE_TABLE.svg
 [84]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-PG-JOINED.png
 [85]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-PG-SINGLE_TABLE.png
 [86]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-H2-JOINED.png
-[87]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-H2-SINGLE_TABLE.png
+[87]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-H2-SINGLE_TABLE.svg
 [88]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-PG-JOINED.png
 [89]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-PG-SINGLE_TABLE.png
