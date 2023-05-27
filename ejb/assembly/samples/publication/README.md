@@ -188,25 +188,17 @@ mvn -Phibernate clean test
 
 The [PublicationTest#testSchemaCrawler2()][74] method generates a diagram of the database tables in your `target/generated-docs` sub-directory. Here are the diagrams for the options available in v2.1.0 of **HyperJAXB**.
 
-| EclipseLink | Hibernate |
-| ----------- | --------- |
-| ![PublicationTables-EL-H2-JOINED][82] | ![PublicationTables-HB-H2-JOINED][86] |
+**Joined Tables**
 
-**EclipseLink Joined Tables**
-![PublicationTables-EL-H2-JOINED][82]
+| EclipseLink         | Hibernate           |
+| ------------------- | ------------------- |
+| ![EL-H2-JOINED][82] | ![HB-H2-JOINED][86] |
 
-**Hibernate Joined Tables**
-![PublicationTables-HB-H2-JOINED][86]
+**Single Table**
 
-| EclipseLink | Hibernate |
-| ----------- | --------- |
-| ![PublicationTables-EL-H2-SINGLE_TABLE][83] | ![PublicationTables-HB-H2-SINGLE_TABLE][87] |
-
-**EclipseLink Single Table**
-![PublicationTables-EL-H2-SINGLE_TABLE][83]
-
-**Hibernate Single Table**
-![PublicationTables-HB-H2-SINGLE_TABLE][87]
+| EclipseLink               | Hibernate                 |
+| ------------------------- | ------------------------- |
+| ![EL-H2-SINGLE_TABLE][83] | ![HB-H2-SINGLE_TABLE][87] |
 
 
 #### Omit `@Inheritance` from Childless Roots
@@ -283,11 +275,11 @@ mvn -Phibernate   clean compile exec:java -Dexec.args="src/test/samples/Blog01.x
 [75]: https://github.com/patrodyne/hisrc-hyperjaxb/tree/master/ejb/assembly/samples/publication/src/test/java/org/example/pub/RoundtripTest.java
 [80]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/2.1.0/ejb/plugin/src/main/java/org/jvnet/hyperjaxb/ejb/strategy/mapping/EntityMapping.java
 [81]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationClasses.svg
-[82]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-H2-JOINED.png
+[82]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-H2-JOINED.svg
 [83]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-H2-SINGLE_TABLE.svg
-[84]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-PG-JOINED.png
-[85]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-PG-SINGLE_TABLE.png
-[86]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-H2-JOINED.png
+[84]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-PG-JOINED.svg
+[85]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-PG-SINGLE_TABLE.svg
+[86]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-H2-JOINED.svg
 [87]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-H2-SINGLE_TABLE.svg
-[88]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-PG-JOINED.png
+[88]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-PG-JOINED.svg
 [89]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-PG-SINGLE_TABLE.png
