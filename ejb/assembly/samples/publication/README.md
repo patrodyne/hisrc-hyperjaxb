@@ -1,7 +1,7 @@
 # Sample: Publication
-## JPA Inheritance and Many-To-Many
+## JPA Inheritance plus Many-To-Many
 
-This Maven project demonstrates the generation of JPA Entities from an XML Schema file (xsd) using the [HiSrc HyperJAXB Maven Plugin][13]. The generated code include [JPA][1] and [JAXB][2] annotations to support JDBC persistence and XML marshaling/unmarshaling. Further, it uses [HiSrc BasicJAXB XJC Plugins][10] plugins to add custom `hashCode`, `equals`, and `toString` implementations to each generated entity.
+This Maven project demonstrates the generation of JPA Entities from an XML Schema file (xsd) using the [HiSrc HyperJAXB Maven Plugin][13]. The generated code includes [JPA][1] and [JAXB][2] annotations to support JDBC persistence and XML marshaling/unmarshaling. Further, it uses [HiSrc BasicJAXB XJC Plugins][10] to add custom `hashCode`, `equals`, and `toString` implementations to each generated entity.
 
 The XML Schema file, [Publication.xsd][36], is based on this fine article, [Inheritance Strategies with JPA and Hibernate – The Complete Guide](https://thorben-janssen.com/complete-guide-inheritance-strategies-jpa-hibernate/). The schema defines these entities:
 
@@ -13,6 +13,15 @@ The XML Schema file, [Publication.xsd][36], is based on this fine article, [Inhe
 This project demonstrates the inheritance strategy and many-to-many configuration used to persist these entities to a database.
 
 ### Problem ( from [GitHub][7] )
+
+**HyperJAXB** needs a way to select its default **JPA** inheritance strategy and *possibly* limit the generation of the `@Inheritance` annotation only to top-level entities that are inherited. In **HyperJAXB** 2.1.0, the `JOINED` mapping strategy is always added to top-level entities.
+
+From the JPA 3.0 specification:
+
++ [§11.1.24][8] If the *Inheritance* annotation is not specified or if no inheritance type is specified for an entity class hierarchy, the `SINGLE_TABLE` mapping strategy is used.
+
++ [§2.12][9] An implementation is required to support the **single table per class** hierarchy inheritance mapping strategy and the **joined subclass** strategy. Support for the **table per concrete class** inheritance mapping strategy is optional.
+
 
 #### Inheritance
 
@@ -31,7 +40,7 @@ As of v2.1.0, **HyperJAXB** ...
 + *does* add the `@Inheritance` annotation on *every* root class, even if the base has no inherited classes in the XML Schema.
 + *does* return `JOINED` as the default inheritance strategy, see [EntityMapping#getInheritanceStrategy(...)][80].
 
-The [JPA][1] specifies how the *persistence provider* should implement the [11.1.12. DiscriminatorColumn Annotation](https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0.html#a14530) to:
+The [JPA][1] specifies how the *persistence provider* should implement the [§11.1.12. DiscriminatorColumn Annotation](https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0.html#a14530) to:
 
 + define the discriminator column for the `SINGLE_TABLE` and `JOINED` inheritance mapping strategies.
 + default the name of the discriminator column defaults to `"DTYPE"` and the discriminator type to `STRING`.
@@ -40,8 +49,10 @@ The [JPA][1] specifies how the *persistence provider* should implement the [11.1
 
 Two well-known *persistence provider*s are [EclipseLink][4] and [Hibernate][5] and each provides a different approach:
 
-+ As of v4.0.1, [EclipseLink][5] always adds a `DTYPE` column for each root table.
++ As of v4.0.1, [EclipseLink][5] adds a `DTYPE` column for each root table when the `@Inheritance` annotation is *explicitly* declared with or without sub-tables.
 + As of v5.6.15.Final, [Hibernate][6] only adds a `DTYPE` column on root tables with sub-tables.
+
+> **Note:** Because **HyperJAXB** does not provide a way to select the default inheritance strategy, the behavior of [EclipseLink][4] and [Hibernate][5] is not known for explicitly declared `SINGLE_TABLE` and `TABLE_PER_CLASS` strategies.
 
 This [demonstration (zip)][20] can be executed using either provider.
 
@@ -153,7 +164,7 @@ There are three basic strategies that are used when mapping a class or class hie
 
 + a table per concrete entity class
 
-#### Changing the Inheritance Strategy (or not)
+#### Changing the Inheritance Strategy
 
 Currently in v2.1.0, **HyperJAXB** implements the inheritance strategy in [EntityMapping#getInheritanceStrategy(...)][80] as a non-configurable default:
 
@@ -176,15 +187,15 @@ Although v2.1.0 of **HyperJAXB** does not expose a configuration option for its 
 ...
 ~~~
 
-#### Inheritance Strategy Diagrams
-
-Use Maven's test goal to generate the JPA/JAXB classes for your review. You can use a pre-configured Maven profile to select the JPA provider: [eclipselink][5] or [hibernate][6].
+Then use Maven's test goal to generate the JPA/JAXB classes for your review. You can use a pre-configured Maven profile to select the JPA provider: [eclipselink][5] or [hibernate][6]. By removing the `@Inheritance` annotation, the providers default ([§11.1.24][8]) to using the `SINGLE_TABLE` mapping.
 
 ~~~
 mvn -Peclipselink clean test
 OR
 mvn -Phibernate clean test
 ~~~
+
+#### Inheritance Strategy Diagrams
 
 The [PublicationTest#testSchemaCrawler2()][74] method generates a diagram of the database tables in your `target/generated-docs` sub-directory. Here are the diagrams for the options available in v2.1.0 of **HyperJAXB**.
 
@@ -227,6 +238,7 @@ mvn -Phibernate   clean compile exec:java -Dexec.args="src/test/samples/Blog01.x
 [6]: https://hibernate.org/orm/
 [7]: https://github.com/patrodyne/hisrc-hyperjaxb/issues/1
 [8]: https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0.html#a14891
+[9]: https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0.html#a966
 [10]: https://github.com/patrodyne/hisrc-basicjaxb#readme
 [11]: https://github.com/patrodyne/hisrc-basicjaxb-annox#readme
 [12]: https://github.com/patrodyne/hisrc-higherjaxb#readme

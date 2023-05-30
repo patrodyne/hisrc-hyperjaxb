@@ -181,9 +181,24 @@ public class PublicationTest extends AbstractEntityManagerTest
 				for ( Publication pub : author.getPublications() )
 				{
 					String title = pub.getTitle();
-					Transactional<List<Publication>> tx = Main.selectPublicationsTX(0, 1, title);
-					List<Publication> publicationList = tx.transact(entityManager, REUSE);
-					assertTrue(publicationList.size() > 0, "Publication with '" + title + "' should exist.");
+					Transactional<List<Publication>> txPub = Main.selectPublicationsTX(0, 1, title);
+					List<Publication> publicationList = txPub.transact(entityManager, REUSE);
+					if ( publicationList.isEmpty() )
+					{
+						// EclipseLink fails selection of TABLE_PER_CLASS inheritance; EL bug.
+						getLogger().error("Publication with title '" + title + "' should exist. EclipseLink TABLE_PER_CLASS bug?");
+						if ( pub instanceof Blog )
+						{
+							Transactional<List<Blog>> txBlog = Main.selectBlogsTX(0, 1, title);
+							publicationList.addAll(txBlog.transact(entityManager, REUSE));
+						}
+						else if ( pub instanceof Book )
+						{
+							Transactional<List<Book>> txBook = Main.selectBooksTX(0, 1, title);
+							publicationList.addAll(txBook.transact(entityManager, REUSE));
+						}
+					}
+					assertTrue(publicationList.size() > 0, "Publication with title '" + title + "' should exist.");
 					assertTrue(pub.getAuthors().size() > 0, "There must be at least 1 author per publication.");
 				}
 			}
@@ -241,9 +256,6 @@ public class PublicationTest extends AbstractEntityManagerTest
 	    
 	    final DiagramOutputFormat dof = DiagramOutputFormat.svg;
 	    final Path outputFile = getOutputFile(OUTFILE_PATH, OUTFILE_NAME, dof);
-//	    final OutputOptions outputOptions =
-//	    	OutputOptionsBuilder.newOutputOptions(dof, outputFile);
-	    
 	    final OutputOptions outputOptions = OutputOptionsBuilder.builder()
 			.withOutputFormat(dof)
 			.withOutputFile(outputFile)

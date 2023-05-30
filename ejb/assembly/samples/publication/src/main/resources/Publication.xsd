@@ -22,7 +22,7 @@
 	<xs:element name="Blog" type="tns:Blog" />
 	<xs:element name="Book" type="tns:Book" />
 
-	<xs:complexType name="Publication">
+	<xs:complexType name="Publication" abstract="false">
 		<xs:sequence>
 			<xs:element name="title" type="xs:string" />
 			<xs:element name="authors" type="tns:Author" minOccurs="0" maxOccurs="unbounded" />

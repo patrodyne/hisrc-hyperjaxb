@@ -7,7 +7,9 @@ import java.util.Set;
 
 import org.example.pub.model.Author;
 import org.example.pub.model.Blog;
+import org.example.pub.model.Blog_;
 import org.example.pub.model.Book;
+import org.example.pub.model.Book_;
 import org.example.pub.model.Publication;
 import org.example.pub.model.Publication_;
 import org.jvnet.hyperjaxb.ejb.util.Transactional;
@@ -210,6 +212,65 @@ public class Main extends Context
 			query.setHint("eclipselink.query-results-cache", false);
 			query.setHint("org.hibernate.cacheable", false);
 			List<Publication> entities = query
+				.setFirstResult(start)
+				.setMaxResults(count)
+				.getResultList();
+
+			return entities;
+		};
+		return tx;
+	}
+	
+	protected static Transactional<List<Blog>> selectBlogsTX(Integer start, Integer count, String title)
+	{
+		// Always perform EntityManager actions within a transaction!
+		Transactional<List<Blog>> tx = (em) ->
+		{
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Blog> cq = cb.createQuery(Blog.class);
+			
+			// Force eager loading of authors using an inner join.
+			// See https://thorben-janssen.com/5-ways-to-initialize-lazy-relations-and-when-to-use-them/
+			Root<Blog> fromBlog = cq.from(Blog.class);
+			fromBlog.fetch(Blog_.AUTHORS, JoinType.INNER);
+			
+			cq.select(fromBlog)
+				.where(cb.equal(fromBlog.get(Blog_.TITLE), title));
+			
+			TypedQuery<Blog> query = em.createQuery(cq);
+			query.setHint("eclipselink.query-results-cache", false);
+			query.setHint("org.hibernate.cacheable", false);
+			List<Blog> entities = query
+				.setFirstResult(start)
+				.setMaxResults(count)
+				.getResultList();
+
+			return entities;
+		};
+		return tx;
+	}
+	
+	
+	protected static Transactional<List<Book>> selectBooksTX(Integer start, Integer count, String title)
+	{
+		// Always perform EntityManager actions within a transaction!
+		Transactional<List<Book>> tx = (em) ->
+		{
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Book> cq = cb.createQuery(Book.class);
+			
+			// Force eager loading of authors using an inner join.
+			// See https://thorben-janssen.com/5-ways-to-initialize-lazy-relations-and-when-to-use-them/
+			Root<Book> fromBook = cq.from(Book.class);
+			fromBook.fetch(Book_.AUTHORS, JoinType.INNER);
+			
+			cq.select(fromBook)
+				.where(cb.equal(fromBook.get(Book_.TITLE), title));
+			
+			TypedQuery<Book> query = em.createQuery(cq);
+			query.setHint("eclipselink.query-results-cache", false);
+			query.setHint("org.hibernate.cacheable", false);
+			List<Book> entities = query
 				.setFirstResult(start)
 				.setMaxResults(count)
 				.getResultList();
