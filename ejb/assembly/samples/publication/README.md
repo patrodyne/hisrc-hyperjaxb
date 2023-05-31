@@ -211,8 +211,14 @@ The [PublicationTest#testSchemaCrawler2()][74] method generates a diagram of the
 | DB | EclipseLink               | Hibernate                 |
 | -- | ------------------------- | ------------------------- |
 | H2 | ![EL-H2-SINGLE_TABLE][83] | ![HB-H2-SINGLE_TABLE][87] |
-| PG | ![EL-PG-SINGLE_TABLE][85] | ![HB-Pg-SINGLE_TABLE][89] |
+| PG | ![EL-PG-SINGLE_TABLE][85] | ![HB-PG-SINGLE_TABLE][89] |
 
+**Table Per Class**
+
+| DB | EclipseLink                  | Hibernate                    |
+| -- | ---------------------------- | ---------------------------- |
+| H2 | ![EL-H2-TABLE_PER_CLASS][90] | ![HB-H2-TABLE_PER_CLASS][92] |
+| PG | ![EL-PG-TABLE_PER_CLASS][91] | ![HB-PG-TABLE_PER_CLASS][93] |
 
 #### Omit `@Inheritance` from Childless Roots
 
@@ -296,4 +302,9 @@ mvn -Phibernate   clean compile exec:java -Dexec.args="src/test/samples/Blog01.x
 [86]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-H2-JOINED.svg
 [87]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-H2-SINGLE_TABLE.svg
 [88]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-PG-JOINED.svg
-[89]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-PG-SINGLE_TABLE.png
+[89]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-PG-SINGLE_TABLE.svg
+[90]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-H2-TABLE_PER_CLASS.svg
+[91]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-EL-PG-TABLE_PER_CLASS.svg
+[92]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-H2-TABLE_PER_CLASS.svg
+[93]: https://raw.githubusercontent.com/patrodyne/hisrc-hyperjaxb/master/ejb/assembly/samples/publication/src/main/resources/PublicationTables-HB-PG-TABLE_PER_CLASS.svg
+
