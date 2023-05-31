@@ -22,7 +22,6 @@ From the JPA 3.0 specification:
 
 + [§2.12][9] An implementation is required to support the **single table per class** hierarchy inheritance mapping strategy and the **joined subclass** strategy. Support for the **table per concrete class** inheritance mapping strategy is optional.
 
-
 #### Inheritance
 
 With regard to [JPA][1] entity inheritance, **HyperJAXB** uses the `JOINED` inheritance strategy for all root level entities:
@@ -36,7 +35,7 @@ import jakarta.persistence.InheritanceType;
 
 As of v2.1.0, **HyperJAXB** ...
 
-+ *does not* provide a configuration option for alternative [JPA][1] strategies: `SINGLE_TABLE`, `JOINED`, `TABLE_PER_CLASS`.
++ *does* provide a configuration option for alternative [JPA][1] strategies: `SINGLE_TABLE`, `JOINED`, `TABLE_PER_CLASS`.
 + *does* add the `@Inheritance` annotation on *every* root class, even if the base has no inherited classes in the XML Schema.
 + *does* return `JOINED` as the default inheritance strategy, see [EntityMapping#getInheritanceStrategy(...)][80].
 
@@ -51,8 +50,6 @@ Two well-known *persistence provider*s are [EclipseLink][4] and [Hibernate][5] a
 
 + As of v4.0.1, [EclipseLink][5] adds a `DTYPE` column for each root table when the `@Inheritance` annotation is *explicitly* declared with or without sub-tables.
 + As of v5.6.15.Final, [Hibernate][6] only adds a `DTYPE` column on root tables with sub-tables.
-
-> **Note:** Because **HyperJAXB** does not provide a way to select the default inheritance strategy, the behavior of [EclipseLink][4] and [Hibernate][5] is not known for explicitly declared `SINGLE_TABLE` and `TABLE_PER_CLASS` strategies.
 
 This [demonstration (zip)][20] can be executed using either provider.
 
@@ -146,9 +143,9 @@ public List<Publication> getPublications()
 ...
 ~~~
 
-### Solution (in progress)
+### Solution
 
-This [demonstration (zip)][20] confirms the observations reported in this [issue][7] and provides some approaches to address it; but, a full resolution will require some review and changes to a future release.
+This [demonstration (zip)][20] confirms the observations reported in this [issue][7] and provides some approaches to address it.
 
 #### [JPA][1] Inheritance Strategy
 
@@ -166,19 +163,24 @@ There are three basic strategies that are used when mapping a class or class hie
 
 #### Changing the Inheritance Strategy
 
-Currently in v2.1.0, **HyperJAXB** implements the inheritance strategy in [EntityMapping#getInheritanceStrategy(...)][80] as a non-configurable default:
+Currently in v2.1.0, **HyperJAXB** implements the inheritance strategy in [EntityMapping#getInheritanceStrategy(...)][80] as a *configurable* default:
 
 ~~~
 ...
-return jakarta.persistence.InheritanceType.JOINED;
-...
+if (isRootClass(context, classOutline))
+{
+    if (entity.getInheritance() != null && entity.getInheritance().getStrategy() != null)
+        return InheritanceType.valueOf(entity.getInheritance().getStrategy());
+    else
+        return jakarta.persistence.InheritanceType.JOINED;
+}...
 ~~~
 
 > **Note:** The **JPA** default inheritance strategy is `SINGLE_TABLE`; however, **HyperJAXB** customizes **JPA** to use `JOINED` when no other strategy is declared.
 
-Although v2.1.0 of **HyperJAXB** does not expose a configuration option for its default inheritance strategy, you can leverage the difference between the **JPA** and **HyperJAXB** implementations to use the former over the latter.
+You can leverage the difference between the **JPA** and **HyperJAXB** implementations to use the former over the latter.
 
-[**HyperJAXB Annox**][14] can be used to remove the **HyperJAXB** generated `@Inheritance` annotation in post-processing. To explore this approach, edit your copy of [Publication.xjb][39] to enable this (commented) binding in the two root elements: `Publication` and `Author`.
+[**HyperJAXB Annox**][14] can be used to remove the **HyperJAXB** generated `@Inheritance` annotation in post-processing. To explore this approach, edit your copy of [Publication.xjb][39] to enable this (commented) binding in the two root elements: `Publication` and `Author`. This will cause the JPA provider to fall back to the default strategy `SINGLE_TABLE`.
 
 `Publication.xjb`
 ~~~
@@ -199,7 +201,23 @@ mvn -Phibernate clean test
 
 The [PublicationTest#testSchemaCrawler2()][74] method generates a diagram of the database tables in your `target/generated-docs` sub-directory. Here are the diagrams for the options available in v2.1.0 of **HyperJAXB**.
 
++ You can use a pre-configured Maven profile to select the JPA provider: [eclipselink][5] or [hibernate][6].
+
++ You can configure the test database in [jvmsystem.properties][38] by setting `org.jvnet.hyperjaxb.persistencePropertiesMoreFile` to one of: 
+
+    + `persistence-h2.properties`
+    + `persistence-pg.properties` (see [pg-create-database.sh][25])
+
 **Joined Tables**
+
++ **HyperJAXB** implements the `JOINED` inheritance strategy in [EntityMapping#getInheritanceStrategy(...)][80] when the default entity mapping is not configured. You can configure the inheritance strategy in your binding file, as shown here:
+
+[Publication.xjb][39]
+~~~
+<hj:default-entity>
+    <orm:inheritance strategy="JOINED"/>
+</hj:default-entity>
+~~~
 
 | DB | EclipseLink         | Hibernate           |
 | -- | ------------------- | ------------------- |
@@ -208,6 +226,15 @@ The [PublicationTest#testSchemaCrawler2()][74] method generates a diagram of the
 
 **Single Table**
 
++ When the `@Inheritance` annotation or the `orm.xml` equivalent is not present,  the **JPA** default is `SINGLE_TABLE`. You can explicitly configure this inheritance strategy in your binding file, as shown here:
+
+[Publication.xjb][39]
+~~~
+<hj:default-entity>
+    <orm:inheritance strategy="SINGLE_TABLE"/>
+</hj:default-entity>
+~~~
+
 | DB | EclipseLink               | Hibernate                 |
 | -- | ------------------------- | ------------------------- |
 | H2 | ![EL-H2-SINGLE_TABLE][83] | ![HB-H2-SINGLE_TABLE][87] |
@@ -215,14 +242,33 @@ The [PublicationTest#testSchemaCrawler2()][74] method generates a diagram of the
 
 **Table Per Class**
 
++ The `TABLE_PER_CLASS` inheritance strategy is option in [JPA][1]. Providers ([eclipselink][5], [hibernate][6], etc.) are not required to implement it and support may be partial. You can explicitly configure this inheritance strategy in your binding file, as shown here:
+
+[Publication.xjb][39]
+~~~
+<hj:default-entity>
+    <orm:inheritance strategy="TABLE_PER_CLASS"/>
+</hj:default-entity>
+~~~
+
+> **Note:** The `TABLE_PER_CLASS` strategy applied the root ID to each sub-class in an hierarchal instance; thus, the preferred `generated-id` strategy is `TABLE`.
+
+~~~
+<hj:default-generated-id ... >
+    <orm:column name="id"/>
+    <orm:generated-value generator="SEQUENCES" strategy="TABLE"/>
+    <orm:table-generator name="SEQUENCES" table="sequences" />
+</hj:default-generated-id>
+~~~
+
 | DB | EclipseLink                  | Hibernate                    |
 | -- | ---------------------------- | ---------------------------- |
 | H2 | ![EL-H2-TABLE_PER_CLASS][90] | ![HB-H2-TABLE_PER_CLASS][92] |
 | PG | ![EL-PG-TABLE_PER_CLASS][91] | ![HB-PG-TABLE_PER_CLASS][93] |
 
-#### Omit `@Inheritance` from Childless Roots
+#### DTYPE: Omit `@Inheritance` from Childless Roots
 
-TBD
+[**HyperJAXB Annox**][14] can be used to remove the **HyperJAXB** generated `@Inheritance` annotation in post-processing. This approach (edit your copy of [Publication.xjb][39]) can be used to remove the binding from the `Author` table. When [eclipselink][5] and [hibernate][6] fall back to the `SINGLE_TABLE` strategy, they both omit the `dtype` column.
 
 ##### Demonstration
 
