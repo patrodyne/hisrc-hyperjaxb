@@ -48,7 +48,7 @@ The [JPA][1] specifies how the *persistence provider* should implement the [§11
 
 Two well-known *persistence provider*s are [EclipseLink][4] and [Hibernate][5] and each provides a different approach:
 
-+ As of v4.0.1, [EclipseLink][5] adds a `DTYPE` column for each root table when the `@Inheritance` annotation is *explicitly* declared with or without sub-tables.
++ As of v4.0.1, [EclipseLink][5] adds a `DTYPE` column for each root table when the `@Inheritance` annotation is *explicitly* declared with or without sub-tables; without the annotation, a `DTYPE` column is added only when needed.
 + As of v5.6.15.Final, [Hibernate][6] only adds a `DTYPE` column on root tables with sub-tables.
 
 This [demonstration (zip)][20] can be executed using either provider.
@@ -155,11 +155,11 @@ The *[Inheritance][8]* annotation defines the inheritance strategy to be used fo
 
 There are three basic strategies that are used when mapping a class or class hierarchy to a relational database:
 
-+ a single table per class hierarchy
++ **a single table per class hierarchy** maps all entities of the inheritance structure to the same database table.
 
-+ a joined subclass strategy, in which fields that are specific to a subclass are mapped to a separate table than the fields that are common to the parent class, and a join is performed to instantiate the subclass.
++ **a joined subclass strategy**, in which fields that are specific to a subclass are mapped to a separate table than the fields that are common to the parent class, and a join is performed to instantiate the subclass.
 
-+ a table per concrete entity class
++ **a table per concrete entity class**, in which each entity is mapped to its own table and all the properties of the entity, including the ones inherited are stored in columns of that table.
 
 #### Changing the Inheritance Strategy
 
@@ -224,9 +224,9 @@ The [PublicationTest#testSchemaCrawler2()][74] method generates a diagram of the
 | H2 | ![EL-H2-JOINED][82] | ![HB-H2-JOINED][86] |
 | PG | ![EL-PG-JOINED][84] | ![HB-PG-JOINED][88] |
 
-**Single Table**
+**Single Table (explicit) **
 
-+ When the `@Inheritance` annotation or the `orm.xml` equivalent is not present,  the **JPA** default is `SINGLE_TABLE`. You can explicitly configure this inheritance strategy in your binding file, as shown here:
++ When the `@Inheritance` annotation or the `orm.xml` equivalent is not present,  the **JPA** default is `SINGLE_TABLE`. You can *explicitly* configure this inheritance strategy in your binding file, as shown here:
 
 [Publication.xjb][39]
 ~~~
@@ -267,6 +267,8 @@ The [PublicationTest#testSchemaCrawler2()][74] method generates a diagram of the
 | PG | ![EL-PG-TABLE_PER_CLASS][91] | ![HB-PG-TABLE_PER_CLASS][93] |
 
 #### DTYPE: Omit `@Inheritance` from Childless Roots
+
+**Single Table (implicit) **
 
 [**HyperJAXB Annox**][14] can be used to remove the **HyperJAXB** generated `@Inheritance` annotation in post-processing. This approach (edit your copy of [Publication.xjb][39]) can be used to remove the binding from the `Author` table. When [eclipselink][5] and [hibernate][6] fall back to the `SINGLE_TABLE` strategy, they both omit the `dtype` column.
 
