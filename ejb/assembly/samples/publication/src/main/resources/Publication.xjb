@@ -56,6 +56,7 @@
             <hj:default-entity>
             	<!-- SINGLE_TABLE | JOINED | TABLE_PER_CLASS -->
             	<orm:inheritance strategy="JOINED"/>
+				<!-- <orm:discriminator-column length="255"/> -->
             </hj:default-entity>
 
             <hj:default-generated-id
@@ -67,7 +68,8 @@
             >
                 <orm:column name="id"/>
                 <orm:generated-value generator="SEQUENCES" strategy="TABLE"/>
-                <orm:table-generator name="SEQUENCES" table="sequences" />
+                <orm:table-generator name="SEQUENCES" table="sequences"
+					pk-column-name="seq_name" value-column-name="seq_next" />
             </hj:default-generated-id>
 
             <hj:default-generated-version
