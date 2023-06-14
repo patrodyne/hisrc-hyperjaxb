@@ -64,7 +64,7 @@
 					<xs:appinfo>
 						<jaxb:property name="Items"/>
 						<hj:one-to-many>
-                        				<orm:join-column name="ALPHA_ID"/>
+							<orm:join-column name="ALPHA_ID"/>
 						</hj:one-to-many>
 					</xs:appinfo>
 				</xs:annotation>
@@ -81,7 +81,7 @@
 					<xs:appinfo>
 						<jaxb:property name="Items"/>
 						<!--hj:one-to-many>
-                        				<orm:join-column name="DELTA_ID"/>
+							<orm:join-column name="DELTA_ID"/>
 						</hj:one-to-many-->
 					</xs:appinfo>
 				</xs:annotation>
@@ -98,7 +98,7 @@
 					<xs:appinfo>
 						<jaxb:property name="Items"/>
 						<hj:one-to-many>
-                        				<orm:join-column name="GAMMA_ID"/>
+							<orm:join-column name="GAMMA_ID"/>
 						</hj:one-to-many>
 					</xs:appinfo>
 				</xs:annotation>
@@ -117,7 +117,7 @@
 					<xs:appinfo>
 						<jaxb:property name="Items"/>
 						<!--hj:one-to-many>
-                        				<orm:join-column name="DELTA_ID"/>
+							<orm:join-column name="DELTA_ID"/>
 						</hj:one-to-many-->
 					</xs:appinfo>
 				</xs:annotation>

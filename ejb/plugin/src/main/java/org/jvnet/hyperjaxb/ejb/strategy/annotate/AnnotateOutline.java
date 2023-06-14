@@ -1,6 +1,12 @@
 package org.jvnet.hyperjaxb.ejb.strategy.annotate;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static java.lang.String.format;
+import static org.jvnet.basicjaxb.util.OutlineUtils.getContextPath;
+import static org.jvnet.basicjaxb.util.OutlineUtils.getFieldName;
+import static org.jvnet.basicjaxb.util.OutlineUtils.getLocalClassName;
+import static org.jvnet.basicjaxb.util.OutlineUtils.getPackagedClassName;
+import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,16 +14,13 @@ import java.util.Collection;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.basicjaxb.util.FieldAccessorUtils;
-import org.jvnet.basicjaxb.util.OutlineUtils;
 import org.jvnet.basicjaxb_annox.model.XAnnotation;
 import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.MojoConfigured;
 import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.Mapping;
-import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
+import org.jvnet.hyperjaxb.ejb.strategy.outline.EJBOutlineProcessor;
 import org.jvnet.hyperjaxb.persistence.util.AttributesUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
@@ -41,10 +44,8 @@ import jakarta.persistence.Transient;
 @Alternative
 @Priority(APPLICATION + 1)
 @StrategyAnnotate
-public class AnnotateOutline implements OutlineProcessor<EJBPlugin>
+public class AnnotateOutline extends EJBOutlineProcessor
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
-
 	@Inject
 	private Ignoring ignoring;
 	public Ignoring getIgnoring()
@@ -87,19 +88,21 @@ public class AnnotateOutline implements OutlineProcessor<EJBPlugin>
 	{
 		this.applyXAnnotations = annotator;
 	}
-
+	
 	@Override
 	public Collection<ClassOutline> process(EJBPlugin context, Outline outline)
 		throws Exception
 	{
-		logger.debug("Processing outline with context path [" + OutlineUtils.getContextPath(outline) + "].");
+		setXjcPlugin(context);
+		debug("{}, process; ContextPath={}", getLocation("unknown"), getContextPath(outline));
+		
 		final Collection<? extends ClassOutline> classes = outline.getClasses();
 		final Collection<ClassOutline> processedClassOutlines = new ArrayList<ClassOutline>(classes.size());
 		for (final ClassOutline classOutline : classes)
 		{
 			if (!getIgnoring().isClassOutlineIgnored(getMapping(), classOutline))
 			{
-				final ClassOutline processedClassOutline = process(this, classOutline);
+				final ClassOutline processedClassOutline = processClassOutline(this, classOutline);
 				if (processedClassOutline != null)
 					processedClassOutlines.add(processedClassOutline);
 			}
@@ -107,10 +110,9 @@ public class AnnotateOutline implements OutlineProcessor<EJBPlugin>
 		return processedClassOutlines;
 	}
 
-	public ClassOutline process(AnnotateOutline context, ClassOutline classOutline)
+	private ClassOutline processClassOutline(AnnotateOutline context, ClassOutline classOutline)
 		throws Exception
 	{
-		logger.debug("Processing class outline [" + OutlineUtils.getClassName(classOutline) + "].");
 		final Object entityOrMappedSuperclassOrEmbeddable = context.getMapping()
 			.getEntityOrMappedSuperclassOrEmbeddableMapping().process(context.getMapping(), classOutline);
 		final Object attributes;
@@ -136,18 +138,19 @@ public class AnnotateOutline implements OutlineProcessor<EJBPlugin>
 		}
 		else
 		{
-			throw new AssertionError("Either entity or mapped superclass expected, but an instance of ["
-				+ entityOrMappedSuperclassOrEmbeddable.getClass() + "] received.");
+			String msg = format("Either entity or mapped superclass expected, but an instance of [%s] received.",
+				entityOrMappedSuperclassOrEmbeddable.getClass());
+			throw new AssertionError(msg);
 		}
 
-		logger.debug("Annotating the class ["	+ OutlineUtils.getClassName(classOutline) + "]:\n"
-			+ ArrayUtils.toString(annotations));
 		context.getApplyXAnnotations().annotate(classOutline.ref.owner(), classOutline.ref, annotations);
+		debug("{}, processClassOutline; Class={}, Annotations={}",
+			getLocation(classOutline), getLocalClassName(classOutline), arrayToString(annotations));
 
 		// Prevent WARNING: "Unacknowledged customization check"
 		for (CPluginCustomization cpc : CustomizationUtils.getCustomizations(classOutline))
 		{
-			logger.debug("Customization: " + CustomizationUtils.getInfo("mark", cpc));
+			trace("Customization: " + CustomizationUtils.getInfo("mark", cpc));
 			cpc.markAsAcknowledged();
 		}
 
@@ -156,51 +159,57 @@ public class AnnotateOutline implements OutlineProcessor<EJBPlugin>
 
 		final FieldOutline[] fieldOutlines = classOutline.getDeclaredFields();
 		for (final FieldOutline fieldOutline : fieldOutlines)
-			process(context, fieldOutline, attributes);
+			processFieldOutline(context, fieldOutline, attributes);
 		return classOutline;
 	}
 
 	private void processAttributeWildcard(ClassOutline classOutline)
 	{
-		logger.debug("The class ["	+ OutlineUtils.getClassName(classOutline)
-			+ "] declares an attribute wildcard which will be made transient.");
 		String FIELD_NAME = "otherAttributes";
 		String METHOD_SEED = classOutline.parent().getModel().getNameConverter().toClassName(FIELD_NAME);
 		final JMethod getOtherAttributesMethod = classOutline.ref.getMethod("get" + METHOD_SEED, new JType[0]);
-		if (getOtherAttributesMethod == null)
+		if (getOtherAttributesMethod != null)
 		{
-			logger.error("Could not find the attribute wildcard method in the class ["
-							+ OutlineUtils.getClassName(classOutline) + "].");
+			debug("{}, processAttributeWildcard; Class={}, Wildcard={}, Annotations=@{}",
+				getLocation(classOutline), getLocalClassName(classOutline),
+				getOtherAttributesMethod.name(), Transient.class.getName());
+			getOtherAttributesMethod.annotate(Transient.class);
 		}
 		else
-			getOtherAttributesMethod.annotate(Transient.class);
+			error("Could not find the attribute wildcard method in the class [{}].", getPackagedClassName(classOutline));
 	}
 
-	public FieldOutline process(AnnotateOutline context, FieldOutline fieldOutline, Object attributes)
+	private FieldOutline processFieldOutline(AnnotateOutline context, FieldOutline fieldOutline, Object attributes)
 	{
-		final String name = context.getMapping().getNaming().getPropertyName(context.getMapping(), fieldOutline);
-		logger.debug("Processing field [" + name + "].");
+		final String fieldName = context.getMapping().getNaming().getPropertyName(context.getMapping(), fieldOutline);
+		final String className = fieldOutline.parent().getImplClass().name();
 		final JMethod issetter = FieldAccessorUtils.issetter(fieldOutline);
 
 		if (issetter != null)
 		{
-			logger.debug("Annotating [" + issetter.name() + "] with @javax.persistence.Transient.");
+			debug("{}, processFieldOutline; Class={}, IsSet={}, Annotations=@{}",
+				getLocation(fieldOutline), className, issetter.name(), Transient.class.getName());
 			issetter.annotate(Transient.class);
 		}
 
-		final Object attribute = AttributesUtils.getAttribute(attributes, name);
+		final Object attribute = AttributesUtils.getAttribute(attributes, fieldName);
 		Collection<XAnnotation<?>> xannotations = context.getCreateXAnnotations().createAttributeAnnotations(attribute);
-
-		final JMethod getter = FieldAccessorUtils.getter(fieldOutline);
-		logger.debug("Annotating the field ["	+ OutlineUtils.getFieldName(fieldOutline) + "]:\n"
-			+ ArrayUtils.toString(xannotations));
 		if (xannotations == null)
-		{
-			logger.error("No annotations for the field ["	+ OutlineUtils.getFieldName(fieldOutline) + "]:\n"
-							+ ArrayUtils.toString(xannotations));
-		}
+			error("No annotations for the field [ {} ]: {}", getFieldName(fieldOutline), arrayToString(xannotations));
 		else
+		{
+			final JMethod getter = FieldAccessorUtils.getter(fieldOutline);
 			context.getApplyXAnnotations().annotate(fieldOutline.parent().ref.owner(), getter, xannotations);
+		}
+		
+		debug("{}, processFieldOutline; Class={}, Field={}, Annotations={}",
+			getLocation(fieldOutline), className, fieldName, arrayToString(xannotations));
+		
 		return fieldOutline;
+	}
+	
+	private static String arrayToString(Object value)
+	{
+		return ArrayUtils.toString(value);
 	}
 }

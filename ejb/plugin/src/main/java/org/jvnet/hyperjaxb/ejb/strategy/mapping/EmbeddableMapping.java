@@ -29,7 +29,7 @@ public class EmbeddableMapping implements ClassOutlineMapping<Embeddable> {
 	public void createEmbeddable$Class(Mapping context,
 			ClassOutline classOutline, final Embeddable entity) {
 		if (entity.getClazz() == null || "##default".equals(entity.getClazz())) {
-			entity.setClazz(OutlineUtils.getClassName(classOutline));
+			entity.setClazz(OutlineUtils.getPackagedClassName(classOutline));
 		}
 	}
 

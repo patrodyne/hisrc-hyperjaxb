@@ -1,10 +1,13 @@
 package org.jvnet.hyperjaxb.ejb.plugin;
 
+import static java.lang.String.format;
 import static org.jvnet.basicjaxb.util.GeneratorContextUtils.generateContextPathAwareClass;
+import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Collection;
@@ -20,9 +23,8 @@ import org.jvnet.hyperjaxb.ejb.strategy.processor.ModelAndOutlineProcessor;
 import org.jvnet.hyperjaxb.ejb.test.RoundtripTest;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.UntypedListFieldRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.Locator;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
@@ -39,6 +41,7 @@ import com.sun.tools.xjc.generator.bean.field.FieldRendererFactory;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CPluginCustomization;
 import com.sun.tools.xjc.model.CPropertyInfo;
+import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
@@ -48,41 +51,28 @@ import com.sun.tools.xjc.reader.xmlschema.BGMBuilder;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
 
 /**
- * Hyperjaxb EJB plugin.
+ * An XJC plugin to add EJB annotations to JAXB generated classes.
  */
 public class EJBPlugin extends AbstractWeldCDIPlugin
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
-
-	private final Method generateFieldDecl;
-	{
-		try
-		{
-			generateFieldDecl = BeanGenerator.class.getDeclaredMethod("generateFieldDecl",
-				new Class[] { ClassOutlineImpl.class, CPropertyInfo.class });
-			generateFieldDecl.setAccessible(true);
-		}
-		catch (Exception ex)
-		{
-			throw new ExceptionInInitializerError(ex);
-
-		}
-	}
-
-	private List<URL> episodeURLs = new LinkedList<URL>();
-
+	/** Name of Option to enable this plugin. */
+	private static final String OPTION_NAME = "Xhyperjaxb-ejb";
+	
+	/** Description of Option to enable this plugin. */
+	private static final String OPTION_DESC = "add EJB annotations to JAXB generated classes";
+	
 	@Override
 	public String getOptionName()
 	{
-		return "Xhyperjaxb-ejb";
+		return OPTION_NAME;
 	}
 
 	@Override
 	public String getUsage()
 	{
-		return "  -Xhyperjaxb-ejb: Hyperjaxb EJB plugin";
+		return format(USAGE_FORMAT, OPTION_NAME, OPTION_DESC);
 	}
-	
+
 	private Boolean validateXml = null;
 	public Boolean isValidateXml() { return validateXml; }
 	public void setValidateXml(Boolean validateXml) { this.validateXml = validateXml; }
@@ -163,6 +153,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 	public BGMBuilder getBgmBuilder() { return bgmBuilder; }
 	public void setBgmBuilder(BGMBuilder bgmBuilder) { this.bgmBuilder = bgmBuilder; }
 
+	private List<URL> episodeURLs = new LinkedList<URL>();
 	@Override
 	public int parseArgument(Options opt, String[] args, int start)
 		throws BadCommandLineException, IOException
@@ -236,9 +227,9 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 			if (!customization.isAcknowledged())
 			{
 				if ( Customizations.NAMESPACE_URI.equals(namespace) )
-					logger.warn("Unacknowledged customization "+infoMap.get(customization));
+					warn("Unacknowledged customization {}", infoMap.get(customization));
 				else
-					logger.debug("Unacknowledged customization pending "+infoMap.get(customization));
+					debug("Unacknowledged customization pending {}", infoMap.get(customization));
 				customization.markAsAcknowledged();
 			}
 		}
@@ -253,9 +244,9 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 			if (!customization.isAcknowledged())
 			{
 				if ( Customizations.NAMESPACE_URI.equals(namespace) )
-					logger.warn("Unacknowledged customization "+infoMap.get(customization));
+					warn("Unacknowledged customization {}", infoMap.get(customization));
 				else
-					logger.debug("Unacknowledged customization pending "+infoMap.get(customization));
+					debug("Unacknowledged customization pending {}", infoMap.get(customization));
 				customization.markAsAcknowledged();
 			}
 		}
@@ -268,7 +259,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 
 		if (LocalScoping.NESTED.equals(getBgmBuilder().getGlobalBinding().getFlattenClasses()))
 		{
-			logger.warn("According to the Java Persistence API specification, section 2.1, "
+			warn("According to the Java Persistence API specification, section 2.1, "
 				+ "entities must be top-level classes:\n"
 				+ "\"The entity class must be a top-level class.\"\n"
 				+ "Your JAXB model is not customized as with top-level local scoping, "
@@ -280,7 +271,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 
 		if (!serializable)
 		{
-			logger.warn("According to the Java Persistence API specification, section 2.1, "
+			warn("According to the Java Persistence API specification, section 2.1, "
 				+ "entities must implement the serializable interface:\n"
 				+ "\"If an entity instance is to be passed by value as a detached object\n"
 				+ "(e.g., through a remote interface), the entity class must implement\n "
@@ -310,10 +301,27 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 	}
 
 	@Override
-	protected void beforeRun(Outline outline, Options options) throws Exception
+	protected void beforeRun(Outline outline) throws Exception
 	{
 		// Configure Dependency Injection Context
-		super.beforeRun(outline, options);
+		super.beforeRun(outline);
+		
+		if ( isInfoEnabled() )
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.append(LOGGING_START);
+			sb.append("\nParameters");
+			sb.append("\n  MaxIdentifierLength....: " + getMaxIdentifierLength());
+			sb.append("\n  PersistenceUnitName....: " + getPersistenceUnitName());
+			sb.append("\n  PersistenceXml.........: " + getPersistenceXml());
+			sb.append("\n  Result.................: " + getResult());
+			sb.append("\n  RoundtripTestClassName.: " + getRoundtripTestClassName());
+			sb.append("\n  TargetDir..............: " + getTargetDir());
+			sb.append("\n  ValidateXml............: " + isValidateXml());
+			sb.append("\n  Verbose................: " + isVerbose());
+			sb.append("\n  Debug..................: " + isDebug());
+			info(sb.toString());
+		}
 		
 		// Wire this XJC plugin into the CDI strategy producer.
 		getStrategyProducer().setPlugin(this);
@@ -330,12 +338,26 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 
 		// Set target directory, when needed.
 		if (getTargetDir() == null)
-			setTargetDir(options.targetDir);
+			setTargetDir(getOptions().targetDir);
 
 		// Configure XJC Plugin properties from XJC parameter(s)
 		// and/or from Maven Mojo settings.
 		if ( getMaxIdentifierLength() != null )
 			getNaming().setMaxIdentifierLength(getMaxIdentifierLength());
+	}
+
+	@Override
+	protected void afterRun(Outline outline) throws Exception
+	{
+		super.afterRun(outline);
+		if ( isInfoEnabled() )
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.append(LOGGING_FINISH);
+			sb.append("\nResults");
+			sb.append("\n  HadError.: " + hadError(outline.getErrorReceiver()));
+			info(sb.toString());
+		}
 	}
 	
 	@Override
@@ -348,11 +370,6 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 			Ring.add(getBgmBuilder());
 			Ring.add(outline.getModel());
 			getModelAndOutlineProcessor().process(this, outline.getModel());
-		}
-		catch (Exception ex)
-		{
-			ex.printStackTrace();
-			throw ex;
 		}
 		finally
 		{
@@ -387,18 +404,13 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		
 		return true;
 	}
-
-	@Override
-	protected void afterRun(Outline outline, Options options) throws Exception
-	{
-		super.afterRun(outline, options);
-	}
 	
 	// if serialization support is turned on, generate
 	// [RESULT]
-	// class ... implements Serializable {
-	// private static final long serialVersionUID = <id>;
-	// ....
+	// class ... implements Serializable
+	// {
+	//     private static final long serialVersionUID = <id>;
+	//     ....
 	// }
 	private void generateClassSerializable(Outline outline, ClassOutlineImpl coi)
 	{
@@ -416,30 +428,73 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 					implClass.field(JMod.PRIVATE | JMod.STATIC | JMod.FINAL,
 						codeModel.LONG, "serialVersionUID",
 						JExpr.lit(model.serialVersionUID));
+					if ( isDebugEnabled() )
+					{
+						if ( coi.getTarget() instanceof CClassInfo )
+						{
+							CClassInfo coiTarget = (CClassInfo) coi.getTarget();
+							debug("{}, generateClassSerializable; Class={}",
+								getLocation(coiTarget), coiTarget.shortName);
+						}
+					}
 				}
 			}
 		}
 	}
 
 	private void generateClassBody(Outline outline, ClassOutlineImpl coi)
+		throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
 	{
 		CClassInfo target = coi.target;
-
+		
 		for (CPropertyInfo prop : target.getProperties())
 			generateFieldDecl(outline, coi, prop);
 
 		assert !target.declaresAttributeWildcard();
+		
+		debug("{}, generateClassBody; Class={}", getLocation(target), target.shortName);
 	}
-
-	private FieldOutline generateFieldDecl(Outline outline, ClassOutlineImpl cc, CPropertyInfo prop)
+	
+	// Represents a generate field declaration method that is initialized in an
+	// instance initializer block.
+	private final Method generateFieldDecl;
 	{
 		try
 		{
-			return (FieldOutline) generateFieldDecl.invoke(outline,	new Object[] { cc, prop });
-		} catch (Exception ex)
-		{
-			ex.printStackTrace();
-			throw new RuntimeException(ex);
+			generateFieldDecl = BeanGenerator.class.getDeclaredMethod("generateFieldDecl",
+				new Class[] { ClassOutlineImpl.class, CPropertyInfo.class });
+			generateFieldDecl.setAccessible(true);
 		}
+		catch (Exception ex)
+		{
+			throw new ExceptionInInitializerError(ex);
+
+		}
+	}
+	
+	private FieldOutline generateFieldDecl(Outline outline, ClassOutlineImpl cc, CPropertyInfo propInfo)
+		throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
+	{
+		FieldOutline fieldOutline = (FieldOutline) generateFieldDecl.invoke(outline, new Object[] { cc, propInfo });
+		
+		if ( isDebugEnabled() )
+		{
+			CPropertyInfo fieldInfo = fieldOutline.getPropertyInfo();
+			CTypeInfo fieldParent = fieldInfo.parent();
+			Locator locator = fieldInfo.getLocator();
+			if ( locator == null )
+			{
+				if ( fieldParent.getSchemaComponent() != null )
+					locator = fieldParent.getSchemaComponent().getLocator();
+				else
+					locator = fieldParent.getLocator();
+			}
+			String className = fieldOutline.parent().getImplClass().name();
+			String fieldName = fieldInfo.getName(false);
+			debug("{}, generateFieldDecl; Class={}, Field={}",
+				getLocation(locator), className, fieldName);
+		}
+		
+		return fieldOutline;
 	}
 }

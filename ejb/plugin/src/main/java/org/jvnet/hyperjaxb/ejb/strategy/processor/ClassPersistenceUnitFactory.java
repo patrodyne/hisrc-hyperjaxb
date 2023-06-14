@@ -16,7 +16,7 @@ public class ClassPersistenceUnitFactory implements PersistenceUnitFactory{
 		final PersistenceUnit persistenceUnit = new PersistenceUnit();
 		for (final ClassOutline classOutline : includedClasses) {
 			persistenceUnit.getClazz().add(
-					OutlineUtils.getClassName(classOutline));
+					OutlineUtils.getPackagedClassName(classOutline));
 		}
 		return persistenceUnit;
 

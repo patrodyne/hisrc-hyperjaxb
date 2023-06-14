@@ -16,7 +16,7 @@ public class MappingFilePersistenceUnitFactory implements
 			final Collection<ClassOutline> includedClasses) {
 		final PersistenceUnit persistenceUnit = new PersistenceUnit();
 		for (final ClassOutline classOutline : includedClasses) {
-			final String className = OutlineUtils.getClassName(classOutline);
+			final String className = OutlineUtils.getPackagedClassName(classOutline);
 			persistenceUnit.getMappingFile().add(
 					className.replace('.', '/') + ".orm.xml");
 		}

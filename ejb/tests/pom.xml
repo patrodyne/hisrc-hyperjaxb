@@ -155,7 +155,7 @@
 						</execution>
 					</executions>
 					<configuration>
-						<debug>false</debug>
+						<debug>true</debug>
 						<extension>true</extension>
 						<variant>jpa</variant>
 						<generateCopyable>true</generateCopyable>

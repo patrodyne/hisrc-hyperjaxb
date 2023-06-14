@@ -10,6 +10,7 @@ import org.jvnet.basicjaxb.lang.JAXBMergeCollectionsStrategy;
 import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.annotate.StrategyAnnotate;
 import org.jvnet.hyperjaxb.ejb.strategy.naming.Naming;
+import org.jvnet.hyperjaxb.ejb.strategy.outline.EJBOutlineProcessor;
 import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
 import org.jvnet.hyperjaxb.persistence.util.PersistenceUtils;
 
@@ -34,7 +35,7 @@ import jakarta.xml.bind.JAXBException;
 @Alternative
 @Priority(APPLICATION + 1)
 @ClassPersistence
-public class ClassPersistenceProcessor implements OutlineProcessor<EJBPlugin>
+public class ClassPersistenceProcessor extends EJBOutlineProcessor
 {
 	@Inject @StrategyAnnotate
 	private OutlineProcessor<EJBPlugin> outlineProcessor;

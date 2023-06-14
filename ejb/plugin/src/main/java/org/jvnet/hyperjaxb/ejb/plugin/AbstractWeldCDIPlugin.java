@@ -1,7 +1,6 @@
 package org.jvnet.hyperjaxb.ejb.plugin;
 
 import static jakarta.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
-import static org.jvnet.basicjaxb.util.ClassUtils.identify;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -26,10 +25,7 @@ import org.jvnet.hyperjaxb.ejb.strategy.service.StrategyProducer;
 import org.jvnet.hyperjaxb.ejb.strategy.service.StrategyService;
 import org.jvnet.basicjaxb.config.LocatorProperties;
 import org.jvnet.basicjaxb.plugin.AbstractParameterizablePlugin;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.Outline;
 
 import jakarta.enterprise.inject.Any;
@@ -49,8 +45,6 @@ import jakarta.xml.bind.Unmarshaller;
 public abstract class AbstractWeldCDIPlugin
 	extends AbstractParameterizablePlugin
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
-
 	private Weld weld;
 	public Weld getWeld() { return weld; }
 	public void setWeld(Weld weld) { this.weld = weld; }
@@ -81,16 +75,16 @@ public abstract class AbstractWeldCDIPlugin
 	public void setJaxbContext(JAXBContext jaxbContext) { this.jaxbContext = jaxbContext; }
 
 	@Override
-	protected void beforeRun(Outline outline, Options options) throws Exception
+	protected void beforeRun(Outline outline) throws Exception
 	{
-		super.beforeRun(outline, options);
+		super.beforeRun(outline);
 		configureWeldContext();
 	}
 	
 	@Override
-	protected void afterRun(Outline outline, Options options) throws Exception
+	protected void afterRun(Outline outline) throws Exception
 	{
-		super.afterRun(outline, options);
+		super.afterRun(outline);
 		if ( getWeldContainer() != null )
 			getWeldContainer().close();
 	}
@@ -120,7 +114,7 @@ public abstract class AbstractWeldCDIPlugin
 			}
 			catch (IOException ex)
 			{
-				logger.warn("Beans properties not loaded: "+getBeansPropertiesLocator(), ex);
+				warn("Beans properties not loaded: {}", getBeansPropertiesLocator(), ex);
 			}			
 		}
 		return beansProperties;
@@ -141,7 +135,7 @@ public abstract class AbstractWeldCDIPlugin
 		}
 		catch ( JAXBException ex)
 		{
-			logger.error("Cannot create JAXB context", ex);
+			error("Cannot create JAXB context", ex);
 		}
 		return jaxbContext;
 	}
@@ -157,11 +151,11 @@ public abstract class AbstractWeldCDIPlugin
 				marshaller.setProperty(JAXB_FORMATTED_OUTPUT, true);
 			}
 			else
-				logger.error("Cannot create marshaller because JAXB context is null!");
+				error("Cannot create marshaller because JAXB context is null!");
 		}
 		catch ( JAXBException ex )
 		{
-			logger.error("Cannot create JAXB marshaller", ex);
+			error("Cannot create JAXB marshaller", ex);
 		}
 		return marshaller;
 	}
@@ -176,11 +170,11 @@ public abstract class AbstractWeldCDIPlugin
 				unmarshaller = jaxbContext.createUnmarshaller();
 			}
 			else
-				logger.error("Cannot create unmarshaller because JAXB context is null!");
+				error("Cannot create unmarshaller because JAXB context is null!");
 		}
 		catch ( JAXBException ex )
 		{
-			logger.error("Cannot create JAXB unmarshaller", ex);
+			error("Cannot create JAXB unmarshaller", ex);
 		}
 		return unmarshaller;
 	}
@@ -234,104 +228,104 @@ public abstract class AbstractWeldCDIPlugin
 			sb.append(psz + ":" + psb + "\t|");
 			sb.append("\n");
 		}
-		logger.debug("CDI Beans: \n" + sb);
+		trace("CDI Beans: \n{}", sb);
 	}
 	
 	public void logContext(Naming naming)
 	{
-		if ( logger.isDebugEnabled() )
+		if ( isTraceEnabled() )
 		{
-			logger.debug(identify(naming));
-			logger.debug(identify(naming.getReservedNames()));
-			logger.debug(identify(naming.getIgnoring()));
-			logger.debug(identify(naming.getIgnoring().getCustomizing()));
+			trace(identify(naming));
+			trace(identify(naming.getReservedNames()));
+			trace(identify(naming.getIgnoring()));
+			trace(identify(naming.getIgnoring().getCustomizing()));
 		}
 	}
 	
 	public void logContext(MappingContext mappingContext)
 	{
-		if ( logger.isDebugEnabled() )
+		if ( isTraceEnabled() )
 		{
-			logger.debug(identify(mappingContext));
-			logger.debug(identify(mappingContext.getGetTypes()));
-			logger.debug(identify(mappingContext.getCustomizing()));
-			logger.debug(identify(mappingContext.getNaming()));
-			logger.debug(identify(mappingContext.getIgnoring()));
-			logger.debug(identify(mappingContext.getIgnoring().getCustomizing()));
-			logger.debug(identify(mappingContext.getEmbeddableAttributesMapping()));
+			trace(identify(mappingContext));
+			trace(identify(mappingContext.getGetTypes()));
+			trace(identify(mappingContext.getCustomizing()));
+			trace(identify(mappingContext.getNaming()));
+			trace(identify(mappingContext.getIgnoring()));
+			trace(identify(mappingContext.getIgnoring().getCustomizing()));
+			trace(identify(mappingContext.getEmbeddableAttributesMapping()));
 		}
 	}
 	
 	public void logContext(ModelAndOutlineProcessor<EJBPlugin> maoProcessor)
 	{
-		if ( logger.isDebugEnabled() )
+		if ( isTraceEnabled() )
 		{
-			logger.debug(identify(maoProcessor));
-			logger.debug(identify(maoProcessor.getModelProcessor()));
-			logger.debug(identify(maoProcessor.getOutlineProcessor()));
+			trace(identify(maoProcessor));
+			trace(identify(maoProcessor.getModelProcessor()));
+			trace(identify(maoProcessor.getOutlineProcessor()));
 			ModelProcessor<EJBPlugin> maoModelProcessor = maoProcessor.getModelProcessor();
 			if ( maoModelProcessor instanceof DefaultProcessModel )
 			{
 				DefaultProcessModel processModel = (DefaultProcessModel) maoModelProcessor;
 				
 				// Process properties
-				logger.debug(identify(processModel.getProcessClassInfo()));	
-				logger.debug(identify(processModel.getProcessPropertyInfos()));
-				logger.debug(identify(processModel.getCreateIdClass()));
-				logger.debug(identify(processModel.getCreateDefaultIdPropertyInfos()));
-				logger.debug(identify(processModel.getCreateDefaultVersionPropertyInfos()));
-				logger.debug(identify(processModel.getGetIdPropertyInfos()));
-				logger.debug(identify(processModel.getGetVersionPropertyInfos()));
-				logger.debug(identify(processModel.getGetTypes()));
-				logger.debug(identify(processModel.getAdaptBuiltinTypeUse()));
+				trace(identify(processModel.getProcessClassInfo()));	
+				trace(identify(processModel.getProcessPropertyInfos()));
+				trace(identify(processModel.getCreateIdClass()));
+				trace(identify(processModel.getCreateDefaultIdPropertyInfos()));
+				trace(identify(processModel.getCreateDefaultVersionPropertyInfos()));
+				trace(identify(processModel.getGetIdPropertyInfos()));
+				trace(identify(processModel.getGetVersionPropertyInfos()));
+				trace(identify(processModel.getGetTypes()));
+				trace(identify(processModel.getAdaptBuiltinTypeUse()));
 				
 				// Wrap Attributes
-				logger.debug(identify(processModel.getWrapSingleBuiltinAttribute()));
-				logger.debug(identify(processModel.getWrapSingleEnumAttribute()));
-				logger.debug(identify(processModel.getWrapCollectionBuiltinAttribute()));
+				trace(identify(processModel.getWrapSingleBuiltinAttribute()));
+				trace(identify(processModel.getWrapSingleEnumAttribute()));
+				trace(identify(processModel.getWrapCollectionBuiltinAttribute()));
 				if ( processModel.getWrapCollectionBuiltinAttribute() instanceof WrapCollectionBuiltinNonReference )
 				{
 					WrapCollectionBuiltinNonReference wcbnr = (WrapCollectionBuiltinNonReference) processModel.getWrapCollectionBuiltinAttribute();
-					logger.debug("fallback: " + identify(wcbnr.getFallback()));
+					trace("fallback: {}", identify(wcbnr.getFallback()));
 				}
-				logger.debug(identify(processModel.getWrapCollectionEnumAttribute()));
+				trace(identify(processModel.getWrapCollectionEnumAttribute()));
 				// Wrap Values
-				logger.debug(identify(processModel.getWrapSingleBuiltinValue()));
-				logger.debug(identify(processModel.getWrapSingleEnumValue()));
-				logger.debug(identify(processModel.getWrapCollectionBuiltinValue()));
+				trace(identify(processModel.getWrapSingleBuiltinValue()));
+				trace(identify(processModel.getWrapSingleEnumValue()));
+				trace(identify(processModel.getWrapCollectionBuiltinValue()));
 				if ( processModel.getWrapCollectionBuiltinValue() instanceof WrapCollectionBuiltinNonReference )
 				{
 					WrapCollectionBuiltinNonReference wcbnr = (WrapCollectionBuiltinNonReference) processModel.getWrapCollectionBuiltinValue();
-					logger.debug("fallback: " + identify(wcbnr.getFallback()));
+					trace("fallback: {}", identify(wcbnr.getFallback()));
 				}
-				logger.debug(identify(processModel.getWrapCollectionEnumValue()));
+				trace(identify(processModel.getWrapCollectionEnumValue()));
 				// Wrap Elements
-				logger.debug(identify(processModel.getWrapSingleBuiltinElement()));
-				logger.debug(identify(processModel.getWrapSingleEnumElement()));
-				logger.debug(identify(processModel.getWrapSingleHeteroElement()));
-				logger.debug(identify(processModel.getWrapCollectionBuiltinElement()));
+				trace(identify(processModel.getWrapSingleBuiltinElement()));
+				trace(identify(processModel.getWrapSingleEnumElement()));
+				trace(identify(processModel.getWrapSingleHeteroElement()));
+				trace(identify(processModel.getWrapCollectionBuiltinElement()));
 				if ( processModel.getWrapCollectionBuiltinElement() instanceof WrapCollectionBuiltinNonReference )
 				{
 					WrapCollectionBuiltinNonReference wcbnr = (WrapCollectionBuiltinNonReference) processModel.getWrapCollectionBuiltinElement();
-					logger.debug("fallback: " + identify(wcbnr.getFallback()));
+					trace("fallback: {}", identify(wcbnr.getFallback()));
 				}
-				logger.debug(identify(processModel.getWrapCollectionEnumElement()));
-				logger.debug(identify(processModel.getWrapCollectionHeteroElement()));
+				trace(identify(processModel.getWrapCollectionEnumElement()));
+				trace(identify(processModel.getWrapCollectionHeteroElement()));
 				// Wrap ElementReferences
-				logger.debug(identify(processModel.getWrapSingleBuiltinElementReference()));
-				logger.debug(identify(processModel.getWrapSingleEnumElementReference()));
-				logger.debug(identify(processModel.getWrapSingleClassElementReference()));
-				logger.debug(identify(processModel.getWrapSingleSubstitutedElementReference()));
+				trace(identify(processModel.getWrapSingleBuiltinElementReference()));
+				trace(identify(processModel.getWrapSingleEnumElementReference()));
+				trace(identify(processModel.getWrapSingleClassElementReference()));
+				trace(identify(processModel.getWrapSingleSubstitutedElementReference()));
 				// Wrap References
-				logger.debug(identify(processModel.getWrapSingleHeteroReference()));
-				logger.debug(identify(processModel.getWrapSingleClassReference()));
-				logger.debug(identify(processModel.getWrapSingleWildcardReference()));
-				logger.debug(identify(processModel.getWrapCollectionHeteroReference()));
-				logger.debug(identify(processModel.getWrapCollectionWildcardReference()));
+				trace(identify(processModel.getWrapSingleHeteroReference()));
+				trace(identify(processModel.getWrapSingleClassReference()));
+				trace(identify(processModel.getWrapSingleWildcardReference()));
+				trace(identify(processModel.getWrapCollectionHeteroReference()));
+				trace(identify(processModel.getWrapCollectionWildcardReference()));
 				
 				// Ubiquitous properties
-				logger.debug(identify(processModel.getIgnoring()));
-				logger.debug(identify(processModel.getCustomizing()));
+				trace(identify(processModel.getIgnoring()));
+				trace(identify(processModel.getCustomizing()));
 				
 				processModel = null;
 			}
@@ -339,31 +333,37 @@ public abstract class AbstractWeldCDIPlugin
 			if ( maoOutlineProcessor instanceof ClassPersistenceProcessor )
 			{
 				ClassPersistenceProcessor classPersistenceProcessor = (ClassPersistenceProcessor) maoOutlineProcessor;
-				logger.debug(identify(classPersistenceProcessor.getOutlineProcessor()));
+				trace(identify(classPersistenceProcessor.getOutlineProcessor()));
 				OutlineProcessor<EJBPlugin> cpOutlineProcessor = classPersistenceProcessor.getOutlineProcessor();
 				if ( cpOutlineProcessor instanceof AnnotateOutline )
 				{
 					AnnotateOutline annotateOutline = (AnnotateOutline) cpOutlineProcessor;
-					logger.debug(identify(annotateOutline.getIgnoring()));
-					logger.debug(identify(annotateOutline.getMapping()));
-					logger.debug(identify(annotateOutline.getCreateXAnnotations()));
+					trace(identify(annotateOutline.getIgnoring()));
+					trace(identify(annotateOutline.getMapping()));
+					trace(identify(annotateOutline.getCreateXAnnotations()));
 				}
-				logger.debug(identify(classPersistenceProcessor.getNaming()));
-				logger.debug(identify(classPersistenceProcessor.getPersistenceFactory()));
-				logger.debug(identify(classPersistenceProcessor.getPersistenceMarshaller()));
+				trace(identify(classPersistenceProcessor.getNaming()));
+				trace(identify(classPersistenceProcessor.getPersistenceFactory()));
+				trace(identify(classPersistenceProcessor.getPersistenceMarshaller()));
 			}
 			else if ( maoOutlineProcessor instanceof MappingFilePersistenceProcessor )
 			{
 				MappingFilePersistenceProcessor mfPersistenceProcessor = (MappingFilePersistenceProcessor) maoOutlineProcessor;
-				logger.debug(identify(mfPersistenceProcessor.getOutlineProcessor()));
+				trace(identify(mfPersistenceProcessor.getOutlineProcessor()));
 				OutlineProcessor<EJBPlugin> mfOutlineProcessor = mfPersistenceProcessor.getOutlineProcessor();
 				if ( mfOutlineProcessor instanceof MarshalMappings )
 				{
 					MarshalMappings marshalMappings = (MarshalMappings) mfOutlineProcessor;
-					logger.debug(identify(marshalMappings.getIgnoring()));
-					logger.debug(identify(marshalMappings.getMapping()));
+					trace(identify(marshalMappings.getIgnoring()));
+					trace(identify(marshalMappings.getMapping()));
 				}
 			}
 		}
+	}
+	
+	/* Identify with prefix */
+	private String identify(Object obj)
+	{
+		return "CDI " + org.jvnet.basicjaxb.util.ClassUtils.identify(obj);
 	}
 }

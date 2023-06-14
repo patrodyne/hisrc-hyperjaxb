@@ -1,7 +1,10 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.basicjaxb.util.OutlineUtils.getContextPath;
+import static org.jvnet.basicjaxb.util.OutlineUtils.getLocalClassName;
 import static org.jvnet.hyperjaxb.ejb.Constants.ORM_EJB_VERSION;
+import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.io.StringWriter;
 import java.io.Writer;
@@ -9,13 +12,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.jvnet.basicjaxb.util.CodeModelUtils;
-import org.jvnet.basicjaxb.util.OutlineUtils;
 import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
-import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
+import org.jvnet.hyperjaxb.ejb.strategy.outline.EJBOutlineProcessor;
 import org.jvnet.hyperjaxb.persistence.jpa.JPAUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.fmt.JTextFile;
 import com.sun.tools.xjc.outline.ClassOutline;
@@ -36,10 +36,8 @@ import jakarta.xml.bind.Marshaller;
 @Alternative
 @Priority(APPLICATION + 1)
 @StrategyMapping
-public class MarshalMappings implements OutlineProcessor<EJBPlugin>
+public class MarshalMappings extends EJBOutlineProcessor
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
-
 	@Inject
 	private Ignoring ignoring;
 	public Ignoring getIgnoring()
@@ -71,14 +69,16 @@ public class MarshalMappings implements OutlineProcessor<EJBPlugin>
 	public Collection<ClassOutline> process(EJBPlugin context, Outline outline)
 		throws Exception
 	{
-		logger.debug("Processing outline with context path [" + OutlineUtils.getContextPath(outline) + "].");
+		setXjcPlugin(context);
+		debug("{}, process; ContextPath={}", getLocation("unknown"), getContextPath(outline));
+		
 		final Collection<? extends ClassOutline> classes = outline.getClasses();
 		final Collection<ClassOutline> processedClassOutlines = new ArrayList<ClassOutline>(classes.size());
 		for (final ClassOutline classOutline : classes)
 		{
 			if (!getIgnoring().isClassOutlineIgnored(getMapping(), classOutline))
 			{
-				final ClassOutline processedClassOutline = process(this, classOutline);
+				final ClassOutline processedClassOutline = processClassOutline(this, classOutline);
 				if (processedClassOutline != null)
 					processedClassOutlines.add(processedClassOutline);
 			}
@@ -86,10 +86,9 @@ public class MarshalMappings implements OutlineProcessor<EJBPlugin>
 		return processedClassOutlines;
 	}
 
-	public ClassOutline process(MarshalMappings context, ClassOutline classOutline)
+	private ClassOutline processClassOutline(MarshalMappings context, ClassOutline classOutline)
 		throws Exception
 	{
-		logger.debug("Processing class outline [" + OutlineUtils.getClassName(classOutline) + "].");
 		final String className = CodeModelUtils.getLocalClassName(classOutline.ref);
 		final JTextFile classOrmXmlFile = new JTextFile(className + ".orm.xml");
 		classOutline._package()._package().addResourceFile(classOrmXmlFile);
@@ -124,6 +123,9 @@ public class MarshalMappings implements OutlineProcessor<EJBPlugin>
 		final Writer writer = new StringWriter();
 		getMarshaller().marshal(entityMappings, writer);
 		classOrmXmlFile.setContents(writer.toString());
+		
+		debug("{}, processClassOutline; Class={}", getLocation(classOutline), getLocalClassName(classOutline));
+		
 		return classOutline;
 	}
 

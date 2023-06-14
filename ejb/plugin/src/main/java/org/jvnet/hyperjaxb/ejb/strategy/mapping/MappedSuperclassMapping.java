@@ -34,7 +34,7 @@ public class MappedSuperclassMapping implements
 			ClassOutline classOutline, final MappedSuperclass mappedSuperclass) {
 		if (mappedSuperclass.getClazz() == null
 				|| "##default".equals(mappedSuperclass.getClazz())) {
-			mappedSuperclass.setClazz(OutlineUtils.getClassName(classOutline));
+			mappedSuperclass.setClazz(OutlineUtils.getPackagedClassName(classOutline));
 		}
 	}
 
