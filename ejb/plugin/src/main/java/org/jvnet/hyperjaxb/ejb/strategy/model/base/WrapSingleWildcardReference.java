@@ -7,14 +7,13 @@ import java.util.Set;
 
 import org.glassfish.jaxb.core.v2.model.core.WildcardMode;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.jpa.Basic;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.model.CExternalLeafInfo;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.ElementAsString;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CBuiltinLeafInfo;
 import com.sun.tools.xjc.model.CElement;
@@ -32,11 +31,15 @@ import jakarta.enterprise.inject.Alternative;
 @Priority(APPLICATION + 1)
 public class WrapSingleWildcardReference implements CreatePropertyInfos
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
 
 	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
+		setPlugin(context.getPlugin());
+		
 		assert propertyInfo instanceof CReferencePropertyInfo;
 		final CReferencePropertyInfo referencePropertyInfo = (CReferencePropertyInfo) propertyInfo;
 		final Collection<? extends CTypeInfo> types = context.getGetTypes().process(context, referencePropertyInfo);

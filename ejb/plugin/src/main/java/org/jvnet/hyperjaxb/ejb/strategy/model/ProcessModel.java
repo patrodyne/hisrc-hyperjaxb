@@ -10,6 +10,7 @@ import com.sun.tools.xjc.model.CPropertyInfo;
 
 public interface ProcessModel extends ModelProcessor<EJBPlugin>
 {
+	public EJBPlugin getPlugin();
 	public ProcessClassInfo getProcessClassInfo();
 	public ProcessPropertyInfos getProcessPropertyInfos();
 	public CreateDefaultIdPropertyInfos getCreateDefaultIdPropertyInfos();

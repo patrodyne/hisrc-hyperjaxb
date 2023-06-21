@@ -334,6 +334,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		// Configure CDI strategy context.
 		setNaming(getStrategyService().getNaming());
 		setMapping((Mapping) getStrategyService().getMappingContext());
+		getMapping().setPlugin(this);
 		setModelAndOutlineProcessor(getStrategyService().getModelAndOutlineProcessor());
 
 		// Set target directory, when needed.

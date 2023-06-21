@@ -10,23 +10,17 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class EJBOutlineProcessor implements OutlineProcessor<EJBPlugin>
 {
-	private EJBPlugin xjcPlugin;
-	protected EJBPlugin getXjcPlugin()
-	{
-		return xjcPlugin;
-	}
-	protected void setXjcPlugin(EJBPlugin xjcPlugin)
-	{
-		this.xjcPlugin = xjcPlugin;
-	}
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
 	
 	private Logger logger;
 	protected Logger getLogger()
 	{
 		if ( logger == null )
 		{
-			if ( getXjcPlugin() != null )
-				setLogger(getXjcPlugin().getLogger());
+			if ( getPlugin() != null )
+				setLogger(getPlugin().getLogger());
 			else
 				setLogger(LoggerFactory.getLogger(getClass()));
 		}
@@ -39,80 +33,80 @@ public abstract class EJBOutlineProcessor implements OutlineProcessor<EJBPlugin>
 	
 	public boolean isTraceEnabled()
 	{
-		if ( getXjcPlugin() != null )
-			return getXjcPlugin().isTraceEnabled();
+		if ( getPlugin() != null )
+			return getPlugin().isTraceEnabled();
 		else
 			return getLogger().isTraceEnabled();
 	}
 	
 	public boolean isDebugEnabled()
 	{
-		if ( getXjcPlugin() != null )
-			return getXjcPlugin().isDebugEnabled();
+		if ( getPlugin() != null )
+			return getPlugin().isDebugEnabled();
 		else
 			return getLogger().isDebugEnabled();
 	}
 	
 	public boolean isInfoEnabled()
 	{
-		if ( getXjcPlugin() != null )
-			return getXjcPlugin().isInfoEnabled();
+		if ( getPlugin() != null )
+			return getPlugin().isInfoEnabled();
 		else
 			return getLogger().isInfoEnabled();
 	}
 	
 	public boolean isWarnEnabled()
 	{
-		if ( getXjcPlugin() != null )
-			return getXjcPlugin().isWarnEnabled();
+		if ( getPlugin() != null )
+			return getPlugin().isWarnEnabled();
 		else
 			return getLogger().isWarnEnabled();
 	}
 	
 	public boolean isErrorEnabled()
 	{
-		if ( getXjcPlugin() != null )
-			return getXjcPlugin().isErrorEnabled();
+		if ( getPlugin() != null )
+			return getPlugin().isErrorEnabled();
 		else
 			return getLogger().isErrorEnabled();
 	}
 	
 	public void trace(String msg, Object... args)
 	{
-		if ( getXjcPlugin() != null )
-			getXjcPlugin().trace(msg, args);
+		if ( getPlugin() != null )
+			getPlugin().trace(msg, args);
 		else
 			getLogger().trace(msg, args);
 	}
 
 	public void debug(String msg, Object... args)
 	{
-		if ( getXjcPlugin() != null )
-			getXjcPlugin().debug(msg, args);
+		if ( getPlugin() != null )
+			getPlugin().debug(msg, args);
 		else
 			getLogger().debug(msg, args);
 	}
 
 	public void info(String msg, Object... args)
 	{
-		if ( getXjcPlugin() != null )
-			getXjcPlugin().info(msg, args);
+		if ( getPlugin() != null )
+			getPlugin().info(msg, args);
 		else
 			getLogger().info(msg, args);
 	}
 
 	public void warn(String msg, Object... args)
 	{
-		if ( getXjcPlugin() != null )
-			getXjcPlugin().warn(msg, args);
+		if ( getPlugin() != null )
+			getPlugin().warn(msg, args);
 		else
 			getLogger().warn(msg, args);
 	}
 
 	public void error(String msg, Object... args)
 	{
-		if ( getXjcPlugin() != null )
-			getXjcPlugin().error(msg, args);
+		if ( getPlugin() != null )
+			getPlugin().error(msg, args);
 		else
 			getLogger().error(msg, args);
 	}

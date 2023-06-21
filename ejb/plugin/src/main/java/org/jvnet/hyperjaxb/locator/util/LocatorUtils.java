@@ -46,4 +46,28 @@ public class LocatorUtils
 		}
 		return org.jvnet.basicjaxb.locator.util.LocatorUtils.getLocation(locator);
 	}
+	
+	public static String getLocation(CPropertyInfo pi)
+	{
+		return getLocation(pi, null);
+	}
+	
+	public static String getLocation(CPropertyInfo pi, CClassInfo ci)
+	{
+		Locator locator = pi.getLocator();
+		if ( locator == null )
+		{
+			if ( pi.getSchemaComponent() != null )
+				locator = pi.getSchemaComponent().getLocator();
+			else
+			{
+				if ( pi.parent().getLocator() != null )
+					locator = pi.parent().getLocator();
+				else if ( ci != null )
+					locator = ci.getSchemaComponent().getLocator();
+			}
+		}
+		return org.jvnet.basicjaxb.locator.util.LocatorUtils.getLocation(locator);
+	}
+
 }

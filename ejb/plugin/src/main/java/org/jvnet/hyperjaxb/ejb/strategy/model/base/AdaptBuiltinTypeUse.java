@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.model.AdaptTypeUse;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.xjc.model.CExternalLeafInfo;
@@ -24,8 +25,6 @@ import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsGY
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsGYearMonth;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsTime;
 import org.jvnet.hyperjaxb.xsom.TypeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CBuiltinLeafInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
@@ -47,7 +46,9 @@ import jakarta.enterprise.inject.Alternative;
 @ModelBase
 public class AdaptBuiltinTypeUse implements AdaptTypeUse
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
 
 	/**
 	 * Process context and propertyInfo to adapt the TypeUse for a schema component.
@@ -60,6 +61,8 @@ public class AdaptBuiltinTypeUse implements AdaptTypeUse
 	@Override
 	public TypeUse process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
+		setPlugin(context.getPlugin());
+		
 		// propertyInfo.g
 		final TypeUse type = context.getGetTypes().getTypeUse(context, propertyInfo);
 		final XSComponent schemaComponent = propertyInfo.getSchemaComponent();

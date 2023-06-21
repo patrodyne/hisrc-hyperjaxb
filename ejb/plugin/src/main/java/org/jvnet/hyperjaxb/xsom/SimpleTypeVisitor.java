@@ -30,122 +30,146 @@ import com.sun.xml.xsom.XSWildcard;
 import com.sun.xml.xsom.XSXPath;
 import com.sun.xml.xsom.visitor.XSVisitor;
 
-public class SimpleTypeVisitor implements XSVisitor {
-
+/**
+ * <p>Implement a visitor for {@link com.sun.xml.xsom.XSComponent} to get type names.</p>
+ * 
+ * <p>XML Schema Object Model (XSOM) is a Java library that allows applications
+ * to parse XML Schema documents and inspect information in them.</p>
+ */
+public class SimpleTypeVisitor implements XSVisitor
+{
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	private List<QName> typeNames = new LinkedList<QName>();
-
-	public List<QName> getTypeNames() {
+	public List<QName> getTypeNames()
+	{
 		return typeNames;
 	}
 
 	@Override
-	public void annotation(XSAnnotation ann) {
+	public void simpleType(XSSimpleType simpleType)
+	{
+		if (simpleType.getName() != null)
+		{
+			typeNames.add(new QName(simpleType.getTargetNamespace(), simpleType.getName()));
+			
+			if (simpleType.isRestriction())
+			{
+				final XSType baseType = simpleType.asRestriction() .getBaseType();
+				if (baseType != null)
+					baseType.visit(this);
+			}
+
+			if (simpleType.isList())
+			{
+				final XSSimpleType itemType = simpleType.asList().getItemType();
+				if (itemType != null)
+					itemType.visit(this);
+			}
+			
+			// simpleType.getSimpleBaseType()
+		}
+	}
+	
+	@Override
+	public void annotation(XSAnnotation ann)
+	{
 		// todo("Annotation.");
 	}
 
 	@Override
-	public void attGroupDecl(XSAttGroupDecl decl) {
+	public void attGroupDecl(XSAttGroupDecl decl)
+	{
 		todo("Attribute group declaration [" + decl.getName() + "].");
 	}
 
 	@Override
-	public void attributeDecl(XSAttributeDecl decl) {
+	public void attributeDecl(XSAttributeDecl decl)
+	{
 		decl.getType().visit(this);
 	}
 
 	@Override
-	public void attributeUse(XSAttributeUse use) {
+	public void attributeUse(XSAttributeUse use)
+	{
 		use.getDecl().visit(this);
 	}
 
 	@Override
-	public void complexType(XSComplexType type) {
+	public void complexType(XSComplexType type)
+	{
 		// todo("Complex type [" + type.getName() + "].");
 	}
 
 	@Override
-	public void facet(XSFacet facet) {
+	public void facet(XSFacet facet)
+	{
 		todo("Facet.");
 	}
 
 	@Override
-	public void identityConstraint(XSIdentityConstraint decl) {
+	public void identityConstraint(XSIdentityConstraint decl)
+	{
 		todo("Identity constraint.");
 	}
 
 	@Override
-	public void notation(XSNotation notation) {
+	public void notation(XSNotation notation)
+	{
 		todo("Notation.");
 	}
 
 	@Override
-	public void schema(XSSchema schema) {
+	public void schema(XSSchema schema)
+	{
 		todo("Schema.");
 	}
 
 	@Override
-	public void xpath(XSXPath xp) {
+	public void xpath(XSXPath xp)
+	{
 		todo("XPath.");
 	}
 
 	@Override
-	public void elementDecl(XSElementDecl decl) {
+	public void elementDecl(XSElementDecl decl)
+	{
 		decl.getType().visit(this);
 	}
 
 	@Override
-	public void modelGroup(XSModelGroup group) {
-		for (XSParticle child : group.getChildren()) {
+	public void modelGroup(XSModelGroup group)
+	{
+		for (XSParticle child : group.getChildren())
 			child.visit(this);
-		}
 	}
 
 	@Override
-	public void modelGroupDecl(XSModelGroupDecl decl) {
+	public void modelGroupDecl(XSModelGroupDecl decl)
+	{
 		todo("Model group declaration.");
 	}
 
 	@Override
-	public void wildcard(XSWildcard wc) {
+	public void wildcard(XSWildcard wc)
+	{
 		todo("Wildcard.");
 	}
 
 	@Override
-	public void empty(XSContentType empty) {
+	public void empty(XSContentType empty)
+	{
 		todo("Empty.");
 	}
 
 	@Override
-	public void particle(XSParticle particle) {
+	public void particle(XSParticle particle)
+	{
 		particle.getTerm().visit(this);
 	}
 
-	@Override
-	public void simpleType(XSSimpleType simpleType) {
-		if (simpleType.getName() != null) {
-			typeNames.add(new QName(simpleType.getTargetNamespace(), simpleType
-					.getName()));
-			if (simpleType.isRestriction()) {
-				final XSType baseType = simpleType.asRestriction()
-						.getBaseType();
-				if (baseType != null) {
-					baseType.visit(this);
-				}
-			}
-
-			if (simpleType.isList()) {
-				final XSSimpleType itemType = simpleType.asList().getItemType();
-				if (itemType != null) {
-					itemType.visit(this);
-				}
-			}
-			// simpleType.getSimpleBaseType()
-		}
-	}
-
-	private void todo(String comment) {
+	private void todo(String comment)
+	{
         String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
 		String level = System.getProperty(TODO_LOG_LEVEL);
 		if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);

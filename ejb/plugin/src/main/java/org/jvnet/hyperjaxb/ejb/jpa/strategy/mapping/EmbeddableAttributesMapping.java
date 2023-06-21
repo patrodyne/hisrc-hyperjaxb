@@ -2,6 +2,7 @@ package org.jvnet.hyperjaxb.ejb.jpa.strategy.mapping;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.Variant;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.ClassOutlineMapping;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.Mapping;
@@ -20,6 +21,10 @@ import jakarta.enterprise.inject.Alternative;
 @Variant(type = Variant.Type.JPA)
 public class EmbeddableAttributesMapping implements ClassOutlineMapping<EmbeddableAttributes>
 {
+	private EJBPlugin plugin;
+	protected EJBPlugin getPlugin() { return plugin; }
+	protected void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
+	
 	@Override
 	public EmbeddableAttributes process(Mapping context, ClassOutline classOutline)
 	{

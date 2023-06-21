@@ -1,6 +1,7 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.Collection;
 
@@ -8,6 +9,7 @@ import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 
 import com.sun.tools.xjc.model.CBuiltinLeafInfo;
+import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.model.TypeUse;
@@ -35,7 +37,13 @@ public class WrapSingleBuiltinNonReference extends AbstractWrapBuiltin
 		final TypeUse adaptingTypeUse = context.getAdaptBuiltinTypeUse().process(context, propertyInfo);
 		if (adaptingTypeUse == originalTypeUse || adaptingTypeUse.getAdapterUse() == null)
 		{
-			logger.debug("No adaptation required.");
+			if ( getPlugin().isTraceEnabled() && propertyInfo.parent() instanceof CClassInfo )
+			{
+				CClassInfo parent = (CClassInfo) propertyInfo.parent();
+				getPlugin().trace("{}, {}: class={}, property={}; no adaptation required",
+					getLocation(propertyInfo), getClass().getSimpleName(),
+					parent.shortName, propertyInfo.getName(false));
+			}
 			return CreateNoPropertyInfos.INSTANCE;
 		}
 		else

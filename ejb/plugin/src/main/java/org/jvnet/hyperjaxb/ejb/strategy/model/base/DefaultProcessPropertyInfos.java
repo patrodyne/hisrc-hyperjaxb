@@ -1,21 +1,21 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static java.lang.String.format;
 import static org.jvnet.hyperjaxb.ejb.Constants.TODO_LOG_LEVEL;
+import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
-import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 
 import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessPropertyInfos;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.model.CClassifier;
 import org.jvnet.hyperjaxb.xjc.model.CClassifyingVisitor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import com.sun.tools.xjc.model.CClassInfo;
@@ -37,12 +37,15 @@ import jakarta.persistence.MappedSuperclass;
 @ModelBase
 public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
 
 	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CClassInfo classInfo)
 	{
-		logger.debug("Processing property infos for class info [" + classInfo.getName() + "].");
+		setPlugin(context.getPlugin());
+		
 		final Collection<CPropertyInfo> newPropertyInfos = new LinkedList<CPropertyInfo>();
 		
 		// In case this is a root entity, create default id properties
@@ -53,9 +56,8 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 			
 			if (!idPropertyInfos.isEmpty())
 			{
-				todo(MessageFormat
-					.format("Class info [{0}] is annotated with hj:generated-id customization, "
-					+ "but it already contains id properties. " + "The customization will be ignored.",
+				todo(format("Class info [%s] is annotated with hj:generated-id customization, "
+					+ "but it already contains id properties. The customization will be ignored.",
 					classInfo.getName()));
 			}
 			else
@@ -70,6 +72,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 			if (idPropertyInfos.isEmpty())
 				newPropertyInfos.addAll(createDefaultIdPropertyInfos(context, classInfo));
 		}
+		
 		if (CustomizationUtils.containsCustomization(classInfo, Customizations.GENERATED_VERSION_ELEMENT_NAME))
 		{
 			final Collection<CPropertyInfo> versionPropertyInfos =
@@ -77,9 +80,8 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 			
 			if (!versionPropertyInfos.isEmpty())
 			{
-				todo(MessageFormat
-					.format("Class info [{0}] is annotated with hj:generated-version customization, "
-						+ "but it already contains version properties. " + "The customization will be ignored.",
+				todo(format("Class info [%s] is annotated with hj:generated-version customization, "
+						+ "but it already contains version properties. The customization will be ignored.",
 						classInfo.getName()));
 			}
 			else
@@ -103,17 +105,19 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		}
 		
 		if (classInfo.declaresAttributeWildcard())
-		{
-			todo("Class ["	+ classInfo.getName()
-					+ "] declares an attribute wildcard. This is currently not supported. See issue #46.");
-		}
+			todo("Class ["	+ classInfo.getName() + "] declares an attribute wildcard. This is currently not supported. See issue #46.");
+		
 		// Add properties if they're not yet there
 		for (final CPropertyInfo newPropertyInfo : newPropertyInfos)
 		{
 			if (newPropertyInfo.parent() == null)
+			{
 				classInfo.addProperty(newPropertyInfo);
+				getPlugin().debug("{}, DefaultProcessPropertyInfos: class={}, property={}",
+					getLocation(newPropertyInfo, classInfo), classInfo.shortName, newPropertyInfo.getName(false));
+			}
 		}
-		logger.debug("Finished processing property infos for class info [" + classInfo.getName() + "].");
+
 		return newPropertyInfos;
 	}
 
@@ -167,8 +171,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		}
 		catch (ClassNotFoundException cnfex)
 		{
-			logger.warn("Referenced class ["	+ className
-						+ "] could not be found, this may lead to incorrect generation of the identifier fields.");
+			getPlugin().warn("Referenced class [{}] could not be found, this may lead to incorrect generation of the identifier fields.", className);
 			return true;
 		}
 	}
@@ -503,14 +506,14 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 		String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
 		String level = System.getProperty(TODO_LOG_LEVEL);
 		if ("DEBUG".equalsIgnoreCase(level))
-			logger.debug(msg);
+			getPlugin().debug(msg);
 		else if ("INFO".equalsIgnoreCase(level))
-			logger.info(msg);
+			getPlugin().info(msg);
 		else if ("WARN".equalsIgnoreCase(level))
-			logger.warn(msg);
+			getPlugin().warn(msg);
 		else if ("ERROR".equalsIgnoreCase(level))
-			logger.error(msg);
+			getPlugin().error(msg);
 		else
-			logger.error(msg);
+			getPlugin().error(msg);
 	}
 }

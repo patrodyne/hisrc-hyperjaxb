@@ -38,8 +38,6 @@ import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
 import org.jvnet.hyperjaxb.ejb.strategy.processor.ClassPersistence;
 import org.jvnet.hyperjaxb.ejb.strategy.processor.MappingFilePersistence;
 import org.jvnet.hyperjaxb.jpa.Persistence;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import ee.jakarta.xml.ns.persistence.orm.EmbeddableAttributes;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -55,8 +53,6 @@ import jakarta.xml.bind.Unmarshaller;
 @ApplicationScoped
 public class StrategyProducer
 {
-	private static Logger logger = LoggerFactory.getLogger(StrategyProducer.class);
-
 	@Inject
 	private StrategyService strategyService;
 	public StrategyService getStrategyService() { return strategyService; }
@@ -76,7 +72,7 @@ public class StrategyProducer
 	private Unmarshaller unmarshaller;
 	public Unmarshaller getUnmarshaller() { return unmarshaller; }
 	public void setUnmarshaller(Unmarshaller unmarshaller) { this.unmarshaller = unmarshaller; }
-
+	
 	@Produces
 	public ReservedNames produceReservedNames()
 	{
@@ -90,7 +86,7 @@ public class StrategyProducer
 		}
 		catch (IOException ex)
 		{
-			logger.warn("Cannot load '" + locator + "'", ex);
+			getPlugin().warn("Cannot load '" + locator + "'", ex);
 		}
 		return reservedNames;
 	}
@@ -112,7 +108,7 @@ public class StrategyProducer
 		}
 		catch (IOException | JAXBException ex)
 		{
-			logger.error("Cannot unmarshal default customizations", ex);
+			getPlugin().error("Cannot unmarshal default customizations", ex);
 		}
 		return defaultCustomizations;
 	}

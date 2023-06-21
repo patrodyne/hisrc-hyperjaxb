@@ -5,7 +5,8 @@ import java.util.Collection;
 import com.sun.tools.xjc.model.CPropertyInfo;
 
 /**
- * Creates properties for the given property.
+ * Interface to create a {@link Collection} of {@link CPropertyInfo}s for the
+ * given {@link CPropertyInfo} instance in the given {@link ProcessModel} context.
  */
 public interface CreatePropertyInfos 
 	extends PropertyInfoProcessor<Collection<CPropertyInfo>, ProcessModel>
@@ -17,7 +18,7 @@ public interface CreatePropertyInfos
 	 * @param propertyInfo Property to be processed.
 	 * 
 	 * @return Collection of properties created for the given property.
-	 *         Must not be &lt;code&gt;null&lt;/code&gt;, if nothing is created,
+	 *         Must not be {@code null}, if nothing is created,
 	 *         return an empty collection instead.
 	 */
 	@Override

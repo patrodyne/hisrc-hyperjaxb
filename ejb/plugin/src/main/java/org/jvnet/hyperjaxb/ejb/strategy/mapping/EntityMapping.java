@@ -1,6 +1,7 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 
 import com.sun.tools.xjc.outline.ClassOutline;
@@ -13,10 +14,15 @@ import jakarta.persistence.InheritanceType;
 
 public class EntityMapping implements ClassOutlineMapping<Entity> {
 
-	// private static Log logger = LogFactory.getLog(EntityMapping.class);
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
 
 	@Override
-	public Entity process(Mapping context, ClassOutline classOutline) {
+	public Entity process(Mapping context, ClassOutline classOutline)
+	{
+		setPlugin(context.getPlugin());
+		
 		final Entity entity = context.getCustomizing().getEntity(classOutline);
 		createEntity(context, classOutline, entity);
 		return entity;

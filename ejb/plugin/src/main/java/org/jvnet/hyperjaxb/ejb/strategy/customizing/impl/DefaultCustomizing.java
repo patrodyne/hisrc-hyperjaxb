@@ -1,6 +1,11 @@
 package org.jvnet.hyperjaxb.ejb.strategy.customizing.impl;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.basicjaxb.util.CustomizationUtils.containsCustomization;
+import static org.jvnet.basicjaxb.util.CustomizationUtils.getInfo;
+import static org.jvnet.hyperjaxb.jpa.Customizations.BASIC_ELEMENT_NAME;
+import static org.jvnet.hyperjaxb.jpa.Customizations.JAXB_CONTEXT_ELEMENT_NAME;
+import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,6 +22,7 @@ import org.jvnet.basicjaxb.lang.MergeFrom;
 import org.jvnet.basicjaxb.lang.MergeStrategy;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.basicjaxb.lang.MergeableMergeStrategy;
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.customizing.Customizing;
 import org.jvnet.hyperjaxb.jpa.Basic;
 import org.jvnet.hyperjaxb.jpa.CollectionProperty;
@@ -45,8 +51,6 @@ import org.jvnet.hyperjaxb.jpa.ToOne;
 import org.jvnet.hyperjaxb.jpa.Version;
 import org.jvnet.hyperjaxb.xsom.SimpleTypeAnalyzer;
 import org.jvnet.hyperjaxb.xsom.TypeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CCustomizable;
@@ -82,9 +86,12 @@ import jakarta.inject.Inject;
 @Priority(APPLICATION + 1)
 public class DefaultCustomizing implements Customizing
 {
-	private final static Logger logger = LoggerFactory.getLogger(Customizations.class);
 	private final Map<CPluginCustomization, Object> customizationsMap = new IdentityHashMap<CPluginCustomization, Object>();
 
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
+	
 	@Inject
 	private Persistence defaultCustomizations;
 	public Persistence getDefaultCustomizations() { return defaultCustomizations; }
@@ -456,8 +463,8 @@ public class DefaultCustomizing implements Customizing
 					}
 					else
 					{
-						logger.warn("Default single property for type ["	+ typeName
-									+ "] does not define the expected basic mapping.");
+						getPlugin().warn("{}, getDefaultBasic: Default single property for type [{}] does not define the expected basic mapping.",
+							getLocation(property), typeName);
 					}
 				}
 			}
@@ -542,8 +549,8 @@ public class DefaultCustomizing implements Customizing
 					}
 					else
 					{
-						logger.warn("Default single property for type ["	+ typeName
-									+ "] does not define the expected basic mapping.");
+						getPlugin().warn("{}, getDefaultElementCollection: Default single property for type [{}] does not define the expected basic mapping.",
+							getLocation(property), typeName);
 					}
 				}
 			}
@@ -599,14 +606,13 @@ public class DefaultCustomizing implements Customizing
 	{
 		final Basic defaultBasic = getDefaultBasic(property);
 		final Basic basic;
-		if (CustomizationUtils.containsCustomization(property, Customizations.BASIC_ELEMENT_NAME))
+		if (CustomizationUtils.containsCustomization(property, BASIC_ELEMENT_NAME))
 		{
-			basic = findCustomization(property, Customizations.BASIC_ELEMENT_NAME, defaultBasic, this.<Basic> merge());
-			for (CPluginCustomization parentBasic : findCustomizations(property.parent(),
-				Customizations.BASIC_ELEMENT_NAME))
+			basic = findCustomization(property, BASIC_ELEMENT_NAME, defaultBasic, this.<Basic> merge());
+			for (CPluginCustomization parentBasic : findCustomizations(property.parent(), BASIC_ELEMENT_NAME))
 			{
-				logger.debug("Acknowledging parent class customization: "	+ basic + " INFO: "
-								+ CustomizationUtils.getInfo("PARENT:", property.parent()));
+				getPlugin().trace("{}, getBasic: basic={}; acknowledging parent class customization: {}",
+					getLocation(property), basic, getInfo("PARENT:", property.parent()));
 				parentBasic.markAsAcknowledged();
 			}
 		}
@@ -1231,21 +1237,20 @@ public class DefaultCustomizing implements Customizing
 	{
 		final Persistence persistence = getModelCustomization(property);
 		if (persistence.getDefaultJaxbContext() == null)
-		{
 			throw new AssertionError("Default jaxb-context element is not provided.");
-		}
+		
 		final JaxbContext defaultJaxbContext = (JaxbContext) persistence.getDefaultJaxbContext()
 			.copyTo(new JaxbContext());
+		
 		final JaxbContext jaxbContext;
-		if (CustomizationUtils.containsCustomization(property, Customizations.JAXB_CONTEXT_ELEMENT_NAME))
+		if (containsCustomization(property, JAXB_CONTEXT_ELEMENT_NAME))
 		{
-			jaxbContext = findCustomization(property, Customizations.JAXB_CONTEXT_ELEMENT_NAME, defaultJaxbContext,
+			jaxbContext = findCustomization(property, JAXB_CONTEXT_ELEMENT_NAME, defaultJaxbContext,
 				this.<JaxbContext> merge());
 		}
 		else
-		{
 			jaxbContext = defaultJaxbContext;
-		}
+		
 		return jaxbContext;
 	}
 

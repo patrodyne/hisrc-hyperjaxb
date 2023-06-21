@@ -20,8 +20,6 @@ import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb.ejb.strategy.naming.Naming;
 import org.jvnet.hyperjaxb.ejb.strategy.naming.ReservedNames;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JType;
@@ -53,7 +51,6 @@ import jakarta.inject.Inject;
 @Priority(APPLICATION + 1)
 public class DefaultNaming implements Naming
 {
-	protected Logger logger = LoggerFactory.getLogger(Naming.class);
 	private static final Pattern CAMELCASE_PATTERN = Pattern.compile("\\p{Lower}\\p{Upper}|\\D\\d");
 
 	@Inject

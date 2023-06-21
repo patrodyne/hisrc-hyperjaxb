@@ -9,14 +9,13 @@ import java.util.Set;
 import javax.xml.namespace.QName;
 
 import org.glassfish.jaxb.core.v2.model.core.ID;
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.JAXBElementNameField;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.JAXBElementValueField;
 import org.jvnet.hyperjaxb.xml.XMLConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;
@@ -42,11 +41,15 @@ import jakarta.enterprise.inject.Alternative;
 @Priority(APPLICATION + 1)
 public class WrapSingleSubstitutedElementReference implements CreatePropertyInfos
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
 
 	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, final CPropertyInfo draftPropertyInfo)
 	{
+		setPlugin(context.getPlugin());
+		
 		assert draftPropertyInfo instanceof CReferencePropertyInfo;
 		final CReferencePropertyInfo propertyInfo = (CReferencePropertyInfo) draftPropertyInfo;
 		final CReferencePropertyInfo referencePropertyInfo = (CReferencePropertyInfo) propertyInfo;

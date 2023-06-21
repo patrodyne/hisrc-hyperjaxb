@@ -1,12 +1,14 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 
 import org.jvnet.basicjaxb.util.ClassUtils;
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreateIdClassProcessor;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.jpa.Customizations;
@@ -40,9 +42,15 @@ import jakarta.enterprise.inject.Alternative;
 @ModelBase
 public class CreateIdClass implements CreateIdClassProcessor
 {
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
+	
 	@Override
 	public Collection<CClassInfo> process(final ProcessModel context, CClassInfo classInfo)
 	{
+		setPlugin(context.getPlugin());
+		
 		final XSComponent component = classInfo.getSchemaComponent();
 		final Collection<CPropertyInfo> propertyInfos = context.getGetIdPropertyInfos().process(context, classInfo);
 		
@@ -60,6 +68,8 @@ public class CreateIdClass implements CreateIdClassProcessor
 			
 			// Ignore IdClass from being an Entity.
 			Customizations.markIgnored(idClassInfo);
+			
+			getPlugin().debug("{}, CreateIdClass: class={}", getLocation(idClassInfo), idClassInfo.shortName);
 			
 			// Customizations.markGenerated(idClassInfo);
 			for (CPropertyInfo propertyInfo : propertyInfos)

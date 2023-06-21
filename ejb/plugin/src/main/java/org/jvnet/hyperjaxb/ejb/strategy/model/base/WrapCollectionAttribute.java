@@ -1,6 +1,10 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.JavaType.BuiltIn;
+import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.Plurality.Collection;
+import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.SchemaType.Attribute;
+import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,14 +16,13 @@ import javax.xml.namespace.QName;
 import org.glassfish.jaxb.core.v2.model.core.ID;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.basicjaxb.util.FieldAccessorUtils;
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.item.Item;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.WrappedCollectionField;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.WrappingCollectionField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JExpr;
@@ -48,21 +51,34 @@ import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Alternative;
 
+/**
+ * <p>Implementation to create a {@link Collection} of {@link CPropertyInfo}s for the
+ * given {@link CPropertyInfo} instance in the given {@link ProcessModel} context.</p>
+ * 
+ * <p>Wrap a simple homogeneous property attribute in a collection.</p>
+ */
 @ApplicationScoped
 @Alternative
 @Priority(APPLICATION + 1)
 public class WrapCollectionAttribute implements CreatePropertyInfos
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
 
 	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, final CPropertyInfo propertyInfo)
 	{
+		setPlugin(context.getPlugin());
+		
 		assert propertyInfo instanceof CAttributePropertyInfo;
 		final CAttributePropertyInfo wrappedPropertyInfo = (CAttributePropertyInfo) propertyInfo;
 		final CClassInfo classInfo = (CClassInfo) wrappedPropertyInfo.parent();
 		final String propertyName = wrappedPropertyInfo.getName(true);
-		logger.debug("Property [" + propertyName + "] is a simple homogeneous collection property.");
+		
+		getPlugin().debug("{}, WrapCollectionAttribute: class={}, property={}, <{},{},{}>.",
+			getLocation(propertyInfo), classInfo.shortName, propertyName, Collection, BuiltIn, Attribute);
+		
 		final CClassInfoParent parent = Ring.get(BGMBuilder.class).getGlobalBinding()
 			.getFlattenClasses() == LocalScoping.NESTED ? classInfo : classInfo.parent();
 		final CClassInfo itemClassInfo = new CClassInfo(classInfo.model, parent,

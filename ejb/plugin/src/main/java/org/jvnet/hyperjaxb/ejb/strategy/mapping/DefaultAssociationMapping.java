@@ -1,8 +1,5 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
-import static org.jvnet.hyperjaxb.ejb.Constants.TODO_LOG_LEVEL;
-
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -15,8 +12,6 @@ import java.util.Map;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.model.CTypeInfoUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CClassInfo;
@@ -40,8 +35,6 @@ import ee.jakarta.xml.ns.persistence.orm.OrderColumn;
 import ee.jakarta.xml.ns.persistence.orm.PrimaryKeyJoinColumn;
 
 public class DefaultAssociationMapping implements AssociationMapping {
-
-	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public Collection<FieldOutline> getSourceIdFieldsOutline(Mapping context,
@@ -67,21 +60,20 @@ public class DefaultAssociationMapping implements AssociationMapping {
 
 		assert type instanceof CClass;
 
-		if (type instanceof CClassInfo) {
-
+		if (type instanceof CClassInfo)
+		{
 			final ClassOutline targetClassOutline = fieldOutline.parent()
-					.parent().getClazz((CClassInfo) type);
-
+				.parent().getClazz((CClassInfo) type);
 			return getIdFieldsOutline(targetClassOutline);
-		} else {
-
-			todo(MessageFormat
-					.format("Field outline [{0}] references the type [{1}] which is not present in the XJC model "
-							+ "(it is probably a class reference due to episodic compilation). "
-							+ "Due to this reason Hyperjaxb cannot generate correct identifier column mapping. "
-							+ "Please customize your association manually. See also issue HJIII-51.",
-							propertyInfo.getName(true), type.getType()
-									.fullName()));
+		}
+		else
+		{
+			context.getPlugin().warn("Field outline [{}] references the type [{}]"
+				+ " which is not present in the XJC model"
+				+ " (it is probably a class reference due to episodic compilation)."
+				+ " Due to this reason HyperJAXB cannot generate correct identifier column mapping."
+				+ " Please customize your association manually. See also issue HJIII-51.",
+				propertyInfo.getName(true), type.getType().fullName());
 			return Collections.emptyList();
 		}
 	}
@@ -532,15 +524,5 @@ public class DefaultAssociationMapping implements AssociationMapping {
 				}
 			}
 		}
-	}
-
-	private void todo(String comment) {
-        String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
-		String level = System.getProperty(TODO_LOG_LEVEL);
-		if ( "DEBUG".equalsIgnoreCase(level) ) logger.debug(msg);
-		else if ( "INFO".equalsIgnoreCase(level) ) logger.info(msg);
-		else if ( "WARN".equalsIgnoreCase(level) ) logger.warn(msg);
-		else if ( "ERROR".equalsIgnoreCase(level) ) logger.error(msg);
-		else logger.error(msg);
 	}
 }

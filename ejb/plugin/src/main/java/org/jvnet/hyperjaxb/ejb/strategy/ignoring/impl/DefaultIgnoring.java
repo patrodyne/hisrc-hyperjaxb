@@ -3,20 +3,20 @@ package org.jvnet.hyperjaxb.ejb.strategy.ignoring.impl;
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import static org.jvnet.hyperjaxb.jpa.Customizations.IGNORED_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.IGNORED_PACKAGE_ELEMENT_NAME;
+import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
 import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.customizing.Customizing;
 import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.jpa.IgnoredPackage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CClassInfoParent;
@@ -46,8 +46,6 @@ import jakarta.inject.Inject;
 @Priority(APPLICATION + 1)
 public class DefaultIgnoring implements Ignoring
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
-
 	@Inject
 	private Customizing customizing;
 	@Override
@@ -84,21 +82,25 @@ public class DefaultIgnoring implements Ignoring
 	@Override
 	public boolean isClassOutlineIgnored(Mapping context, ClassOutline classOutline)
 	{
+		EJBPlugin plugin = context.getPlugin();
 		if (isPackageOutlineIgnored(context, classOutline.parent(), classOutline._package()))
 		{
-			logger.debug("Class outline is ignored since package is ignored.");
+			plugin.trace("{}, isClassOutlineIgnored: class={}; ignored since package is ignored.",
+				getLocation(classOutline), classOutline.getImplClass().name());
 			markAsAcknowledged(classOutline);
 			return true;
 		}
 		else if (CustomizationUtils.containsCustomization(classOutline, IGNORED_ELEMENT_NAME))
 		{
-			logger.debug("Class outline is ignored per customization.");
+			plugin.trace("{}, isClassOutlineIgnored: class={}; ignored per customization.",
+				getLocation(classOutline), classOutline.getImplClass().name());
 			markAsAcknowledged(classOutline);
 			return true;
 		}
 		else if (classOutline.getSuperClass() != null && isClassOutlineIgnored(context, classOutline.getSuperClass()))
 		{
-			logger.debug("Class outline is ignored since superclass outline is ignored.");
+			plugin.trace("{}, isClassOutlineIgnored: class={}; ignored since superclass outline is ignored.",
+				getLocation(classOutline), classOutline.getImplClass().name());
 			markAsAcknowledged(classOutline);
 			return true;
 		}
@@ -109,14 +111,17 @@ public class DefaultIgnoring implements Ignoring
 	@Override
 	public boolean isFieldOutlineIgnored(Mapping context, FieldOutline fieldOutline)
 	{
+		EJBPlugin plugin = context.getPlugin();
 		if (isClassOutlineIgnored(context, fieldOutline.parent()))
 		{
-			logger.debug("Field outline is ignored since its class outline is ignored.");
+			plugin.trace("{}, isFieldOutlineIgnored: class={}, field={}; ignored since its class outline is ignored.",
+				getLocation(fieldOutline), fieldOutline.parent().getImplClass().name(), fieldOutline.getPropertyInfo().getName(false));
 			return true;
 		}
 		else if (CustomizationUtils.containsCustomization(fieldOutline, IGNORED_ELEMENT_NAME))
 		{
-			logger.debug("Field outline is ignored per customization.");
+			plugin.trace("{}, isFieldOutlineIgnored: class={}, field={}; ignored per customization.",
+				getLocation(fieldOutline), fieldOutline.parent().getImplClass().name(), fieldOutline.getPropertyInfo().getName(false));
 			return true;
 		}
 		else
@@ -139,7 +144,8 @@ public class DefaultIgnoring implements Ignoring
 			
 			if (allIgnored)
 			{
-				logger.debug("Field outline is ignored since all types are ignored.");
+				plugin.trace("{}, isFieldOutlineIgnored: class={}, field={}; ignored since all types are ignored.",
+					getLocation(fieldOutline), fieldOutline.parent().getImplClass().name(), fieldOutline.getPropertyInfo().getName(false));
 				markAsAcknowledged(fieldOutline);
 			}
 			
@@ -168,21 +174,25 @@ public class DefaultIgnoring implements Ignoring
 	@Override
 	public boolean isClassInfoIgnored(ProcessModel context, CClassInfo classInfo)
 	{
+		EJBPlugin plugin = context.getPlugin();
 		if (isPackageInfoIgnored(context, classInfo.model, getPackageInfo(classInfo)))
 		{
-			logger.debug("Class info is ignored since package is ignored.");
+			plugin.trace("{}, isClassInfoIgnored: class={}; ignored since package is ignored.",
+				getLocation(classInfo), classInfo.shortName);
 			markAsAcknowledged(classInfo);
 			return true;
 		}
 		else if (CustomizationUtils.containsCustomization(classInfo, IGNORED_ELEMENT_NAME))
 		{
-			logger.debug("Class info is ignored per customization.");
+			plugin.trace("{}, isClassInfoIgnored: class={}; ignored per customization.",
+				getLocation(classInfo), classInfo.shortName);
 			markAsAcknowledged(classInfo);
 			return true;
 		}
 		else if (classInfo.getBaseClass() != null && isClassInfoIgnored(context, classInfo.getBaseClass()))
 		{
-			logger.debug("Class info is ignored since base class info is ignored.");
+			plugin.trace("{}, isClassInfoIgnored: class={}; ignored since base class info is ignored.",
+				getLocation(classInfo), classInfo.shortName);
 			markAsAcknowledged(classInfo);
 			return true;
 		}
@@ -198,14 +208,17 @@ public class DefaultIgnoring implements Ignoring
 	@Override
 	public boolean isPropertyInfoIgnored(ProcessModel context, CPropertyInfo propertyInfo)
 	{
+		EJBPlugin plugin = context.getPlugin();
 		if (propertyInfo.parent() instanceof CClassInfo	&& isClassInfoIgnored(context, (CClassInfo) propertyInfo.parent()))
 		{
-			logger.debug("Property info is ignored since its class info is ignored.");
+			plugin.trace("{}, isPropertyInfoIgnored: property={}; ignored since its class info is ignored.",
+				getLocation(propertyInfo), propertyInfo.getName(false));
 			return true;
 		}
 		else if (CustomizationUtils.containsCustomization(propertyInfo, IGNORED_ELEMENT_NAME))
 		{
-			logger.debug("Property info is ignored per customization.");
+			plugin.trace("{}, isPropertyInfoIgnored: property={}; ignored per customization.",
+				getLocation(propertyInfo), propertyInfo.getName(false));
 			return true;
 		}
 		else
@@ -224,7 +237,8 @@ public class DefaultIgnoring implements Ignoring
 			}
 			if (allIgnored)
 			{
-				logger.debug("Property info is ignored since all types are ignored.");
+				plugin.trace("{}, isPropertyInfoIgnored: property={}; ignored since all types are ignored.",
+					getLocation(propertyInfo), propertyInfo.getName(false));
 				markAsAcknowledged(propertyInfo);
 			}
 			return allIgnored;

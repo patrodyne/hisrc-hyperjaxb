@@ -1,6 +1,9 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.basicjaxb.util.CustomizationUtils.findCustomization;
+import static org.jvnet.hyperjaxb.jpa.Customizations.PERSISTENCE_ELEMENT_NAME;
+import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,9 +12,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.customizing.Customizing;
+import org.jvnet.hyperjaxb.ejb.strategy.customizing.impl.DefaultCustomizing;
 import org.jvnet.hyperjaxb.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb.ejb.strategy.model.AdaptTypeUse;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreateDefaultIdPropertyInfos;
@@ -24,9 +27,6 @@ import org.jvnet.hyperjaxb.ejb.strategy.model.GetVersionPropertyInfoProcessor;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessClassInfo;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessPropertyInfos;
-import org.jvnet.hyperjaxb.jpa.Customizations;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.Model;
@@ -47,10 +47,12 @@ import jakarta.inject.Inject;
 @ModelBase
 public class DefaultProcessModel implements ProcessModel
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
 	
 	// Process properties
-	
+
 	@Inject @ModelBase
 	private ProcessClassInfo processClassInfo;
 	@Override
@@ -489,8 +491,15 @@ public class DefaultProcessModel implements ProcessModel
 	public Collection<CClassInfo> process(EJBPlugin context, Model model)
 		throws Exception
 	{
-		CustomizationUtils.findCustomization(model, Customizations.PERSISTENCE_ELEMENT_NAME);
-		logger.debug("Processing model [...].");
+		setPlugin(context);
+		
+		if ( getCustomizing() instanceof DefaultCustomizing )
+			((DefaultCustomizing) getCustomizing()).setPlugin(context);
+		
+		findCustomization(model, PERSISTENCE_ELEMENT_NAME);
+		
+		getPlugin().debug("{}, DefaultProcessModel: Processing model ...", getLocation("unknown") );
+		
 		final Collection<CClassInfo> unorderedClassInfos = model.beans().values();
 		final CClassInfo[] classInfos = orderClassInfos(unorderedClassInfos).toArray(new CClassInfo[0]);
 		final Collection<CClassInfo> includedClasses = new HashSet<CClassInfo>();

@@ -7,12 +7,11 @@ import java.util.Collection;
 
 import org.glassfish.jaxb.core.v2.model.core.ID;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.SingleWrappingElementField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;
@@ -33,11 +32,15 @@ import jakarta.enterprise.inject.Alternative;
 @Priority(APPLICATION + 1)
 public class WrapSingleHeteroElement implements CreatePropertyInfos
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
-
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
+	
 	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
+		setPlugin(context.getPlugin());
+		
 		assert propertyInfo instanceof CElementPropertyInfo;
 		final CElementPropertyInfo elementPropertyInfo = (CElementPropertyInfo) propertyInfo;
 		final Collection<CPropertyInfo> newPropertyInfos = new ArrayList<CPropertyInfo>(

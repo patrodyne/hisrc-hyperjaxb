@@ -1,16 +1,18 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.basicjaxb.util.CustomizationUtils.containsCustomization;
+import static org.jvnet.basicjaxb.util.FieldAccessorUtils.getter;
+import static org.jvnet.hyperjaxb.codemodel.util.JTypeUtils.isBasicType;
+import static org.jvnet.hyperjaxb.jpa.Customizations.EMBEDDED_ID_ELEMENT_NAME;
+import static org.jvnet.hyperjaxb.jpa.Customizations.ID_ELEMENT_NAME;
+import static org.jvnet.hyperjaxb.jpa.Customizations.VERSION_ELEMENT_NAME;
+import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.Collection;
 
-import org.jvnet.basicjaxb.util.CustomizationUtils;
-import org.jvnet.basicjaxb.util.FieldAccessorUtils;
-import org.jvnet.hyperjaxb.codemodel.util.JTypeUtils;
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.Variant;
-import org.jvnet.hyperjaxb.jpa.Customizations;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
@@ -40,17 +42,22 @@ import jakarta.enterprise.inject.Alternative;
 @Variant(type = Variant.Type.EJB)
 public class EmbeddableAttributesMapping implements ClassOutlineMapping<EmbeddableAttributes>
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
-
+	private EJBPlugin plugin;
+	protected EJBPlugin getPlugin() { return plugin; }
+	protected void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
+	
 	@Override
 	public EmbeddableAttributes process(Mapping context, ClassOutline classOutline)
 	{
+		setPlugin(context.getPlugin());
+		
 		final EmbeddableAttributes attributes = new EmbeddableAttributes();
 		final FieldOutline[] fieldOutlines = classOutline.getDeclaredFields();
 		for (final FieldOutline fieldOutline : fieldOutlines)
 		{
-			final Object attributeMapping =
-				getAttributeMapping(context, fieldOutline).process(context, fieldOutline);
+			final Object attributeMapping = getAttributeMapping(context, fieldOutline)
+				.process(context, fieldOutline);
+			
 			if (attributeMapping instanceof Basic)
 				attributes.getBasic().add((Basic) attributeMapping);
 			else if (attributeMapping instanceof Transient)
@@ -61,70 +68,98 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 
 	public FieldOutlineMapping<?> getAttributeMapping(Mapping context, FieldOutline fieldOutline)
 	{
+		final CPropertyInfo propertyInfo = fieldOutline.getPropertyInfo();
+		final ClassOutline classOutline = fieldOutline.parent();
+		
 		if (context.getIgnoring().isFieldOutlineIgnored(context, fieldOutline))
 		{
+			getPlugin().trace("{}, getAttributeMapping: class={}, field={};"
+				+ " 'marked as [ignored]' field."
+				+ " It will be made transient.",
+				getLocation(propertyInfo, classOutline.target),
+				classOutline.getImplClass().name(), propertyInfo.getName(false) );
 			return context.getTransientMapping();
 		}
 		else if (isFieldOutlineId(context, fieldOutline))
 		{
-			final CPropertyInfo propertyInfo = fieldOutline.getPropertyInfo();
-			logger.warn("Field outline  ["	+ propertyInfo.getName(true) + "] is marked as [id] field. "
-						+ "This is not supported in embeddable classes. " + "This field will be made transient.");
+			getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
+				+ " 'marked as [id]' field is not supported in embeddable classes."
+				+ " It will be made transient.",
+				getLocation(propertyInfo, classOutline.target),
+				classOutline.getImplClass().name(), propertyInfo.getName(false) );
 			return context.getTransientMapping();
 		}
 		else if (isFieldOutlineEmbeddedId(context, fieldOutline))
 		{
-			final CPropertyInfo propertyInfo = fieldOutline.getPropertyInfo();
-			logger.warn("Field outline  ["	+ propertyInfo.getName(true) + "] is marked as [embedded-id] field. "
-						+ "This is not supported in embeddable classes. " + "This field will be made transient.");
+			getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
+				+ " 'marked as [embedded-id]' field is not supported in embeddable classes."
+				+ " It will be made transient.",
+				getLocation(propertyInfo, classOutline.target),
+				classOutline.getImplClass().name(), propertyInfo.getName(false) );
 			return context.getTransientMapping();
 		}
 		else if (isFieldOutlineVersion(context, fieldOutline))
 		{
-			final CPropertyInfo propertyInfo = fieldOutline.getPropertyInfo();
-			logger.warn("Field outline  ["	+ propertyInfo.getName(true) + "] is marked as [version] field. "
-						+ "This is not supported in embeddable classes. " + "This field will be made transient.");
+			getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
+				+ " 'marked as [version]' field is not supported in embeddable classes."
+				+ " It will be made transient.",
+				getLocation(propertyInfo, classOutline.target),
+				classOutline.getImplClass().name(), propertyInfo.getName(false) );
 			return context.getTransientMapping();
 		}
 		else
 		{
-			final CPropertyInfo propertyInfo = fieldOutline.getPropertyInfo();
 			if (!propertyInfo.isCollection())
 			{
-				logger.trace("Field outline  [" + propertyInfo.getName(true) + "] is a single field.");
-				final Collection<? extends CTypeInfo> types = context.getGetTypes().process(context, propertyInfo);
+				final Collection<? extends CTypeInfo> types = context.getGetTypes()
+					.process(context, propertyInfo);
+
 				if (types.size() == 1)
 				{
-					logger.trace("Field outline  [" + propertyInfo.getName(true) + "] is a homogeneous single field.");
 					if (isFieldOutlineBasic(context, fieldOutline))
+					{
+						getPlugin().trace("{}, getAttributeMapping: class={}, field={};"
+							+ " basic homogeneous single field.",
+							getLocation(propertyInfo, classOutline.target),
+							classOutline.getImplClass().name(), propertyInfo.getName(false) );
 						return context.getBasicMapping();
+					}
 					else if (isFieldOutlineComplex(context, fieldOutline))
 					{
-						logger.warn("Field outline  ["	+ propertyInfo.getName(true) + "] is a complex field. "
-									+ "This is not supported in embeddable classes. "
-									+ "This field will be made transient.");
+						getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
+							+ " complex field is not supported in embeddable classes."
+							+ " It will be made transient.",
+							getLocation(propertyInfo, classOutline.target),
+							classOutline.getImplClass().name(), propertyInfo.getName(false) );
 						return context.getTransientMapping();
 					}
 					else
 					{
-						logger.warn("Field outline  ["	+ propertyInfo.getName(true) + "] is not a basic field. "
-									+ "This is not supported in embeddable classes. "
-									+ "This field will be made transient.");
+						getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
+							+ " non-basic field is not supported in embeddable classes."
+							+ " It will be made transient.",
+							getLocation(propertyInfo, classOutline.target),
+							classOutline.getImplClass().name(), propertyInfo.getName(false) );
 						return context.getTransientMapping();
 					}
 				}
 				else
 				{
-					logger.warn("Field outline  ["	+ propertyInfo.getName(true) + "] is a heterogeneous field. "
-								+ "This is not supported in embeddable classes. "
-								+ "This field will be made transient.");
+					getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
+						+ " heterogeneous field is not supported in embeddable classes."
+						+ " It will be made transient.",
+						getLocation(propertyInfo, classOutline.target),
+						classOutline.getImplClass().name(), propertyInfo.getName(false) );
 					return context.getTransientMapping();
 				}
 			}
 			else
 			{
-				logger.warn("Field outline  ["	+ propertyInfo.getName(true) + "] is a collection field. "
-							+ "This is not supported in embeddable classes. " + "This field will be made transient.");
+				getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
+					+ " collection field is not supported in embeddable classes."
+					+ " It will be made transient.",
+					getLocation(propertyInfo, classOutline.target),
+					classOutline.getImplClass().name(), propertyInfo.getName(false) );
 				return context.getTransientMapping();
 			}
 		}
@@ -132,12 +167,12 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 
 	public boolean isFieldOutlineId(Mapping context, FieldOutline fieldOutline)
 	{
-		return CustomizationUtils.containsCustomization(fieldOutline, Customizations.ID_ELEMENT_NAME);
+		return containsCustomization(fieldOutline, ID_ELEMENT_NAME);
 	}
 
 	public boolean isFieldOutlineVersion(Mapping context, FieldOutline fieldOutline)
 	{
-		return CustomizationUtils.containsCustomization(fieldOutline, Customizations.VERSION_ELEMENT_NAME);
+		return containsCustomization(fieldOutline, VERSION_ELEMENT_NAME);
 	}
 
 	public boolean isFieldOutlineBasic(Mapping context, FieldOutline fieldOutline)
@@ -147,15 +182,16 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 
 	public boolean isFieldOutlineCore(Mapping context, FieldOutline fieldOutline)
 	{
-		final JMethod getter = FieldAccessorUtils.getter(fieldOutline);
+		final JMethod getter = getter(fieldOutline);
 		final JType type = getter.type();
-		return JTypeUtils.isBasicType(type);
+		return isBasicType(type);
 	}
 
 	public boolean isFieldOutlineEnumerated(Mapping context, FieldOutline fieldOutline)
 	{
 		final CPropertyInfo propertyInfo = fieldOutline.getPropertyInfo();
-		final Collection<? extends CTypeInfo> types = context.getGetTypes().process(context, propertyInfo);
+		final Collection<? extends CTypeInfo> types = context.getGetTypes()
+			.process(context, propertyInfo);
 		if (types.size() == 1)
 		{
 			final CTypeInfo type = types.iterator().next();
@@ -176,6 +212,6 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 
 	public boolean isFieldOutlineEmbeddedId(Mapping context, FieldOutline fieldOutline)
 	{
-		return CustomizationUtils.containsCustomization(fieldOutline, Customizations.EMBEDDED_ID_ELEMENT_NAME);
+		return containsCustomization(fieldOutline, EMBEDDED_ID_ELEMENT_NAME);
 	}
 }

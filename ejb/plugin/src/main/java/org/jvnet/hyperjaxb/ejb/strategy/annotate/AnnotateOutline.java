@@ -2,6 +2,7 @@ package org.jvnet.hyperjaxb.ejb.strategy.annotate;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import static java.lang.String.format;
+import static org.jvnet.basicjaxb.util.CustomizationUtils.getInfo;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getContextPath;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getFieldName;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getLocalClassName;
@@ -93,7 +94,7 @@ public class AnnotateOutline extends EJBOutlineProcessor
 	public Collection<ClassOutline> process(EJBPlugin context, Outline outline)
 		throws Exception
 	{
-		setXjcPlugin(context);
+		setPlugin(context);
 		debug("{}, process; ContextPath={}", getLocation("unknown"), getContextPath(outline));
 		
 		final Collection<? extends ClassOutline> classes = outline.getClasses();
@@ -150,7 +151,7 @@ public class AnnotateOutline extends EJBOutlineProcessor
 		// Prevent WARNING: "Unacknowledged customization check"
 		for (CPluginCustomization cpc : CustomizationUtils.getCustomizations(classOutline))
 		{
-			trace("Customization: " + CustomizationUtils.getInfo("mark", cpc));
+			trace(getInfo("mark", cpc));
 			cpc.markAsAcknowledged();
 		}
 

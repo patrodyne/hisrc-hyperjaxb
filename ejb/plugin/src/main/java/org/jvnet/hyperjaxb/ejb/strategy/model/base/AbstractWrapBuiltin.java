@@ -1,23 +1,26 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static org.jvnet.hyperjaxb.ejb.Constants.TODO_LOG_LEVEL;
+import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.Collection;
 import java.util.Collections;
 
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.tools.xjc.model.CBuiltinLeafInfo;
+import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.model.TypeUse;
 
 public abstract class AbstractWrapBuiltin implements CreatePropertyInfos
 {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
 
 	protected abstract Collection<CPropertyInfo> wrapAnyType(ProcessModel context, CPropertyInfo propertyInfo);
 
@@ -28,16 +31,23 @@ public abstract class AbstractWrapBuiltin implements CreatePropertyInfos
 	@Override
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
-		// Single
+		setPlugin(context.getPlugin());
+		
+		// Single Builtin
 		// assert !propertyInfo.isCollection();
-		// Builtin
 		Collection<? extends CTypeInfo> types = context.getGetTypes().process(context, propertyInfo);
 		assert types.size() == 1;
 		assert types.iterator().next() instanceof CBuiltinLeafInfo;
 		final CBuiltinLeafInfo originalTypeUse = getTypeUse(context, propertyInfo);
 		if (propertyInfo.getAdapter() != null)
 		{
-			logger.debug("Adapter property info is not wrapped");
+			if ( getPlugin().isTraceEnabled() && propertyInfo.parent() instanceof CClassInfo )
+			{
+				CClassInfo parent = (CClassInfo) propertyInfo.parent();
+				getPlugin().trace("{}, {}: class={}, property={}; not wrapping a property info adapter",
+					getLocation(propertyInfo), getClass().getSimpleName(),
+					parent.shortName, propertyInfo.getName(false));
+			}
 			return Collections.emptyList();
 		}
 		else if (originalTypeUse == CBuiltinLeafInfo.DATA_HANDLER)
@@ -74,14 +84,14 @@ public abstract class AbstractWrapBuiltin implements CreatePropertyInfos
 		String msg = "TODO " + (comment == null ? "Not yet supported." : comment);
 		String level = System.getProperty(TODO_LOG_LEVEL);
 		if ("DEBUG".equalsIgnoreCase(level))
-			logger.debug(msg);
+			getPlugin().debug(msg);
 		else if ("INFO".equalsIgnoreCase(level))
-			logger.info(msg);
+			getPlugin().info(msg);
 		else if ("WARN".equalsIgnoreCase(level))
-			logger.warn(msg);
+			getPlugin().warn(msg);
 		else if ("ERROR".equalsIgnoreCase(level))
-			logger.error(msg);
+			getPlugin().error(msg);
 		else
-			logger.error(msg);
+			getPlugin().error(msg);
 	}
 }

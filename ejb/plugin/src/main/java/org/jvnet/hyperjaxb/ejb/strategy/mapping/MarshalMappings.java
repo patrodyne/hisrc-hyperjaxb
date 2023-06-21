@@ -69,7 +69,7 @@ public class MarshalMappings extends EJBOutlineProcessor
 	public Collection<ClassOutline> process(EJBPlugin context, Outline outline)
 		throws Exception
 	{
-		setXjcPlugin(context);
+		setPlugin(context);
 		debug("{}, process; ContextPath={}", getLocation("unknown"), getContextPath(outline));
 		
 		final Collection<? extends ClassOutline> classes = outline.getClasses();
