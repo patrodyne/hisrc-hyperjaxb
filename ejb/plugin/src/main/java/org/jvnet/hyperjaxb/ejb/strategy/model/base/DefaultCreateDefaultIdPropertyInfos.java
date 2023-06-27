@@ -16,6 +16,7 @@ import org.jvnet.hyperjaxb.jpa.GeneratedId;
 import org.jvnet.hyperjaxb.jpa.Id;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.TransientSingleField;
 import org.jvnet.hyperjaxb.xjc.model.CExternalLeafInfo;
+import org.xml.sax.Locator;
 
 import com.sun.tools.xjc.generator.bean.field.GenericFieldRenderer;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
@@ -57,20 +58,32 @@ public class DefaultCreateDefaultIdPropertyInfos implements CreateDefaultIdPrope
 
 	protected CPropertyInfo createPropertyInfo(ProcessModel context, CClassInfo classInfo)
 	{
+		Locator locator = classInfo.getLocator();
+		if ( (locator == null) && (classInfo.getSchemaComponent() != null) )
+			locator = classInfo.getSchemaComponent().getLocator();
 		final GeneratedId cid = context.getCustomizing().getGeneratedId(classInfo);
 		final String propertyName = getPropertyName(context, cid);
 		final QName attributeName = getAttributeName(context, cid);
 		final CNonElement propertyTypeInfo = getPropertyTypeInfo(context, cid);
 		final CCustomizations customizations = new CCustomizations();
-		final CPluginCustomization id = createIdCustomization(context, cid);
+		final CPluginCustomization id = createIdCustomization(context, cid, locator);
 		customizations.add(id);
 		//
 		// CPluginCustomization generated = CustomizationUtils
 		// .createCustomization(org.jvnet.basicjaxb.plugin.Customizations.GENERATED_ELEMENT_NAME);
 		// generated.markAsAcknowledged();
 		// customizations.add(generated);
-		final CPropertyInfo propertyInfo = new CAttributePropertyInfo(propertyName, null, customizations, null,
-			attributeName, propertyTypeInfo, propertyTypeInfo.getTypeName(), false);
+		final CPropertyInfo propertyInfo = new CAttributePropertyInfo
+		(
+			propertyName,
+			null,
+			customizations,
+			locator,
+			attributeName,
+			propertyTypeInfo,
+			propertyTypeInfo.getTypeName(),
+			false
+		);
 		if (cid.isTransient() != null && cid.isTransient())
 			propertyInfo.realization = new GenericFieldRenderer(TransientSingleField.class);
 		Customizations.markGenerated(propertyInfo);
@@ -115,11 +128,11 @@ public class DefaultCreateDefaultIdPropertyInfos implements CreateDefaultIdPrope
 		}
 	}
 
-	public CPluginCustomization createIdCustomization(ProcessModel context, GeneratedId generatedId)
+	public CPluginCustomization createIdCustomization(ProcessModel context, GeneratedId generatedId, Locator locator)
 	{
 		final Id id = new Id();
 		id.mergeFrom(generatedId, id);
 		final JAXBElement<Id> idElement = Customizations.getCustomizationsObjectFactory().createId(id);
-		return Customizations.createCustomization(idElement);
+		return Customizations.createCustomization(idElement, locator);
 	}
 }

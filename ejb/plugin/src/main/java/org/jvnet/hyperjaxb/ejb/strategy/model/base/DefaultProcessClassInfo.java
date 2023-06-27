@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -44,7 +44,7 @@ public class DefaultProcessClassInfo implements ProcessClassInfo
 		}
 		classes.addAll(context.getCreateIdClass().process(context, classInfo));
 		
-		getPlugin().debug("{}, DefaultProcessClassInfo: class={}", getLocation(classInfo), classInfo.shortName);
+		getPlugin().debug("{}, DefaultProcessClassInfo: class={}", toLocation(classInfo), classInfo.shortName);
 
 		return classes;
 	}

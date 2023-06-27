@@ -98,7 +98,7 @@ public abstract class AbstractAdaptPropertyInfo implements CreatePropertyInfos {
 		if (generatedProperty != null && !generatedProperty.getAny().isEmpty()) {
 			for (Element element : generatedProperty.getAny()) {
 				cPluginCustomizations.add(CustomizationUtils
-						.createCustomization(element));
+						.createCustomization(element, propertyInfo.getLocator()));
 			}
 		}
 

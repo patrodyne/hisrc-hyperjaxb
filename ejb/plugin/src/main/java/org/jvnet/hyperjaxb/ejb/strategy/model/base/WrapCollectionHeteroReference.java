@@ -1,10 +1,10 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.JavaType.Hetero;
 import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.Plurality.Collection;
 import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.SchemaType.Reference;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -90,7 +90,7 @@ public class WrapCollectionHeteroReference implements CreatePropertyInfos
 		// }
 		
 		getPlugin().debug("{}, WrapCollectionHeteroElement: class={}, property={}, <{},{},{}>.",
-			getLocation(propertyInfo), classInfo.shortName, propertyName, Collection, Hetero, Reference);
+			toLocation(propertyInfo), classInfo.shortName, propertyName, Collection, Hetero, Reference);
 		
 		final CClassInfoParent parent = Ring.get(BGMBuilder.class).getGlobalBinding()
 			.getFlattenClasses() == LocalScoping.NESTED ? classInfo : classInfo.parent();

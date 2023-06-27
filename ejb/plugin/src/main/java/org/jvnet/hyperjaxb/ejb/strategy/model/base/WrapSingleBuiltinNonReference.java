@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 
 import java.util.Collection;
 
@@ -41,7 +41,7 @@ public class WrapSingleBuiltinNonReference extends AbstractWrapBuiltin
 			{
 				CClassInfo parent = (CClassInfo) propertyInfo.parent();
 				getPlugin().trace("{}, {}: class={}, property={}; no adaptation required",
-					getLocation(propertyInfo), getClass().getSimpleName(),
+					toLocation(propertyInfo), getClass().getSimpleName(),
 					parent.shortName, propertyInfo.getName(false));
 			}
 			return CreateNoPropertyInfos.INSTANCE;

@@ -4,6 +4,7 @@ import static com.sun.tools.xjc.outline.Aspect.EXPOSED;
 import static java.lang.String.format;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.containsCustomization;
 import static org.jvnet.basicjaxb.util.FieldAccessorUtils.getter;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.codemodel.util.JTypeUtils.isBasicType;
 import static org.jvnet.hyperjaxb.ejb.Constants.TODO_LOG_LEVEL;
 import static org.jvnet.hyperjaxb.jpa.Customizations.EMBEDDABLE_ELEMENT_NAME;
@@ -11,7 +12,6 @@ import static org.jvnet.hyperjaxb.jpa.Customizations.EMBEDDED_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.EMBEDDED_ID_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.ID_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.VERSION_ELEMENT_NAME;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.Collection;
 
@@ -75,7 +75,7 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes>
 					getPlugin().error("{}, AttributesMapping: class={}, field={};"
 						+ " could not add an id element to the attributes"
 						+ " because they already contain an embedded-id element.",
-						getLocation(fieldOutline), classInfo.shortName, propInfo.getName(false));
+						toLocation(fieldOutline), classInfo.shortName, propInfo.getName(false));
 				}
 			}
 			else if (attributeMapping instanceof EmbeddedId)
@@ -87,7 +87,7 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes>
 					getPlugin().error("{}, AttributesMapping: class={}, field={};"
 						+ " could not add an embedded-id element to the attributes"
 						+ " because they already contain an id element.",
-						getLocation(fieldOutline), classInfo.shortName, propInfo.getName(false));
+						toLocation(fieldOutline), classInfo.shortName, propInfo.getName(false));
 				}
 				else if (attributes.getEmbeddedId() != null)
 				{
@@ -96,7 +96,7 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes>
 					getPlugin().error("{}, AttributesMapping: class={}, field={};"
 						+ " Could not add an embedded-id element to the attributes"
 						+ " bbecause they already contain an embedded-id element.",
-						getLocation(fieldOutline), classInfo.shortName, propInfo.getName(false));
+						toLocation(fieldOutline), classInfo.shortName, propInfo.getName(false));
 				}
 				else
 					attributes.setEmbeddedId((EmbeddedId) attributeMapping);
@@ -133,7 +133,7 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes>
 			return context.getVersionMapping();
 		else
 		{
-			final String location = getLocation(fieldOutline);
+			final String location = toLocation(fieldOutline);
 			final CClassInfo classInfo = fieldOutline.parent().target;
 			final CPropertyInfo propInfo = fieldOutline.getPropertyInfo();
 			if (!propInfo.isCollection())

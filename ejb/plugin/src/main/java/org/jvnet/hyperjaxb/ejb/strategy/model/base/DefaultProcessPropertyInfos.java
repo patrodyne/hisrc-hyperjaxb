@@ -2,8 +2,8 @@ package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import static java.lang.String.format;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.ejb.Constants.TODO_LOG_LEVEL;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -114,7 +114,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 			{
 				classInfo.addProperty(newPropertyInfo);
 				getPlugin().debug("{}, DefaultProcessPropertyInfos: class={}, property={}",
-					getLocation(newPropertyInfo, classInfo), classInfo.shortName, newPropertyInfo.getName(false));
+					toLocation(newPropertyInfo, classInfo), classInfo.shortName, newPropertyInfo.getName(false));
 			}
 		}
 

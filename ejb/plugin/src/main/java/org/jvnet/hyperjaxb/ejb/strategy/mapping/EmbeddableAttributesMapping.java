@@ -3,11 +3,11 @@ package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.containsCustomization;
 import static org.jvnet.basicjaxb.util.FieldAccessorUtils.getter;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.codemodel.util.JTypeUtils.isBasicType;
 import static org.jvnet.hyperjaxb.jpa.Customizations.EMBEDDED_ID_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.ID_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.VERSION_ELEMENT_NAME;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.Collection;
 
@@ -76,7 +76,7 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 			getPlugin().trace("{}, getAttributeMapping: class={}, field={};"
 				+ " 'marked as [ignored]' field."
 				+ " It will be made transient.",
-				getLocation(propertyInfo, classOutline.target),
+				toLocation(propertyInfo, classOutline.target),
 				classOutline.getImplClass().name(), propertyInfo.getName(false) );
 			return context.getTransientMapping();
 		}
@@ -85,7 +85,7 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 			getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
 				+ " 'marked as [id]' field is not supported in embeddable classes."
 				+ " It will be made transient.",
-				getLocation(propertyInfo, classOutline.target),
+				toLocation(propertyInfo, classOutline.target),
 				classOutline.getImplClass().name(), propertyInfo.getName(false) );
 			return context.getTransientMapping();
 		}
@@ -94,7 +94,7 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 			getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
 				+ " 'marked as [embedded-id]' field is not supported in embeddable classes."
 				+ " It will be made transient.",
-				getLocation(propertyInfo, classOutline.target),
+				toLocation(propertyInfo, classOutline.target),
 				classOutline.getImplClass().name(), propertyInfo.getName(false) );
 			return context.getTransientMapping();
 		}
@@ -103,7 +103,7 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 			getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
 				+ " 'marked as [version]' field is not supported in embeddable classes."
 				+ " It will be made transient.",
-				getLocation(propertyInfo, classOutline.target),
+				toLocation(propertyInfo, classOutline.target),
 				classOutline.getImplClass().name(), propertyInfo.getName(false) );
 			return context.getTransientMapping();
 		}
@@ -120,7 +120,7 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 					{
 						getPlugin().trace("{}, getAttributeMapping: class={}, field={};"
 							+ " basic homogeneous single field.",
-							getLocation(propertyInfo, classOutline.target),
+							toLocation(propertyInfo, classOutline.target),
 							classOutline.getImplClass().name(), propertyInfo.getName(false) );
 						return context.getBasicMapping();
 					}
@@ -129,7 +129,7 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 						getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
 							+ " complex field is not supported in embeddable classes."
 							+ " It will be made transient.",
-							getLocation(propertyInfo, classOutline.target),
+							toLocation(propertyInfo, classOutline.target),
 							classOutline.getImplClass().name(), propertyInfo.getName(false) );
 						return context.getTransientMapping();
 					}
@@ -138,7 +138,7 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 						getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
 							+ " non-basic field is not supported in embeddable classes."
 							+ " It will be made transient.",
-							getLocation(propertyInfo, classOutline.target),
+							toLocation(propertyInfo, classOutline.target),
 							classOutline.getImplClass().name(), propertyInfo.getName(false) );
 						return context.getTransientMapping();
 					}
@@ -148,7 +148,7 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 					getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
 						+ " heterogeneous field is not supported in embeddable classes."
 						+ " It will be made transient.",
-						getLocation(propertyInfo, classOutline.target),
+						toLocation(propertyInfo, classOutline.target),
 						classOutline.getImplClass().name(), propertyInfo.getName(false) );
 					return context.getTransientMapping();
 				}
@@ -158,7 +158,7 @@ public class EmbeddableAttributesMapping implements ClassOutlineMapping<Embeddab
 				getPlugin().warn("{}, getAttributeMapping: class={}, field={};"
 					+ " collection field is not supported in embeddable classes."
 					+ " It will be made transient.",
-					getLocation(propertyInfo, classOutline.target),
+					toLocation(propertyInfo, classOutline.target),
 					classOutline.getImplClass().name(), propertyInfo.getName(false) );
 				return context.getTransientMapping();
 			}

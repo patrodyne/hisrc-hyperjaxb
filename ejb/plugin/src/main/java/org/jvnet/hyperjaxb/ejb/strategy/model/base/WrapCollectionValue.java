@@ -1,10 +1,10 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.JavaType.BuiltIn;
 import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.Plurality.Collection;
 import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.SchemaType.Value;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -228,7 +228,7 @@ public class WrapCollectionValue implements CreatePropertyInfos
 		propertyInfoList.add(itemPropertyInfo);
 		
 		getPlugin().debug("{}, WrapCollectionValue: class={}, property={}, <{},{},{}>.",
-			getLocation(propertyInfo), classInfo.shortName, propertyName, Collection, BuiltIn, Value);
+			toLocation(propertyInfo), classInfo.shortName, propertyName, Collection, BuiltIn, Value);
 
 		return propertyInfoList;
 	}

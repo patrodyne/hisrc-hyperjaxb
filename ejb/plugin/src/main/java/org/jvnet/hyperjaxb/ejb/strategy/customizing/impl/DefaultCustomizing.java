@@ -3,9 +3,9 @@ package org.jvnet.hyperjaxb.ejb.strategy.customizing.impl;
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.containsCustomization;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.getInfo;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.jpa.Customizations.BASIC_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.JAXB_CONTEXT_ELEMENT_NAME;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -464,7 +464,7 @@ public class DefaultCustomizing implements Customizing
 					else
 					{
 						getPlugin().warn("{}, getDefaultBasic: Default single property for type [{}] does not define the expected basic mapping.",
-							getLocation(property), typeName);
+							toLocation(property), typeName);
 					}
 				}
 			}
@@ -550,7 +550,7 @@ public class DefaultCustomizing implements Customizing
 					else
 					{
 						getPlugin().warn("{}, getDefaultElementCollection: Default single property for type [{}] does not define the expected basic mapping.",
-							getLocation(property), typeName);
+							toLocation(property), typeName);
 					}
 				}
 			}
@@ -612,7 +612,7 @@ public class DefaultCustomizing implements Customizing
 			for (CPluginCustomization parentBasic : findCustomizations(property.parent(), BASIC_ELEMENT_NAME))
 			{
 				getPlugin().trace("{}, getBasic: basic={}; acknowledging parent class customization: {}",
-					getLocation(property), basic, getInfo("PARENT:", property.parent()));
+					toLocation(property), basic, getInfo("PARENT:", property.parent()));
 				parentBasic.markAsAcknowledged();
 			}
 		}

@@ -3,14 +3,15 @@ package org.jvnet.hyperjaxb.ejb.strategy.annotate;
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import static java.lang.String.format;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.getInfo;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getContextPath;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getFieldName;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getLocalClassName;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getPackagedClassName;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
@@ -95,7 +96,12 @@ public class AnnotateOutline extends EJBOutlineProcessor
 		throws Exception
 	{
 		setPlugin(context);
-		debug("{}, process; ContextPath={}", getLocation("unknown"), getContextPath(outline));
+		if ( isDebugEnabled() )
+		{
+			Iterator<? extends ClassOutline> classOutlines = outline.getClasses().iterator();
+			if ( classOutlines.hasNext() )
+				debug("{}, process; ContextPath={}", toLocation(classOutlines.next()), getContextPath(outline));
+		}
 		
 		final Collection<? extends ClassOutline> classes = outline.getClasses();
 		final Collection<ClassOutline> processedClassOutlines = new ArrayList<ClassOutline>(classes.size());
@@ -145,8 +151,8 @@ public class AnnotateOutline extends EJBOutlineProcessor
 		}
 
 		context.getApplyXAnnotations().annotate(classOutline.ref.owner(), classOutline.ref, annotations);
-		debug("{}, processClassOutline; Class={}, Annotations={}",
-			getLocation(classOutline), getLocalClassName(classOutline), arrayToString(annotations));
+		debug("{}, processClassOutline: Class={}, Annotations={}",
+			toLocation(classOutline), getLocalClassName(classOutline), arrayToString(annotations));
 
 		// Prevent WARNING: "Unacknowledged customization check"
 		for (CPluginCustomization cpc : CustomizationUtils.getCustomizations(classOutline))
@@ -172,7 +178,7 @@ public class AnnotateOutline extends EJBOutlineProcessor
 		if (getOtherAttributesMethod != null)
 		{
 			debug("{}, processAttributeWildcard; Class={}, Wildcard={}, Annotations=@{}",
-				getLocation(classOutline), getLocalClassName(classOutline),
+				toLocation(classOutline), getLocalClassName(classOutline),
 				getOtherAttributesMethod.name(), Transient.class.getName());
 			getOtherAttributesMethod.annotate(Transient.class);
 		}
@@ -189,7 +195,7 @@ public class AnnotateOutline extends EJBOutlineProcessor
 		if (issetter != null)
 		{
 			debug("{}, processFieldOutline; Class={}, IsSet={}, Annotations=@{}",
-				getLocation(fieldOutline), className, issetter.name(), Transient.class.getName());
+				toLocation(fieldOutline), className, issetter.name(), Transient.class.getName());
 			issetter.annotate(Transient.class);
 		}
 
@@ -204,7 +210,7 @@ public class AnnotateOutline extends EJBOutlineProcessor
 		}
 		
 		debug("{}, processFieldOutline; Class={}, Field={}, Annotations={}",
-			getLocation(fieldOutline), className, fieldName, arrayToString(xannotations));
+			toLocation(fieldOutline), className, fieldName, arrayToString(xannotations));
 		
 		return fieldOutline;
 	}

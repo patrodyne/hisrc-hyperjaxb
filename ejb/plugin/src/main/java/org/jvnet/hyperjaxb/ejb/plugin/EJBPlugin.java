@@ -2,7 +2,7 @@ package org.jvnet.hyperjaxb.ejb.plugin;
 
 import static java.lang.String.format;
 import static org.jvnet.basicjaxb.util.GeneratorContextUtils.generateContextPathAwareClass;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 
 import java.io.File;
 import java.io.IOException;
@@ -435,7 +435,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 						{
 							CClassInfo coiTarget = (CClassInfo) coi.getTarget();
 							debug("{}, generateClassSerializable; Class={}",
-								getLocation(coiTarget), coiTarget.shortName);
+								toLocation(coiTarget), coiTarget.shortName);
 						}
 					}
 				}
@@ -453,7 +453,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 
 		assert !target.declaresAttributeWildcard();
 		
-		debug("{}, generateClassBody; Class={}", getLocation(target), target.shortName);
+		debug("{}, generateClassBody; Class={}", toLocation(target), target.shortName);
 	}
 	
 	// Represents a generate field declaration method that is initialized in an
@@ -493,7 +493,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 			String className = fieldOutline.parent().getImplClass().name();
 			String fieldName = fieldInfo.getName(false);
 			debug("{}, generateFieldDecl; Class={}, Field={}",
-				getLocation(locator), className, fieldName);
+				toLocation(locator), className, fieldName);
 		}
 		
 		return fieldOutline;

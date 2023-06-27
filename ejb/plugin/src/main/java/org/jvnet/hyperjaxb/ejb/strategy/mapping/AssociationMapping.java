@@ -11,51 +11,43 @@ import ee.jakarta.xml.ns.persistence.orm.JoinTable;
 import ee.jakarta.xml.ns.persistence.orm.OrderColumn;
 import ee.jakarta.xml.ns.persistence.orm.PrimaryKeyJoinColumn;
 
-public interface AssociationMapping {
+/**
+ * Methods to create or collect associations for the given {@link Mapping} context and {@link FieldOutline}.
+ */
+public interface AssociationMapping
+{
+	public Collection<FieldOutline> getSourceIdFieldsOutline(Mapping context, FieldOutline fieldOutline);
 
-	public Collection<FieldOutline> getSourceIdFieldsOutline(Mapping context,
-			FieldOutline fieldOutline);
-
-	public Collection<FieldOutline> getTargetIdFieldsOutline(Mapping context,
-			FieldOutline fieldOutline);
+	public Collection<FieldOutline> getTargetIdFieldsOutline(Mapping context, FieldOutline fieldOutline);
 
 	// * 1:1
-	public void createPrimaryKeyJoinColumns(Mapping context,
-			FieldOutline fieldOutline,
-			Collection<FieldOutline> idFieldOutlines,
-			List<PrimaryKeyJoinColumn> primaryKeyJoinColumns);
+	public void createPrimaryKeyJoinColumns(Mapping context, FieldOutline fieldOutline,
+		Collection<FieldOutline> idFieldOutlines, List<PrimaryKeyJoinColumn> primaryKeyJoinColumns);
 
 	// * M:1
 	// * 1:M
 	// * 1:1
-	public void createJoinColumns(Mapping context, FieldOutline fieldOutline,
-			Collection<FieldOutline> idFieldOutlines,
-			List<JoinColumn> joinColumns);
+	public void createJoinColumns(Mapping context, FieldOutline fieldOutline, Collection<FieldOutline> idFieldOutlines,
+		List<JoinColumn> joinColumns);
 
 	// 1:1
 	// M:1
 	// 1:M
 	// M:M
 	public void createJoinTable(Mapping context, FieldOutline fieldOutline,
-			Collection<FieldOutline> sourceIdFieldOutlines,
-			Collection<FieldOutline> targetIdFieldOutlines, JoinTable joinTable);
+		Collection<FieldOutline> sourceIdFieldOutlines, Collection<FieldOutline> targetIdFieldOutlines,
+		JoinTable joinTable);
 
-	public void createOrderColumn(Mapping context, FieldOutline fieldOutline,
-			final OrderColumn orderColumn);
+	public void createOrderColumn(Mapping context, FieldOutline fieldOutline, final OrderColumn orderColumn);
 
-	public void createElementCollection$OrderColumn(Mapping context,
-			FieldOutline fieldOutline, final OrderColumn orderColumn);
+	public void createElementCollection$OrderColumn(Mapping context, FieldOutline fieldOutline,
+		final OrderColumn orderColumn);
 
-	public void createElementCollection$CollectionTable$JoinColumns(
-			Mapping context, FieldOutline fieldOutline,
-			Collection<FieldOutline> idFieldOutlines,
-			List<JoinColumn> joinColumns);
+	public void createElementCollection$CollectionTable$JoinColumns(Mapping context, FieldOutline fieldOutline,
+		Collection<FieldOutline> idFieldOutlines, List<JoinColumn> joinColumns);
 
-	public AssociationMapping createEmbeddedAssociationMapping(
-			FieldOutline fieldOutline);
+	public AssociationMapping createEmbeddedAssociationMapping(FieldOutline fieldOutline);
 
-	public void createAssociationOverride(Mapping context,
-			FieldOutline fieldOutline,
-			final List<AssociationOverride> associationOverrides);
-
+	public void createAssociationOverride(Mapping context, FieldOutline fieldOutline,
+		final List<AssociationOverride> associationOverrides);
 }

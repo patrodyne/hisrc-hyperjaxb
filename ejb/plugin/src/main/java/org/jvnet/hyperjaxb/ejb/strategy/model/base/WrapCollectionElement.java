@@ -1,10 +1,10 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.JavaType.BuiltIn;
 import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.Plurality.Collection;
 import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.SchemaType.Element;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class WrapCollectionElement implements CreatePropertyInfos
 		final String propertyName = wrappedPropertyInfo.getName(true);
 		
 		getPlugin().debug("{}, WrapCollectionElement: class={}, property={}, <{},{},{}>.",
-			getLocation(propertyInfo), classInfo.shortName, propertyName, Collection, BuiltIn, Element);
+			toLocation(propertyInfo), classInfo.shortName, propertyName, Collection, BuiltIn, Element);
 		
 		final CClassInfoParent parent = Ring.get(BGMBuilder.class).getGlobalBinding()
 			.getFlattenClasses() == LocalScoping.NESTED ? classInfo : classInfo.parent();
@@ -93,7 +93,7 @@ public class WrapCollectionElement implements CreatePropertyInfos
 			final Collection<CPluginCustomization> cPluginCustomizations =
 				new ArrayList<CPluginCustomization>(generatedClass.getAny().size());
 			for (Element element : generatedClass.getAny())
-				cPluginCustomizations.add(CustomizationUtils.createCustomization(element));
+				cPluginCustomizations.add(CustomizationUtils.createCustomization(element, propertyInfo.getLocator()));
 			customizations = new CCustomizations(cPluginCustomizations);
 		}
 		else
@@ -102,10 +102,17 @@ public class WrapCollectionElement implements CreatePropertyInfos
 		final CClassInfo itemClassInfo = new CClassInfo(classInfo.model, parent, className, null,
 			new QName(propertyName), null, propertyInfo.getSchemaComponent(), customizations);
 		Customizations.markGenerated(itemClassInfo);
-		final CElementPropertyInfo itemPropertyInfo = new CElementPropertyInfo("Item", CollectionMode.NOT_REPEATED,
-			ID.NONE, wrappedPropertyInfo.getExpectedMimeType(), wrappedPropertyInfo.getSchemaComponent(),
+		final CElementPropertyInfo itemPropertyInfo = new CElementPropertyInfo
+		(
+			"Item",
+			CollectionMode.NOT_REPEATED,
+			ID.NONE,
+			wrappedPropertyInfo.getExpectedMimeType(),
+			wrappedPropertyInfo.getSchemaComponent(),
 			new CCustomizations(CustomizationUtils.getCustomizations(wrappedPropertyInfo)),
-			wrappedPropertyInfo.getLocator(), false);
+			wrappedPropertyInfo.getLocator(),
+			false
+		);
 		itemPropertyInfo.getTypes().addAll(context.getGetTypes().getTypes(context, wrappedPropertyInfo));
 		
 		if (wrappedPropertyInfo.getAdapter() != null)
@@ -151,9 +158,17 @@ public class WrapCollectionElement implements CreatePropertyInfos
 		itemPropertyInfo.realization = fieldRenderer;
 		itemClassInfo.addProperty(itemPropertyInfo);
 		context.getProcessClassInfo().process(context, itemClassInfo);
-		final CElementPropertyInfo wrappingPropertyInfo = new CElementPropertyInfo(propertyName + "Items",
-			CollectionMode.REPEATED_ELEMENT, ID.NONE, wrappedPropertyInfo.getExpectedMimeType(), null,
-			new CCustomizations(), null, false);
+		final CElementPropertyInfo wrappingPropertyInfo = new CElementPropertyInfo
+		(
+			propertyName + "Items",
+			CollectionMode.REPEATED_ELEMENT,
+			ID.NONE,
+			wrappedPropertyInfo.getExpectedMimeType(),
+			null,
+			new CCustomizations(),
+			wrappedPropertyInfo.getLocator(),
+			false
+		);
 		for (final CTypeRef typeRef : context.getGetTypes().getTypes(context, wrappedPropertyInfo))
 		{
 			wrappingPropertyInfo.getTypes()

@@ -1,10 +1,10 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.JavaType.BuiltIn;
 import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.Plurality.Collection;
 import static org.jvnet.hyperjaxb.ejb.strategy.model.base.ModelWrap.SchemaType.Attribute;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ public class WrapCollectionAttribute implements CreatePropertyInfos
 		final String propertyName = wrappedPropertyInfo.getName(true);
 		
 		getPlugin().debug("{}, WrapCollectionAttribute: class={}, property={}, <{},{},{}>.",
-			getLocation(propertyInfo), classInfo.shortName, propertyName, Collection, BuiltIn, Attribute);
+			toLocation(propertyInfo), classInfo.shortName, propertyName, Collection, BuiltIn, Attribute);
 		
 		final CClassInfoParent parent = Ring.get(BGMBuilder.class).getGlobalBinding()
 			.getFlattenClasses() == LocalScoping.NESTED ? classInfo : classInfo.parent();

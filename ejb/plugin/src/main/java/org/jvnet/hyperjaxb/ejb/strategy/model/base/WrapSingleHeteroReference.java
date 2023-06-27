@@ -7,11 +7,11 @@ import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import static org.glassfish.jaxb.core.v2.model.core.ID.NONE;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.addCustomization;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.getCustomizations;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.jpa.Customizations.BASIC_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.getContext;
 import static org.jvnet.hyperjaxb.jpa.Customizations.markGenerated;
 import static org.jvnet.hyperjaxb.jpa.Customizations.markIgnored;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -194,7 +194,7 @@ public class WrapSingleHeteroReference implements CreatePropertyInfos
 					getPlugin().error("{}, createElementProperties: class={}, prop={};"
 						+ " single hetero reference containing element [{}]"
 						+ " which is a substitution group head. See issue #95.",
-						getLocation(propInfo, propClassInfo), propClassInfo.shortName, propInfo.getName(false),
+						toLocation(propInfo, propClassInfo), propClassInfo.shortName, propInfo.getName(false),
 						elementInfo.getSqueezedName());
 				}
 				else
@@ -243,7 +243,7 @@ public class WrapSingleHeteroReference implements CreatePropertyInfos
 				getPlugin().error("{}, createElementProperties: class={}, prop={};"
 					+ " single hetero reference containing unsupported CClassRef element [{}]"
 					+ " See issue #94.",
-					getLocation(propInfo, propClassInfo), propClassInfo.shortName, propInfo.getName(false),
+					toLocation(propInfo, propClassInfo), propClassInfo.shortName, propInfo.getName(false),
 					classRef.fullName());
 			}
 		}

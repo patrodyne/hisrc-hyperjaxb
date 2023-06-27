@@ -2,8 +2,8 @@ package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.findCustomization;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.jpa.Customizations.PERSISTENCE_ELEMENT_NAME;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,6 +29,7 @@ import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessPropertyInfos;
 
 import com.sun.tools.xjc.model.CClassInfo;
+import com.sun.tools.xjc.model.CPluginCustomization;
 import com.sun.tools.xjc.model.Model;
 
 import jakarta.annotation.Priority;
@@ -496,9 +497,10 @@ public class DefaultProcessModel implements ProcessModel
 		if ( getCustomizing() instanceof DefaultCustomizing )
 			((DefaultCustomizing) getCustomizing()).setPlugin(context);
 		
-		findCustomization(model, PERSISTENCE_ELEMENT_NAME);
-		
-		getPlugin().debug("{}, DefaultProcessModel: Processing model ...", getLocation("unknown") );
+		// Find and mark persistence customizations as acknowledged.
+		CPluginCustomization pec = findCustomization(model, PERSISTENCE_ELEMENT_NAME);
+		if ( pec != null )
+			getPlugin().debug("{}, DefaultProcessModel: Persistence", toLocation(pec) );
 		
 		final Collection<CClassInfo> unorderedClassInfos = model.beans().values();
 		final CClassInfo[] classInfos = orderClassInfos(unorderedClassInfos).toArray(new CClassInfo[0]);

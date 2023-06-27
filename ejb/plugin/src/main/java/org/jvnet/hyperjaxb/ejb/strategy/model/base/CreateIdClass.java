@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -69,7 +69,7 @@ public class CreateIdClass implements CreateIdClassProcessor
 			// Ignore IdClass from being an Entity.
 			Customizations.markIgnored(idClassInfo);
 			
-			getPlugin().debug("{}, CreateIdClass: class={}", getLocation(idClassInfo), idClassInfo.shortName);
+			getPlugin().debug("{}, CreateIdClass: class={}", toLocation(idClassInfo), idClassInfo.shortName);
 			
 			// Customizations.markGenerated(idClassInfo);
 			for (CPropertyInfo propertyInfo : propertyInfos)

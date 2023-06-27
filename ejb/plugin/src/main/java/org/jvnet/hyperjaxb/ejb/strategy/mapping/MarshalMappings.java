@@ -1,10 +1,10 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getContextPath;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getLocalClassName;
 import static org.jvnet.hyperjaxb.ejb.Constants.ORM_EJB_VERSION;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.io.StringWriter;
 import java.io.Writer;
@@ -70,7 +70,7 @@ public class MarshalMappings extends EJBOutlineProcessor
 		throws Exception
 	{
 		setPlugin(context);
-		debug("{}, process; ContextPath={}", getLocation("unknown"), getContextPath(outline));
+		debug("{}, process: ContextPath={}", toLocation("unknown"), getContextPath(outline));
 		
 		final Collection<? extends ClassOutline> classes = outline.getClasses();
 		final Collection<ClassOutline> processedClassOutlines = new ArrayList<ClassOutline>(classes.size());
@@ -124,7 +124,7 @@ public class MarshalMappings extends EJBOutlineProcessor
 		getMarshaller().marshal(entityMappings, writer);
 		classOrmXmlFile.setContents(writer.toString());
 		
-		debug("{}, processClassOutline; Class={}", getLocation(classOutline), getLocalClassName(classOutline));
+		debug("{}, processClassOutline: Class={}", toLocation(classOutline), getLocalClassName(classOutline));
 		
 		return classOutline;
 	}

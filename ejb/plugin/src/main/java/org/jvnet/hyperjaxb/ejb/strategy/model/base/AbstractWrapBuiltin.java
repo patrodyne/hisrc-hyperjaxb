@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.ejb.Constants.TODO_LOG_LEVEL;
-import static org.jvnet.hyperjaxb.locator.util.LocatorUtils.getLocation;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -45,7 +45,7 @@ public abstract class AbstractWrapBuiltin implements CreatePropertyInfos
 			{
 				CClassInfo parent = (CClassInfo) propertyInfo.parent();
 				getPlugin().trace("{}, {}: class={}, property={}; not wrapping a property info adapter",
-					getLocation(propertyInfo), getClass().getSimpleName(),
+					toLocation(propertyInfo), getClass().getSimpleName(),
 					parent.shortName, propertyInfo.getName(false));
 			}
 			return Collections.emptyList();

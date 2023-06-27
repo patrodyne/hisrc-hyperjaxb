@@ -16,6 +16,7 @@ import org.jvnet.hyperjaxb.jpa.GeneratedVersion;
 import org.jvnet.hyperjaxb.jpa.Version;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.TransientSingleField;
 import org.jvnet.hyperjaxb.xjc.model.CExternalLeafInfo;
+import org.xml.sax.Locator;
 
 import com.sun.tools.xjc.generator.bean.field.GenericFieldRenderer;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
@@ -55,7 +56,7 @@ public class DefaultCreateDefaultVersionPropertyInfos implements CreateDefaultVe
 		final QName attributeName = getAttributeName(context, cversion);
 		final CNonElement propertyTypeInfo = getPropertyTypeInfo(context, cversion);
 		final CCustomizations customizations = new CCustomizations();
-		final CPluginCustomization version = createVersionCustomization(context, cversion);
+		final CPluginCustomization version = createVersionCustomization(context, cversion, classInfo.getLocator());
 		customizations.add(version);
 		//
 		// CPluginCustomization generated = CustomizationUtils
@@ -104,12 +105,12 @@ public class DefaultCreateDefaultVersionPropertyInfos implements CreateDefaultVe
 		}
 	}
 
-	public CPluginCustomization createVersionCustomization(ProcessModel context, GeneratedVersion cversion)
+	public CPluginCustomization createVersionCustomization(ProcessModel context, GeneratedVersion cversion, Locator locator)
 	{
 		final Version version = new Version();
 		version.mergeFrom(cversion, version);
 		final JAXBElement<Version> versionElement =
 			Customizations.getCustomizationsObjectFactory().createVersion(version);
-		return Customizations.createCustomization(versionElement);
+		return Customizations.createCustomization(versionElement, locator);
 	}
 }
