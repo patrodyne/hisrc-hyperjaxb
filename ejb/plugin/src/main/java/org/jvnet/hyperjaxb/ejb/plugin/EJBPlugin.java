@@ -403,7 +403,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		generateRoundtripTestClass(outline);
 		checkCustomizations(outline);
 		
-		return true;
+		return !hadError(outline.getErrorReceiver());
 	}
 	
 	// if serialization support is turned on, generate

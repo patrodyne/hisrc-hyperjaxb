@@ -2,6 +2,7 @@ package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
 import static org.jvnet.basicjaxb.util.CustomizationUtils.containsCustomization;
 import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
+import static org.jvnet.hyperjaxb.ejb.Constants.TODO_LOG_LEVEL;
 import static org.jvnet.hyperjaxb.jpa.Customizations.EMBEDDED_ID_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.ID_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.IGNORED_ELEMENT_NAME;
@@ -68,18 +69,22 @@ public class DefaultAssociationMapping implements AssociationMapping
 		}
 		else
 		{
-			context.getPlugin().warn
-			(
-				"{}, getTargetIdFieldsOutline: Class={}, Field={};"
-				+ " references the type [{}] which is not present in the XJC model"
-				+ " (it is probably a class reference due to episodic compilation)."
-				+ " Due to this reason HyperJAXB cannot generate correct identifier column mapping."
-				+ " Please customize your association manually. See also issue HJIII-51.",
-				toLocation(fieldOutline),
-				fieldOutline.parent().target.shortName,
-				propertyInfo.getName(false),
-				type.getType().fullName()
-			);
+			String level = System.getProperty(TODO_LOG_LEVEL);
+			if ( "WARN".equalsIgnoreCase(level) )
+			{
+				context.getPlugin().warn
+				(
+					"{}, getTargetIdFieldsOutline: Class={}, Field={};"
+					+ " references the type [{}] which is not present in the XJC model"
+					+ " (it is probably a class reference due to episodic compilation)."
+					+ " Due to this reason HyperJAXB cannot generate correct identifier column mapping."
+					+ " Please customize your association manually. See also issue HJIII-51.",
+					toLocation(fieldOutline),
+					fieldOutline.parent().target.shortName,
+					propertyInfo.getName(false),
+					type.getType().fullName()
+				);
+			}
 			return Collections.emptyList();
 		}
 	}
