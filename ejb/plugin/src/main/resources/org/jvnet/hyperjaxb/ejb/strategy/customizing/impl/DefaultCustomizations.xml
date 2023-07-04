@@ -1,3 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+	HyperJAXB Default Persistence XML Configuration
+
+	This XML instance is unmarshalled using this CDI producer:
+	org.jvnet.hyperjaxb.ejb.strategy.service.StrategyProducer.producePersistence()
+
+	Ref: /hisrc-hyperjaxb-ejb-schemas-customizations/src/main/resources/customizations.xsd
+-->
 <hj:persistence
 	xmlns="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
@@ -79,6 +88,12 @@
 
 	<hj:default-embedded/>
 
+	<!-- 
+		W3C XML Schema Part 2: Datatypes Second Edition
+		https://www.w3.org/TR/xmlschema-2/
+		3.2 Built-in Primitive Datatypes: Single
+	-->
+
     <!-- 3.2.1 xsd:string -->
 	<hj:default-single-property type="xsd:string">
 		<hj:basic>
@@ -96,16 +111,18 @@
 	</hj:default-single-property>	
 	
     <!-- 3.2.4 xsd:float -->
+	<!-- Note: precision/scale have no meaning for floating point numbers -->
 	<hj:default-single-property type="xsd:float">
 		<hj:basic>
-			<orm:column scale="10" precision="20"/>
+			<orm:column/>
 		</hj:basic>
 	</hj:default-single-property>
 
     <!-- 3.2.5 xsd:double -->
+	<!-- Note: precision/scale have no meaning for floating point numbers -->
 	<hj:default-single-property type="xsd:double">
 		<hj:basic>
-			<orm:column scale="10" precision="20"/>
+			<orm:column/>
 		</hj:basic>
 	</hj:default-single-property>
 	
@@ -192,6 +209,12 @@
 
     <!-- 3.2.19 xsd:NOTATION -->
     
+ 	<!-- 
+		W3C XML Schema Part 2: Datatypes Second Edition
+		https://www.w3.org/TR/xmlschema-2/
+		3.3 Built-in Derived Datatypes: Single
+	-->
+    
     <!-- 3.3.1 xsd:normalizedString -->
 
     <!-- 3.3.2 xsd:token -->
@@ -223,6 +246,7 @@
     
 
     <!-- 3.3.13 xsd:integer -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-single-property type="xsd:integer">
 		<hj:basic>
 			<orm:column scale="0" precision="20"/>
@@ -234,6 +258,7 @@
     <!-- 3.3.15 xsd:negativeInteger -->
     
     <!-- 3.3.16 xsd:long -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-single-property type="xsd:long">
 		<hj:basic>
 			<orm:column scale="0" precision="20"/>
@@ -241,6 +266,7 @@
 	</hj:default-single-property>
 
     <!-- 3.3.17 xsd:int -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-single-property type="xsd:int">
 		<hj:basic>
 			<orm:column scale="0" precision="10"/>
@@ -248,6 +274,7 @@
 	</hj:default-single-property>
 
     <!-- 3.3.18 xsd:short -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-single-property type="xsd:short">
 		<hj:basic>
 			<orm:column scale="0" precision="5"/>
@@ -255,6 +282,7 @@
 	</hj:default-single-property>
 
     <!-- 3.3.19 xsd:byte -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-single-property type="xsd:byte">
 		<hj:basic>
 			<orm:column scale="0" precision="3"/>
@@ -264,6 +292,7 @@
     <!-- 3.3.20 xsd:nonNegativeInteger -->
 
     <!-- 3.3.21 xsd:unsignedLong -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-single-property type="xsd:unsignedLong">
 		<hj:basic>
 			<orm:column scale="0" precision="20"/>
@@ -271,6 +300,7 @@
 	</hj:default-single-property>
 	
     <!-- 3.3.22 xsd:unsignedInt -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-single-property type="xsd:unsignedInt">
 		<hj:basic>
 			<orm:column scale="0" precision="10"/>
@@ -278,6 +308,7 @@
 	</hj:default-single-property>
 
     <!-- 3.3.23 xsd:unsignedShort -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-single-property type="xsd:unsignedShort">
 		<hj:basic>
 			<orm:column scale="0" precision="5"/>
@@ -285,13 +316,19 @@
 	</hj:default-single-property>
 
     <!-- 3.3.24 xsd:unsignedByte -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-single-property type="xsd:unsignedByte">
 		<hj:basic>
 			<orm:column scale="0" precision="3"/>
 		</hj:basic>
 	</hj:default-single-property>
-    <!-- ================================================================================== -->
-
+	
+	<!-- 
+		W3C XML Schema Part 2: Datatypes Second Edition
+		https://www.w3.org/TR/xmlschema-2/
+		3.2 Built-in Primitive Datatypes: Collection
+	-->
+	
     <!-- 3.2.1 xsd:string -->
 	<hj:default-collection-property type="xsd:string">
 		<hj:element-collection>
@@ -309,16 +346,18 @@
 	</hj:default-collection-property>	
 	
     <!-- 3.2.4 xsd:float -->
+	<!-- Note: precision/scale have no meaning for floating point numbers -->
 	<hj:default-collection-property type="xsd:float">
 		<hj:element-collection>
-			<orm:column scale="10" precision="20"/>
+			<orm:column/>
 		</hj:element-collection>
 	</hj:default-collection-property>
 
     <!-- 3.2.5 xsd:double -->
+	<!-- Note: precision/scale have no meaning for floating point numbers -->
 	<hj:default-collection-property type="xsd:double">
 		<hj:element-collection>
-			<orm:column scale="10" precision="20"/>
+			<orm:column/>
 		</hj:element-collection>
 	</hj:default-collection-property>
 	
@@ -404,7 +443,13 @@
     <!-- 3.2.18 xsd:QName -->
 
     <!-- 3.2.19 xsd:NOTATION -->
-    
+     
+ 	<!-- 
+		W3C XML Schema Part 2: Datatypes Second Edition
+		https://www.w3.org/TR/xmlschema-2/
+		3.3 Built-in Derived Datatypes: Collection
+	-->
+	   
     <!-- 3.3.1 xsd:normalizedString -->
 
     <!-- 3.3.2 xsd:token -->
@@ -434,8 +479,8 @@
     
     <!-- 3.3.12 xsd:ENTITIES -->
     
-
     <!-- 3.3.13 xsd:integer -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-collection-property type="xsd:integer">
 		<hj:element-collection>
 			<orm:column scale="0" precision="20"/>
@@ -447,6 +492,7 @@
     <!-- 3.3.15 xsd:negativeInteger -->
     
     <!-- 3.3.16 xsd:long -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-collection-property type="xsd:long">
 		<hj:element-collection>
 			<orm:column scale="0" precision="20"/>
@@ -454,6 +500,7 @@
 	</hj:default-collection-property>
 
     <!-- 3.3.17 xsd:int -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-collection-property type="xsd:int">
 		<hj:element-collection>
 			<orm:column scale="0" precision="10"/>
@@ -461,6 +508,7 @@
 	</hj:default-collection-property>
 
     <!-- 3.3.18 xsd:short -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-collection-property type="xsd:short">
 		<hj:element-collection>
 			<orm:column scale="0" precision="5"/>
@@ -468,6 +516,7 @@
 	</hj:default-collection-property>
 
     <!-- 3.3.19 xsd:byte -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-collection-property type="xsd:byte">
 		<hj:element-collection>
 			<orm:column scale="0" precision="3"/>
@@ -477,6 +526,7 @@
     <!-- 3.3.20 xsd:nonNegativeInteger -->
 
     <!-- 3.3.21 xsd:unsignedLong -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-collection-property type="xsd:unsignedLong">
 		<hj:element-collection>
 			<orm:column scale="0" precision="20"/>
@@ -484,6 +534,7 @@
 	</hj:default-collection-property>
 	
     <!-- 3.3.22 xsd:unsignedInt -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-collection-property type="xsd:unsignedInt">
 		<hj:element-collection>
 			<orm:column scale="0" precision="10"/>
@@ -491,6 +542,7 @@
 	</hj:default-collection-property>
 
     <!-- 3.3.23 xsd:unsignedShort -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-collection-property type="xsd:unsignedShort">
 		<hj:element-collection>
 			<orm:column scale="0" precision="5"/>
@@ -498,6 +550,7 @@
 	</hj:default-collection-property>
 
     <!-- 3.3.24 xsd:unsignedByte -->
+    <!-- Note: derived from xsd:decimal by fixing fractionDigits to be 0. -->
 	<hj:default-collection-property type="xsd:unsignedByte">
 		<hj:element-collection>
 			<orm:column scale="0" precision="3"/>

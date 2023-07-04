@@ -8,10 +8,9 @@ import ee.jakarta.xml.ns.persistence.orm.AttributeOverride;
 import ee.jakarta.xml.ns.persistence.orm.Column;
 import ee.jakarta.xml.ns.persistence.orm.Lob;
 
-public interface AttributeMapping {
-
-	public Column createColumn(Mapping context, FieldOutline fieldOutline,
-			Column column);
+public interface AttributeMapping
+{
+	public Column createColumn(Mapping context, FieldOutline fieldOutline, Column column);
 
 	public boolean isTemporal(Mapping context, FieldOutline fieldOutline);
 
@@ -25,8 +24,6 @@ public interface AttributeMapping {
 
 	public String createEnumerated(Mapping context, FieldOutline fieldOutline);
 
-	public void createAttributeOverride(Mapping context,
-			FieldOutline fieldOutline,
-			final List<AttributeOverride> attributeOverrides);
-
+	public void createAttributeOverride(Mapping context, FieldOutline fieldOutline,
+		final List<AttributeOverride> attributeOverrides);
 }
