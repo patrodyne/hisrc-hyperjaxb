@@ -18,7 +18,9 @@ import jakarta.persistence.EntityManagerFactory;
 
 public class JPATest
 {
-	private static Logger log = LoggerFactory.getLogger(JPATest.class);
+	private static final Logger log = LoggerFactory.getLogger(JPATest.class);
+	private static final String PUN = "generated";
+	
 	private ObjectFactory objectFactory;
 	private EntityManagerFactory entityManagerFactory;
 
@@ -28,7 +30,7 @@ public class JPATest
 	{
 		objectFactory = new ObjectFactory();
 		Map<String, String> properties = createEntityManagerFactoryProperties(getClass());
-		entityManagerFactory = createEntityManagerFactory("generated", properties);
+		entityManagerFactory = createEntityManagerFactory(PUN, properties);
 	}
 
 	@Test
@@ -37,15 +39,21 @@ public class JPATest
 		final PurchaseOrderType alpha = objectFactory.createPurchaseOrderType();
 		alpha.setShipTo(objectFactory.createUSAddress());
 		alpha.getShipTo().setCity("Sacramento");
-		final EntityManager saveManager = entityManagerFactory.createEntityManager();
-		saveManager.getTransaction().begin();
-		saveManager.persist(alpha);
-		saveManager.getTransaction().commit();
-		saveManager.close();
+		
+		try ( final EntityManager saveManager = entityManagerFactory.createEntityManager() )
+		{
+			saveManager.getTransaction().begin();
+			saveManager.persist(alpha);
+			saveManager.getTransaction().commit();
+		}
+		
+		PurchaseOrderType beta = null;
 		final Long id = alpha.getHjid();
-		final EntityManager loadManager = entityManagerFactory.createEntityManager();
-		final PurchaseOrderType beta = loadManager.find(PurchaseOrderType.class, id);
-		loadManager.close();
+		try ( final EntityManager loadManager = entityManagerFactory.createEntityManager() )
+		{
+			beta = loadManager.find(PurchaseOrderType.class, id);
+		}
+		
 		// Check that we're still shipping to Sacramento
 		assertEquals("Sacramento", beta.getShipTo().getCity());
 		log.info("JAXB shipTo equals JPA shipTo.");

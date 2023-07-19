@@ -1,5 +1,24 @@
-/err
-/std
+# git config --global core.excludesfile ~/.gitignore
+# see .gitconfig
+####################################################
+
+# Eclipse #
+###################
+.classpath
+.factorypath
+.metadata
+.project
+.settings
 target
-/.idea/
-*.iml
+
+# Logs and databases #
+######################
+*.log
+
+# Temporaries #
+######################
+tmp
+*.tmp
+*.out
+*.~
+*~

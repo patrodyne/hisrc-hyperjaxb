@@ -224,4 +224,9 @@ public class Customizations
 	{
 		return containsCustomization(propertyInfo, GENERATED_ELEMENT_NAME);
 	}
+
+	public static boolean isVersion(CPropertyInfo propertyInfo)
+	{
+		return containsCustomization(propertyInfo, VERSION_ELEMENT_NAME);
+	}
 }

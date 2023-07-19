@@ -32,16 +32,6 @@
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>eclipselink</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>org.eclipse.persistence.extension</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<!-- Roundtrip -->
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>

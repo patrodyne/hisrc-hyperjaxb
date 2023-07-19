@@ -1,6 +1,26 @@
 package org.jvnet.hyperjaxb.ejb.strategy.model.base;
 
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.BASE64_BYTE_ARRAY;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.BIG_DECIMAL;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.BIG_INTEGER;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.BOOLEAN;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.BYTE;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.CALENDAR;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.DOUBLE;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.DURATION;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.FLOAT;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.HEXBIN_BYTE_ARRAY;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.ID;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.INT;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.LONG;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.NORMALIZED_STRING;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.QNAME;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.SHORT;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.STRING;
+import static com.sun.tools.xjc.model.CBuiltinLeafInfo.TOKEN;
+import static com.sun.tools.xjc.model.TypeUseFactory.adapt;
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static org.jvnet.hyperjaxb.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -13,7 +33,6 @@ import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.model.AdaptTypeUse;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb.xjc.model.CExternalLeafInfo;
-import org.jvnet.hyperjaxb.xml.XMLConstants;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.DurationAsString;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.QNameAsString;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsDate;
@@ -26,10 +45,8 @@ import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsGY
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsTime;
 import org.jvnet.hyperjaxb.xsom.TypeUtils;
 
-import com.sun.tools.xjc.model.CBuiltinLeafInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.TypeUse;
-import com.sun.tools.xjc.model.TypeUseFactory;
 import com.sun.xml.xsom.XSComponent;
 
 import jakarta.annotation.Priority;
@@ -38,7 +55,7 @@ import jakarta.enterprise.inject.Alternative;
 
 /**
  * Adapt the TypeUse for a schema component by processing the Model context and
- * the property info. 
+ * the property info.
  */
 @ApplicationScoped
 @Alternative
@@ -46,17 +63,79 @@ import jakarta.enterprise.inject.Alternative;
 @ModelBase
 public class AdaptBuiltinTypeUse implements AdaptTypeUse
 {
+	private static final QName QNAME_HEX_BINARY        = new QName(W3C_XML_SCHEMA_NS_URI, "hexBinary");
+	private static final QName QNAME_ID                = new QName(W3C_XML_SCHEMA_NS_URI, "ID");
+	private static final QName QNAME_NORMALIZED_STRING = new QName(W3C_XML_SCHEMA_NS_URI, "normalizedString");
+	private static final QName QNAME_TOKEN             = new QName(W3C_XML_SCHEMA_NS_URI, "token");
+	private static final QName QNAME_DATE_TIME         = new QName(W3C_XML_SCHEMA_NS_URI, "dateTime");
+	private static final QName QNAME_ANY_SIMPLE_TYPE   = new QName(W3C_XML_SCHEMA_NS_URI, "anySimpleType");
+	private static final QName QNAME_DATE              = new QName(W3C_XML_SCHEMA_NS_URI, "date");
+	private static final QName QNAME_TIME              = new QName(W3C_XML_SCHEMA_NS_URI, "time");
+	private static final QName QNAME_G_YEAR_MONTH      = new QName(W3C_XML_SCHEMA_NS_URI, "gYearMonth");
+	private static final QName QNAME_G_YEAR            = new QName(W3C_XML_SCHEMA_NS_URI, "gYear");
+	private static final QName QNAME_G_MONTH_DAY       = new QName(W3C_XML_SCHEMA_NS_URI, "gMonthDay");
+	private static final QName QNAME_G_DAY             = new QName(W3C_XML_SCHEMA_NS_URI, "gDay");
+	private static final QName QNAME_G_MONTH           = new QName(W3C_XML_SCHEMA_NS_URI, "gMonth");
+
+	private static final CExternalLeafInfo CELI_HEX_BINARY        = new CExternalLeafInfo(byte[].class, QNAME_HEX_BINARY, null);
+	private static final CExternalLeafInfo CELI_ID                = new CExternalLeafInfo(String.class, QNAME_ID, null);
+	private static final CExternalLeafInfo CELI_NORMALIZED_STRING = new CExternalLeafInfo(String.class, QNAME_NORMALIZED_STRING, null);
+	private static final CExternalLeafInfo CELI_TOKEN             = new CExternalLeafInfo(String.class, QNAME_TOKEN, null);
+	private static final CExternalLeafInfo CELI_DATETIME          = new CExternalLeafInfo(Date.class, "dateTime", XMLGregorianCalendarAsDateTime.class);
+	private static final CExternalLeafInfo CELI_DATE              = new CExternalLeafInfo(Date.class, "date", XMLGregorianCalendarAsDate.class);
+	private static final CExternalLeafInfo CELI_TIME              = new CExternalLeafInfo(Date.class, "time", XMLGregorianCalendarAsTime.class);
+	private static final CExternalLeafInfo CELI_G_YEAR_MONTH      = new CExternalLeafInfo(Date.class, "gYearMonth", XMLGregorianCalendarAsGYearMonth.class);
+	private static final CExternalLeafInfo CELI_G_YEAR            = new CExternalLeafInfo(Date.class, "gYear", XMLGregorianCalendarAsGYear.class);
+	private static final CExternalLeafInfo CELI_G_MONTH_DAY       = new CExternalLeafInfo(Date.class, "gMonthDay", XMLGregorianCalendarAsGMonthDay.class);
+	private static final CExternalLeafInfo CELI_G_DAY             = new CExternalLeafInfo(Date.class, "gDay", XMLGregorianCalendarAsGDay.class);
+	private static final CExternalLeafInfo CELI_G_MONTH           = new CExternalLeafInfo(Date.class, "gMonth", XMLGregorianCalendarAsGMonth.class);
+
+	/**
+	 * The map of PropertyType and TypeUse bindings.
+	 */
+	private Map<PropertyType, TypeUse> adapters = new HashMap<PropertyType, TypeUse>();
+	{
+		adapters.put(new PropertyType(BASE64_BYTE_ARRAY), BASE64_BYTE_ARRAY);
+		// adapters.put(new PropertyType(HEXBIN_BYTE_ARRAY), HEXBIN_BYTE_ARRAY);
+		adapters.put(new PropertyType(HEXBIN_BYTE_ARRAY), CELI_HEX_BINARY);
+		adapters.put(new PropertyType(BIG_DECIMAL), BIG_DECIMAL);
+		adapters.put(new PropertyType(BIG_INTEGER), BIG_INTEGER);
+		adapters.put(new PropertyType(BOOLEAN), BOOLEAN);
+		adapters.put(new PropertyType(BYTE), BYTE);
+		adapters.put(new PropertyType(DOUBLE), DOUBLE);
+		adapters.put(new PropertyType(FLOAT), FLOAT);
+		adapters.put(new PropertyType(INT), INT);
+		adapters.put(new PropertyType(LONG), LONG);
+		adapters.put(new PropertyType(SHORT), SHORT);
+		adapters.put(new PropertyType(STRING), STRING);
+		adapters.put(new PropertyType(ID), CELI_ID);
+		adapters.put(new PropertyType(NORMALIZED_STRING), CELI_NORMALIZED_STRING);
+		adapters.put(new PropertyType(TOKEN), CELI_TOKEN);
+		adapters.put(new PropertyType(QNAME), adapt(STRING, QNameAsString.class, false));
+		adapters.put(new PropertyType(DURATION), adapt(STRING, DurationAsString.class, false));
+		adapters.put(new PropertyType(CALENDAR), CELI_DATETIME);
+		adapters.put(new PropertyType(CALENDAR, QNAME_DATE_TIME), CELI_DATETIME);
+		adapters.put(new PropertyType(CALENDAR, QNAME_ANY_SIMPLE_TYPE), CALENDAR);
+		adapters.put(new PropertyType(CALENDAR, QNAME_DATE), CELI_DATE);
+		adapters.put(new PropertyType(CALENDAR, QNAME_TIME), CELI_TIME);
+		adapters.put(new PropertyType(CALENDAR, QNAME_G_YEAR_MONTH), CELI_G_YEAR_MONTH);
+		adapters.put(new PropertyType(CALENDAR, QNAME_G_YEAR), CELI_G_YEAR);
+		adapters.put(new PropertyType(CALENDAR, QNAME_G_MONTH_DAY), CELI_G_MONTH_DAY);
+		adapters.put(new PropertyType(CALENDAR, QNAME_G_DAY), CELI_G_DAY);
+		adapters.put(new PropertyType(CALENDAR, QNAME_G_MONTH), CELI_G_MONTH);
+	}
+
 	private EJBPlugin plugin;
 	public EJBPlugin getPlugin() { return plugin; }
 	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
 
 	/**
-	 * Process context and propertyInfo to adapt the TypeUse for a schema component.
-	 * This method gets the current TypeUse from the context and the XSComponent
-	 * from the propertyInfo. If there is an XSComponent instance, then a local
-	 * adapter map is scanned for a matching PropertyType and the first adapted
-	 * TypeUse is returned; otherwise, the current TypeUse from the context is
-	 * returned.
+	 * Process context and propertyInfo to adapt the TypeUse for a schema
+	 * component. This method gets the current TypeUse from the context and the
+	 * XSComponent from the propertyInfo. If there is an XSComponent instance,
+	 * then a local adapter map is scanned for a matching PropertyType and the
+	 * first adapted TypeUse is returned; otherwise, the current TypeUse from
+	 * the context is returned.
 	 */
 	@Override
 	public TypeUse process(ProcessModel context, CPropertyInfo propertyInfo)
@@ -88,18 +167,13 @@ public class AdaptBuiltinTypeUse implements AdaptTypeUse
 //	{
 //		final CTypeInfo type = propertyInfo.ref().iterator().next();
 //		if (propertyInfo instanceof CAttributePropertyInfo || propertyInfo instanceof CValuePropertyInfo)
-//		{
 //			return TypeUseUtils.getTypeUse(propertyInfo);
-//		}
 //		else
 //		{
 //			if (type instanceof CBuiltinLeafInfo)
 //			{
 //				if (propertyInfo.getAdapter() != null)
-//				{
-//					return TypeUseFactory.adapt((CBuiltinLeafInfo) type,
-//					propertyInfo.getAdapter());
-//				}
+//					return TypeUseFactory.adapt((CBuiltinLeafInfo) type, propertyInfo.getAdapter());
 //				else
 //					return (CBuiltinLeafInfo) type;
 //			}
@@ -112,65 +186,7 @@ public class AdaptBuiltinTypeUse implements AdaptTypeUse
 //				throw new AssertionError("Unexpected type.");
 //		}
 //	}
-
-	/**
-	 * The map of PropertyType and TypeUse bindings.
-	 */
-	private Map<PropertyType, TypeUse> adapters = new HashMap<PropertyType, TypeUse>();
-	{
-		adapters.put(new PropertyType(CBuiltinLeafInfo.BASE64_BYTE_ARRAY), CBuiltinLeafInfo.BASE64_BYTE_ARRAY);
-		// adapters.put(new PropertyType(CBuiltinLeafInfo.HEXBIN_BYTE_ARRAY),
-		// CBuiltinLeafInfo.HEXBIN_BYTE_ARRAY);
-		adapters.put(new PropertyType(CBuiltinLeafInfo.HEXBIN_BYTE_ARRAY),
-			new CExternalLeafInfo(byte[].class, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "hexBinary"), null));
-		adapters.put(new PropertyType(CBuiltinLeafInfo.BIG_DECIMAL), CBuiltinLeafInfo.BIG_DECIMAL);
-		adapters.put(new PropertyType(CBuiltinLeafInfo.BIG_INTEGER), CBuiltinLeafInfo.BIG_INTEGER);
-		adapters.put(new PropertyType(CBuiltinLeafInfo.BOOLEAN), CBuiltinLeafInfo.BOOLEAN);
-		adapters.put(new PropertyType(CBuiltinLeafInfo.BYTE), CBuiltinLeafInfo.BYTE);
-		adapters.put(new PropertyType(CBuiltinLeafInfo.DOUBLE), CBuiltinLeafInfo.DOUBLE);
-		adapters.put(new PropertyType(CBuiltinLeafInfo.FLOAT), CBuiltinLeafInfo.FLOAT);
-		adapters.put(new PropertyType(CBuiltinLeafInfo.INT), CBuiltinLeafInfo.INT);
-		adapters.put(new PropertyType(CBuiltinLeafInfo.LONG), CBuiltinLeafInfo.LONG);
-		adapters.put(new PropertyType(CBuiltinLeafInfo.SHORT), CBuiltinLeafInfo.SHORT);
-		adapters.put(new PropertyType(CBuiltinLeafInfo.STRING), CBuiltinLeafInfo.STRING);
-		adapters.put(new PropertyType(CBuiltinLeafInfo.ID),
-			new CExternalLeafInfo(String.class, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "ID"), null));
-		adapters.put(new PropertyType(CBuiltinLeafInfo.NORMALIZED_STRING), new CExternalLeafInfo(String.class,
-			new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "normalizedString"), null));
-		adapters.put(new PropertyType(CBuiltinLeafInfo.TOKEN),
-			new CExternalLeafInfo(String.class, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "token"), null));
-		adapters.put(new PropertyType(CBuiltinLeafInfo.QNAME),
-			TypeUseFactory.adapt(CBuiltinLeafInfo.STRING, QNameAsString.class, false));
-		adapters.put(new PropertyType(CBuiltinLeafInfo.DURATION),
-			TypeUseFactory.adapt(CBuiltinLeafInfo.STRING, DurationAsString.class, false));
-		adapters.put(new PropertyType(CBuiltinLeafInfo.CALENDAR),
-			new CExternalLeafInfo(Date.class, "dateTime", XMLGregorianCalendarAsDateTime.class));
-		adapters.put(
-			new PropertyType(CBuiltinLeafInfo.CALENDAR, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "dateTime")),
-			new CExternalLeafInfo(Date.class, "dateTime", XMLGregorianCalendarAsDateTime.class));
-		adapters.put(
-			new PropertyType(CBuiltinLeafInfo.CALENDAR, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "anySimpleType")),
-			CBuiltinLeafInfo.CALENDAR);
-		adapters.put(new PropertyType(CBuiltinLeafInfo.CALENDAR, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "date")),
-			new CExternalLeafInfo(Date.class, "date", XMLGregorianCalendarAsDate.class));
-		adapters.put(new PropertyType(CBuiltinLeafInfo.CALENDAR, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "time")),
-			new CExternalLeafInfo(Date.class, "time", XMLGregorianCalendarAsTime.class));
-		adapters.put(
-			new PropertyType(CBuiltinLeafInfo.CALENDAR, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "gYearMonth")),
-			new CExternalLeafInfo(Date.class, "gYearMonth", XMLGregorianCalendarAsGYearMonth.class));
-		adapters.put(
-			new PropertyType(CBuiltinLeafInfo.CALENDAR, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "gYear")),
-			new CExternalLeafInfo(Date.class, "gYear", XMLGregorianCalendarAsGYear.class));
-		adapters.put(
-			new PropertyType(CBuiltinLeafInfo.CALENDAR, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "gMonthDay")),
-			new CExternalLeafInfo(Date.class, "gMonthDay", XMLGregorianCalendarAsGMonthDay.class));
-		adapters.put(new PropertyType(CBuiltinLeafInfo.CALENDAR, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "gDay")),
-			new CExternalLeafInfo(Date.class, "gDay", XMLGregorianCalendarAsGDay.class));
-		adapters.put(
-			new PropertyType(CBuiltinLeafInfo.CALENDAR, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "gMonth")),
-			new CExternalLeafInfo(Date.class, "gMonth", XMLGregorianCalendarAsGMonth.class));
-	}
-
+	
 	/**
 	 * A pojo to couple a QName with its TypeUse.
 	 * 
@@ -184,7 +200,9 @@ public class AdaptBuiltinTypeUse implements AdaptTypeUse
 
 		/**
 		 * Construct with a TypeUse only.
-		 * @param typeUse Information about how another type is referenced in the XJC model.
+		 * 
+		 * @param typeUse Information about how another type is referenced in
+		 *                the XJC model.
 		 */
 		public PropertyType(TypeUse typeUse)
 		{
@@ -195,8 +213,11 @@ public class AdaptBuiltinTypeUse implements AdaptTypeUse
 
 		/**
 		 * Construct with a TypeUse and QName
-		 * @param typeUse Information about how another type is referenced in the XJC model.
-		 * @param typeName Represents a qualified name as defined in the XML specifications.
+		 * 
+		 * @param typeUse Information about how another type is referenced in
+		 *                the XJC model.
+		 * @param typeName Represents a qualified name as defined in the XML
+		 *                 specifications.
 		 */
 		public PropertyType(TypeUse typeUse, QName typeName)
 		{

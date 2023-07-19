@@ -136,22 +136,11 @@
 			-->
 			<version>3.5.3</version>
 		</dependency>
-		<!-- Hibernate -->
+		<!-- JPA -->
 		<dependency>
 			<groupId>jakarta.persistence</groupId>
 			<artifactId>jakarta.persistence-api</artifactId>
 			<version>${jpa-api.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core-jakarta</artifactId>
-			<version>${hibernate-series.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.jboss.logging</groupId>
-					<artifactId>jboss-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<!-- HiSrc HyperJAXB -->
 		<dependency>

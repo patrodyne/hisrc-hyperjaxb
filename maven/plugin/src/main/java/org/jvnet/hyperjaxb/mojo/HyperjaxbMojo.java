@@ -27,6 +27,17 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	public static final String HYPERJAXB_MOJO_PREFIX = "org.jvnet.hyperjaxb.mojo.xjc";
 
 	/**
+	 * Option to enable/disable correct generation of Boolean getters/setters for
+	 * Bean Introspection.
+	 */
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".enableIntrospection")
+	private boolean enableIntrospection = true;
+	@Override
+	public boolean getEnableIntrospection() { return enableIntrospection; }
+	@Override
+	public void setEnableIntrospection(boolean enableIntrospection) { this.enableIntrospection = enableIntrospection; }
+	
+	/**
 	 * Target directory for the generated mappings. If left empty, mappings are
 	 * generated together with sources.
 	 */
@@ -303,6 +314,9 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	{
 		final List<String> arguments = new ArrayList<String>();
 
+		if (getEnableIntrospection())
+			add(arguments,"-enableIntrospection");
+		
 		if (getPreArgs() != null)
 			addAll(arguments,Arrays.asList(getPreArgs()));
 		

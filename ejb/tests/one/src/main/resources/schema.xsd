@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xs:schema jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:anx="http://jvnet.org/basicjaxb/xjc/annox"
+	xmlns:bas="http://jvnet.org/basicjaxb/xjc"
 	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
-	jaxb:extensionBindingPrefixes="xjc hj orm"
-	jaxb:version="3.0">
+	jaxb:extensionBindingPrefixes="xjc hj orm anx bas"
+>
+
 	<xs:annotation>
 		<xs:appinfo>
 			<jaxb:schemaBindings>
@@ -678,9 +680,11 @@
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="version" type="xs:dateTime">
+			<!-- TODO: type="xs:dateTime" -->
+			<xs:element name="version" type="xs:long" nillable="true" minOccurs="0">
 				<xs:annotation>
 					<xs:appinfo>
+						<bas:ignored/>
 						<hj:version>
 							<orm:column name="C_I_D_VERSION"/>
 						</hj:version>
@@ -702,6 +706,7 @@
 			<xs:element name="version" type="xs:long" nillable="true" minOccurs="0">
 				<xs:annotation>
 					<xs:appinfo>
+						<bas:ignored/>
 						<hj:version/>
 					</xs:appinfo>
 				</xs:annotation>

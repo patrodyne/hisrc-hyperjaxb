@@ -1,27 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	xmlns:hj="http://jvnet.org/hyperjaxb/jpa" xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-	xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox"
-	jaxb:extensionBindingPrefixes="hj orm annox" jaxb:version="3.0">
-	<xs:annotation>
-		<xs:appinfo>
-			<jaxb:globalBindings localScoping="toplevel">
-				<jaxb:serializable uid="20211201" />
-			</jaxb:globalBindings>
-			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.embeddablejpa"/>
-			</jaxb:schemaBindings>
-		</xs:appinfo>
-	</xs:annotation>
-	<!-- ... -->
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	xmlns:anx="http://jvnet.org/basicjaxb/xjc/annox"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	jaxb:extensionBindingPrefixes="hj orm anx"
+	jaxb:version="3.0"
+>
+
 	<xs:element name="a" type="aType"/>
 	<xs:complexType name="aType">
 		<xs:sequence>
 			<xs:element name="b0" type="bType" minOccurs="0"/>
 			<xs:element name="b1" type="bType" minOccurs="0"/>
-			<xs:element name="e" type="eType" minOccurs="0"/>
+			<xs:element name="e" type="eType" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:embedded>
+							<orm:association-override name="ems">
+								<orm:join-table name="ATYPE_MTYPE">
+									<orm:join-column name="AType_HJID"/>
+									<orm:inverse-join-column name="ems_HJID"/>
+								</orm:join-table>
+							</orm:association-override>
+							<!-- 
+							<orm:association-override name="g.hms">
+								<orm:join-table name="ATYPE_MTYPE">
+									<orm:join-column name="AType_HJID"/>
+									<orm:inverse-join-column name="hms_HJID"/>
+								</orm:join-table>
+							</orm:association-override>
+							 -->
+						</hj:embedded>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+
 	<xs:complexType name="bType">
 		<xs:annotation>
 			<xs:appinfo>
@@ -39,6 +56,7 @@
 			<xs:element name="d" type="xs:int" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+
 	<xs:complexType name="eType">
 		<xs:annotation>
 			<xs:appinfo>
@@ -48,9 +66,16 @@
 		<xs:sequence>
 			<xs:element name="f" type="xs:string" minOccurs="0"/>
 			<xs:element name="g" type="hType" minOccurs="0"/>
-			<xs:element name="ems" type="mType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ems" type="mType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<anx:removeAnnotation target="getter" class="jakarta.persistence.JoinColumn"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+
 	<xs:complexType name="hType">
 		<xs:annotation>
 			<xs:appinfo>
@@ -60,9 +85,18 @@
 		<xs:sequence>
 			<xs:element name="i" type="xs:string" minOccurs="0"/>
 			<xs:element name="j" type="kType" minOccurs="0"/>
-			<xs:element name="hms" type="mType" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- 
+			<xs:element name="hms" type="mType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<anx:removeAnnotation target="getter" class="jakarta.persistence.JoinColumn"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			 -->
 		</xs:sequence>
 	</xs:complexType>
+
 	<xs:complexType name="kType">
 		<xs:annotation>
 			<xs:appinfo>
@@ -73,11 +107,13 @@
 			<xs:element name="l" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+
 	<xs:complexType name="mType">
 		<xs:sequence>
 			<xs:element name="n" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+
 	<xs:element name="employees">
 		<xs:complexType>
 			<xs:sequence>
@@ -85,6 +121,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+
 	<xs:complexType name="EmployeeType">
 		<xs:sequence>
 			<xs:element name="employeeId" type="xs:string" nillable="false"/>
@@ -94,7 +131,6 @@
 			<xs:element name="primaryPhone" nillable="true" minOccurs="0">
 				<xs:annotation>
 					<xs:appinfo>
-						
 						<hj:embedded>
 							<orm:attribute-override name="phoneNumber">
 								<orm:column name="PRIMARY_PHONE_NO"/>
@@ -132,6 +168,7 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+
 	<xs:complexType name="embeddableIdType">
 		<xs:annotation>
 			<xs:appinfo>
@@ -209,6 +246,5 @@
 			<xs:element name="country" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>   
-
 	
 </xs:schema>

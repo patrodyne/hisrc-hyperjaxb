@@ -35,11 +35,6 @@
 		<!-- Hibernate Dependencies -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core-jakarta</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen-jakarta</artifactId>
 		</dependency>
 		<!-- Roundtrip -->

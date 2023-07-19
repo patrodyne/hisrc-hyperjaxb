@@ -27,6 +27,10 @@ import jakarta.xml.bind.Unmarshaller;
 public class JAXBAndJPATest
 {
 	private static Logger log = LoggerFactory.getLogger(JAXBAndJPATest.class);
+	private static final String PUN = "generated";
+	
+	private static final String SAMPLE_XML = "src/test/samples/po.xml";
+	
 	private ObjectFactory objectFactory;
 	private EntityManagerFactory entityManagerFactory;
 	private JAXBContext context;
@@ -37,8 +41,8 @@ public class JAXBAndJPATest
 	{
 		objectFactory = new ObjectFactory();
 		Map<String, String> properties = createEntityManagerFactoryProperties(getClass());
-		entityManagerFactory = createEntityManagerFactory("generated", properties);
-		context = JAXBContext.newInstance("generated");
+		entityManagerFactory = createEntityManagerFactory(PUN, properties);
+		context = JAXBContext.newInstance(ObjectFactory.class);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -47,23 +51,28 @@ public class JAXBAndJPATest
 		throws JAXBException
 	{
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
-		final Object object = unmarshaller.unmarshal(new File("src/test/samples/po.xml"));
+		final Object object = unmarshaller.unmarshal(new File(SAMPLE_XML));
+		
 		final PurchaseOrderType alpha = ((JAXBElement<PurchaseOrderType>) object).getValue();
-		final EntityManager saveManager = entityManagerFactory.createEntityManager();
-		saveManager.getTransaction().begin();
-		saveManager.persist(alpha);
-		saveManager.getTransaction().commit();
-		saveManager.close();
+		try ( final EntityManager saveManager = entityManagerFactory.createEntityManager() )
+		{
+			saveManager.getTransaction().begin();
+			saveManager.persist(alpha);
+			saveManager.getTransaction().commit();
+		}
+		
 		final Long id = alpha.getHjid();
-		final EntityManager loadManager = entityManagerFactory.createEntityManager();
-		final PurchaseOrderType beta = loadManager.find(PurchaseOrderType.class, id);
-		assertEquals(alpha, beta, "Objects are not equal.");
-		log.info("JAXB object equals JPA object.");
-		final Marshaller marshaller = context.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-		Writer sw = new StringWriter();
-		marshaller.marshal(objectFactory.createPurchaseOrder(beta), sw);
-		log.debug("PurchaseOrder:\n" + sw);
-		loadManager.close();
+		try ( final EntityManager loadManager = entityManagerFactory.createEntityManager() )
+		{
+			final PurchaseOrderType beta = loadManager.find(PurchaseOrderType.class, id);
+			assertEquals(alpha, beta, "Objects are not equal.");
+			log.info("JAXB object equals JPA object.");
+			
+			final Marshaller marshaller = context.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			Writer sw = new StringWriter();
+			marshaller.marshal(objectFactory.createPurchaseOrder(beta), sw);
+			log.debug("PurchaseOrder:\n" + sw);
+		}
 	}
 }

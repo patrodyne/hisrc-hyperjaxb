@@ -1,13 +1,34 @@
 package org.jvnet.hyperjaxb.ejb.test.tests;
 
+import static org.apache.commons.lang3.builder.ToStringStyle.SIMPLE_STYLE;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
+
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.jvnet.basicjaxb.lang.Equals;
+import org.jvnet.basicjaxb.lang.EqualsStrategy;
+import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
+import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
+import org.jvnet.basicjaxb.locator.ObjectLocator;
+import org.jvnet.basicjaxb.locator.RootObjectLocator;
+import org.jvnet.hyperjaxb.item.Item;
+import org.jvnet.hyperjaxb.item.ItemUtils;
+import org.jvnet.hyperjaxb.xml.bind.JAXBContextUtils;
+import org.jvnet.hyperjaxb.xml.bind.JAXBElementUtils;
+import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsDateTime;
+import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XmlAdapterUtils;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,20 +50,6 @@ import jakarta.xml.bind.annotation.XmlElementRef;
 import jakarta.xml.bind.annotation.XmlSeeAlso;
 import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.namespace.QName;
-
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.jvnet.hyperjaxb.item.Item;
-import org.jvnet.hyperjaxb.item.ItemUtils;
-import org.jvnet.hyperjaxb.xml.bind.JAXBContextUtils;
-import org.jvnet.hyperjaxb.xml.bind.JAXBElementUtils;
-import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsDateTime;
-import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XmlAdapterUtils;
-import org.jvnet.basicjaxb.lang.Equals;
-import org.jvnet.basicjaxb.lang.EqualsStrategy;
-import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
-import org.jvnet.basicjaxb.locator.ObjectLocator;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "A", propOrder = { "id", "b", "b1", "b2", "d", "e", "eNillable", "f", "fNillable", "g", "h" })
@@ -59,14 +66,14 @@ public class A implements Equals
 	private boolean isIdSet() { return (id != null); }
 
 	private B b;
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	public B getB() { return b; }
 	public void setB(B b) { this.b = b; }
 	@Transient
 	private boolean isBSet() { return (b != null); }
 
 	private List<B> b1 = new LinkedList<B>();
-	@OneToMany(cascade = { CascadeType.ALL })
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@JoinTable(name = "A_B1")
 	public List<B> getB1() { return b1; }
 	public void setB1(List<B> b1) { this.b1 = b1; }
@@ -74,7 +81,7 @@ public class A implements Equals
 	private boolean isB1Set() { return (b1 != null); }
 
 	private List<B> b2 = new LinkedList<B>();
-	@OneToMany(cascade = { CascadeType.ALL })
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@JoinTable(name = "A_B2")
 	public List<B> getB2() { return b2; }
 	public void setB2(List<B> b2) { this.b2 = b2; }
@@ -104,7 +111,7 @@ public class A implements Equals
 
 	@XmlTransient
 	private List<EItem> eItems;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public List<EItem> getEItems()
 	{
 		if (eItems == null)
@@ -142,7 +149,7 @@ public class A implements Equals
 
 	@XmlTransient
 	private List<ENillableItem> eNillableItems;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public List<ENillableItem> getENillableItems()
 	{
 		if (eNillableItems == null)
@@ -179,7 +186,7 @@ public class A implements Equals
 
 	@XmlTransient
 	private List<FItem> fItems;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public List<FItem> getFItems()
 	{
 		if (fItems == null)
@@ -217,7 +224,7 @@ public class A implements Equals
 
 	@XmlTransient
 	private List<FNillableItem> fNillableItems;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public List<FNillableItem> getFNillableItems()
 	{
 		if (fNillableItems == null)
@@ -240,7 +247,9 @@ public class A implements Equals
 	@Override
 	public boolean equals(Object obj)
 	{
-		return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
+		RootObjectLocator thisLocator = new DefaultRootObjectLocator(this);
+		RootObjectLocator thatLocator = new DefaultRootObjectLocator(obj);
+		return equals(thisLocator, thatLocator, obj, JAXBEqualsStrategy.getInstance());
 	}
 
 	@Override
@@ -269,6 +278,12 @@ public class A implements Equals
 	public int hashCode()
 	{
 		return HashCodeBuilder.reflectionHashCode(this);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return ToStringBuilder.reflectionToString(this, SIMPLE_STYLE);
 	}
 
 	@XmlAccessorType(XmlAccessType.FIELD)
@@ -416,7 +431,9 @@ public class A implements Equals
 		@Override
 		public boolean equals(Object obj)
 		{
-			return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
+			RootObjectLocator thisLocator = new DefaultRootObjectLocator(this);
+			RootObjectLocator thatLocator = new DefaultRootObjectLocator(obj);
+			return equals(thisLocator, thatLocator, obj, JAXBEqualsStrategy.getInstance());
 		}
 
 		@Override
@@ -431,6 +448,18 @@ public class A implements Equals
 			
 			final G that = (G) object;
 			return strategy.equals(thisLocator, thatLocator, this.getH(), that.getH(), this.isHSet(), that.isHSet());
+		}
+
+		@Override
+		public int hashCode()
+		{
+			return HashCodeBuilder.reflectionHashCode(this);
+		}
+		
+		@Override
+		public String toString()
+		{
+			return ToStringBuilder.reflectionToString(this, SIMPLE_STYLE);
 		}
 	}
 
@@ -450,7 +479,9 @@ public class A implements Equals
 		@Override
 		public boolean equals(Object obj)
 		{
-			return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
+			RootObjectLocator thisLocator = new DefaultRootObjectLocator(this);
+			RootObjectLocator thatLocator = new DefaultRootObjectLocator(obj);
+			return equals(thisLocator, thatLocator, obj, JAXBEqualsStrategy.getInstance());
 		}
 
 		@Override
@@ -465,6 +496,18 @@ public class A implements Equals
 			final G1 that = (G1) object;
 			return super.equals(thisLocator, thatLocator, object, strategy)
 				&& strategy.equals(thisLocator, thatLocator, this.getH1(), that.getH1(), this.isH1Set(), that.isH1Set());
+		}
+
+		@Override
+		public int hashCode()
+		{
+			return HashCodeBuilder.reflectionHashCode(this);
+		}
+		
+		@Override
+		public String toString()
+		{
+			return ToStringBuilder.reflectionToString(this, SIMPLE_STYLE);
 		}
 	}
 
@@ -484,7 +527,9 @@ public class A implements Equals
 		@Override
 		public boolean equals(Object obj)
 		{
-			return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
+			RootObjectLocator thisLocator = new DefaultRootObjectLocator(this);
+			RootObjectLocator thatLocator = new DefaultRootObjectLocator(obj);
+			return equals(thisLocator, thatLocator, obj, JAXBEqualsStrategy.getInstance());
 		}
 
 		@Override
@@ -500,6 +545,18 @@ public class A implements Equals
 			final G2 that = (G2) object;
 			return super.equals(thisLocator, thatLocator, object, strategy)
 				&& strategy.equals(thisLocator, thatLocator, this.getH2(), that.getH2(), this.isH2Set(), that.isH2Set());
+		}
+
+		@Override
+		public int hashCode()
+		{
+			return HashCodeBuilder.reflectionHashCode(this);
+		}
+		
+		@Override
+		public String toString()
+		{
+			return ToStringBuilder.reflectionToString(this, SIMPLE_STYLE);
 		}
 	}
 
@@ -522,7 +579,7 @@ public class A implements Equals
 		public void setItemName(String name) { this.itemName = name; }
 
 		private G itemValue;
-		@ManyToOne(cascade = { CascadeType.ALL })
+		@ManyToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 		public G getItemValue() { return itemValue; }
 		public void setItemValue(G g) { this.itemValue = g; }
 		@Transient
@@ -546,17 +603,13 @@ public class A implements Equals
 		}
 		@Transient
 		private boolean isItemSet() { return (item != null); }
-
-		@Override
-		public int hashCode()
-		{
-			return HashCodeBuilder.reflectionHashCode(this);
-		}
-
+		
 		@Override
 		public boolean equals(Object obj)
 		{
-			return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
+			RootObjectLocator thisLocator = new DefaultRootObjectLocator(this);
+			RootObjectLocator thatLocator = new DefaultRootObjectLocator(obj);
+			return equals(thisLocator, thatLocator, obj, JAXBEqualsStrategy.getInstance());
 		}
 
 		@Override
@@ -573,6 +626,18 @@ public class A implements Equals
 			return strategy.equals(thisLocator, thatLocator,
 				this.getItemValue(), that.getItemValue(),
 				this.isItemValueSet(), that.isItemValueSet());
+		}
+
+		@Override
+		public int hashCode()
+		{
+			return HashCodeBuilder.reflectionHashCode(this);
+		}
+		
+		@Override
+		public String toString()
+		{
+			return ToStringBuilder.reflectionToString(this, SIMPLE_STYLE);
 		}
 	}
 
@@ -594,7 +659,7 @@ public class A implements Equals
 
 	@XmlTransient
 	private List<GItem> gItems;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public List<GItem> getGItems()
 	{
 		if (gItems == null)

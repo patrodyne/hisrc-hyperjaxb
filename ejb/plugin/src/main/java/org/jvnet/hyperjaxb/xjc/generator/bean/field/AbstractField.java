@@ -1,16 +1,12 @@
 package org.jvnet.hyperjaxb.xjc.generator.bean.field;
 
 import static com.sun.tools.xjc.outline.Aspect.IMPLEMENTATION;
+import static org.jvnet.hyperjaxb.xjc.reader.TypeUtil.getCommonBaseType;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import jakarta.xml.bind.annotation.W3CDomHandler;
-import jakarta.xml.bind.annotation.XmlList;
-import jakarta.xml.bind.annotation.XmlMixed;
-import jakarta.xml.bind.annotation.XmlNsForm;
-import jakarta.xml.bind.annotation.XmlValue;
 import javax.xml.namespace.QName;
 
 import org.glassfish.jaxb.core.v2.TODO;
@@ -30,6 +26,7 @@ import com.sun.tools.xjc.generator.annotation.spec.XmlElementRefsWriter;
 import com.sun.tools.xjc.generator.annotation.spec.XmlElementWriter;
 import com.sun.tools.xjc.generator.annotation.spec.XmlElementsWriter;
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
+import com.sun.tools.xjc.model.CAdapter;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import com.sun.tools.xjc.model.CElement;
 import com.sun.tools.xjc.model.CElementInfo;
@@ -40,10 +37,17 @@ import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.CValuePropertyInfo;
 import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldAccessor;
 import com.sun.tools.xjc.outline.FieldOutline;
+
+import jakarta.xml.bind.annotation.W3CDomHandler;
+import jakarta.xml.bind.annotation.XmlList;
+import jakarta.xml.bind.annotation.XmlMixed;
+import jakarta.xml.bind.annotation.XmlNsForm;
+import jakarta.xml.bind.annotation.XmlValue;
 
 /**
  * Useful base class for implementing {@link FieldOutline}.
@@ -55,8 +59,8 @@ import com.sun.tools.xjc.outline.FieldOutline;
  * @author
  *     Kohsuke Kawaguchi (kohsuke.kawaguchi@sun.com)
  */
-public abstract class AbstractField implements FieldOutline {
-    
+public abstract class AbstractField implements FieldOutline
+{
     protected final ClassOutlineImpl outline;
     
     protected final CPropertyInfo prop;
@@ -74,7 +78,8 @@ public abstract class AbstractField implements FieldOutline {
      */
     protected final JType exposedType;
 
-    protected AbstractField( ClassOutlineImpl outline, CPropertyInfo prop ) {
+    protected AbstractField( ClassOutlineImpl outline, CPropertyInfo prop )
+    {
         this.outline = outline;
         this.prop = prop;
         this.codeModel = outline.parent().getCodeModel();
@@ -357,21 +362,39 @@ public abstract class AbstractField implements FieldOutline {
             return JExpr.cast(implType,exp);
     }
 
-    protected JType getType(final Aspect aspect) {
+    protected JType getType(final Aspect aspect)
+    {
     	return getType(prop, aspect);
     }
     
-    protected JType getType(CPropertyInfo prop, final Aspect aspect) {
-        if(prop.getAdapter()!=null)
-            return prop.getAdapter().customType.toType(outline.parent(),aspect);
+    protected JType getType(CPropertyInfo prop, final Aspect aspect)
+    {
+        if ( prop.getAdapter() != null )
+        {
+        	CAdapter adapter = prop.getAdapter();
+        	NType customType = adapter.customType;
+        	JType jType = customType.toType(outline.parent(), aspect);
+//    		if (Customizations.isVersion(prop))
+//    		{
+//    			System.out.println("PROP IS VERSION, ASPECT: " + aspect);
+//    			System.out.println("PROP ADAPTER: " + adapter);
+//    			System.out.println("PROP CUSTOM TYPE: " + customType);
+//    			System.out.println("PROP CUSTOM JTYPE: " + jType);
+//    			if ( EXPOSED.equals(aspect) && isTemporalType(jType) )
+//    				jType = codeModel.ref(java.sql.Timestamp.class);
+//    		}
+            return jType;
+        }
 
-        final class TypeList extends ArrayList<JType> {
-
+        final class TypeList extends ArrayList<JType>
+        {
         	private static final long serialVersionUID = 1L;
 
-			void add( CTypeInfo t ) {
+			void add( CTypeInfo t )
+			{
                 add( t.getType().toType(outline.parent(),aspect) );
-                if(t instanceof CElementInfo) {
+                if(t instanceof CElementInfo)
+                {
                     // UGLY. element substitution is implemented in a way that
                     // the derived elements are not assignable to base elements.
                     // so when we compute the signature, we have to take derived types
@@ -380,27 +403,31 @@ public abstract class AbstractField implements FieldOutline {
                 }
             }
 
-            void add( Collection<? extends CTypeInfo> col ) {
+            void add( Collection<? extends CTypeInfo> col )
+            {
                 for (CTypeInfo typeInfo : col)
                     add(typeInfo);
             }
         }
+        
         TypeList r = new TypeList();
         r.add(prop.ref());
 
         JType t;
-        if(prop.baseType!=null)
+        if ( prop.baseType != null )
             t = prop.baseType;
         else
-            t = org.jvnet.hyperjaxb.xjc.reader.TypeUtil.getCommonBaseType(codeModel,r);
+            t = getCommonBaseType(codeModel,r);
 
         // if item type is unboxable, convert t=Integer -> t=int
         // the in-memory data structure can't have primitives directly,
         // but this guarantees that items cannot legal hold null,
         // which helps us improve the boundary signature between our
-        // data structure and user code
-//        if(prop.isUnboxable())
-//            t = t.unboxify();
+        // data structure and user code.
+        //
+        // if ( prop.isUnboxable() )
+        //     t = t.unboxify();
+        
         return t;
     }
     

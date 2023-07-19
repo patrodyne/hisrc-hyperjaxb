@@ -20,11 +20,15 @@
 
 	<!-- Schema Bindings -->
 	<jaxb:bindings schemaLocation="po.xsd" node="/xs:schema">
+
 		<jaxb:schemaBindings>
 			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tutorials.po.stepthree"/>
 		</jaxb:schemaBindings>
 
 		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
 			<hj:default-one-to-many>
 				<orm:join-table/>
 			</hj:default-one-to-many>
@@ -35,30 +39,34 @@
 				<orm:table name="po"/>
 			</hj:entity>
 		</jaxb:bindings>
+
 		<jaxb:bindings node="xs:complexType[@name='USAddress']">
 			<hj:entity>
 				<orm:table name="address"/>
 			</hj:entity>
 		</jaxb:bindings>
+
 		<jaxb:bindings node="xs:complexType[@name='Items']//xs:complexType">
 			<hj:entity>
 				<orm:table name="item"/>
 			</hj:entity>
 		</jaxb:bindings>
+
 		<jaxb:bindings node="xs:complexType[@name='Items']/xs:sequence/xs:element[@name='item']">
 			<hj:one-to-many>
 				<orm:order-by>partNum</orm:order-by>
 			</hj:one-to-many>
 		</jaxb:bindings>
+
 		<jaxb:bindings node="xs:complexType[@name='Items']//xs:attribute[@name='partNum']">
 			<hj:id merge="false"/>
 		</jaxb:bindings>
+
 		<jaxb:bindings node="xs:complexType[@name='Items']//xs:element[@name='USPrice']">
 			<hj:basic>
 				<orm:column name="Price"/>
 			</hj:basic>
 		</jaxb:bindings>
 	</jaxb:bindings>
-
 
 </jaxb:bindings>

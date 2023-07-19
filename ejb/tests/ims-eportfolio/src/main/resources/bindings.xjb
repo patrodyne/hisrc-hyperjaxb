@@ -22,15 +22,24 @@
 	<!-- Schema Bindings -->
 
 	<jaxb:bindings schemaLocation="imsparticipation_v1p0.xsd" node="/xs:schema">
+
 		<!-- Default Generated Id Stratagy -->
 		<hj:persistence>
+
+            <hj:default-entity>
+				<orm:discriminator-column length="63"/>
+            </hj:default-entity>
+
 			<hj:default-generated-id>
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
+
 			<hj:default-basic>
 				<orm:column length="2048"/>
 			</hj:default-basic>
+
 		</hj:persistence>
+
 	</jaxb:bindings>
 
 	<jaxb:bindings schemaLocation="imsassert_v1p0.xsd" node="/xs:schema">

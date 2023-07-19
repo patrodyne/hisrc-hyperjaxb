@@ -67,11 +67,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core-jakarta</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<scope>test</scope>
@@ -104,4 +99,57 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<!-- Hints:
+			mvn -Djpa=eclipselink -Pall clean test
+			Eclipse > Project > Properties > Maven > Acive Profiles: eclipselink
+			See also:
+				src/test/resources/jvmsystem.properties
+				org.jvnet.hyperjaxb.persistence=<eclipselink|hibernate>
+		-->
+		<profile>
+			<id>eclipselink</id>
+			<activation>
+				<property>
+					<name>org.jvnet.hyperjaxb.persistence</name>
+					<value>eclipselink</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.eclipse.persistence</groupId>
+					<artifactId>eclipselink</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.eclipse.persistence</groupId>
+					<artifactId>org.eclipse.persistence.extension</artifactId>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<!-- Hints:
+			mvn -Phibernate,all clean test
+			Eclipse > Project > Properties > Maven > Acive Profiles: hibernate
+			See also:
+				src/test/resources/jvmsystem.properties
+				org.jvnet.hyperjaxb.persistence=<eclipselink|hibernate>
+		-->
+		<profile>
+			<id>hibernate</id>
+			<activation>
+				<property>
+					<name>org.jvnet.hyperjaxb.persistence</name>
+					<value>!eclipselink</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core-jakarta</artifactId>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 </project>

@@ -8,16 +8,22 @@ import jakarta.persistence.Version;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.xml.bind.annotation.XmlType;
 
+import static org.apache.commons.lang3.builder.ToStringStyle.SIMPLE_STYLE;
+
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jvnet.basicjaxb.lang.Equals;
 import org.jvnet.basicjaxb.lang.EqualsStrategy;
 import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
+import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
 import org.jvnet.basicjaxb.locator.ObjectLocator;
+import org.jvnet.basicjaxb.locator.RootObjectLocator;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "B", propOrder = { "id", "version", "c" })
+@XmlType(name = "B", propOrder = { "id", "c" })
 @Entity
 @Table(name = "table_b")
 public class B implements Equals
@@ -36,7 +42,7 @@ public class B implements Equals
 	@Transient
 	private boolean isCSet() { return (c != null); }
 
-	@XmlAttribute
+	@XmlTransient
 	private int version;
 	@Version
 	public int getVersion() { return version; }
@@ -47,7 +53,9 @@ public class B implements Equals
 	@Override
 	public boolean equals(Object obj)
 	{
-		return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
+		RootObjectLocator thisLocator = new DefaultRootObjectLocator(this);
+		RootObjectLocator thatLocator = new DefaultRootObjectLocator(obj);
+		return equals(thisLocator, thatLocator, obj, JAXBEqualsStrategy.getInstance());
 	}
 
 	@Override
@@ -69,5 +77,11 @@ public class B implements Equals
 	public int hashCode()
 	{
 		return HashCodeBuilder.reflectionHashCode(this);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return ToStringBuilder.reflectionToString(this, SIMPLE_STYLE);
 	}
 }

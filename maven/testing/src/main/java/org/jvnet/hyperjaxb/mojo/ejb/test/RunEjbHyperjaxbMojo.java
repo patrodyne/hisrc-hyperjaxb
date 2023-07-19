@@ -5,6 +5,9 @@ import org.jvnet.higherjaxb.mojo.AbstractHigherjaxbParmMojo;
 import org.jvnet.higherjaxb.mojo.test.RunHigherjaxbMojo;
 import org.jvnet.hyperjaxb.mojo.HyperjaxbMojo;
 
+/**
+ * Run the HyperJAXB Mojo to trigger Maven's build-process behavior.
+ */
 public class RunEjbHyperjaxbMojo extends RunHigherjaxbMojo
 {
 	@Override

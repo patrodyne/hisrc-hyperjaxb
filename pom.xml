@@ -92,7 +92,7 @@
 		<activation-imp.version>2.0.0</activation-imp.version>
 		<annotation.version>2.1.1</annotation.version>
 		<derby.version>10.16.1.1</derby.version>
-		<eclipselink.version>4.0.1</eclipselink.version>
+		<eclipselink.version>4.0.2</eclipselink.version>
 		<ehcache.version>3.10.8</ehcache.version>
 		<hibernate-series.version>5.6.15.Final</hibernate-series.version>
 		<!--
@@ -103,7 +103,7 @@
 		<hisrc-basicjaxb.version>2.1.1-SNAPSHOT</hisrc-basicjaxb.version>
 		<hisrc-higherjaxb-maven-plugin.version>2.1.1-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
 		<hisrc-hyperjaxb-annox-plugin.version>2.1.1-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
-		<h2database.version>2.1.214</h2database.version>
+		<h2database.version>2.2.220</h2database.version>
 		<javassist.version>3.29.2-GA</javassist.version>
 		<jpa-api.version>3.1.0</jpa-api.version>
 		<jaxb-api.version>4.0.0</jaxb-api.version>
@@ -350,19 +350,50 @@
 				<artifactId>jandex</artifactId>
 				<version>3.0.5</version>
 			</dependency>
+			<!-- Jakarta Persistence API -->
+			<dependency>
+				<groupId>jakarta.persistence</groupId>
+				<artifactId>jakarta.persistence-api</artifactId>
+				<version>${jpa-api.version}</version>
+			</dependency>
+			<!--
+			<dependency>
+				<groupId>jakarta.transaction</groupId>
+				<artifactId>jakarta.transaction-api</artifactId>
+				<version>2.0.1</version>
+			</dependency>
+			-->
+			<!-- Eclipselink -->
+			<dependency>
+				<groupId>org.eclipse.persistence</groupId>
+				<artifactId>eclipselink</artifactId>
+				<version>${eclipselink.version}</version>
+				<exclusions>
+					<!-- In favor of org.glassfish.jaxb:jaxb-xjc -->
+					<exclusion>
+						<groupId>com.sun.xml.bind</groupId>
+						<artifactId>jaxb-xjc</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.persistence</groupId>
+				<artifactId>org.eclipse.persistence.extension</artifactId>
+				<version>${eclipselink.version}</version>
+				<exclusions>
+					<!-- In favor of org.eclipse.persistence:eclipselink -->
+					<exclusion>
+						<groupId>org.eclipse.persistence</groupId>
+						<artifactId>org.eclipse.persistence.core</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-opt-eclipselink</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<!-- Hibernate -->
-			<dependency>
-				<groupId>org.javassist</groupId>
-				<artifactId>javassist</artifactId>
-				<version>${javassist.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.logging</groupId>
-				<artifactId>jboss-logging</artifactId>
-				<version>3.5.0.Final</version>
-				<scope>runtime</scope>
-			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core-jakarta</artifactId>
@@ -387,11 +418,6 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>com.zaxxer</groupId>
-				<artifactId>HikariCP</artifactId>
-				<version>${HikariCP.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-hikaricp</artifactId>
 				<version>${hibernate-series.version}</version>
@@ -402,13 +428,18 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			<!--
 			<dependency>
-				<groupId>org.hibernate.common</groupId>
-				<artifactId>hibernate-commons-annotations</artifactId>
-				<version>${hibernate-commons-annotations.version}</version>
+				<groupId>org.javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>${javassist.version}</version>
+				<scope>test</scope>
 			</dependency>
-			-->
+			<dependency>
+				<groupId>org.jboss.logging</groupId>
+				<artifactId>jboss-logging</artifactId>
+				<version>3.5.0.Final</version>
+				<scope>runtime</scope>
+			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-jpamodelgen-jakarta</artifactId>
@@ -420,43 +451,11 @@
 				<scope>runtime</scope>
 				<version>${ehcache.version}</version>
 			</dependency>
-			<!-- Jakarta Persistence API -->
+			<!-- Hikari JDBC Connection Pool -->
 			<dependency>
-				<groupId>jakarta.persistence</groupId>
-				<artifactId>jakarta.persistence-api</artifactId>
-				<version>${jpa-api.version}</version>
-			</dependency>
-			<!--
-			<dependency>
-				<groupId>jakarta.transaction</groupId>
-				<artifactId>jakarta.transaction-api</artifactId>
-				<version>2.0.1</version>
-			</dependency>
-			-->
-			<!-- EclispeLink -->
-			<dependency>
-				<groupId>org.eclipse.persistence</groupId>
-				<artifactId>eclipselink</artifactId>
-				<version>${eclipselink.version}</version>
-				<exclusions>
-					<!-- In favor of org.glassfish.jaxb:jaxb-xjc -->
-					<exclusion>
-						<groupId>com.sun.xml.bind</groupId>
-						<artifactId>jaxb-xjc</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.persistence</groupId>
-				<artifactId>org.eclipse.persistence.extension</artifactId>
-				<version>${eclipselink.version}</version>
-				<exclusions>
-					<!-- In favor of org.eclipse.persistence:eclipselink -->
-					<exclusion>
-						<groupId>org.eclipse.persistence</groupId>
-						<artifactId>org.eclipse.persistence.core</artifactId>
-					</exclusion>
-				</exclusions>
+				<groupId>com.zaxxer</groupId>
+				<artifactId>HikariCP</artifactId>
+				<version>${HikariCP.version}</version>
 			</dependency>
 			<!-- H2 Database -->
 			<dependency>
@@ -694,8 +693,8 @@
 				<plugin>
 					<artifactId>maven-plugin-plugin</artifactId>
 					<version>${maven-plugin-plugin.version}</version>
-					<?m2e ignore?>
 					<executions>
+						<?m2e ignore?>
 						<execution>
 							<id>mojo-descriptor</id>
 							<phase>process-classes</phase>
@@ -837,8 +836,8 @@
 				<version>${maven-enforcer-plugin.version}</version>
 				<executions>
 					<execution>
-						<id>enforce-java-maven</id>
 						<?m2e ignore?>
+						<id>enforce-java-maven</id>
 						<goals>
 							<goal>enforce</goal>
 						</goals>
@@ -936,11 +935,60 @@
 				<module>ejb</module>
 			</modules>
 		</profile>
+		<!-- Hints:
+			mvn -Peclipselink clean compile exec:java
+			Eclipse > Project > Properties > Maven > Acive Profiles: eclipselink
+			See also:
+				src/test/resources/jvmsystem.properties
+				org.jvnet.hyperjaxb.persistence=<eclipselink|hibernate>
+		-->
+		<profile>
+			<id>eclipselink</id>
+			<activation>
+				<property>
+					<name>org.jvnet.hyperjaxb.persistence</name>
+					<value>eclipselink</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>${maven-antrun-plugin.version}</version>
+						<executions>
+							<execution>
+								<?m2e ignore?>
+								<id>runtime</id>
+								<phase>compile</phase>
+								<configuration>
+									<target>
+										<mkdir dir="${project.build.directory}/test-database-sql" />
+									</target>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<!-- Hints:
+			mvn -Phibernate,all clean test
+			Eclipse > Project > Properties > Maven > Acive Profiles: hibernate
+			See also:
+				src/test/resources/jvmsystem.properties
+				org.jvnet.hyperjaxb.persistence=<eclipselink|hibernate>
+		-->
 		<profile>
 			<id>hibernate</id>
-			<dependencies>
-				<!-- Future Use -->
-			</dependencies>
+			<activation>
+				<property>
+					<name>org.jvnet.hyperjaxb.persistence</name>
+					<value>!eclipselink</value>
+				</property>
+			</activation>
 		</profile>
 	</profiles>
 </project>

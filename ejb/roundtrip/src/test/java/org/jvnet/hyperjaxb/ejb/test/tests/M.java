@@ -3,6 +3,7 @@ package org.jvnet.hyperjaxb.ejb.test.tests;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -14,11 +15,16 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.xml.bind.annotation.XmlType;
 
+import static org.apache.commons.lang3.builder.ToStringStyle.SIMPLE_STYLE;
+
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jvnet.basicjaxb.lang.Equals;
 import org.jvnet.basicjaxb.lang.EqualsStrategy;
 import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
+import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
 import org.jvnet.basicjaxb.locator.ObjectLocator;
+import org.jvnet.basicjaxb.locator.RootObjectLocator;
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "M", namespace = "")
@@ -64,7 +70,7 @@ public class M implements Equals
 	}
 
 	private OneTwo oneTwo;
-	@ManyToOne(targetEntity = OneTwo.class, cascade = { CascadeType.ALL })
+	@ManyToOne(targetEntity = OneTwo.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@XmlTransient
 	public OneTwo getOneTwo() { return oneTwo; }
 	public void setOneTwo(OneTwo oneTwo) { this.oneTwo = oneTwo; }
@@ -81,7 +87,9 @@ public class M implements Equals
 	@Override
 	public boolean equals(Object obj)
 	{
-		return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
+		RootObjectLocator thisLocator = new DefaultRootObjectLocator(this);
+		RootObjectLocator thatLocator = new DefaultRootObjectLocator(obj);
+		return equals(thisLocator, thatLocator, obj, JAXBEqualsStrategy.getInstance());
 	}
 
 	@Override
@@ -105,5 +113,11 @@ public class M implements Equals
 	public int hashCode()
 	{
 		return HashCodeBuilder.reflectionHashCode(this);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return ToStringBuilder.reflectionToString(this, SIMPLE_STYLE);
 	}
 }

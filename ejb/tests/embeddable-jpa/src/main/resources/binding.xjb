@@ -8,12 +8,30 @@
 	xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox"
 	jaxb:extensionBindingPrefixes="hj orm annox"
 >
+
+	<!--  Global Bindings
+		* JPA section 2.1, entities must be top-level classes.
+		* JPA section 2.1, entities must implement the serializable interface.
+		* When processing a Microsoft WCF service WSDL, it is recommended that the
+		  generateElementProperty customization be set to 'false' in globalBindings.
+		* Hint: Increase EnumMemberSizeCap above 256 with typesafeEnumMaxMembers="512".
+	-->
+	<jaxb:globalBindings localScoping="toplevel">
+		<jaxb:serializable uid="20211201" />
+	</jaxb:globalBindings>
 	
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.embeddablejpa"/>
+		</jaxb:schemaBindings>
+
 		<hj:persistence>
 			<hj:default-generated-id>
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
 		</hj:persistence>
+
 	</jaxb:bindings>
+
 </jaxb:bindings>

@@ -4,7 +4,8 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
-	jaxb:extensionBindingPrefixes="xjc"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm"
 	xmlns:cda="urn:hl7-org:v3"
 >
 	<!--  Global Bindings
@@ -18,7 +19,16 @@
 		<jaxb:serializable uid="20211201" />
 	</jaxb:globalBindings>
 	
+	<jaxb:bindings schemaLocation="CDASchemas/cda/Schemas/CDA.xsd" node="/xsd:schema">
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
+	</jaxb:bindings>
+
 	<jaxb:bindings scd="x-schema::cda">
+
 		<jaxb:schemaBindings>
 			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.cda.tests"/>
 		</jaxb:schemaBindings>

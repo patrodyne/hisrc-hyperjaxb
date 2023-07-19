@@ -5,6 +5,8 @@ import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map.Entry;
 
 import org.jvnet.basicjaxb.lang.JAXBMergeCollectionsStrategy;
 import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
@@ -14,6 +16,10 @@ import org.jvnet.hyperjaxb.ejb.strategy.outline.EJBOutlineProcessor;
 import org.jvnet.hyperjaxb.ejb.strategy.outline.OutlineProcessor;
 import org.jvnet.hyperjaxb.persistence.util.PersistenceUtils;
 
+import com.sun.codemodel.JAnnotationClassValue;
+import com.sun.codemodel.JAnnotationUse;
+import com.sun.codemodel.JAnnotationValue;
+import com.sun.codemodel.JMethod;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -23,6 +29,10 @@ import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Inject;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.xml.bind.JAXBException;
 
 /**
@@ -99,11 +109,58 @@ public class ClassPersistenceProcessor extends EJBOutlineProcessor
 		final String pun = plugin.getPersistenceUnitName();
 		final String persistenceUnitName = pun != null ? pun : getNaming().getPersistenceUnitName(plugin.getMapping(), outline);
 		final PersistenceUnit persistenceUnit = getPersistenceUnitFactory().createPersistenceUnit(includedClasses);
+		addExternalClasses(persistenceUnit, includedClasses);
 		final Persistence persistence = createPersistence(plugin, persistenceUnit, persistenceUnitName);
 		getPersistenceMarshaller().marshallPersistence(outline.getCodeModel(), persistence);
 		return includedClasses;
 	}
 
+	/**
+	 * Add externally defined classes. The XJC outline may not contain externally
+	 * define entities; thus, this method digs into the structure for candidate 
+	 * target entities, etc.
+	 * 
+	 * @param persistenceUnit The persistence unit to be marshalled.
+	 * @param includedClasses Current list of included classes.
+	 */
+	private void addExternalClasses(PersistenceUnit persistenceUnit, Collection<ClassOutline> includedClasses)
+	{
+		List<String> puClassList = persistenceUnit.getClazz();
+		for ( ClassOutline includedClass : includedClasses )
+		{
+			for ( JMethod method : includedClass.getImplClass().methods() )
+			{
+				for ( JAnnotationUse annotationUse : method.annotations() )
+				{
+					if ( annotationUse.getAnnotationClass() != null )
+					{
+						String annotationName = annotationUse.getAnnotationClass().binaryName();
+						if ( ManyToMany.class.getName().equals(annotationName) ||
+							 ManyToOne.class.getName().equals(annotationName) ||
+							 OneToMany.class.getName().equals(annotationName) ||
+							 OneToOne.class.getName().equals(annotationName)
+						)
+						{
+							for ( Entry<String, JAnnotationValue> entry : annotationUse.getAnnotationMembers().entrySet() )
+							{
+								if ( "targetEntity".equals(entry.getKey()) )
+								{
+									if ( entry.getValue() instanceof JAnnotationClassValue )
+									{
+										JAnnotationClassValue value = (JAnnotationClassValue) entry.getValue();
+										String targetEntityClassName = value.type().binaryName();
+										if ( !puClassList.contains(targetEntityClassName) )
+											puClassList.add(targetEntityClassName);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	protected Persistence createPersistence(EJBPlugin plugin, PersistenceUnit persistenceUnit, String persistenceUnitName)
 		throws JAXBException
 	{

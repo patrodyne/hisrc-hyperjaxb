@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -52,6 +53,7 @@ import org.jvnet.basicjaxb.locator.util.LocatorUtils;
 @Entity(name = "org.jvnet.hyperjaxb.ejb.tests.issues.MyIssueXXXType")
 @Table(name = "MYISSUEXXXTYPE")
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(length = 63)
 public class MyIssueXXXType implements Serializable, Equals, HashCode
 {
 	private static final long serialVersionUID = 20221201L;
@@ -99,7 +101,7 @@ public class MyIssueXXXType implements Serializable, Equals, HashCode
 	 */
 	@Id
 	@Column(name = "HJID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getHjid()
 	{
 		return hjid;

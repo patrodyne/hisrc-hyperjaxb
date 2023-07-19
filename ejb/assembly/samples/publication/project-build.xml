@@ -50,6 +50,8 @@
 			<include name="classmate*.jar"/>
 			<include name="commons-io-*.jar"/>
 			<include name="commons-lang3-*.jar"/>
+			<include name="eclipselink-*.jar"/>
+			<include name="org.eclipse.persistence.extension-*.jar"/>
 			<include name="hibernate-commons-annotations-*.jar"/>
 			<include name="hibernate-core-jakarta-*.jar"/>
 			<include name="jakarta.activation-api-*.jar"/>
@@ -138,6 +140,7 @@
         <mkdir dir="\${basedir}/target/junit-reports"/>
 		<mkdir dir="\${basedir}/target/generated-docs"/>
 		<mkdir dir="\${basedir}/target/generated-sources/xjc"/>
+		<mkdir dir="\${basedir}/target/test-database-sql"/>
     </target>
 
 	<target name="generate-sources" depends="init">

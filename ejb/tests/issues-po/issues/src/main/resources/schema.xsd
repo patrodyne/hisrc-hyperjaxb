@@ -544,12 +544,7 @@
 			<xsd:appinfo>
 				<hj:entity>
 					<orm:named-query name="issueHJIII14NamedQuery">
-					<orm:query>SELECT
-x
-FROM
-org.jvnet.hyperjaxb.ejb.tests.issues.IssueHJIII14Type						
-x
-</orm:query>
+						<orm:query>SELECT e FROM org.jvnet.hyperjaxb.ejb.tests.issues.IssueHJIII14Type e</orm:query>
 					</orm:named-query>
 				</hj:entity>
 			</xsd:appinfo> 
@@ -914,7 +909,7 @@ x
 			<xsd:appinfo>
 				<hj:entity> 
 					<orm:named-query name="IssueHJIII100Type.getAll"> 
-						<orm:query>from IssueHJIII100Type</orm:query> 
+						<orm:query>select e from IssueHJIII100Type e</orm:query> 
 						<orm:hint name="org.hibernate.cacheable" value="true" /> 
 					</orm:named-query> 
 				</hj:entity>

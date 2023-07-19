@@ -1,7 +1,5 @@
 package org.jvnet.hyperjaxb.xjc.generator.bean.field;
 
-import jakarta.xml.bind.JAXBElement.GlobalScope;
-
 import org.jvnet.hyperjaxb.jpa.Customizations;
 
 import com.sun.codemodel.JBlock;
@@ -20,24 +18,35 @@ import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.FieldAccessor;
 
+import jakarta.xml.bind.JAXBElement.GlobalScope;
+
 public abstract class AbstractWrappingField extends AbstractField
 {
 	protected final static boolean CENTRAL_CASTING = true;
 	
 	protected final CPropertyInfo core;
-	protected JMethod getter;
-	protected JMethod setter;
 	protected final JFieldRef coreField;
 
-	public AbstractWrappingField(ClassOutlineImpl context, CPropertyInfo prop, CPropertyInfo core)
+	protected JMethod getter;
+	protected JMethod setter;
+	public void generateAccessors()
 	{
-		super(context, prop);
-		this.core = core;
-		if (!Customizations.isGenerated(prop))
-			this.coreField = JExpr.refthis(core.getName(false));
-		else
-			this.coreField = null;
-		assert !exposedType.isPrimitive() && !implType.isPrimitive();
+		getter = createGetter();
+		setter = createSetter();
+	}
+
+	protected abstract JExpression unwrap(final JExpression source);
+	protected abstract JExpression wrap(final JExpression target);
+	
+	public final JType getFieldType()
+	{
+		return implType;
+	}
+
+	@Override
+	public final JType getRawType()
+	{
+		return exposedType;
 	}
 
 	public JExpression getCore()
@@ -56,39 +65,52 @@ public abstract class AbstractWrappingField extends AbstractField
 			block.invoke("set" + core.getName(true)).arg(value);
 	}
 
-	public void generateAccessors()
+	protected String getGetterName()
 	{
-		getter = createGetter();
-		setter = createSetter();
-	}
-
-	protected JMethod createSetter()
-	{
-		final JMethod setter;
-		final MethodWriter writer = outline.createMethodWriter();
-		setter = writer.declareMethod(codeModel.VOID, getSetterName());
-		final JVar target = writer.addParameter(exposedType, "target");
-		final JExpression wrapCondition = wrapCondifiton(target);
-
-		if (wrapCondition == null)
-			setCore(setter.body(), wrap(target));
-		else
-		{
-			final JConditional _if = setter.body()._if(wrapCondition);
-			setCore(_if._then(), wrap(target));
-		}
-
-		return setter;
+		return (getFieldType().boxify().getPrimitiveType() == codeModel.BOOLEAN ? "is" : "get") + prop.getName(true);
 	}
 
 	protected String getSetterName()
 	{
 		return "set" + prop.getName(true);
 	}
-
-	protected String getGetterName()
+	
+	public JClass getScope(CClassInfo scope)
 	{
-		return (getFieldType().boxify().getPrimitiveType() == codeModel.BOOLEAN ? "is" : "get") + prop.getName(true);
+		if (scope == null)
+			return codeModel.ref(GlobalScope.class);
+		else
+			return scope.toType(outline.parent(), Aspect.EXPOSED);
+	}
+	
+	public AbstractWrappingField(ClassOutlineImpl context, CPropertyInfo prop, CPropertyInfo core)
+	{
+		super(context, prop);
+		this.core = core;
+		if (!Customizations.isGenerated(prop))
+			this.coreField = JExpr.refthis(core.getName(false));
+		else
+			this.coreField = null;
+		assert !exposedType.isPrimitive() && !implType.isPrimitive();
+//		if (Customizations.isVersion(prop))
+//		{
+//			System.out.println("PROP IS VERSION");
+//			System.out.println("PROP NAME: " + prop.getName(true));
+//			System.out.println("PROP KIND: " + prop.kind());
+//			for ( CTypeInfo ref : prop.ref() )
+//				System.out.println("PROP REF TYPE: " + ref.getType().fullName());
+//			if ( prop.getAdapter() != null )
+//			{
+//				System.out.println("PROP ADAPTER TYPE: " + prop.getAdapter().adapterType.fullName());
+//				System.out.println("PROP ADAPTER CUSTOM TYPE: " + prop.getAdapter().customType.fullName());
+//				System.out.println("PROP ADAPTER DEFAULT TYPE: " + prop.getAdapter().defaultType.fullName());
+//			}
+//			System.out.println("THIS FIELD TYPE: " + getFieldType());
+//			System.out.println("THIS RAW TYPE: " + getRawType());
+//			System.out.println("THIS CORE: " + getCore());
+//			System.out.println("THIS GETTER NAME: " + getGetterName());
+//			System.out.println("THIS SETTER NAME: " + getSetterName());
+//		}
 	}
 
 	protected JMethod createGetter()
@@ -109,44 +131,40 @@ public abstract class AbstractWrappingField extends AbstractField
 
 		return getter;
 	}
+	
+	protected JMethod createSetter()
+	{
+		final JMethod setter;
+		final MethodWriter writer = outline.createMethodWriter();
+		setter = writer.declareMethod(codeModel.VOID, getSetterName());
+		final JVar target = writer.addParameter(exposedType, "target");
+		final JExpression wrapCondition = wrapCondifiton(target);
 
-	protected abstract JExpression unwrap(final JExpression source);
+		if (wrapCondition == null)
+			setCore(setter.body(), wrap(target));
+		else
+		{
+			final JConditional _if = setter.body()._if(wrapCondition);
+			setCore(_if._then(), wrap(target));
+		}
+
+		return setter;
+	}
 
 	public JExpression unwrapCondifiton(final JExpression source)
 	{
 		return null;
 	}
 
-	protected abstract JExpression wrap(final JExpression target);
-
 	public JExpression wrapCondifiton(final JExpression source)
 	{
 		return null;
 	}
-
-	public final JType getFieldType()
-	{
-		return implType;
-	}
-
+	
 	@Override
 	public FieldAccessor create(JExpression targetObject)
 	{
 		return new Accessor(targetObject);
-	}
-
-	@Override
-	public final JType getRawType()
-	{
-		return exposedType;
-	}
-
-	public JClass getScope(CClassInfo scope)
-	{
-		if (scope == null)
-			return codeModel.ref(GlobalScope.class);
-		else
-			return scope.toType(outline.parent(), Aspect.EXPOSED);
 	}
 
 	class Accessor extends AbstractField.Accessor

@@ -23,102 +23,83 @@ import com.sun.tools.xjc.outline.Outline;
 import com.sun.xml.xsom.XSComponent;
 import com.sun.xml.xsom.XmlString;
 
-public class CExternalLeafInfo implements CNonElement, Location {
-
+public class CExternalLeafInfo implements CNonElement, Location
+{
 	private final NType type;
-	private final QName typeName;
-	private final CAdapter adapter;
+	@Override
+	public NType getType() { return type; }
 
-	public CExternalLeafInfo(Class<?> c, String typeName,
-			Class<? extends XmlAdapter<?, ?>> adapterClass) {
-		this(c, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, typeName),
-				new CAdapter(adapterClass, false));
+	private final QName typeName;
+	@Override
+	public QName getTypeName() { return typeName; }
+
+	private final CAdapter adapter;
+	@Override
+	public final CAdapter getAdapterUse() { return adapter; }
+
+	@Override
+	public boolean isCollection() { return false; }
+
+	@Override
+	public MimeType getExpectedMimeType() { return null; }
+
+	@Override
+	public final CExternalLeafInfo getInfo() { return this; }
+
+	@Override
+	public Locator getLocator() { return Constants.EMPTY_LOCATOR; }
+
+	@Override
+	public final XSComponent getSchemaComponent()
+	{
+		throw new UnsupportedOperationException( "TODO. If you hit this, let us know.");
 	}
 
-	public CExternalLeafInfo(Class<?> c, QName typeName, CAdapter adapter) {
+	@Override
+	public boolean isSimpleType() { return true; }
+
+	@Override
+	public Location getLocation() { return this; }
+
+	@Override
+	public Locatable getUpstream() { return null; }
+
+	@Override
+	public CCustomizations getCustomizations() { return CCustomizations.EMPTY; }
+
+	public CExternalLeafInfo(Class<?> c, String typeName, Class<? extends XmlAdapter<?, ?>> adapterClass)
+	{
+		this(c, new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, typeName), new CAdapter(adapterClass, false));
+	}
+
+	public CExternalLeafInfo(Class<?> c, QName typeName, CAdapter adapter)
+	{
 		this.type = NavigatorImpl.create(c);
 		this.typeName = typeName;
 		this.adapter = adapter;
 	}
 
 	@Override
-	public JType toType(Outline o, Aspect aspect) {
-		return type.toType(o, aspect);
-	}
-
-	@Override
-	public boolean isCollection() {
-		return false;
-	}
-
-	@Override
-	public ID idUse() {
+	public ID idUse()
+	{
 		return ID.NONE;
 	}
 
 	@Override
-	public MimeType getExpectedMimeType() {
-		return null;
+	public JType toType(Outline o, Aspect aspect)
+	{
+		return type.toType(o, aspect);
 	}
 
 	@Override
-	public final CAdapter getAdapterUse() {
-		return adapter;
-	}
-
-	@Override
-	public final CExternalLeafInfo getInfo() {
-		return this;
-	}
-
-	@Override
-	public Locator getLocator() {
-		return Constants.EMPTY_LOCATOR;
-	}
-
-	@Override
-	public final XSComponent getSchemaComponent() {
-		throw new UnsupportedOperationException(
-				"TODO. If you hit this, let us know.");
-	}
-
-	@Override
-	public QName getTypeName() {
-		return typeName;
-	}
-
-	@Override
-	public boolean isSimpleType() {
-		return true;
-	}
-
-	@Override
-	public boolean canBeReferencedByIDREF() {
+	public boolean canBeReferencedByIDREF()
+	{
 		return false;
 	}
 
 	@Override
-	public NType getType() {
-		return type;
-	}
-
-	@Override
-	public Location getLocation() {
-		return this;
-	}
-
-	@Override
-	public Locatable getUpstream() {
+	public JExpression createConstant(Outline arg0, XmlString arg1)
+	{
 		return null;
-	}
-
-	@Override
-	public JExpression createConstant(Outline arg0, XmlString arg1) {
-		return null;
-	}
-
-	@Override
-	public CCustomizations getCustomizations() {
-		return CCustomizations.EMPTY;
 	}
 }

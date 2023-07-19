@@ -9,6 +9,7 @@ public class RoundtripTest
 	@Override
 	public String getContextPath()
 	{
+		getLogger();
 		return "org.sbml.sbml.level2:org.w3._1998.math.mathml";
 	}
 

@@ -12,30 +12,44 @@
 		<xsd:attribute name="childData" type="xsd:string"/>
 	</xsd:complexType>
 
+	<xsd:element name="parent" type="Parent"/>
 	<xsd:complexType name="Parent">
 		<xsd:sequence>
 			<xsd:element name="children" type="Child" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
 		<xsd:attribute name="pk1" type="xsd:string">
-			<xsd:annotation><xsd:appinfo><hj:id /></xsd:appinfo></xsd:annotation>
+			<xsd:annotation>
+				<xsd:appinfo>
+					<hj:id />
+				</xsd:appinfo>
+			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="pk2" type="xsd:string">
-			<xsd:annotation><xsd:appinfo><hj:id /></xsd:appinfo></xsd:annotation>
+			<xsd:annotation>
+				<xsd:appinfo>
+					<hj:id />
+				</xsd:appinfo>
+			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="parentData" type="xsd:string"/>
 	</xsd:complexType>
 
-	<xsd:element name="parent" type="Parent"/>
-
 	<xsd:element name="issueHJIII49Element" type="IssueHJIII49Type"/>
-
 	<xsd:complexType name="IssueHJIII49Type">
 		<xsd:sequence>
 			<xsd:element name="GUID" type="xsd:normalizedString">
-				<xsd:annotation><xsd:appinfo><hj:id /></xsd:appinfo></xsd:annotation>
+				<xsd:annotation>
+					<xsd:appinfo>
+						<hj:id />
+					</xsd:appinfo>
+				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="VERSION" type="xsd:int">
-				<xsd:annotation><xsd:appinfo><hj:id /></xsd:appinfo></xsd:annotation>
+				<xsd:annotation>
+					<xsd:appinfo>
+						<hj:id />
+					</xsd:appinfo>
+				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="child" type="IssueHJIII49ChildType" minOccurs="0"/>
 		</xsd:sequence>
@@ -48,6 +62,5 @@
 			<xsd:element name="z" type="xsd:string"/>
 		</xsd:sequence>
 	</xsd:complexType>
-
 
 </xsd:schema>

@@ -17,17 +17,14 @@
 	<dependencies>
 		<!-- Hibernate Dependencies -->
 		<!-- Test -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core-jakarta</artifactId>
-			<scope>test</scope>
-		</dependency>
+		<!--
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.16</version>
 			<scope>test</scope>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
@@ -48,51 +45,6 @@
 					-->
 				</configuration>
 			</plugin>
-			<!--
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>hibernate3-maven-plugin</artifactId>
-				<version>3.0</version>
-				<executions>
-					<execution>
-						<id>generate-schema</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<hibernatetool>
-						<classpath>
-							<path location="${project.build.directory}/classes" />
-						</classpath>
-	                
-						<jpaconfiguration persistenceunit="org.jvnet.hyperjaxb.ejb.tests.po" propertyfile="src/test/resources/persistence.properties"/>
-	                
-						<hbm2ddl export="false" create="true" update="false" format="true" outputfilename="schema.ddl" />
-	                
-					</hibernatetool>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>jakarta.persistence</groupId>
-						<artifactId>jakarta.persistence-api</artifactId>
-						<version>${jpa-api.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-core-jakarta</artifactId>
-						<version>${hibernate-series.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>mysql</groupId>
-						<artifactId>mysql-connector-java</artifactId>
-						<version>8.0.16</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			-->
 		</plugins>
 	</build>
 </project>

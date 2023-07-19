@@ -37,8 +37,11 @@
 		<module>eminq</module>
 		<module>enum</module>
 		<module>equals-builder</module>
+		<module>floating</module>
 		<module>idSymbolSpace</module>
+		<!--
 		<module>ims-eportfolio</module>
+		-->
 		<module>ioda</module>
 		<module>issues-el</module>
 		<module>issues-jpa</module>
@@ -63,47 +66,6 @@
 		<module>web</module>
 		<module>xmldsig</module>
 	</modules>
-	<profiles>
-		<profile>
-			<!-- package=SUCCESS; test=FAILURE -->
-			<id>tests-0</id>
-			<modules>
-				<module>derby</module>
-				<module>dl</module>
-				<module>ids</module>
-				<module>ims-lip</module>
-				<module>nml</module>
-				<module>nokis</module>
-				<module>ows</module>
-				<module>regrep</module>
-				<module>rim</module>
-				<module>uniprot</module>
-				<module>xacml</module>
-			</modules>
-		</profile>
-		<profile>
-			<!-- package=SUCCESS; test=FAILURE; long running -->
-			<id>tests-1</id>
-			<modules>
-				<module>cda</module>
-				<module>component</module>
-				<module>episodes</module> <!-- package=SUCCESS; WARNINGS -->
-				<module>fpml-pretrade</module>
-				<module>ota</module>
-				<module>plmxml</module>
-				<module>sml</module>
-				<module>star</module>
-			</modules>
-		</profile>
-		<profile>
-			<!-- package=FAILURE; test=FAILURE -->
-			<id>tests-2</id>
-			<modules>
-				<module>annox</module>
-				<module>po-mysql</module>
-			</modules>
-		</profile>
-	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
@@ -209,4 +171,100 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<!-- package=SUCCESS; test=FAILURE -->
+			<id>tests-0</id>
+			<modules>
+				<module>derby</module>
+				<module>dl</module>
+				<module>ids</module>
+				<module>ims-lip</module>
+				<module>nml</module>
+				<module>nokis</module>
+				<module>ows</module>
+				<module>regrep</module>
+				<module>rim</module>
+				<module>uniprot</module>
+				<module>xacml</module>
+			</modules>
+		</profile>
+		<profile>
+			<!-- package=SUCCESS; test=FAILURE; long running -->
+			<id>tests-1</id>
+			<modules>
+				<module>cda</module>
+				<module>component</module>
+				<module>episodes</module> <!-- package=SUCCESS; WARNINGS -->
+				<module>fpml-pretrade</module>
+				<module>ota</module>
+				<module>plmxml</module>
+				<module>sml</module>
+				<module>star</module>
+			</modules>
+		</profile>
+		<profile>
+			<!-- package=FAILURE; test=FAILURE -->
+			<id>tests-2</id>
+			<modules>
+				<module>annox</module>
+				<module>po-mysql</module>
+			</modules>
+		</profile>
+		<!-- Hints:
+			mvn -Djpa=eclipselink -Pall clean test
+			Eclipse > Project > Properties > Maven > Acive Profiles: eclipselink
+			See also:
+				src/test/resources/jvmsystem.properties
+				org.jvnet.hyperjaxb.persistence=<eclipselink|hibernate>
+		-->
+		<profile>
+			<id>eclipselink</id>
+			<activation>
+				<property>
+					<name>org.jvnet.hyperjaxb.persistence</name>
+					<value>eclipselink</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.eclipse.persistence</groupId>
+					<artifactId>eclipselink</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.eclipse.persistence</groupId>
+					<artifactId>org.eclipse.persistence.extension</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-eclipselink</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+		<!-- Hints:
+			mvn -Phibernate,all clean test
+			Eclipse > Project > Properties > Maven > Acive Profiles: hibernate
+			See also:
+				src/test/resources/jvmsystem.properties
+				org.jvnet.hyperjaxb.persistence=<eclipselink|hibernate>
+		-->
+		<profile>
+			<id>hibernate</id>
+			<activation>
+				<property>
+					<name>org.jvnet.hyperjaxb.persistence</name>
+					<value>!eclipselink</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core-jakarta</artifactId>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 </project>

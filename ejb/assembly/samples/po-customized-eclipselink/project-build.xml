@@ -17,9 +17,11 @@
 		<fileset dir="\${basedir}/lib">
 			<include name="jakarta.xml.bind-api-*.jar"/>
 			<include name="jakarta.persistence-api-*.jar"/>
+			<include name="hibernate-jpamodelgen-jakarta-*.jar"/>
 			<include name="hisrc-basicjaxb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
+			<include name="slf4j-*.jar"/>
 		</fileset>
 	</path>
 
@@ -38,20 +40,31 @@
 		<pathelement location="\${basedir}/target/classes"/>
 		<pathelement location="\${basedir}/target/test-classes"/>
 		<fileset dir="\${basedir}/lib">
+			<include name="antlr-*.jar"/>
+			<include name="byte-buddy*.jar"/>
+			<include name="classmate*.jar"/>
 			<include name="commons-io-*.jar"/>
 			<include name="commons-lang3-*.jar"/>
 			<include name="eclipselink-*.jar"/>
 			<include name="org.eclipse.persistence.extension-*.jar"/>
+			<include name="hibernate-commons-annotations-*.jar"/>
+			<include name="hibernate-core-jakarta-*.jar"/>
+			<include name="jakarta.activation-api-*.jar"/>
 			<include name="jakarta.activation-*.jar"/>
-			<include name="jakarta.xml.bind-api-*.jar"/>
 			<include name="jakarta.persistence-api-*.jar"/>
+			<include name="jakarta.transaction-api-*.jar"/>
+			<include name="jakarta.xml.bind-api-*.jar"/>
+			<include name="jandex-*.jar"/>
+			<include name="javaparser-*.jar"/>
+			<include name="jaxb-core-*.jar"/>
+			<include name="jaxb-runtime-*.jar"/>
+			<include name="jaxb-xjc-*.jar"/>
+			<include name="jboss-logging-*.Final.jar"/>
 			<include name="hisrc-basicjaxb-runtime-*.jar"/>
 			<include name="hisrc-basicjaxb-testing-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
 			<include name="istack-commons-runtime-*.jar"/>
-			<include name="jaxb-core-*.jar"/>
-			<include name="jaxb-runtime-*.jar"/>
 			<include name="h2-*.jar"/>
 			<include name="slf4j-*.jar"/>
 			<include name="txw2-*.jar"/>
@@ -119,6 +132,7 @@
 		<mkdir dir="\${basedir}/target/test-classes"/>
 		<mkdir dir="\${basedir}/target/junit-reports"/>
 		<mkdir dir="\${basedir}/target/generated-sources/xjc"/>
+		<mkdir dir="\${basedir}/target/test-database-sql"/>
 	</target>
 
 	<target name="generate-sources" depends="init">
@@ -135,6 +149,7 @@
 			<arg line="-Xequals"/>
 			<arg line="-XhashCode"/>
 			<arg line="-XtoString"/>
+			<arg line="-disableXmlSecurity"/>
 			<binding dir="\${basedir}/src/main/resources">
 			 	<include name="**/*.xjb"/>
 			</binding>
@@ -160,7 +175,9 @@
 			destdir="\${basedir}/target/classes" 
 			srcdir="\${basedir}/src/main/java:\${basedir}/target/generated-sources/xjc"
 			includeantruntime="false"
-		/>
+		>
+			<compilerarg line="-s \${basedir}/target/generated-sources/apt"/>
+		</javac>
 		<copy todir="\${basedir}/target/classes">
 			<fileset dir="\${basedir}/src/main/resources"/>
 			<fileset dir="\${basedir}/target/generated-sources/xjc">

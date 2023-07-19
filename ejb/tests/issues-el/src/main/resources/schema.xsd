@@ -1,19 +1,12 @@
-<xsd:schema
+<xsd:schema elementFormDefault="qualified" attributeFormDefault="unqualified"
 	targetNamespace="urn:test" xmlns:test="urn:test" 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	jaxb:version="3.0" 
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-
-	elementFormDefault="qualified" 
-	attributeFormDefault="unqualified"
-
 	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-
-	jaxb:extensionBindingPrefixes="hj orm xjc"
-
-	>
+	jaxb:extensionBindingPrefixes="hj orm"
+	jaxb:version="3.0" 
+>
 
 	<xsd:element name="issueHJIII31Persons" type="test:issueHJIII31Persons"/>
 	<xsd:complexType name="issueHJIII31Persons">

@@ -34,7 +34,8 @@
 		<orm:column/>
 	</hj:default-version>
 
-	<hj:default-generated-version name="Hjversion" javaType="java.lang.Long" schemaType="xsd:long" forced="false">
+	<hj:default-generated-version name="Hjversion" javaType="java.lang.Long"
+		schemaType="xsd:long" forced="false" transient="true">
 		<orm:column/>
 	</hj:default-generated-version>
 

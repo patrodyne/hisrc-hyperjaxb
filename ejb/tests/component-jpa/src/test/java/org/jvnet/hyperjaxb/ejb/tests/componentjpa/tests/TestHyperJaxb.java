@@ -41,7 +41,7 @@ public class TestHyperJaxb
 			{
 				// Deserialize test XML document
 				JobStream jaxbElement = (JobStream) JAXBContextUtils.unmarshal(
-					"org.jvnet.hyperjaxb.ejb.tests.componentjpa.tests", readFileAsString("src/test/resources/tests.xml"));
+					"org.jvnet.hyperjaxb.ejb.tests.componentjpa.tests", readFileAsString("src/test/samples/tests.xml"));
 				// JobStream mails = (JobStream) JAXBElementUtils.getValue(jaxbElement);
 				// persist object
 				em.getTransaction().begin();

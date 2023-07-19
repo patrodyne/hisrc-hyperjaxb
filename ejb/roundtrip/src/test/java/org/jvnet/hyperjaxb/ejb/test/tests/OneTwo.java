@@ -13,11 +13,16 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 
+import static org.apache.commons.lang3.builder.ToStringStyle.SIMPLE_STYLE;
+
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jvnet.basicjaxb.lang.Equals;
 import org.jvnet.basicjaxb.lang.EqualsStrategy;
 import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
+import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
 import org.jvnet.basicjaxb.locator.ObjectLocator;
+import org.jvnet.basicjaxb.locator.RootObjectLocator;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OneTwo", propOrder = { "one", "two" })
@@ -50,7 +55,9 @@ public class OneTwo implements Equals
 	@Override
 	public boolean equals(Object obj)
 	{
-		return equals(null, null, obj, JAXBEqualsStrategy.getInstance());
+		RootObjectLocator thisLocator = new DefaultRootObjectLocator(this);
+		RootObjectLocator thatLocator = new DefaultRootObjectLocator(obj);
+		return equals(thisLocator, thatLocator, obj, JAXBEqualsStrategy.getInstance());
 	}
 
 	@Override
@@ -72,5 +79,11 @@ public class OneTwo implements Equals
 	public int hashCode()
 	{
 		return HashCodeBuilder.reflectionHashCode(this);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return ToStringBuilder.reflectionToString(this, SIMPLE_STYLE);
 	}
 }

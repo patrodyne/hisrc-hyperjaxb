@@ -19,11 +19,19 @@
 	</jaxb:globalBindings>
 
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+
 		<hj:persistence>
+
+            <hj:default-entity>
+				<orm:discriminator-column length="63"/>
+            </hj:default-entity>
+
 			<hj:default-generated-id>
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
+
 		</hj:persistence>
+
 	</jaxb:bindings>
 
 </jaxb:bindings>

@@ -6,13 +6,19 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
 
 import org.jvnet.hyperjaxb.item.Item;
+
+import static org.apache.commons.lang3.builder.ToStringStyle.SIMPLE_STYLE;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jvnet.basicjaxb.lang.Equals;
 import org.jvnet.basicjaxb.lang.EqualsStrategy;
 import org.jvnet.basicjaxb.lang.HashCode;
 import org.jvnet.basicjaxb.lang.HashCodeStrategy;
 import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
 import org.jvnet.basicjaxb.lang.JAXBHashCodeStrategy;
+import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
 import org.jvnet.basicjaxb.locator.ObjectLocator;
+import org.jvnet.basicjaxb.locator.RootObjectLocator;
 import org.jvnet.basicjaxb.locator.util.LocatorUtils;
 
 @MappedSuperclass
@@ -54,8 +60,10 @@ public abstract class PrimitiveItem<T, V> implements Equals, HashCode, Item<V>
 	@Override
 	public boolean equals(Object object)
 	{
+		RootObjectLocator thisLocator = new DefaultRootObjectLocator(this);
+		RootObjectLocator thatLocator = new DefaultRootObjectLocator(object);
 		final EqualsStrategy strategy = JAXBEqualsStrategy.getInstance();
-		return equals(null, null, object, strategy);
+		return equals(thisLocator, thatLocator, object, strategy);
 	}
 
 	@Override
@@ -71,5 +79,11 @@ public abstract class PrimitiveItem<T, V> implements Equals, HashCode, Item<V>
 	public int hashCode()
 	{
 		return hashCode(null, JAXBHashCodeStrategy.getInstance());
+	}
+	
+	@Override
+	public String toString()
+	{
+		return ToStringBuilder.reflectionToString(this, SIMPLE_STYLE);
 	}
 }

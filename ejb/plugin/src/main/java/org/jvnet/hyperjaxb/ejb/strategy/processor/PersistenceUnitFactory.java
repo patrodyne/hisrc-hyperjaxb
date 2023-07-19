@@ -6,8 +6,7 @@ import com.sun.tools.xjc.outline.ClassOutline;
 
 import ee.jakarta.xml.ns.persistence.Persistence.PersistenceUnit;
 
-public interface PersistenceUnitFactory {
-	
+public interface PersistenceUnitFactory
+{
 	public PersistenceUnit createPersistenceUnit(Collection<ClassOutline> includedClasses);
-
 }

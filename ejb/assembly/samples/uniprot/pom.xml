@@ -32,12 +32,6 @@
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
 		</dependency>
-		<!-- Hibernate Dependencies -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core-jakarta</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<!-- Roundtrip -->
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>

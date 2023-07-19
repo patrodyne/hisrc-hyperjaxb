@@ -33,84 +33,89 @@ import org.xml.sax.SAXException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JAXBTest {
-
+public class JAXBTest
+{
 	private static Logger log = LoggerFactory.getLogger(JAXBTest.class);
-
+	
 	private JAXBContext context;
-
 	private ObjectFactory objectFactory;
-
+	
+	private static final String SAMPLE_XSD = "po.xsd";
+	private static final String SAMPLE_XML = "src/test/samples/po.xml";
+ 
 	@BeforeEach
-	protected void setUp() throws Exception {
-		context = JAXBContext.newInstance("generated");
+	protected void setUp()
+		throws Exception
+	{
+		context = JAXBContext.newInstance(ObjectFactory.class);
 		objectFactory = new ObjectFactory();
 	}
 
 	@Test
-	public void testUnmarshall() throws JAXBException {
+	public void testUnmarshall()
+		throws JAXBException
+	{
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
-		final Object object = unmarshaller.unmarshal(new File(
-				"src/test/samples/po.xml"));
+		final Object object = unmarshaller.unmarshal(new File(SAMPLE_XML));
 		@SuppressWarnings("unchecked")
-		final PurchaseOrderType purchaseOrder = ((JAXBElement<PurchaseOrderType>) object)
-				.getValue();
+		final PurchaseOrderType purchaseOrder = ((JAXBElement<PurchaseOrderType>) object).getValue();
 		assertEquals("Mill Valley", purchaseOrder.getShipTo().getCity(), "Wrong city");
 	}
 
 	@Test
-	public void testMarshal() throws JAXBException, XPathException {
-		final PurchaseOrderType purchaseOrder = objectFactory
-				.createPurchaseOrderType();
+	public void testMarshal()
+		throws JAXBException, XPathException
+	{
+		final PurchaseOrderType purchaseOrder = objectFactory.createPurchaseOrderType();
 		purchaseOrder.setShipTo(objectFactory.createUSAddress());
 		purchaseOrder.getShipTo().setCity("New Orleans");
-		final JAXBElement<PurchaseOrderType> purchaseOrderElement = objectFactory
-				.createPurchaseOrder(purchaseOrder);
-
+		
+		final JAXBElement<PurchaseOrderType> purchaseOrderElement =
+			objectFactory.createPurchaseOrder(purchaseOrder);
+		
 		final Marshaller marshaller = context.createMarshaller();
-
 		final DOMResult result = new DOMResult();
 		marshaller.marshal(purchaseOrderElement, result);
-
+		
 		final XPathFactory xPathFactory = XPathFactory.newInstance();
-
-		assertEquals("New Orleans", xPathFactory.newXPath()
-				.evaluate("/purchaseOrder/shipTo/city", result.getNode()), "Wrong city");
+		assertEquals("New Orleans",
+			xPathFactory.newXPath().evaluate("/purchaseOrder/shipTo/city", result.getNode()), "Wrong city");
 	}
 
 	@Test
-	public void testValidate() throws SAXException, JAXBException {
-
-		final PurchaseOrderType purchaseOrder = objectFactory
-				.createPurchaseOrderType();
+	public void testValidate()
+		throws SAXException, JAXBException
+	{
+		final PurchaseOrderType purchaseOrder = objectFactory.createPurchaseOrderType();
 		purchaseOrder.setShipTo(objectFactory.createUSAddress());
 		purchaseOrder.setBillTo(objectFactory.createUSAddress());
-		final JAXBElement<PurchaseOrderType> purchaseOrderElement = objectFactory
-				.createPurchaseOrder(purchaseOrder);
-
-		final SchemaFactory schemaFactory = SchemaFactory
-				.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		final Schema schema = schemaFactory.newSchema(new StreamSource(
-				getClass().getClassLoader().getResourceAsStream("po.xsd")));
-
+		
+		final JAXBElement<PurchaseOrderType> purchaseOrderElement =
+			objectFactory.createPurchaseOrder(purchaseOrder);
+		
+		final SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		final Schema schema = schemaFactory
+			.newSchema(new StreamSource(getClass().getClassLoader().getResourceAsStream(SAMPLE_XSD)));
+		
 		final Marshaller marshaller = context.createMarshaller();
-
 		marshaller.setSchema(schema);
-
+		
 		final List<ValidationEvent> events = new LinkedList<ValidationEvent>();
-
-		marshaller.setEventHandler(new ValidationEventHandler() {
+		marshaller.setEventHandler(new ValidationEventHandler()
+		{
 			@Override
-			public boolean handleEvent(ValidationEvent event) {
+			public boolean handleEvent(ValidationEvent event)
+			{
 				events.add(event);
 				return true;
 			}
 		});
+		
 		marshaller.marshal(purchaseOrderElement, new DOMResult());
-
 		assertFalse(events.isEmpty(), "List of validation events must not be empty.");
+		
 		log.info("Validation Events (expected):");
-		for ( int index=0; index < events.size(); ++index )
+		for (int index = 0; index < events.size(); ++index)
 		{
 			ValidationEvent event = events.get(index);
 			log.info("  Event #" + index);

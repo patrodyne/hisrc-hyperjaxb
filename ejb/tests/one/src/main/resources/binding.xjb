@@ -26,9 +26,15 @@
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
 
 		<hj:persistence>
+
+            <hj:default-entity>
+				<orm:discriminator-column length="63"/>
+            </hj:default-entity>
+
 			<hj:default-generated-id>
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
+
 		</hj:persistence>
 		
 		<!--
@@ -39,5 +45,20 @@
 			<hj:ignored/>
 		</jaxb:bindings>
 		-->
+
+		<!--
+		<jaxb:bindings node="xs:complexType[@name='simpleTypesType']/xs:sequence/xs:element[@name='double']">
+			<hj:basic>
+				<orm:column precision="0" scale="0"/>
+			</hj:basic>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="xs:complexType[@name='simpleTypesType']/xs:sequence/xs:element[@name='float']">
+			<hj:basic>
+				<orm:column precision="0" scale="0"/>
+			</hj:basic>
+		</jaxb:bindings>
+		-->
+
 	</jaxb:bindings>
 </jaxb:bindings>

@@ -1,23 +1,25 @@
 package org.jvnet.hyperjaxb.xml.bind.annotation.adapters;
 
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-public class XMLGregorianCalendarAsTime extends
-		AbstractXMLGregorianCalendarAdapter {
-
+public class XMLGregorianCalendarAsTime extends AbstractXMLGregorianCalendarAdapter
+{
 	@Override
-	public Date createDate(XMLGregorianCalendar calendar) {
-		final java.sql.Time time = new java.sql.Time(calendar.normalize()
-				.toGregorianCalendar(/* timeZone, Locale.UK, null */)
-				.getTimeInMillis());
+	public Timestamp createDate(XMLGregorianCalendar calendar)
+	{
+		final GregorianCalendar gc = calendar.normalize().toGregorianCalendar();
+		final Timestamp time = new Timestamp(gc.getTimeInMillis());
 		return time;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void createCalendar(Date date, XMLGregorianCalendar calendar) {
+	public void createCalendar(Date date, XMLGregorianCalendar calendar)
+	{
 		calendar.setHour(date.getHours());
 		calendar.setMinute(date.getMinutes());
 		calendar.setSecond(date.getSeconds());
