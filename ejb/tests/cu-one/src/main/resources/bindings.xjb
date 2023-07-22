@@ -20,18 +20,30 @@
 	</jaxb:globalBindings>
 
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+	
 		<jaxb:schemaBindings>
 			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.pocustomized"/>
 		</jaxb:schemaBindings>
+		
 		<hj:persistence>
+		
 			<hj:default-generated-id name="MySuperId" transient="true">
 				<orm:column name="MY_SUPER_ID"/>
 				<orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
+			
 			<hj:default-one-to-many>
 				<orm:join-table/>
 			</hj:default-one-to-many>
+			
 		</hj:persistence>
+
+		<jaxb:bindings node="xs:complexType[@name='one']/xs:sequence/xs:element[@name='one-to-many-default']">
+            <hj:one-to-many>
+                <orm:order-by>value</orm:order-by>
+            </hj:one-to-many>
+		</jaxb:bindings>
+		
 		<jaxb:bindings node="xs:complexType[@name='one']/xs:sequence/xs:element[@name='many-to-many-join-table']">
 			<!--
 			DEPRECATED: Hibernate originally handled orphan removal as a specialized cascade.

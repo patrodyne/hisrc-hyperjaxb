@@ -53,6 +53,7 @@
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:one-to-many orphan-removal="true">
+			                <orm:order-by>value</orm:order-by>
 							<orm:join-table name="ONE_O2MJT_TWO">
 								<orm:join-column name="ONE_ID"/>
 								<orm:inverse-join-column name="TWO_ID"/>
@@ -76,6 +77,7 @@
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:many-to-many>
+			                <orm:order-by>value</orm:order-by>
 							<orm:join-table name="ONE_M2MJT_TWO">
 								<orm:join-column name="ONE_ID"/>
 								<orm:inverse-join-column name="TWO_ID"/>

@@ -4,8 +4,6 @@ import static org.jvnet.basicjaxb.util.OutlineUtils.getPackagedClassName;
 
 import java.util.Collection;
 
-import org.jvnet.basicjaxb.util.OutlineUtils;
-
 import com.sun.tools.xjc.outline.ClassOutline;
 
 import ee.jakarta.xml.ns.persistence.Persistence.PersistenceUnit;

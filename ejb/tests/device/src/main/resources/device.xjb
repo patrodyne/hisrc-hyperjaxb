@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jaxb:bindings jaxb:version="3.0"
-    xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
-    xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-    jaxb:extensionBindingPrefixes="hj orm"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm"
 >
-    
+	
 	<!--  Global Bindings
 		* JPA section 2.1, entities must be top-level classes.
 		* JPA section 2.1, entities must implement the serializable interface.
@@ -21,101 +21,123 @@
 	<jaxb:bindings schemaLocation="device.xsd" node="/xsd:schema">
 
 		<hj:persistence>
+
 			<hj:default-generated-id>
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
+
+			<hj:default-one-to-many>
+				<!--
+					If the ordering value is not specified, ordering by
+					the primary key of the associated entity is assumed.
+				-->
+				<orm:order-by/>
+			</hj:default-one-to-many>
+
 		</hj:persistence>
 
-		<jaxb:bindings node="xsd:complexType[@name='deviceConfigurationType']">        
-		<hj:entity>
+		<jaxb:bindings node="xsd:complexType[@name='deviceConfigurationType']">		   
+			<hj:entity>
 				<orm:table name="devcfgs"/>
-		</hj:entity>
-		</jaxb:bindings>
-		<jaxb:bindings node="xsd:complexType[@name='deviceConfigurationType']//xsd:element[@name='identifier']">
-			<hj:id>
-			<orm:column length="30"/>
-		</hj:id>
+			</hj:entity>
 		</jaxb:bindings>
 		
-		<jaxb:bindings node="xsd:complexType[@name='projectType']">        
-		<hj:entity>
-			<orm:table name="projects"/>
-		</hj:entity>
+		<jaxb:bindings node="xsd:complexType[@name='deviceConfigurationType']//xsd:element[@name='identifier']">
+			<hj:id>
+				<orm:column length="30"/>
+			</hj:id>
 		</jaxb:bindings>
+		
+		<jaxb:bindings node="xsd:complexType[@name='projectType']">		   
+			<hj:entity>
+				<orm:table name="projects"/>
+			</hj:entity>
+		</jaxb:bindings>
+		
 		<jaxb:bindings node="xsd:complexType[@name='projectType']//xsd:element[@name='identifier']">
 			<hj:id>
 				<hj:column length="30"/>
-		</hj:id>
-		</jaxb:bindings>        
+			</hj:id>
+		</jaxb:bindings>		
 		
 		<jaxb:bindings node="xsd:complexType[@name='serverType']">
-		<hj:entity>
+			<hj:entity>
 				<orm:table name="devices"/>
-		</hj:entity>
-		</jaxb:bindings>    
+			</hj:entity>
+		</jaxb:bindings>
+		
 		<jaxb:bindings node="xsd:complexType[@name='serverType']//xsd:element[@name='identifier']">
 			<hj:id>
 				<orm:column length="30"/>
-		</hj:id>
+			</hj:id>
 		</jaxb:bindings>
 		
 		<jaxb:bindings node="xsd:complexType[@name='diskArrayType']">
-		<hj:entity>
+			<hj:entity>
 				<orm:table name="devices"/>
-		</hj:entity>
-		</jaxb:bindings>    
+			</hj:entity>
+		</jaxb:bindings>
+		
 		<jaxb:bindings node="xsd:complexType[@name='diskArrayType']//xsd:element[@name='identifier']">
 			<hj:id>
 				<orm:column length="30"/>
-		</hj:id>
+			</hj:id>
 		</jaxb:bindings>
 		
 		<jaxb:bindings node="xsd:complexType[@name='serverType']//xsd:element[@name='diskSummary']">
-		<hj:basic>
+			<hj:basic>
 				<orm:column length="4000"/>
-		</hj:basic>
+			</hj:basic>
 		</jaxb:bindings>
+		
 		<jaxb:bindings node="xsd:complexType[@name='serverType']//xsd:element[@name='memorySummary']">
-		<hj:basic>
+			<hj:basic>
 				<orm:column length="4000"/>
-		</hj:basic>
+			</hj:basic>
 		</jaxb:bindings>
+		
 		<jaxb:bindings node="xsd:complexType[@name='serverType']//xsd:element[@name='zfsConfigCheckResults']">
-		<hj:basic>
+			<hj:basic>
 				<orm:column length="4000"/>
-		</hj:basic>
+			</hj:basic>
 		</jaxb:bindings>
+		
 		<jaxb:bindings node="xsd:complexType[@name='serverType']//xsd:element[@name='svmConfigCheckResults']">
-		<hj:basic>
+			<hj:basic>
 				<orm:column length="4000"/>
-		</hj:basic>
+			</hj:basic>
 		</jaxb:bindings>
+		
 		<jaxb:bindings node="xsd:complexType[@name='serverType']//xsd:element[@name='vxvmConfigCheckResults']">
-		<hj:basic>
+			<hj:basic>
 				<orm:column length="4000"/>
-		</hj:basic>
+			</hj:basic>
 		</jaxb:bindings>
+		
 		<jaxb:bindings node="xsd:complexType[@name='serverType']//xsd:element[@name='mirroredDiskCheckResults']">
-		<hj:basic>
+			<hj:basic>
 				<orm:column length="4000"/>
-		</hj:basic>
+			</hj:basic>
 		</jaxb:bindings>
+		
 		<jaxb:bindings node="xsd:complexType[@name='serverType']//xsd:element[@name='patchCheckResults']">
-		<hj:basic>
+			<hj:basic>
 				<orm:column length="4000"/>
-		</hj:basic>
+			</hj:basic>
 		</jaxb:bindings>
+		
 		<jaxb:bindings node="xsd:complexType[@name='serverType']//xsd:element[@name='dreamDisabledResults']">
-		<hj:basic>
+			<hj:basic>
 				<orm:column length="4000"/>
-		</hj:basic>
+			</hj:basic>
 		</jaxb:bindings>
+		
 		<jaxb:bindings node="xsd:complexType[@name='applicationType']//xsd:element[@name='description']">
-		<hj:basic>
+			<hj:basic>
 				<orm:column length="2000"/>
-		</hj:basic>
+			</hj:basic>
 		</jaxb:bindings>
 
 	</jaxb:bindings>
-    
+	
 </jaxb:bindings>

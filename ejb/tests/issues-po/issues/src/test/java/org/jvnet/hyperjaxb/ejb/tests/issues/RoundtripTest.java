@@ -29,4 +29,14 @@ public class RoundtripTest
 	{
 		return false;
 	}
+	
+//	@Override
+//	protected void checkSample(File sample) throws Exception
+//	{
+//		// issues-po/issues/src/test/samples/issue112[0].xml
+//		if ( "issue112[0].xml".equals(sample.getName()) )
+//		{
+//			super.checkSample(sample);
+//		}
+//	}
 }

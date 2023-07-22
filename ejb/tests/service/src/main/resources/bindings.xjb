@@ -19,11 +19,23 @@
 	</jaxb:globalBindings>
 
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+
 		<hj:persistence>
+
 			<hj:default-generated-id>
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
+
+			<hj:default-one-to-many>
+				<!--
+					If the ordering value is not specified, ordering by
+					the primary key of the associated entity is assumed.
+				-->
+				<orm:order-by/>
+			</hj:default-one-to-many>
+
 		</hj:persistence>
+
 	</jaxb:bindings>
 
 </jaxb:bindings>
