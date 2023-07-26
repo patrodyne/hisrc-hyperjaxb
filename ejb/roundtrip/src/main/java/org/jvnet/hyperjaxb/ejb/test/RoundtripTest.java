@@ -1,9 +1,15 @@
 package org.jvnet.hyperjaxb.ejb.test;
 
+import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.jvnet.basicjaxb.lang.ContextUtils.createSchemaOutputDomResolver;
 
 import java.io.File;
+import java.io.IOException;
+
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 
 import org.jvnet.basicjaxb.lang.ContextUtils;
 import org.jvnet.basicjaxb.lang.CopyTo;
@@ -12,6 +18,8 @@ import org.jvnet.basicjaxb.lang.MergeFrom;
 import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
 import org.jvnet.hyperjaxb.ejb.util.EntityUtils;
 import org.jvnet.hyperjaxb.lang.builder.ExtendedJAXBEqualsStrategy;
+import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputDomResolver;
+import org.xml.sax.SAXException;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -147,6 +155,17 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		final EqualsStrategy strategy = new ExtendedJAXBEqualsStrategy();
 		assertTrue(strategy.equals(new DefaultRootObjectLocator(lhsObject), new DefaultRootObjectLocator(rhsObject),
 			lhsObject, rhsObject, true, true), "Objects NOT equal. Use DEBUG for location details.");
+	}
+	
+	protected void generateXmlSchemaValidatorFromDom(JAXBContext context, Unmarshaller unmarshaller)
+		throws IOException, SAXException
+	{
+		// Generate a Schema Validator from given the JAXB context.
+		SchemaOutputDomResolver sodr = createSchemaOutputDomResolver(context);
+		SchemaFactory schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
+		Schema schemaValidator = schemaFactory.newSchema(sodr.getDomSource());
+		// Configure Marshaller / unmarshaller to use validator.
+		unmarshaller.setSchema(schemaValidator);
 	}
 	
 	/**

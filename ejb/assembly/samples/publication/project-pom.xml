@@ -260,9 +260,9 @@
 					<plugin>
 						<artifactId>maven-antrun-plugin</artifactId>
 						<version>\${maven-antrun-plugin.version}</version>
-						<?m2e ignore?>
 						<executions>
 							<execution>
+								<?m2e ignore?>
 								<id>runtime</id>
 								<phase>compile</phase>
 								<configuration>

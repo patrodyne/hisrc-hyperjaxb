@@ -41,9 +41,9 @@ public class EntityMapping
 	{
 		createEntity$Name(context, classOutline, entity);
 		createEntity$Class(context, classOutline, entity);
+		createEntity$Attributes(context, classOutline, entity);
 		createEntity$Inheritance(context, classOutline, entity);
 		createEntity$Table(context, classOutline, entity);
-		createEntity$Attributes(context, classOutline, entity);
 	}
 
 	public void createEntity$Name(Mapping context, ClassOutline classOutline, final Entity entity)

@@ -23,8 +23,8 @@
 # See also https://h2database.com/javadoc/org/h2/tools/Shell.html
 #
 JAVA_CMD="rlwrap java"
-H2JAR="${M2_REPO}/com/h2database/h2/2.1.214/h2-2.1.214.jar"
-PGJAR="${M2_REPO}/org/postgresql/postgresql/42.5.3/postgresql-42.5.3.jar"
+H2JAR="${M2_REPO}/com/h2database/h2/2.2.220/h2-2.2.220.jar"
+PGJAR="${M2_REPO}/org/postgresql/postgresql/42.6.0/postgresql-42.6.0.jar"
 if [ -r "${H2JAR}" ]; then
 	echo ""
 else
