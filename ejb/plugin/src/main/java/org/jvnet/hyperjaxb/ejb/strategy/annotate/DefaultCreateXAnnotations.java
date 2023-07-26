@@ -818,27 +818,35 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 	@Override
 	public Collection<XAnnotation<?>> createEntityAnnotations(Entity cEntity)
 	{
-		return cEntity == null ? Collections.<XAnnotation<?>> emptyList() : annotations(createEntity(cEntity),
-			createTable(cEntity.getTable()), createSecondaryTables(cEntity.getSecondaryTable()),
-			createPrimaryKeyJoinColumns(cEntity.getPrimaryKeyJoinColumn()), createIdClass(cEntity.getIdClass()),
-			createInheritance(cEntity.getInheritance()), createDiscriminatorValue(cEntity.getDiscriminatorValue()),
-			createDiscriminatorColumn(cEntity.getDiscriminatorColumn()),
-			createSequenceGenerator(cEntity.getSequenceGenerator()), createTableGenerator(cEntity.getTableGenerator()),
-			createNamedQueries(cEntity.getNamedQuery()), createNamedNativeQuery(cEntity.getNamedNativeQuery()),
-			createSqlResultSetMapping(cEntity.getSqlResultSetMapping()),
-			createExcludeDefaultListeners(cEntity.getExcludeDefaultListeners()),
-			createExcludeSuperclassListeners(cEntity.getExcludeSuperclassListeners()),
-			createEntityListeners(cEntity.getEntityListeners()),
-			// "prePersist",
-			// "postPersist",
-			// "preRemove",
-			// "postRemove",
-			// "preUpdate",
-			// "postUpdate",
-			// "postLoad",
-			createAttributeOverrides(cEntity.getAttributeOverride()),
-			createAssociationOverrides(cEntity.getAssociationOverride())
-		// "attributes"
+		return cEntity == null ? Collections.<XAnnotation<?>> emptyList() : annotations
+		    (
+		    	createEntity(cEntity),
+				createTable(cEntity.getTable()),
+				createSecondaryTables(cEntity.getSecondaryTable()),
+				createPrimaryKeyJoinColumns(cEntity.getPrimaryKeyJoinColumn()),
+				createIdClass(cEntity.getIdClass()),
+				createInheritance(cEntity.getInheritance()),
+				createDiscriminatorValue(cEntity.getDiscriminatorValue()),
+				createDiscriminatorColumn(cEntity.getDiscriminatorColumn()),
+				createSequenceGenerator(cEntity.getSequenceGenerator()),
+				createTableGenerator(cEntity.getTableGenerator()),
+				createNamedQueries(cEntity.getNamedQuery()),
+				createNamedNativeQuery(cEntity.getNamedNativeQuery()),
+				createSqlResultSetMapping(cEntity.getSqlResultSetMapping()),
+				createExcludeDefaultListeners(cEntity.getExcludeDefaultListeners()),
+				createExcludeSuperclassListeners(cEntity.getExcludeSuperclassListeners()),
+				createEntityListeners(cEntity.getEntityListeners()),
+				// "prePersist",
+				// "postPersist",
+				// "preRemove",
+				// "postRemove",
+				// "preUpdate",
+				// "postUpdate",
+				// "postLoad",
+				createAttributeOverrides(cEntity.getAttributeOverride()),
+				createAssociationOverrides(cEntity.getAssociationOverride()
+			)
+			// "attributes"
 		);
 	}
 

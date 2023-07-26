@@ -4,9 +4,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
 >
-    <persistence-unit name="##generated" transaction-type="RESOURCE_LOCAL">
-	<description>Purchase Order Persistence Unit</description>
-	<mapping-file>org/jvnet/hyperjaxb/ejb/tests/po/orm.xml</mapping-file>
-        <!--class>org.jvnet.hyperjaxb.ejb.tests.po.USAddress1111</class-->
-    </persistence-unit>
+	<persistence-unit name="##generated" transaction-type="RESOURCE_LOCAL">
+		<description>Purchase Order Persistence Unit</description>
+		<mapping-file>META-INF/orm.xml</mapping-file>
+		<!--class>org.jvnet.hyperjaxb.ejb.tests.po.USAddress1111</class-->
+	</persistence-unit>
 </persistence>

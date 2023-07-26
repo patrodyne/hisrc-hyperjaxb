@@ -45,7 +45,7 @@
 					<!--result>mappingFiles</result-->
 					<validateXml>false</validateXml>
 					<!--
-					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.issues_jpa.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.issuesjpa.RoundtripTest</roundtripTestClassName>
 					-->
 				</configuration>
 			</plugin>

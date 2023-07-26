@@ -11,8 +11,7 @@
 
 	<xs:element name="Users">
 		<xs:annotation>
-			<xs:documentation>Comment describing your root 
-				element</xs:documentation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
 			<xs:appinfo>
 				<!-- ** hj:class>
 					<hj:table name="users_element"/>

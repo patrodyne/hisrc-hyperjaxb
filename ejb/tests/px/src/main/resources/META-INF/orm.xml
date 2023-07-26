@@ -7,6 +7,11 @@
 	<persistence-unit-metadata>
 		<persistence-unit-defaults>
 			<schema>ejb_tests_px</schema>
+			<entity-listeners>
+				<entity-listener class="org.jvnet.hyperjaxb.ejb.tests.po.EntityListener">
+					<pre-persist method-name="prePersist"/>
+				</entity-listener>
+			</entity-listeners>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
 </entity-mappings>

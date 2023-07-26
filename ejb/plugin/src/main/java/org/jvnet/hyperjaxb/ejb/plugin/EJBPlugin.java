@@ -366,6 +366,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 	{
 		final Ring ring = Ring.begin();
 
+		// Process com.sun.tools.xjc.model.Model
 		try
 		{
 			Ring.add(getBgmBuilder());
@@ -399,6 +400,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 			}
 		}
 
+		// Process com.sun.tools.xjc.outline.Outline
 		getModelAndOutlineProcessor().process(this, outline);
 		generateRoundtripTestClass(outline);
 		checkCustomizations(outline);
@@ -476,7 +478,8 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 	private FieldOutline generateFieldDecl(Outline outline, ClassOutlineImpl cc, CPropertyInfo propInfo)
 		throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
 	{
-		FieldOutline fieldOutline = (FieldOutline) generateFieldDecl.invoke(outline, new Object[] { cc, propInfo });
+		FieldOutline fieldOutline = (FieldOutline) generateFieldDecl
+			.invoke(outline, new Object[] { cc, propInfo });
 		
 		if ( isDebugEnabled() )
 		{

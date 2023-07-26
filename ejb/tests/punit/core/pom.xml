@@ -44,8 +44,8 @@
 				<configuration>
 					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.punit.core.RoundtripTest</roundtripTestClassName>
-					-->
 					<persistenceXml>src/main/etc/persistence.xml</persistenceXml>
+					-->
 				</configuration>
 			</plugin>
 		</plugins>

@@ -44,13 +44,13 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		
 		if ( getLogger().isTraceEnabled() )
 		{
-			if (etalonSample.getElement() != null)
+			if (initialSample.getElement() != null)
 			{
-				final JAXBElement<Object> etalonElement = etalonSample.getElement();
-				getLogger().trace("Etalon element:\n" + ContextUtils.toString(context, etalonElement));
+				final JAXBElement<Object> initialElement = initialSample.getElement();
+				getLogger().trace("Initial element:\n" + ContextUtils.toString(context, initialElement));
 			}
 			else
-				getLogger().trace("Etalon object:\n" + ContextUtils.toString(context, etalonSample.getValue()));
+				getLogger().trace("Initial object:\n" + ContextUtils.toString(context, initialSample.getValue()));
 		}
 		
 		// Save
