@@ -31,7 +31,7 @@
 
 			<hj:default-single-property type="xs:float">
 				<hj:basic>
-					<orm:column precision="10" scale="5"/>
+					<orm:column />
 				</hj:basic>
 			</hj:default-single-property>
 

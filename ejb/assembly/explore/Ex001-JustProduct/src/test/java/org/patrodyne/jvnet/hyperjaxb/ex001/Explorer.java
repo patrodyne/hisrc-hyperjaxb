@@ -8,10 +8,10 @@ import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.CANCELED;
 import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.CLOSED;
 import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.HOLD;
 import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.OPEN;
-import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.gatherProperties;
-import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.isInitialized;
-import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.isProxy;
-import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.sqlAction;
+import static org.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.gatherProperties;
+import static org.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.isInitialized;
+import static org.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.isProxy;
+import static org.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.sqlAction;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -44,8 +44,8 @@ import org.patrodyne.jvnet.hyperjaxb.ex001.model.Product;
 import org.patrodyne.jvnet.hyperjaxb.ex001.model.Product_;
 import org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage;
 import org.patrodyne.jvnet.hyperjaxb.explore.AbstractEntityExplorer;
-import org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil;
-import org.patrodyne.jvnet.hyperjaxb.opt.hikaricp.HikariCPUtil;
+import org.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil;
+import org.jvnet.hyperjaxb.opt.hikaricp.HikariCPUtil;
 
 /**
  * A Swing application to explore features of the HiSrc HyperJAXB Framework.

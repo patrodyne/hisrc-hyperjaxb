@@ -34,8 +34,8 @@
 		</dependency>
 		<!-- Hibernate Dependencies -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen-jakarta</artifactId>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
 		</dependency>
 		<!-- Roundtrip -->
 		<dependency>

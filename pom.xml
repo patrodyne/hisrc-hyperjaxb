@@ -99,10 +99,7 @@
 		<derby.version>10.16.1.1</derby.version>
 		<eclipselink.version>4.0.2</eclipselink.version>
 		<ehcache.version>3.10.8</ehcache.version>
-		<hibernate-series.version>5.6.15.Final</hibernate-series.version>
-		<!--
 		<hibernate-series.version>6.2.7.Final</hibernate-series.version>
-		-->
 		<HikariCP.version>5.0.1</HikariCP.version>
 		<hisrc-basicjaxb-annox-parser.version>2.1.1-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
 		<hisrc-basicjaxb.version>2.1.1-SNAPSHOT</hisrc-basicjaxb.version>
@@ -400,8 +397,8 @@
 			</dependency>
 			<!-- Hibernate -->
 			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core-jakarta</artifactId>
+				<groupId>org.hibernate.orm</groupId>
+				<artifactId>hibernate-core</artifactId>
 				<version>${hibernate-series.version}</version>
 				<exclusions>
 					<!-- In favor of io.smallrye:jandex -->
@@ -412,23 +409,23 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>org.hibernate</groupId>
+				<groupId>org.hibernate.orm</groupId>
 				<artifactId>hibernate-jcache</artifactId>
 				<version>${hibernate-series.version}</version>
 				<exclusions>
 					<exclusion>
-						<groupId>org.hibernate</groupId>
+						<groupId>org.hibernate.orm</groupId>
 						<artifactId>hibernate-core</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>org.hibernate</groupId>
+				<groupId>org.hibernate.orm</groupId>
 				<artifactId>hibernate-hikaricp</artifactId>
 				<version>${hibernate-series.version}</version>
 				<exclusions>
 					<exclusion>
-						<groupId>org.hibernate</groupId>
+						<groupId>org.hibernate.orm</groupId>
 						<artifactId>hibernate-core</artifactId>
 					</exclusion>
 				</exclusions>
@@ -446,8 +443,8 @@
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-jpamodelgen-jakarta</artifactId>
+				<groupId>org.hibernate.orm</groupId>
+				<artifactId>hibernate-jpamodelgen</artifactId>
 				<version>${hibernate-series.version}</version>
 			</dependency>
 			<dependency>
@@ -455,6 +452,11 @@
 				<artifactId>ehcache</artifactId>
 				<scope>runtime</scope>
 				<version>${ehcache.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-opt-hibernate</artifactId>
+				<version>${project.version}</version>
 			</dependency>
 			<!-- Hikari JDBC Connection Pool -->
 			<dependency>

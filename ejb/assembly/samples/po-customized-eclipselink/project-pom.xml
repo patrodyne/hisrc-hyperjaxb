@@ -15,7 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<eclipselink.version>${eclipselink.version}</eclipselink.version>
-		<hibernate-series.version>${hibernate-series.version}</hibernate-series.version>
+		<hisrc-hyperjaxb.version>${hisrc-hyperjaxb.version}</hisrc-hyperjaxb.version>
 		<h2database.version>${h2database.version}</h2database.version>
 		<postgresql.version>${postgresql.version}</postgresql.version>
 		<jpa-api.version>${jpa-api.version}</jpa-api.version>
@@ -314,7 +314,9 @@
 			</plugin>
 		</plugins>
 	</reporting>
+
 	<profiles>
+
 		<!-- Hints:
 			mvn -Peclipselink clean compile exec:java
 			Eclipse > Project > Properties > Maven > Acive Profiles: eclipselink
@@ -329,28 +331,9 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>org.eclipse.persistence</groupId>
-					<artifactId>eclipselink</artifactId>
-					<version>\${eclipselink.version}</version>
-					<exclusions>
-						<!-- In favor of org.glassfish.jaxb:jaxb-xjc -->
-						<exclusion>
-							<groupId>com.sun.xml.bind</groupId>
-							<artifactId>jaxb-xjc</artifactId>
-						</exclusion>
-					</exclusions>
-				</dependency>
-				<dependency>
-					<groupId>org.eclipse.persistence</groupId>
-					<artifactId>org.eclipse.persistence.extension</artifactId>
-					<version>\${eclipselink.version}</version>
-					<exclusions>
-						<!-- In favor of org.eclipse.persistence:eclipselink -->
-						<exclusion>
-							<groupId>org.eclipse.persistence</groupId>
-							<artifactId>org.eclipse.persistence.core</artifactId>
-						</exclusion>
-					</exclusions>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-eclipselink</artifactId>
+					<version>\${hisrc-hyperjaxb.version}</version>
 				</dependency>
 			</dependencies>
 			<build>
@@ -377,6 +360,7 @@
 				</plugins>
 			</build>
 		</profile>
+
 		<!-- Hints:
 			mvn -Phibernate clean compile exec:java
 			Eclipse > Project > Properties > Maven > Acive Profiles: hibernate
@@ -391,12 +375,14 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-core-jakarta</artifactId>
-					<version>\${hibernate-series.version}</version>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-hibernate</artifactId>
+					<version>\${hisrc-hyperjaxb.version}</version>
 				</dependency>
 			</dependencies>
 		</profile>
+
 	</profiles>
+
 </project>
 <!-- vi:set tabstop=4 hardtabs=4 shiftwidth=4 noexpandtab:-->

@@ -116,8 +116,8 @@
 				<configuration>
 					<annotationProcessorPaths>
 						<path>
-							<groupId>org.hibernate</groupId>
-							<artifactId>hibernate-jpamodelgen-jakarta</artifactId>
+							<groupId>org.hibernate.orm</groupId>
+							<artifactId>hibernate-jpamodelgen</artifactId>
 							<version>\${hibernate-series.version}</version>
 						</path>
 					</annotationProcessorPaths>
@@ -217,6 +217,7 @@
 	</reporting>
 
 	<profiles>
+
 		<!-- Hints:
 			mvn -Peclipselink clean compile exec:java
 			Eclipse > Project > Properties > Maven > Acive Profiles: eclipselink
@@ -231,28 +232,9 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>org.eclipse.persistence</groupId>
-					<artifactId>eclipselink</artifactId>
-					<version>\${eclipselink.version}</version>
-					<exclusions>
-						<!-- In favor of org.glassfish.jaxb:jaxb-xjc -->
-						<exclusion>
-							<groupId>com.sun.xml.bind</groupId>
-							<artifactId>jaxb-xjc</artifactId>
-						</exclusion>
-					</exclusions>
-				</dependency>
-				<dependency>
-					<groupId>org.eclipse.persistence</groupId>
-					<artifactId>org.eclipse.persistence.extension</artifactId>
-					<version>\${eclipselink.version}</version>
-					<exclusions>
-						<!-- In favor of org.eclipse.persistence:eclipselink -->
-						<exclusion>
-							<groupId>org.eclipse.persistence</groupId>
-							<artifactId>org.eclipse.persistence.core</artifactId>
-						</exclusion>
-					</exclusions>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-eclipselink</artifactId>
+					<version>\${hisrc-hyperjaxb.version}</version>
 				</dependency>
 			</dependencies>
 			<build>
@@ -279,6 +261,7 @@
 				</plugins>
 			</build>
 		</profile>
+
 		<!-- Hints:
 			mvn -Phibernate clean compile exec:java
 			Eclipse > Project > Properties > Maven > Acive Profiles: hibernate
@@ -293,12 +276,13 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-core-jakarta</artifactId>
-					<version>\${hibernate-series.version}</version>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-hibernate</artifactId>
+					<version>\${hisrc-hyperjaxb.version}</version>
 				</dependency>
 			</dependencies>
 		</profile>
+
 	</profiles>
 
 </project>

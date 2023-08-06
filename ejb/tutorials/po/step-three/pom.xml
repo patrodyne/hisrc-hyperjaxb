@@ -96,7 +96,6 @@
 				<configuration>
 					<ignoredUnusedDeclaredDependencies>
 						<ignoredUnusedDeclaredDependency>org.glassfish.jaxb:jaxb-runtime:jar:</ignoredUnusedDeclaredDependency>
-						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-core-jakarta:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>com.h2database:h2:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-simple:jar:</ignoredUnusedDeclaredDependency>
 					</ignoredUnusedDeclaredDependencies>

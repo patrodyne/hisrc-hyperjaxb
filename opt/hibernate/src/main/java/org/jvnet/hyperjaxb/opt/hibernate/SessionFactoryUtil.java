@@ -117,15 +117,18 @@ import org.hibernate.tool.schema.Action;
 import org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator;
 import org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.ActionGrouping;
 import org.jvnet.hyperjaxb.ejb.util.TransactionalSql;
-import org.jvnet.basicjaxb.reflection.util.FieldAccessor;
+import org.jvnet.hyperjaxb.reflection.util.FieldAccessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Utility methods for a SessionFactory.
  * 
+ * TODO: Review deprecated options.
+ * 
  * @author Rick O'Sullivan
  */
+@SuppressWarnings("deprecation")
 public class SessionFactoryUtil
 {
 	private static Logger log = LoggerFactory.getLogger(SessionFactoryUtil.class);

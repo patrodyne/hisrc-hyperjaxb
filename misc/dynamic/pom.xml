@@ -34,8 +34,8 @@
 			<artifactId>jaxb-xjc</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core-jakarta</artifactId>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-opt-hibernate</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

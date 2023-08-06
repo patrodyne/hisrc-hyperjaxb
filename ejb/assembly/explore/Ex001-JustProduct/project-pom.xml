@@ -11,6 +11,7 @@
 	<name>HyperJAXB EJB - Ex001 - JustProduct</name>
 
 	<properties>
+		<maven-antrun-plugin.version>${maven-antrun-plugin.version}</maven-antrun-plugin.version>
 		<maven.compiler.release>${maven.compiler.release}</maven.compiler.release>
 		<maven-min.version>${maven-min.version}</maven-min.version>
 
@@ -243,8 +244,8 @@
 				<configuration>
 					<annotationProcessorPaths>
 						<path>
-							<groupId>org.hibernate</groupId>
-							<artifactId>hibernate-jpamodelgen-jakarta</artifactId>
+							<groupId>org.hibernate.orm</groupId>
+							<artifactId>hibernate-jpamodelgen</artifactId>
 							<version>\${hibernate-series.version}</version>
 						</path>
 					</annotationProcessorPaths>
@@ -378,6 +379,75 @@
 			</plugin>
 		</plugins>
 	</reporting>
+
+	<profiles>
+
+		<!-- Hints:
+			mvn -Peclipselink clean compile exec:java
+			Eclipse > Project > Properties > Maven > Acive Profiles: eclipselink
+		-->
+		<profile>
+			<id>eclipselink</id>
+			<activation>
+				<property>
+					<name>org.jvnet.hyperjaxb.persistence</name>
+					<value>eclipselink</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-eclipselink</artifactId>
+					<version>\${hisrc-hyperjaxb.version}</version>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>\${maven-antrun-plugin.version}</version>
+						<executions>
+							<execution>
+								<?m2e ignore?>
+								<id>runtime</id>
+								<phase>compile</phase>
+								<configuration>
+									<target>
+										<mkdir dir="\${project.build.directory}/test-database-sql" />
+									</target>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- Hints:
+			mvn -Phibernate clean compile exec:java
+			Eclipse > Project > Properties > Maven > Acive Profiles: hibernate
+		-->
+		<profile>
+			<id>hibernate</id>
+			<activation>
+				<property>
+					<name>org.jvnet.hyperjaxb.persistence</name>
+					<value>!eclipselink</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-hibernate</artifactId>
+					<version>\${hisrc-hyperjaxb.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
+	</profiles>
 
 </project>
 <!-- vi:set tabstop=4 hardtabs=4 shiftwidth=4 noexpandtab:-->

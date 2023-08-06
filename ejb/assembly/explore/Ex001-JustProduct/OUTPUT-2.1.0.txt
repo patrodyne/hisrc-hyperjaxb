@@ -1,0 +1,213 @@
+[INFO] -----------< org.patrodyne.jvnet:hisrc-hyperjaxb-ejb-ex001 >------------
+[INFO] Building HyperJAXB EJB - Ex001 - JustProduct 2.1.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.5.0:tree (default-cli) @ hisrc-hyperjaxb-ejb-ex001 ---
+[INFO] org.patrodyne.jvnet:hisrc-hyperjaxb-ejb-ex001:jar:2.1.0
+[INFO] +- org.patrodyne.jvnet:hisrc-hyperjaxb-opt-hibernate:jar:2.1.0:compile
+[INFO] |  +- org.patrodyne.jvnet:hisrc-basicjaxb-tools:jar:2.1.0:compile
+[INFO] |  |  +- commons-beanutils:commons-beanutils:jar:1.9.4:compile
+[INFO] |  |  |  \- commons-collections:commons-collections:jar:3.2.2:compile
+[INFO] |  |  +- org.glassfish.jaxb:codemodel:jar:4.0.2:compile
+[INFO] |  |  +- org.glassfish.jaxb:xsom:jar:4.0.2:compile
+[INFO] |  |  |  \- com.sun.xml.bind.external:relaxng-datatype:jar:4.0.2:compile
+[INFO] |  |  +- org.glassfish.jaxb:jaxb-runtime:jar:4.0.2:compile
+[INFO] |  |  |  \- org.glassfish.jaxb:jaxb-core:jar:4.0.2:compile
+[INFO] |  |  |     +- org.eclipse.angus:angus-activation:jar:2.0.0:runtime
+[INFO] |  |  |     +- org.glassfish.jaxb:txw2:jar:4.0.2:compile
+[INFO] |  |  |     \- com.sun.istack:istack-commons-runtime:jar:4.1.1:compile
+[INFO] |  |  \- org.glassfish.jaxb:jaxb-xjc:jar:4.0.2:compile
+[INFO] |  |     +- com.sun.xml.bind.external:rngom:jar:4.0.2:compile
+[INFO] |  |     +- com.sun.xml.dtd-parser:dtd-parser:jar:1.5.0:compile
+[INFO] |  |     \- com.sun.istack:istack-commons-tools:jar:4.1.1:compile
+[INFO] |  +- org.patrodyne.jvnet:hisrc-hyperjaxb-ejb-runtime:jar:2.1.0:compile
+[INFO] |  +- io.smallrye:jandex:jar:3.0.5:compile
+[INFO] |  +- org.hibernate:hibernate-core-jakarta:jar:5.6.15.Final:compile
+[INFO] |  |  +- org.jboss.logging:jboss-logging:jar:3.4.3.Final:compile
+[INFO] |  |  +- jakarta.persistence:jakarta.persistence-api:jar:3.0.0:compile
+[INFO] |  |  +- net.bytebuddy:byte-buddy:jar:1.12.18:compile
+[INFO] |  |  +- antlr:antlr:jar:2.7.7:compile
+[INFO] |  |  +- jakarta.transaction:jakarta.transaction-api:jar:2.0.0:compile
+[INFO] |  |  +- com.fasterxml:classmate:jar:1.5.1:compile
+[INFO] |  |  +- jakarta.activation:jakarta.activation-api:jar:2.0.1:compile
+[INFO] |  |  +- org.dom4j:dom4j:jar:2.1.3:compile
+[INFO] |  |  \- org.hibernate.common:hibernate-commons-annotations:jar:5.1.2.Final:compile
+[INFO] |  +- org.hibernate:hibernate-jcache:jar:5.6.15.Final:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.6:compile
+[INFO] +- org.patrodyne.jvnet:hisrc-hyperjaxb-opt-hikaricp:jar:2.1.0:test
+[INFO] |  +- com.zaxxer:HikariCP:jar:5.0.1:test
+[INFO] |  \- org.hibernate:hibernate-hikaricp:jar:5.6.15.Final:test
+[INFO] +- org.ehcache:ehcache:jar:jakarta:3.10.8:runtime
+[INFO] |  \- javax.cache:cache-api:jar:1.1.0:compile
+[INFO] +- org.slf4j:slf4j-simple:jar:2.0.7:test
+[INFO] +- org.patrodyne.jvnet:hisrc-hyperjaxb-ejb-roundtrip:jar:2.1.0:test
+[INFO] |  +- commons-io:commons-io:jar:2.11.0:compile
+[INFO] |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:4.0.0:compile
+[INFO] |  +- org.apache.commons:commons-lang3:jar:3.12.0:compile
+[INFO] |  +- org.patrodyne.jvnet:hisrc-basicjaxb-runtime:jar:2.1.0:compile
+[INFO] |  +- org.patrodyne.jvnet:hisrc-basicjaxb-testing:jar:2.1.0:test
+[INFO] |  \- xmlunit:xmlunit:jar:1.6:test
+[INFO] +- com.h2database:h2:jar:2.2.220:test
+[INFO] +- org.postgresql:postgresql:jar:42.6.0:compile
+[INFO] |  \- org.checkerframework:checker-qual:jar:3.31.0:runtime
+[INFO] \- org.junit.jupiter:junit-jupiter-api:jar:5.10.0:compile
+[INFO]    +- org.opentest4j:opentest4j:jar:1.3.0:compile
+[INFO]    +- org.junit.platform:junit-platform-commons:jar:1.10.0:compile
+[INFO]    \- org.apiguardian:apiguardian-api:jar:1.1.2:compile
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.378 s
+[INFO] Finished at: 2023-08-04T12:13:12-04:00
+[INFO] ------------------------------------------------------------------------
+
+Persistence Configuration Properties, External:
+
+  hibernate.cache.region.factory_class = org.hibernate.cache.jcache.internal.JCacheRegionFactory
+  hibernate.cache.region_prefix = podb
+  hibernate.cache.use_query_cache = true
+  hibernate.cache.use_second_level_cache = true
+  hibernate.connection.driver_class = org.h2.Driver
+  hibernate.connection.isolation = READ_COMMITTED
+  hibernate.connection.password = ****
+  hibernate.connection.provider_class = org.patrodyne.jvnet.hyperjaxb.opt.hikaricp.HikariCPHyperConnectionProvider
+  hibernate.connection.url = jdbc:h2:file:./target/test-database/h2db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1;TRACE_LEVEL_FILE=1
+  hibernate.connection.username = ****
+  hibernate.default_schema = public
+  hibernate.dialect = org.hibernate.dialect.PostgreSQL95Dialect
+  hibernate.discriminator.ignore_explicit_for_joined = true
+  hibernate.ejb.persistenceUnitName = org.patrodyne.jvnet.hyperjaxb.ex001.model
+  hibernate.format_sql = true
+  hibernate.generate_statistics = true
+  hibernate.hikari.schema = public
+  hibernate.javax.cache.missing_cache_strategy = create
+  hibernate.javax.cache.uri = /ehcache-podb.xml
+  hibernate.persistenceUnitName = org.patrodyne.jvnet.hyperjaxb.ex001.model
+  hibernate.show_sql = false
+  hibernate.transaction.coordinator_class = org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorBuilderImpl
+  jakarta.persistence.jdbc.driver = org.h2.Driver
+  jakarta.persistence.jdbc.password = ****
+  jakarta.persistence.jdbc.url = jdbc:h2:file:./target/test-database/h2db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1;TRACE_LEVEL_FILE=1
+  jakarta.persistence.jdbc.user = ****
+  jakarta.persistence.schema-generation.database.action = drop-and-create
+  jakarta.persistence.schema-generation.scripts.action = drop-and-create
+  jakarta.persistence.schema-generation.scripts.create-target = target/test-database-sql/ddl-create.sql
+  jakarta.persistence.schema-generation.scripts.drop-target = target/test-database-sql/ddl-drop.sql
+  jakarta.persistence.sharedCache.mode = ENABLE_SELECTIVE
+  javax.persistence.jdbc.driver = org.h2.Driver
+  javax.persistence.jdbc.password = ****
+  javax.persistence.jdbc.url = jdbc:h2:file:./target/test-database/h2db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1;TRACE_LEVEL_FILE=1
+  javax.persistence.jdbc.user = ****
+  org.jvnet.hyperjaxb.persistencePropertiesBaseFile = persistence.properties
+  org.jvnet.hyperjaxb.persistencePropertiesMoreFile = persistence-h2.properties
+
+Persistence Configuration Properties, Internal:
+
+  hibernate.allow_update_outside_transaction = false
+  hibernate.batch_fetch_style = LEGACY
+  hibernate.cache.auto_evict_collection_cache = false
+  hibernate.cache.default_cache_concurrency_strategy = READ_WRITE
+  hibernate.cache.query_cache_factory = org.hibernate.cache.internal.StandardTimestampsCacheFactory
+  hibernate.cache.region.factory_class = org.hibernate.cache.jcache.internal.JCacheRegionFactory
+  hibernate.cache.region_prefix = podb
+  hibernate.cache.use_minimal_puts = false
+  hibernate.cache.use_query_cache = true
+  hibernate.cache.use_reference_entries = false
+  hibernate.cache.use_second_level_cache = true
+  hibernate.cache.use_structured_entries = false
+  hibernate.check_nullability = true
+  hibernate.connection.autocommit = true
+  hibernate.connection.driver_class = org.h2.Driver
+  hibernate.connection.handling_mode = DELAYED_ACQUISITION_AND_RELEASE_AFTER_TRANSACTION
+  hibernate.connection.isolation = READ_COMMITTED
+  hibernate.connection.password = ****
+  hibernate.connection.provider_class = org.patrodyne.jvnet.hyperjaxb.opt.hikaricp.HikariCPHyperConnectionProvider
+  hibernate.connection.url = jdbc:h2:file:./target/test-database/h2db
+  hibernate.connection.username = TESTER
+  hibernate.default_batch_fetch_size = -1
+  hibernate.default_catalog = h2db
+  hibernate.default_schema = public
+  hibernate.dialect = org.hibernate.dialect.PostgreSQL95Dialect
+  hibernate.entity_dirtiness_strategy = org.hibernate.boot.internal.DefaultCustomEntityDirtinessStrategy
+  hibernate.format_sql = true
+  hibernate.generate_statistics = true
+  hibernate.hbm2ddl.auto = create
+  hibernate.hikari.allowPoolSuspension = false
+  hibernate.hikari.autoCommit = true
+  hibernate.hikari.catalog = null
+  hibernate.hikari.connectionInitSql = null
+  hibernate.hikari.connectionTestQuery = null
+  hibernate.hikari.connectionTimeout = 30000
+  hibernate.hikari.dataSource = null
+  hibernate.hikari.dataSourceClassName = null
+  hibernate.hikari.dataSourceJNDI = null
+  hibernate.hikari.dataSourceProperties = {}
+  hibernate.hikari.driverClassName = org.h2.Driver
+  hibernate.hikari.exceptionOverrideClassName = null
+  hibernate.hikari.healthCheckProperties = {}
+  hibernate.hikari.healthCheckRegistry = null
+  hibernate.hikari.idleTimeout = 600000
+  hibernate.hikari.initializationFailTimeout = 1
+  hibernate.hikari.isolateInternalQueries = false
+  hibernate.hikari.jdbcUrl = jdbc:h2:file:./target/test-database/h2db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1;TRACE_LEVEL_FILE=1
+  hibernate.hikari.keepaliveTime = 0
+  hibernate.hikari.leakDetectionThreshold = 0
+  hibernate.hikari.maxLifetime = 1800000
+  hibernate.hikari.maximumPoolSize = 10
+  hibernate.hikari.metricRegistry = null
+  hibernate.hikari.metricsTrackerFactory = null
+  hibernate.hikari.minimumIdle = 10
+  hibernate.hikari.password = 123456
+  hibernate.hikari.poolName = HikariPool-1
+  hibernate.hikari.readOnly = false
+  hibernate.hikari.registerMbeans = false
+  hibernate.hikari.scheduledExecutor = null
+  hibernate.hikari.schema = public
+  hibernate.hikari.threadFactory = null
+  hibernate.hikari.transactionIsolation = TRANSACTION_READ_COMMITTED
+  hibernate.hikari.username = tester
+  hibernate.hikari.validationTimeout = 5000
+  hibernate.javax.cache.missing_cache_strategy = CREATE
+  hibernate.javax.cache.provider = org.ehcache.jsr107.EhcacheCachingProvider
+  hibernate.javax.cache.uri = file:/home/rick/dev/work/repos/jvnet/hisrc-hyperjaxb/ejb/assembly/explore/Ex001-JustProduct/target/hisrc-hyperjaxb-ex001-2.1.0/target/classes/ehcache-podb.xml
+  hibernate.jdbc.batch_size = 15
+  hibernate.jdbc.batch_versioned_data = true
+  hibernate.jdbc.fetch_size = 100
+  hibernate.jdbc.use_get_generated_keys = true
+  hibernate.jdbc.use_scrollable_resultset = true
+  hibernate.jta.allowTransactionAccess = false
+  hibernate.jta.cacheTransactionManager = true
+  hibernate.jta.cacheUserTransaction = false
+  hibernate.jta.prefer_user_transaction = false
+  hibernate.jta.track_by_thread = true
+  hibernate.max_fetch_depth = null
+  hibernate.order_inserts = false
+  hibernate.order_updates = false
+  hibernate.persistenceUnitName = org.patrodyne.jvnet.hyperjaxb.ex001.model
+  hibernate.query.jpaql_strict_compliance = 
+  hibernate.query.startup_check = true
+  hibernate.session_factory.interceptor = org.hibernate.EmptyInterceptor
+  hibernate.session_factory.session_scoped_interceptor = null
+  hibernate.session_factory.statement_inspector = null
+  hibernate.session_factory_name = null
+  hibernate.session_factory_name_is_jndi = true
+  hibernate.show_sql = false
+  hibernate.tenant_identifier_resolver = null
+  hibernate.transaction.auto_close_session = false
+  hibernate.transaction.flush_before_completion = true
+  hibernate.transaction.jta.platform = org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
+  hibernate.transaction.jta.platform_resolver = org.hibernate.engine.transaction.jta.platform.internal.StandardJtaPlatformResolver
+  hibernate.use_identifier_rollback = false
+  hibernate.use_sql_comments = false
+  jakarta.persistence.cache.retrieveMode = USE
+  jakarta.persistence.cache.storeMode = USE
+  javax.persistence.jtaDataSource = null
+  javax.persistence.nonJtaDataSource = null
+  javax.persistence.schema-generation-connection = jdbc:h2:file:./target/test-database/h2db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1;TRACE_LEVEL_FILE=1
+  javax.persistence.schema-generation.database.action = drop-and-create
+  javax.persistence.schema-generation.scripts.action = drop-and-create
+  javax.persistence.schema-generation.scripts.create-target = null
+  javax.persistence.schema-generation.scripts.drop-target = null
+  javax.persistence.sharedCache.mode = UNSPECIFIED
+

@@ -91,7 +91,6 @@
 				<configuration>
 					<ignoredUnusedDeclaredDependencies>
 						<ignoredUnusedDeclaredDependency>org.glassfish.jaxb:jaxb-runtime:jar:</ignoredUnusedDeclaredDependency>
-						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-core-jakarta:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>com.h2database:h2:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-simple:jar:</ignoredUnusedDeclaredDependency>
 					</ignoredUnusedDeclaredDependencies>
@@ -117,13 +116,8 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>org.eclipse.persistence</groupId>
-					<artifactId>eclipselink</artifactId>
-					<scope>test</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.eclipse.persistence</groupId>
-					<artifactId>org.eclipse.persistence.extension</artifactId>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-eclipselink</artifactId>
 					<scope>test</scope>
 				</dependency>
 			</dependencies>
@@ -145,8 +139,8 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-core-jakarta</artifactId>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-hibernate</artifactId>
 					<scope>test</scope>
 				</dependency>
 			</dependencies>

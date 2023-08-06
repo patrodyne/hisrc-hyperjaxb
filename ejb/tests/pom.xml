@@ -19,7 +19,9 @@
 		<module>ak</module>
 		<module>any</module>
 		<module>bibtexml</module>
+		<!-- LONG RUNNING
 		<module>ccr</module>
+		-->
 		<module>component-jpa</module>
 		<module>cu-one</module>
 		<module>custom-naming</module>
@@ -29,7 +31,11 @@
 		<module>device</module>
 		<module>dom</module>
 		<module>dy</module>
+		<!-- Hibernate 6.2.7.Final: SemanticException: 
+		     Could not resolve attribute of due to the
+			 attribute being declared in multiple sub types.
 		<module>ebxmlrr</module>
+		-->
 		<module>edxl</module>
 		<module>ek</module>
 		<module>embeddable</module>
@@ -229,18 +235,9 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>org.eclipse.persistence</groupId>
-					<artifactId>eclipselink</artifactId>
-					<scope>test</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.eclipse.persistence</groupId>
-					<artifactId>org.eclipse.persistence.extension</artifactId>
-					<scope>test</scope>
-				</dependency>
-				<dependency>
 					<groupId>org.patrodyne.jvnet</groupId>
 					<artifactId>hisrc-hyperjaxb-opt-eclipselink</artifactId>
+					<scope>test</scope>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -261,8 +258,8 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-core-jakarta</artifactId>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-hibernate</artifactId>
 					<scope>test</scope>
 				</dependency>
 			</dependencies>

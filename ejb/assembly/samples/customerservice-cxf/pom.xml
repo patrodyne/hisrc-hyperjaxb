@@ -295,7 +295,6 @@
 						<ignoredUnusedDeclaredDependency>junit-jupiter:junit-jupiter-api:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.apache.cxf:cxf-rt-frontend-jaxws:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.apache.cxf:cxf-rt-transports-http:jar:</ignoredUnusedDeclaredDependency>
-						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-core-jakarta:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.hisrc.hifaces20:hifaces20-testing:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>com.h2database:h2:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.patrodyne.jvnet:hisrc-basicjaxb:jar:</ignoredUnusedDeclaredDependency>

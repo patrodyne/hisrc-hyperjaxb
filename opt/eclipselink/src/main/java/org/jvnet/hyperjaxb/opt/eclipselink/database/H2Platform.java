@@ -1,4 +1,4 @@
-package org.jvnet.hyperjaxb.opt.eclipselink;
+package org.jvnet.hyperjaxb.opt.eclipselink.database;
 
 import java.io.IOException;
 import java.io.Writer;

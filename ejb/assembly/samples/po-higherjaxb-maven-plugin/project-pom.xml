@@ -9,13 +9,14 @@
 	<packaging>jar</packaging>
 	<name>${project.name}</name>
 	<properties>
+		<maven-antrun-plugin.version>${maven-antrun-plugin.version}</maven-antrun-plugin.version>
 		<maven.compiler.release>${maven.compiler.release}</maven.compiler.release>
 		<maven-min.version>${maven-min.version}</maven-min.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<hisrc-hyperjaxb.version>${hisrc-hyperjaxb.version}</hisrc-hyperjaxb.version>
 		<h2database.version>${h2database.version}</h2database.version>
 		<postgresql.version>${postgresql.version}</postgresql.version>
-		<hibernate-series.version>${hibernate-series.version}</hibernate-series.version>
 		<jpa-api.version>${jpa-api.version}</jpa-api.version>
 		<jaxb-api.version>${jaxb-api.version}</jaxb-api.version>
 		<jaxb-imp.version>${jaxb-imp.version}</jaxb-imp.version>
@@ -72,13 +73,6 @@
 			<version>${hisrc-hyperjaxb.version}</version>
 		</dependency>
 
-		<!-- Hibernate Dependencies -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core-jakarta</artifactId>
-			<version>\${hibernate-series.version}</version>
-			<scope>test</scope>
-		</dependency>
 		<!-- Database -->
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -344,7 +338,6 @@
 				<configuration>
 					<ignoredUnusedDeclaredDependencies>
 						<ignoredUnusedDeclaredDependency>org.glassfish.jaxb:jaxb-runtime:jar:</ignoredUnusedDeclaredDependency>
-						<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-core-jakarta:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>com.h2database:h2:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-api:jar:</ignoredUnusedDeclaredDependency>
 						<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-simple:jar:</ignoredUnusedDeclaredDependency>
@@ -363,5 +356,75 @@
 			</plugin>
 		</plugins>
 	</reporting>
+
+	<profiles>
+
+		<!-- Hints:
+			mvn -Peclipselink clean compile exec:java
+			Eclipse > Project > Properties > Maven > Acive Profiles: eclipselink
+		-->
+		<profile>
+			<id>eclipselink</id>
+			<activation>
+				<property>
+					<name>org.jvnet.hyperjaxb.persistence</name>
+					<value>eclipselink</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-eclipselink</artifactId>
+					<version>\${hisrc-hyperjaxb.version}</version>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>\${maven-antrun-plugin.version}</version>
+						<?m2e ignore?>
+						<executions>
+							<execution>
+								<id>runtime</id>
+								<phase>compile</phase>
+								<configuration>
+									<target>
+										<mkdir dir="\${project.build.directory}/test-database-sql" />
+									</target>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- Hints:
+			mvn -Phibernate clean compile exec:java
+			Eclipse > Project > Properties > Maven > Acive Profiles: hibernate
+		-->
+		<profile>
+			<id>hibernate</id>
+			<activation>
+				<property>
+					<name>org.jvnet.hyperjaxb.persistence</name>
+					<value>!eclipselink</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-hibernate</artifactId>
+					<version>\${hisrc-hyperjaxb.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
+	</profiles>
+
 </project>
 <!-- vi:set tabstop=4 hardtabs=4 shiftwidth=4 noexpandtab:-->

@@ -17,7 +17,7 @@
 		<fileset dir="\${basedir}/lib">
 			<include name="jakarta.xml.bind-api-*.jar"/>
 			<include name="jakarta.persistence-api-*.jar"/>
-			<include name="hibernate-jpamodelgen-jakarta-*.jar"/>
+			<include name="hibernate-jpamodelgen-*.jar"/>
 			<include name="hisrc-basicjaxb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
@@ -40,7 +40,7 @@
 		<pathelement location="\${basedir}/target/classes"/>
 		<pathelement location="\${basedir}/target/test-classes"/>
 		<fileset dir="\${basedir}/lib">
-			<include name="antlr-*.jar"/>
+			<include name="antlr4-runtime-*.jar"/>
 			<include name="byte-buddy*.jar"/>
 			<include name="classmate*.jar"/>
 			<include name="commons-io-*.jar"/>
@@ -48,7 +48,7 @@
 			<include name="eclipselink-*.jar"/>
 			<include name="org.eclipse.persistence.extension-*.jar"/>
 			<include name="hibernate-commons-annotations-*.jar"/>
-			<include name="hibernate-core-jakarta-*.jar"/>
+			<include name="hibernate-core-*.jar"/>
 			<include name="jakarta.activation-api-*.jar"/>
 			<include name="jakarta.activation-*.jar"/>
 			<include name="jakarta.persistence-api-*.jar"/>
@@ -64,8 +64,10 @@
 			<include name="hisrc-basicjaxb-testing-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
+			<include name="hisrc-hyperjaxb-opt-hibernate-*.jar"/>
 			<include name="istack-commons-runtime-*.jar"/>
 			<include name="h2-*.jar"/>
+			<include name="postgresql-*.jar"/>
 			<include name="slf4j-*.jar"/>
 			<include name="txw2-*.jar"/>
 			<include name="junit-jupiter-api-*.jar"/>

@@ -6,4 +6,4 @@ BUILD_LOG="false"
 
 # Choose one JPA provider
 #MAVEN_ARGS="-Peclipselink"
- MAVEN_ARGS="-Phibernate"
+#MAVEN_ARGS="-Phibernate"

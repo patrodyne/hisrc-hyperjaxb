@@ -156,7 +156,11 @@ public class EntityManagerFactoryUtil
 						logger.debug("Loading more entity manager factory properties.");
 						properties = loadResources(properties, resourcesMore);
 					}
+					else
+						logger.debug("More entity manager factory properties not found: {}.", getPersistencePropertiesMoreFile());
 				}
+				else
+					logger.warn("Entity manager factory properties not found: {}.", getPersistencePropertiesBaseFile());
 				return toMap(properties);
 			}
 			else

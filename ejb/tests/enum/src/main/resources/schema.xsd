@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema
   targetNamespace="urn:test"
   xmlns:test="urn:test"
@@ -26,7 +27,7 @@
 			<hj:persistence>
 				<hj:default-single-property type="test:issue143BType">
 					<hj:basic>
-						<orm:column scale="2" precision="1"/>
+						<orm:column precision="3" scale="2"/>
 						<hj:enumerated-value/>
 					</hj:basic>
 				</hj:default-single-property>
@@ -137,8 +138,8 @@
 				<jaxb:typesafeEnumClass/>
 			</xsd:appinfo>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:double">
-			<xsd:enumeration value="0.5">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:enumeration value="0.50">
 				<xsd:annotation>
 					<xsd:appinfo>
 						<jaxb:typesafeEnumMember name="ONE_HALF"/>
