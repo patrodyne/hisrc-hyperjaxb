@@ -1,5 +1,6 @@
 package org.jvnet.hyperjaxb.jpa.tests;
 
+import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,17 +9,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBElement;
-import jakarta.xml.bind.JAXBException;
-
-import org.junit.jupiter.api.Test;
-
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.Validate;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.jpa.Persistence;
 import org.jvnet.hyperjaxb.jpa.SingleProperty;
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
 
 public class UnmarshalPersistenceTest {
 
@@ -28,7 +27,7 @@ public class UnmarshalPersistenceTest {
 
 	protected Persistence unmarshal(String resourceName) throws IOException,
 			JAXBException {
-		Validate.notNull(resourceName);
+		requireNonNull(resourceName);
 		final InputStream is;
 		if (resourceName.startsWith("/")) {
 			is = getClass().getClassLoader().getResourceAsStream(

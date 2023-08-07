@@ -1,6 +1,7 @@
 package org.jvnet.hyperjaxb.ejb.strategy.customizing.impl;
 
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
+import static java.util.Objects.requireNonNull;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.containsCustomization;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.getInfo;
 import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
@@ -16,7 +17,6 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.basicjaxb.lang.JAXBMergeStrategy;
 import org.jvnet.basicjaxb.lang.MergeFrom;
 import org.jvnet.basicjaxb.lang.MergeStrategy;
@@ -184,7 +184,7 @@ public class DefaultCustomizing implements Customizing
 				final T t = (T) CustomizationUtils.unmarshall(Customizations.getContext(), customization);
 				if (defaultValue != null)
 				{
-					Validate.notNull(merge);
+					requireNonNull(merge);
 					merge.merge(t, defaultValue);
 				}
 				this.customizationsMap.put(customization, t);
@@ -575,8 +575,8 @@ public class DefaultCustomizing implements Customizing
 
 	public SingleProperty getDefaultSingleProperty(Persistence persistence, QName typeName)
 	{
-		Validate.notNull(persistence);
-		Validate.notNull(typeName);
+		requireNonNull(persistence);
+		requireNonNull(typeName);
 		for (final SingleProperty property : persistence.getDefaultSingleProperty())
 		{
 			if (typeName.equals(property.getType()))
@@ -589,8 +589,8 @@ public class DefaultCustomizing implements Customizing
 
 	public CollectionProperty getDefaultCollectionProperty(Persistence persistence, QName typeName)
 	{
-		Validate.notNull(persistence);
-		Validate.notNull(typeName);
+		requireNonNull(persistence);
+		requireNonNull(typeName);
 		for (final CollectionProperty property : persistence.getDefaultCollectionProperty())
 		{
 			if (typeName.equals(property.getType()))

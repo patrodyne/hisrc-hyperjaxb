@@ -1,11 +1,12 @@
 package org.jvnet.hyperjaxb.basicjaxb.lang;
 
-import org.apache.commons.lang3.Validate;
+import static java.util.Objects.requireNonNull;
+
+import org.jvnet.basicjaxb.lang.MergeStrategy;
+import org.jvnet.basicjaxb.locator.ObjectLocator;
 import org.jvnet.hyperjaxb.jpa.Mergeable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jvnet.basicjaxb.lang.MergeStrategy;
-import org.jvnet.basicjaxb.locator.ObjectLocator;
 
 public class MergeableMergeStrategy implements MergeStrategy
 {
@@ -35,7 +36,7 @@ public class MergeableMergeStrategy implements MergeStrategy
 
 	public MergeableMergeStrategy(MergeStrategy mergeStrategy)
 	{
-		Validate.notNull(mergeStrategy);
+		requireNonNull(mergeStrategy);
 		setMergeStrategy(mergeStrategy);
 	}
 

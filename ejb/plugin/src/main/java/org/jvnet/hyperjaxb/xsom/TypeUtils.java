@@ -1,10 +1,10 @@
 package org.jvnet.hyperjaxb.xsom;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 
 import javax.xml.namespace.QName;
-
-import org.apache.commons.lang3.Validate;
 
 import com.sun.xml.xsom.XSComponent;
 
@@ -18,7 +18,7 @@ public class TypeUtils
 {
 	public static List<QName> getTypeNames(XSComponent component)
 	{
-		Validate.notNull(component);
+		requireNonNull(component);
 		final SimpleTypeVisitor visitor = new SimpleTypeVisitor();
 		component.visit(visitor);
 		return visitor.getTypeNames();
