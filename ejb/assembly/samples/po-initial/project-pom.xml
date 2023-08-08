@@ -7,7 +7,7 @@
 
 	<groupId>org.patrodyne.jvnet</groupId>
 	<artifactId>hisrc-hyperjaxb-ejb-sample-po-initial-maven</artifactId>
-	<version>2.1.0</version>
+	<version>${hisrc-hyperjaxb.version}</version>
 	<packaging>jar</packaging>
 	<name>HiSrc HyperJAXB EJB Assembly Sample [po-initial]</name>
 

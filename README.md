@@ -4,12 +4,14 @@ Maven and XJC plugins to add JPA annotations to JAXB.
 
 ## Description
 
-This repository is a fork of [hyperjaxb3][25]. The original project was developed by the admirable
-Alexey Valikov (a.k.a. [Highsource][2]). This repository contains Java projects to build Maven artifact(s)
-related to the Java Architecture for XML Binding (JAXB) framework. It is one of a family of repositories
-forked from [Highsource][2] that provide tools for JAXB and JPA processing. Repo and artifact names have
-been changed to reflect the familial connection between the repositories and to fix a conformance issue
-with the original `maven-jaxb2-plugin` name.
+This repository is a fork of [hyperjaxb3][25]. The original project was
+developed by the admirable Alexey Valikov (a.k.a. [Highsource][2]). This
+repository contains Java projects to build Maven artifact(s) related to the
+Java Architecture for XML Binding (JAXB) framework. It is one of a family of
+repositories forked from [Highsource][2] that provide tools for JAXB and JPA
+processing. Repo and artifact names have been changed to reflect the familial
+connection between the repositories and to fix a conformance issue with the
+original `maven-jaxb2-plugin` name.
 
 ### List of repositories in this family
 
@@ -37,6 +39,7 @@ with the original `maven-jaxb2-plugin` name.
 
 #### GitHub Releases, Demonstrations
 
+* [HiSrc HyperJAXB v2.1.1, Explorations][34]
 * [HiSrc HyperJAXB v2.1.0, Explorations][33]
 * [HiSrc HyperJAXB v2.0.0, Explorations][32]
 * [HiSrc HyperJAXB v0.6.4, Explorations][31]
@@ -68,6 +71,20 @@ New goals for the next release are:
 * Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
 
 ### Fork History
+
+#### Version 2.1.1
+
+* Standardized the plugin option name and usage for all XJC plugins.
+* Standardized logging and error handling for all XJC plugins.
+* Added `generateValueConstructor` param to `HyperjaxbMojo`.
+* Adding sample: [publication](https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/publication/README.md).
+* Removed inappropriate precision/scale for `double`/`float` defaults.
+* Enable all tests to use either *Hibernate* or *EclipseLink* JPA providers.
+* Limit inheritance to extended roots.
+* Update Hibernate to 6.x series.
+* Read JVM properties from main or test.
+* Update plugin and dependency versions.
+* Resolved deprecated method(s).
 
 #### Version 2.1.0
 
@@ -157,3 +174,4 @@ New goals for the next release are:
   [31]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/0.6.4
   [32]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/2.0.0
   [33]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/2.1.0
+  [34]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/2.1.1

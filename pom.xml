@@ -101,10 +101,10 @@
 		<ehcache.version>3.10.8</ehcache.version>
 		<hibernate-series.version>6.2.7.Final</hibernate-series.version>
 		<HikariCP.version>5.0.1</HikariCP.version>
-		<hisrc-basicjaxb-annox-parser.version>2.1.1-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
-		<hisrc-basicjaxb.version>2.1.1-SNAPSHOT</hisrc-basicjaxb.version>
-		<hisrc-higherjaxb-maven-plugin.version>2.1.1-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
-		<hisrc-hyperjaxb-annox-plugin.version>2.1.1-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
+		<hisrc-basicjaxb-annox-parser.version>2.1.1</hisrc-basicjaxb-annox-parser.version>
+		<hisrc-basicjaxb.version>2.1.1</hisrc-basicjaxb.version>
+		<hisrc-higherjaxb-maven-plugin.version>2.1.1</hisrc-higherjaxb-maven-plugin.version>
+		<hisrc-hyperjaxb-annox-plugin.version>2.1.1</hisrc-hyperjaxb-annox-plugin.version>
 		<h2database.version>2.2.220</h2database.version>
 		<javassist.version>3.29.2-GA</javassist.version>
 		<jpa-api.version>3.1.0</jpa-api.version>
