@@ -273,30 +273,30 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	{
 		super.logConfiguration();
 
-		getLog().info("MOJO Configuration: target:" + getTarget());
-		getLog().info("MOJO Configuration: validateXml:" + isValidateXml());
-		getLog().info("MOJO Configuration: maxIdentifierLength:" + getMaxIdentifierLength());
-		getLog().info("MOJO Configuration: roundtripTestClassName:" + getRoundtripTestClassName());
-		getLog().info("MOJO Configuration: resourceIncludes:" + getResourceIncludes());
-		getLog().info("MOJO Configuration: variant:" + getVariant());
-		getLog().info("MOJO Configuration: persistenceUnitName:" + getPersistenceUnitName());
-		getLog().info("MOJO Configuration: persistenceXml:" + getPersistenceXml());
-		getLog().info("MOJO Configuration: generateInheritance:" + isGenerateInheritance());
-		getLog().info("MOJO Configuration: generateAnnotation:" + isGenerateAnnotation());
-		getLog().info("MOJO Configuration: generateHashCode:" + isGenerateHashCode());
-		getLog().info("MOJO Configuration: generateEquals:" + isGenerateEquals());
-		getLog().info("MOJO Configuration: generateToString:" + isGenerateToString());
-		getLog().info("MOJO Configuration: generateHET:" + getOverrideHET());
-		getLog().info("MOJO Configuration: generateTransientId:" + isGenerateTransientId());
-		getLog().info("MOJO Configuration: generateCopyable:" + isGenerateCopyable());
-		getLog().info("MOJO Configuration: generateMergeable" + isGenerateMergeable());
-		getLog().info("MOJO Configuration: generateValueConstructor" + isGenerateValueConstructor());
-		getLog().info("MOJO Configuration: result:" + getResult());
-		getLog().info("MOJO Configuration: preArgs:" + Arrays.toString(getPreArgs()));
-		getLog().info("MOJO Configuration: postArgs:" + Arrays.toString(getPostArgs()));
+		getLog().info("MOJO Configuration: target: " + getTarget());
+		getLog().info("MOJO Configuration: validateXml: " + isValidateXml());
+		getLog().info("MOJO Configuration: maxIdentifierLength: " + getMaxIdentifierLength());
+		getLog().info("MOJO Configuration: roundtripTestClassName: " + getRoundtripTestClassName());
+		getLog().info("MOJO Configuration: resourceIncludes: " + getResourceIncludes());
+		getLog().info("MOJO Configuration: variant: " + getVariant());
+		getLog().info("MOJO Configuration: persistenceUnitName: " + getPersistenceUnitName());
+		getLog().info("MOJO Configuration: persistenceXml: " + getPersistenceXml());
+		getLog().info("MOJO Configuration: generateInheritance: " + isGenerateInheritance());
+		getLog().info("MOJO Configuration: generateAnnotation: " + isGenerateAnnotation());
+		getLog().info("MOJO Configuration: generateHashCode: " + isGenerateHashCode());
+		getLog().info("MOJO Configuration: generateEquals: " + isGenerateEquals());
+		getLog().info("MOJO Configuration: generateToString: " + isGenerateToString());
+		getLog().info("MOJO Configuration: generateHET: " + getOverrideHET());
+		getLog().info("MOJO Configuration: generateTransientId: " + isGenerateTransientId());
+		getLog().info("MOJO Configuration: generateCopyable: " + isGenerateCopyable());
+		getLog().info("MOJO Configuration: generateMergeable: " + isGenerateMergeable());
+		getLog().info("MOJO Configuration: generateValueConstructor: " + isGenerateValueConstructor());
+		getLog().info("MOJO Configuration: result: " + getResult());
+		getLog().info("MOJO Configuration: preArgs: " + Arrays.toString(getPreArgs()));
+		getLog().info("MOJO Configuration: postArgs: " + Arrays.toString(getPostArgs()));
 		try
 		{
-			getLog().info("MOJO Configuration: XJC loaded from:"
+			getLog().info("MOJO Configuration: XJC loaded from: "
 				+ Options.class.getResource("Options.class").toURI().toURL().toExternalForm());
 		}
 		catch (IOException ioex)

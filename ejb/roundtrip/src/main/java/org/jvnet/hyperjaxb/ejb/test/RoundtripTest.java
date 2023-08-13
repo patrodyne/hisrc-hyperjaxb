@@ -4,6 +4,7 @@ import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.jvnet.basicjaxb.lang.ContextUtils.createSchemaOutputDomResolver;
+import static org.jvnet.basicjaxb.lang.ContextUtils.enableXmlSchemaValidator;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +43,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
 		
 		if ( isValidateXml() )
-			ContextUtils.enableXmlSchemaValidator(unmarshaller, null, context);
+			enableXmlSchemaValidator(unmarshaller, null, context);
 		
 		getLogger().debug("Unmarshalling sample.");
 		Sample initialSample = new Sample(unmarshaller, sampleFile);
