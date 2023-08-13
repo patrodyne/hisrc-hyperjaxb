@@ -23,6 +23,10 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 	public static final String DEFAULT_SAMPLES_DIRECTORY_NAME = "src/test/samples";
 	private final static IOFileFilter SAMPLE_FILTER = FileFilterUtils.suffixFileFilter(".xml");
 
+	private Boolean failFast = false;
+	public Boolean isFailFast() { return failFast; }
+	public void setFailFast(Boolean failFast) { this.failFast = failFast; }
+	
 	private AbstractSamplesTest samplesTest;
 	public AbstractSamplesTest getSamplesTest()
 	{
