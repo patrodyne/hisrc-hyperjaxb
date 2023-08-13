@@ -30,7 +30,7 @@
 			<date>                            
 				<typename>                               
 					<tysource sourcetype = "imsdefault"/>                               
-					<tyvalue>Birth</tyvalue>                            
+					<tyvalue xml:lang="en">Birth</tyvalue>                            
 				</typename>                            
 				<datetime>2004-05-31T13:00:00-05:00</datetime>                        
 			</date>

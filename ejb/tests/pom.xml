@@ -45,9 +45,7 @@
 		<module>equals-builder</module>
 		<module>floating</module>
 		<module>idSymbolSpace</module>
-		<!--
 		<module>ims-eportfolio</module>
-		-->
 		<module>ioda</module>
 		<module>issues-el</module>
 		<module>issues-jpa</module>
