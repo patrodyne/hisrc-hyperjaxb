@@ -53,7 +53,7 @@ public class SingleWrappingReferenceObjectField extends AbstractWrappingField {
 		}
 
 		final JExpression isElement = codeModel.ref(JAXBContextUtils.class)
-				.staticInvoke("isElement").arg(contextPath).arg(source);
+				.staticInvoke("isBindingElement").arg(contextPath).arg(source);
 		return predicate == null ? isElement : JOp.cand(JOp.not(predicate),
 				isElement);
 	}
