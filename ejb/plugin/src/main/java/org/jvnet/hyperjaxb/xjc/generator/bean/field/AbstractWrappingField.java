@@ -118,7 +118,7 @@ public abstract class AbstractWrappingField extends AbstractField
 		final MethodWriter writer = outline.createMethodWriter();
 		final JMethod getter = writer.declareMethod(exposedType, getGetterName());
 		JExpression source = getCore();
-		final JExpression unwrapCondition = unwrapCondifiton(source);
+		final JExpression unwrapCondition = unwrapCondition(source);
 
 		if (unwrapCondition == null)
 			getter.body()._return(unwrap(source));
@@ -126,7 +126,7 @@ public abstract class AbstractWrappingField extends AbstractField
 		{
 			final JConditional _if = getter.body()._if(unwrapCondition);
 			_if._then()._return(unwrap(source));
-			_if._else()._return(JExpr._null());
+			_if._else()._return(unwrapElse(source));
 		}
 
 		return getter;
@@ -138,7 +138,7 @@ public abstract class AbstractWrappingField extends AbstractField
 		final MethodWriter writer = outline.createMethodWriter();
 		setter = writer.declareMethod(codeModel.VOID, getSetterName());
 		final JVar target = writer.addParameter(exposedType, "target");
-		final JExpression wrapCondition = wrapCondifiton(target);
+		final JExpression wrapCondition = wrapCondition(target);
 
 		if (wrapCondition == null)
 			setCore(setter.body(), wrap(target));
@@ -151,12 +151,17 @@ public abstract class AbstractWrappingField extends AbstractField
 		return setter;
 	}
 
-	public JExpression unwrapCondifiton(final JExpression source)
+	public JExpression unwrapCondition(final JExpression source)
 	{
 		return null;
 	}
 
-	public JExpression wrapCondifiton(final JExpression source)
+	public JExpression unwrapElse(final JExpression source)
+	{
+		return JExpr._null();
+	}
+
+	public JExpression wrapCondition(final JExpression source)
 	{
 		return null;
 	}

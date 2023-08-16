@@ -10,6 +10,8 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.JAXBIntrospector;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import javax.xml.namespace.QName;
 
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.ElementAsString;
@@ -24,11 +26,29 @@ public class JAXBContextUtils
 	// Seal this utility class for static usage.
 	private JAXBContextUtils() { }
 
+	/**
+	 * <p>Determine if the given <code>object</code> is an {@link Element}
+	 * interface in an JAXB context. Note: The {@link Element} interface
+	 * inherits from {@link org.w3c.dom.Node}.</p>
+	 * 
+	 * @param object The target to examine.
+	 * 
+	 * @return True, if the given <code>object</code> is an instance of {@link Element}.
+	 */
 	public static boolean isElement(Object object)
 	{
 		return object != null && (object instanceof Element);
 	}
 
+	/**
+     * <p>Introspect on the given <code>object</code> to determine if it is a
+     * Jakarta XML Binding element: {@link JAXBElement} or {@link XmlRootElement}.</p>
+	 * 
+	 * @param contextPath The {@link JAXBContext} path.
+	 * @param object The target to introspect.
+	 * 
+	 * @return True, if <code>object</code> represents a Jakarta XML Binding element.
+	 */
 	public static boolean isBindingElement(String contextPath, Object object)
 	{
 		try
@@ -41,6 +61,15 @@ public class JAXBContextUtils
 		}
 	}
 
+	/**
+	 * Determine if the given <code>object</code> is either an XML schema {@link Element}
+	 * or a JAXB XML Binding element.
+	 * 
+	 * @param contextPath The {@link JAXBContext} path.
+	 * @param object The target to inspect.
+	 * 
+	 * @return True, if the <code>object</code> is an XML {@link Element} or a JAXB XML Binding element.
+	 */
 	public static boolean isMarshallable(String contextPath, Object object)
 	{
 		return isElement(object) || isBindingElement(contextPath, object);
@@ -223,4 +252,13 @@ public class JAXBContextUtils
 	{
 		return getJAXBContext(contextPath).createJAXBIntrospector();
 	}
+
+	public static String escalateNotNull(Object object, String msg)
+	{
+		if ( object == null )
+			return null;
+		else
+			throw new RuntimeException(msg + object);
+	}
+
 }

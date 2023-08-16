@@ -40,7 +40,7 @@ public class SingleWrappingClassInfoField extends AbstractWrappingField {
 	}
 
 	@Override
-	public JExpression unwrapCondifiton(JExpression source) {
+	public JExpression unwrapCondition(JExpression source) {
 		return JOp._instanceof(source, _class);
 	}
 
@@ -50,7 +50,7 @@ public class SingleWrappingClassInfoField extends AbstractWrappingField {
 	}
 
 	@Override
-	public JExpression wrapCondifiton(JExpression source) {
+	public JExpression wrapCondition(JExpression source) {
 		return JOp.ne(source, JExpr._null());
 	}
 

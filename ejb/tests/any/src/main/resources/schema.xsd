@@ -1,7 +1,14 @@
-<xsd:schema targetNamespace="urn:test" xmlns:test="urn:test" 
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" jaxb:version="3.0" 
-	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" elementFormDefault="qualified" 
-	attributeFormDefault="unqualified">
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+	attributeFormDefault="unqualified"
+	elementFormDefault="qualified" 
+	targetNamespace="urn:test"
+	xmlns:test="urn:test" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	jaxb:version="3.0" 
+>
+	
 	<xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
@@ -94,6 +101,7 @@
 			<xsd:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
+	
 	<xsd:element name="anyAttribute" type="test:anyAttributeType"/>
 	<xsd:complexType name="anyAttributeType">
 		<xsd:sequence>

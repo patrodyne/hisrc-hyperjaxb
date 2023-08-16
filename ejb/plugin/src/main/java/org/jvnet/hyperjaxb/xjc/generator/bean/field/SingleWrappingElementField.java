@@ -24,12 +24,12 @@ public class SingleWrappingElementField extends SingleWrappingField {
 	}
 
 	@Override
-	public JExpression wrapCondifiton(JExpression source) {
+	public JExpression wrapCondition(JExpression source) {
 		return source.ne(JExpr._null());
 	}
 	
 	@Override
-	public JExpression unwrapCondifiton(JExpression source) {
+	public JExpression unwrapCondition(JExpression source) {
 		
 		final JType type = getTypeRef().getTarget().toType(outline.parent(),
 				Aspect.EXPOSED);

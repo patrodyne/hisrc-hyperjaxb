@@ -16,12 +16,12 @@ public class ElementField extends SingleWrappingField {
 	}
 
 	@Override
-	public JExpression unwrapCondifiton(JExpression source) {
+	public JExpression unwrapCondition(JExpression source) {
 		return source._instanceof(codeModel.ref(Element.class));
 	}
 	
 	@Override
-	public JExpression wrapCondifiton(JExpression source) {
+	public JExpression wrapCondition(JExpression source) {
 		return source.ne(JExpr._null());
 	}
 	

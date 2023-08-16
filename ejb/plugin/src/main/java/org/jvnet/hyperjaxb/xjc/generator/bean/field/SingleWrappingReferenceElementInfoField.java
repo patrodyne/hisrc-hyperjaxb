@@ -26,14 +26,14 @@ public class SingleWrappingReferenceElementInfoField extends
 	}
 
 	@Override
-	public JExpression unwrapCondifiton(JExpression source) {
+	public JExpression unwrapCondition(JExpression source) {
 		// if (xmlAdapterClass == null) {
 		return XmlAdapterXjcUtils.isJAXBElement(codeModel, getDeclaredType(),
 				getName(), getScope(), source);
 	}
 
 	@Override
-	public JExpression wrapCondifiton(JExpression source) {
+	public JExpression wrapCondition(JExpression source) {
 		return source.ne(JExpr._null());
 	}
 
