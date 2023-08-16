@@ -2,7 +2,7 @@ package org.jvnet.hyperjaxb.mojo.ejb.test;
 
 import java.io.File;
 
-public class EjbHyperjaxbMojoTest extends RunEjbHyperjaxbMojo
+public class EjbHyperjaxbMojoTest extends RunEjbHyperJaxbMojo
 {
 	@Override
 	public File getSchemaDirectory()

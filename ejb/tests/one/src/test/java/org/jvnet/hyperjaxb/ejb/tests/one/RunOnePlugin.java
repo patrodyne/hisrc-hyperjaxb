@@ -1,11 +1,11 @@
 package org.jvnet.hyperjaxb.ejb.tests.one;
 
-import org.jvnet.hyperjaxb.mojo.ejb.test.RunEjbHyperjaxbMojo;
+import org.jvnet.hyperjaxb.mojo.ejb.test.RunEjbHyperJaxbMojo;
 
 /**
  * Run the HyperJAXB Mojo to trigger Maven's build-process behavior.
  */
-public class RunOnePlugin extends RunEjbHyperjaxbMojo
+public class RunOnePlugin extends RunEjbHyperJaxbMojo
 {
 	/**
 	 * Use existing {@link org.jvnet.hyperjaxb.ejb.tests.one.RoundtripTest} on

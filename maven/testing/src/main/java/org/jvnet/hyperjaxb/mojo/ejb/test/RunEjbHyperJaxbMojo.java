@@ -2,13 +2,13 @@ package org.jvnet.hyperjaxb.mojo.ejb.test;
 
 import org.apache.maven.project.MavenProject;
 import org.jvnet.higherjaxb.mojo.AbstractHigherjaxbParmMojo;
-import org.jvnet.higherjaxb.mojo.test.RunHigherjaxbMojo;
+import org.jvnet.higherjaxb.mojo.test.RunHigherJaxbMojo;
 import org.jvnet.hyperjaxb.mojo.HyperjaxbMojo;
 
 /**
  * Run the HyperJAXB Mojo to trigger Maven's build-process behavior.
  */
-public class RunEjbHyperjaxbMojo extends RunHigherjaxbMojo
+public class RunEjbHyperJaxbMojo extends RunHigherJaxbMojo
 {
 	@Override
 	protected AbstractHigherjaxbParmMojo<?> createMojo()
@@ -20,10 +20,10 @@ public class RunEjbHyperjaxbMojo extends RunHigherjaxbMojo
 	protected void configureMojo(AbstractHigherjaxbParmMojo<?> mojo)
 	{
 		super.configureMojo(mojo);
-		configureHyperjaxbMojo((HyperjaxbMojo) mojo);
+		configureHyperJaxbMojo((HyperjaxbMojo) mojo);
 	}
 
-	protected void configureHyperjaxbMojo(HyperjaxbMojo mojo)
+	protected void configureHyperJaxbMojo(HyperjaxbMojo mojo)
 	{
 		final MavenProject project = new MavenProject();
 		mojo.setProject(project);

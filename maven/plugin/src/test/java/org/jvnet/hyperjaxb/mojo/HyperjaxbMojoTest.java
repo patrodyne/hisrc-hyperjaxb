@@ -4,9 +4,9 @@ import java.io.File;
 
 import org.apache.maven.project.MavenProject;
 import org.jvnet.higherjaxb.mojo.AbstractHigherjaxbParmMojo;
-import org.jvnet.higherjaxb.mojo.test.RunHigherjaxbMojo;
+import org.jvnet.higherjaxb.mojo.test.RunHigherJaxbMojo;
 
-public class HyperjaxbMojoTest extends RunHigherjaxbMojo {
+public class HyperjaxbMojoTest extends RunHigherJaxbMojo {
 
 	@Override
 	protected AbstractHigherjaxbParmMojo<?> createMojo() {
