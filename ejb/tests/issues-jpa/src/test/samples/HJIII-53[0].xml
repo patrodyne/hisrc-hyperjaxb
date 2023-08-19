@@ -1,0 +1,10 @@
+<HJIII-53 xmlns="urn:test">
+	<a>
+		<b>B0</b>
+		<b1 id="B1"></b1>
+		<c>C0</c>
+		<c1 id="C1"></c1>
+	</a>
+	<b id="B0"></b>
+	<c id="C0"></c>
+</HJIII-53>

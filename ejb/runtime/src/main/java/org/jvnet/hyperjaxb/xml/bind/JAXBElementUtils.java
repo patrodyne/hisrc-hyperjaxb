@@ -44,7 +44,7 @@ public class JAXBElementUtils
 	}
 
 	/**
-	 * Determine when a value should be wrapped in a JAXBElenent.
+	 * Determine when a value should be wrapped in a JAXBElement.
 	 * 
 	 * @param <T> The element's generic type.
 	 * @param element A reference JAXBElement instance.

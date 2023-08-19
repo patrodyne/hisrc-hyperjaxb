@@ -209,15 +209,15 @@
 		</xsd:attribute>
 	</xsd:complexType>
 
-	<xsd:element name="HJIII-53"/>
-
-	<xsd:complexType name="HJIII-53">
-		<xsd:sequence>
-			<xsd:element name="a" type="test:HJIII-53-A"/>
-			<xsd:element name="b" type="test:HJIII-53-B"/>
-			<xsd:element name="c" type="test:HJIII-53-C"/>
-		</xsd:sequence>
-	</xsd:complexType>
+	<xsd:element name="HJIII-53">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="a" type="test:HJIII-53-A"/>
+				<xsd:element name="b" type="test:HJIII-53-B"/>
+				<xsd:element name="c" type="test:HJIII-53-C"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
 
 	<xsd:complexType name="HJIII-53-A">
 		<xsd:sequence>

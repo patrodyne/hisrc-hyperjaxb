@@ -4,28 +4,25 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBElement;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.JAXBIntrospector;
-import jakarta.xml.bind.Marshaller;
-import jakarta.xml.bind.Unmarshaller;
-import jakarta.xml.bind.annotation.XmlRootElement;
-
 import javax.xml.namespace.QName;
 
+import org.jvnet.basicjaxb.lang.ContextUtils;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.ElementAsString;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XmlAdapterUtils;
 import org.w3c.dom.Element;
 
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 /**
  * Utility class for {@link JAXBContext} methods.
  */
-public class JAXBContextUtils
+public class JAXBContextUtils extends ContextUtils
 {
-	// Seal this utility class for static usage.
-	private JAXBContextUtils() { }
-
 	/**
 	 * <p>Determine if the given <code>object</code> is an {@link Element}
 	 * interface in an JAXB context. Note: The {@link Element} interface
@@ -37,7 +34,7 @@ public class JAXBContextUtils
 	 */
 	public static boolean isElement(Object object)
 	{
-		return object != null && (object instanceof Element);
+		return (object != null) && (object instanceof Element);
 	}
 
 	/**
@@ -53,12 +50,17 @@ public class JAXBContextUtils
 	{
 		try
 		{
-			return object != null && createJAXBIntrospector(contextPath).isElement(object);
+			return (object != null) && isBindingElement(getJAXBContext(contextPath), object);
 		}
 		catch (JAXBException ex)
 		{
 			throw new RuntimeException(ex);
 		}
+	}
+	
+	public static boolean isBindingElement(JAXBContext context, Object object)
+	{
+		return (object != null) && context.createJAXBIntrospector().isElement(object);
 	}
 
 	/**
@@ -75,21 +77,16 @@ public class JAXBContextUtils
 		return isElement(object) || isBindingElement(contextPath, object);
 	}
 
-	public static String marshalElement(Object object)
+	public static boolean isMarshallable(JAXBContext context, Object object)
 	{
-		return object != null && (object instanceof Element) ? XmlAdapterUtils.unmarshall(ElementAsString.class, (Element) object) : null;
-	}
-
-	public static Object unmarshalElement(String object)
-	{
-		return object == null ? null : XmlAdapterUtils.marshall(ElementAsString.class, object);
+		return isElement(object) || isBindingElement(context, object);
 	}
 
 	public static boolean isMarshallableObject(String contextPath, Object object)
 	{
 		try
 		{
-			return object != null && (createJAXBIntrospector(contextPath).isElement(object));
+			return (object == null) ? null : isMarshallableObject(getJAXBContext(contextPath), object);
 		}
 		catch (JAXBException ex)
 		{
@@ -97,13 +94,50 @@ public class JAXBContextUtils
 		}
 	}
 
+	public static boolean isMarshallableObject(JAXBContext context, Object object)
+	{
+		return (object != null) && context.createJAXBIntrospector().isElement(object);
+	}
+	
+	public static String marshalElement(Object object)
+	{
+		return isElement(object) ? XmlAdapterUtils.unmarshall(ElementAsString.class, (Element) object) : null;
+	}
+
+	public static Object unmarshalElement(String object)
+	{
+		return (object == null) ? null : XmlAdapterUtils.marshall(ElementAsString.class, object);
+	}
+
 	public static String marshalObject(String contextPath, Object object)
+	{
+		return marshalObject(contextPath, object, DEFAULT_JAXB_FORMATTED_OUTPUT);
+	}
+	
+	public static String marshalObject(String contextPath, Object object, boolean formatted)
+	{
+		try
+		{
+			return (object == null) ? null : marshalObject(getJAXBContext(contextPath), object, formatted);
+		}
+		catch (JAXBException ex)
+		{
+			throw new RuntimeException(ex);
+		}
+	}
+
+	public static String marshalObject(JAXBContext context, Object object)
+	{
+		return marshalObject(context, object, DEFAULT_JAXB_FORMATTED_OUTPUT);
+	}
+	
+	public static String marshalObject(JAXBContext context, Object object, boolean formatted)
 	{
 		if (object != null)
 		{
 			try
 			{
-				final Marshaller marshaller = getJAXBContext(contextPath).createMarshaller();
+				final Marshaller marshaller = createMarshaller(context, formatted);
 				final StringWriter sw = new StringWriter();
 				marshaller.marshal(object, sw);
 				return sw.toString();
@@ -119,6 +153,18 @@ public class JAXBContextUtils
 
 	public static Object unmarshalObject(String contextPath, String object)
 	{
+		try
+		{
+			return (object == null) ? null : unmarshal(getJAXBContext(contextPath), object);
+		}
+		catch (JAXBException ex)
+		{
+			throw new RuntimeException(ex);
+		}
+	}
+
+	public static Object unmarshalObject(JAXBContext context, String object)
+	{
 		if (object == null)
 			return null;
 		else
@@ -126,7 +172,7 @@ public class JAXBContextUtils
 			final Element element = XmlAdapterUtils.marshall(ElementAsString.class, object);
 			try
 			{
-				final Unmarshaller unmarshaller = getJAXBContext(contextPath).createUnmarshaller();
+				final Unmarshaller unmarshaller = context.createUnmarshaller();
 				return unmarshaller.unmarshal(element);
 			}
 			catch (JAXBException ex)
@@ -136,11 +182,26 @@ public class JAXBContextUtils
 		}
 	}
 
+	public static String marshalJAXBElement(String contextPath, JAXBElement<Object> object)
+	{
+		return marshalJAXBElement(contextPath, object, DEFAULT_JAXB_FORMATTED_OUTPUT);
+	}
+
+	public static String marshalJAXBElement(String contextPath, JAXBElement<Object> object, boolean formatted)
+	{
+		return (object == null) ? null : marshal(contextPath, object.getValue(), formatted);
+	}
+
 	public static String marshal(String contextPath, Object object)
+	{
+		return marshal(contextPath, object, DEFAULT_JAXB_FORMATTED_OUTPUT);
+	}
+
+	public static String marshal(String contextPath, Object object, boolean formatted)
 	{
 		try
 		{
-			return object == null ? null : marshal(getJAXBContext(contextPath), object);
+			return (object == null) ? null : marshal(getJAXBContext(contextPath), object, formatted);
 		}
 		catch (JAXBException ex)
 		{
@@ -148,15 +209,12 @@ public class JAXBContextUtils
 		}
 	}
 
-	public static String marshalJAXBElement(String contextPath, JAXBElement<Object> object)
+	public static String marshal(JAXBContext context, Object object)
 	{
-		if (object == null)
-			return null;
-		else
-			return marshal(contextPath, object.getValue());
+		return marshal(context, object, DEFAULT_JAXB_FORMATTED_OUTPUT);
 	}
 
-	public static String marshal(JAXBContext context, Object object)
+	public static String marshal(JAXBContext context, Object object, boolean formatted)
 	{
 		if (object == null)
 			return null;
@@ -166,7 +224,7 @@ public class JAXBContextUtils
 		{
 			try
 			{
-				Marshaller marshaller = context.createMarshaller();
+				Marshaller marshaller = createMarshaller(context, formatted);
 				final StringWriter sw = new StringWriter();
 				marshaller.marshal(object, sw);
 				return sw.toString();
@@ -178,40 +236,36 @@ public class JAXBContextUtils
 		}
 	}
 
-	public static Object unmarshal(String contextPath, String string)
+	public static JAXBElement<Object> unmarshalJAXBElement(String contextPath, QName name, Class<?> scope, String object)
 	{
 		try
 		{
-			return string == null ? null : unmarshal(getJAXBContext(contextPath), string);
+			return (object == null) ? null: unmarshalJAXBElement(getJAXBContext(contextPath), name, scope, object);
 		}
 		catch (JAXBException ex)
 		{
 			throw new RuntimeException(ex);
 		}
 	}
-
-	private static Map<String, JAXBContext> contextCache = new HashMap<String, JAXBContext>();
-
-	public static JAXBContext getJAXBContext(String contextPath)
-		throws JAXBException
-	{
-		if (contextCache.containsKey(contextPath))
-			return contextCache.get(contextPath);
-		else
-		{
-			final JAXBContext context = JAXBContext.newInstance(contextPath);
-			contextCache.put(contextPath, context);
-			return context;
-		}
-	}
-
-	public static JAXBElement<Object> unmarshalJAXBElement(String contextPath, QName name, Class<?> scope,
-		String object)
+	
+	public static JAXBElement<Object> unmarshalJAXBElement(JAXBContext context, QName name, Class<?> scope, String object)
 	{
 		if (object == null)
 			return null;
 		else
-			return new JAXBElement<Object>(name, Object.class, scope, unmarshal(contextPath, object));
+			return new JAXBElement<Object>(name, Object.class, scope, unmarshal(context, object));
+	}
+	
+	public static Object unmarshal(String contextPath, String string)
+	{
+		try
+		{
+			return (string == null) ? null : unmarshal(getJAXBContext(contextPath), string);
+		}
+		catch (JAXBException ex)
+		{
+			throw new RuntimeException(ex);
+		}
 	}
 
 	public static Object unmarshal(JAXBContext context, String object)
@@ -236,21 +290,19 @@ public class JAXBContextUtils
 			}
 		}
 	}
-
-    /**
-     * Creates a {@code JAXBIntrospector} object that can be used to
-     * introspect Jakarta XML Binding objects.
-     * 
-	 * @param contextPath The JAXB context path.
-     *
-     * @return A non-null valid {@code JAXBIntrospector} object.
-     * 
-	 * @throws JAXBException If an error was encountered creating the {@code JAXBContext}.
-     */
-	private static JAXBIntrospector createJAXBIntrospector(String contextPath)
+	
+	private static Map<String, JAXBContext> contextCache = new HashMap<String, JAXBContext>();
+	public static JAXBContext getJAXBContext(String contextPath)
 		throws JAXBException
 	{
-		return getJAXBContext(contextPath).createJAXBIntrospector();
+		if (contextCache.containsKey(contextPath))
+			return contextCache.get(contextPath);
+		else
+		{
+			final JAXBContext context = JAXBContext.newInstance(contextPath);
+			contextCache.put(contextPath, context);
+			return context;
+		}
 	}
 
 	public static String escalateNotNull(Object object, String msg)
@@ -260,5 +312,4 @@ public class JAXBContextUtils
 		else
 			throw new RuntimeException(msg + object);
 	}
-
 }

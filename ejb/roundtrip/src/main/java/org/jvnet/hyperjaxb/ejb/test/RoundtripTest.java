@@ -3,8 +3,14 @@ package org.jvnet.hyperjaxb.ejb.test;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.jvnet.basicjaxb.lang.ContextUtils.createJAXBElement;
 import static org.jvnet.basicjaxb.lang.ContextUtils.createSchemaOutputDomResolver;
 import static org.jvnet.basicjaxb.lang.ContextUtils.enableXmlSchemaValidator;
+import static org.jvnet.hyperjaxb.ejb.util.EntityUtils.getId;
+import static org.jvnet.hyperjaxb.xml.bind.JAXBContextUtils.isBindingElement;
+import static org.jvnet.hyperjaxb.xml.bind.JAXBContextUtils.isElement;
+import static org.jvnet.hyperjaxb.xml.bind.JAXBContextUtils.marshal;
+import static org.jvnet.hyperjaxb.xml.bind.JAXBContextUtils.marshalElement;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,12 +18,10 @@ import java.io.IOException;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.jvnet.basicjaxb.lang.ContextUtils;
 import org.jvnet.basicjaxb.lang.CopyTo;
 import org.jvnet.basicjaxb.lang.EqualsStrategy;
 import org.jvnet.basicjaxb.lang.MergeFrom;
 import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
-import org.jvnet.hyperjaxb.ejb.util.EntityUtils;
 import org.jvnet.hyperjaxb.lang.builder.ExtendedJAXBEqualsStrategy;
 import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputDomResolver;
 import org.xml.sax.SAXException;
@@ -53,13 +57,30 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		
 		if ( getLogger().isTraceEnabled() )
 		{
-			if (initialSample.getElement() != null)
+			if (etalonSample.getJAXBElement() != null)
 			{
-				final JAXBElement<Object> initialElement = initialSample.getElement();
-				getLogger().trace("Initial element:\n" + ContextUtils.toString(context, initialElement));
+				final JAXBElement<Object> jaxbElement = etalonSample.getJAXBElement();
+				String xml = "UNMARSHALLABLE";
+		        if (isBindingElement(context, jaxbElement))
+		        	xml = marshal(context, jaxbElement, true);
+				getLogger().trace("Etalon element:\n" + xml);
 			}
 			else
-				getLogger().trace("Initial object:\n" + ContextUtils.toString(context, initialSample.getValue()));
+			{
+				final Object value = etalonSample.getValue();
+				String xml = "UNMARSHALLABLE";
+		        if (isBindingElement(context, value))
+		        	xml = marshal(context, value, true);
+		        else if (isElement(value))
+	        		xml = marshalElement(value);
+		        else
+		        {
+		        	JAXBElement<Object> valueElement = createJAXBElement(value);
+		        	if ( valueElement != null )
+		        		xml = marshal(context, valueElement, true);
+		        }
+		        getLogger().trace("Etalon object:\n" + xml);
+			}
 		}
 		
 		// Save
@@ -78,12 +99,24 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			mergedClass = mergedEntity.getClass();
 			
 			saveTX.begin();
-			mergedId = EntityUtils.getId(saveManager, mergedEntity);
+			mergedId = getId(saveManager, mergedEntity);
 			saveTX.commit();
 			
 			if ( getLogger().isTraceEnabled() )
-				getLogger().trace("Merged object:\n" + ContextUtils.toString(context, mergedEntity));
-			
+			{
+				String xml = "UNMARSHALLABLE";
+		        if (isBindingElement(context, mergedEntity))
+		        	xml = marshal(context, mergedEntity, true);
+		        else if (isElement(mergedEntity))
+	        		xml = marshalElement(mergedEntity);
+		        else
+		        {
+		        	JAXBElement<Object> mergedEntityElement = createJAXBElement(mergedEntity);
+		        	if ( mergedEntityElement != null )
+		        		xml = marshal(context, mergedEntityElement, true);
+		        }
+				getLogger().trace("Merged object:\n" + xml);
+			}
 		}
 		
 		assertNotNull(mergedId, "merged identifier");
@@ -100,7 +133,20 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			loadTX.commit();
 
 			if ( getLogger().isTraceEnabled() )
-				getLogger().trace("Loaded object:\n" + ContextUtils.toString(context, loadedEntity));
+			{
+				String xml = "UNMARSHALLABLE";
+		        if (isBindingElement(context, loadedEntity))
+		        	xml = marshal(context, loadedEntity, true);
+		        else if (isElement(loadedEntity))
+	        		xml = marshalElement(loadedEntity);
+		        else
+		        {
+		        	JAXBElement<Object> loadedEntityElement = createJAXBElement(loadedEntity);
+		        	if ( loadedEntityElement != null )
+		        		xml = marshal(context, loadedEntityElement, true);
+		        }
+				getLogger().trace("Loaded object:\n" + xml);
+			}
 			
 			getLogger().debug("Checking the sample object identity: Etalon vs Loaded.");
 			checkObjects(etalonSample.getValue(), loadedEntity);
@@ -174,9 +220,9 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 	 */
 	private class Sample
 	{
-		private JAXBElement<Object> element;
-		public JAXBElement<Object> getElement() { return element; }
-		public void setElement(JAXBElement<Object> element) { this.element = element; }
+		private JAXBElement<Object> jaxbElement;
+		public JAXBElement<Object> getJAXBElement() { return jaxbElement; }
+		public void setJAXBElement(JAXBElement<Object> jaxbElement) { this.jaxbElement = jaxbElement; }
 
 		private Object value;
 		public Object getValue() { return value; }
@@ -194,12 +240,12 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			Object unmarshalledDraft = unmarshaller.unmarshal(sampleFile);
 			if (unmarshalledDraft instanceof JAXBElement)
 			{
-				setElement((JAXBElement<Object>) unmarshalledDraft);
-				setValue(getElement().getValue());
+				setJAXBElement((JAXBElement<Object>) unmarshalledDraft);
+				setValue(getJAXBElement().getValue());
 			}
 			else
 			{
-				setElement(null);
+				setJAXBElement(null);
 				setValue(unmarshalledDraft);
 			}
 		}
