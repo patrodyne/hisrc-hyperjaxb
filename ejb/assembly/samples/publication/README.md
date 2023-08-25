@@ -21,7 +21,7 @@ This project demonstrates the inheritance strategy and many-to-many configuratio
 > `boolean isSuperClass(Mapping context, ClassOutline theClassOutline)`
 > `boolean containsNonDiscriminatorColumn(Entity entity)`
 >
-> The second condition is required for an [EclipseLink][4] issue [#1918][95] that SQL inserts for tables with `IDENTITY` primary key must have at least one other column value. Often, this other column is the `DTYPE` column, alone. For example, a root entity that serves as a *one-to-many* container, only.
+> The second condition is required for an [EclipseLink][5] issue [#1918][95] that SQL inserts for tables with `IDENTITY` primary key must have at least one other column value. Often, this other column is the `DTYPE` column, alone. For example, a root entity that serves as a *one-to-many* container, only.
 
 From the JPA 3.0 specification:
 
@@ -53,7 +53,7 @@ The [JPA][1] specifies how the *persistence provider* should implement the [§11
 
 > **Note:** The discriminator column can be configured *explicitly* by adding a `@jakarta.persistence.DiscriminatorColumn` annotation to any root entity. For example, the column length can be changed from the default `31` to another length.
 
-Two well-known *persistence provider*s are [EclipseLink][4] and [Hibernate][5] and each provides a different approach:
+Two well-known *persistence provider*s are [EclipseLink][5] and [Hibernate][6] and each provides a different approach:
 
 + As of v4.0.1, [EclipseLink][5] adds a `DTYPE` column for each root table when the `@Inheritance` annotation is *explicitly* declared with or without sub-tables; without the annotation, a `DTYPE` column is added only when needed.
 + As of v5.6.15.Final, [Hibernate][6] only adds a `DTYPE` column on root tables with sub-tables.
@@ -275,7 +275,7 @@ The [PublicationTest#testSchemaCrawler2()][74] method generates a diagram of the
 
 #### DTYPE: Omit `@Inheritance` from Childless Roots
 
-> **Note:** As of HyperJAXB 2.1.1, the `@Inheritance` is automatically omitted with one exception. The exception is omission of a `DTYPE` column will create a sparse insert, see [EclipseLink][4] [Issue #1918][95].
+> **Note:** As of HyperJAXB 2.1.1, the `@Inheritance` is automatically omitted with one exception. The exception is when the omission of a `DTYPE` column creates a sparse insert, see [EclipseLink][5] [Issue #1918][95].
 
 **Single Table (implicit) **
 
@@ -307,7 +307,7 @@ mvn -Phibernate   clean compile exec:java -Dexec.args="src/test/samples/Blog01.x
 [12]: https://github.com/patrodyne/hisrc-higherjaxb#readme
 [13]: https://github.com/patrodyne/hisrc-hyperjaxb#readme
 [14]: https://github.com/patrodyne/hisrc-hyperjaxb-annox#readme
-[20]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/download/2.1.0/hisrc-hyperjaxb-ejb-sample-publication-2.1.0-mvn-src.zip
+[20]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/download/2.1.1/hisrc-hyperjaxb-ejb-sample-publication-2.1.1-mvn-src.zip
 [21]: https://github.com/patrodyne/hisrc-hyperjaxb/tree/master/ejb/assembly/samples/publication/README.md
 [22]: https://github.com/patrodyne/hisrc-hyperjaxb/tree/master/ejb/assembly/samples/publication/OUTPUT.txt
 [23]: https://github.com/patrodyne/hisrc-hyperjaxb/tree/master/ejb/assembly/samples/publication/project-pom.xml
