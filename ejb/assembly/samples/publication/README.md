@@ -16,7 +16,7 @@ This project demonstrates the inheritance strategy and many-to-many configuratio
 
 **HyperJAXB** needs a way to select its default **JPA** inheritance strategy and *possibly* limit the generation of the `@Inheritance` annotation only to top-level entities that are inherited. In **HyperJAXB** 2.1.0, the `JOINED` mapping strategy is always added to top-level entities.
 
-> In **HyperJAXB** 2.1.1, commit [1a269e2][94] modified `EntityMapping.java` to check when a root class is inherited by some other class in the JAXB context *and* to determine if the root class contains at least one basic field. When these conditions are satisfied, the `@Inheritance` annotation is omitted from the root class. See [Issue #1][7].
+> In **HyperJAXB** 2.1.1, commit [1a269e2][94] modified `EntityMapping.java` to check when a root class is not inherited by some other class in the JAXB context *and* to determine if the root class contains at least one basic field. When these conditions are satisfied, the `@Inheritance` annotation is omitted from the root class. See [Issue #1][7].
 >
 > `boolean isSuperClass(Mapping context, ClassOutline theClassOutline)`
 > `boolean containsNonDiscriminatorColumn(Entity entity)`
