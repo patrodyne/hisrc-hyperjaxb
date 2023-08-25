@@ -126,7 +126,7 @@
 <text text-anchor="start" x="13" y="-675.3" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">seq_name</text>
 <text text-anchor="start" x="96" y="-674.3" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text text-anchor="start" x="105" y="-674.3" font-family="Helvetica,sans-Serif" font-size="14.00">CHARACTER VARYING(50) NOT NULL</text>
-<text text-anchor="start" x="13" y="-655.3" font-family="Helvetica,sans-Serif" font-size="14.00">seq_count</text>
+<text text-anchor="start" x="13" y="-655.3" font-family="Helvetica,sans-Serif" font-size="14.00">seq_next</text>
 <text text-anchor="start" x="96" y="-655.3" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text text-anchor="start" x="105" y="-655.3" font-family="Helvetica,sans-Serif" font-size="14.00">DECIMAL(38, 0)</text>
 <polygon fill="none" stroke="#888888" points="9.5,-649 9.5,-708 362.5,-708 362.5,-649 9.5,-649"/>
