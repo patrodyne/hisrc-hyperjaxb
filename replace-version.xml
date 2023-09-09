@@ -29,6 +29,12 @@
 			<replacevalue><![CDATA[/org/postgresql/postgresql/42.6.0/postgresql-42.6.0.jar]]></replacevalue>
 		</replace>
 
+		<replace dir="${basedir}" summary="true">
+			<include name="**/CreateToplevelXJBindings.sh"/>
+			<replacetoken><![CDATA[BASICJAXB_VERSION="2.1.0"]]></replacetoken>
+			<replacevalue><![CDATA[BASICJAXB_VERSION="2.1.1"]]></replacevalue>
+		</replace>
+
 	</target>
 
 </project>
