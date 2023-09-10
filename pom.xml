@@ -750,6 +750,10 @@
 								<!-- Generate META-INF/maven/plugin.xml -->
 								<goal>descriptor</goal>
 							</goals>
+							<configuration>
+								<checkExpectedProvidedScope>false</checkExpectedProvidedScope>
+								<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+							</configuration>
 						</execution>
 						<execution>
 							<id>help-goal</id>
@@ -759,10 +763,6 @@
 							</goals>
 						</execution>
 					</executions>
-					<configuration>
-						<checkExpectedProvidedScope>false</checkExpectedProvidedScope>
-						<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
-					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
