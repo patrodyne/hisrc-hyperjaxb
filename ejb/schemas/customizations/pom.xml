@@ -60,6 +60,14 @@
 			<plugin>
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-higherjaxb-maven-plugin</artifactId>
+				<dependencies>
+					<!-- Required by org.jvnet.basicjaxb.plugin.util.StrategyClassUtils.superClassImplements(ClassOutline, Ignoring, Class<? extends T>) -->
+					<dependency>
+						<groupId>org.patrodyne.jvnet</groupId>
+						<artifactId>hisrc-hyperjaxb-ejb-schemas-persistence</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
 						<id>generate</id>
