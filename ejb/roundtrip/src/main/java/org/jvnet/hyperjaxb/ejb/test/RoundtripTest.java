@@ -22,7 +22,7 @@ import org.jvnet.basicjaxb.lang.CopyTo;
 import org.jvnet.basicjaxb.lang.EqualsStrategy;
 import org.jvnet.basicjaxb.lang.MergeFrom;
 import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
-import org.jvnet.hyperjaxb.lang.builder.ExtendedJAXBEqualsStrategy;
+import org.jvnet.hyperjaxb.lang.ExtendedJAXBEqualsStrategy;
 import org.patrodyne.jvnet.basicjaxb.validation.SchemaOutputDomResolver;
 import org.xml.sax.SAXException;
 

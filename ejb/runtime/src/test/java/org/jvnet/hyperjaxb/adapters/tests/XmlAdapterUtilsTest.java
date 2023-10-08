@@ -1,6 +1,7 @@
 package org.jvnet.hyperjaxb.adapters.tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.jvnet.hyperjaxb.xml.util.XMLGregorianCalendarUtils.getTimeInMillis;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +14,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
 
 import org.junit.jupiter.api.Test;
-
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.DurationAsString;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.QNameAsString;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.TimeStringAsCalendar;
@@ -21,7 +21,6 @@ import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsDa
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsDateTime;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsTime;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XmlAdapterUtils;
-import org.jvnet.hyperjaxb.xml.datatype.util.XMLGregorianCalendarUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,9 +63,9 @@ public class XmlAdapterUtilsTest
 //		assertEquals(alpha.normalize(), beta.normalize(), "Conversion failed.");
 //		assertEquals(beta.normalize(), omega.normalize(), "Conversion failed.");
 
-		assertEquals(XMLGregorianCalendarUtils.getTimeInMillis(alpha), XMLGregorianCalendarUtils.getTimeInMillis(beta), "Conversion failed.");
-		assertEquals(XMLGregorianCalendarUtils.getTimeInMillis(alpha), XMLGregorianCalendarUtils.getTimeInMillis(omega), "Conversion failed.");
-		assertEquals(XMLGregorianCalendarUtils.getTimeInMillis(beta), XMLGregorianCalendarUtils.getTimeInMillis(omega), "Conversion failed.");
+		assertEquals(getTimeInMillis(alpha), getTimeInMillis(beta), "Conversion failed.");
+		assertEquals(getTimeInMillis(alpha), getTimeInMillis(omega), "Conversion failed.");
+		assertEquals(getTimeInMillis(beta), getTimeInMillis(omega), "Conversion failed.");
 	}
 
 	@Test

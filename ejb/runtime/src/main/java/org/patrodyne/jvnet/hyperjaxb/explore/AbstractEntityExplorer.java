@@ -257,7 +257,7 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 		String xml = null;
 		try 
 		{
-			xml = ContextUtils.toString(getMarshaller(), instance);
+			xml = ContextUtils.marshalToString(getMarshaller(), instance);
 		}
 		catch (JAXBException ex)
 		{
@@ -286,7 +286,7 @@ abstract public class AbstractEntityExplorer extends AbstractExplorer
 		T instance = null;
 		try 
 		{
-			instance = ContextUtils.fromString(getUnmarshaller(), xml, clazz);
+			instance = ContextUtils.unmarshalFromString(getUnmarshaller(), xml, clazz);
 		}
 		catch (JAXBException ex)
 		{
