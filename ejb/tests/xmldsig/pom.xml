@@ -42,6 +42,8 @@
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
+					<catalog>src/main/catalog/catalog.xml</catalog>
+					<strict>false</strict>
 					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.xmldsig.RoundtripTest</roundtripTestClassName>
 					-->

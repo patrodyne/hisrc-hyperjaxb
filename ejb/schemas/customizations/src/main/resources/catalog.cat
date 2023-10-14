@@ -1,6 +1,5 @@
 --
-    If the <catalog/> parameter isn't working, this link to schema A is
-    not recognized and the test will fail because of a missing schema.
+    OASIS TR 9401 (https://www.oasis-open.org/specs/a401.htm)
 
 	TR9401 Format: https://dzone.com/articles/jaxb-xjc-imported-schemas-and
 	  The PUBLIC keyword indicates that a schema manager should use the associated
