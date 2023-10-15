@@ -54,12 +54,12 @@ original `maven-jaxb2-plugin` name.
 
 #### JavaDoc
 
-* [hisrc-hyperjaxb-ejb-extensions-custom-naming-pre_0_6_0][40]
+* [hisrc-hyperjaxb-ejb-extensions-custom-naming][40]
 * [hisrc-hyperjaxb-ejb-plugin][41]
 * [hisrc-hyperjaxb-ejb-roundtrip][42]
 * [hisrc-hyperjaxb-ejb-runtime][43]
-* [hisrc-hyperjaxb-ejb-schemas][44]
-* [hisrc-hyperjaxb-ejb-schemas][45]
+* [hisrc-hyperjaxb-ejb-schemas-customizations][44]
+* [hisrc-hyperjaxb-ejb-schemas-persistence][45]
 * [hisrc-hyperjaxb-maven-plugin][46]
 * [hisrc-hyperjaxb-maven-plugin-testing][47]
 * [hisrc-hyperjaxb-opt-eclipselink][48]
@@ -193,11 +193,10 @@ New goals for the next release are:
   [41]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-plugin/latest/index.html
   [42]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-roundtrip/latest/index.html
   [43]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-runtime/latest/index.html
-  [44]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-schemas/latest/index.html
-  [45]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-schemas/latest/index.html
+  [44]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-schemas/customizations/latest/index.html
+  [45]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-schemas/persistence/latest/index.html
   [46]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-maven-plugin/latest/index.html
   [47]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-maven-plugin-testing/latest/index.html
   [48]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-opt-eclipselink/latest/index.html
   [49]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-opt-hibernate/latest/index.html
   [50]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-opt-hikaricp/latest/index.html
-
