@@ -52,6 +52,20 @@ original `maven-jaxb2-plugin` name.
 * Index
 	* [Central Repository](https://repo1.maven.org/maven2/org/patrodyne/jvnet/)
 
+#### JavaDoc
+
+* [hisrc-hyperjaxb-ejb-extensions-custom-naming-pre_0_6_0][40]
+* [hisrc-hyperjaxb-ejb-plugin][41]
+* [hisrc-hyperjaxb-ejb-roundtrip][42]
+* [hisrc-hyperjaxb-ejb-runtime][43]
+* [hisrc-hyperjaxb-ejb-schemas][44]
+* [hisrc-hyperjaxb-ejb-schemas][45]
+* [hisrc-hyperjaxb-maven-plugin][46]
+* [hisrc-hyperjaxb-maven-plugin-testing][47]
+* [hisrc-hyperjaxb-opt-eclipselink][48]
+* [hisrc-hyperjaxb-opt-hibernate][49]
+* [hisrc-hyperjaxb-opt-hikaricp][50]
+
 ### Goals
 
 New goals for the next release are:
@@ -175,3 +189,15 @@ New goals for the next release are:
   [32]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/2.0.0
   [33]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/2.1.0
   [34]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/2.1.1
+  [40]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-extensions-custom-naming-pre_0_6_0/latest/index.html
+  [41]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-plugin/latest/index.html
+  [42]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-roundtrip/latest/index.html
+  [43]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-runtime/latest/index.html
+  [44]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-schemas/latest/index.html
+  [45]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-schemas/latest/index.html
+  [46]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-maven-plugin/latest/index.html
+  [47]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-maven-plugin-testing/latest/index.html
+  [48]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-opt-eclipselink/latest/index.html
+  [49]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-opt-hibernate/latest/index.html
+  [50]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-opt-hikaricp/latest/index.html
+
