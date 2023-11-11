@@ -452,7 +452,7 @@ Deployment File may indicate one of the following:
 	      The env-entry-name element contains the name of a
 	      Deployment Component's environment entry.  The name
 	      is a JNDI name relative to the java:comp/env
-	      context.  The name must be unique within a
+	      context.	The name must be unique within a
 	      Deployment Component. The uniqueness
 	      constraints must be defined within the declared
 	      context.
@@ -678,7 +678,7 @@ Deployment File may indicate one of the following:
 
 	The jndi-nameType type designates a JNDI name in the
 	Deployment Component's environment and is relative to the
-	java:comp/env context.  A JNDI name must be unique within the
+	java:comp/env context.	A JNDI name must be unique within the
 	Deployment Component.
 
       </xsd:documentation>
@@ -867,7 +867,7 @@ Deployment File may indicate one of the following:
 	    The message-destination-ref-name element specifies
 	    the name of a message destination reference; its
 	    value is the environment entry name used in
-	    Deployment Component code.  The name is a JNDI name
+	    Deployment Component code.	The name is a JNDI name
 	    relative to the java:comp/env context and must be
 	    unique within an ejb-jar (for enterprise beans) or a
 	    Deployment File (for others).
@@ -1049,7 +1049,7 @@ Deployment File may indicate one of the following:
 	the Deployment File's namespace.  Absolute filenames (i.e.,
 	those starting with "/") also specify names in the root of
 	the Deployment File's namespace.  In general, relative names
-	are preferred.  The exception is .war files where absolute
+	are preferred.	The exception is .war files where absolute
 	names are preferred for consistency with the Servlet API.
 
       </xsd:documentation>
@@ -1146,7 +1146,7 @@ Deployment File may indicate one of the following:
 	  resource-env-type elements.  It contains a declaration of a
 	  Deployment Component's reference to an administered object
 	  associated with a resource in the Deployment Component's
-	  environment.  It consists of an optional description, the
+	  environment.	It consists of an optional description, the
 	  resource environment reference name, and an indication of
 	  the resource environment reference type expected by the
 	  Deployment Component code.

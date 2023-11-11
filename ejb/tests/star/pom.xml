@@ -47,6 +47,7 @@
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
+					<generateValueConstructor>true</generateValueConstructor>
 					<!--result>mappingFiles</result-->
 					<bindingIncludes>
 						<include>STAR/Rev5.1.4/BODs/Developer/bindings.xjb</include>

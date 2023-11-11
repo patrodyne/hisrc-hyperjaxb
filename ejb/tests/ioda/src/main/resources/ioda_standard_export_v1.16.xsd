@@ -129,7 +129,7 @@
     </xsd:complexType>
     <xsd:unique name="uniqueTrackNumberSequence">
       <xsd:selector xpath="track"/>
-      <xsd:field xpath="discNumber"/>
+      <xsd:field xpath="disc_number"/>
       <xsd:field xpath="sequence"/>
     </xsd:unique>
   </xsd:element>

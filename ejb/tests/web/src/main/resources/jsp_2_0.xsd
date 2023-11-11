@@ -176,7 +176,7 @@
 	    translation-time error to name different encodings
 	    in the pageEncoding attribute of the page directive
 	    of a JSP page and in a JSP configuration element
-	    matching the page.  It is also a translation-time
+	    matching the page.	It is also a translation-time
 	    error to name different encodings in the prolog
 	    or text declaration of a document in XML syntax and
 	    in a JSP configuration element matching the document.

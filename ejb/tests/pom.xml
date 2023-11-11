@@ -67,7 +67,6 @@
 		<module>tp</module>
 		<module>transient-ids</module>
 		<module>verylong</module>
-		<module>web</module>
 		<module>xmldsig</module>
 	</modules>
 	<dependencies>
@@ -126,7 +125,7 @@
 						<variant>jpa</variant>
 						<generateCopyable>true</generateCopyable>
 						<generateMergeable>true</generateMergeable>
-						<generateValueConstructor>false</generateValueConstructor>
+						<generateValueConstructor>true</generateValueConstructor>
 						<!--roundtripTestClassName>RoundtripTest</roundtripTestClassName-->
 					</configuration>
 					<!-- TODO: Remove when plugin dependency management is reworked -->
@@ -191,6 +190,7 @@
 				<module>regrep</module>
 				<module>rim</module>
 				<module>uniprot</module>
+				<module>web</module>
 				<module>xacml</module>
 			</modules>
 		</profile>

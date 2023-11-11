@@ -42,6 +42,13 @@
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
+					<generateValueConstructor>true</generateValueConstructor>
+					<!--
+					<schemaIncludes>
+						<schemaInclude>PLMXMLAnnotationSchema.xsd</schemaInclude>
+						<schemaInclude>PLMXMLClassificationSchema.xsd</schemaInclude>
+					</schemaIncludes>
+					-->
 					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.plmxml.RoundtripTest</roundtripTestClassName>
 					-->
