@@ -64,8 +64,8 @@
 	<properties>
 		<build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
 		<maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
-		<maven-assembly-plugin.version>3.4.2</maven-assembly-plugin.version>
-		<maven-bundle-plugin.version>5.1.8</maven-bundle-plugin.version>
+		<maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
+		<maven-bundle-plugin.version>5.1.9</maven-bundle-plugin.version>
 		<maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
 		<maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
 		<maven-dependency-plugin.version>3.5.0</maven-dependency-plugin.version>
@@ -76,13 +76,13 @@
 		<maven-install-plugin.version>3.1.0</maven-install-plugin.version>
 		<maven-invoker-plugin.version>3.4.0</maven-invoker-plugin.version>
 		<maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
-		<maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
+		<maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
 		<maven-jxr-plugin.version>3.3.0</maven-jxr-plugin.version>
 		<maven-project-info-reports-plugin.version>3.4.2</maven-project-info-reports-plugin.version>
 		<maven-release-plugin.version>3.0.0-M7</maven-release-plugin.version>
-		<maven-resources-plugin.version>3.3.0</maven-resources-plugin.version>
-		<maven-site-plugin.version>3.12.1</maven-site-plugin.version>
-		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+		<maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+		<maven-site-plugin.version>4.0.0-M12</maven-site-plugin.version>
+		<maven-source-plugin.version>3.3.0</maven-source-plugin.version>
 		<maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
 		<maven-surefire-report-plugin.version>3.1.2</maven-surefire-report-plugin.version>
 		<nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
@@ -95,6 +95,7 @@
 		<derby.version>10.16.1.1</derby.version>
 		<eclipselink.version>4.0.2</eclipselink.version>
 		<ehcache.version>3.10.8</ehcache.version>
+		<guice.version>5.1.0</guice.version>
 		<hibernate-series.version>6.2.7.Final</hibernate-series.version>
 		<HikariCP.version>5.0.1</HikariCP.version>
 		<hisrc-basicjaxb-annox-parser.version>2.1.2-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
@@ -114,6 +115,7 @@
 		<maven-api.version>3.9.4</maven-api.version>
 		<maven-plugin-plugin.version>3.9.0</maven-plugin-plugin.version>
 		<maven-plugin-testing.version>3.3.0</maven-plugin-testing.version>
+		<maven-resolver.version>1.9.13</maven-resolver.version>
 		<postgresql.version>42.6.0</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -531,6 +533,13 @@
 				<artifactId>plexus-utils</artifactId>
 				<version>4.0.0</version>
 			</dependency>
+			<!-- Maven JSR-330 Dependency Injection -->
+			<dependency>
+				<groupId>com.google.inject</groupId>
+				<artifactId>guice</artifactId>
+				<version>${guice.version}</version>
+				<scope>provided</scope>
+			</dependency>
 			<!-- Maven API -->
 			<dependency>
 				<groupId>org.apache.maven</groupId>
@@ -571,17 +580,26 @@
 				<artifactId>maven-plugin-api</artifactId>
 				<version>${maven-api.version}</version>
 				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-compat</artifactId>
-				<version>${maven-api.version}</version>
-				<scope>provided</scope>
+				<exclusions>
+					<!-- In favor of jakarta.annotation:jakarta.annotation-api -->
+					<exclusion>
+						<groupId>javax.annotation</groupId>
+						<artifactId>javax.annotation-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-core</artifactId>
 				<version>${maven-api.version}</version>
+				<scope>provided</scope>
+				<exclusions>
+					<!-- In favor of jakarta.inject:jakarta.inject-api -->
+					<exclusion>
+						<groupId>javax.inject</groupId>
+						<artifactId>javax.inject</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
@@ -593,8 +611,33 @@
 				<groupId>org.apache.maven.plugin-tools</groupId>
 				<artifactId>maven-plugin-annotations</artifactId>
 				<version>${maven-plugin-plugin.version}</version>
+			</dependency>
+			<!-- Maven Artifact Resolver and Transport -->
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-resolver-provider</artifactId>
+				<version>${maven-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.apache.maven.resolver</groupId>
+				<artifactId>maven-resolver-connector-basic</artifactId>
+				<version>${maven-resolver.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven.resolver</groupId>
+				<artifactId>maven-resolver-transport-file</artifactId>
+				<version>${maven-resolver.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven.resolver</groupId>
+				<artifactId>maven-resolver-transport-http</artifactId>
+				<version>${maven-resolver.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -772,6 +815,7 @@
 				<executions>
 					<execution>
 						<?m2e ignore?>
+						<id>echo-build-properties</id>
 						<phase>validate</phase>
 						<goals>
 							<goal>run</goal>

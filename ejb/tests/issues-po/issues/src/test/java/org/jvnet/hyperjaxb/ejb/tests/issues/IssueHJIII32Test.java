@@ -4,10 +4,12 @@ import jakarta.persistence.Entity;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import org.jvnet.hyperjaxb.ejb.tests.issuesignored.IssueHJIII32ComplexType;
 
+@Order(3)
 public class IssueHJIII32Test {
 	
 	@Test

@@ -5,8 +5,10 @@ import jakarta.persistence.NamedQuery;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
+@Order(4)
 public class IssueHJIII100Test {
 
 	@Test

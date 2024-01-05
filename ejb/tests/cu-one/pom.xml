@@ -44,7 +44,7 @@
 				<configuration>
 					<!--result>mappingFiles</result-->
 					<!--
-					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.cu_one.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.cuone.RoundtripTest</roundtripTestClassName>
 					-->
 					<variant>ejb</variant>
 					<args>

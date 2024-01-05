@@ -1,5 +1,7 @@
 package org.jvnet.hyperjaxb.ejb.tests.po;
 
+import static org.jvnet.basicjaxb.testing.AbstractSamplesTest.getMavenProjectDir;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,9 +63,7 @@ public class RunPoCustomNamingPlugin
 	{
 		try
 		{
-			return (new File(RunPoCustomNamingPlugin.class.getProtectionDomain()
-				.getCodeSource().getLocation().getFile())).getParentFile()
-				.getParentFile().getAbsoluteFile();
+			return getMavenProjectDir(RunPoCustomNamingPlugin.class);
 		}
 		catch (Exception ex)
 		{

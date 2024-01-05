@@ -1,6 +1,7 @@
 package org.jvnet.hyperjaxb.ejb.test;
 
 import static java.util.Arrays.sort;
+import static org.jvnet.basicjaxb.testing.AbstractSamplesTest.getMavenProjectDir;
 
 import java.io.File;
 import java.util.Collection;
@@ -15,7 +16,7 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.jvnet.basicjaxb.test.AbstractSamplesTest;
+import org.jvnet.basicjaxb.testing.AbstractSamplesTest;
 import org.jvnet.basicjaxb.xml.bind.ContextPathAware;
 
 public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityManagerTest implements ContextPathAware
@@ -127,8 +128,7 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 	{
 		try
 		{
-			File codeSourceLocation = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getFile());
-			return codeSourceLocation.getParentFile().getParentFile().getAbsoluteFile();
+			return getMavenProjectDir(getClass());
 		}
 		catch (Exception ex)
 		{

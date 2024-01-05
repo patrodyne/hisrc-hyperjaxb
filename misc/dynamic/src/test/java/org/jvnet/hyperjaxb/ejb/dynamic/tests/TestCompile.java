@@ -1,5 +1,7 @@
 package org.jvnet.hyperjaxb.ejb.dynamic.tests;
 
+import static org.jvnet.basicjaxb.testing.AbstractSamplesTest.getMavenProjectDir;
+
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -18,9 +20,7 @@ public abstract class TestCompile {
 
 	protected File getBaseDir() {
 		try {
-			return (new File(getClass().getProtectionDomain().getCodeSource()
-					.getLocation().toURI())).getParentFile().getParentFile()
-					.getAbsoluteFile();
+			return getMavenProjectDir(getClass());
 		} catch (Exception ex) {
 			throw new AssertionError(ex);
 		}

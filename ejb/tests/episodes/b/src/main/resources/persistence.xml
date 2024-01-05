@@ -6,8 +6,8 @@
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd
 						https://jakarta.ee/xml/ns/persistence/orm https://jakarta.ee/xml/ns/persistence/orm/orm_3_0.xsd" 
 >
-    <persistence-unit name="org.jvnet.hyperjaxb.ejb.tests.episodes.b.tests">
-        <class>org.jvnet.hyperjaxb.ejb.tests.episodes.a.tests.AType</class>
-        <class>org.jvnet.hyperjaxb.ejb.tests.episodes.a.tests.A1Type</class>
+    <persistence-unit name="org.jvnet.hyperjaxb.ejb.tests.episodes.b">
+        <class>org.jvnet.hyperjaxb.ejb.tests.episodes.a.AType</class>
+        <class>org.jvnet.hyperjaxb.ejb.tests.episodes.a.A1Type</class>
     </persistence-unit>
 </persistence>

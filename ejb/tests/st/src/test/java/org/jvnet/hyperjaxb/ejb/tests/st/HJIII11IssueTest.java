@@ -4,9 +4,11 @@ import jakarta.persistence.Column;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
+@Order(3)
 public class HJIII11IssueTest {
 
 	@Test

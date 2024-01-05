@@ -4,8 +4,10 @@ import jakarta.persistence.Version;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
+@Order(3)
 public class IssueHJIII35Test {
 
 	@Test

@@ -8,11 +8,11 @@ public class RoundtripTest
 {
     public String getContextPath()
 	{
-        return "org.jvnet.hyperjaxb.ejb.tests.episodes.a.tests";
+        return "org.jvnet.hyperjaxb.ejb.tests.episodes.a";
     }
 
     public String getPersistenceUnitName()
 	{
-        return "org.jvnet.hyperjaxb.ejb.tests.episodes.a.tests";
+        return "org.jvnet.hyperjaxb.ejb.tests.episodes.a";
     }
 }

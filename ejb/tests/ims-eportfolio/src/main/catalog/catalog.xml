@@ -3,6 +3,7 @@
 	PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
 		   "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
 <!-- See https://www.oasis-open.org/committees/entity/spec.html -->
+<!-- xmlcatalog -v catalog.xml [publicId|systemId] -->
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
 
 	<public publicId="-//W3C//DTD XMLSCHEMA 200102//EN" uri="XMLSchema.dtd" />

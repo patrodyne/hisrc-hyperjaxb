@@ -17,32 +17,40 @@
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-artifact</artifactId>
-			<scope>provided</scope>
 		</dependency>
+		<!-- Maven JSR-330 Dependency Injection -->
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+		</dependency>
+		<!-- Maven dependencies -->
 		<dependency>
 			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-compat</artifactId>
-			<scope>provided</scope>
+			<artifactId>maven-plugin-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-core</artifactId>
-			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.resolver</groupId>
+			<artifactId>maven-resolver-connector-basic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.resolver</groupId>
+			<artifactId>maven-resolver-transport-file</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.resolver</groupId>
+			<artifactId>maven-resolver-transport-http</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-model</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-plugin-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-settings</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.plugin-tools</groupId>
@@ -81,6 +89,11 @@
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
 			<artifactId>hisrc-higherjaxb-maven-plugin-testing</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-maven-plugin-testing</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

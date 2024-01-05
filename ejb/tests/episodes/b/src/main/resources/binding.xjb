@@ -4,7 +4,8 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
-	jaxb:extensionBindingPrefixes="xjc"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="xjc hj orm"
 	xmlns:a="a"
 	xmlns:b="b"
 >
@@ -21,20 +22,35 @@
 	</jaxb:globalBindings>
 
 	<jaxb:bindings scd="x-schema::b">
+
 		<jaxb:schemaBindings>
-			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.episodes.b.tests"/>
+			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.episodes.b"/>
 		</jaxb:schemaBindings>
+
+		<hj:persistence>
+
+			<hj:default-entity>
+				<!-- SINGLE_TABLE | JOINED | TABLE_PER_CLASS -->
+				<orm:inheritance strategy="JOINED"/>
+			</hj:default-entity>
+
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+
+		</hj:persistence>
+
 	</jaxb:bindings>
 
 	<!--jaxb:bindings scd="x-schema::a">
 		<jaxb:schemaBindings>
-			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.episodes.a.tests"/>
+			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.episodes.a"/>
 		</jaxb:schemaBindings>
 		<jaxb:bindings scd="~a:AType">
-			<jaxb:class ref="org.jvnet.hyperjaxb.ejb.tests.episodes.a.tests.AType"/>
+			<jaxb:class ref="org.jvnet.hyperjaxb.ejb.tests.episodes.a.AType"/>
 		</jaxb:bindings>
 		<jaxb:bindings scd="~a:A1Type">
-			<jaxb:class ref="org.jvnet.hyperjaxb.ejb.tests.episodes.a.tests.A1Type"/>
+			<jaxb:class ref="org.jvnet.hyperjaxb.ejb.tests.episodes.a.A1Type"/>
 		</jaxb:bindings>
 	</jaxb:bindings-->
 

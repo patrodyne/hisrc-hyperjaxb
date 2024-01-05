@@ -26,13 +26,20 @@
 	<jaxb:bindings schemaLocation="a.xsd" node="/xsd:schema">
 
 		<jaxb:schemaBindings>
-			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.episodes.a.tests"/>
+			<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.episodes.a"/>
 		</jaxb:schemaBindings>
 
 		<hj:persistence>
+
+			<hj:default-entity>
+				<!-- SINGLE_TABLE | JOINED | TABLE_PER_CLASS -->
+				<orm:inheritance strategy="JOINED"/>
+			</hj:default-entity>
+
 			<hj:default-generated-id>
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
+
 		</hj:persistence>
 
 	</jaxb:bindings>

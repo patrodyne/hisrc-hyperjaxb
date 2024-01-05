@@ -4,12 +4,14 @@ import jakarta.persistence.Column;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import org.jvnet.basicjaxb_annox.reflect.AnnotatedElementFactory;
 import org.jvnet.basicjaxb_annox.reflect.DualAnnotatedElementFactory;
 import org.jvnet.basicjaxb_annox.reflect.ParameterizedAnnotatedElement;
 
+@Order(3)
 public class IssueHJIII28Test {
 	
 	@Test
