@@ -95,7 +95,7 @@ public class WrapCollectionHeteroReference implements CreatePropertyInfos
 		final CClassInfoParent parent = Ring.get(BGMBuilder.class).getGlobalBinding()
 			.getFlattenClasses() == LocalScoping.NESTED ? classInfo : classInfo.parent();
 		final CClassInfo itemClassInfo = new CClassInfo(classInfo.model, parent,
-			classInfo.shortName + propertyName + "Item", null, new QName(propertyName), null,
+			classInfo.shortName + propertyName + "Item", classInfo.getLocator(), new QName(propertyName), null,
 			propertyInfo.getSchemaComponent(), new CCustomizations());
 		Customizations.markGenerated(itemClassInfo);
 		final CReferencePropertyInfo itemPropertyInfo = new CReferencePropertyInfo(

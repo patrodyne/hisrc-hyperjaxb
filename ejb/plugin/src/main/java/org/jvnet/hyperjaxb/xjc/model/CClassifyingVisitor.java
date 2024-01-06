@@ -1,9 +1,13 @@
 package org.jvnet.hyperjaxb.xjc.model;
 
+import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
+
 import java.util.Collection;
 import java.util.Set;
 
+import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
+import org.slf4j.Logger;
 
 import com.sun.tools.xjc.model.CArrayInfo;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
@@ -20,15 +24,29 @@ import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.model.CValuePropertyInfo;
 import com.sun.tools.xjc.model.CWildcardTypeInfo;
+import com.sun.xml.xsom.XSComplexType;
+import com.sun.xml.xsom.XSParticle;
+import com.sun.xml.xsom.impl.ElementDecl;
 
 public class CClassifyingVisitor<U> implements CPropertyVisitor<U> {
 
 	private final ProcessModel context;
 	private final CClassifier<U> classifier;
-
-	public CClassifyingVisitor(ProcessModel context, CClassifier<U> classifier) {
+	
+	private EJBPlugin plugin;
+	public EJBPlugin getPlugin() { return plugin; }
+	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
+	
+	public Logger getLogger()
+	{
+		return getPlugin().getLogger();
+	}
+	
+	public CClassifyingVisitor(ProcessModel context, CClassifier<U> classifier, EJBPlugin plugin)
+	{
 		this.context = context;
 		this.classifier = classifier;
+		setPlugin(plugin);
 	}
 
 	@Override
@@ -89,7 +107,9 @@ public class CClassifyingVisitor<U> implements CPropertyVisitor<U> {
 				context, referencePropertyInfo);
 		if (types.size() == 1) {
 			final CTypeInfo type = types.iterator().next();
-
+			
+			getLogger().trace("Type............: {}", type);
+			getLogger().trace("  Location........: {}", toLocation(referencePropertyInfo));
 			if (type instanceof CWildcardTypeInfo
 					|| type.equals(CBuiltinLeafInfo.ANYTYPE)) {
 				assert elements.isEmpty();
@@ -106,12 +126,46 @@ public class CClassifyingVisitor<U> implements CPropertyVisitor<U> {
 					return onClassReference(referencePropertyInfo);
 				} else if (type instanceof CElementInfo) {
 					final CElementInfo elementInfo = (CElementInfo) type;
-					final CNonElement contentType = elementInfo
-							.getContentType();
+					final CNonElement contentType = elementInfo.getContentType();
 
+					getLogger().trace("  ContextType.....: {}", contentType);
 					if (contentType instanceof CBuiltinLeafInfo) {
 						assert referencePropertyInfo.getWildcard() == null;
-						assert referencePropertyInfo.isMixed() ^ elements.isEmpty();
+						if ( getLogger().isTraceEnabled())
+						{
+							getLogger().trace("  Parent..........: {}", referencePropertyInfo.parent());
+							getLogger().trace("  Property........: {}", referencePropertyInfo.getName(false));
+						}
+						boolean isMixed = referencePropertyInfo.isMixed();
+						boolean isNillable = false;
+						if ( referencePropertyInfo.getSchemaComponent() instanceof XSParticle )
+						{
+							XSParticle xp = (XSParticle) referencePropertyInfo.getSchemaComponent();
+							if ( getLogger().isTraceEnabled())
+							{
+								getLogger().trace("  MinOccurs.: {}", xp.getMinOccurs());
+								getLogger().trace("  MaxOccurs.: {}", xp.getMaxOccurs());
+							}
+							if ( xp.getTerm().isElementDecl() )
+							{
+								ElementDecl ed = (ElementDecl) xp.getTerm();
+								getLogger().trace("  Nillable..: {}", ed.isNillable());
+								isNillable = ed.isNillable();
+							}
+						}
+						else if ( referencePropertyInfo.getSchemaComponent() instanceof XSComplexType )
+						{
+							XSComplexType xc = (XSComplexType) referencePropertyInfo.getSchemaComponent();
+							isMixed = xc.isMixed();
+						}
+						if ( getLogger().isTraceEnabled())
+						{
+							getLogger().trace("    isMixed............: {}", isMixed);
+							getLogger().trace("    elements.isEmpty().: {}", elements.isEmpty());
+							getLogger().trace("    isNillable.........: {}", isNillable);
+							getLogger().trace("    XOR................: {}", (isMixed ^ elements.isEmpty() ^ isNillable));
+						}
+						assert isMixed ^ elements.isEmpty() ^ isNillable;
 						return onBuiltinElementReference(referencePropertyInfo);
 					} else if (contentType instanceof CEnumLeafInfo) {
 						assert !elements.isEmpty();

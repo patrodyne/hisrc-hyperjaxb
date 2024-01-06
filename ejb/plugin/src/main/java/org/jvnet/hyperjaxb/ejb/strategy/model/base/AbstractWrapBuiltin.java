@@ -12,6 +12,7 @@ import org.jvnet.hyperjaxb.ejb.strategy.model.ProcessModel;
 
 import com.sun.tools.xjc.model.CBuiltinLeafInfo;
 import com.sun.tools.xjc.model.CClassInfo;
+import com.sun.tools.xjc.model.CElementInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.model.TypeUse;
@@ -37,7 +38,8 @@ public abstract class AbstractWrapBuiltin implements CreatePropertyInfos
 		// assert !propertyInfo.isCollection();
 		Collection<? extends CTypeInfo> types = context.getGetTypes().process(context, propertyInfo);
 		assert types.size() == 1;
-		assert types.iterator().next() instanceof CBuiltinLeafInfo;
+		CTypeInfo type = types.iterator().next();
+		assert (type instanceof CBuiltinLeafInfo) || (type instanceof CElementInfo);
 		final CBuiltinLeafInfo originalTypeUse = getTypeUse(context, propertyInfo);
 		if (propertyInfo.getAdapter() != null)
 		{

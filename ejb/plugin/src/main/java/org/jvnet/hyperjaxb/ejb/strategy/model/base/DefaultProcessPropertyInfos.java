@@ -125,7 +125,7 @@ public class DefaultProcessPropertyInfos implements ProcessPropertyInfos
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		final CClassifyingVisitor<Collection<CPropertyInfo>> classifyingVisitor =
-			new CClassifyingVisitor<Collection<CPropertyInfo>>(context, new PropertyClassifier(context));
+			new CClassifyingVisitor<Collection<CPropertyInfo>>(context, new PropertyClassifier(context), getPlugin());
 		return propertyInfo.accept(classifyingVisitor);
 	}
 
