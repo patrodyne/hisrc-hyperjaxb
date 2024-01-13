@@ -38,6 +38,25 @@
 				<orm:column length="2048"/>
 			</hj:default-basic>
 
+			<!--
+				The 'merge' attribute represents the HJ POJO mergeability and not
+				the JPA merge feature. When the attribute is 'merge="true"' then
+				CascadeType.ALL will be included in the JPA annotation! It must
+				be 'merge="false"' to limit the JPA annotation the given types below.
+			-->
+            <hj:default-many-to-one merge="false">
+				<!--
+					Starting with Hibernate 6.2.8.Final:
+					Cascade merge omitted to avoid detached entity exception in Issue112.
+					Cascade remove omitted to reflect non-ownership of the 'one' side.
+				-->
+                <orm:cascade>
+                    <orm:cascade-refresh />
+                    <orm:cascade-persist />
+                    <orm:cascade-detach />
+                </orm:cascade>
+            </hj:default-many-to-one>
+
 		</hj:persistence>
 
 	</jaxb:bindings>

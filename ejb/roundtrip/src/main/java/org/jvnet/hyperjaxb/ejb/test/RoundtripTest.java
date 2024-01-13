@@ -38,9 +38,17 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 	private Boolean validateXml = true;
 	public Boolean isValidateXml() { return validateXml; }
 	public void setValidateXml(Boolean validateXml) { this.validateXml = validateXml; }
+	
+	public static enum SaveType { MERGE, PERSIST }
 
 	@Override
 	protected void checkSample(File sampleFile)
+		throws Exception
+	{
+		checkSample(sampleFile, SaveType.MERGE);
+	}
+
+	protected void checkSample(File sampleFile, SaveType saveType)
 		throws Exception
 	{
 		final JAXBContext context = createContext();
@@ -85,41 +93,51 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		
 		// Save
 		getLogger().debug("Persisting the unmarshalled sample.");
-		Object mergedId = null;
-		Class<?> mergedClass = null;
+		Object savedId = null;
+		Class<?> savedClass = null;
 		try ( final EntityManager saveManager = createEntityManager() )
 		{
 			// Transaction
 			EntityTransaction saveTX = saveManager.getTransaction();
 			
+			Object savedEntity = null;
 			saveTX.begin();
-			Object mergedEntity = saveManager.merge(initialSample.getValue());
+			switch ( saveType )
+			{
+				case MERGE:
+					savedEntity = saveManager.merge(initialSample.getValue());
+					break;
+				case PERSIST:
+					saveManager.persist(initialSample.getValue());
+					savedEntity = initialSample.getValue();
+					break;
+			}
 			saveTX.commit();
 			
-			mergedClass = mergedEntity.getClass();
+			savedClass = savedEntity.getClass();
 			
 			saveTX.begin();
-			mergedId = getId(saveManager, mergedEntity);
+			savedId = getId(saveManager, savedEntity);
 			saveTX.commit();
 			
 			if ( getLogger().isTraceEnabled() )
 			{
 				String xml = "UNMARSHALLABLE";
-		        if (isBindingElement(context, mergedEntity))
-		        	xml = marshal(context, mergedEntity, true);
-		        else if (isElement(mergedEntity))
-	        		xml = marshalElement(mergedEntity);
+		        if (isBindingElement(context, savedEntity))
+		        	xml = marshal(context, savedEntity, true);
+		        else if (isElement(savedEntity))
+	        		xml = marshalElement(savedEntity);
 		        else
 		        {
-		        	JAXBElement<Object> mergedEntityElement = createJAXBElement(mergedEntity);
-		        	if ( mergedEntityElement != null )
-		        		xml = marshal(context, mergedEntityElement, true);
+		        	JAXBElement<Object> savedEntityElement = createJAXBElement(savedEntity);
+		        	if ( savedEntityElement != null )
+		        		xml = marshal(context, savedEntityElement, true);
 		        }
-				getLogger().trace("Merged object:\n" + xml);
+				getLogger().trace("Saved object:\n" + xml);
 			}
 		}
 		
-		assertNotNull(mergedId, "merged identifier");
+		assertNotNull(savedId, "saved identifier");
 		
 		// Load
 		getLogger().debug("Loading the persisted sample.");
@@ -129,7 +147,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			EntityTransaction loadTX = loadManager.getTransaction();
 			
 			loadTX.begin();
-			final Object loadedEntity = loadManager.find(mergedClass, mergedId);
+			final Object loadedEntity = loadManager.find(savedClass, savedId);
 			loadTX.commit();
 
 			if ( getLogger().isTraceEnabled() )
@@ -164,7 +182,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 				getLogger().trace("Checking the sample object identity: Loaded vs Loaded clone.");
 				checkCopyable(loadedEntity);
 
-				getLogger().trace("Checking the sample object identity: Etalon vs Initial vs Loaded merge.");
+				getLogger().trace("Checking the sample object identity: Etalon vs Initial vs Loaded.");
 				checkMergeable(etalonSample.getValue(), initialSample.getValue(), loadedEntity);
 			}
 		}

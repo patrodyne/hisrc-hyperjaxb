@@ -92,36 +92,36 @@
 		<activation-api.version>2.1.2</activation-api.version>
 		<activation-imp.version>2.0.1</activation-imp.version>
 		<annotation.version>2.1.1</annotation.version>
-		<derby.version>10.16.1.1</derby.version>
+		<derby.version>10.17.1.0</derby.version>
 		<eclipselink.version>4.0.2</eclipselink.version>
 		<ehcache.version>3.10.8</ehcache.version>
 		<guice.version>5.1.0</guice.version>
-		<hibernate-series.version>6.2.7.Final</hibernate-series.version>
-		<HikariCP.version>5.0.1</HikariCP.version>
+		<hibernate-series.version>6.4.1.Final</hibernate-series.version>
+		<HikariCP.version>5.1.0</HikariCP.version>
 		<hisrc-basicjaxb-annox-parser.version>2.1.2-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
 		<hisrc-basicjaxb.version>2.1.2-SNAPSHOT</hisrc-basicjaxb.version>
 		<hisrc-higherjaxb-maven-plugin.version>2.1.2-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
 		<hisrc-hyperjaxb-annox-plugin.version>2.1.2-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
-		<h2database.version>2.2.220</h2database.version>
-		<javassist.version>3.29.2-GA</javassist.version>
+		<h2database.version>2.2.224</h2database.version>
+		<javassist.version>3.30.2-GA</javassist.version>
 		<jpa-api.version>3.1.0</jpa-api.version>
-		<jaxb-api.version>4.0.0</jaxb-api.version>
-		<jaxb-imp.version>4.0.3</jaxb-imp.version>
-		<junit-jupiter.version>5.10.0</junit-jupiter.version>
-		<junit-platform.version>1.10.0</junit-platform.version>
+		<jaxb-api.version>4.0.1</jaxb-api.version>
+		<jaxb-imp.version>4.0.4</jaxb-imp.version>
+		<junit-jupiter.version>5.10.1</junit-jupiter.version>
+		<junit-platform.version>1.10.1</junit-platform.version>
 		<m2e.jpa.activation>false</m2e.jpa.activation>
 		<maven.compiler.release>11</maven.compiler.release>
 		<maven-min.version>3.8.4</maven-min.version>
-		<maven-api.version>3.9.4</maven-api.version>
-		<maven-plugin-plugin.version>3.9.0</maven-plugin-plugin.version>
+		<maven-api.version>3.9.6</maven-api.version>
+		<maven-plugin-plugin.version>3.11.0</maven-plugin-plugin.version>
 		<maven-plugin-testing.version>3.3.0</maven-plugin-testing.version>
-		<maven-resolver.version>1.9.13</maven-resolver.version>
-		<postgresql.version>42.6.0</postgresql.version>
+		<maven-resolver.version>1.9.18</maven-resolver.version>
+		<postgresql.version>42.7.1</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<schemacrawler.version>16.20.4</schemacrawler.version>
-		<slf4j.version>2.0.7</slf4j.version>
-		<weld.version>5.1.1.SP1</weld.version>
+		<schemacrawler.version>16.20.8</schemacrawler.version>
+		<slf4j.version>2.0.9</slf4j.version>
+		<weld.version>5.1.2.Final</weld.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -297,7 +297,7 @@
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
-				<version>3.13.0</version>
+				<version>3.14.0</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-beanutils</groupId>
@@ -307,7 +307,7 @@
 			<dependency>
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
-				<version>2.13.0</version>
+				<version>2.15.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sourceforge.collections</groupId>
@@ -348,7 +348,7 @@
 			<dependency>
 				<groupId>io.smallrye</groupId>
 				<artifactId>jandex</artifactId>
-				<version>3.1.2</version>
+				<version>3.1.6</version>
 			</dependency>
 			<!-- Jakarta Persistence API -->
 			<dependency>
@@ -651,12 +651,12 @@
 						<dependency>
 							<groupId>org.apache.ant</groupId>
 							<artifactId>ant-junitlauncher</artifactId>
-							<version>1.10.13</version>
+							<version>1.10.14</version>
 						</dependency>
 						<dependency>
 							<groupId>org.apache.ant</groupId>
 							<artifactId>ant-apache-xalan2</artifactId>
-							<version>1.10.13</version>
+							<version>1.10.14</version>
 						</dependency>
 						<dependency>
 							<groupId>ant</groupId>

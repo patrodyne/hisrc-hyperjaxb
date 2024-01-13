@@ -22,6 +22,7 @@
 		<!-- LONG RUNNING
 		<module>ccr</module>
 		-->
+		<module>choice</module>
 		<module>component-jpa</module>
 		<module>cu-one</module>
 		<module>custom-naming</module>

@@ -29,7 +29,7 @@
 			<hj:default-one-to-many>
 				<!--
 					If the ordering value is not specified, ordering by
-					the primary key of the associated entity is assumed.
+					the primary key of the associated entity is used.
 				-->
 				<orm:order-by/>
 			</hj:default-one-to-many>

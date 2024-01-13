@@ -32,13 +32,31 @@ public class RoundtripTest
 		return false;
 	}
 	
-//	@Override
-//	protected void checkSample(File sample) throws Exception
-//	{
-//		// issues-po/issues/src/test/samples/issue112[0].xml
-//		if ( "issue112[0].xml".equals(sample.getName()) )
-//		{
-//			super.checkSample(sample);
-//		}
-//	}
+	@Override
+	protected void checkSample(java.io.File sample) throws Exception
+	{
+		// issues-po/issues/src/test/samples/
+		switch ( sample.getName() )
+		{
+			case "issue108[0].xml":
+			case "issue112[0].xml":
+			case "issue138.xml":
+			case "issue44One.xml":
+			case "issue44five.xml":
+			case "issue44four.xml":
+			case "issue44three.xml":
+			case "issue44two.xml":
+			case "issue53[0].xml":
+			case "issue66.xml":
+			case "issue91.xml":
+			case "issue93.xml":
+			case "issueHJIII26[0].xml":
+			case "issueHJIII40[0].xml":
+				super.checkSample(sample, SaveType.PERSIST);
+				break;
+			default:
+				super.checkSample(sample, SaveType.MERGE);
+				break;
+		}
+	}
 }

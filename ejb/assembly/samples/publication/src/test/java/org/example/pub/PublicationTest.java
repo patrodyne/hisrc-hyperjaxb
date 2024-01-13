@@ -2,11 +2,11 @@ package org.example.pub;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.jvnet.basicjaxb.test.Bogus.RANDOM;
-import static org.jvnet.basicjaxb.test.Bogus.alpha;
-import static org.jvnet.basicjaxb.test.Bogus.firstName;
-import static org.jvnet.basicjaxb.test.Bogus.lastName;
-import static org.jvnet.basicjaxb.test.Bogus.streetAddress;
+import static org.jvnet.basicjaxb.testing.Bogus.RANDOM;
+import static org.jvnet.basicjaxb.testing.Bogus.alpha;
+import static org.jvnet.basicjaxb.testing.Bogus.firstName;
+import static org.jvnet.basicjaxb.testing.Bogus.lastName;
+import static org.jvnet.basicjaxb.testing.Bogus.streetAddress;
 import static org.jvnet.hyperjaxb.ejb.util.Transactional.CacheOption.REUSE;
 
 import java.nio.file.Path;

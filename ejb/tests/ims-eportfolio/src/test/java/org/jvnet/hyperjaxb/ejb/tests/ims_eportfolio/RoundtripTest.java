@@ -25,4 +25,25 @@ public class RoundtripTest
 	{
 		return false;
 	}
+	
+	@Override
+	protected void checkSample(java.io.File sample) throws Exception
+	{
+		// issues-po/issues/src/test/samples/
+		switch ( sample.getName() )
+		{
+			case "Assertion.xml":
+			case "Identification.xml":
+			case "Reflexion.xml":
+			case "Relationship.xml":
+			case "minimalIdentification.xml":
+			case "uw_stout_rubric.xml":
+				super.checkSample(sample, SaveType.PERSIST);
+				break;
+			default:
+				super.checkSample(sample, SaveType.MERGE);
+				break;
+		}
+	}
+
 }

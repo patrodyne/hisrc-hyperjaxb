@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persons
+	xmlns="http://hyperjaxb.jvnet.org/ejb/tests/choice"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://hyperjaxb.jvnet.org/ejb/tests/choice ../../main/resources/schema.xsd"
+>
+
+	<employee>
+		<firstname>Samuel</firstname>
+		<lastname>Smith</lastname>
+		<salary>50</salary>
+	</employee>
+
+<!-- 
+	<customer>
+		<firstname>Jennifer</firstname>
+		<lastname>Jones</lastname>
+		<company>BigCompany</company>
+	</customer>
+
+	<prospect>
+		<value>Benedict Brown</value>
+	</prospect>
+ -->
+
+	<prospect>Benedict Brown</prospect>
+
+	<employee>
+		<firstname>Samuel</firstname>
+		<lastname>Smith</lastname>
+		<salary>50</salary>
+	</employee>
+
+</persons>

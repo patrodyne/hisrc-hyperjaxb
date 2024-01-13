@@ -40,7 +40,7 @@ public class RunImsEPortfolioPluginTest extends AbstractHyperMojoTest
 		mojo.setForceRegenerate(true);
 		mojo.setNoFileHeader(true);
 
-		mojo.setStrict(true);
+		mojo.setStrict(false);
 		mojo.setCatalog(fullpath("src/main/catalog/catalog.xml"));
 		mojo.setValidateXml(false);
 		

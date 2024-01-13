@@ -8,25 +8,25 @@
 		<replace dir="${basedir}" summary="true">
 			<include name="**/*pom.xml"/>
 			<replacetoken><![CDATA[version>2.1.1-SNAPSHOT</version>]]></replacetoken>
-			<replacevalue><![CDATA[version>2.1.2-SNAPSHOT</version>]]></replacevalue>
+			<replacevalue><![CDATA[version>2.2.0-SNAPSHOT</version>]]></replacevalue>
 		</replace>
 
 		<replace dir="${basedir}" summary="true">
 			<include name="LICENSE.md"/>
 			<replacetoken><![CDATA[Copyright &copy; 2022-2023, Rick O'Sullivan;]]></replacetoken>
-			<replacevalue><![CDATA[Copyright &copy; 2022-2023, Rick O'Sullivan;]]></replacevalue>
+			<replacevalue><![CDATA[Copyright &copy; 2022-2024, Rick O'Sullivan;]]></replacevalue>
 		</replace>
 
 		<replace dir="${basedir}" summary="true">
 			<include name="**/sql-*-h2db.sh"/>
-			<replacetoken><![CDATA[/com/h2database/h2/2.1.214/h2-2.1.214.jar]]></replacetoken>
-			<replacevalue><![CDATA[/com/h2database/h2/2.2.220/h2-2.2.220.jar]]></replacevalue>
+			<replacetoken><![CDATA[/com/h2database/h2/2.1.214/h2-2.2.220.jar]]></replacetoken>
+			<replacevalue><![CDATA[/com/h2database/h2/2.2.220/h2-2.2.224.jar]]></replacevalue>
 		</replace>
 
 		<replace dir="${basedir}" summary="true">
 			<include name="**/sql-*-h2db.sh"/>
-			<replacetoken><![CDATA[/org/postgresql/postgresql/42.5.3/postgresql-42.5.3.jar]]></replacetoken>
-			<replacevalue><![CDATA[/org/postgresql/postgresql/42.6.0/postgresql-42.6.0.jar]]></replacevalue>
+			<replacetoken><![CDATA[/org/postgresql/postgresql/42.6.0/postgresql-42.6.0.jar]]></replacetoken>
+			<replacevalue><![CDATA[/org/postgresql/postgresql/42.7.1/postgresql-42.7.1.jar]]></replacevalue>
 		</replace>
 
 		<replace dir="${basedir}" summary="true">

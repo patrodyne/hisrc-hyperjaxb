@@ -1,8 +1,9 @@
 package org.example.pub;
 
+import static org.jvnet.basicjaxb.lang.ContextUtils.marshalToString;
+
 import java.io.File;
 
-import org.jvnet.basicjaxb.lang.ContextUtils;
 import org.jvnet.basicjaxb.xml.bind.ContextPathAware;
 import org.jvnet.hyperjaxb.ejb.util.EntityUtils;
 
@@ -65,15 +66,15 @@ public class RoundtripTest
 			final JAXBElement<Object> etalonElement = etalonSample.getElement();
 			final JAXBElement<Object> mergedElement = wrap(etalonElement, mergedEntity);
 			final JAXBElement<Object> loadedElement = wrap(etalonElement, loadedEntity);
-			getLogger().debug("Etalon element:\n" + ContextUtils.toString(context, etalonElement));
-			getLogger().debug("Merged element:\n" + ContextUtils.toString(context, mergedElement));
-			getLogger().debug("Loaded element:\n" + ContextUtils.toString(context, loadedElement));
+			getLogger().debug("Etalon element:\n" + marshalToString(context, etalonElement));
+			getLogger().debug("Merged element:\n" + marshalToString(context, mergedElement));
+			getLogger().debug("Loaded element:\n" + marshalToString(context, loadedElement));
 		}
 		else
 		{
-			getLogger().debug("Etalon object:\n" + ContextUtils.toString(context, etalonSample.getValue()));
-			getLogger().debug("Merged object:\n" + ContextUtils.toString(context, mergedEntity));
-			getLogger().debug("Loaded object:\n" + ContextUtils.toString(context, loadedEntity));
+			getLogger().debug("Etalon object:\n" + marshalToString(context, etalonSample.getValue()));
+			getLogger().debug("Merged object:\n" + marshalToString(context, mergedEntity));
+			getLogger().debug("Loaded object:\n" + marshalToString(context, loadedEntity));
 		}
 		
 		getLogger().debug("Checking the sample object identity: Merged vs Loaded.");

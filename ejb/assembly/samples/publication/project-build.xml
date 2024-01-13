@@ -15,8 +15,10 @@
 
 	<path id="compile.path">
 		<fileset dir="\${basedir}/lib">
+			<include name="antlr4-runtime-*.jar"/>
 			<include name="jakarta.xml.bind-api-*.jar"/>
 			<include name="jakarta.persistence-api-*.jar"/>
+			<include name="hibernate-core-*.jar"/>
 			<include name="hibernate-jpamodelgen-*.jar"/>
 			<include name="hisrc-basicjaxb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>

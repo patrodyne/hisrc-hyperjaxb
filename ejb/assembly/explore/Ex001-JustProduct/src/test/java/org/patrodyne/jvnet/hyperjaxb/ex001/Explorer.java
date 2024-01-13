@@ -38,7 +38,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import org.jvnet.hyperjaxb.ejb.util.Transactional;
-import org.jvnet.basicjaxb.test.Bogus;
+import org.jvnet.basicjaxb.testing.Bogus;
 import org.patrodyne.jvnet.hyperjaxb.ex001.model.ObjectFactory;
 import org.patrodyne.jvnet.hyperjaxb.ex001.model.Product;
 import org.patrodyne.jvnet.hyperjaxb.ex001.model.Product_;

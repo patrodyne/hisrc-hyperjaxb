@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+	targetNamespace="http://hyperjaxb.jvnet.org/ejb/tests/choice"
+	xmlns:tns="http://hyperjaxb.jvnet.org/ejb/tests/choice" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+	<xs:complexType name="employee">
+		<xs:sequence>
+			<xs:element name="firstname" type="xs:string" minOccurs="0"/>
+			<xs:element name="lastname" type="xs:string" minOccurs="0"/>
+			<xs:element name="salary" type="xs:int" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- 
+	<xs:complexType name="customer">
+		<xs:sequence>
+			<xs:element name="firstname" type="xs:string" minOccurs="0"/>
+			<xs:element name="lastname" type="xs:string" minOccurs="0"/>
+			<xs:element name="company" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name = "prospect">
+		<xs:sequence>
+			<xs:any processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	 -->
+
+	<xs:complexType name = "prospect">
+		<xs:simpleContent>
+			<xs:extension base="xs:string" />
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<!-- 
+	<xs:element name="employee" type="tns:employee" />
+	<xs:element name="customer" type="tns:customer" />
+	<xs:element name="prospect" type="tns:prospect" />
+	 -->
+	
+	<xs:element name="persons">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="employee" type="tns:employee"/>
+				<!-- 
+				<xs:element name="customer" type="tns:customer"/>
+				 -->
+				<xs:element name="prospect" type="tns:prospect" nillable="true"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>
+<!-- vi:set tabstop=4 hardtabs=4 shiftwidth=4 noexpandtab:-->
