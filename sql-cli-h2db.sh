@@ -34,8 +34,8 @@ if ! command -v rlwrap >/dev/null; then
 	echo "	Home: https://github.com/hanslub42/rlwrap"
 	echo "	Debian: sudo apt update; sudo apt install rlwrap"
 fi
-H2JAR="${M2_REPO}/com/h2database/h2/2.2.220/h2-2.2.220.jar"
-PGJAR="${M2_REPO}/org/postgresql/postgresql/42.6.0/postgresql-42.6.0.jar"
+H2JAR="${M2_REPO}/com/h2database/h2/2.2.224/h2-2.2.224.jar"
+PGJAR="${M2_REPO}/org/postgresql/postgresql/42.7.1/postgresql-42.7.1.jar"
 if [ ! -r "${H2JAR}" ]; then
 	echo "ERROR: Please configure H2JAR location in this script."
 	exit 1

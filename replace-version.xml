@@ -7,8 +7,8 @@
 
 		<replace dir="${basedir}" summary="true">
 			<include name="**/*pom.xml"/>
-			<replacetoken><![CDATA[version>2.1.1-SNAPSHOT</version>]]></replacetoken>
-			<replacevalue><![CDATA[version>2.2.0-SNAPSHOT</version>]]></replacevalue>
+			<replacetoken><![CDATA[version>2.1.2-SNAPSHOT</]]></replacetoken>
+			<replacevalue><![CDATA[version>2.2.0-SNAPSHOT</]]></replacevalue>
 		</replace>
 
 		<replace dir="${basedir}" summary="true">
@@ -19,8 +19,8 @@
 
 		<replace dir="${basedir}" summary="true">
 			<include name="**/sql-*-h2db.sh"/>
-			<replacetoken><![CDATA[/com/h2database/h2/2.1.214/h2-2.2.220.jar]]></replacetoken>
-			<replacevalue><![CDATA[/com/h2database/h2/2.2.220/h2-2.2.224.jar]]></replacevalue>
+			<replacetoken><![CDATA[/com/h2database/h2/2.2.220/h2-2.2.220.jar]]></replacetoken>
+			<replacevalue><![CDATA[/com/h2database/h2/2.2.224/h2-2.2.224.jar]]></replacevalue>
 		</replace>
 
 		<replace dir="${basedir}" summary="true">
@@ -31,8 +31,8 @@
 
 		<replace dir="${basedir}" summary="true">
 			<include name="**/CreateToplevelXJBindings.sh"/>
-			<replacetoken><![CDATA[BASICJAXB_VERSION="2.1.0"]]></replacetoken>
-			<replacevalue><![CDATA[BASICJAXB_VERSION="2.1.1"]]></replacevalue>
+			<replacetoken><![CDATA[BASICJAXB_VERSION="2.1.1"]]></replacetoken>
+			<replacevalue><![CDATA[BASICJAXB_VERSION="2.2.0"]]></replacevalue>
 		</replace>
 
 	</target>
