@@ -23,16 +23,7 @@
 			<jaxb:package name="net.opengis.gml"/>
 		</jaxb:schemaBindings>
 		
-		<!-- 
-			This binding creates a class names 'AbstractCurve' that is an extension of 
-			'JAXBElement<AbstractCurveType>'. The XJC tool generates the 'AbstractCurve'
-			class with unchecked conversions and without a 'serialVersionUID' both of which
-			cause appropriate compiler WARNINGs.
-		-->
 		<jaxb:bindings node="xs:element[@name='_Curve']">
-			<anx:annotate>
-				@java.lang.SuppressWarnings({"unchecked","rawtypes","serial"})
-			</anx:annotate>
 			<jaxb:class name="AbstractCurve"/>
 		</jaxb:bindings>
 		
