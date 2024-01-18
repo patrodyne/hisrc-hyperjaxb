@@ -74,7 +74,7 @@ original `maven-jaxb2-plugin` name.
 
 New goals for the next release are:
 
-* Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
+* Review in progress.
 
 ### Status
 
@@ -83,10 +83,6 @@ New goals for the next release are:
 #### Completed
 
 * Review in progress.
-
-#### Future
-
-* Replace `org.apache.maven:maven-compat` with Maven 3 dependencies.
 
 ### Fork History
 
