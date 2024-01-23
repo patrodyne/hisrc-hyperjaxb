@@ -41,9 +41,10 @@ case "${JDBC_TYPE}" in
 		JDBC_LIBS="${H2JAR}"
 		echo "Hints: sql>"
 		echo "	show schemas;"
-		echo "	show tables;"
+		echo "	show tables from SCHEMANAME;"
+		echo "	set schema SCHEMANAME;"
 		echo "	show columns from TABLENAME;"
-		echo "	select table_name, row_count_estimate from information_schema.tables where table_schema = 'public' and row_count_estimate > 0 order by row_count_estimate desc;"
+		echo "	select table_name, row_count_estimate from information_schema.tables where table_schema = 'SCHEMANAME' and row_count_estimate > 0 order by row_count_estimate desc;"
 		;;
 	pg)
 		JDBC_URL="jdbc:postgresql://nas02/hyperjaxb"
