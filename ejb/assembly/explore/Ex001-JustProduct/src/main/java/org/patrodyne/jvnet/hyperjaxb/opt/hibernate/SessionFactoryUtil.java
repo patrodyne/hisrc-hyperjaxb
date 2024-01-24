@@ -1,4 +1,4 @@
-package org.jvnet.hyperjaxb.opt.hibernate;
+package org.patrodyne.jvnet.hyperjaxb.opt.hibernate;
 
 import static java.sql.Connection.TRANSACTION_NONE;
 import static java.sql.Connection.TRANSACTION_READ_COMMITTED;
@@ -125,6 +125,7 @@ import org.slf4j.LoggerFactory;
  * Utility methods for a SessionFactory.
  * 
  * TODO: Review deprecated options.
+ * TODO: Replace with org.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil
  * 
  * @author Rick O'Sullivan
  */
