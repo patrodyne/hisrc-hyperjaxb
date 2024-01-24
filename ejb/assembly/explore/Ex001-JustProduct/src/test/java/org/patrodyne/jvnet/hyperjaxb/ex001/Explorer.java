@@ -8,10 +8,10 @@ import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.CANCELED;
 import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.CLOSED;
 import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.HOLD;
 import static org.patrodyne.jvnet.hyperjaxb.ex001.model.Stage.OPEN;
-import static org.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.gatherProperties;
-import static org.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.isInitialized;
-import static org.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.isProxy;
-import static org.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.sqlAction;
+import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.gatherProperties;
+import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.isInitialized;
+import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.isProxy;
+import static org.patrodyne.jvnet.hyperjaxb.opt.hibernate.SessionFactoryUtil.sqlAction;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;

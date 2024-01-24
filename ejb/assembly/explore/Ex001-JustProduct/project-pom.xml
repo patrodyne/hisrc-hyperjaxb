@@ -18,6 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+		<annotation.version>${annotation.version}</annotation.version>
 		<ehcache.version>${ehcache.version}</ehcache.version>
 		<h2database.version>${h2database.version}</h2database.version>
 		<postgresql.version>${postgresql.version}</postgresql.version>
@@ -41,6 +42,11 @@
 	<dependencies>
 
 		<!-- Persistence Dependencies -->
+		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+			<version>\${annotation.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
 			<artifactId>hisrc-hyperjaxb-opt-hibernate</artifactId>

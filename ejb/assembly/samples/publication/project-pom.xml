@@ -17,6 +17,7 @@
 		<maven-min.version>${maven-min.version}</maven-min.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<annotation.version>${annotation.version}</annotation.version>
 		<eclipselink.version>${eclipselink.version}</eclipselink.version>
 		<hisrc-basicjaxb.version>${hisrc-basicjaxb.version}</hisrc-basicjaxb.version>
 		<hisrc-hyperjaxb.version>${hisrc-hyperjaxb.version}</hisrc-hyperjaxb.version>
@@ -30,6 +31,11 @@
 
 	<dependencies>
 		<!-- JPA Dependencies -->
+		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+			<version>\${annotation.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>jakarta.persistence</groupId>
 			<artifactId>jakarta.persistence-api</artifactId>
