@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.patrodyne.jvnet</groupId>
 		<artifactId>hisrc-hyperjaxb-ejb-tests-episodes</artifactId>
-		<version>2.2.0-SNAPSHOT</version>
+		<version>2.2.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>hisrc-hyperjaxb-ejb-tests-episodes-b</artifactId>
 	<packaging>jar</packaging>
@@ -59,6 +59,8 @@
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.episodes.b.RoundtripTest</roundtripTestClassName>
 					-->
 					<persistenceXml>src/main/resources/persistence.xml</persistenceXml>
+					<strict>false</strict>
+					<catalog>src/main/resources/catalog.xml</catalog>
 					<episodes>
 						<episode>
 							<groupId>org.patrodyne.jvnet</groupId>

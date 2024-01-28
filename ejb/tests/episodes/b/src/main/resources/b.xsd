@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="b"
-	xmlns:a="a"
-	xmlns:b="b"
+	targetNamespace="public:hisrc-hyperjaxb.ejb.tests.episodes.b"
+	xmlns:a="public:hisrc-hyperjaxb.ejb.tests.episodes.a"
+	xmlns:b="public:hisrc-hyperjaxb.ejb.tests.episodes.b"
 	elementFormDefault="qualified"
 >
 
-	<xsd:import namespace="a" schemaLocation="a.xsd"/>
+	<!--
+		XJC: Resolved by catalog.xml and publicId.
+		IDE: Resolved by "preferences" XML Catalog Manager.
+		key: public:hisrc-hyperjaxb.ejb.tests.episodes.a
+		loc: hisrc-hyperjaxb-ejb-tests-episodes-a/src/main/resources/a.xsd
+	-->
+	<xsd:import namespace="public:hisrc-hyperjaxb.ejb.tests.episodes.a" />
 
-	<xsd:element name="b" type="b:BType"/>
+	<xsd:element name="b" type="b:BType" />
 
 	<xsd:complexType name="BType">
 		<xsd:complexContent>
-		    <xsd:extension base="a:AType">
+			<xsd:extension base="a:AType">
 				<xsd:sequence>
-					<xsd:element name="b" type="b:B1Type"/>
-					<xsd:element name="ba" type="a:AType" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element name="b" type="b:B1Type" />
+					<xsd:element name="ba" type="a:AType" minOccurs="0" maxOccurs="unbounded" />
 				</xsd:sequence>
-		    </xsd:extension>
+			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 
 	<xsd:complexType name="B1Type">
 		<xsd:complexContent>
-		    <xsd:extension base="a:A1Type">
+			<xsd:extension base="a:A1Type">
 				<xsd:sequence>
-					<xsd:element name="b1" type="xsd:string"/>
+					<xsd:element name="b1" type="xsd:string" />
 				</xsd:sequence>
-		    </xsd:extension>
+			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 
 	<xsd:complexType name="issueHJIII24Mammal">
 		<xsd:complexContent>
-		    <xsd:extension base="a:issueHJIII24Animal">
-		    </xsd:extension>
+			<xsd:extension base="a:issueHJIII24Animal"></xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 
 	<xsd:complexType name="issueHJIII24Dog">
 		<xsd:complexContent>
-		    <xsd:extension base="b:issueHJIII24Mammal">
-		    </xsd:extension>
+			<xsd:extension base="b:issueHJIII24Mammal"></xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 

@@ -1,4 +1,7 @@
-<b xmlns:a="a" xmlns="b">
+<b
+	xmlns:a="public:hisrc-hyperjaxb.ejb.tests.episodes.a"
+	xmlns="public:hisrc-hyperjaxb.ejb.tests.episodes.b"
+>
 	<a:a>
 		<a:a1>test</a:a1>
 	</a:a>

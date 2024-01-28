@@ -8,6 +8,7 @@ import static org.jvnet.hyperjaxb.jpa.Customizations.MAPPED_SUPERCLASS_ELEMENT_N
 
 import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
 
+import com.sun.tools.xjc.model.CClassRef;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -61,33 +62,47 @@ public class EntityMapping
 	public void createEntity$Inheritance(Mapping context, ClassOutline classOutline, final Entity entity)
 	{
 		final InheritanceType inheritanceStrategy = getInheritanceStrategy(context, classOutline, entity);
-		if ( isRootClass(context, classOutline) )
+		if ( isRootEntity(context, classOutline) )
 		{
-			boolean isSuperClass = isSuperClass(context, classOutline);
-			boolean containsNDC = containsNonDiscriminatorColumn(entity);
-			
-			if ( isSuperClass  || !containsNDC )
+			if ( getPlugin().isNaiveInheritanceStrategy() )
 			{
-				// This entity DOES have sub-classes for inheritance OR
-				// We need to keep discriminator when present for insertability (i.e. EclipseLink).
+				// This entity is a root class AND 
+				// naive mode adds the inheritance strategy with or without sub-entites present
+				// in the current schema (useful for episodic builds).
 				if ( (entity.getInheritance() == null) || (entity.getInheritance().getStrategy() == null) )
 				{
 					entity.setInheritance(new Inheritance());
 					entity.getInheritance().setStrategy(inheritanceStrategy.name());
 				}				
 			}
-			
-			if ( !isSuperClass && containsNDC )
+			else
 			{
-				// It is a root entity but it does NOT have sub-classes for inheritance
-				// and it DOES have a non-discriminator field/column for EclipseLink insertability.
-				// Remove explicit inheritance annotation and discriminator field/column.
-				if ( (entity.getInheritance() != null) && (entity.getInheritance().getStrategy() != null) )
-					entity.setInheritance(null);
-				if (entity.getDiscriminatorColumn() != null)
-					entity.setDiscriminatorColumn(null);
-				if (entity.getDiscriminatorValue() != null)
-					entity.setDiscriminatorValue(null);
+				boolean isSuperClass = isSuperClass(context, classOutline);
+				boolean containsNDC = containsNonDiscriminatorColumn(entity);
+				
+				if ( isSuperClass  || !containsNDC )
+				{
+					// This entity DOES have sub-classes for inheritance OR
+					// We need to keep discriminator when present for insertability (i.e. EclipseLink).
+					if ( (entity.getInheritance() == null) || (entity.getInheritance().getStrategy() == null) )
+					{
+						entity.setInheritance(new Inheritance());
+						entity.getInheritance().setStrategy(inheritanceStrategy.name());
+					}				
+				}
+				
+				if ( !isSuperClass && containsNDC )
+				{
+					// It is a root entity but it does NOT have sub-classes for inheritance
+					// and it DOES have a non-discriminator field/column for EclipseLink insertability.
+					// Remove explicit inheritance annotation and discriminator field/column.
+					if ( (entity.getInheritance() != null) && (entity.getInheritance().getStrategy() != null) )
+						entity.setInheritance(null);
+					if (entity.getDiscriminatorColumn() != null)
+						entity.setDiscriminatorColumn(null);
+					if (entity.getDiscriminatorValue() != null)
+						entity.setDiscriminatorValue(null);
+				}
 			}
 		}
 		else
@@ -116,7 +131,7 @@ public class EntityMapping
 				createTable(context, classOutline, entity.getTable());
 				break;
 			case SINGLE_TABLE:
-				if (isRootClass(context, classOutline))
+				if (isRootEntity(context, classOutline))
 				{
 					if (entity.getTable() == null)
 						entity.setTable(new Table());
@@ -154,7 +169,7 @@ public class EntityMapping
 	public InheritanceType getInheritanceStrategy(Mapping context,
 		ClassOutline classOutline, Entity entity)
 	{
-		if ( isRootClass(context, classOutline) )
+		if ( isRootEntity(context, classOutline) )
 		{
 			if ( (entity.getInheritance() != null) && (entity.getInheritance().getStrategy() != null) )
 				return valueOf(entity.getInheritance().getStrategy());
@@ -163,58 +178,114 @@ public class EntityMapping
 		}
 		else
 		{
-			final ClassOutline superClassOutline = getSuperClass(context, classOutline);
-			final Entity superClassEntity = context.getCustomizing().getEntity(superClassOutline);
-			return getInheritanceStrategy(context, superClassOutline, superClassEntity);
+			final ClassOutline superClassOutline = classOutline.getSuperClass();
+			if ( superClassOutline != null )
+			{
+				final Entity superClassEntity = context.getCustomizing().getEntity(superClassOutline);
+				return getInheritanceStrategy(context, superClassOutline, superClassEntity);
+			}
+			else
+			{
+				// Episodes
+				InheritanceType inhType = getInheritanceType(classOutline.target.getRefBaseClass());
+				return inhType != null ? inhType : jakarta.persistence.InheritanceType.JOINED;
+			}
 		}
-	}
-
-	public ClassOutline getSuperClass(Mapping context, ClassOutline classOutline)
-	{
-		return classOutline.getSuperClass();
 	}
 	
-	/*
-	 * public ClassOutline getSuperClassOutline(Mapping context, ClassOutline classOutline)
-	 * {
-	 *     return classOutline.getSuperClass();
-	 * }
-	 * 
-	 * public boolean isEntityClassHierarchyRoot(Mapping context, ClassOutline classOutline)
-	 * {
-	 *     final ClassOutline superClassOutline = getSuperClassOutline(context, classOutline);
-	 *     if (superClassOutline == null)
-	 *         return true;
-	 *     else if (containsCustomization(classOutline, MAPPED_SUPERCLASS_ELEMENT_NAME))
-	 *         return true;
-	 *     else if (context.getIgnoring().isClassOutlineIgnored(superClassOutline))
-	 *         return true;
-	 *     else
-	 *         return false;
-	 * }
-	 */
-
-	public boolean isRootClass(Mapping context, ClassOutline classOutline)
+	private InheritanceType getInheritanceType(CClassRef refClass)
 	{
-		if ( classOutline.getSuperClass() != null )
+		if ( refClass != null )
 		{
-			return !containsCustomization(classOutline, MAPPED_SUPERCLASS_ELEMENT_NAME)
-				&& !isSelfOrAncestorRootClass(context, classOutline.getSuperClass());
+			try
+			{
+				return getInheritanceType(Class.forName(refClass.fullName()));
+			}
+			catch (ClassNotFoundException ex)
+			{
+				return null;
+			}
 		}
 		else
-			return !containsCustomization(classOutline, MAPPED_SUPERCLASS_ELEMENT_NAME);
+			return null;
+	}
+	
+	private InheritanceType getInheritanceType(Class<?> clazz)
+	{
+		InheritanceType it = null;
+		if ( clazz != null )
+		{
+			jakarta.persistence.Inheritance inh = clazz.getAnnotation(jakarta.persistence.Inheritance.class);
+			if ( inh != null )
+				it = inh.strategy();
+			
+			InheritanceType its = getInheritanceType(clazz.getSuperclass());
+			if ( its != null )
+				it = its;
+		}
+		return it;
 	}
 
-	public boolean isSelfOrAncestorRootClass(Mapping context, ClassOutline classOutline)
+	private boolean isRootEntity(Mapping context, ClassOutline classOutline)
 	{
-		if (context.getIgnoring().isClassOutlineIgnored(context, classOutline))
+		if ( containsCustomization(classOutline, MAPPED_SUPERCLASS_ELEMENT_NAME) )
 			return false;
-		else if ( isRootClass(context, classOutline) )
-			return true;
-		else if ( classOutline.getSuperClass() != null )
-			return isSelfOrAncestorRootClass(context, classOutline.getSuperClass());
+		else if ( context.getIgnoring().isClassOutlineIgnored(context, classOutline) )
+			return false;
 		else
-			return !containsCustomization(classOutline, MAPPED_SUPERCLASS_ELEMENT_NAME);
+		{
+			if ( classOutline.getSuperClass() == null )
+				return !isRefBaseAnEntity(classOutline);
+			else
+				return !isSelfOrAncestorRootEntity(context, classOutline.getSuperClass());
+		}
+	}
+	
+	private boolean isSelfOrAncestorRootEntity(Mapping context, ClassOutline classOutline)
+	{
+		if ( classOutline == null )
+			return false;
+		else
+		{
+			if ( containsCustomization(classOutline, MAPPED_SUPERCLASS_ELEMENT_NAME) )
+				return false;
+			else
+			{
+				if ( context.getIgnoring().isClassOutlineIgnored(context, classOutline) )
+					return isSelfOrAncestorRootEntity(context, classOutline.getSuperClass());
+				else
+				{
+					if ( isRootEntity(context, classOutline) )
+						return true;
+					else 
+					{
+						if ( classOutline.getSuperClass() != null )
+							return isSelfOrAncestorRootEntity(context, classOutline.getSuperClass());
+						else
+							return isRefBaseAnEntity(classOutline);
+					}
+				}
+			}
+		}
+	}
+
+	private boolean isRefBaseAnEntity(ClassOutline classOutline)
+	{
+		if ( classOutline.target.getRefBaseClass() == null )
+			return false;
+		else
+		{
+			try
+			{
+				CClassRef refBaseClass = classOutline.target.getRefBaseClass();
+				Class<?> baseClass = Class.forName(refBaseClass.fullName());
+				return (baseClass.getAnnotation(jakarta.persistence.Entity.class) != null);
+			}
+			catch (ClassNotFoundException ex)
+			{
+				return false;
+			}
+		}
 	}
 
 	/**

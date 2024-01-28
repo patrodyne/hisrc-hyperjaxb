@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="a"
-	xmlns:a="a"
+	targetNamespace="public:hisrc-hyperjaxb.ejb.tests.episodes.a"
+	xmlns:a="public:hisrc-hyperjaxb.ejb.tests.episodes.a"
 	elementFormDefault="qualified"
 >
 
@@ -25,5 +25,5 @@
 			<xsd:element name="name" type="xsd:string"/>
 		</xsd:sequence>
 	</xsd:complexType>
-
+	
 </xsd:schema>

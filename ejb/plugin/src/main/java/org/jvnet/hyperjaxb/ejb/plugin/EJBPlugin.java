@@ -1,5 +1,6 @@
 package org.jvnet.hyperjaxb.ejb.plugin;
 
+import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
 import static org.jvnet.basicjaxb.util.GeneratorContextUtils.generateContextPathAwareClass;
 import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
@@ -73,6 +74,11 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		return format(USAGE_FORMAT, OPTION_NAME, OPTION_DESC);
 	}
 
+	private boolean naiveInheritanceStrategy = false;
+	public boolean isNaiveInheritanceStrategy() { return naiveInheritanceStrategy; }
+	public void setNaiveInheritanceStrategy(boolean naiveInheritanceStrategy) { this.naiveInheritanceStrategy = naiveInheritanceStrategy; }
+	
+	// Applies only when roundtripTestClassName is set.
 	private Boolean validateXml = null;
 	public Boolean isValidateXml() { return validateXml; }
 	public void setValidateXml(Boolean validateXml) { this.validateXml = validateXml; }
@@ -206,6 +212,11 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 				isValidateXml.body()._return(JExpr.lit(isValidateXml()));
 			}
 		}
+		else
+		{
+			if ( TRUE.equals(isValidateXml()) )
+				warn("Method isValidateXML() not generated because no roundtripTestClassName defined, isValidateXml: {}.", isValidateXml());
+		}
 	}
 
 	private void checkCustomizations(Outline outline)
@@ -311,15 +322,19 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 			StringBuilder sb = new StringBuilder();
 			sb.append(LOGGING_START);
 			sb.append("\nParameters");
-			sb.append("\n  MaxIdentifierLength....: " + getMaxIdentifierLength());
-			sb.append("\n  PersistenceUnitName....: " + getPersistenceUnitName());
-			sb.append("\n  PersistenceXml.........: " + getPersistenceXml());
-			sb.append("\n  Result.................: " + getResult());
-			sb.append("\n  RoundtripTestClassName.: " + getRoundtripTestClassName());
-			sb.append("\n  TargetDir..............: " + getTargetDir());
-			sb.append("\n  ValidateXml............: " + isValidateXml());
-			sb.append("\n  Verbose................: " + isVerbose());
-			sb.append("\n  Debug..................: " + isDebug());
+			sb.append("\n  NaiveInheritanceStrategy.: " + isNaiveInheritanceStrategy());
+			sb.append("\n  MaxIdentifierLength......: " + getMaxIdentifierLength());
+			sb.append("\n  PersistenceUnitName......: " + getPersistenceUnitName());
+			sb.append("\n  PersistenceXml...........: " + getPersistenceXml());
+			sb.append("\n  Result...................: " + getResult());
+			sb.append("\n  RoundtripTestClassName...: " + getRoundtripTestClassName());
+			if ( getRoundtripTestClassName() != null )
+				sb.append("\n    ValidateXml.: " + isValidateXml());
+			else
+				sb.append("\n    ValidateXml.: " + isValidateXml() + " (ignored)");
+			sb.append("\n  TargetDir................: " + getTargetDir());
+			sb.append("\n  Verbose..................: " + isVerbose());
+			sb.append("\n  Debug....................: " + isDebug());
 			info(sb.toString());
 		}
 		
