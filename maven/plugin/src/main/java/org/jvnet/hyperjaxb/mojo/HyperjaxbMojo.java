@@ -47,7 +47,18 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	public void setTarget(File target) { this.target = target; }
 
 	/**
+	 * Option to enable/disable naive inheritance strategy.
+	 * Naive inheritance strategy annotates all base entities
+	 * regardless of them having sub-entities in the current schema.
+	 */
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".naiveInheritanceStrategy")
+	private Boolean naiveInheritanceStrategy = null;
+	public Boolean isNaiveInheritanceStrategy() { return naiveInheritanceStrategy; }
+	public void setNaiveInheritanceStrategy(Boolean naiveInheritanceStrategy) { this.naiveInheritanceStrategy = naiveInheritanceStrategy; }
+
+	/**
 	 * Option to enable/disable schema validation of xml.
+	 * Applies only when roundtripTestClassName is set.
 	 */
 	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".validateXml")
 	private Boolean validateXml = null;
@@ -274,6 +285,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 		super.logConfiguration();
 
 		getLog().info("MOJO Configuration: target: " + getTarget());
+		getLog().info("MOJO Configuration: naiveInheritanceStrategy: " + isNaiveInheritanceStrategy());
 		getLog().info("MOJO Configuration: validateXml: " + isValidateXml());
 		getLog().info("MOJO Configuration: maxIdentifierLength: " + getMaxIdentifierLength());
 		getLog().info("MOJO Configuration: roundtripTestClassName: " + getRoundtripTestClassName());
@@ -332,6 +344,8 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 			add(arguments,"-Xhyperjaxb-jpa");
 			if (getResult() != null)
 				add(arguments,"-Xhyperjaxb-jpa-result=" + getResult());
+			if (isNaiveInheritanceStrategy() != null)
+				add(arguments,"-Xhyperjaxb-jpa-naiveInheritanceStrategy=" + isNaiveInheritanceStrategy());
 			if (isValidateXml() != null)
 				add(arguments,"-Xhyperjaxb-jpa-validateXml=" + isValidateXml());
 			if (getMaxIdentifierLength() != null)
@@ -354,6 +368,8 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 			add(arguments,"-Xhyperjaxb-ejb");
 			if (getResult() != null)
 				add(arguments,"-Xhyperjaxb-ejb-result=" + getResult());
+			if (isNaiveInheritanceStrategy() != null)
+				add(arguments,"-Xhyperjaxb-ejb-naiveInheritanceStrategy=" + isNaiveInheritanceStrategy());
 			if (isValidateXml() != null)
 				add(arguments,"-Xhyperjaxb-ejb-validateXml=" + isValidateXml());
 			if (getMaxIdentifierLength() != null)
