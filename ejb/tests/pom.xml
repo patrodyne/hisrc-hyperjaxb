@@ -17,6 +17,7 @@
 	<modules>
 		<module>addressbook</module>
 		<module>ak</module>
+		<module>annox</module>
 		<module>any</module>
 		<module>bibtexml</module>
 		<!-- LONG RUNNING
@@ -161,21 +162,6 @@
 						<generateValueConstructor>true</generateValueConstructor>
 						<!--roundtripTestClassName>RoundtripTest</roundtripTestClassName-->
 					</configuration>
-					<!-- TODO: Remove when plugin dependency management is reworked -->
-					<dependencies>
-						<!-- ** Needed for annox -->
-						<dependency>
-							<groupId>org.hibernate</groupId>
-							<artifactId>hibernate-search</artifactId>
-							<version>3.4.0.Final</version>
-						</dependency>
-						<!-- ** Needed for cu-one -->
-						<dependency>
-							<groupId>org.hibernate</groupId>
-							<artifactId>hibernate-annotations</artifactId>
-							<version>3.5.6-Final</version>
-						</dependency>
-					</dependencies>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -246,7 +232,6 @@
 			<!-- package=FAILURE; test=FAILURE -->
 			<id>tests-2</id>
 			<modules>
-				<module>annox</module>
 				<module>po-mysql</module>
 			</modules>
 		</profile>
