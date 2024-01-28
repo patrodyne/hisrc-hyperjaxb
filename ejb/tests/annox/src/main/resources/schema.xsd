@@ -42,6 +42,7 @@
   <xsd:complexType name="USAddress">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string">
+		<!--
         <xsd:annotation>
           <xsd:appinfo>
             <annox:annotate>
@@ -53,6 +54,7 @@
             </annox:annotate>
           </xsd:appinfo>
         </xsd:annotation>
+		-->
       </xsd:element>
       <xsd:element name="street" type="xsd:string"/>
       <xsd:element name="city" type="xsd:string"/>
@@ -97,9 +99,11 @@
       <xsd:annotation>
         <xsd:appinfo>
           <hj:generated-property propertyName="Ts0">
+			<!--
             <annox:annotate>
               <ha:Index name="HYPERJAXB3_149_TYPE_TS0" columnNames="TS0"/>
             </annox:annotate>
+			-->
           </hj:generated-property>
         </xsd:appinfo>
       </xsd:annotation>

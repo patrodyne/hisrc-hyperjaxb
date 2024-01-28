@@ -13,21 +13,19 @@
 	<name>HiSrc HyperJAXB EJB Test [annox]</name>
 	<properties>
 		<root.basedir>${basedir}/../../..</root.basedir>
-		<hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
-		<hibernate-search.version>4.5.0.Final</hibernate-search.version>
 	</properties>
 	<dependencies>
+		<!-- Hibernate Dependencies -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-search</artifactId>
+			<groupId>org.hibernate.search</groupId>
+			<artifactId>hibernate-search-mapper-orm</artifactId>
 			<version>${hibernate-search.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>${hibernate-annotations.version}</version>
+			<groupId>org.hibernate.search</groupId>
+			<artifactId>hibernate-search-v5migrationhelper-orm</artifactId>
+			<version>${hibernate-search.version}</version>
 		</dependency>
-		<!-- Hibernate Dependencies -->
 		<!-- Test -->
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -63,14 +61,14 @@
 				</configuration>
 				<dependencies>
 					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-search</artifactId>
+						<groupId>org.hibernate.search</groupId>
+						<artifactId>hibernate-search-mapper-orm</artifactId>
 						<version>${hibernate-search.version}</version>
 					</dependency>
 					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-annotations</artifactId>
-						<version>${hibernate-annotations.version}</version>
+						<groupId>org.hibernate.search</groupId>
+						<artifactId>hibernate-search-v5migrationhelper-orm</artifactId>
+						<version>${hibernate-search.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>

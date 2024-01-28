@@ -27,10 +27,11 @@
 		<jaxb:bindings node="xs:complexType[@name='Items']/xs:sequence/xs:element[@name='item']">
 			<jaxb:bindings node="xs:complexType">
 				<annox:annotate>
-					<annox:annotate annox:class="org.hibernate.search.annotations.Indexed" index="target/test-index"/>
+					<annox:annotate annox:class="org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed" index="target/test-index"/>
 				</annox:annotate>
 				<jaxb:bindings node="xs:sequence">
 					<jaxb:bindings node="xs:element[@name='productName']">
+						<!--
 						<annox:annotate>
 							<annox:annotate
 								annox:class="org.hibernate.search.annotations.FieldBridge"
@@ -42,8 +43,9 @@
 								</annox:annotate>
 							</annox:annotate>
 						</annox:annotate>
+						-->
 						<annox:annotate>
-							<annox:annotate annox:class="org.hibernate.search.annotations.Field" name="item"/>
+							<annox:annotate annox:class="org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField" name="item"/>
 						</annox:annotate>
 					</jaxb:bindings>
 				</jaxb:bindings>
@@ -52,11 +54,13 @@
 
 		<jaxb:bindings node="xs:complexType[@name='HYPERJAXB3_149_Type']/xs:attribute[@name='timestamp1']">
 			<hj:generated-property propertyName="Ts1">
+				<!--
 				<annox:annotate>
 					<annox:annotate
 						annox:class="org.hibernate.annotations.Index"
 						name="HYPERJAXB3_149_TYPE_INDEX_TS1" columnNames="TS1"/>
 				</annox:annotate>
+				-->
 			</hj:generated-property>
 		</jaxb:bindings>
 	</jaxb:bindings>
