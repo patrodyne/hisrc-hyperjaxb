@@ -9,7 +9,7 @@ import org.jvnet.hyperjaxb.mojo.HyperjaxbMojo;
 import org.jvnet.hyperjaxb.mojo.ejb.testing.AbstractHyperMojoTest;
 
 @Order(1)
-public class RunAnyPluginTest extends AbstractHyperMojoTest
+public class RunChoicePluginTest extends AbstractHyperMojoTest
 {
 	@Test
 	public void testExecute() throws Exception
