@@ -3,10 +3,11 @@ package org.jvnet.hyperjaxb.ejb.strategy.processor;
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.TreeSet;
 
 import org.jvnet.basicjaxb.lang.JAXBMergeCollectionsStrategy;
 import org.jvnet.hyperjaxb.ejb.plugin.EJBPlugin;
@@ -20,6 +21,7 @@ import com.sun.codemodel.JAnnotationClassValue;
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JAnnotationValue;
 import com.sun.codemodel.JMethod;
+import com.sun.tools.xjc.model.CClassRef;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -29,6 +31,7 @@ import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Inject;
+import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -128,6 +131,21 @@ public class ClassPersistenceProcessor extends EJBOutlineProcessor
 		List<String> puClassList = persistenceUnit.getClazz();
 		for ( ClassOutline includedClass : includedClasses )
 		{
+			// Episode Entities
+			CClassRef refBaseClass = includedClass.target.getRefBaseClass();
+			if ( refBaseClass != null )
+			{
+				try
+				{
+					Class<?> baseClass = Class.forName(refBaseClass.fullName());
+					addExternalBaseClasses(puClassList, baseClass);
+				}
+				catch (ClassNotFoundException ex)
+				{
+				}
+			}
+			
+			// Method References
 			for ( JMethod method : includedClass.getImplClass().methods() )
 			{
 				for ( JAnnotationUse annotationUse : method.annotations() )
@@ -155,6 +173,26 @@ public class ClassPersistenceProcessor extends EJBOutlineProcessor
 								}
 							}
 						}
+					}
+				}
+			}
+		}
+	}
+	
+	private void addExternalBaseClasses(List<String> puClassList, Class<?> baseClass)
+	{
+		if ( baseClass != null )
+		{
+			for (  java.lang.annotation.Annotation ann : baseClass.getAnnotations() )
+			{
+				if ( Entity.class.getPackage().equals(ann.annotationType().getPackage()) )
+				{
+					String targetEntityClassName = baseClass.getName();
+					if ( !puClassList.contains(targetEntityClassName) )
+					{
+						puClassList.add(targetEntityClassName);
+						addExternalBaseClasses(puClassList, baseClass.getSuperclass());
+						break;
 					}
 				}
 			}
@@ -210,9 +248,17 @@ public class ClassPersistenceProcessor extends EJBOutlineProcessor
 			JAXBMergeCollectionsStrategy.getInstance());
 		// persistenceUnit.copyTo(targetPersistenceUnit);
 		targetPersistenceUnit.setName(persistenceUnitName);
-		Collections.sort(targetPersistenceUnit.getMappingFile());
-		Collections.sort(targetPersistenceUnit.getClazz());
+		
+		uniqueSort(targetPersistenceUnit.getMappingFile());
+		uniqueSort(targetPersistenceUnit.getClazz());
 		
 		return persistence;
+	}
+	
+	private void uniqueSort(List<String> list)
+	{
+		ArrayList<String> tmpList = new ArrayList<>(new TreeSet<>(list));
+		list.clear();
+		list.addAll(tmpList);
 	}
 }

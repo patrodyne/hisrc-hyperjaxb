@@ -38,6 +38,16 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
+	<xsd:complexType name="B3Type">
+		<xsd:complexContent>
+			<xsd:extension base="a:A3Type">
+				<xsd:sequence>
+					<xsd:element name="b3" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 	<xsd:complexType name="issueHJIII24Mammal">
 		<xsd:complexContent>
 			<xsd:extension base="a:issueHJIII24Animal"></xsd:extension>

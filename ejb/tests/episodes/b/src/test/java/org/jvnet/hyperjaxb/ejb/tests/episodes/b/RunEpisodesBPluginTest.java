@@ -66,7 +66,6 @@ public class RunEpisodesBPluginTest extends AbstractHyperMojoTest
 		mojo.setExtension(true);
 		mojo.setArgs(new ArrayList<>());
 		
-		
 		mojo.setStrict(false);
 		mojo.setCatalog(fullpath("src/main/resources/catalog.xml"));
 		mojo.setEpisodes(new Dependency[] { episode });

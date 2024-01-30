@@ -44,6 +44,7 @@
 		<module>embeddable-jpa</module>
 		<module>eminq</module>
 		<module>enum</module>
+		<module>episodes</module>
 		<module>equals-builder</module>
 		<module>floating</module>
 		<module>idSymbolSpace</module>
@@ -220,7 +221,6 @@
 			<modules>
 				<module>cda</module>
 				<module>component</module>
-				<module>episodes</module> <!-- package=SUCCESS; WARNINGS -->
 				<module>fpml-pretrade</module>
 				<module>ota</module>
 				<module>plmxml</module>

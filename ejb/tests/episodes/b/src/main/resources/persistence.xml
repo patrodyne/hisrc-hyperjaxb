@@ -9,5 +9,6 @@
     <persistence-unit name="org.jvnet.hyperjaxb.ejb.tests.episodes.b">
         <class>org.jvnet.hyperjaxb.ejb.tests.episodes.a.AType</class>
         <class>org.jvnet.hyperjaxb.ejb.tests.episodes.a.A1Type</class>
+        <class>org.jvnet.hyperjaxb.ejb.tests.episodes.a.IssueHJIII24Animal</class>
     </persistence-unit>
 </persistence>

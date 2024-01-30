@@ -58,7 +58,10 @@
 					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.episodes.b.RoundtripTest</roundtripTestClassName>
 					-->
+					<!--
+					See org.jvnet.hyperjaxb.ejb.strategy.processor.ClassPersistenceProcessor.addExternalClasses(...)
 					<persistenceXml>src/main/resources/persistence.xml</persistenceXml>
+					-->
 					<strict>false</strict>
 					<catalog>src/main/resources/catalog.xml</catalog>
 					<episodes>

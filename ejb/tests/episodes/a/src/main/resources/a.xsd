@@ -25,5 +25,21 @@
 			<xsd:element name="name" type="xsd:string"/>
 		</xsd:sequence>
 	</xsd:complexType>
+
+	<xsd:complexType name="A2Type">
+		<xsd:sequence>
+			<xsd:element name="a2" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
 	
+	<xsd:complexType name="A3Type">
+		<xsd:complexContent>
+			<xsd:extension base="a:A2Type">
+				<xsd:sequence>
+					<xsd:element name="a3" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 </xsd:schema>
