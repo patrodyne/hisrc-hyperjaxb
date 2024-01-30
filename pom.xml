@@ -112,8 +112,8 @@
 		<junit-platform.version>1.10.1</junit-platform.version>
 		<m2e.jpa.activation>false</m2e.jpa.activation>
 		<maven.compiler.release>11</maven.compiler.release>
-		<maven-min.version>3.8.4</maven-min.version>
 		<maven-api.version>3.9.6</maven-api.version>
+		<maven-min.version>3.9.0</maven-min.version>
 		<maven-plugin-plugin.version>3.11.0</maven-plugin-plugin.version>
 		<maven-plugin-testing.version>3.3.0</maven-plugin-testing.version>
 		<maven-resolver.version>1.9.18</maven-resolver.version>
