@@ -160,6 +160,7 @@
 						<variant>jpa</variant>
 						<generateCopyable>true</generateCopyable>
 						<generateMergeable>true</generateMergeable>
+						<generateFluentAPI>true</generateFluentAPI>
 						<generateValueConstructor>true</generateValueConstructor>
 						<!--roundtripTestClassName>RoundtripTest</roundtripTestClassName-->
 					</configuration>

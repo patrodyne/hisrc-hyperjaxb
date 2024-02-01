@@ -98,10 +98,10 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 
 	/**
 	 * Persistence variant. Switches between various persistence
-	 * implementations. Possible values are "hibernate" and "ejb-hibernate".
+	 * implementations. Possible values are "ejb" and "jpa".
 	 */
-	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".variant", defaultValue = "ejb")
-	private String variant = "ejb";
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".variant", defaultValue = "jpa")
+	private String variant = "jpa";
 	public String getVariant() { return variant; }
 	public void setVariant(String variant) { this.variant = variant; }
 
@@ -184,7 +184,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	 * Whether the <code>copyTo(...)</code> methods should be generated.
 	 */
 	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateCopyable", defaultValue = "false")
-	private boolean generateCopyable = true;
+	private boolean generateCopyable = false;
 	public boolean isGenerateCopyable() { return generateCopyable; }
 	public void setGenerateCopyable(boolean generateCopyable) { this.generateCopyable = generateCopyable; }
 
@@ -192,15 +192,23 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	 * Whether the <code>mergeFrom(...)</code> methods should be generated.
 	 */
 	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateMergeable", defaultValue = "false")
-	private boolean generateMergeable = true;
+	private boolean generateMergeable = false;
 	public boolean isGenerateMergeable() { return generateMergeable; }
 	public void setGenerateMergeable(boolean generateMergeable) { this.generateMergeable = generateMergeable; }
+
+	/**
+	 * Whether the <code>FluentApi</code> methods should be generated.
+	 */
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateFluentAPI", defaultValue = "false")
+	private boolean generateFluentAPI = false;
+	public boolean isGenerateFluentAPI() { return generateFluentAPI; }
+	public void setGenerateFluentAPI(boolean generateFluentAPI) { this.generateFluentAPI = generateFluentAPI; }
 
 	/**
 	 * Whether to generate a constructor to initialize (non-ignored) classes and/or fields.
 	 */
 	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateValueConstructor", defaultValue = "false")
-	private boolean generateValueConstructor = true;
+	private boolean generateValueConstructor = false;
 	public boolean isGenerateValueConstructor() { return generateValueConstructor; }
 	public void setGenerateValueConstructor(boolean generateValueConstructor) { this.generateValueConstructor = generateValueConstructor; }
 
@@ -302,6 +310,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 		getLog().info("MOJO Configuration: generateTransientId: " + isGenerateTransientId());
 		getLog().info("MOJO Configuration: generateCopyable: " + isGenerateCopyable());
 		getLog().info("MOJO Configuration: generateMergeable: " + isGenerateMergeable());
+		getLog().info("MOJO Configuration: generateFluentAPI: " + isGenerateFluentAPI());
 		getLog().info("MOJO Configuration: generateValueConstructor: " + isGenerateValueConstructor());
 		getLog().info("MOJO Configuration: result: " + getResult());
 		getLog().info("MOJO Configuration: preArgs: " + Arrays.toString(getPreArgs()));
@@ -450,6 +459,8 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 			add(arguments,"-Xcopyable");
 		if (isGenerateMergeable())
 			add(arguments,"-Xmergeable");
+		if (isGenerateFluentAPI())
+			add(arguments,"-XfluentAPI");
 		if (isGenerateValueConstructor())
 			add(arguments,"-XvalueConstructor");
 
