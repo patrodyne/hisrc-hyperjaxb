@@ -17,7 +17,8 @@
 		  generateElementProperty customization be set to 'false' in globalBindings.
 		* Hint: Increase EnumMemberSizeCap above 256 with typesafeEnumMaxMembers="512".
 	-->
-	<jaxb:globalBindings localScoping="toplevel" generateIsSetMethod="true">
+	<jaxb:globalBindings localScoping="toplevel" generateIsSetMethod="false"
+		fixedAttributeAsConstantProperty="true">
 		<jaxb:serializable uid="20211201" />
 	</jaxb:globalBindings>
 

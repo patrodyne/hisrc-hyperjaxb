@@ -13,6 +13,15 @@
 	<xsd:import namespace="https://jakarta.ee/xml/ns/persistence/orm" schemaLocation="orm/orm_3_1.xsd"/>
 	<xsd:import namespace="https://jakarta.ee/xml/ns/persistence" schemaLocation="persistence_3_0.xsd"/>
 
+	<!--
+		@Access(AccessType.PROPERTY)
+
+        By default, the access type is defined by the place where we put the
+        identifier annotation (@Id). If we put it on the field – it will be
+        AccessType.FIELD, if we put it on the getter – it will be
+        AccessType.PROPERTY.
+	-->
+
 	<xsd:element name="persistence"	type="hj:persistence"/>
 	<xsd:complexType name="persistence">
 		<xsd:annotation>

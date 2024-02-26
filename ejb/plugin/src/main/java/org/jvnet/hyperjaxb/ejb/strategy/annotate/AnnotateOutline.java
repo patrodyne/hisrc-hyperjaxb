@@ -3,6 +3,7 @@ package org.jvnet.hyperjaxb.ejb.strategy.annotate;
 import static jakarta.interceptor.Interceptor.Priority.APPLICATION;
 import static java.lang.String.format;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.getInfo;
+import static org.jvnet.basicjaxb.util.FieldUtils.isConstantField;
 import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getContextPath;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getFieldName;
@@ -166,7 +167,10 @@ public class AnnotateOutline extends EJBOutlineProcessor
 
 		final FieldOutline[] fieldOutlines = classOutline.getDeclaredFields();
 		for (final FieldOutline fieldOutline : fieldOutlines)
-			processFieldOutline(context, fieldOutline, attributes);
+		{
+			if ( !isConstantField(fieldOutline) )
+				processFieldOutline(context, fieldOutline, attributes);
+		}
 		return classOutline;
 	}
 

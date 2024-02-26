@@ -4,6 +4,7 @@ import static com.sun.tools.xjc.outline.Aspect.EXPOSED;
 import static java.lang.String.format;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.containsCustomization;
 import static org.jvnet.basicjaxb.util.FieldAccessorUtils.getter;
+import static org.jvnet.basicjaxb.util.FieldUtils.isConstantField;
 import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.codemodel.util.JTypeUtils.isBasicType;
 import static org.jvnet.hyperjaxb.ejb.Constants.TODO_LOG_LEVEL;
@@ -61,64 +62,67 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes>
 		final FieldOutline[] fieldOutlines = classOutline.getDeclaredFields();
 		for (final FieldOutline fieldOutline : fieldOutlines)
 		{
-			final Object attributeMapping =	getAttributeMapping(context, fieldOutline)
-				.process(context, fieldOutline);
-			
-			if (attributeMapping instanceof Id)
+			if ( !isConstantField(fieldOutline) )
 			{
-				if (attributes.getEmbeddedId() == null)
-					attributes.getId().add((Id) attributeMapping);
-				else
+				final Object attributeMapping =	getAttributeMapping(context, fieldOutline)
+					.process(context, fieldOutline);
+				
+				if (attributeMapping instanceof Id)
 				{
-					CClassInfo classInfo = fieldOutline.parent().target;
-					CPropertyInfo propInfo = fieldOutline.getPropertyInfo();
-					getPlugin().error("{}, AttributesMapping: class={}, field={};"
-						+ " could not add an id element to the attributes"
-						+ " because they already contain an embedded-id element.",
-						toLocation(fieldOutline), classInfo.shortName, propInfo.getName(false));
+					if (attributes.getEmbeddedId() == null)
+						attributes.getId().add((Id) attributeMapping);
+					else
+					{
+						CClassInfo classInfo = fieldOutline.parent().target;
+						CPropertyInfo propInfo = fieldOutline.getPropertyInfo();
+						getPlugin().error("{}, AttributesMapping: class={}, field={};"
+							+ " could not add an id element to the attributes"
+							+ " because they already contain an embedded-id element.",
+							toLocation(fieldOutline), classInfo.shortName, propInfo.getName(false));
+					}
 				}
+				else if (attributeMapping instanceof EmbeddedId)
+				{
+					if (!attributes.getId().isEmpty())
+					{
+						CClassInfo classInfo = fieldOutline.parent().target;
+						CPropertyInfo propInfo = fieldOutline.getPropertyInfo();
+						getPlugin().error("{}, AttributesMapping: class={}, field={};"
+							+ " could not add an embedded-id element to the attributes"
+							+ " because they already contain an id element.",
+							toLocation(fieldOutline), classInfo.shortName, propInfo.getName(false));
+					}
+					else if (attributes.getEmbeddedId() != null)
+					{
+						CClassInfo classInfo = fieldOutline.parent().target;
+						CPropertyInfo propInfo = fieldOutline.getPropertyInfo();
+						getPlugin().error("{}, AttributesMapping: class={}, field={};"
+							+ " Could not add an embedded-id element to the attributes"
+							+ " because they already contain an embedded-id element.",
+							toLocation(fieldOutline), classInfo.shortName, propInfo.getName(false));
+					}
+					else
+						attributes.setEmbeddedId((EmbeddedId) attributeMapping);
+				}
+				else if (attributeMapping instanceof Basic)
+					attributes.getBasic().add((Basic) attributeMapping);
+				else if (attributeMapping instanceof Version)
+					attributes.getVersion().add((Version) attributeMapping);
+				else if (attributeMapping instanceof ManyToOne)
+					attributes.getManyToOne().add((ManyToOne) attributeMapping);
+				else if (attributeMapping instanceof OneToMany)
+					attributes.getOneToMany().add((OneToMany) attributeMapping);
+				else if (attributeMapping instanceof OneToOne)
+					attributes.getOneToOne().add((OneToOne) attributeMapping);
+				else if (attributeMapping instanceof ManyToMany)
+					attributes.getManyToMany().add((ManyToMany) attributeMapping);
+				else if (attributeMapping instanceof ElementCollection)
+					attributes.getElementCollection().add((ElementCollection) attributeMapping);
+				else if (attributeMapping instanceof Embedded)
+					attributes.getEmbedded().add((Embedded) attributeMapping);
+				else if (attributeMapping instanceof Transient)
+					attributes.getTransient().add((Transient) attributeMapping);
 			}
-			else if (attributeMapping instanceof EmbeddedId)
-			{
-				if (!attributes.getId().isEmpty())
-				{
-					CClassInfo classInfo = fieldOutline.parent().target;
-					CPropertyInfo propInfo = fieldOutline.getPropertyInfo();
-					getPlugin().error("{}, AttributesMapping: class={}, field={};"
-						+ " could not add an embedded-id element to the attributes"
-						+ " because they already contain an id element.",
-						toLocation(fieldOutline), classInfo.shortName, propInfo.getName(false));
-				}
-				else if (attributes.getEmbeddedId() != null)
-				{
-					CClassInfo classInfo = fieldOutline.parent().target;
-					CPropertyInfo propInfo = fieldOutline.getPropertyInfo();
-					getPlugin().error("{}, AttributesMapping: class={}, field={};"
-						+ " Could not add an embedded-id element to the attributes"
-						+ " bbecause they already contain an embedded-id element.",
-						toLocation(fieldOutline), classInfo.shortName, propInfo.getName(false));
-				}
-				else
-					attributes.setEmbeddedId((EmbeddedId) attributeMapping);
-			}
-			else if (attributeMapping instanceof Basic)
-				attributes.getBasic().add((Basic) attributeMapping);
-			else if (attributeMapping instanceof Version)
-				attributes.getVersion().add((Version) attributeMapping);
-			else if (attributeMapping instanceof ManyToOne)
-				attributes.getManyToOne().add((ManyToOne) attributeMapping);
-			else if (attributeMapping instanceof OneToMany)
-				attributes.getOneToMany().add((OneToMany) attributeMapping);
-			else if (attributeMapping instanceof OneToOne)
-				attributes.getOneToOne().add((OneToOne) attributeMapping);
-			else if (attributeMapping instanceof ManyToMany)
-				attributes.getManyToMany().add((ManyToMany) attributeMapping);
-			else if (attributeMapping instanceof ElementCollection)
-				attributes.getElementCollection().add((ElementCollection) attributeMapping);
-			else if (attributeMapping instanceof Embedded)
-				attributes.getEmbedded().add((Embedded) attributeMapping);
-			else if (attributeMapping instanceof Transient)
-				attributes.getTransient().add((Transient) attributeMapping);
 		}
 		return attributes;
 	}
