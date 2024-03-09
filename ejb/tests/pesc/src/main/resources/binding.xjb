@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-	jaxb:extensionBindingPrefixes="hj orm xjc">
+	jaxb:extensionBindingPrefixes="hj orm">
 >
 
 	<!--  Global Bindings
@@ -22,9 +21,15 @@
 			typesafeEnumMemberName="generateName"
 			generateIsSetMethod="true"
 			localScoping="toplevel">
-			<xjc:noValidator />
-			<xjc:noValidatingUnmarshaller />
 			<jaxb:serializable uid="20211201" />
+			<!--
+				These customizations were valid in XJC 1.0, but in 2.0 we
+				don't use them. OTOH, we don't want to issue an error for
+				them, so we just define a mapping and ignore the value.
+
+				<xjc:noValidator />
+				<xjc:noValidatingUnmarshaller />
+			-->
 		</jaxb:globalBindings>
 
 		<jaxb:schemaBindings>
