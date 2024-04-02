@@ -84,20 +84,20 @@
 		<maven-site-plugin.version>4.0.0-M12</maven-site-plugin.version>
 		<maven-source-plugin.version>3.3.0</maven-source-plugin.version>
 		<maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
-		<maven-surefire-report-plugin.version>3.2.3</maven-surefire-report-plugin.version>
+		<maven-surefire-report-plugin.version>3.2.5</maven-surefire-report-plugin.version>
 		<nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
 		<plantuml-generator-maven-plugin.version>2.0.0</plantuml-generator-maven-plugin.version>
 		<versions-maven-plugin.version>2.14.2</versions-maven-plugin.version>
 
-		<activation-api.version>2.1.2</activation-api.version>
-		<activation-imp.version>2.0.1</activation-imp.version>
+		<activation-api.version>2.1.3</activation-api.version>
+		<activation-imp.version>2.0.2</activation-imp.version>
 		<annotation.version>2.1.1</annotation.version>
 		<derby.version>10.17.1.0</derby.version>
 		<eclipselink.version>4.0.2</eclipselink.version>
 		<ehcache.version>3.10.8</ehcache.version>
-		<guice.version>5.1.0</guice.version>
-		<hibernate-search.version>7.0.0.Final</hibernate-search.version>
-		<hibernate-series.version>6.4.1.Final</hibernate-series.version>
+		<guice.version>5.1.0</guice.version> <!-- provided by Maven -->
+		<hibernate-search.version>7.1.0.Final</hibernate-search.version>
+		<hibernate-series.version>6.4.4.Final</hibernate-series.version>
 		<HikariCP.version>5.1.0</HikariCP.version>
 		<hisrc-basicjaxb-annox-parser.version>2.2.1-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
 		<hisrc-basicjaxb.version>2.2.1-SNAPSHOT</hisrc-basicjaxb.version>
@@ -106,10 +106,10 @@
 		<h2database.version>2.2.224</h2database.version>
 		<javassist.version>3.30.2-GA</javassist.version>
 		<jpa-api.version>3.1.0</jpa-api.version>
-		<jaxb-api.version>4.0.1</jaxb-api.version>
-		<jaxb-imp.version>4.0.4</jaxb-imp.version>
-		<junit-jupiter.version>5.10.1</junit-jupiter.version>
-		<junit-platform.version>1.10.1</junit-platform.version>
+		<jaxb-api.version>4.0.2</jaxb-api.version>
+		<jaxb-imp.version>4.0.5</jaxb-imp.version>
+		<junit-jupiter.version>5.10.2</junit-jupiter.version>
+		<junit-platform.version>1.10.2</junit-platform.version>
 		<m2e.jpa.activation>false</m2e.jpa.activation>
 		<maven.compiler.release>11</maven.compiler.release>
 		<maven-api.version>3.9.6</maven-api.version>
@@ -117,11 +117,11 @@
 		<maven-plugin-plugin.version>3.11.0</maven-plugin-plugin.version>
 		<maven-plugin-testing.version>3.3.0</maven-plugin-testing.version>
 		<maven-resolver.version>1.9.18</maven-resolver.version>
-		<postgresql.version>42.7.1</postgresql.version>
+		<postgresql.version>42.7.3</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<schemacrawler.version>16.20.8</schemacrawler.version>
-		<slf4j.version>2.0.9</slf4j.version>
+		<schemacrawler.version>16.21.2</schemacrawler.version>
+		<slf4j.version>2.0.12</slf4j.version>
 		<weld.version>5.1.2.Final</weld.version>
 	</properties>
 	<dependencyManagement>
@@ -294,7 +294,7 @@
 			<dependency>
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
-				<version>2.15.1</version>
+				<version>2.16.0</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sourceforge.collections</groupId>
@@ -335,7 +335,7 @@
 			<dependency>
 				<groupId>io.smallrye</groupId>
 				<artifactId>jandex</artifactId>
-				<version>3.1.6</version>
+				<version>3.1.7</version>
 			</dependency>
 			<!-- Jakarta Persistence API -->
 			<dependency>
@@ -754,7 +754,11 @@
 							<ignoreVersions>
                                 <ignoreVersion>
                                     <type>regex</type>
-                                    <version>(.+\.Alpha\d|.+-alpha-\d)</version>
+                                    <version>(.+\.Alpha\d|.+-alpha(\d|-\d+))</version>
+                                </ignoreVersion>
+                                <ignoreVersion>
+                                    <type>regex</type>
+                                    <version>(.+\.Beta\d|.+-B\d+)</version>
                                 </ignoreVersion>
 								<ignoreVersion>
 									<type>regex</type>

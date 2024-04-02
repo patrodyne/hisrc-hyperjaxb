@@ -25,14 +25,20 @@
 
 		<replace dir="${basedir}" summary="true">
 			<include name="**/sql-*-h2db.sh"/>
-			<replacetoken><![CDATA[/org/postgresql/postgresql/42.6.0/postgresql-42.6.0.jar]]></replacetoken>
-			<replacevalue><![CDATA[/org/postgresql/postgresql/42.7.1/postgresql-42.7.1.jar]]></replacevalue>
+			<replacetoken><![CDATA[/org/postgresql/postgresql/42.7.1/postgresql-42.7.1.jar]]></replacetoken>
+			<replacevalue><![CDATA[/org/postgresql/postgresql/42.7.3/postgresql-42.7.3.jar]]></replacevalue>
 		</replace>
 
 		<replace dir="${basedir}" summary="true">
 			<include name="**/CreateToplevelXJBindings.sh"/>
 			<replacetoken><![CDATA[BASICJAXB_VERSION="2.1.1"]]></replacetoken>
 			<replacevalue><![CDATA[BASICJAXB_VERSION="2.2.0"]]></replacevalue>
+		</replace>
+
+		<replace dir="${basedir}" summary="true">
+			<include name="ejb/assembly/pom.xml"/>
+			<replacetoken><![CDATA[version>2.2.0</]]></replacetoken>
+			<replacevalue><![CDATA[version>2.2.0</]]></replacevalue>
 		</replace>
 
 	</target>
