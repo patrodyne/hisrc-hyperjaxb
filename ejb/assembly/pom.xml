@@ -15,10 +15,10 @@
 	<name>HiSrc HyperJAXB EJB Assembly</name>
 	<properties>
 		<ant-atleast.version>1.10.4</ant-atleast.version>
-		<hisrc-basicjaxb.version>2.2.0</hisrc-basicjaxb.version>
+		<hisrc-basicjaxb.version>2.2.1</hisrc-basicjaxb.version>
 		<hisrc-basicjaxb-annox-parser.version>2.2.1</hisrc-basicjaxb-annox-parser.version>
-		<hisrc-higherjaxb-maven-plugin.version>2.2.0</hisrc-higherjaxb-maven-plugin.version>
-		<hisrc-hyperjaxb-annox-plugin.version>2.2.0</hisrc-hyperjaxb-annox-plugin.version>
+		<hisrc-higherjaxb-maven-plugin.version>2.2.1</hisrc-higherjaxb-maven-plugin.version>
+		<hisrc-hyperjaxb-annox-plugin.version>2.2.1</hisrc-hyperjaxb-annox-plugin.version>
 		<hisrc-hyperjaxb.version>2.2.0</hisrc-hyperjaxb.version>
 		<root.basedir>${basedir}/../..</root.basedir>
 	</properties>
