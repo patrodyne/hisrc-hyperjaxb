@@ -99,7 +99,7 @@
 		<hibernate-search.version>7.1.0.Final</hibernate-search.version>
 		<hibernate-series.version>6.4.4.Final</hibernate-series.version>
 		<HikariCP.version>5.1.0</HikariCP.version>
-		<hisrc-basicjaxb-annox-parser.version>2.2.1-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
+		<hisrc-basicjaxb-annox-parser.version>2.2.1</hisrc-basicjaxb-annox-parser.version>
 		<hisrc-basicjaxb.version>2.2.1-SNAPSHOT</hisrc-basicjaxb.version>
 		<hisrc-higherjaxb-maven-plugin.version>2.2.1-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
 		<hisrc-hyperjaxb-annox-plugin.version>2.2.1-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
