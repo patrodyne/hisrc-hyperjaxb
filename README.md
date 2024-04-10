@@ -43,6 +43,7 @@ original `maven-jaxb2-plugin` name.
 
 #### GitHub Releases, Demonstrations
 
+* [HiSrc HyperJAXB v2.2.1, Explorations][36]
 * [HiSrc HyperJAXB v2.2.0, Explorations][35]
 * [HiSrc HyperJAXB v2.1.1, Explorations][34]
 * [HiSrc HyperJAXB v2.1.0, Explorations][33]
@@ -88,6 +89,16 @@ New goals for the next release are:
 * Review in progress.
 
 ### Fork History
+
+
+#### Version 2.2.1
+
+* Improve EntityMapping for episodes.
+* Add naiveInheritanceStrategy parameter.
+* Improve episode persistence unit configuration.
+* Update ORM schema to v3.1.
+* Update Maven plugin and dependency versions.
+* Build with JDK 21 and Java 11 compatibility.
 
 #### Version 2.2.0
 
@@ -200,6 +211,7 @@ New goals for the next release are:
   [33]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/2.1.0
   [34]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/2.1.1
   [35]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/2.2.0
+  [36]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/tag/2.2.1
   [40]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-extensions-custom-naming-pre_0_6_0/latest/index.html
   [41]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-plugin/latest/index.html
   [42]: https://javadoc.io/doc/org.patrodyne.jvnet/hisrc-hyperjaxb-ejb-roundtrip/latest/index.html
