@@ -23,7 +23,7 @@ public class Main extends Context
 	private static Logger logger = LoggerFactory.getLogger(Main.class);
 	public static Logger getLogger() { return logger; }
 
-	public static final String SAMPLE_ROOT_HEADER_FILE = "src/test/samples/root_header_01.xml";
+	public static final String SAMPLE_ROOT_HEADER_FILE = "src/test/samples/root-header-01.xml";
 	
     // Represents the unmarshalled Root.
     private Root root = null;
