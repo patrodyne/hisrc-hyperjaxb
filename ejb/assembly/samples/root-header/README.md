@@ -79,9 +79,9 @@ The JUnit test class, [RoundtripTest.java][60], scans for the sample files and i
     + The initial object is *merged* into the persistence session
 + The JPA transaction is committed
 + A new JPA `EntityManager`, *em*, instance is created
-    + The new *em* is used to load the persisted PO by id
+    + The new *em* is used to load the persisted `Root` by id
     + The etalon, merged and loaded `Root` objects are compared for equality
-+ The *em* is closed and each PO object is marshaled for review in the logs
++ The *em* is closed and each `Root` object is marshaled for review in the logs
 
 When successful, each object is *marshaled* for logging and your [review][2].
 
