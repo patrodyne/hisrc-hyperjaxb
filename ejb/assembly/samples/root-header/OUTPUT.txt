@@ -1,0 +1,128 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --< org.patrodyne.jvnet:hisrc-hyperjaxb-ejb-sample-root-header-maven >--
+[INFO] Building HiSrc HyperJAXB EJB Assembly Sample [root-header] 2.2.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ hisrc-hyperjaxb-ejb-sample-root-header-maven ---
+[INFO] Deleting hisrc-hyperjaxb-ejb-sample-root-header-2.2.0/target
+[INFO] 
+[INFO] --- hisrc-hyperjaxb:2.2.0:generate (generate) @ hisrc-hyperjaxb-ejb-sample-root-header-maven ---
+[INFO] Sources are not up-to-date, XJC will be executed.
+[INFO] WELD-000900: 5.1.2 (Final)
+[INFO] WELD-ENV-000020: Using jandex for bean discovery
+[INFO] WELD-000101: Transactional services not available. Injection of @Inject UserTransaction not available. Transactional observers will be invoked synchronously.
+[INFO] WELD-001125: Illegal bean type interface org.jvnet.hyperjaxb.ejb.strategy.model.PropertyInfoProcessor<java.util.Collection<? extends com.sun.tools.xjc.model.CTypeInfo>,C> ignored on [EnhancedAnnotatedTypeImpl] public @Alternative @Dependent @ModelBase @Priority class org.jvnet.hyperjaxb.ejb.strategy.model.base.DefaultGetTypes
+[INFO] WELD-ENV-002003: Weld SE container 7cdfaba2-08e0-4790-b94b-70323dce197a initialized
+[INFO] WELD-ENV-002001: Weld SE container 7cdfaba2-08e0-4790-b94b-70323dce197a shut down
+[INFO] Episode file [hisrc-hyperjaxb-ejb-sample-root-header-2.2.0/target/generated-sources/xjc/META-INF/sun-jaxb.episode] was augmented with if-exists="true" attributes.
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ hisrc-hyperjaxb-ejb-sample-root-header-maven ---
+[INFO] Copying 9 resources from src/main/resources to target/classes
+[INFO] Copying 1 resource from target/generated-sources/xjc to target/classes
+[INFO] Copying 1 resource from target/generated-sources/xjc to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ hisrc-hyperjaxb-ejb-sample-root-header-maven ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 7 source files with javac [debug release 11] to target/classes
+[INFO] Hibernate/JPA static Metamodel Generator 6.4.4.Final
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ hisrc-hyperjaxb-ejb-sample-root-header-maven ---
+[INFO] Copying 2 resources from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ hisrc-hyperjaxb-ejb-sample-root-header-maven ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 1 source file with javac [debug release 11] to target/test-classes
+[INFO] Hibernate/JPA static Metamodel Generator 6.4.4.Final
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ hisrc-hyperjaxb-ejb-sample-root-header-maven ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running org.example.root_header.RoundtripTest
+13:32:28:540 INFO EMF: Detected [file:hisrc-hyperjaxb-ejb-sample-root-header-2.2.0/target/classes/META-INF/persistence.xml].
+13:32:28:542 DEBUG Loading entity manager factory properties.
+13:32:28:542 INFO EMF: Loading [file:hisrc-hyperjaxb-ejb-sample-root-header-2.2.0/target/classes/persistence.properties].
+13:32:28:542 DEBUG Loading more entity manager factory properties.
+13:32:28:543 INFO EMF: Loading [file:hisrc-hyperjaxb-ejb-sample-root-header-2.2.0/target/classes/persistence-h2.properties].
+13:32:30:486 DEBUG alter table if exists ejb_samples_root_header.ROOT drop constraint if exists FK5d77itb5vb41ofk3buqsndneg
+13:32:30:489 DEBUG alter table if exists ejb_samples_root_header.ROOT drop constraint if exists FKppwt7fd2tm9tlapq9g9abfqjb
+13:32:30:489 DEBUG drop table if exists ejb_samples_root_header.DATA_BLOCK cascade
+13:32:30:489 DEBUG drop table if exists ejb_samples_root_header.HEADER cascade
+13:32:30:489 DEBUG drop table if exists ejb_samples_root_header.ROOT cascade
+13:32:30:490 DEBUG create table ejb_samples_root_header.DATA_BLOCK (HJID bigserial not null, DATA_ varchar(255), TYPE_ varchar(255), primary key (HJID))
+13:32:30:497 DEBUG create table ejb_samples_root_header.HEADER (CREATED_ITEM timestamp(6), HJID bigserial not null, NAME_ varchar(255), primary key (HJID))
+13:32:30:498 DEBUG create table ejb_samples_root_header.ROOT (DATA_BLOCK_ROOT_HJID bigint, EXPORTED_ITEM timestamp(6), HEADER_ROOT_HJID bigint unique, HJID bigserial not null, primary key (HJID))
+13:32:30:500 DEBUG alter table if exists ejb_samples_root_header.ROOT add constraint FK5d77itb5vb41ofk3buqsndneg foreign key (DATA_BLOCK_ROOT_HJID) references ejb_samples_root_header.DATA_BLOCK
+13:32:30:512 DEBUG alter table if exists ejb_samples_root_header.ROOT add constraint FKppwt7fd2tm9tlapq9g9abfqjb foreign key (HEADER_ROOT_HJID) references ejb_samples_root_header.HEADER
+13:32:30:517 DEBUG Testing samples, start
+13:32:30:517 INFO Testing directory [hisrc-hyperjaxb-ejb-sample-root-header-2.2.0/src/test/samples].
+13:32:30:527 DEBUG Testing sample, start [root_header_01.xml].
+13:32:30:588 DEBUG Unmarshalling sample.
+13:32:30:599 DEBUG Unmarshalling etalon.
+13:32:30:609 TRACE Etalon object:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Root exported="2024-06-01T13:15:45.000Z" xmlns="http://example.org/root_header">
+    <header>
+        <name>StackOverflow-78482471-01</name>
+        <created>2024-05-01T09:45:15.000Z</created>
+    </header>
+    <dataBlock>
+        <type>base64</type>
+        <data>aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNzg0ODI0NzEvCg==</data>
+    </dataBlock>
+</Root>
+
+13:32:30:609 DEBUG Persisting the unmarshalled sample.
+13:32:30:671 DEBUG insert into ejb_samples_root_header.DATA_BLOCK (DATA_,TYPE_) values (?,?)
+13:32:30:708 DEBUG insert into ejb_samples_root_header.HEADER (CREATED_ITEM,NAME_) values (?,?)
+13:32:30:713 DEBUG insert into ejb_samples_root_header.ROOT (DATA_BLOCK_ROOT_HJID,EXPORTED_ITEM,HEADER_ROOT_HJID) values (?,?,?)
+13:32:30:729 TRACE Saved object:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Root exported="2024-06-01T09:15:45.000" Hjid="1" xmlns="http://example.org/root_header">
+    <header Hjid="1">
+        <name>StackOverflow-78482471-01</name>
+        <created>2024-05-01T05:45:15.000</created>
+    </header>
+    <dataBlock Hjid="1">
+        <type>base64</type>
+        <data>aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNzg0ODI0NzEvCg==</data>
+    </dataBlock>
+</Root>
+
+13:32:30:732 DEBUG Loading the persisted sample.
+13:32:30:762 DEBUG select r1_0.HJID,db1_0.HJID,db1_0.DATA_,db1_0.TYPE_,r1_0.EXPORTED_ITEM,h1_0.HJID,h1_0.CREATED_ITEM,h1_0.NAME_ from ejb_samples_root_header.ROOT r1_0 left join ejb_samples_root_header.DATA_BLOCK db1_0 on db1_0.HJID=r1_0.DATA_BLOCK_ROOT_HJID left join ejb_samples_root_header.HEADER h1_0 on h1_0.HJID=r1_0.HEADER_ROOT_HJID where r1_0.HJID=?
+13:32:30:771 TRACE Loaded object:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Root exported="2024-06-01T09:15:45.000" Hjid="1" xmlns="http://example.org/root_header">
+    <header Hjid="1">
+        <name>StackOverflow-78482471-01</name>
+        <created>2024-05-01T05:45:15.000</created>
+    </header>
+    <dataBlock Hjid="1">
+        <type>base64</type>
+        <data>aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNzg0ODI0NzEvCg==</data>
+    </dataBlock>
+</Root>
+
+13:32:30:771 DEBUG Checking the sample object identity: Etalon vs Loaded.
+13:32:30:776 DEBUG Checking the sample object identity: Etalon vs Etalon clone.
+13:32:30:776 TRACE Checking the sample object identity: Loaded vs Loaded clone.
+13:32:30:776 TRACE Checking the sample object identity: Etalon vs Initial vs Loaded.
+13:32:30:777 INFO Testing sample, SUCCESS [root_header_01.xml].
+13:32:30:777 DEBUG Testing samples, finish
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.343 s -- in org.example.root_header.RoundtripTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.574 s
+[INFO] Finished at: 2024-05-15T13:32:31-04:00
+[INFO] ------------------------------------------------------------------------

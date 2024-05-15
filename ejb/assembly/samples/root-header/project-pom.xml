@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.patrodyne.jvnet</groupId>
+	<artifactId>hisrc-hyperjaxb-ejb-sample-root-header-maven</artifactId>
+	<version>${hisrc-hyperjaxb.version}</version>
+	<packaging>jar</packaging>
+	<name>HiSrc HyperJAXB EJB Assembly Sample [root-header]</name>
+
+	<properties>
+		<maven-antrun-plugin.version>${maven-antrun-plugin.version}</maven-antrun-plugin.version>
+		<maven.compiler.release>${maven.compiler.release}</maven.compiler.release>
+		<maven-min.version>${maven-min.version}</maven-min.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<annotation.version>${annotation.version}</annotation.version>
+		<eclipselink.version>${eclipselink.version}</eclipselink.version>
+		<hisrc-basicjaxb.version>${hisrc-basicjaxb.version}</hisrc-basicjaxb.version>
+		<hisrc-hyperjaxb.version>${hisrc-hyperjaxb.version}</hisrc-hyperjaxb.version>
+		<h2database.version>${h2database.version}</h2database.version>
+		<postgresql.version>${postgresql.version}</postgresql.version>
+		<hibernate-series.version>${hibernate-series.version}</hibernate-series.version>
+		<jpa-api.version>${jpa-api.version}</jpa-api.version>
+		<slf4j.version>${slf4j.version}</slf4j.version>
+	</properties>
+
+	<dependencies>
+		<!-- JPA Dependencies -->
+		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+			<version>\${annotation.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>\${jpa-api.version}</version>
+		</dependency>
+
+		<!-- HiSrc Runtime Dependencies -->
+		<dependency>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-basicjaxb-runtime</artifactId>
+			<version>\${hisrc-basicjaxb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
+			<version>\${hisrc-hyperjaxb.version}</version>
+		</dependency>
+
+		<!-- Database Dependencies -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>\${h2database.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>\${postgresql.version}</version>
+		</dependency>
+
+		<!-- SLF4J Implementation -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>\${slf4j.version}</version>
+		</dependency>
+
+		<!-- Test dependencies -->
+
+		<!-- HiSrc Roundtrip Dependencies -->
+		<dependency>
+			<groupId>org.patrodyne.jvnet</groupId>
+			<artifactId>hisrc-hyperjaxb-ejb-roundtrip</artifactId>
+			<version>\${hisrc-hyperjaxb.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>package</defaultGoal>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.hibernate.orm</groupId>
+							<artifactId>hibernate-jpamodelgen</artifactId>
+							<version>\${hibernate-series.version}</version>
+						</path>
+					</annotationProcessorPaths>
+					<!-- In Eclipse, Enable: Preferences / Maven / Annotation Processing / Auto-configure JDT APT. -->
+					<generatedSourcesDirectory>\${project.build.directory}/generated-sources/apt</generatedSourcesDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>${maven-site-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
+				<configuration>
+					<argLine>\${env.JVM_SYS_ARGS}</argLine>
+					<systemPropertiesFile>\${basedir}/src/main/resources/jvmsystem.properties</systemPropertiesFile>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<mainClass>org.example.root_header.Main</mainClass>
+					<cleanupDaemonThreads>false</cleanupDaemonThreads>
+				</configuration>
+			</plugin>
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
+			<plugin>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
+				<version>\${hisrc-hyperjaxb.version}</version>
+				<executions>
+					<execution>
+						<id>generate</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<noFileHeader>true</noFileHeader>
+							<extension>true</extension>
+							<!--
+							<roundtripTestClassName>org.example.root_header.RoundtripTest</roundtripTestClassName>
+							-->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>${maven-project-info-reports-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>${maven-surefire-report-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>${maven-jxr-plugin.version}</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<profiles>
+
+		<!-- Hints:
+			mvn -Peclipselink clean compile exec:java
+			Eclipse > Project > Properties > Maven > Acive Profiles: eclipselink
+		-->
+		<profile>
+			<id>eclipselink</id>
+			<activation>
+				<property>
+					<name>org.jvnet.hyperjaxb.persistence</name>
+					<value>eclipselink</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-eclipselink</artifactId>
+					<version>\${hisrc-hyperjaxb.version}</version>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>\${maven-antrun-plugin.version}</version>
+						<executions>
+							<execution>
+								<?m2e ignore?>
+								<id>runtime</id>
+								<phase>compile</phase>
+								<configuration>
+									<target>
+										<mkdir dir="\${project.build.directory}/test-database-sql" />
+									</target>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- Hints:
+			mvn -Phibernate clean compile exec:java
+			Eclipse > Project > Properties > Maven > Acive Profiles: hibernate
+		-->
+		<profile>
+			<id>hibernate</id>
+			<activation>
+				<property>
+					<name>org.jvnet.hyperjaxb.persistence</name>
+					<value>!eclipselink</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.patrodyne.jvnet</groupId>
+					<artifactId>hisrc-hyperjaxb-opt-hibernate</artifactId>
+					<version>\${hisrc-hyperjaxb.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
+	</profiles>
+
+</project>
+<!-- vi:set tabstop=4 hardtabs=4 shiftwidth=4 noexpandtab:-->

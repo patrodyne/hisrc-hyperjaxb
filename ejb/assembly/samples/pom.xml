@@ -21,6 +21,7 @@
 		<module>po-initial</module>
 		<module>po-customized-eclipselink</module>
 		<module>publication</module>
+		<module>root-header</module>
 		<module>uniprot</module>
 		<module>po-higherjaxb-maven-plugin</module>
 		<!--module>customerservice-cxf</module-->
