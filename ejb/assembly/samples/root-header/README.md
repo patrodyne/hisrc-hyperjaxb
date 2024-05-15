@@ -97,7 +97,7 @@ mvn -Phibernate   clean compile exec:java -Dexec.args="src/test/samples/root-hea
 
 <!-- References -->
 
-[1]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/download/2.2.0/hisrc-hyperjaxb-ejb-sample-root-header-2.2.0-mvn-src.zip
+[1]: https://github.com/patrodyne/hisrc-hyperjaxb/releases/download/2.2.1/hisrc-hyperjaxb-ejb-sample-root-header-2.2.1-mvn-src.zip
 [2]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/root-header/OUTPUT.txt
 [9]: https://github.com/patrodyne/hisrc-hyperjaxb#readme
 [10]: https://github.com/patrodyne/hisrc-basicjaxb#readme
