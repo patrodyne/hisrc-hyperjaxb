@@ -87,7 +87,7 @@ When successful, each object is *marshaled* for logging and your [review][2].
 
 ##### Demonstration
 
-A Java standard engine application with a `main(...)` method is at [`org.example.root_header.Main`][11]. This application is executed using:
+A Java standard engine application with a `main(...)` method is at [`org.example.root_header.Main`][42]. This application is executed using:
 
 ~~~
 mvn -Peclipselink clean compile exec:java -Dexec.args="src/test/samples/root-header-01.xml"
