@@ -132,5 +132,5 @@ mvn -Phibernate   clean compile exec:java -Dexec.args="src/test/samples/root-hea
 [60]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/root-header/src/test/java/org/example/root_header/RoundtripTest.java
 [61]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/root-header/src/test/resources/persistence-pg-create-database.sql
 [62]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/root-header/src/test/resources/persistence-pg-recreate-schema.sql
-[63]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/root-header/src/test/samples/root_header_01.xml
+[63]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/ejb/assembly/samples/root-header/src/test/samples/root-header-01.xml
 
