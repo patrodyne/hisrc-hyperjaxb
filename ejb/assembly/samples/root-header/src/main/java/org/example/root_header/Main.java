@@ -1,7 +1,6 @@
 package org.example.root_header;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import org.jvnet.hyperjaxb.ejb.util.Transactional;
@@ -26,9 +25,9 @@ public class Main extends Context
 	public static final String SAMPLE_ROOT_HEADER_FILE = "src/test/samples/root-header-01.xml";
 	
     // Represents the unmarshalled Root.
-    private Root root = null;
-    public Root getRoot() { return root; }
-    public void setRoot(Root root) { this.root = root; }
+    private ROOT root = null;
+    public ROOT getRoot() { return root; }
+    public void setRoot(ROOT root) { this.root = root; }
 	
 	/**
 	 * Command Line Invocation.
@@ -64,11 +63,11 @@ public class Main extends Context
 		generateXmlSchemaValidatorFromDom();
 		
 		// JAXB: unmarshal XML file by path name.
-        setRoot(unmarshal(xmlFileName, Root.class));
-        getLogger().info("Root: {}\n\n{}\n", getRoot().getExported(), getRoot());
+        setRoot(unmarshal(xmlFileName, ROOT.class));
+        getLogger().info("Root: {}\n\n{}\n", getRoot().getHeader().getHeaderId(), getRoot());
 
         // Select Purchase Order(s) by order date.
-        List<Root> rootList = selectRoots(0, 10, getRoot().getExportedItem());
+        List<ROOT> rootList = selectRoots(0, 10, getRoot().getHeader().getHeaderId());
 
         // Persist Purchase Order, if missing.
         if ( rootList.isEmpty() )
@@ -76,11 +75,11 @@ public class Main extends Context
     		// JPA: persist Root to database.
             persist(getRoot());
             // Again, select Purchase Order(s) by order date.
-            rootList = selectRoots(0, 1, getRoot().getExportedItem());
+            rootList = selectRoots(0, 1, getRoot().getHeader().getHeaderId());
         }
 
         // Display Purchase Order(s).
-        for ( Root root : rootList )
+        for ( ROOT root : rootList )
         {
 			// JAXB: marshal Root.
             String xmlRoot = marshalToString(root);
@@ -88,22 +87,22 @@ public class Main extends Context
         }
 	}
 	
-	private List<Root> selectRoots(Integer start, Integer count, Date exported)
+	private List<ROOT> selectRoots(Integer start, Integer count, String headerId)
 		throws IOException
 	{
 		// Always perform EntityManager actions within a transaction!
-		Transactional<List<Root>> tx = (em) ->
+		Transactional<List<ROOT>> tx = (em) ->
 		{
 			CriteriaBuilder cb = em.getCriteriaBuilder();
-			CriteriaQuery<Root> cq = cb.createQuery(Root.class);
-			jakarta.persistence.criteria.Root<Root> fromRoot = cq.from(Root.class);
+			CriteriaQuery<ROOT> cq = cb.createQuery(ROOT.class);
+			jakarta.persistence.criteria.Root<ROOT> fromRoot = cq.from(ROOT.class);
 			
 			cq.select(fromRoot)
-				.where(cb.equal(fromRoot.get(Root_.EXPORTED_ITEM), exported));
+				.where(cb.equal(fromRoot.get(ROOT_.HEADER).get(HeaderType_.HEADER_ID), headerId));
 			
-			TypedQuery<Root> query = em.createQuery(cq);
+			TypedQuery<ROOT> query = em.createQuery(cq);
 			query.setHint("org.hibernate.cacheable", false);
-			List<Root> entities = query
+			List<ROOT> entities = query
 				.setFirstResult(start)
 				.setMaxResults(count)
 				.getResultList();
@@ -111,7 +110,7 @@ public class Main extends Context
 			return entities;
 		};
 		// Auto-close transactional session.
-		List<Root> rootList;
+		List<ROOT> rootList;
 		try ( EntityManager em = createEntityManager() )
 		{
 			rootList = tx.transact(em);
@@ -119,7 +118,7 @@ public class Main extends Context
 		return rootList;
 	}
 	
-	private void persist(Root root)
+	private void persist(ROOT root)
 		throws IOException
 	{
 		Transactional<Integer> tx = (em) ->
@@ -131,7 +130,7 @@ public class Main extends Context
 		try ( EntityManager em = createEntityManager() )
 		{
 		    Integer count = tx.transact(em);
-			getLogger().info("Persisted {} {}(s)", count, Root.class.getSimpleName());
+			getLogger().info("Persisted {} {}(s)", count, ROOT.class.getSimpleName());
 		}
 	}
 }

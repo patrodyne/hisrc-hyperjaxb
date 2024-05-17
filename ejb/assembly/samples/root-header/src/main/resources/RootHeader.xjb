@@ -43,13 +43,13 @@
 
 		</hj:persistence>
 
-		<jaxb:bindings node="xs:element[@name='Root']//xs:element[@name='header']">
+		<!--
+		<jaxb:bindings node="xs:element[@name='ROOT']//xs:element[@name='Header']">
 			<hj:one-to-one>
-				<!-- Optional, custom column name.
 				<orm:join-column name="HEADER_ROOT_HJID"/>
-				-->
 			</hj:one-to-one>
 		</jaxb:bindings>
+		-->
 
 	</jaxb:bindings>
 

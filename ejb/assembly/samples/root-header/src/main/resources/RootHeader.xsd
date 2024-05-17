@@ -1,34 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:tns="http://example.org/root_header"
 	targetNamespace="http://example.org/root_header"
 	elementFormDefault="qualified"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	jaxb:extensionBindingPrefixes="hj orm"
 >
-
-	<xs:complexType name="Header">
-		<xs:sequence>
-			<xs:element name="name" type="xs:string"/>
-			<xs:element name="created" type="xs:dateTime"/>
-		</xs:sequence>
+	<xs:complexType name="AcquisitionType">
+		<xs:attribute name="Acquisition_Id" type="xs:string"/>
 	</xs:complexType>
-
-	<xs:complexType name="DataBlock">
-		<xs:sequence>
-			<xs:element name="type" type="xs:string"/>
-			<xs:element name="data" type="xs:string"/>
-		</xs:sequence>
+	
+	<xs:complexType name="DumpType">
+		<xs:attribute name="Dump_Id" type="xs:string"/>
 	</xs:complexType>
-
-	<xs:element name="Root">
+	
+	<xs:complexType name="HeaderType">
+		<xs:attribute name="Header_Id" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:element name="ROOT">
 		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="header" type="tns:Header"/>
-				<xs:element name="dataBlock" type="tns:DataBlock"/>
+			<xs:sequence maxOccurs="1">
+				<xs:element name="Header" type="tns:HeaderType" maxOccurs="1">
+					<xs:annotation>
+						<xs:appinfo>
+							<hj:one-to-one>
+								<orm:join-column name="HEADER_ROOT_HJID"/>
+							</hj:one-to-one>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Data_Block" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Sensing_Start_Time" type="xs:string"/>
+							<xs:element name="Sensing_Stop_Time" type="xs:string"/>
+							<xs:element name="List_of_Acquisitions" maxOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Acquisition" type="tns:AcquisitionType" maxOccurs="unbounded"/>
+									</xs:sequence>
+									<xs:attribute name="count" type="xs:int" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="List_Of_Dumps" minOccurs="0" maxOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Dump" type="tns:DumpType" maxOccurs="unbounded"/>
+									</xs:sequence>
+									<xs:attribute name="count" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="type" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="exported" type="xs:dateTime"/>
 		</xs:complexType>
 	</xs:element>
-
 </xs:schema>
-<!-- vi:set tabstop=4 hardtabs=4 shiftwidth=4 noexpandtab:-->
