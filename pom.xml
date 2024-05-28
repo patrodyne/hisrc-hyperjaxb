@@ -888,6 +888,7 @@
 							<detectLinks>true</detectLinks>
 							<doclint>all,-missing</doclint>
 							<failOnError>false</failOnError>
+							<offline>true</offline>
 							<links>
 								<link>https://javadoc.io/doc/com.zaxxer/HikariCP/${HikariCP.version}/</link>
 								<link>https://javadoc.io/doc/com.google.inject/guice/${guice.version}/</link>
