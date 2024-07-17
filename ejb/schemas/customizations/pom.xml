@@ -79,7 +79,7 @@
 							<schemaIncludes>
 								<value>customizations.xsd</value>
 							</schemaIncludes>
-							<catalog>src/main/resources/catalog.cat</catalog>
+							<catalog>src/main/resources/catalog.xml</catalog>
 							<strict>false</strict>
 							<args>
 								<arg>-Xequals</arg>

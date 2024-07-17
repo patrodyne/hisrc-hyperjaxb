@@ -7,14 +7,13 @@
 		../../../../../../src/test/resources/w3c/2005/10/catalog/catalog.xsd"
 >
 
-	<system
-		systemId="http://www.w3.org/2001/XMLSchema.dtd"
-		uri="XMLSchema.dtd"
-	/>
-
-	<system
-		systemId="http://www.w3.org/2001/datatypes.dtd"
-		uri="datatypes.dtd"
+	<!--
+        PUBLIC entries are only considered if prefer is public (default) and
+        system entries are not found. A system entry is always used if found.
+	-->
+	<public
+		publicId="https://jakarta.ee/xml/ns/persistence"
+		uri="persistence_3_0.xsd"
 	/>
 
 </catalog>

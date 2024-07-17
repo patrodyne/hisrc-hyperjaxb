@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE catalog
-	PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
-		   "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
 <!-- See https://www.oasis-open.org/committees/entity/spec.html -->
 <!-- xmlcatalog -v catalog.xml [publicId|systemId] -->
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:entity:xmlns:xml:catalog
+		../../../../../../src/test/resources/w3c/2005/10/catalog/catalog.xsd"
+>
 
+	<!--
+        PUBLIC entries are only considered if prefer is public (default) and
+        system entries are not found. A system entry is always used if found.
+	-->
 	<public publicId="-//W3C//DTD XMLSCHEMA 200102//EN" uri="XMLSchema.dtd" />
 	<public publicId="datatypes" uri="datatypes.dtd" />
 
 	<system systemId="http://www.imsglobal.org/xsd/imslip_v1p0.xsd" uri="imslip_v1p0.xsd" />
 
+	<!--
+        PUBLIC entries are only considered if prefer is public (default) and
+        system entries are not found. A system entry is always used if found.
+	-->
 	<public publicId="http://www.imsglobal.org/services/gms/xsd/imsGroupManDataSchema_v1p0"		uri="imsGroupManDataSchema_v1p0.xsd" />
 	<system systemId="http://www.imsglobal.org/services/gms/xsd/imsGroupManDataSchema_v1p0.xsd" uri="imsGroupManDataSchema_v1p0.xsd" />
 
+	<!--
+        PUBLIC entries are only considered if prefer is public (default) and
+        system entries are not found. A system entry is always used if found.
+	-->
 	<public publicId="http://www.imsglobal.org/services/common/imsCommonSchema_v1p0"	 uri="imsCommonSchema_v1p0.xsd" />
 	<system systemId="http://www.imsglobal.org/services/common/imsCommonSchema_v1p0.xsd" uri="imsCommonSchema_v1p0.xsd" />
 
 	<system systemId="http://www.imsglobal.org/xsd/imsrdceo_rootv1p0.xsd" uri="imsrdceo_rootv1p0.xsd" />
 
+	<!--
+        PUBLIC entries are only considered if prefer is public (default) and
+        system entries are not found. A system entry is always used if found.
+	-->
 	<public publicId="http://www.w3.org/XML/1998/namespace"          uri="xml.xsd" />
 	<system systemId="https://www.imsglobal.org/xsd/w3/2001/xml.xsd" uri="xml.xsd" />
-
-	<!--
-	<public publicId="http://www.imsglobal.org/xsd/imslip_v1p0" uri="imslip_v1p0.xsd" />
-	<system systemId="https://www.imsglobal.org/xsd/w3/2001/xml.xsd" uri="xml.xsd" />
-
-	<system systemId="http://www.imsglobal.org/xsd/imslip_v1p0.xsd" uri="imslip_v1p0.xsd" />
-
-	<system systemId="http://www.imsglobal.org/services/gms/xsd/imsGroupManDataSchema_v1p0.xsd" uri="imsGroupManDataSchema_v1p0.xsd" />
-	<system systemId="http://www.imsglobal.org/services/common/imsCommonSchema_v1p0.xsd" uri="imsCommonSchema_v1p0.xsd" />
-
-	<system systemId="http://www.imsglobal.org/xsd/imsrdceo_rootv1p0.xsd" uri="imsrdceo_rootv1p0.xsd" />
-	<public publicId="http://www.imsglobal.org/xsd/imsrdceo_rootv1p0" uri="imsrdceo_rootv1p0.xsd" />
-	-->
 
 </catalog>
