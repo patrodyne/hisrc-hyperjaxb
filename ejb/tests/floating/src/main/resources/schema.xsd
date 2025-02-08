@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-	xmlns:hj="http://jvnet.org/hyperjaxb/jpa" 
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
 	jaxb:extensionBindingPrefixes="hj"
 	jaxb:version="3.0"
@@ -13,6 +13,7 @@
 		<xs:sequence>
 			<xs:element name="float"  type="xs:float"  minOccurs="0"/>
 			<xs:element name="double" type="xs:double" minOccurs="0"/>
+			<xs:element name="doubleArrayB64" type="xs:base64Binary"/>
 		</xs:sequence>
 	</xs:complexType>
 

@@ -168,6 +168,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			
 			getLogger().debug("Checking the sample object identity: Etalon vs Loaded.");
 			checkObjects(etalonSample.getValue(), loadedEntity);
+			checkObject(etalonSample.getValue());
 
 			// Check Copyable (CopyTo / Cloneable), when present.
 			if ( getLogger().isDebugEnabled() )
@@ -213,6 +214,11 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			
 			checkObjects(lhsValueMergeFrom, rhsValueMergeFrom);
 		}
+	}
+	
+	protected void checkObject(final Object obj)
+	{
+		;
 	}
 	
 	protected void checkObjects(final Object lhsObject, final Object rhsObject)

@@ -1,6 +1,7 @@
 package org.jvnet.hyperjaxb.ejb.tests.floating;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,9 @@ public class RunFloatingPluginTest extends AbstractHyperMojoTest
 		mojo.setNoFileHeader(true);
 		mojo.setValidateXml(false);
 		mojo.setExtension(true);
-		mojo.setArgs(new ArrayList<>());
+		List<String> args = new ArrayList<>();
+		args.add("-Xinject-code");
+		mojo.setArgs(args);
 
 		mojo.setVariant("ejb");
 		mojo.setRoundtripTestClassName(getRoundtripTestClassName());

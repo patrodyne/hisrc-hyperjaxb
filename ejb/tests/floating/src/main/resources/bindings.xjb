@@ -2,6 +2,7 @@
 <jaxb:bindings jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:ci="http://jaxb.dev.java.net/plugin/code-injector"
 	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	jaxb:extensionBindingPrefixes="hj orm"
@@ -43,5 +44,16 @@
 		</hj:persistence>
 
 	</jaxb:bindings>
+
+	<jaxb:bindings node="//xs:schema" schemaLocation="schema.xsd">
+		<jaxb:bindings node="xs:complexType[@name='floatingTypesType']">
+			<ci:code>
+	@jakarta.persistence.Transient
+	public double[][] getDoubleArray() { return DoubleArrayAdapter.unmarshal(getDoubleArrayB64()); }
+	@jakarta.persistence.Transient
+	public void setDoubleArray(double[][] doubleArray) { setDoubleArrayB64(DoubleArrayAdapter.marshal(doubleArray)); }
+			</ci:code>
+		</jaxb:bindings>
+</jaxb:bindings>
 
 </jaxb:bindings>
