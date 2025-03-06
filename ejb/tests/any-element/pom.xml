@@ -8,9 +8,9 @@
 		<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
 		<version>2.2.2-SNAPSHOT</version>
 	</parent>
-	<artifactId>hisrc-hyperjaxb-ejb-tests-any</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-tests-anyelement</artifactId>
 	<packaging>jar</packaging>
-	<name>HiSrc HyperJAXB EJB Test [any]</name>
+	<name>HiSrc HyperJAXB EJB Test [anyelement]</name>
 	<properties>
 		<root.basedir>${basedir}/../../..</root.basedir>
 	</properties>
@@ -41,12 +41,21 @@
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
+					<debug>false</debug>
+					<verbose>true</verbose>
 					<maxIdentifierLength>60</maxIdentifierLength>
 					<validateXml>false</validateXml>
+					<noFileHeader>true</noFileHeader>
+					<schemaIncludes>
+						<schemaInclude>model.xsd</schemaInclude>
+					</schemaIncludes>
 					<!--
-					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.any.RoundtripTest</roundtripTestClassName>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.anyelement.RoundtripTest</roundtripTestClassName>
 					<variant>ejb</variant>
 					<generateTransientId>true</generateTransientId>
+					<args>
+						<arg>-Xhyperjaxb-ejb-generateTransientId=true</arg>
+					</args>
 					-->
 				</configuration>
 			</plugin>

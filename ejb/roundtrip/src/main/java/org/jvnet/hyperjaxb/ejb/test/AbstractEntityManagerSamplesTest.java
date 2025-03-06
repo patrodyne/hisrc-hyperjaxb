@@ -74,7 +74,7 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 	
 	protected AbstractSamplesTest createSamplesTest()
 	{
-		return new AbstractSamplesTest()
+		AbstractSamplesTest ast = new AbstractSamplesTest()
 		{
 			@Override
 			protected void checkSample(File sample)
@@ -113,6 +113,8 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 				return AbstractEntityManagerSamplesTest.this.getContextClassLoader();
 			}
 		};
+		ast.setFailFast(isFailFast());
+		return ast;
 	}
 
 	protected JAXBContext createContext()

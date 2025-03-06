@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="urn:blog:anyelement:adapted:model" 
+	targetNamespace="urn:blog:anyelement:adapted:model"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa" 
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
+	jaxb:extensionBindingPrefixes="hj"
+	jaxb:version="3.0"
+>
+
+	<xs:element name="method">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" use="required" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

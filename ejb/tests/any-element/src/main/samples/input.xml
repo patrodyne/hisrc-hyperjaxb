@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<other:method name="addCustomer"
+	xmlns:other="urn:blog:anyelement:adapted:other"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:blog:anyelement:adapted:other ../../main/resources/other.xsd"
+>
+    <other:id type="java.lang.Integer">123</other:id>
+    <other:name type="java.lang.String">Jane Doe</other:name>
+    <other:address type="blog.anyelement.adapted.other.Address">
+        <other:street>123 A Street</other:street>
+        <other:city>Any Town</other:city>
+    </other:address>
+</other:method>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="urn:blog:anyelement:adapted:other" 
+	targetNamespace="urn:blog:anyelement:adapted:other"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
+	jaxb:version="3.0"
+>
+
+	<xs:element name="method">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" use="required" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="id">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int">
+					<xs:attribute name="type" use="required" type="xs:string"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="name">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="type" use="required" type="xs:string"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="address">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="street" type="xs:string"/>
+				<xs:element name="city" type="xs:string"/>
+			</xs:sequence>
+			<xs:attribute name="type" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

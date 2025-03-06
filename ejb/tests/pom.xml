@@ -19,6 +19,7 @@
 		<module>ak</module>
 		<module>annox</module>
 		<module>any</module>
+		<module>any-element</module>
 		<module>bibtexml</module>
 		<!-- LONG RUNNING
 		<module>ccr</module>
