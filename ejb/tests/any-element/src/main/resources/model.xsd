@@ -4,13 +4,24 @@
 	xmlns:tns="urn:blog:anyelement:adapted:model" 
 	targetNamespace="urn:blog:anyelement:adapted:model"
 	xmlns:hj="http://jvnet.org/hyperjaxb/jpa" 
+	xmlns:wc="http://jvnet.org/basicjaxb/xjc/wildcard"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
-	jaxb:extensionBindingPrefixes="hj"
+	jaxb:extensionBindingPrefixes="hj wc"
 	jaxb:version="3.0"
 >
 
 	<xs:element name="method">
 		<xs:complexType>
+			<xs:annotation>
+				<xs:appinfo>
+					<!--
+					Unmarshalls blog.anyelement.adapted.model.Method.any objects to be Parameter;
+					but, Marshal does not work!
+					<wc:handler lax="true">blog.anyelement.adapted.ParameterHandler</wc:handler>
+					-->
+					<wc:handler lax="true"/>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:sequence>
 				<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>

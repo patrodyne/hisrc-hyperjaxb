@@ -8,7 +8,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "street", "city" })
+@XmlType(name = "address", propOrder = { "street", "city" })
 public class Address implements Serializable
 {
 	private static final long serialVersionUID = 20250301L;

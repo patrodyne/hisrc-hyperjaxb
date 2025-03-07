@@ -19,11 +19,11 @@ public class Demo
 	public static void main(String[] args)
 		throws Exception
 	{
-		JAXBContext jc = JAXBContext.newInstance(Method.class, Parameter.class, Address.class);
+		JAXBContext otherContext = JAXBContext.newInstance(Method.class, Parameter.class, Address.class);
 		
 		// Create an unmarshaller with a JAXB adapter.
-		ParameterAdapter adapter = new ParameterAdapter(jc);
-		Unmarshaller unmarshaller = jc.createUnmarshaller();
+		ParameterAdapter adapter = new ParameterAdapter(otherContext);
+		Unmarshaller unmarshaller = otherContext.createUnmarshaller();
 		unmarshaller.setAdapter(adapter);
 		
 		// Unmarshal the input file into an action instance of Method type.
@@ -43,7 +43,7 @@ public class Demo
 		}
 		
 		// Create a marshaller with the JAXB adapter with formatted output.
-		Marshaller marshaller = jc.createMarshaller();
+		Marshaller marshaller = otherContext.createMarshaller();
 		marshaller.setAdapter(adapter);
 		marshaller.setProperty(JAXB_FORMATTED_OUTPUT, true);
 		

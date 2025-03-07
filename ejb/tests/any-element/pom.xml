@@ -57,6 +57,11 @@
 						<arg>-Xhyperjaxb-ejb-generateTransientId=true</arg>
 					</args>
 					-->
+					<args>
+						<arg>-Xwildcard</arg>
+						<arg>-Xwildcard-verbose=true</arg>
+						<arg>-Xwildcard-debug=true</arg>
+					</args>
 				</configuration>
 			</plugin>
 		</plugins>
