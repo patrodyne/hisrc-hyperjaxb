@@ -2,39 +2,33 @@ package org.jvnet.hyperjaxb.ejb.tests.floating;
 
 import static java.lang.Double.parseDouble;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DoubleArrayAdapter
 {
 	public static double[][] unmarshal(byte[] doubleArrayBytes)
 	{
-		double[][] doubleArray = null;
+		double[][] rowsArray = null;
 		if ( doubleArrayBytes != null )
 		{
-			List<List<Double>> doubleArrayList = new ArrayList<>();
-			String doubleArrayText = new String(doubleArrayBytes);
-			for ( String row : doubleArrayText.split(";") )
+			String doubleArrayText = new String(doubleArrayBytes).replaceAll("\\s+","");
+			String[] rows = doubleArrayText.split(";");
+			rowsArray = new double[rows.length][];
+			for ( int rowIndex=0; rowIndex < rows.length; ++rowIndex )
 			{
+				String row = rows[rowIndex];
 				if ( !row.isBlank() )
 				{
-					List<Double> doubleList = new ArrayList<>();
-					for ( String cell : row.split(",") )
-						doubleList.add(parseDouble(cell));
-					doubleArrayList.add(doubleList);
+					String[] cols = row.split(",");
+					if ( cols.length > 0 )
+					{
+						double[] colsArray = new double[cols.length];
+						for ( int colIndex=0; colIndex < cols.length; ++colIndex )
+							colsArray[colIndex] = parseDouble(cols[colIndex]);
+						rowsArray[rowIndex] = colsArray;
+					}
 				}
 			}
-			doubleArray = new double[doubleArrayList.size()][];
-			for ( int row = 0; row < doubleArrayList.size(); ++row )
-			{
-				List<Double> cells = doubleArrayList.get(row);
-				double[] cellsArray = new double[cells.size()];
-				for ( int col=0; col < cells.size(); ++col )
-					cellsArray[col] = cells.get(col);
-				doubleArray[row] = cellsArray;
-			}
 		}
-		return doubleArray;
+		return rowsArray;
 	}
 	
 	public static byte[] marshal(double[][] doubleArray)
