@@ -42,6 +42,12 @@
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
 					<!--
+						FIX: JAXP09040001: No match found for publicId 
+						Set strict mode tp false but a catalog is not required.
+						<catalog>src/main/resources/catalog.xml</catalog>
+					-->
+					<strict>false</strict>
+					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.edxl.RoundtripTest</roundtripTestClassName>
 					-->
 					<variant>ejb</variant>
