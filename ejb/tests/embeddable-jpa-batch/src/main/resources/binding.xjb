@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings jaxb:version="3.0"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox"
+	jaxb:extensionBindingPrefixes="hj orm annox"
+>
+
+	<!--  Global Bindings
+		* JPA section 2.1, entities must be top-level classes.
+		* JPA section 2.1, entities must implement the serializable interface.
+		* When processing a Microsoft WCF service WSDL, it is recommended that the
+		  generateElementProperty customization be set to 'false' in globalBindings.
+		* Hint: Increase EnumMemberSizeCap above 256 with typesafeEnumMaxMembers="512".
+	-->
+	<jaxb:globalBindings localScoping="toplevel">
+		<jaxb:serializable uid="20250301" />
+	</jaxb:globalBindings>
+	
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.stackoverflow.embeddable_jpa_batch"/>
+		</jaxb:schemaBindings>
+
+		<hj:persistence>
+			<hj:default-generated-id>
+				 <orm:generated-value strategy="IDENTITY"/> 
+			</hj:default-generated-id>
+		</hj:persistence>
+
+	</jaxb:bindings>
+
+</jaxb:bindings>

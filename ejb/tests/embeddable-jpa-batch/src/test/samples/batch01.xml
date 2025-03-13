@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MyEntityBatch Id="batch01"
+	xmlns="urn:com:stackoverflow:embeddable_jpa_batch"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:com:stackoverflow:embeddable_jpa_batch ../../main/resources/schema.xsd"
+>
+	<MyEntity>
+		<AdditionalData>xx1</AdditionalData>
+		<Id>
+			<AnEnum>I</AnEnum>
+			<ABoolean>true</ABoolean>
+			<AString>aaaaa</AString>
+		</Id>
+	</MyEntity>
+	<MyEntity>
+		<AdditionalData>xx1</AdditionalData>
+		<Id>
+			<AnEnum>I</AnEnum>
+			<ABoolean>true</ABoolean>
+			<AString>aaaab</AString>
+		</Id>
+	</MyEntity>
+</MyEntityBatch>

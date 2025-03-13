@@ -43,6 +43,7 @@
 		<module>ek</module>
 		<module>embeddable</module>
 		<module>embeddable-jpa</module>
+		<module>embeddable-jpa-batch</module>
 		<module>eminq</module>
 		<module>enum</module>
 		<module>episodes</module>

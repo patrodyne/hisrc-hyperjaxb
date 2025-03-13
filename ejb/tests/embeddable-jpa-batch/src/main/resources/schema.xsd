@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified"
+	targetNamespace="urn:com:stackoverflow:embeddable_jpa_batch"
+	xmlns:tns="urn:com:stackoverflow:embeddable_jpa_batch"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	xmlns:anx="http://jvnet.org/basicjaxb/xjc/annox"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	jaxb:extensionBindingPrefixes="hj orm anx"
+	jaxb:version="3.0"
+>
+
+	<xs:element name="MyEntityBatch" >
+		<xs:complexType>
+			<xs:annotation>
+				<xs:appinfo>
+					<hj:entity>
+						<orm:table name="MY_TMP_BATCH"/>
+					</hj:entity>
+				</xs:appinfo>
+			</xs:annotation>
+			<xs:sequence>
+				<xs:element name="MyEntity" type="tns:myEntity" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="Id" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:id />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="MyEntity" type="tns:myEntity"/>
+	<xs:complexType name="myEntity">
+		<xs:annotation>
+			<xs:appinfo>
+				<anx:annotate>@jakarta.xml.bind.annotation.XmlRootElement(name = "MyEntity")</anx:annotate>
+				<hj:entity>
+					<orm:table name="MY_TMP_TABLE"/>
+				</hj:entity>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AdditionalData" type="xs:string"/>
+			<xs:element name="Id" type="tns:myPk" minOccurs="1">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:embedded-id/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="New" type="xs:boolean">
+			<xs:annotation>
+				<xs:appinfo>
+					<hj:ignored/>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="myPk">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:embeddable/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AnEnum" type="tns:anEnum" minOccurs="1" default="I"/>
+			<xs:element name="ABoolean" type="xs:boolean" minOccurs="1"/>
+			<xs:element name="AString" type="xs:string" minOccurs="1" default="batch00"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="anEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="I"/>
+			<xs:enumeration value="O"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+</xs:schema>
