@@ -49,7 +49,19 @@ public class EmbeddedNamingWrapper implements Naming
 	@Override
 	public String getPropertyName(Mapping context, FieldOutline fieldOutline)
 	{
-		return naming.getPropertyName(context, fieldOutline);
+		// The JavaBeans v1.01 specification (Section 8.8) 
+		// ... However to support the occasional use of all upper-case names,
+		// we check if the first two characters of the name are both upper case
+		// and if so leave it alone.
+		String pubname = fieldOutline.getPropertyInfo().getName(true);
+		if ( (pubname != null) && (pubname.length() > 1)
+			&& Character.isUpperCase(pubname.charAt(1))
+			&& Character.isUpperCase(pubname.charAt(0)))
+		{
+			return pubname;
+		}
+		else
+			return naming.getPropertyName(context, fieldOutline);
 	}
 
 	@Override
