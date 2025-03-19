@@ -30,6 +30,13 @@
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:attribute>
+			<xs:attribute name="New" type="xs:boolean" default="true" >
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:ignored/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	
@@ -45,15 +52,16 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="AdditionalData" type="xs:string"/>
-			<xs:element name="Id" type="tns:myPk" minOccurs="1">
+			<xs:element name="Id" type="tns:MyPk" minOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>
+						<!-- Note: HJ prefixes the column names with this element's name. -->
 						<hj:embedded-id/>
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
-		<xs:attribute name="New" type="xs:boolean">
+		<xs:attribute name="New" type="xs:boolean" default="true">
 			<xs:annotation>
 				<xs:appinfo>
 					<hj:ignored/>
@@ -62,16 +70,39 @@
 		</xs:attribute>
 	</xs:complexType>
 
-	<xs:complexType name="myPk">
+	<xs:complexType name="MyPk">
 		<xs:annotation>
 			<xs:appinfo>
+				<!--
+					Set hibernate.column_ordering_strategy=legacy to order alphabetically.
+					Prefix the element names with the desired composite key position.
+					Or, use 'jaxb:' to declare the Java property name.
+				-->
 				<hj:embeddable/>
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AnEnum" type="tns:anEnum" minOccurs="1" default="I"/>
-			<xs:element name="ABoolean" type="xs:boolean" minOccurs="1"/>
-			<xs:element name="AString" type="xs:string" minOccurs="1" default="batch00"/>
+			<xs:element name="AString" type="xs:string" minOccurs="1" default="aaaaa">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="kaString"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AnEnum" type="tns:anEnum" minOccurs="1" default="I">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="kbEnum"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ABoolean" type="xs:boolean" minOccurs="1">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="kcBoolean"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	

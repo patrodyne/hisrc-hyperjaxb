@@ -7,17 +7,17 @@
 	<MyEntity>
 		<AdditionalData>xx1</AdditionalData>
 		<Id>
+			<AString>aaaaa</AString>
 			<AnEnum>I</AnEnum>
 			<ABoolean>true</ABoolean>
-			<AString>aaaaa</AString>
 		</Id>
 	</MyEntity>
 	<MyEntity>
 		<AdditionalData>xx1</AdditionalData>
 		<Id>
+			<AString>aaaab</AString>
 			<AnEnum>I</AnEnum>
 			<ABoolean>true</ABoolean>
-			<AString>aaaab</AString>
 		</Id>
 	</MyEntity>
 </MyEntityBatch>
