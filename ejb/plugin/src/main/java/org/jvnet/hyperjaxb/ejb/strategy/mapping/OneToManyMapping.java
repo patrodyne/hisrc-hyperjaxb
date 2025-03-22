@@ -21,7 +21,11 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany> {
 		createOneToMany$Name(context, fieldOutline, oneToMany);
 		createOneToMany$OrderColumn(context, fieldOutline, oneToMany);
 		createOneToMany$TargetEntity(context, fieldOutline, oneToMany);
-		createOneToMany$JoinTableOrJoinColumn(context, fieldOutline, oneToMany);
+		// Join columns must not be overridden for 1:X
+		if ( oneToMany.getMappedBy() != null )
+			oneToMany.getJoinColumn().clear();
+		else
+			createOneToMany$JoinTableOrJoinColumn(context, fieldOutline, oneToMany);
 		return oneToMany;
 	}
 
@@ -67,9 +71,8 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany> {
 			final Collection<FieldOutline> idFieldsOutline = context
 					.getAssociationMapping().getSourceIdFieldsOutline(context,
 							fieldOutline);
-			// if (idFieldsOutline.isEmpty()) {
-			// oneToMany.getJoinColumn().clear();
-			// }
+			// if (idFieldsOutline.isEmpty())
+			//     oneToMany.getJoinColumn().clear();
 			context.getAssociationMapping().createJoinColumns(context,
 					fieldOutline, idFieldsOutline, oneToMany.getJoinColumn());
 		} else if (oneToMany.getJoinTable() != null) {
@@ -80,13 +83,12 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany> {
 					.getAssociationMapping().getTargetIdFieldsOutline(context,
 							fieldOutline);
 
-			// if (sourceIdFieldOutlines.isEmpty()) {
-			// oneToMany.setJoinTable(null);
-			// } else {
+			// if (sourceIdFieldOutlines.isEmpty())
+			//     oneToMany.setJoinTable(null);
+			// else
 			context.getAssociationMapping().createJoinTable(context,
 					fieldOutline, sourceIdFieldOutlines, targetIdFieldOutlines,
 					oneToMany.getJoinTable());
-			// }
 		}
 	}
 }

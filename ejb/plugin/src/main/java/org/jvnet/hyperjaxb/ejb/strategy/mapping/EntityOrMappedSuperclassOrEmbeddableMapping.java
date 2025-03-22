@@ -1,5 +1,7 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
+import org.jvnet.hyperjaxb.ejb.strategy.customizing.Customizing;
+
 import com.sun.tools.xjc.outline.ClassOutline;
 
 import ee.jakarta.xml.ns.persistence.orm.Embeddable;
@@ -11,8 +13,9 @@ public class EntityOrMappedSuperclassOrEmbeddableMapping implements
 
 	@Override
 	public Object process(Mapping context, ClassOutline classOutline) {
-		final Object entityOrMappedSuperclass = context.getCustomizing()
-				.getEntityOrMappedSuperclassOrEmbeddable(classOutline);
+		final Customizing customizing = context.getCustomizing();
+		final Object entityOrMappedSuperclass =
+			customizing.getEntityOrMappedSuperclassOrEmbeddable(classOutline);
 
 		if (entityOrMappedSuperclass instanceof Entity) {
 			return context.getEntityMapping().process(context, classOutline);

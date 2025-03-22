@@ -404,9 +404,13 @@ public class DefaultAssociationMapping implements AssociationMapping
 				associationOverride = new AssociationOverride();
 				associationOverride.setName(name);
 				associationOverride.setJoinTable(source.getJoinTable());
-				// Join columns must not be overridden for 1:X
-				// associationOverride.getJoinColumn().addAll(
-				// source.getJoinColumn());
+				if (source.getMappedBy() != null)
+				{
+					// Join columns must not be overridden for 1:X
+					// associationOverride.getJoinColumn()
+					//   .addAll(source.getJoinColumn());
+					source.getJoinColumn().clear();
+				}
 				associationOverridesMap.put(name, associationOverride);
 				associationOverrides.add(associationOverride);
 			}
@@ -442,8 +446,8 @@ public class DefaultAssociationMapping implements AssociationMapping
 				if (source.getMappedBy() == null)
 				{
 					// Join columns must not be overridden for 1:X
-					// associationOverride.getJoinColumn().addAll(
-					// source.getJoinColumn());
+					// associationOverride.getJoinColumn()
+					//   .addAll(source.getJoinColumn());
 				}
 				else
 					associationOverride.getJoinColumn().addAll(source.getJoinColumn());

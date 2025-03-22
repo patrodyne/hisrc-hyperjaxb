@@ -440,10 +440,14 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 		}
 		else if (attribute instanceof OneToMany)
 		{
+			// Join columns must not be overridden for 1:X
+			// See org.jvnet.hyperjaxb.ejb.strategy.mapping.OneToManyMapping.process(Mapping, FieldOutline)
 			return createOneToManyAnnotations((OneToMany) attribute);
 		}
 		else if (attribute instanceof OneToOne)
 		{
+			// Join columns must not be overridden for 1:X
+			// See org.jvnet.hyperjaxb.ejb.strategy.mapping.OneToOneMapping.process(Mapping, FieldOutline)
 			return createOneToOneAnnotations((OneToOne) attribute);
 		}
 		else if (attribute instanceof ManyToMany)
