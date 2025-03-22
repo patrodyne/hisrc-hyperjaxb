@@ -6,8 +6,9 @@
 	xmlns:ci="http://jaxb.dev.java.net/plugin/code-injector"
 	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-	xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox"
-	jaxb:extensionBindingPrefixes="hj orm annox"
+	xmlns:anx="http://jvnet.org/basicjaxb/xjc/annox"
+	xmlns:bas="http://jvnet.org/basicjaxb/xjc"
+	jaxb:extensionBindingPrefixes="hj orm anx bas"
 >
 
 	<!--  Global Bindings
@@ -53,7 +54,41 @@
 
 		</hj:persistence>
 
-		<jaxb:bindings node="xs:complexType[@name='myEntity']">
+		<!--
+			Customizations: MyEntityPk
+			1) Set hibernate.column_ordering_strategy=legacy to order alphabetically.
+			2) Prefix the element names with the desired composite key position.
+			   Or, use 'jaxb:property' to declare the Java property name.
+		-->
+		<jaxb:bindings node="xs:complexType[@name='MyEntityPk']">
+			<hj:embeddable/>
+			<jaxb:bindings node="//xs:element[@name='AString']">
+				<jaxb:property name="kaString"/>
+			</jaxb:bindings>
+			<jaxb:bindings node="//xs:element[@name='AnEnum']">
+				<jaxb:property name="kbEnum"/>
+			</jaxb:bindings>
+			<jaxb:bindings node="//xs:element[@name='ABoolean']">
+				<jaxb:property name="kcBoolean"/>
+			</jaxb:bindings>
+		</jaxb:bindings>
+		
+		<!--
+			Customizations: MyEntity
+			1) Make this a JAXB root element.
+			2) Custom database column name.
+			3) Inject code to listen for JAXB unmarshal events.
+			4) Declare 'Id' to be an JPA embedded id.
+			5) Declare many-to-one relationship to 'MyEntityBatch'.
+			   This provides the parent id when SQL inserts each 'MyEntity';
+			   Thus, eliminating SQL updates to do the same after each insert.
+			6) The attribute 'New' is transient.
+		-->
+		<jaxb:bindings node="xs:complexType[@name='MyEntity']">
+			<anx:annotate>@jakarta.xml.bind.annotation.XmlRootElement(name = "MyEntity")</anx:annotate>
+			<hj:entity>
+				<orm:table name="MY_TMP_TABLE"/>
+			</hj:entity>
 			<ci:code>
 	void afterUnmarshal(jakarta.xml.bind.Unmarshaller target, Object parent)
 	{
@@ -61,6 +96,44 @@
 			setMyEntityBatch((MyEntityBatch) parent);
 	}
 			</ci:code>
+			<jaxb:bindings node="//xs:element[@name='Id']">
+				<!-- Note: HJ prefixes the embedded-id column names with this element's name. -->
+				<hj:embedded-id/>
+			</jaxb:bindings>
+			<jaxb:bindings node="//xs:element[@ref='tns:MyEntityBatch']">
+				<anx:removeAnnotation target="field" class="jakarta.xml.bind.annotation.XmlElement"/>
+				<anx:annotate target="field">@jakarta.xml.bind.annotation.XmlTransient</anx:annotate>
+				<anx:annotate target="class">@jakarta.xml.bind.annotation.XmlType(name = "myEntity", propOrder = { "id", "additionalData" })</anx:annotate>
+				<bas:ignored/>
+				<hj:many-to-one>
+					<orm:join-column name="MY_ENTITY_BATCH_ID"/>
+				</hj:many-to-one>
+			</jaxb:bindings>
+			<jaxb:bindings node="xs:attribute[@name='New']">
+				<hj:ignored/>
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<!--
+			Customizations: MyEntityBatch
+			1) Custom database column name.
+			2) The one-to-many relationship is mapped by 'MyEntity.myEntityBatch'.
+			3) The attribute 'Id' is the primary key.
+			4) The attribute 'New' is transient.
+		-->
+		<jaxb:bindings node="xs:element[@name='MyEntityBatch']/xs:complexType">
+			<hj:entity>
+				<orm:table name="MY_TMP_BATCH"/>
+			</hj:entity>		
+			<jaxb:bindings node="xs:sequence/xs:element[@name='MyEntity']">
+				<hj:one-to-many mapped-by="myEntityBatch"/>
+			</jaxb:bindings>
+			<jaxb:bindings node="xs:attribute[@name='Id']">
+				<hj:id />
+			</jaxb:bindings>
+			<jaxb:bindings node="xs:attribute[@name='New']">
+				<hj:ignored/>
+			</jaxb:bindings>
 		</jaxb:bindings>
 
 	</jaxb:bindings>

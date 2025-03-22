@@ -19,7 +19,7 @@ import com.stackoverflow.embeddable_jpa_batch.AnEnum;
 import com.stackoverflow.embeddable_jpa_batch.MyEntity;
 import com.stackoverflow.embeddable_jpa_batch.MyEntityBatch;
 import com.stackoverflow.embeddable_jpa_batch.MyEntityBatch_;
-import com.stackoverflow.embeddable_jpa_batch.MyPk;
+import com.stackoverflow.embeddable_jpa_batch.MyEntityPk;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -128,7 +128,7 @@ public class Main extends Context
 			setBatch(new MyEntityBatch().useId(format("batch%04d",batchNo+1)));
 			for ( int index=0; index < batchSize; ++index)
 			{
-				MyPk id = new MyPk(idFactory.nextId(), AnEnum.I, true);
+				MyEntityPk id = new MyEntityPk(idFactory.nextId(), AnEnum.I, true);
 				MyEntity entity = new MyEntity(id, SAMPLE_DATA, true);
 				entity.setMyEntityBatch(getBatch());
 				getBatch().getMyEntity().add(entity);
