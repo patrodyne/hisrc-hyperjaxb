@@ -57,8 +57,8 @@
 		<!--
 			Customizations: MyEntityPk
 			1) Set hibernate.column_ordering_strategy=legacy to order alphabetically.
-			2) Prefix the element names with the desired composite key position.
-			   Or, use 'jaxb:property' to declare the Java property name.
+			2) Prefix the element names with the desired composite key order.
+			   Or, use 'jaxb:property' to declare the Java property name order.
 		-->
 		<jaxb:bindings node="xs:complexType[@name='MyEntityPk']">
 			<hj:embeddable/>

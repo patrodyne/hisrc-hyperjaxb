@@ -39,8 +39,8 @@ import jakarta.xml.bind.JAXBException;
 public class Main extends Context
 {
 	public static final String SAMPLE_BATCH_FILE = "src/test/samples/batch01.xml";
-	public static final int SAMPLE_BATCH_COUNT = 2;
-	public static final int SAMPLE_BATCH_SIZE = 20;
+	public static final int SAMPLE_BATCH_COUNT = 100;
+	public static final int SAMPLE_BATCH_SIZE = 100;
 	private static final String SAMPLE_DATA = "xx1";;
 	
 	private static Logger logger = LoggerFactory.getLogger(Main.class);
@@ -130,7 +130,8 @@ public class Main extends Context
 			{
 				MyEntityPk id = new MyEntityPk(idFactory.nextId(), AnEnum.I, true);
 				MyEntity entity = new MyEntity(id, SAMPLE_DATA, true);
-				entity.setMyEntityBatch(getBatch());
+				// Omit the batch reference on the entity for test purposes.
+				// entity.setMyEntityBatch(getBatch());
 				getBatch().getMyEntity().add(entity);
 			}
 			getBatchList().add(getBatch());
@@ -145,53 +146,81 @@ public class Main extends Context
 	public void insert1() throws IOException
 	{
 		long ms1 = System.currentTimeMillis();
+		long cnt = 0;
 		for ( MyEntityBatch batch : getBatchList() )
+		{
 			insert(batch.getId(), batch.getMyEntity());
+			cnt = 1 + batch.getMyEntity().size();
+		}
 		long ms2 = System.currentTimeMillis();
 		long tot = ms2 - ms1;
-		long cnt = getBatchList().size();
 		double avg = (double) tot / (double) cnt;
 		getLogger().info(format("%s: cnt=%d; avg=%.4f ms; tot=%d ms", "ALL", cnt, avg, tot));
 	}
-	
+
 	/**
-	 * Insert 2, persist a list of {@link MyEntityBatch} with <em>updates</em>.
+	 * Insert 2, persist a list of {@link MyEntityBatch} <em>without</em> updates.
 	 * 
 	 * @throws IOException When batch cannot be persisted.
 	 */
 	public void insert2() throws IOException
 	{
 		long ms1 = System.currentTimeMillis();
+		long cnt = 0;
 		for ( MyEntityBatch batch : getBatchList() )
+		{
+			// Assign batch to each entity because it was omitted
+			// in the sample.
+			for ( MyEntity entity : batch.getMyEntity() )
+			{
+				entity.setMyEntityBatch(batch);
+				++cnt;
+			}
 			insert(batch);
+			++cnt;
+		}
 		long ms2 = System.currentTimeMillis();
 		long tot = ms2 - ms1;
-		long cnt = getBatchList().size();
 		double avg = (double) tot / (double) cnt;
 		getLogger().info(format("%s: cnt=%d; avg=%.4f ms; tot=%d ms", "ALL", cnt, avg, tot));
-	}
-
+	}	
+	
 	/**
-	 * Insert 3, persist a list of {@link MyEntityBatch} <em>without</em> updates.
+	 * Insert 3, persist a list of {@link MyEntityBatch} with merged <em>updates</em>.
+	 * 
+	 * <p><b>Note:</b> This example inserts the entities without a reference to their
+	 * parent batch then assigns the reference and merges the assignment using
+	 * SQL select(s) and update(s). This is not a recommended practice. It mimics
+	 * what will happen if {@code MyEntityBatch} used a 'join column' instead of the
+	 * 'mapped by' configuration. Often in that case, the {@code MyEntity} children do
+	 * not have a parent reference ('many-to-one') and JPA will perform SQL insert(s)
+	 * to persist the children then perform SQL update(s) to store the parent reference,
+	 * albeit in one transaction</p>
 	 * 
 	 * @throws IOException When batch cannot be persisted.
 	 */
 	public void insert3() throws IOException
 	{
 		long ms1 = System.currentTimeMillis();
+		long cnt = 0;
 		for ( MyEntityBatch batch : getBatchList() )
 		{
+			insert(batch);
+			++cnt;
 			for ( MyEntity entity : batch.getMyEntity() )
+			{
 				entity.setMyEntityBatch(batch);
+				++cnt;
+			}
+			// Only count inserts, these are select/merge.
 			insert(batch);
 		}
 		long ms2 = System.currentTimeMillis();
 		long tot = ms2 - ms1;
-		long cnt = getBatchList().size();
 		double avg = (double) tot / (double) cnt;
 		getLogger().info(format("%s: cnt=%d; avg=%.4f ms; tot=%d ms", "ALL", cnt, avg, tot));
-	}	
-
+	}
+	
 	/**
 	 * Execute the JAXB and JPA actions.
 	 * 
@@ -358,7 +387,12 @@ public class Main extends Context
 		Transactional<Integer> tx = (em) ->
 		{
 			if ( batch.getNew() )
+			{
 				em.persist(batch);
+				batch.setNew(false);
+				for ( MyEntity entity : batch.getMyEntity() )
+					entity.setNew(false);
+			}
 			else
 				em.merge(batch);
 		    return batch.getMyEntity().size() + 1;
@@ -377,7 +411,10 @@ public class Main extends Context
 			for ( MyEntity entity : entityList )
 			{
 				if ( entity.getNew() )
+				{
 					em.persist(entity);
+					entity.setNew(false);
+				}
 				else
 					em.merge(entity);
 			}
