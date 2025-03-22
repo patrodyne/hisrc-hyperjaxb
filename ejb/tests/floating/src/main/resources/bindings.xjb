@@ -54,6 +54,6 @@
 	public void setDoubleArray(double[][] doubleArray) { setDoubleArrayB64(DoubleArrayAdapter.marshal(doubleArray)); }
 			</ci:code>
 		</jaxb:bindings>
-</jaxb:bindings>
+	</jaxb:bindings>
 
 </jaxb:bindings>
