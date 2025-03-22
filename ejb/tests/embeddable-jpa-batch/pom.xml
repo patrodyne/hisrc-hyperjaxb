@@ -34,7 +34,6 @@
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
 			<artifactId>hisrc-basicjaxb-annox-parser</artifactId>
-			<version>2.2.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -66,6 +65,7 @@
 					-->
 					<variant>jpa</variant>
 					<args>
+						<arg>-Xinject-code</arg>
 						<arg>-XdefaultValue</arg>
 					</args>
 				</configuration>

@@ -82,6 +82,7 @@ public class Main extends Context
 					case "sample1": main.sample1(SAMPLE_BATCH_COUNT, SAMPLE_BATCH_SIZE); break;
 					case "insert1": main.insert1(); break;
 					case "insert2": main.insert2(); break;
+					case "insert3": main.insert3(); break;
 					case "execute0": 
 					default: main.execute0(SAMPLE_BATCH_FILE); break;
 				}
@@ -128,47 +129,68 @@ public class Main extends Context
 			for ( int index=0; index < batchSize; ++index)
 			{
 				MyPk id = new MyPk(idFactory.nextId(), AnEnum.I, true);
-				getBatch().getMyEntity().add(new MyEntity(SAMPLE_DATA, id, true));
+				MyEntity entity = new MyEntity(id, SAMPLE_DATA, true);
+				entity.setMyEntityBatch(getBatch());
+				getBatch().getMyEntity().add(entity);
 			}
 			getBatchList().add(getBatch());
 		}
 	}
-	
+
 	/**
-	 * Insert 1, persist a list of {@link MyEntityBatch}.
+	 * Insert 1, persist a list of {@link MyEntity} outside of a batch.
 	 * 
-	 * @throws IOException When batch cannot be persisted.
+	 * @throws IOException When entities cannot be persisted.
 	 */
 	public void insert1() throws IOException
 	{
 		long ms1 = System.currentTimeMillis();
 		for ( MyEntityBatch batch : getBatchList() )
-			persist(batch);
+			insert(batch.getId(), batch.getMyEntity());
 		long ms2 = System.currentTimeMillis();
 		long tot = ms2 - ms1;
 		long cnt = getBatchList().size();
 		double avg = (double) tot / (double) cnt;
-		String id = "ALL";
-		getLogger().info(format("%s: cnt=%d; avg=%.4f ms; tot=%d ms", id, cnt, avg, tot));
+		getLogger().info(format("%s: cnt=%d; avg=%.4f ms; tot=%d ms", "ALL", cnt, avg, tot));
 	}
-
+	
 	/**
-	 * Insert 2, persist a list of {@link MyEntity}.
+	 * Insert 2, persist a list of {@link MyEntityBatch} with <em>updates</em>.
 	 * 
-	 * @throws IOException When entities cannot be persisted.
+	 * @throws IOException When batch cannot be persisted.
 	 */
 	public void insert2() throws IOException
 	{
 		long ms1 = System.currentTimeMillis();
 		for ( MyEntityBatch batch : getBatchList() )
-			persist(batch.getId(), batch.getMyEntity());
+			insert(batch);
 		long ms2 = System.currentTimeMillis();
 		long tot = ms2 - ms1;
 		long cnt = getBatchList().size();
 		double avg = (double) tot / (double) cnt;
-		String id = "ALL";
-		getLogger().info(format("%s: cnt=%d; avg=%.4f ms; tot=%d ms", id, cnt, avg, tot));
+		getLogger().info(format("%s: cnt=%d; avg=%.4f ms; tot=%d ms", "ALL", cnt, avg, tot));
 	}
+
+	/**
+	 * Insert 3, persist a list of {@link MyEntityBatch} <em>without</em> updates.
+	 * 
+	 * @throws IOException When batch cannot be persisted.
+	 */
+	public void insert3() throws IOException
+	{
+		long ms1 = System.currentTimeMillis();
+		for ( MyEntityBatch batch : getBatchList() )
+		{
+			for ( MyEntity entity : batch.getMyEntity() )
+				entity.setMyEntityBatch(batch);
+			insert(batch);
+		}
+		long ms2 = System.currentTimeMillis();
+		long tot = ms2 - ms1;
+		long cnt = getBatchList().size();
+		double avg = (double) tot / (double) cnt;
+		getLogger().info(format("%s: cnt=%d; avg=%.4f ms; tot=%d ms", "ALL", cnt, avg, tot));
+	}	
 
 	/**
 	 * Execute the JAXB and JPA actions.
@@ -186,17 +208,17 @@ public class Main extends Context
 		
 		// JAXB: unmarshal XML file by path name.
         setBatch(unmarshal(xmlFileName, MyEntityBatch.class));
-        getLogger().info("Batch: {}\n\n{}\n", getBatch().getId());
+        getLogger().info("Batch: {}", getBatch());
 
-        // Select Batch(s) by batch id.
+        // Select Batch(s) by batch id, if any, up to 10.
         List<MyEntityBatch> batchList = selectBatches(0, 10, getBatch().getId());
 
         // Persist Batch, if missing.
         if ( batchList.isEmpty() )
         {
     		// JPA: persist Batch to database.
-            persist(getBatch());
-            // Again, select Batch(es) by id.
+            insert(getBatch());
+            // Again, select Batch(es) by id, up to 1.
             batchList = selectBatches(0, 1, getBatch().getId());
         }
 
@@ -315,17 +337,20 @@ public class Main extends Context
 		return tx;
 	}
 	
-	private void persist(MyEntityBatch batch)
+	private void insert(MyEntityBatch batch)
 		throws IOException
 	{
-		// The batch is new if it contain at least one new entity.
-		batch.setNew(false);
-		for ( MyEntity entity : batch.getMyEntity() )
+		if ( batch.getNew() )
 		{
-			if ( entity.getNew() )
+			// But, are there any old child entities in the batch.
+			// The batch is old if it contain at least one old entity.
+			for ( MyEntity entity : batch.getMyEntity() )
 			{
-				batch.setNew(true);
-				break;
+				if ( !entity.getNew() )
+				{
+					batch.setNew(false);
+					break;
+				}
 			}
 		}
 		
@@ -343,7 +368,7 @@ public class Main extends Context
 		perform(batch.getId(), tx);
 	}
 	
-	private void persist(String batchName, List<MyEntity> entityList)
+	private void insert(String batchName, List<MyEntity> entityList)
 		throws IOException
 	{
 		// Prepare the transaction to persist or merge one batch.

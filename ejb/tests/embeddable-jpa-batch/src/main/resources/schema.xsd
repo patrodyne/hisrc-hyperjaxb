@@ -6,8 +6,9 @@
 	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:anx="http://jvnet.org/basicjaxb/xjc/annox"
+	xmlns:bas="http://jvnet.org/basicjaxb/xjc"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	jaxb:extensionBindingPrefixes="hj orm anx"
+	jaxb:extensionBindingPrefixes="hj orm anx bas"
 	jaxb:version="3.0"
 >
 
@@ -21,7 +22,13 @@
 				</xs:appinfo>
 			</xs:annotation>
 			<xs:sequence>
-				<xs:element name="MyEntity" type="tns:myEntity" maxOccurs="unbounded"/>
+				<xs:element name="MyEntity" type="tns:myEntity" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:appinfo>
+							<hj:one-to-many mapped-by="myEntityBatch"/>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
 			<xs:attribute name="Id" type="xs:string">
 				<xs:annotation>
@@ -51,7 +58,6 @@
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AdditionalData" type="xs:string"/>
 			<xs:element name="Id" type="tns:MyPk" minOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>
@@ -60,6 +66,20 @@
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>
+			<xs:element ref="tns:MyEntityBatch" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<anx:removeAnnotation target="field" class="jakarta.xml.bind.annotation.XmlElement"/>
+						<anx:annotate target="field">@jakarta.xml.bind.annotation.XmlTransient</anx:annotate>
+						<anx:annotate target="class">@jakarta.xml.bind.annotation.XmlType(name = "myEntity", propOrder = { "id", "additionalData" })</anx:annotate>
+						<bas:ignored/>
+						<hj:many-to-one>
+							<orm:join-column name="MY_ENTITY_BATCH_ID"/>
+						</hj:many-to-one>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalData" type="xs:string"/>
 		</xs:sequence>
 		<xs:attribute name="New" type="xs:boolean" default="true">
 			<xs:annotation>
@@ -76,7 +96,7 @@
 				<!--
 					Set hibernate.column_ordering_strategy=legacy to order alphabetically.
 					Prefix the element names with the desired composite key position.
-					Or, use 'jaxb:' to declare the Java property name.
+					Or, use 'jaxb:property' to declare the Java property name.
 				-->
 				<hj:embeddable/>
 			</xs:appinfo>

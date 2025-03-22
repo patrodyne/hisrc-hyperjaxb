@@ -4,10 +4,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:com:stackoverflow:embeddable_jpa_batch ../../main/resources/schema.xsd"
 >
-	<AdditionalData>xx1</AdditionalData>
 	<Id>
-		<PaString>aaaac</PaString>
-		<PbEnum>I</PbEnum>
-		<PcBoolean>true</PcBoolean>
+		<AString>aaaac</AString>
+		<AnEnum>I</AnEnum>
+		<ABoolean>true</ABoolean>
 	</Id>
+	<AdditionalData>xx1</AdditionalData>
 </MyEntity>

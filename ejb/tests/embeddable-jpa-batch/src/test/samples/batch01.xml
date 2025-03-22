@@ -5,19 +5,19 @@
 	xsi:schemaLocation="urn:com:stackoverflow:embeddable_jpa_batch ../../main/resources/schema.xsd"
 >
 	<MyEntity>
-		<AdditionalData>xx1</AdditionalData>
 		<Id>
 			<AString>aaaaa</AString>
 			<AnEnum>I</AnEnum>
 			<ABoolean>true</ABoolean>
 		</Id>
+		<AdditionalData>xx1</AdditionalData>
 	</MyEntity>
 	<MyEntity>
-		<AdditionalData>xx1</AdditionalData>
 		<Id>
 			<AString>aaaab</AString>
 			<AnEnum>I</AnEnum>
 			<ABoolean>true</ABoolean>
 		</Id>
+		<AdditionalData>xx1</AdditionalData>
 	</MyEntity>
 </MyEntityBatch>

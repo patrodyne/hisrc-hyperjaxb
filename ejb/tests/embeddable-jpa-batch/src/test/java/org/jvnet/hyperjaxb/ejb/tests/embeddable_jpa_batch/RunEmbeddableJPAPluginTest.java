@@ -41,7 +41,10 @@ public class RunEmbeddableJPAPluginTest extends AbstractHyperMojoTest
 		mojo.setNoFileHeader(true);
 		mojo.setExtension(true);
 		mojo.setVariant("jpa");
+		mojo.setGenerateFluentAPI(true);
+		mojo.setGenerateValueConstructor(true);
 		mojo.setArgs(new ArrayList<>());
+		mojo.getArgs().add("-Xinject-code");
 		mojo.getArgs().add("-XdefaultValue");
 
 		mojo.setRoundtripTestClassName(getRoundtripTestClassName());

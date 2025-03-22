@@ -3,6 +3,7 @@
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:ci="http://jaxb.dev.java.net/plugin/code-injector"
 	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox"
@@ -20,17 +21,47 @@
 		<jaxb:serializable uid="20250301" />
 	</jaxb:globalBindings>
 	
-	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+	<jaxb:bindings node="/xs:schema" schemaLocation="schema.xsd">
 
 		<jaxb:schemaBindings>
 			<jaxb:package name="com.stackoverflow.embeddable_jpa_batch"/>
 		</jaxb:schemaBindings>
 
 		<hj:persistence>
+
 			<hj:default-generated-id>
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
+
+			<hj:default-one-to-one fetch="EAGER"/>
+			<hj:default-one-to-many fetch="EAGER"/>
+			<hj:default-many-to-one merge="false" fetch="LAZY">
+				<orm:join-column/>
+				<orm:cascade>
+					<orm:cascade-refresh />
+					<orm:cascade-persist />
+					<orm:cascade-merge />
+				</orm:cascade>
+			</hj:default-many-to-one>
+			<hj:default-many-to-many merge="false" fetch="LAZY">
+				<orm:cascade>
+					<orm:cascade-refresh />
+					<orm:cascade-persist />
+					<orm:cascade-merge />
+				</orm:cascade>
+			</hj:default-many-to-many>
+
 		</hj:persistence>
+
+		<jaxb:bindings node="xs:complexType[@name='myEntity']">
+			<ci:code>
+	void afterUnmarshal(jakarta.xml.bind.Unmarshaller target, Object parent)
+	{
+		if ( parent instanceof MyEntityBatch )
+			setMyEntityBatch((MyEntityBatch) parent);
+	}
+			</ci:code>
+		</jaxb:bindings>
 
 	</jaxb:bindings>
 
