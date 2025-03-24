@@ -4,7 +4,6 @@ import static java.lang.String.format;
 import static org.jvnet.hyperjaxb.ejb.util.Transactional.CacheOption.CLEAN;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -39,9 +38,9 @@ import jakarta.xml.bind.JAXBException;
 public class Main extends Context
 {
 	public static final String SAMPLE_BATCH_FILE = "src/test/samples/batch01.xml";
-	public static final int SAMPLE_BATCH_COUNT = 100;
-	public static final int SAMPLE_BATCH_SIZE = 100;
-	private static final String SAMPLE_DATA = "xx1";;
+	public static final int SAMPLE_BATCH_COUNT = 2;
+	public static final int SAMPLE_BATCH_SIZE = 20;
+	private static final String SAMPLE_DATA = "xx1";
 	
 	private static Logger logger = LoggerFactory.getLogger(Main.class);
 	public static Logger getLogger() { return logger; }
@@ -101,13 +100,13 @@ public class Main extends Context
 	 */
 	public void connect1() throws IOException
 	{
-		// Prepare a transaction to select the current date and time.
+		// Prepare a transaction to select the MyEntityBatch count.
 		Transactional<Integer> tx = (em) ->
 		{
-			Query query = em.createQuery("select CURRENT_TIMESTAMP");
-			Timestamp result = (Timestamp) query.getSingleResult();
-			getLogger().info("connect1: Current Time is {}", result);
-		    return 0;
+			Query query = em.createQuery("select count(B) from MyEntityBatch B");
+			Integer result = ((Long) query.getSingleResult()).intValue();
+			getLogger().info("connect1: MyEntityBatch count is {}", result);
+		    return result;
 		};
 		
 		perform("connect1", tx);
@@ -159,7 +158,7 @@ public class Main extends Context
 	}
 
 	/**
-	 * Insert 2, persist a list of {@link MyEntityBatch} <em>without</em> updates.
+	 * Insert 2, persist a list of {@link MyEntityBatch} <em>without</em> SQL updates.
 	 * 
 	 * @throws IOException When batch cannot be persisted.
 	 */
@@ -186,7 +185,7 @@ public class Main extends Context
 	}	
 	
 	/**
-	 * Insert 3, persist a list of {@link MyEntityBatch} with merged <em>updates</em>.
+	 * Insert 3, persist a list of {@link MyEntityBatch} with SQL <em>updates</em>.
 	 * 
 	 * <p><b>Note:</b> This example inserts the entities without a reference to their
 	 * parent batch then assigns the reference and merges the assignment using
