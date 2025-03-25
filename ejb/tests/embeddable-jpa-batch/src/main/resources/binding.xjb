@@ -31,13 +31,12 @@
 		<hj:persistence>
 
 			<hj:default-generated-id>
-				 <orm:generated-value strategy="IDENTITY"/> 
+				 <orm:generated-value strategy="NONE"/> 
 			</hj:default-generated-id>
 
 			<hj:default-one-to-one fetch="EAGER"/>
 			<hj:default-one-to-many fetch="EAGER"/>
 			<hj:default-many-to-one merge="false" fetch="LAZY">
-				<orm:join-column/>
 				<orm:cascade>
 					<orm:cascade-refresh />
 					<orm:cascade-persist />
@@ -56,8 +55,9 @@
 
 		<!--
 			Customizations: MyEntityPk
-			1) Set hibernate.column_ordering_strategy=legacy to order alphabetically.
-			2) Prefix the element names with the desired composite key order.
+			1) Indicate that 'MyEntityPk' is embedded within another entity.
+			2) Set hibernate.column_ordering_strategy=legacy to order alphabetically.
+			3) Prefix the element names with the desired composite key order.
 			   Or, use 'jaxb:property' to declare the Java property name order.
 		-->
 		<jaxb:bindings node="xs:complexType[@name='MyEntityPk']">
@@ -76,13 +76,13 @@
 		<!--
 			Customizations: MyEntity
 			1) Make this a JAXB root element.
-			2) Custom database column name.
+			2) Custom database table name.
 			3) Inject code to listen for JAXB unmarshal events.
 			4) Declare 'Id' to be an JPA embedded id.
 			5) Declare many-to-one relationship to 'MyEntityBatch'.
 			   This provides the parent id when SQL inserts each 'MyEntity';
 			   Thus, eliminating SQL updates to do the same after each insert.
-			6) The attribute 'New' is transient.
+			6) Make the attribute 'New' to be JPA transient (HyperJAXB ignored).
 		-->
 		<jaxb:bindings node="xs:complexType[@name='MyEntity']">
 			<anx:annotate>@jakarta.xml.bind.annotation.XmlRootElement(name = "MyEntity")</anx:annotate>
