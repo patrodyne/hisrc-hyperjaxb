@@ -2,8 +2,14 @@ package org.jvnet.hyperjaxb.ejb.plugin;
 
 import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
+import static org.jvnet.basicjaxb.lang.StringUtils.capitalize;
+import static org.jvnet.basicjaxb.plugin.Customizations.IGNORED_ELEMENT_NAME;
+import static org.jvnet.basicjaxb.util.CustomizationUtils.createCustomization;
 import static org.jvnet.basicjaxb.util.GeneratorContextUtils.generateContextPathAwareClass;
 import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
+import static org.jvnet.hyperjaxb.jpa.Customizations.MANY_TO_ONE_ELEMENT_NAME;
+import static org.jvnet.hyperjaxb.jpa.Customizations.ONE_TO_MANY_ELEMENT_NAME;
+import static org.jvnet.hyperjaxb_annox.plugin.annotate.AnnotatePlugin.ANNOTATE_PROPERTY_FIELD_QNAME;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,10 +19,16 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.xml.namespace.QName;
+
+import org.glassfish.jaxb.core.v2.model.core.ID;
+import org.jvnet.basicjaxb.plugin.AbstractPlugin;
 import org.jvnet.basicjaxb.util.CustomizationUtils;
 import org.jvnet.hyperjaxb.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb.ejb.strategy.naming.Naming;
@@ -24,6 +36,7 @@ import org.jvnet.hyperjaxb.ejb.strategy.processor.ModelAndOutlineProcessor;
 import org.jvnet.hyperjaxb.ejb.test.RoundtripTest;
 import org.jvnet.hyperjaxb.jpa.Customizations;
 import org.jvnet.hyperjaxb.xjc.generator.bean.field.UntypedListFieldRenderer;
+import org.w3c.dom.Element;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 
@@ -40,9 +53,13 @@ import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;
 import com.sun.tools.xjc.generator.bean.field.FieldRendererFactory;
 import com.sun.tools.xjc.model.CClassInfo;
+import com.sun.tools.xjc.model.CCustomizations;
+import com.sun.tools.xjc.model.CElementPropertyInfo;
+import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
 import com.sun.tools.xjc.model.CPluginCustomization;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
+import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
@@ -50,6 +67,9 @@ import com.sun.tools.xjc.outline.Outline;
 import com.sun.tools.xjc.reader.Ring;
 import com.sun.tools.xjc.reader.xmlschema.BGMBuilder;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
+
+import jakarta.activation.MimeType;
+import jakarta.xml.bind.annotation.XmlTransient;
 
 /**
  * An XJC plugin to add EJB annotations to JAXB generated classes.
@@ -263,11 +283,43 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		}
 	}
 
+    /**
+     * Performs the post-processing of the {@link Model}.
+     *
+     * <p>
+     * This method is invoked after XJC has internally finished
+     * the model construction. This is a chance for a plugin to
+     * affect the way code generation is performed.
+     * </p>
+     *
+     * <p>
+     * Compared to the {@link #run(Outline, Options, ErrorHandler)}
+     * method, this method allows a plugin to work at the higher level
+     * conceptually closer to the abstract JAXB model, as opposed to
+     * Java syntax level.
+     * </p>
+     *
+     * <p>
+     * This 'postProcessModel' method is a call-back method from
+     * {@link AbstractPlugin} and that method is responsible for handling
+     * all exceptions. It reports any exception to {@link ErrorHandler}
+     * for processing by {@link com.sun.tools.xjc.Plugin}.
+     * </p>
+     *
+     * <p>
+     * <b>Note:</b> This method is invoked only when a plugin is activated.
+     * </p>
+     *
+     * @param model
+     *      The object that represents the classes/properties to
+     *      be generated.
+     */
 	@Override
-	public void postProcessModel(Model model, ErrorHandler errorHandler)
+	public void postProcessModel(Model model)
 	{
 		setBgmBuilder(Ring.get(BGMBuilder.class));
 
+		// Guard: JPA requires top level entities.
 		if (LocalScoping.NESTED.equals(getBgmBuilder().getGlobalBinding().getFlattenClasses()))
 		{
 			warn("According to the Java Persistence API specification, section 2.1, "
@@ -278,9 +330,8 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 				+ "global bindings customization.");
 		}
 
-		final boolean serializable = model.serializable;
-
-		if (!serializable)
+		// Guard: JPA requires serializable entities.
+		if (!model.serializable)
 		{
 			warn("According to the Java Persistence API specification, section 2.1, "
 				+ "entities must implement the serializable interface:\n"
@@ -289,6 +340,133 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 				+ "the Serializable interface.\"\n"
 				+ "Your JAXB model is not customized as serializable, please use the "
 				+ "<jaxb:serializable/> global bindings customization element to make your model serializable.");
+		}
+		
+		// Post process CClassInfo(s). Handle 'mappedBy', etc.
+		for (final CClassInfo classInfo : model.beans().values())
+			postProcessClassInfo(model, classInfo);
+	}
+	
+	// Post process CClassInfo's properties. Handle 'mappedBy', etc.
+	private void postProcessClassInfo(Model model, CClassInfo classInfo)
+	{
+		for (CPropertyInfo propertyInfo : classInfo.getProperties())
+			postProcessPropertyInfo(model, classInfo, propertyInfo);
+	}
+	
+	// Post process Model to generate the 'mappedBy' field on the collection side.
+	private void postProcessPropertyInfo(Model model, CClassInfo classInfo, CPropertyInfo propertyInfo)
+	{
+		for ( CPluginCustomization cpc : propertyInfo.getCustomizations() )
+		{
+			Element elm = cpc.element;
+			QName elmQName = new QName(elm.getNamespaceURI(), elm.getLocalName());
+			if (ONE_TO_MANY_ELEMENT_NAME.equals(elmQName) )
+				postProcessOneToManyProperty(classInfo, propertyInfo, elm);
+		}
+	}
+	
+	private static final Set<QName> INVOKE_ANNOTATE_QNAME_SET = org.jvnet.hyperjaxb_annox.plugin.annotate.AnnotatePlugin.CUSTOMIZATION_ELEMENT_QNAMES;
+
+	private void postProcessOneToManyProperty(CClassInfo oneSideClassInfo, CPropertyInfo oneSidePropertInfo, Element oneSideElement)
+	{
+		// Is this a bidirectional mapping?
+		String mappedBy = oneSideElement.getAttribute("mapped-by");
+		if ( mappedBy != null )
+		{
+			// Check for an unambiguous collection type for the many side.
+			if ( oneSidePropertInfo.ref().size() == 1)
+			{
+				// 	Iterate list of TypeInfo(s) that this 'one-side' property references.
+				Iterator<? extends CTypeInfo> typeInfos = oneSidePropertInfo.ref().iterator();
+				if ( typeInfos.hasNext() )
+				{
+					// Get the unambiguous collection type.
+					CClassInfo manySideType = (CClassInfo) typeInfos.next().getType();
+					
+					boolean hasInvokeAnnotationXmlTransient = false;
+					boolean hasIgnoredElement = false;
+					@SuppressWarnings("unused")
+					boolean hasManyToOneElement = false;
+					
+					// Check for an existing 'mappedBy' property mapped to an element.
+					CPropertyInfo manySidePropertyInfo = manySideType.getProperty(mappedBy);
+					CElementPropertyInfo manySideElementInfo = (CElementPropertyInfo) manySidePropertyInfo;
+					if ( manySideElementInfo != null )
+					{
+						for ( CPluginCustomization cpc : manySideElementInfo.getCustomizations() )
+						{
+							Element elm = cpc.element;
+							QName elmQName = new QName(elm.getNamespaceURI(), elm.getLocalName());
+							if ( INVOKE_ANNOTATE_QNAME_SET.contains(elmQName) )
+							{
+								String xtName = XmlTransient.class.getName();
+								String acName = elm.getAttribute("class");
+								String elmText = elm.getTextContent();
+								if ( (acName != null) && acName.trim().equals(xtName) )
+									hasInvokeAnnotationXmlTransient = true;
+								else if ( (elmText != null) && elmText.trim().startsWith("@"+xtName) )
+									hasInvokeAnnotationXmlTransient = true;
+							}
+							else if ( IGNORED_ELEMENT_NAME.equals(elmQName) )
+								hasIgnoredElement = true;
+							else if ( MANY_TO_ONE_ELEMENT_NAME.equals(elmQName) )
+								hasManyToOneElement = true;
+						}
+					}
+					else
+					{
+						// manySideType
+						MimeType mimeType = null;
+						boolean required = false;
+						CCustomizations customizations = new CCustomizations();
+						manySideElementInfo = new CElementPropertyInfo
+						(
+							capitalize(mappedBy),
+							CollectionMode.NOT_REPEATED,
+							ID.NONE,
+							mimeType,
+							oneSidePropertInfo.getSchemaComponent(),
+							customizations,
+							oneSidePropertInfo.getLocator(),
+							required
+						);
+						CTypeRef typeRef = new CTypeRef
+						(
+							oneSideClassInfo,
+							oneSideClassInfo.getElementName(),
+							oneSideClassInfo.getTypeName(),
+							false,
+							null
+						);
+						manySideElementInfo.getTypes().add(typeRef);
+						manySideType.addProperty(manySideElementInfo);
+					}
+					
+					// @XmlTransient avoids cyclic marshalling, etc.
+					if ( !hasInvokeAnnotationXmlTransient )
+					{
+						CPluginCustomization cpcInvokeAnnotation = createCustomization
+						(
+							ANNOTATE_PROPERTY_FIELD_QNAME,
+							manySideElementInfo.getLocator()
+						);
+						cpcInvokeAnnotation.element.setTextContent("@"+XmlTransient.class.getName());
+						manySideElementInfo.getCustomizations().add(cpcInvokeAnnotation);
+					}
+					
+					// bas:ignored (http://jvnet.org/basicjaxb/xjc/ignored) avoids cyclic hashing, etc.
+					if ( !hasIgnoredElement )
+					{
+						CPluginCustomization cpcIgnored = createCustomization
+						(
+							IGNORED_ELEMENT_NAME,
+							manySideElementInfo.getLocator()
+						);
+						manySideElementInfo.getCustomizations().add(cpcIgnored);
+					}
+				}
+			}
 		}
 	}
 
@@ -408,10 +586,11 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 			if (Customizations.isGenerated(classInfo))
 				generateClassBody(outline, coi);
 
+			// Generate field declarations, when needed.
 			for (final CPropertyInfo propertyInfo : classInfo.getProperties())
 			{
-				if (outline.getField(propertyInfo) == null)
-					generateFieldDecl(outline, (ClassOutlineImpl) classOutline,	propertyInfo);
+				if ( outline.getField(propertyInfo) == null )
+					generateFieldDecl(outline, coi,	propertyInfo);
 			}
 		}
 
@@ -422,7 +601,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		
 		return !hadError(outline.getErrorReceiver());
 	}
-	
+
 	// if serialization support is turned on, generate
 	// [RESULT]
 	// class ... implements Serializable

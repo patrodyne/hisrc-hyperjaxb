@@ -26,7 +26,8 @@ public class UntypedSettableListField extends UntypedListField {
 		final MethodWriter writer = outline.createMethodWriter();
 		$set = writer.declareMethod(codeModel.VOID, "set" + prop.getName(true));
 		JVar var = writer.addParameter(listT, prop.getName(false));
-		writer.javadoc().append(prop.javadoc);
+		if ( !prop.javadoc.isBlank() )
+			writer.javadoc().append(prop.javadoc);
 		JBlock block = $set.body();
 		block.assign(JExpr._this().ref(field), var);
 	}

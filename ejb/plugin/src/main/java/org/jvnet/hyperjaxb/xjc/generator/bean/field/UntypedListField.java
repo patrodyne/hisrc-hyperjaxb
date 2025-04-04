@@ -26,7 +26,7 @@ import com.sun.tools.xjc.model.CPropertyInfo;
  * <p>
  * Since unmarshaller just adds new values into the storage,
  * we can't fill the storage by default values at the time of
- * instanciation. (or oherwise values found in the document will
+ * instantiation. (or otherwise values found in the document will
  * be appended to default values, where it should overwrite them.)
  * <p>
  * Therefore, when the object is created, the storage will be empty.
@@ -95,24 +95,22 @@ public class UntypedListField extends AbstractListField {
 
         String pname = NameConverter.standard.toVariableName(prop.getName(true));
         writer.javadoc().append(
-            "Gets the value of the "+pname+" property.\n\n"+
-            "<p>\n" +
-            "This accessor method returns a reference to the live list,\n" +
+            "Gets the value of the "+pname+" property.\n\n" +
+            "<p>This accessor method returns a reference to the live list,\n" +
             "not a snapshot. Therefore any modification you make to the\n" +
             "returned list will be present inside the JAXB object.\n" +
-            "This is why there is not a <CODE>set</CODE> method for the " +pname+ " property.\n" +
-            "\n"+
+            "This is why there is not a <CODE>set</CODE> method for the\n" +
+            pname + " property.</p>\n"+
             "<p>\n" +
             "For example, to add a new item, do as follows:\n"+
             "<pre>\n"+
             "   get"+prop.getName(true)+"().add(newItem);\n"+
             "</pre>\n"+
-            "\n\n"
+            "</p>\n"
         );
 
-        writer.javadoc().append(
-            "<p>\n" +
-            "Objects of the following type(s) are allowed in the list\n")
+        writer.javadoc()
+        	.append("<p>Objects of the following type(s) are allowed in the list:</p>\n")
             .append(listPossibleTypes(prop));
     }
 

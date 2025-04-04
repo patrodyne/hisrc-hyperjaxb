@@ -197,6 +197,14 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	public void setGenerateMergeable(boolean generateMergeable) { this.generateMergeable = generateMergeable; }
 
 	/**
+	 * Whether the <code>DefaultValue</code> initializers should be generated.
+	 */
+	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateDefaultValue", defaultValue = "false")
+	private boolean generateDefaultValue = false;
+	public boolean isGenerateDefaultValue() { return generateDefaultValue; }
+	public void setGenerateDefaultValue(boolean generateDefaultValue) { this.generateDefaultValue = generateDefaultValue; }
+	
+	/**
 	 * Whether the <code>FluentApi</code> methods should be generated.
 	 */
 	@Parameter(property = HYPERJAXB_MOJO_PREFIX + ".generateFluentAPI", defaultValue = "false")
@@ -459,6 +467,8 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 			add(arguments,"-Xcopyable");
 		if (isGenerateMergeable())
 			add(arguments,"-Xmergeable");
+		if (isGenerateDefaultValue())
+			add(arguments,"-XdefaultValue");
 		if (isGenerateFluentAPI())
 			add(arguments,"-XfluentAPI");
 		if (isGenerateValueConstructor())
