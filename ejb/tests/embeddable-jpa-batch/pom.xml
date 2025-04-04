@@ -65,7 +65,6 @@
 					-->
 					<variant>jpa</variant>
 					<args>
-						<arg>-Xinject-code</arg>
 						<arg>-XdefaultValue</arg>
 					</args>
 				</configuration>

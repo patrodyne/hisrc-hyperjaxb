@@ -31,7 +31,7 @@ import jakarta.xml.bind.JAXBException;
 
 /**
  * Example of unmarshalling and persisting MyEntity instances.
- * 
+ *
  * Hint: In Eclipse, disable the check box for:
  *       'Run Configuration / Dependencies / exclude test code'.
  */
@@ -41,7 +41,7 @@ public class Main extends Context
 	public static final int SAMPLE_BATCH_COUNT = 2;
 	public static final int SAMPLE_BATCH_SIZE = 20;
 	private static final String SAMPLE_DATA = "xx1";
-	
+
 	private static Logger logger = LoggerFactory.getLogger(Main.class);
 	public static Logger getLogger() { return logger; }
 
@@ -55,17 +55,19 @@ public class Main extends Context
 	public List<MyEntityBatch> getBatchList()
 	{
 		if ( batchList == null )
+		{
 			setBatchList(new ArrayList<>());
+		}
 		return batchList;
 	}
 	public void setBatchList(List<MyEntityBatch> batchList)
 	{
 		this.batchList = batchList;
 	}
-	
+
 	/**
 	 * Command Line Invocation.
-	 * 
+	 *
 	 * @param args CLI argument(s)
 	 */
 	public static void main(String[] args)
@@ -82,7 +84,7 @@ public class Main extends Context
 					case "insert1": main.insert1(); break;
 					case "insert2": main.insert2(); break;
 					case "insert3": main.insert3(); break;
-					case "execute0": 
+					case "execute0":
 					default: main.execute0(SAMPLE_BATCH_FILE); break;
 				}
 			}
@@ -92,10 +94,10 @@ public class Main extends Context
 			getLogger().error("Aborting " + Main.class.getName(), ex);
 		}
 	}
-	
+
 	/**
 	 * Connect 1, connect to the database.
-	 * 
+	 *
 	 * @throws IOException When the connection cannot be established.
 	 */
 	public void connect1() throws IOException
@@ -108,14 +110,14 @@ public class Main extends Context
 			getLogger().info("connect1: MyEntityBatch count is {}", result);
 		    return result;
 		};
-		
+
 		perform("connect1", tx);
 	}
-	
+
 	/**
 	 * Sample 1, generate a {@link MyEntityBatch}. Store result
 	 * in the {@code batch} property.
-	 * 
+	 *
 	 * @param batchCount The number of {@link MyEntityBatch} to generate.
 	 * @param batchSize The number of {@link MyEntity} to generate.
 	 */
@@ -129,8 +131,11 @@ public class Main extends Context
 			{
 				MyEntityPk id = new MyEntityPk(idFactory.nextId(), AnEnum.I, true);
 				MyEntity entity = new MyEntity(id, SAMPLE_DATA, true);
-				// Omit the batch reference on the entity for test purposes.
-				// entity.setMyEntityBatch(getBatch());
+
+				// For test purposes, OMIT the batch reference on the entity.
+				// OMIT: getBatch().addMyEntity(entity);
+				//  USE: getBatch().getMyEntity().add(entity);
+				// The impact is that MyEntity is NOT tied to a MyEntityBatch.
 				getBatch().getMyEntity().add(entity);
 			}
 			getBatchList().add(getBatch());
@@ -138,8 +143,8 @@ public class Main extends Context
 	}
 
 	/**
-	 * Insert 1, persist a list of {@link MyEntity} outside of a batch.
-	 * 
+	 * Insert 1, persist a list of {@link MyEntity} NOT tied to a batch.
+	 *
 	 * @throws IOException When entities cannot be persisted.
 	 */
 	public void insert1() throws IOException
@@ -159,7 +164,7 @@ public class Main extends Context
 
 	/**
 	 * Insert 2, persist a list of {@link MyEntityBatch} <em>without</em> SQL updates.
-	 * 
+	 *
 	 * @throws IOException When batch cannot be persisted.
 	 */
 	public void insert2() throws IOException
@@ -168,13 +173,10 @@ public class Main extends Context
 		long cnt = 0;
 		for ( MyEntityBatch batch : getBatchList() )
 		{
-			// Assign batch to each entity because it was omitted
-			// in the sample.
-			for ( MyEntity entity : batch.getMyEntity() )
-			{
-				entity.setMyEntityBatch(batch);
-				++cnt;
-			}
+			// Assign batch to each entity because it was
+			// omitted in the sample.
+			batch.tieMyEntity();
+			cnt += batch.getMyEntity().size();
 			insert(batch);
 			++cnt;
 		}
@@ -182,11 +184,11 @@ public class Main extends Context
 		long tot = ms2 - ms1;
 		double avg = (double) tot / (double) cnt;
 		getLogger().info(format("%s: cnt=%d; avg=%.4f ms; tot=%d ms", "ALL", cnt, avg, tot));
-	}	
-	
+	}
+
 	/**
 	 * Insert 3, persist a list of {@link MyEntityBatch} with SQL <em>updates</em>.
-	 * 
+	 *
 	 * <p><b>Note:</b> This example inserts the entities without a reference to their
 	 * parent batch then assigns the reference and merges the assignment using
 	 * SQL select(s) and update(s). This is not a recommended practice. It mimics
@@ -195,7 +197,7 @@ public class Main extends Context
 	 * not have a parent reference ('many-to-one') and JPA will perform SQL insert(s)
 	 * to persist the children then perform SQL update(s) to store the parent reference,
 	 * albeit in one transaction</p>
-	 * 
+	 *
 	 * @throws IOException When batch cannot be persisted.
 	 */
 	public void insert3() throws IOException
@@ -206,11 +208,10 @@ public class Main extends Context
 		{
 			insert(batch);
 			++cnt;
-			for ( MyEntity entity : batch.getMyEntity() )
-			{
-				entity.setMyEntityBatch(batch);
-				++cnt;
-			}
+			// Assign batch to each entity because it was
+			// omitted in the sample.
+			batch.tieMyEntity();
+			cnt += batch.getMyEntity().size();
 			// Only count inserts, these are select/merge.
 			insert(batch);
 		}
@@ -219,12 +220,12 @@ public class Main extends Context
 		double avg = (double) tot / (double) cnt;
 		getLogger().info(format("%s: cnt=%d; avg=%.4f ms; tot=%d ms", "ALL", cnt, avg, tot));
 	}
-	
+
 	/**
 	 * Execute the JAXB and JPA actions.
-	 * 
+	 *
 	 * @param xmlFileName The path to an XML data file.
-	 * 
+	 *
 	 * @throws JAXBException When a JAXB action fails.
 	 * @throws IOException When an I/O actions fails.
 	 * @throws SAXException When XmlSchemaValidator cannot be generated from DOM.
@@ -233,7 +234,7 @@ public class Main extends Context
 	{
 		// Enable JAXB schema validation on XML instances.
 		// generateXmlSchemaValidatorFromDom();
-		
+
 		// JAXB: unmarshal XML file by path name.
         setBatch(unmarshal(xmlFileName, MyEntityBatch.class));
         getLogger().info("Batch: {}", getBatch());
@@ -261,17 +262,17 @@ public class Main extends Context
         	String xmlBatch = marshalToString(batch);
 			getLogger().info("Batch:\n\n{}", xmlBatch);
         }
-        
+
         // Display Entities(s) in a transaction to avoid LazyInitializationException.
         int count = displayEntities(entitySet);
         getLogger().info("Entities displayed: {}", count);
 	}
-	
+
 	/**
 	 * Display entities for the given detached set of entities.
-	 * 
+	 *
 	 * @param entitySet A detached set of entities.
-	 * 
+	 *
 	 * @return The count of entities displayed.
 	 */
 	protected int displayEntities(Set<MyEntity> entitySet) throws IOException
@@ -297,7 +298,7 @@ public class Main extends Context
 		        {
 		        	// Find the managed entity using the current EM.
 		        	MyEntity emEntity = em.find(MyEntity.class, entity.getId());
-		        	
+
 		        	String xmlEntity = marshalToString(OF.createMyEntity(emEntity));
 					getLogger().info("Entity:\n\n{}", xmlEntity);
 		        }
@@ -311,16 +312,16 @@ public class Main extends Context
 		};
 		return tx;
 	}
-	
+
 	/**
 	 * Select a limited list of batch(es) for the given id.
-	 * 
+	 *
 	 * @param start The starting offset.
 	 * @param count The count limit.
 	 * @param id The batch title.
-	 * 
+	 *
 	 * @return A list of batch(es).
-	 * 
+	 *
 	 * @throws IOException When the list cannot be selected.
 	 */
 	protected List<MyEntityBatch> selectBatches(Integer start, Integer count, String id)
@@ -335,7 +336,7 @@ public class Main extends Context
 		}
 		return batchList;
 	}
-	
+
 	protected static Transactional<List<MyEntityBatch>> selectBatchesTX(Integer start, Integer count, String id)
 	{
 		// Always perform EntityManager actions within a transaction!
@@ -343,15 +344,15 @@ public class Main extends Context
 		{
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaQuery<MyEntityBatch> cq = cb.createQuery(MyEntityBatch.class);
-			
+
 			// Force eager loading of entities using an inner join.
 			// See https://thorben-janssen.com/5-ways-to-initialize-lazy-relations-and-when-to-use-them/
 			Root<MyEntityBatch> fromBatch = cq.from(MyEntityBatch.class);
 			fromBatch.fetch(MyEntityBatch_.MY_ENTITY, JoinType.INNER);
-			
+
 			cq.select(fromBatch)
 				.where(cb.equal(fromBatch.get(MyEntityBatch_.ID), id));
-			
+
 			TypedQuery<MyEntityBatch> query = em.createQuery(cq);
 			query.setHint("eclipselink.query-results-cache", false);
 			query.setHint("org.hibernate.cacheable", false);
@@ -364,7 +365,7 @@ public class Main extends Context
 		};
 		return tx;
 	}
-	
+
 	private void insert(MyEntityBatch batch)
 		throws IOException
 	{
@@ -381,7 +382,7 @@ public class Main extends Context
 				}
 			}
 		}
-		
+
 		// Prepare the transaction to persist or merge one batch.
 		Transactional<Integer> tx = (em) ->
 		{
@@ -390,17 +391,21 @@ public class Main extends Context
 				em.persist(batch);
 				batch.setNew(false);
 				for ( MyEntity entity : batch.getMyEntity() )
+				{
 					entity.setNew(false);
+				}
 			}
 			else
+			{
 				em.merge(batch);
+			}
 		    return batch.getMyEntity().size() + 1;
 		};
-		
+
 		// Perform the transaction
 		perform(batch.getId(), tx);
 	}
-	
+
 	private void insert(String batchName, List<MyEntity> entityList)
 		throws IOException
 	{
@@ -415,15 +420,17 @@ public class Main extends Context
 					entity.setNew(false);
 				}
 				else
+				{
 					em.merge(entity);
+				}
 			}
 		    return entityList.size();
 		};
-		
+
 		// Perform the transaction
 		perform(batchName, tx);
 	}
-	
+
 	private void perform(String id, Transactional<Integer> tx)
 		throws IOException
 	{
