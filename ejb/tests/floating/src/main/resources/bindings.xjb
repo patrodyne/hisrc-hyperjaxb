@@ -4,8 +4,9 @@
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:ci="http://jaxb.dev.java.net/plugin/code-injector"
 	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:anx="http://jvnet.org/basicjaxb/xjc/annox"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-	jaxb:extensionBindingPrefixes="hj orm"
+	jaxb:extensionBindingPrefixes="anx hj orm"
 >
 
 	<!--  Global Bindings
@@ -47,12 +48,22 @@
 
 	<jaxb:bindings node="//xs:schema" schemaLocation="schema.xsd">
 		<jaxb:bindings node="xs:complexType[@name='floatingTypesType']">
+
 			<ci:code>
 	@jakarta.persistence.Transient
 	public double[][] getDoubleArray() { return DoubleArrayAdapter.unmarshal(getDoubleArrayB64()); }
 	@jakarta.persistence.Transient
 	public void setDoubleArray(double[][] doubleArray) { setDoubleArrayB64(DoubleArrayAdapter.marshal(doubleArray)); }
 			</ci:code>
+
+			<!-- PostgreSQL or H2: Use BYTEA instead of BLOB -->
+			<jaxb:bindings node="xs:sequence/xs:element[@name='doubleArrayB64']">
+				<anx:removeAnnotation target="getter" class="jakarta.persistence.Lob"/>
+				<hj:basic>
+					<orm:column	column-definition="BYTEA"/>
+				</hj:basic>
+			</jaxb:bindings>
+
 		</jaxb:bindings>
 	</jaxb:bindings>
 
