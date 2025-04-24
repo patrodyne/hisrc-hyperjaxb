@@ -29,9 +29,23 @@
 
 		<hj:persistence>
 
-			<hj:default-generated-id>
-				 <orm:generated-value strategy="NONE"/> 
-			</hj:default-generated-id>
+			<!-- 
+				This generated id is only used when MyEntity is configured
+				to use 'embedded' instead of 'embedded-id', see MyEntity bindings.
+			-->
+            <hj:default-generated-id
+            	name="GenId"
+            	javaType="java.lang.Long"
+            	attributeName="genId"
+            	schemaType="xsd:long"
+            	transient="true"
+            >
+                <orm:column name="GEN_ID"/>
+                <orm:generated-value generator="SEQUENCES" strategy="TABLE"/>
+                <orm:table-generator name="SEQUENCES" table="SEQUENCES"
+					pk-column-name="SEQ_NAME" value-column-name="SEQ_NEXT"
+					allocation-size="10" />
+            </hj:default-generated-id>
 
 			<hj:default-one-to-one fetch="EAGER"/>
 			<hj:default-one-to-many fetch="EAGER"/>
@@ -61,13 +75,13 @@
 		-->
 		<jaxb:bindings node="xs:complexType[@name='MyEntityPk']">
 			<hj:embeddable/>
-			<jaxb:bindings node="//xs:element[@name='AString']">
+			<jaxb:bindings node="xs:sequence/xs:element[@name='AString']">
 				<jaxb:property name="kaString"/>
 			</jaxb:bindings>
-			<jaxb:bindings node="//xs:element[@name='AnEnum']">
+			<jaxb:bindings node="xs:sequence/xs:element[@name='AnEnum']">
 				<jaxb:property name="kbEnum"/>
 			</jaxb:bindings>
-			<jaxb:bindings node="//xs:element[@name='ABoolean']">
+			<jaxb:bindings node="xs:sequence/xs:element[@name='ABoolean']">
 				<jaxb:property name="kcBoolean"/>
 			</jaxb:bindings>
 		</jaxb:bindings>
@@ -86,16 +100,57 @@
 		<jaxb:bindings node="xs:complexType[@name='MyEntity']">
 			<anx:annotate>@jakarta.xml.bind.annotation.XmlRootElement(name = "MyEntity")</anx:annotate>
 			<hj:entity>
-				<orm:table name="MY_TMP_TABLE"/>
+				<orm:table name="MY_ENTITY"/>
 			</hj:entity>
-			<jaxb:bindings node="//xs:element[@name='Id']">
+			<jaxb:bindings node="xs:sequence/xs:element[@name='Id']">
+				<!-- Use 'embedded-id' to replace a generated ID -->
+				<!-- Use 'embedded' to add a generated ID, by default -->
 				<!-- Note: HJ prefixes the embedded-id column names with this element's name. -->
 				<hj:embedded-id/>
 			</jaxb:bindings>
-			<jaxb:bindings node="//xs:element[@ref='tns:MyEntityBatch']">
+			<!-- OPTIONAL but needs MyEntityBatch on MyEntity, in schema.xsd
+			<jaxb:bindings node="xs:sequence/xs:element[@ref='tns:MyEntityBatch']">
 				<hj:many-to-one>
 					<orm:join-column name="MY_ENTITY_BATCH_ID"/>
 				</hj:many-to-one>
+			</jaxb:bindings>
+			 -->
+			<jaxb:bindings node="xs:sequence/xs:element[@name='MyEntityData']">
+				<hj:one-to-one mapped-by="myEntity"/>
+			</jaxb:bindings>
+			<jaxb:bindings node="xs:attribute[@name='New']">
+				<hj:ignored/>
+			</jaxb:bindings>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="xs:complexType[@name='MyEntityData']">
+			<hj:entity>
+				<orm:table name="MY_ENTITY_DATA"/>
+			</hj:entity>
+			<jaxb:bindings node="xs:sequence/xs:element[@name='Id']">
+				<!-- Use 'embedded-id' to replace a generated ID -->
+				<!-- Use 'embedded' to add a generated ID, by default -->
+				<!-- Note: HJ prefixes the embedded-id column names with this element's name. -->
+				<hj:embedded-id/>
+			</jaxb:bindings>
+			<!-- 
+			-->
+			<jaxb:bindings node="xs:sequence/xs:element[@name='MyEntity']">
+				<!-- 
+				<bas:ignored/>
+				<hj:one-to-one />
+				<hj:one-to-one>
+					<orm:join-column name="ID_KA_STRING" referenced-column-name="ID_KA_STRING"/>
+					<orm:join-column name="ID_KB_ENUM" referenced-column-name="ID_KB_ENUM"/>
+					<orm:join-column name="ID_KC_BOOLEAN" referenced-column-name="ID_KC_BOOLEAN"/>
+				</hj:one-to-one>
+				<hj:one-to-one maps-id="">
+					<orm:join-column name="ID_KA_STRING" referenced-column-name="ID_KA_STRING"/>
+					<orm:join-column name="ID_KB_ENUM" referenced-column-name="ID_KB_ENUM"/>
+					<orm:join-column name="ID_KC_BOOLEAN" referenced-column-name="ID_KC_BOOLEAN"/>
+				</hj:one-to-one>
+				-->
+				<hj:one-to-one maps-id=""/>
 			</jaxb:bindings>
 			<jaxb:bindings node="xs:attribute[@name='New']">
 				<hj:ignored/>
@@ -111,7 +166,7 @@
 		-->
 		<jaxb:bindings node="xs:element[@name='MyEntityBatch']/xs:complexType">
 			<hj:entity>
-				<orm:table name="MY_TMP_BATCH"/>
+				<orm:table name="MY_ENTITY_BATCH"/>
 			</hj:entity>		
 			<jaxb:bindings node="xs:sequence/xs:element[@name='MyEntity']">
 				<hj:one-to-many mapped-by="myEntityBatch"/>

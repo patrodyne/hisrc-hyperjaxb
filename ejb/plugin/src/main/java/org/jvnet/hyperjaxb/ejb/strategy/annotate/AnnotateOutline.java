@@ -9,6 +9,7 @@ import static org.jvnet.basicjaxb.util.OutlineUtils.getContextPath;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getFieldName;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getLocalClassName;
 import static org.jvnet.basicjaxb.util.OutlineUtils.getPackagedClassName;
+import static org.jvnet.basicjaxb.util.OutlineUtils.processXmlTransient;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -91,7 +92,7 @@ public class AnnotateOutline extends EJBOutlineProcessor
 	{
 		this.applyXAnnotations = annotator;
 	}
-	
+
 	@Override
 	public Collection<ClassOutline> process(EJBPlugin context, Outline outline)
 		throws Exception
@@ -103,7 +104,7 @@ public class AnnotateOutline extends EJBOutlineProcessor
 			if ( classOutlines.hasNext() )
 				debug("{}, process; ContextPath={}", toLocation(classOutlines.next()), getContextPath(outline));
 		}
-		
+
 		final Collection<? extends ClassOutline> classes = outline.getClasses();
 		final Collection<ClassOutline> processedClassOutlines = new ArrayList<ClassOutline>(classes.size());
 		for (final ClassOutline classOutline : classes)
@@ -112,7 +113,12 @@ public class AnnotateOutline extends EJBOutlineProcessor
 			{
 				final ClassOutline processedClassOutline = processClassOutline(this, classOutline);
 				if (processedClassOutline != null)
+				{
+					// XmlTransient fields are JAXB exclusive.
+					processXmlTransient(classOutline);
+					// Add the processed processedClassOutline to the collection.
 					processedClassOutlines.add(processedClassOutline);
+				}
 			}
 		}
 		return processedClassOutlines;
@@ -212,13 +218,13 @@ public class AnnotateOutline extends EJBOutlineProcessor
 			final JMethod getter = FieldAccessorUtils.getter(fieldOutline);
 			context.getApplyXAnnotations().annotate(fieldOutline.parent().ref.owner(), getter, xannotations);
 		}
-		
+
 		debug("{}, processFieldOutline; Class={}, Field={}, Annotations={}",
 			toLocation(fieldOutline), className, fieldName, arrayToString(xannotations));
-		
+
 		return fieldOutline;
 	}
-	
+
 	private static String arrayToString(Object value)
 	{
 		return ArrayUtils.toString(value);

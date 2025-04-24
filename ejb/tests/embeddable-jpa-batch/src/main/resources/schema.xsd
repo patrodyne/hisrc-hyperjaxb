@@ -6,29 +6,44 @@
 >
 	<xs:complexType name="MyEntityPk">
 		<xs:sequence>
-			<xs:element name="AString" type="xs:string" minOccurs="1" default="aaaaa"/>
-			<xs:element name="AnEnum" type="tns:anEnum" minOccurs="1" default="I"/>
-			<xs:element name="ABoolean" type="xs:boolean" minOccurs="1"/>
+			<xs:element name="AString" type="xs:string" default="aaaaa"/>
+			<xs:element name="AnEnum" type="xs:string" default="I"/>
+			<xs:element name="ABoolean" type="xs:boolean"/>
 		</xs:sequence>
 	</xs:complexType>
 
 	<xs:element name="MyEntity" type="tns:MyEntity"/>
 	<xs:complexType name="MyEntity">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:MyEntityPk" minOccurs="1"/>
+			<xs:element name="Id" type="tns:MyEntityPk"/>
+			<xs:element name="Data0" type="xs:string" minOccurs="0"/>
+			<xs:element name="MyEntityData" type="tns:MyEntityData" minOccurs="0"/>
+			<!-- OPTIONAL
 			<xs:element ref="tns:MyEntityBatch" minOccurs="0"/>
-			<xs:element name="AdditionalData" type="xs:string"/>
+			 -->
 		</xs:sequence>
-		<xs:attribute name="New" type="xs:boolean" default="true"/>
+		<xs:attribute name="New" type="xs:boolean" default="false"/>
+	</xs:complexType>
+
+	<xs:complexType name="MyEntityData">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:MyEntityPk"  minOccurs="0"/>
+			<xs:element name="Data1" type="xs:string" minOccurs="0"/>
+			<xs:element name="Data2" type="xs:string" minOccurs="0"/>
+			<!-- 
+			 -->
+			<xs:element name="MyEntity" type="tns:MyEntity" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="New" type="xs:boolean" default="false"/>
 	</xs:complexType>
 
 	<xs:element name="MyEntityBatch" >
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="MyEntity" type="tns:MyEntity" maxOccurs="unbounded"/>
+				<xs:element name="MyEntity" type="tns:MyEntity" minOccurs="0" maxOccurs="unbounded" />
 			</xs:sequence>
 			<xs:attribute name="Id" type="xs:string"/>
-			<xs:attribute name="New" type="xs:boolean" default="true" />
+			<xs:attribute name="New" type="xs:boolean" default="false" />
 		</xs:complexType>
 	</xs:element>
 	

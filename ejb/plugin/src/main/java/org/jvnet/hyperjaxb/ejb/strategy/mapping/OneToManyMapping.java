@@ -42,24 +42,25 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 		createOneToMany$Name(context, fieldOutline, oneToMany);
 		createOneToMany$OrderColumn(context, fieldOutline, oneToMany);
 		createOneToMany$TargetEntity(context, fieldOutline, oneToMany);
+		
+		// The @JoinColumn annotation specifies the column to use for joining an entity
+		// association or element collection. On the other hand, the mappedBy attribute
+		// is used to define the referencing side (non-owning side) of the relationship.
 
-		// Join columns must not be overridden for 1:X
+		// Join columns are not used for 'mapped-by'
 		if ( oneToMany.getMappedBy() != null )
 		{
 			oneToMany.getJoinColumn().clear();
 			createOneToMany$MappedByMethods(fieldOutline, oneToMany);
 		}
 		else
-		{
 			createOneToMany$JoinTableOrJoinColumn(context, fieldOutline, oneToMany);
-		}
 
 		return oneToMany;
 	}
 
 	public void createOneToMany$MappedByMethods(FieldOutline fieldOutline, final OneToMany oneToMany)
 	{
-		JDefinedClass oneSideClass = fieldOutline.parent().implClass;
 		if ( fieldOutline.getRawType() instanceof JClass )
 		{
 			JClass valueType = (JClass) fieldOutline.getRawType();
@@ -68,6 +69,7 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 			{
 				if ( typeParameters.get(0) instanceof JDefinedClass )
 				{
+					JDefinedClass oneSideClass = fieldOutline.parent().implClass;
 					JDefinedClass manySideClass = (JDefinedClass) typeParameters.get(0);
 					String mappedBySetterName = "set" + capitalize(oneToMany.getMappedBy());
 					JMethod mappedBySetter = manySideClass.getMethod(mappedBySetterName, new JType[] { oneSideClass });
@@ -98,9 +100,7 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 
 		// Otherwise, add a new method to the many-side class.
 		if ( afterUnmarshalMethod == null  )
-		{
 			afterUnmarshalMethod = manySideClass.method(JMod.NONE, manySideOwner.VOID, "afterUnmarshal");
-		}
 
 		// Add mapped-by setter statement to the method.
 		@SuppressWarnings("unused")

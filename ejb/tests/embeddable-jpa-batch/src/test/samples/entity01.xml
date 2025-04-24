@@ -9,5 +9,9 @@
 		<AnEnum>I</AnEnum>
 		<ABoolean>true</ABoolean>
 	</Id>
-	<AdditionalData>xx1</AdditionalData>
+	<Data0>xx0</Data0>
+	<MyEntityData>
+		<Data1>xx1</Data1>
+		<Data2>xx2</Data2>
+	</MyEntityData>
 </MyEntity>

@@ -40,6 +40,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.MapKeyJoinColumns;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.QueryHint;
 import jakarta.persistence.TemporalType;
 
@@ -47,7 +48,7 @@ import jakarta.persistence.TemporalType;
  * HiSrc Annox reads annotations into XAnnotation, XAnnotationField, XPackage,
  * XClass, XConstructor, XField, XMethod, and XParameter structures from XML, to
  * run visitors on them, etc.
- * 
+ *
  * <ul>
  * <li>JSR220-EJB30: "JSR 220: Enterprise JavaBeans TM, Version 3.0 Java Persistence API", May 2, 2006.</li>
  * <li>JSR317-JPA20: "JSR 317: Java TM Persistence API, Version 2.0", November 10, 2009.</li>
@@ -103,10 +104,30 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 		return !source ? null : new XAnnotation<jakarta.persistence.Id>(jakarta.persistence.Id.class);
 	}
 
-	public XAnnotation<jakarta.persistence.MapsId> createMapsId(String source)
+	/**
+	 * Create a {@link MapsId} annotation when value is not null.
+	 * 
+	 * <p>
+	 * The value element specifies the attribute within a composite key to which the relationship attribute corresponds. 
+	 * If the entity's primary key is of the same Java type as the primary key of the entity referenced by the
+	 * relationship, then the value attribute is not specified.
+	 * </p>
+	 * 
+	 * @param value The {@code MapsId} attribute within a composite key.
+	 * 
+	 * @return A {@code MapsId} instance with an optional value.
+	 */
+	public XAnnotation<jakarta.persistence.MapsId> createMapsId(String value)
 	{
-		return source == null ? null : new XAnnotation<jakarta.persistence.MapsId>(jakarta.persistence.MapsId.class,
-			AnnotationUtils.create("value", source));
+		XAnnotation<MapsId> mapsId = null;
+		if ( value != null )
+		{
+			if ( !value.isBlank() )
+				mapsId = new XAnnotation<jakarta.persistence.MapsId>(jakarta.persistence.MapsId.class, AnnotationUtils.create("value", value));
+			else
+				mapsId = new XAnnotation<jakarta.persistence.MapsId>(jakarta.persistence.MapsId.class);
+		}
+		return mapsId;
 	}
 
 	public XAnnotation<jakarta.persistence.Access> createAccess(String access)
@@ -178,7 +199,7 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 			AnnotationUtils.create("initialValue", source.getInitialValue()),
 			AnnotationUtils.create("allocationSize", source.getAllocationSize()));
 	}
-	
+
 	// ==================================================================
 	// JSR220-EJB30: 10.1
 	// ==================================================================
