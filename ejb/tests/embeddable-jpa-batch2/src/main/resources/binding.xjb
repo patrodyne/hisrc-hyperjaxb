@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings jaxb:version="3.0"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	xmlns:anx="http://jvnet.org/basicjaxb/xjc/annox"
+	xmlns:bas="http://jvnet.org/basicjaxb/xjc"
+	jaxb:extensionBindingPrefixes="hj orm anx bas"
+>
+
+	<!--  Global Bindings
+		* JPA section 2.1, entities must be top-level classes.
+		* JPA section 2.1, entities must implement the serializable interface.
+		* When processing a Microsoft WCF service WSDL, it is recommended that the
+		  generateElementProperty customization be set to 'false' in globalBindings.
+		* Hint: Increase EnumMemberSizeCap above 256 with typesafeEnumMaxMembers="512".
+	-->
+	<jaxb:globalBindings localScoping="toplevel">
+		<jaxb:serializable uid="20250301" />
+	</jaxb:globalBindings>
+	
+	<jaxb:bindings node="/xs:schema" schemaLocation="schema.xsd">
+
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.stackoverflow.embeddable_jpa_batch"/>
+		</jaxb:schemaBindings>
+
+		<hj:persistence>
+
+			<!-- 
+				This generated id is only used when MyEntity is configured
+				to use 'embedded' instead of 'embedded-id', see MyEntity bindings.
+			-->
+            <hj:default-generated-id
+            	name="GenId"
+            	javaType="java.lang.Long"
+            	attributeName="genId"
+            	schemaType="xsd:long"
+            	transient="true"
+            >
+                <orm:column name="GEN_ID"/>
+                <orm:generated-value generator="SEQUENCES" strategy="TABLE"/>
+                <orm:table-generator name="SEQUENCES" table="SEQUENCES"
+					pk-column-name="SEQ_NAME" value-column-name="SEQ_NEXT"
+					allocation-size="10" />
+            </hj:default-generated-id>
+
+			<hj:default-one-to-one fetch="EAGER"/>
+			<hj:default-one-to-many fetch="EAGER"/>
+			<hj:default-many-to-one merge="false" fetch="LAZY">
+				<orm:cascade>
+					<orm:cascade-refresh />
+					<orm:cascade-persist />
+					<orm:cascade-merge />
+				</orm:cascade>
+			</hj:default-many-to-one>
+			<hj:default-many-to-many merge="false" fetch="LAZY">
+				<orm:cascade>
+					<orm:cascade-refresh />
+					<orm:cascade-persist />
+					<orm:cascade-merge />
+				</orm:cascade>
+			</hj:default-many-to-many>
+
+		</hj:persistence>
+
+		<!--
+			Customizations: MyEntityPk
+			1) Indicate that 'MyEntityPk' is embedded within another entity.
+			2) Set hibernate.column_ordering_strategy=legacy to order alphabetically.
+			3) Prefix the element names with the desired composite key order.
+			   Or, use 'jaxb:property' to declare the Java property name order.
+		-->
+		<jaxb:bindings node="xs:complexType[@name='MyEntityPk']">
+			<hj:embeddable/>
+			<jaxb:bindings node="xs:sequence/xs:element[@name='AString']">
+				<jaxb:property name="kaString"/>
+			</jaxb:bindings>
+			<jaxb:bindings node="xs:sequence/xs:element[@name='AnEnum']">
+				<jaxb:property name="kbEnum"/>
+			</jaxb:bindings>
+			<jaxb:bindings node="xs:sequence/xs:element[@name='ABoolean']">
+				<jaxb:property name="kcBoolean"/>
+			</jaxb:bindings>
+		</jaxb:bindings>
+		
+		<!--
+			Customizations: MyEntity
+			1) Make this a JAXB root element.
+			2) Custom database table name.
+			3) Inject code to listen for JAXB unmarshal events.
+			4) Declare 'Id' to be an JPA embedded id.
+			5) Declare many-to-one relationship to 'MyEntityBatch'.
+			   This provides the parent id when SQL inserts each 'MyEntity';
+			   Thus, eliminating SQL updates to do the same after each insert.
+			6) Make the attribute 'New' to be JPA transient (HyperJAXB ignored).
+		-->
+		<jaxb:bindings node="xs:complexType[@name='MyEntity']">
+			<anx:annotate>@jakarta.xml.bind.annotation.XmlRootElement(name = "MyEntity")</anx:annotate>
+			<hj:entity>
+				<orm:table name="MY_ENTITY"/>
+			</hj:entity>
+			<jaxb:bindings node="xs:sequence/xs:element[@name='Id']">
+				<!-- Use 'embedded-id' to replace a generated ID -->
+				<!-- Use 'embedded' to add a generated ID, by default -->
+				<!-- Note: HJ prefixes the embedded-id column names with this element's name. -->
+				<hj:embedded-id/>
+			</jaxb:bindings>
+			<!-- OPTIONAL but needs MyEntityBatch on MyEntity, in schema.xsd
+			<jaxb:bindings node="xs:sequence/xs:element[@ref='tns:MyEntityBatch']">
+				<hj:many-to-one>
+					<orm:join-column name="MY_ENTITY_BATCH_ID"/>
+				</hj:many-to-one>
+			</jaxb:bindings>
+			 -->
+			<jaxb:bindings node="xs:sequence/xs:element[@name='MyEntityData']">
+				<hj:one-to-one mapped-by="myEntity"/>
+			</jaxb:bindings>
+			<jaxb:bindings node="xs:attribute[@name='New']">
+				<hj:ignored/>
+			</jaxb:bindings>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="xs:complexType[@name='MyEntityData']">
+			<hj:entity>
+				<orm:table name="MY_ENTITY_DATA"/>
+			</hj:entity>
+			<jaxb:bindings node="xs:sequence/xs:element[@name='Id']">
+				<!-- Use 'embedded-id' to replace a generated ID -->
+				<!-- Use 'embedded' to add a generated ID, by default -->
+				<!-- Note: HJ prefixes the embedded-id column names with this element's name. -->
+				<hj:embedded-id/>
+			</jaxb:bindings>
+			<!-- 
+			-->
+			<jaxb:bindings node="xs:sequence/xs:element[@name='MyEntity']">
+				<hj:one-to-one maps-id=""/>
+			</jaxb:bindings>
+			<jaxb:bindings node="xs:attribute[@name='New']">
+				<hj:ignored/>
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<!--
+			Customizations: MyEntityBatch
+			1) Custom database column name.
+			2) The one-to-many relationship is mapped by 'MyEntity.myEntityBatch'.
+			3) The attribute 'Id' is the primary key.
+			4) The attribute 'New' is transient.
+		-->
+		<jaxb:bindings node="xs:element[@name='MyEntityBatch']/xs:complexType">
+			<hj:entity>
+				<orm:table name="MY_ENTITY_BATCH"/>
+			</hj:entity>		
+			<jaxb:bindings node="xs:sequence/xs:element[@name='MyEntity']">
+				<hj:one-to-many mapped-by="myEntityBatch"/>
+			</jaxb:bindings>
+			<jaxb:bindings node="xs:attribute[@name='Id']">
+				<hj:id />
+			</jaxb:bindings>
+			<jaxb:bindings node="xs:attribute[@name='New']">
+				<hj:ignored/>
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+</jaxb:bindings>

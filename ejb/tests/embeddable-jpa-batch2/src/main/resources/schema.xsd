@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified"
+	targetNamespace="urn:com:stackoverflow:embeddable_jpa_batch"
+	xmlns:tns="urn:com:stackoverflow:embeddable_jpa_batch"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+	<xs:complexType name="MyEntityPk">
+		<xs:sequence>
+			<xs:element name="AString" type="xs:string" default="aaaaa"/>
+			<xs:element name="AnEnum" type="xs:string" default="I"/>
+			<xs:element name="ABoolean" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="MyEntity" type="tns:MyEntity"/>
+	<xs:complexType name="MyEntity">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:MyEntityPk"/>
+			<xs:element name="Data0" type="xs:string" minOccurs="0"/>
+			<xs:element name="MyEntityData" type="tns:MyEntityData" minOccurs="0"/>
+			<!-- OPTIONAL
+			<xs:element ref="tns:MyEntityBatch" minOccurs="0"/>
+			 -->
+		</xs:sequence>
+		<xs:attribute name="New" type="xs:boolean" default="false"/>
+	</xs:complexType>
+
+	<xs:complexType name="MyEntityData">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:MyEntityPk"  minOccurs="0"/>
+			<xs:element name="Data1" type="xs:string" minOccurs="0"/>
+			<xs:element name="Data2" type="xs:string" minOccurs="0"/>
+			<!-- 
+			 -->
+			<xs:element name="MyEntity" type="tns:MyEntity" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="New" type="xs:boolean" default="false"/>
+	</xs:complexType>
+
+	<xs:element name="MyEntityBatch" >
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MyEntity" type="tns:MyEntity" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="Id" type="xs:string"/>
+			<xs:attribute name="New" type="xs:boolean" default="false" />
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:simpleType name="anEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="I"/>
+			<xs:enumeration value="O"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+</xs:schema>

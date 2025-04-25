@@ -8,9 +8,9 @@
 		<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
 		<version>2.2.2-SNAPSHOT</version>
 	</parent>
-	<artifactId>hisrc-hyperjaxb-ejb-tests-embeddable-jpa-batch1</artifactId>
+	<artifactId>hisrc-hyperjaxb-ejb-tests-embeddable-jpa-batch2</artifactId>
 	<packaging>jar</packaging>
-	<name>HiSrc HyperJAXB EJB Test [embeddable-jpa-batch1]</name>
+	<name>HiSrc HyperJAXB EJB Test [embeddable-jpa-batch2]</name>
 	<properties>
 		<root.basedir>${basedir}/../../..</root.basedir>
 	</properties>
