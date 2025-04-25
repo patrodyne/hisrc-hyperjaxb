@@ -68,7 +68,7 @@ public class Main extends Context
 	/**
 	 * Command Line Invocation.
 	 *
-	 * @param args CLI argument(s)
+	 * @param args CLI argument(s) (i.e. sample1 connect1 execute0)
 	 */
 	public static void main(String[] args)
 	{
