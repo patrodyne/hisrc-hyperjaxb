@@ -136,20 +136,6 @@
 			<!-- 
 			-->
 			<jaxb:bindings node="xs:sequence/xs:element[@name='MyEntity']">
-				<!-- 
-				<bas:ignored/>
-				<hj:one-to-one />
-				<hj:one-to-one>
-					<orm:join-column name="ID_KA_STRING" referenced-column-name="ID_KA_STRING"/>
-					<orm:join-column name="ID_KB_ENUM" referenced-column-name="ID_KB_ENUM"/>
-					<orm:join-column name="ID_KC_BOOLEAN" referenced-column-name="ID_KC_BOOLEAN"/>
-				</hj:one-to-one>
-				<hj:one-to-one maps-id="">
-					<orm:join-column name="ID_KA_STRING" referenced-column-name="ID_KA_STRING"/>
-					<orm:join-column name="ID_KB_ENUM" referenced-column-name="ID_KB_ENUM"/>
-					<orm:join-column name="ID_KC_BOOLEAN" referenced-column-name="ID_KC_BOOLEAN"/>
-				</hj:one-to-one>
-				-->
 				<hj:one-to-one maps-id=""/>
 			</jaxb:bindings>
 			<jaxb:bindings node="xs:attribute[@name='New']">

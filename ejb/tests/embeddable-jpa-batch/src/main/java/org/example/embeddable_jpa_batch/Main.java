@@ -1,7 +1,6 @@
 package org.example.embeddable_jpa_batch;
 
 import static java.lang.String.format;
-import static org.jvnet.hyperjaxb.ejb.util.Transactional.CacheOption.CLEAN;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jvnet.hyperjaxb.ejb.util.Transactional;
+import org.jvnet.hyperjaxb.ejb.util.Transactional.CacheOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -132,8 +132,10 @@ public class Main extends Context
 				MyEntityPk id = new MyEntityPk(idFactory.nextId(), AnEnum.I.name(), true);
 				MyEntityData entityData = new MyEntityData(id, "xx1", "xx2", true);
 				MyEntity entity = new MyEntity(id, "xx0", entityData, true);
+
+				// Set or tie 'entity' to 'entityData'
 				entityData.setMyEntity(entity);
-				entityData.setId(entity.getId());
+				// ALT: entity.tieMyEntityData();
 
 				// For test purposes, OMIT the batch reference on the entity.
 				// OMIT: getBatch().addMyEntity(entity);
@@ -194,7 +196,7 @@ public class Main extends Context
 	 *
 	 * <p><b>Note:</b> This example inserts the entities without a reference to their
 	 * parent batch then assigns the reference and merges the assignment using
-	 * SQL select(s) and update(s). This is not a recommended practice. It mimics
+	 * SQL select(s) and update(s). This is not a recommended practice; but, it mimics
 	 * what will happen if {@code MyEntityBatch} used a 'join column' instead of the
 	 * 'mapped by' configuration. Often in that case, the {@code MyEntity} children do
 	 * not have a parent reference ('many-to-one') and JPA will perform SQL insert(s)
@@ -209,14 +211,17 @@ public class Main extends Context
 		long cnt = 0;
 		for ( MyEntityBatch batch : getBatchList() )
 		{
-			insert(batch);
-			++cnt;
-			// Assign batch to each entity because it was
-			// omitted in the sample.
-			batch.tieMyEntity();
-			cnt += batch.getMyEntity().size();
-			// Only count inserts, these are select/merge.
-			insert(batch);
+			try ( EntityManager em = createEntityManager() )
+			{
+				insert(batch, em);
+				++cnt;
+				// Assign batch to each entity because it was
+				// omitted in the sample.
+				batch.tieMyEntity();
+				cnt += batch.getMyEntity().size();
+				// Only count inserts, these are select/merge.
+				insert(batch, em);
+			}
 		}
 		long ms2 = System.currentTimeMillis();
 		long tot = ms2 - ms1;
@@ -372,6 +377,12 @@ public class Main extends Context
 	private void insert(MyEntityBatch batch)
 		throws IOException
 	{
+		insert(batch, null);
+	}
+
+	private void insert(MyEntityBatch batch, EntityManager em)
+		throws IOException
+	{
 		if ( batch.getNew() )
 		{
 			// But, are there any old child entities in the batch.
@@ -387,11 +398,11 @@ public class Main extends Context
 		}
 
 		// Prepare the transaction to persist or merge one batch.
-		Transactional<Integer> tx = (em) ->
+		Transactional<Integer> tx = (tem) ->
 		{
 			if ( batch.getNew() )
 			{
-				em.persist(batch);
+				tem.persist(batch);
 				batch.setNew(false);
 				for ( MyEntity entity : batch.getMyEntity() )
 				{
@@ -400,13 +411,16 @@ public class Main extends Context
 			}
 			else
 			{
-				em.merge(batch);
+				tem.merge(batch);
 			}
 		    return batch.getMyEntity().size() + 1;
 		};
 
 		// Perform the transaction
-		perform(batch.getId(), tx);
+		if ( em != null )
+			perform(batch.getId(), tx, em);
+		else
+			perform(batch.getId(), tx);
 	}
 
 	private void insert(String batchName, List<MyEntity> entityList)
@@ -437,13 +451,19 @@ public class Main extends Context
 	private void perform(String id, Transactional<Integer> tx)
 		throws IOException
 	{
+		try ( EntityManager em = createEntityManager() )
+		{
+			perform(id, tx, em);
+		}
+	}
+
+	private void perform(String id, Transactional<Integer> tx, EntityManager em)
+		throws IOException
+	{
 		// Execute the transaction with auto-close.
 		long cnt = 0;
 		long ms1 = System.currentTimeMillis();
-		try ( EntityManager em = createEntityManager() )
-		{
-		    cnt = tx.transact(em, CLEAN);
-		}
+	    cnt = tx.transact(em, CacheOption.CLEAN);
 		long ms2 = System.currentTimeMillis();
 		long tot = ms2 - ms1;
 		double avg = (cnt != 0) ? (double) tot / (double) cnt : tot;
