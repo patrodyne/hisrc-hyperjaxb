@@ -18,7 +18,6 @@ import com.stackoverflow.embeddable_jpa_batch.AnEnum;
 import com.stackoverflow.embeddable_jpa_batch.MyEntity;
 import com.stackoverflow.embeddable_jpa_batch.MyEntityBatch;
 import com.stackoverflow.embeddable_jpa_batch.MyEntityBatch_;
-import com.stackoverflow.embeddable_jpa_batch.MyEntityData;
 import com.stackoverflow.embeddable_jpa_batch.MyEntityPk;
 
 import jakarta.persistence.EntityManager;
@@ -39,8 +38,8 @@ import jakarta.xml.bind.JAXBException;
 public class Main extends Context
 {
 	public static final String SAMPLE_BATCH_FILE = "src/test/samples/batch01.xml";
-	public static final int SAMPLE_BATCH_COUNT = 2;
-	public static final int SAMPLE_BATCH_SIZE = 20;
+	public static final int SAMPLE_BATCH_COUNT = 1;
+	public static final int SAMPLE_BATCH_SIZE = 2;
 
 	private static Logger logger = LoggerFactory.getLogger(Main.class);
 	public static Logger getLogger() { return logger; }
@@ -126,16 +125,11 @@ public class Main extends Context
 		IdFactory idFactory = new IdFactory();
 		for ( int batchNo=0; batchNo < batchCount; ++batchNo )
 		{
-			setBatch(new MyEntityBatch().useId(format("batch%04d",batchNo+1)));
+			setBatch(new MyEntityBatch().useId(format("batch%04d",batchNo+1)).useNew(true));
 			for ( int index=0; index < batchSize; ++index)
 			{
 				MyEntityPk id = new MyEntityPk(idFactory.nextId(), AnEnum.I.name(), true);
-				MyEntityData entityData = new MyEntityData(id, "xx1", "xx2", true);
-				MyEntity entity = new MyEntity(id, "xx0", entityData, true);
-
-				// Set or tie 'entity' to 'entityData'
-				entityData.setMyEntity(entity);
-				// ALT: entity.tieMyEntityData();
+				MyEntity entity = new MyEntity(id, "xx0", true);
 
 				// For test purposes, OMIT the batch reference on the entity.
 				// OMIT: getBatch().addMyEntity(entity);

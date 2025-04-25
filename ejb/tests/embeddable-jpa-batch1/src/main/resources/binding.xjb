@@ -115,29 +115,6 @@
 				</hj:many-to-one>
 			</jaxb:bindings>
 			 -->
-			<jaxb:bindings node="xs:sequence/xs:element[@name='MyEntityData']">
-				<hj:one-to-one mapped-by="myEntity"/>
-			</jaxb:bindings>
-			<jaxb:bindings node="xs:attribute[@name='New']">
-				<hj:ignored/>
-			</jaxb:bindings>
-		</jaxb:bindings>
-		
-		<jaxb:bindings node="xs:complexType[@name='MyEntityData']">
-			<hj:entity>
-				<orm:table name="MY_ENTITY_DATA"/>
-			</hj:entity>
-			<jaxb:bindings node="xs:sequence/xs:element[@name='Id']">
-				<!-- Use 'embedded-id' to replace a generated ID -->
-				<!-- Use 'embedded' to add a generated ID, by default -->
-				<!-- Note: HJ prefixes the embedded-id column names with this element's name. -->
-				<hj:embedded-id/>
-			</jaxb:bindings>
-			<!-- 
-			-->
-			<jaxb:bindings node="xs:sequence/xs:element[@name='MyEntity']">
-				<hj:one-to-one maps-id=""/>
-			</jaxb:bindings>
 			<jaxb:bindings node="xs:attribute[@name='New']">
 				<hj:ignored/>
 			</jaxb:bindings>

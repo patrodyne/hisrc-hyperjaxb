@@ -39,8 +39,8 @@ import jakarta.xml.bind.JAXBException;
 public class Main extends Context
 {
 	public static final String SAMPLE_BATCH_FILE = "src/test/samples/batch01.xml";
-	public static final int SAMPLE_BATCH_COUNT = 2;
-	public static final int SAMPLE_BATCH_SIZE = 20;
+	public static final int SAMPLE_BATCH_COUNT = 1;
+	public static final int SAMPLE_BATCH_SIZE = 2;
 
 	private static Logger logger = LoggerFactory.getLogger(Main.class);
 	public static Logger getLogger() { return logger; }
@@ -126,7 +126,7 @@ public class Main extends Context
 		IdFactory idFactory = new IdFactory();
 		for ( int batchNo=0; batchNo < batchCount; ++batchNo )
 		{
-			setBatch(new MyEntityBatch().useId(format("batch%04d",batchNo+1)));
+			setBatch(new MyEntityBatch().useId(format("batch%04d",batchNo+1)).useNew(true));
 			for ( int index=0; index < batchSize; ++index)
 			{
 				MyEntityPk id = new MyEntityPk(idFactory.nextId(), AnEnum.I.name(), true);

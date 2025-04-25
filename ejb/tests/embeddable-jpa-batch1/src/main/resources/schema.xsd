@@ -17,22 +17,9 @@
 		<xs:sequence>
 			<xs:element name="Id" type="tns:MyEntityPk"/>
 			<xs:element name="Data0" type="xs:string" minOccurs="0"/>
-			<xs:element name="MyEntityData" type="tns:MyEntityData" minOccurs="0"/>
 			<!-- OPTIONAL
 			<xs:element ref="tns:MyEntityBatch" minOccurs="0"/>
 			 -->
-		</xs:sequence>
-		<xs:attribute name="New" type="xs:boolean" default="false"/>
-	</xs:complexType>
-
-	<xs:complexType name="MyEntityData">
-		<xs:sequence>
-			<xs:element name="Id" type="tns:MyEntityPk"  minOccurs="0"/>
-			<xs:element name="Data1" type="xs:string" minOccurs="0"/>
-			<xs:element name="Data2" type="xs:string" minOccurs="0"/>
-			<!-- 
-			 -->
-			<xs:element name="MyEntity" type="tns:MyEntity" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="New" type="xs:boolean" default="false"/>
 	</xs:complexType>
