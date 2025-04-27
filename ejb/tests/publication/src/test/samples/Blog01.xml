@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Blog
+	xmlns="http://example.org/pub/model"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://example.org/pub/model ../../main/resources/Publication.xsd"
+>
+	<title>Taylor Made (Blog)</title>
+	<authors>
+		<firstName>Mark</firstName>
+		<lastName>Taylor, Jr.</lastName>
+	</authors>
+	<publishingDate>2020-10-20T13:15:05.000Z</publishingDate>
+	<url>https://example.org/blog01</url>
+</Blog>

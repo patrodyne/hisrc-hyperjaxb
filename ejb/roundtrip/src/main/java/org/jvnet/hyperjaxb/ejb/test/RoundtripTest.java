@@ -15,6 +15,7 @@ import static org.jvnet.hyperjaxb.xml.bind.JAXBContextUtils.marshalElement;
 import java.io.File;
 import java.io.IOException;
 
+import javax.xml.transform.TransformerException;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
@@ -38,7 +39,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 	private Boolean validateXml = true;
 	public Boolean isValidateXml() { return validateXml; }
 	public void setValidateXml(Boolean validateXml) { this.validateXml = validateXml; }
-	
+
 	public static enum SaveType { MERGE, PERSIST }
 
 	@Override
@@ -53,16 +54,16 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 	{
 		final JAXBContext context = createContext();
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
-		
+
 		if ( isValidateXml() )
 			enableXmlSchemaValidator(unmarshaller, null, context);
-		
+
 		getLogger().debug("Unmarshalling sample.");
 		Sample initialSample = new Sample(unmarshaller, sampleFile);
-		
+
 		getLogger().debug("Unmarshalling etalon.");
 		Sample etalonSample = new Sample(unmarshaller, sampleFile);
-		
+
 		if ( getLogger().isTraceEnabled() )
 		{
 			if (etalonSample.getJAXBElement() != null)
@@ -90,7 +91,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		        getLogger().trace("Etalon object:\n" + xml);
 			}
 		}
-		
+
 		// Save
 		getLogger().debug("Persisting the unmarshalled sample.");
 		Object savedId = null;
@@ -99,7 +100,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		{
 			// Transaction
 			EntityTransaction saveTX = saveManager.getTransaction();
-			
+
 			Object savedEntity = null;
 			saveTX.begin();
 			switch ( saveType )
@@ -113,13 +114,13 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 					break;
 			}
 			saveTX.commit();
-			
+
 			savedClass = savedEntity.getClass();
-			
+
 			saveTX.begin();
 			savedId = getId(saveManager, savedEntity);
 			saveTX.commit();
-			
+
 			if ( getLogger().isTraceEnabled() )
 			{
 				String xml = "UNMARSHALLABLE";
@@ -136,16 +137,16 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 				getLogger().trace("Saved object:\n" + xml);
 			}
 		}
-		
+
 		assertNotNull(savedId, "saved identifier");
-		
+
 		// Load
 		getLogger().debug("Loading the persisted sample.");
 		try ( EntityManager loadManager = createEntityManager() )
 		{
 			// Transaction
 			EntityTransaction loadTX = loadManager.getTransaction();
-			
+
 			loadTX.begin();
 			final Object loadedEntity = loadManager.find(savedClass, savedId);
 			loadTX.commit();
@@ -165,7 +166,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		        }
 				getLogger().trace("Loaded object:\n" + xml);
 			}
-			
+
 			getLogger().debug("Checking the sample object identity: Etalon vs Loaded.");
 			checkObjects(etalonSample.getValue(), loadedEntity);
 			checkObject(etalonSample.getValue());
@@ -176,7 +177,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 				getLogger().debug("Checking the sample object identity: Etalon vs Etalon clone.");
 				checkCopyable(etalonSample.getValue());
 			}
-			
+
 			// Deeper check Copyable (CopyTo / Cloneable) and Mergeable, when present.
 			if ( getLogger().isTraceEnabled() )
 			{
@@ -188,7 +189,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			}
 		}
 	}
-	
+
 	private void checkCopyable(Object value)
 	{
 		if ( value instanceof CopyTo )
@@ -207,38 +208,39 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			MergeFrom value2MergeFrom = (MergeFrom) value2;
 			MergeFrom lhsValueMergeFrom = (MergeFrom) value1MergeFrom.createNewInstance();
 			lhsValueMergeFrom.mergeFrom(value1MergeFrom, value2MergeFrom);
-			
+
 			MergeFrom value3MergeFrom = (MergeFrom) value3;
 			MergeFrom rhsValueMergeFrom = (MergeFrom) value1MergeFrom.createNewInstance();
 			rhsValueMergeFrom.mergeFrom(value1MergeFrom, value3MergeFrom);
-			
+
 			checkObjects(lhsValueMergeFrom, rhsValueMergeFrom);
 		}
 	}
-	
+
 	protected void checkObject(final Object obj)
 	{
 		;
 	}
-	
+
 	protected void checkObjects(final Object lhsObject, final Object rhsObject)
 	{
 		final EqualsStrategy strategy = new ExtendedJAXBEqualsStrategy();
 		assertTrue(strategy.equals(new DefaultRootObjectLocator(lhsObject), new DefaultRootObjectLocator(rhsObject),
 			lhsObject, rhsObject, true, true), "Objects NOT equal. Use DEBUG for location details.");
 	}
-	
+
 	protected void generateXmlSchemaValidatorFromDom(JAXBContext context, Unmarshaller unmarshaller)
-		throws IOException, SAXException
+		throws IOException, SAXException, TransformerException
 	{
 		// Generate a Schema Validator from given the JAXB context.
 		SchemaOutputDomResolver sodr = createSchemaOutputDomResolver(context);
+		getLogger().debug("Xml Schema from DOM:\n{}\n", sodr.getSchemaDomNodeString());
 		SchemaFactory schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
 		Schema schemaValidator = schemaFactory.newSchema(sodr.getDomSource());
 		// Configure Marshaller / unmarshaller to use validator.
 		unmarshaller.setSchema(schemaValidator);
 	}
-	
+
 	/**
 	 * This local class represents a sample file's unmarshalled value and optional JAXBElement.
 	 */
@@ -251,7 +253,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		private Object value;
 		public Object getValue() { return value; }
 		public void setValue(Object value) { this.value = value; }
-		
+
 		/**
 		 * Construct with a JAXB unmarshaller and sample file.
 		 * @param unmarshaller A JAXB unmarshaller.

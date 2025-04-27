@@ -43,7 +43,8 @@
 		<module>ek</module>
 		<module>embeddable</module>
 		<module>embeddable-jpa</module>
-		<module>embeddable-jpa-batch</module>
+		<module>embeddable-jpa-batch1</module>
+		<module>embeddable-jpa-batch2</module>
 		<module>eminq</module>
 		<module>enum</module>
 		<module>episodes</module>
@@ -62,6 +63,7 @@
 		<module>po-el-customized</module>
 		<module>po-jaxb</module>
 		<module>polyform</module>
+		<module>publication</module>
 		<module>punit</module>
 		<module>px</module>
 		<module>sbml</module>
