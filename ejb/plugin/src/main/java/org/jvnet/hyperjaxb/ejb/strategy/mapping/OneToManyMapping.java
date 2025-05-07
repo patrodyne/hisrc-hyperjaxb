@@ -42,7 +42,7 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 		createOneToMany$Name(context, fieldOutline, oneToMany);
 		createOneToMany$OrderColumn(context, fieldOutline, oneToMany);
 		createOneToMany$TargetEntity(context, fieldOutline, oneToMany);
-		
+
 		// The @JoinColumn annotation specifies the column to use for joining an entity
 		// association or element collection. On the other hand, the mappedBy attribute
 		// is used to define the referencing side (non-owning side) of the relationship.
@@ -59,7 +59,7 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 		return oneToMany;
 	}
 
-	public void createOneToMany$MappedByMethods(FieldOutline fieldOutline, final OneToMany oneToMany)
+	private void createOneToMany$MappedByMethods(FieldOutline fieldOutline, final OneToMany oneToMany)
 	{
 		if ( fieldOutline.getRawType() instanceof JClass )
 		{
@@ -71,8 +71,11 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 				{
 					JDefinedClass oneSideClass = fieldOutline.parent().implClass;
 					JDefinedClass manySideClass = (JDefinedClass) typeParameters.get(0);
+
 					String mappedBySetterName = "set" + capitalize(oneToMany.getMappedBy());
-					JMethod mappedBySetter = manySideClass.getMethod(mappedBySetterName, new JType[] { oneSideClass });
+					JType[] mappedBySetterTypes = new JType[] { oneSideClass };
+					JMethod mappedBySetter = manySideClass.getMethod(mappedBySetterName, mappedBySetterTypes);
+
 					if ( mappedBySetter != null )
 					{
 						createOneToMany$AfterUnmarshalMethod(oneSideClass, manySideClass, mappedBySetter);
@@ -87,7 +90,7 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 		}
 	}
 
-	public void createOneToMany$AfterUnmarshalMethod(JDefinedClass oneSideClass, JDefinedClass manySideClass, JMethod mappedBySetter)
+	private void createOneToMany$AfterUnmarshalMethod(JDefinedClass oneSideClass, JDefinedClass manySideClass, JMethod mappedBySetter)
 	{
 		// Prepare many-side class references.
 		JCodeModel manySideOwner = manySideClass.owner();
@@ -108,10 +111,10 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 		JVar aumParent = afterUnmarshalMethod.param(Object.class, "parent");
 		JBlock aumBody = afterUnmarshalMethod.body();
 		aumBody.
-			_if(aumParent._instanceof(oneSideClass)).
+			_if(oneSideClass.dotclass().invoke("isAssignableFrom").arg(aumParent.invoke("getClass"))).
 			_then().invoke(mappedBySetter).arg(cast(oneSideClass, aumParent));
 		afterUnmarshalMethod.javadoc()
-			.add("Callback method invoked after unmarshalling XML data into target. ");
+			.add("Callback method invoked after unmarshalling XML data into this entity. ");
 	}
 
 	private void createOneToMany$TieItemMethod(JDefinedClass oneSideClass, JDefinedClass manySideClass, JMethod mappedBySetter)

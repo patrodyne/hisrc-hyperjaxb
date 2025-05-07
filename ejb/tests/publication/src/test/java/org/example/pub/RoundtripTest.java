@@ -36,7 +36,7 @@ public class RoundtripTest
 	{
 		final JAXBContext context = createContext();
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
-		unmarshaller.setListener(new PublicationUL());
+//		unmarshaller.setListener(new PublicationUL());
 
 		// TODO: 'Schema from DOM' does not match actual schema?
 		setValidateXml(false);

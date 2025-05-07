@@ -8,12 +8,12 @@ import jakarta.xml.bind.Unmarshaller.Listener;
 
 /**
  * Publication Unmarshaller Listener
- * 
+ *
  * <p>
  * Register an instance of an implementation of this class with {@link Unmarshaller} to externally
  * listen for unmarshal events.
  * </p>
- * 
+ *
  * <p>
  * This class enables 'before' and 'after' processing of an instance of a Jakarta XML Binding mapped
  * class as XML data is unmarshalled into it. The event callbacks are called when unmarshalling XML
@@ -26,13 +26,13 @@ public class PublicationUL extends Listener
 {
 	/**
 	 * <p>Callback method invoked after unmarshalling XML data into <code>target</code>.</p>
-	 * 
+	 *
 	 * <p>
 	 * This method is invoked after all the properties (except IDREF) are unmarshalled into
 	 * <code>target</code>, but before <code>target</code> is set into its <code>parent</code>
 	 * object.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * <b>Note:</b> If the class of <code>target</code> defines its own <code>afterUnmarshal</code>
 	 * method, the class specific callback method is invoked before this method is invoked.
@@ -48,8 +48,8 @@ public class PublicationUL extends Listener
 		if ( target instanceof Author && parent instanceof Publication )
 		{
 			Author author = (Author) target;
-			Publication publication = (Publication) parent;
-			author.getPublications().add(publication);
+//			Publication publication = (Publication) parent;
+//			author.getPublications().add(publication);
 		}
 	}
 }

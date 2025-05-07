@@ -81,7 +81,7 @@ public class OneToOneMapping implements FieldOutlineMapping<OneToOne>
 		return oneToOne;
 	}
 
-	public void createOneToOne$MappedByMethods(Mapping context, FieldOutline fieldOutline, final OneToOne oneToOne)
+	private void createOneToOne$MappedByMethods(Mapping context, FieldOutline fieldOutline, final OneToOne oneToOne)
 	{
 		if ( fieldOutline.getRawType() instanceof JDefinedClass )
 		{
@@ -89,7 +89,8 @@ public class OneToOneMapping implements FieldOutlineMapping<OneToOne>
 			String mappedBySetterName = "set" + capitalize(oneToOne.getMappedBy());
 
 			JDefinedClass owningSideClass = (JDefinedClass) fieldOutline.getRawType();
-			JMethod mappedBySetter = owningSideClass.getMethod(mappedBySetterName, new JType[] { mappedBySideClass });
+			JType[] mappedBySetterTypes = new JType[] { mappedBySideClass };
+			JMethod mappedBySetter = owningSideClass.getMethod(mappedBySetterName, mappedBySetterTypes);
 
 			if ( mappedBySetter != null )
 			{
@@ -123,7 +124,8 @@ public class OneToOneMapping implements FieldOutlineMapping<OneToOne>
 		// Add mapped-by setter statement and the primary id setter(s)
 		// to the 'afterUnmarshal' method.
 		JBlock aumBody = afterUnmarshalMethod.body();
-		JBlock aumIfParentThen = aumBody._if(aumParent._instanceof(mappedBySideClass))._then();
+		JInvocation aumParentCond = mappedBySideClass.dotclass().invoke("isAssignableFrom").arg(aumParent.invoke("getClass"));
+		JBlock aumIfParentThen = aumBody._if(aumParentCond)._then();
 		JCast mappedBySideCast = cast(mappedBySideClass, aumParent);
 
 		aumIfParentThen.add(invoke(mappedBySetter).arg(mappedBySideCast));
@@ -134,7 +136,7 @@ public class OneToOneMapping implements FieldOutlineMapping<OneToOne>
 			aumIfParentThen.add(idSync);
 
 		afterUnmarshalMethod.javadoc()
-			.add("Callback method invoked after unmarshalling XML data into target. ");
+			.add("Callback method invoked after unmarshalling XML data into this entity. ");
 
 	}
 

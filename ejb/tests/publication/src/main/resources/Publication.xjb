@@ -22,34 +22,38 @@
 
 	<!--  Schema Bindings -->
 	<jaxb:bindings schemaLocation="Publication.xsd" node="/xs:schema">
-
-		<jaxb:bindings node="xs:complexType[@name='Publication']">
-			<!--
-			<anx:removeAnnotation target="class" class="jakarta.persistence.Inheritance"/>
-			<anx:annotate target="class">@jakarta.persistence.DiscriminatorColumn</anx:annotate>
-			-->
-			<jaxb:bindings node="//xs:element[@name='authors']">
-				<hj:many-to-many>
-					<orm:join-table name="PUBLICATION_AUTHOR_JOIN">
-						<orm:join-column name="PUBLICATION_ID" />
-						<orm:inverse-join-column name="AUTHOR_ID" />
-					</orm:join-table>
-				</hj:many-to-many>
-			</jaxb:bindings>
-		</jaxb:bindings>
 	
         <jaxb:bindings node="xs:complexType[@name='Author']">
-			<!--
-			<anx:removeAnnotation target="class" class="jakarta.persistence.Inheritance"/>
-			<anx:annotate target="class">@jakarta.persistence.DiscriminatorColumn</anx:annotate>
-			-->
+			<!-- 
 			<anx:annotate target="class">@jakarta.xml.bind.annotation.XmlType(name = "Author", propOrder = { "firstName", "lastName" })</anx:annotate>
-	        <jaxb:bindings node="//xs:element[@name='publications']">
-				<hj:many-to-many mapped-by="authors"/>
-	            <anx:annotate target="field">@jakarta.xml.bind.annotation.XmlTransient</anx:annotate>
-	            <bas:ignored/>
+			-->
+			<jaxb:bindings node="xs:sequence">
+				<jaxb:bindings node="xs:element[@name='publications']">
+					<jaxb:class ref="org.example.pub.model.Publication"/>
+					<anx:annotate target="field">@jakarta.xml.bind.annotation.XmlIDREF</anx:annotate>
+		            <bas:ignored/>
+					<hj:many-to-many mapped-by="authors"/>
+				</jaxb:bindings>
 			</jaxb:bindings>
         </jaxb:bindings>
+
+		<jaxb:bindings node="xs:complexType[@name='Publication']">
+			<jaxb:bindings node="xs:sequence">
+				<jaxb:bindings node="xs:element[@name='authors']">
+					<jaxb:class ref="org.example.pub.model.Author"/>
+					<anx:annotate target="field">@jakarta.xml.bind.annotation.XmlIDREF</anx:annotate>
+					<hj:many-to-many>
+						<!-- 
+						<orm:join-table name="PUBLICATION_AUTHOR_JOIN">
+							<orm:join-column name="PUBLICATION_ID" />
+							<orm:inverse-join-column name="AUTHOR_ID" />
+						</orm:join-table>
+						-->
+					</hj:many-to-many>
+				</jaxb:bindings>
+				 
+			</jaxb:bindings>
+		</jaxb:bindings>
 
 		<hj:persistence>
 
@@ -60,16 +64,17 @@
             </hj:default-entity>
 
             <hj:default-generated-id
-            	name="Id"
+            	name="Pid"
             	javaType="java.lang.Long"
-            	attributeName="id"
+            	attributeName="pid"
             	schemaType="xsd:long"
             	transient="true"
             >
-                <orm:column name="id"/>
+                <orm:column name="pid"/>
                 <orm:generated-value generator="SEQUENCES" strategy="TABLE"/>
                 <orm:table-generator name="SEQUENCES" table="sequences"
-					pk-column-name="seq_name" value-column-name="seq_next" />
+					pk-column-name="seq_name" value-column-name="seq_last"
+					initial-value="0" allocation-size="1"/>
             </hj:default-generated-id>
 
             <hj:default-generated-version
@@ -95,7 +100,7 @@
                     <orm:cascade-detach />
                 </orm:cascade>
             </hj:default-many-to-one>
-            <hj:default-many-to-many merge="false" fetch="LAZY">
+            <hj:default-many-to-many merge="false" fetch="EAGER">
                 <orm:cascade>
                     <orm:cascade-refresh />
                     <orm:cascade-persist />

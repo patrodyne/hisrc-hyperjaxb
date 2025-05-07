@@ -8,6 +8,8 @@ import static org.jvnet.basicjaxb.util.CustomizationUtils.containsCustomization;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.createCustomization;
 import static org.jvnet.basicjaxb.util.GeneratorContextUtils.generateContextPathAwareClass;
 import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
+import static org.jvnet.hyperjaxb.jpa.Customizations.ONE_TO_MANY_ELEMENT_NAME;
+import static org.jvnet.hyperjaxb.jpa.Customizations.ONE_TO_ONE_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb_annox.plugin.annotate.AnnotatePlugin.ANNOTATE_PROPERTY_FIELD_QNAME;
 
 import java.io.File;
@@ -360,7 +362,8 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		{
 			Element elm = cpc.element;
 			QName elmQName = new QName(elm.getNamespaceURI(), elm.getLocalName());
-			postProcessOneToProperty(classInfo, propertyInfo, elm, elmQName);
+			if ( ONE_TO_ONE_ELEMENT_NAME.equals(elmQName) || ONE_TO_MANY_ELEMENT_NAME.equals(elmQName) )
+				postProcessOneToProperty(classInfo, propertyInfo, elm, elmQName);
 		}
 	}
 

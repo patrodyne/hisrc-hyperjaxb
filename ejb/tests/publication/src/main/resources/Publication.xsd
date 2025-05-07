@@ -21,13 +21,38 @@
 	<xs:element name="Author" type="tns:Author" />
 	<xs:element name="Blog" type="tns:Blog" />
 	<xs:element name="Book" type="tns:Book" />
+	<xs:element name="Publication" type="tns:Publication" />
+	
+	<!-- Root element -->
+	<xs:element name="Collection">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:Author" maxOccurs="unbounded"/>
+				<xs:choice maxOccurs="unbounded">
+					<xs:element ref="tns:Blog" />
+					<xs:element ref="tns:Book" />
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="Author">
+		<xs:sequence>
+			<xs:element name="firstName" type="xs:string" />
+			<xs:element name="lastName" type="xs:string" />
+			<xs:element name="publications" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="xid" type="xs:ID"/>
+	</xs:complexType>
 
 	<xs:complexType name="Publication" abstract="false">
 		<xs:sequence>
 			<xs:element name="title" type="xs:string" />
-			<xs:element name="authors" type="tns:Author" minOccurs="0" maxOccurs="unbounded" />
 			<xs:element name="publishingDate" type="xs:dateTime" />
+			<xs:element name="authors" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
+		<xs:attribute name="xid" type="xs:ID"/>
 	</xs:complexType>
 
 	<xs:complexType name="Blog">
@@ -48,14 +73,6 @@
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
-	</xs:complexType>
-
-	<xs:complexType name="Author">
-		<xs:sequence>
-			<xs:element name="firstName" type="xs:string" />
-			<xs:element name="lastName" type="xs:string" />
-			<xs:element name="publications" type="tns:Publication" minOccurs="0" maxOccurs="unbounded" />
-		</xs:sequence>
 	</xs:complexType>
 
 </xs:schema>

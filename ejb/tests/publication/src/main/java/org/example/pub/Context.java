@@ -76,7 +76,7 @@ abstract public class Context
 		if ( unmarshaller == null )
 		{
 			setUnmarshaller(getJaxbContext().createUnmarshaller());
-			getUnmarshaller().setListener(new PublicationUL());
+//			getUnmarshaller().setListener(new PublicationUL());
 		}
 		return unmarshaller;
 	}

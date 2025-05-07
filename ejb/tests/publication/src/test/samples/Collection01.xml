@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Collection name="Collection01"
+	xmlns="http://example.org/pub/model"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://example.org/pub/model ../../main/resources/Publication.xsd"
+>
+	
+	<!-- Each Author defines an XML identifier (xid) that can be referenced	-->
+	<!-- one or more times within this document.							-->
+	
+	<Author xid="A01">
+		<firstName>Mark</firstName>
+		<lastName>Taylor, Sr.</lastName>
+		<publications>B01</publications>
+	</Author>
+	
+	<!-- Each Book or Blog can contain one or more Author(s) using	-->
+	<!-- the Author's XML identifier (xid).								-->
+	 
+	<Book xid="B01">
+		<title>Taylor Made (Book)</title>
+		<publishingDate>2020-10-21T14:30:10.000Z</publishingDate>
+		<authors>A01</authors>
+		<pages>199</pages>
+	</Book>
+	
+</Collection>
+
