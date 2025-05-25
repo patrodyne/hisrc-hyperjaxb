@@ -8,9 +8,11 @@ import static org.jvnet.basicjaxb.util.CustomizationUtils.containsCustomization;
 import static org.jvnet.basicjaxb.util.CustomizationUtils.createCustomization;
 import static org.jvnet.basicjaxb.util.GeneratorContextUtils.generateContextPathAwareClass;
 import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
+import static org.jvnet.hyperjaxb.jpa.Customizations.MANY_TO_MANY_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.ONE_TO_MANY_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.ONE_TO_ONE_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb_annox.plugin.annotate.AnnotatePlugin.ANNOTATE_PROPERTY_FIELD_QNAME;
+import static org.jvnet.hyperjaxb_annox.plugin.annotate.AnnotatePlugin.CUSTOMIZATION_ELEMENT_QNAMES;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +27,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.xml.namespace.QName;
@@ -55,14 +58,20 @@ import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;
 import com.sun.tools.xjc.generator.bean.field.FieldRendererFactory;
 import com.sun.tools.xjc.model.CClassInfo;
+import com.sun.tools.xjc.model.CClassRef;
 import com.sun.tools.xjc.model.CCustomizations;
+import com.sun.tools.xjc.model.CElement;
+import com.sun.tools.xjc.model.CElementInfo;
 import com.sun.tools.xjc.model.CElementPropertyInfo;
 import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
 import com.sun.tools.xjc.model.CPluginCustomization;
 import com.sun.tools.xjc.model.CPropertyInfo;
+import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.Model;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
@@ -71,6 +80,7 @@ import com.sun.tools.xjc.reader.xmlschema.BGMBuilder;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
 
 import jakarta.activation.MimeType;
+import jakarta.xml.bind.annotation.XmlIDREF;
 import jakarta.xml.bind.annotation.XmlTransient;
 
 /**
@@ -207,6 +217,10 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 	{
 		this.primaryIdMap = primaryIdMap;
 	}
+
+	private Outline outline;
+	public Outline getOutline() { return outline; }
+	public void setOutline(Outline outline) { this.outline = outline; }
 
 	/**
 	 * Generate a code model for a context-path aware JDefinedClass and
@@ -348,7 +362,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 			postProcessClassInfo(model, classInfo);
 	}
 
-	// Post process CClassInfo's properties. Handle 'mappedBy', etc.
+	// Post process CClassInfo's properties. Handle 'mapped-by', etc.
 	private void postProcessClassInfo(Model model, CClassInfo classInfo)
 	{
 		for (CPropertyInfo propertyInfo : classInfo.getProperties())
@@ -358,20 +372,195 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 	// Post process Model to generate the 'mappedBy' target field on the owning side.
 	private void postProcessPropertyInfo(Model model, CClassInfo classInfo, CPropertyInfo propertyInfo)
 	{
-		for ( CPluginCustomization cpc : propertyInfo.getCustomizations() )
+		@SuppressWarnings("unchecked")
+		List<CPluginCustomization> safeCustomizations =
+			(List<CPluginCustomization>) propertyInfo.getCustomizations().clone();
+		for ( CPluginCustomization cpc : safeCustomizations )
 		{
 			Element elm = cpc.element;
 			QName elmQName = new QName(elm.getNamespaceURI(), elm.getLocalName());
 			if ( ONE_TO_ONE_ELEMENT_NAME.equals(elmQName) || ONE_TO_MANY_ELEMENT_NAME.equals(elmQName) )
-				postProcessOneToProperty(classInfo, propertyInfo, elm, elmQName);
+				postProcessOneToProperty(classInfo, propertyInfo, elm);
+			else if ( MANY_TO_MANY_ELEMENT_NAME.equals(elmQName) )
+				postProcessManyToManyProperty(classInfo, propertyInfo, elm);
+		}
+		if ( propertyInfo instanceof CReferencePropertyInfo )
+		{
+			CReferencePropertyInfo refPropertyInfo = (CReferencePropertyInfo) propertyInfo;
+			for ( CElement element : refPropertyInfo.getElements() )
+			{
+				for ( CPluginCustomization cpc : element.getCustomizations() )
+				{
+					Element elm = cpc.element;
+					QName elmQName = new QName(elm.getNamespaceURI(), elm.getLocalName());
+					if ( MANY_TO_MANY_ELEMENT_NAME.equals(elmQName) )
+					{
+						String mappedByLocation = toLocation(refPropertyInfo.getLocator());
+						String refHint = propertyInfo.getName(true) + " item type";
+						getLogger().warn("{} (many-to-many): Consider using <jaxb:class ref=\"'{}'\"/>",
+							mappedByLocation, refHint);
+						cpc.markAsAcknowledged();
+					}
+				}
+			}
 		}
 	}
 
-	private static final Set<QName> INVOKE_ANNOTATE_QNAME_SET = org.jvnet.hyperjaxb_annox.plugin.annotate.AnnotatePlugin.CUSTOMIZATION_ELEMENT_QNAMES;
+	// Store annotation results
+	private class HasAnnotation
+	{
+		boolean invokeAnnotationXmlIDREF = false;
+		boolean invokeAnnotationXmlTransient = false;
+		boolean ignoredElement = false;
+	}
+
+	private HasAnnotation hasAnnotation(CCustomizations customizations)
+	{
+		HasAnnotation hasAnnotation = new HasAnnotation();
+		for ( CPluginCustomization cpc : customizations )
+		{
+			Element elm = cpc.element;
+			QName elmQName = new QName(elm.getNamespaceURI(), elm.getLocalName());
+			if ( INVOKE_ANNOTATE_QNAME_SET.contains(elmQName) )
+			{
+				String acName = elm.getAttribute("class");
+				String elmText = elm.getTextContent();
+
+				String xrName = XmlIDREF.class.getName();
+				if ( (acName != null) && acName.trim().equals(xrName) )
+					hasAnnotation.invokeAnnotationXmlIDREF = true;
+				else if ( (elmText != null) && elmText.trim().startsWith("@"+xrName) )
+					hasAnnotation.invokeAnnotationXmlIDREF = true;
+
+				String xtName = XmlTransient.class.getName();
+				if ( (acName != null) && acName.trim().equals(xtName) )
+					hasAnnotation.invokeAnnotationXmlTransient = true;
+				else if ( (elmText != null) && elmText.trim().startsWith("@"+xtName) )
+					hasAnnotation.invokeAnnotationXmlTransient = true;
+			}
+			else if ( IGNORED_ELEMENT_NAME.equals(elmQName) )
+				hasAnnotation.ignoredElement = true;
+		}
+		return hasAnnotation;
+	}
+
+	// bas:ignored (http://jvnet.org/basicjaxb/xjc/ignored) avoids cyclic hashing, etc.
+	private void addBasicIgnore(HasAnnotation hasAnnotation, CElementPropertyInfo epi)
+	{
+		if ( !hasAnnotation.ignoredElement )
+		{
+			CPluginCustomization cpcIgnored = createCustomization
+			(
+				IGNORED_ELEMENT_NAME,
+				epi.getLocator()
+			);
+			epi.getCustomizations().add(cpcIgnored);
+			hasAnnotation.ignoredElement = true;
+		}
+	}
+
+	// @XmlIDREF avoids cyclic marshalling, etc.
+	private void addXmlIDREF(HasAnnotation hasAnnotation, CElementPropertyInfo epi)
+	{
+		if ( !hasAnnotation.invokeAnnotationXmlIDREF )
+		{
+			CPluginCustomization cpcInvokeAnnotation = createCustomization
+			(
+				ANNOTATE_PROPERTY_FIELD_QNAME,
+				epi.getLocator()
+			);
+			cpcInvokeAnnotation.element.setTextContent("@"+XmlIDREF.class.getName());
+			epi.getCustomizations().add(cpcInvokeAnnotation);
+			hasAnnotation.invokeAnnotationXmlIDREF = true;
+		}
+	}
+
+	// @XmlTransient avoids cyclic marshalling, etc.
+	private void addXmlTransient(HasAnnotation hasAnnotation, CElementPropertyInfo epi)
+	{
+		if ( !hasAnnotation.invokeAnnotationXmlTransient )
+		{
+			CPluginCustomization cpcInvokeAnnotation = createCustomization
+			(
+				ANNOTATE_PROPERTY_FIELD_QNAME,
+				epi.getLocator()
+			);
+			cpcInvokeAnnotation.element.setTextContent("@"+XmlTransient.class.getName());
+			epi.getCustomizations().add(cpcInvokeAnnotation);
+			hasAnnotation.invokeAnnotationXmlTransient = true;
+		}
+	}
+
+	private void postProcessManyToManyProperty(CClassInfo mappedBySideClassInfo,
+		CPropertyInfo mappedBySidePropertInfo, Element mappedBySideElement)
+	{
+		// Is this a bidirectional mapping?
+		String mappedBy = mappedBySideElement.getAttribute("mapped-by");
+		if ( (mappedBy != null) && !mappedBy.isBlank() )
+		{
+			HasAnnotation hasAnnotation = new HasAnnotation();
+			if ( mappedBySidePropertInfo instanceof CElementPropertyInfo )
+			{
+				CElementPropertyInfo mappedBySideElmPropInfo = (CElementPropertyInfo) mappedBySidePropertInfo;
+				hasAnnotation = hasAnnotation(mappedBySideElmPropInfo.getCustomizations());
+				addXmlIDREF(hasAnnotation, mappedBySideElmPropInfo);
+			}
+
+			// Check for an unambiguous type for the owner side.
+			if ( mappedBySidePropertInfo.ref().size() == 1)
+			{
+				// 	Iterate the only TypeInfo that this 'mapped-by' side attribute references.
+				Iterator<? extends CTypeInfo> typeInfos = mappedBySidePropertInfo.ref().iterator();
+				if ( typeInfos.hasNext() )
+				{
+					// Get the unambiguous 'owner-side' type.
+					NType ownerSideType = typeInfos.next().getType();
+					CElementPropertyInfo ownerSideElmPropInfo = null;
+					if ( ownerSideType instanceof CClassRef )
+					{
+						// Check for an existing 'mappedBy' property bound to an element.
+						CClassRef ownerSideClassRef = (CClassRef) ownerSideType;
+						String ownerSideClassName = ownerSideClassRef.fullName();
+						Map<NClass, CClassInfo> modelBeans = mappedBySideClassInfo.model.beans();
+						CClassInfo ownerSideClassInfo = null;
+						for ( Entry<NClass, CClassInfo> modelBeanEntry : modelBeans.entrySet() )
+						{
+							String beanFullName = modelBeanEntry.getKey().fullName();
+							if ( ownerSideClassName.equals(beanFullName) )
+							{
+								ownerSideClassInfo = modelBeanEntry.getValue();
+								break;
+							}
+						}
+
+						CPropertyInfo ownerSidePropertyInfo = ownerSideClassInfo.getProperty(mappedBy);
+						if ( ownerSidePropertyInfo instanceof CElementPropertyInfo )
+						{
+							ownerSideElmPropInfo = (CElementPropertyInfo) ownerSidePropertyInfo;
+							hasAnnotation = hasAnnotation(ownerSideElmPropInfo.getCustomizations());
+						}
+					}
+					else if ( ownerSideType instanceof CElementInfo )
+					{
+						CElementInfo ownerSideElementInfo = (CElementInfo) ownerSideType;
+						hasAnnotation = hasAnnotation(ownerSideElementInfo.getCustomizations());
+					}
+
+					if ( ownerSideElmPropInfo != null )
+					{
+						// If needed, add customizations
+						addXmlIDREF(hasAnnotation, ownerSideElmPropInfo);
+						addBasicIgnore(hasAnnotation, ownerSideElmPropInfo);
+					}
+				}
+			}
+		}
+	}
+
+	private static final Set<QName> INVOKE_ANNOTATE_QNAME_SET =	CUSTOMIZATION_ELEMENT_QNAMES;
 
 	private void postProcessOneToProperty(CClassInfo mappedBySideClassInfo,
-		CPropertyInfo mappedBySidePropertInfo, Element mappedBySideElement,
-		QName oneToName)
+		CPropertyInfo mappedBySidePropertInfo, Element mappedBySideElement)
 	{
 		// Is this a bidirectional mapping?
 		String mappedBy = mappedBySideElement.getAttribute("mapped-by");
@@ -380,17 +569,15 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 			// Check for an unambiguous type for the owner side.
 			if ( mappedBySidePropertInfo.ref().size() == 1)
 			{
-				// 	Iterate list of TypeInfo(s) that this 'mapped-by' side attribute references.
+				// 	Iterate the only TypeInfo that this 'mapped-by' side attribute references.
 				Iterator<? extends CTypeInfo> typeInfos = mappedBySidePropertInfo.ref().iterator();
 				if ( typeInfos.hasNext() )
 				{
 					// Get the unambiguous 'owner-side' type.
 					CClassInfo ownerSideType = (CClassInfo) typeInfos.next().getType();
 
-					boolean hasInvokeAnnotationXmlTransient = false;
-					boolean hasIgnoredElement = false;
-					@SuppressWarnings("unused")
-					boolean hasToOneElement = false;
+					// Initial annotation status is false, by default.
+					HasAnnotation hasAnnotation = new HasAnnotation();
 
 					// Check for an existing 'mappedBy' property bound to an element.
 					CPropertyInfo ownerSidePropertyInfo = ownerSideType.getProperty(mappedBy);
@@ -407,14 +594,12 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 								String acName = elm.getAttribute("class");
 								String elmText = elm.getTextContent();
 								if ( (acName != null) && acName.trim().equals(xtName) )
-									hasInvokeAnnotationXmlTransient = true;
+									hasAnnotation.invokeAnnotationXmlTransient = true;
 								else if ( (elmText != null) && elmText.trim().startsWith("@"+xtName) )
-									hasInvokeAnnotationXmlTransient = true;
+									hasAnnotation.invokeAnnotationXmlTransient = true;
 							}
 							else if ( IGNORED_ELEMENT_NAME.equals(elmQName) )
-								hasIgnoredElement = true;
-							else if ( oneToName.equals(elmQName) )
-								hasToOneElement = true;
+								hasAnnotation.ignoredElement = true;
 						}
 					}
 					else
@@ -446,28 +631,9 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 						ownerSideType.addProperty(ownerSideElementInfo);
 					}
 
-					// @XmlTransient avoids cyclic marshalling, etc.
-					if ( !hasInvokeAnnotationXmlTransient )
-					{
-						CPluginCustomization cpcInvokeAnnotation = createCustomization
-						(
-							ANNOTATE_PROPERTY_FIELD_QNAME,
-							ownerSideElementInfo.getLocator()
-						);
-						cpcInvokeAnnotation.element.setTextContent("@"+XmlTransient.class.getName());
-						ownerSideElementInfo.getCustomizations().add(cpcInvokeAnnotation);
-					}
-
-					// bas:ignored (http://jvnet.org/basicjaxb/xjc/ignored) avoids cyclic hashing, etc.
-					if ( !hasIgnoredElement )
-					{
-						CPluginCustomization cpcIgnored = createCustomization
-						(
-							IGNORED_ELEMENT_NAME,
-							ownerSideElementInfo.getLocator()
-						);
-						ownerSideElementInfo.getCustomizations().add(cpcIgnored);
-					}
+					// If needed, add customizations
+					addXmlTransient(hasAnnotation, ownerSideElementInfo);
+					addBasicIgnore(hasAnnotation, ownerSideElementInfo);
 				}
 			}
 		}
@@ -560,9 +726,11 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 	@Override
 	public boolean run(Outline outline) throws Exception
 	{
-		final Ring ring = Ring.begin();
+		// Set outline for convenient access.
+		setOutline(outline);
 
 		// Process com.sun.tools.xjc.model.Model
+		final Ring ring = Ring.begin();
 		try
 		{
 			Ring.add(getBgmBuilder());

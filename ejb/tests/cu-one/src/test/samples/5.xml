@@ -1,4 +1,7 @@
-<five xmlns="urn:test">
+<five xmlns="urn:test"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:test ../../main/resources/schema.xsd"
+>
 	<id>2005-01-02T12:13:14</id>
 	<value>test</value>
 </five>

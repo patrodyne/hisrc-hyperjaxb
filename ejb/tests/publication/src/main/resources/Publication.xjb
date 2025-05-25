@@ -29,27 +29,69 @@
 			-->
 			<jaxb:bindings node="xs:sequence">
 				<jaxb:bindings node="xs:element[@name='publications']">
+				
+					<!-- Note: This 'class' declaration causes XJC to omit the '@XmlIDREF' annotation; -->
+					<!--       but, it narrows the generated 'List<>' to the given reference type of   -->
+					<!--       'Publication' thus avoiding 'JAXBElement<Publication>'.                 -->
 					<jaxb:class ref="org.example.pub.model.Publication"/>
-					<anx:annotate target="field">@jakarta.xml.bind.annotation.XmlIDREF</anx:annotate>
-		            <bas:ignored/>
+					
+		            <!--
+		            	Configure this 'publications' collection to be mapped by
+		            	the 'authors' property on the Publication side.
+		            -->
 					<hj:many-to-many mapped-by="authors"/>
+					
+					<!-- Note: This 'annotate' declaration restores the '@XmlIDREF' annotation. -->
+					<!-- Note: It is added by EjbPlugin for 'many-to-many' associations, when needed.
+					<anx:annotate target="field">@jakarta.xml.bind.annotation.XmlIDREF</anx:annotate>
+		            -->
+					
 				</jaxb:bindings>
 			</jaxb:bindings>
         </jaxb:bindings>
 
 		<jaxb:bindings node="xs:complexType[@name='Publication']">
 			<jaxb:bindings node="xs:sequence">
+			
+				<jaxb:bindings node="xs:element[@name='author']">
+					<!--  Note: When 'author' is NOT a list, this 'baseType' declaration causes -->
+					<!--        XJC to generate a '@XmlIDREF' annotation; and the non-list item -->
+					<!--        type is narrowed to the given 'baseType' value (no JAXElement). -->
+					<!--        When it IS a list (unbounded), the narrowed type is wrapped in  -->
+					<!--        a JAXElement instance.                                          -->
+					<jaxb:property>
+						<jaxb:baseType name="org.example.pub.model.Author" />			
+					 </jaxb:property>
+					 
+					<!-- Note: Avoid recursive hashCode, equals, toString, etc. -->
+		            <bas:ignored/>
+				</jaxb:bindings>
+
 				<jaxb:bindings node="xs:element[@name='authors']">
+					<!-- Note: This 'class' declaration causes XJC to omit '@XmlIDREF' annotation; -->
+					<!--       but, it narrows the generated 'List<>' to the given reference type  -->
+					<!--       of 'Author' thus avoiding 'JAXBElement<Author>'.                    -->
 					<jaxb:class ref="org.example.pub.model.Author"/>
-					<anx:annotate target="field">@jakarta.xml.bind.annotation.XmlIDREF</anx:annotate>
+					
 					<hj:many-to-many>
-						<!-- 
+						<!-- OPTIONAL
 						<orm:join-table name="PUBLICATION_AUTHOR_JOIN">
 							<orm:join-column name="PUBLICATION_ID" />
 							<orm:inverse-join-column name="AUTHOR_ID" />
 						</orm:join-table>
 						-->
 					</hj:many-to-many>
+					
+					<!-- Note: This 'annotate' declaration restores the '@XmlIDREF' annotation. -->
+					<!-- Note: It is added by EjbPlugin for 'many-to-many' associations, when needed.
+					<anx:annotate target="field">@jakarta.xml.bind.annotation.XmlIDREF</anx:annotate>
+					-->
+					
+					<!-- Note: Avoid recursive hashCode, equals, toString, etc. -->
+					<!-- Note: It is added by EjbPlugin for 'many-to-many' associations, when needed.
+		            <bas:ignored/>
+					-->
+		            
 				</jaxb:bindings>
 				 
 			</jaxb:bindings>

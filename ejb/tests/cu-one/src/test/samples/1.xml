@@ -1,4 +1,7 @@
-<one xmlns="urn:test">
+<one xmlns="urn:test"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:test ../../main/resources/schema.xsd"
+>
 	<one-to-many-default value="a"/>
 	<one-to-many-default value="b"/>
 	<one-to-many-join-column>

@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	elementFormDefault="qualified"
 	xmlns:tns="http://example.org/pub/model"
 	targetNamespace="http://example.org/pub/model"
-	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
-	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	jaxb:extensionBindingPrefixes="hj orm"
-	jaxb:version="3.0"
+	elementFormDefault="qualified"
 >
 
 	<xs:annotation>
@@ -50,6 +45,7 @@
 		<xs:sequence>
 			<xs:element name="title" type="xs:string" />
 			<xs:element name="publishingDate" type="xs:dateTime" />
+			<xs:element name="author" type="xs:IDREF" minOccurs="1" maxOccurs="1" />
 			<xs:element name="authors" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 		<xs:attribute name="xid" type="xs:ID"/>

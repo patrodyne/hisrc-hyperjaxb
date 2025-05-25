@@ -1,4 +1,7 @@
-<two xmlns="urn:test" value="z">
+<two xmlns="urn:test" value="z"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:test ../../main/resources/schema.xsd"
+>
 	<many-to-one-default value="a"/>
 	<many-to-one-join-column value="b"/>
 	<many-to-one-join-table value="c"/>

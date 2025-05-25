@@ -20,6 +20,7 @@
 	<Book xid="B01">
 		<title>Taylor Made (Book)</title>
 		<publishingDate>2020-10-21T14:30:10.000Z</publishingDate>
+		<author>A01</author>
 		<authors>A01</authors>
 		<pages>199</pages>
 	</Book>

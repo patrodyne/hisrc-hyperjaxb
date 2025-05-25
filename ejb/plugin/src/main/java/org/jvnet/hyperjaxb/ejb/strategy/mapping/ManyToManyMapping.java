@@ -1,9 +1,12 @@
 package org.jvnet.hyperjaxb.ejb.strategy.mapping;
 
-import static com.sun.codemodel.JExpr.cast;
+import static com.sun.codemodel.JExpr._null;
+import static com.sun.codemodel.JExpr._this;
 import static com.sun.codemodel.JExpr.invoke;
+import static com.sun.codemodel.JExpr.ref;
+import static com.sun.codemodel.JMod.PUBLIC;
 import static org.jvnet.basicjaxb.lang.StringUtils.capitalize;
-import static org.jvnet.basicjaxb.util.FieldAccessorUtils.getter;
+import static org.jvnet.basicjaxb.util.CodeModelUtils.groupMethods;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,19 +15,21 @@ import org.jvnet.hyperjaxb.xjc.model.CTypeInfoUtils;
 
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JClass;
-import com.sun.codemodel.JCodeModel;
+import com.sun.codemodel.JConditional;
 import com.sun.codemodel.JDefinedClass;
+import com.sun.codemodel.JFieldRef;
+import com.sun.codemodel.JForEach;
 import com.sun.codemodel.JMethod;
-import com.sun.codemodel.JMod;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
+import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
+import com.sun.tools.xjc.outline.Outline;
 
 import ee.jakarta.xml.ns.persistence.orm.ManyToMany;
-import jakarta.xml.bind.Unmarshaller;
 
 public class ManyToManyMapping implements FieldOutlineMapping<ManyToMany>
 {
@@ -41,12 +46,12 @@ public class ManyToManyMapping implements FieldOutlineMapping<ManyToMany>
 		// is used to define the referencing side (non-owning side) of the relationship.
 
 		// Join table are not used for 'mapped-by'
-//		if ( manyToMany.getMappedBy() != null )
-//		{
-//			manyToMany.setJoinTable(null);
-//			createManyToMany$MappedByMethods(fieldOutline, manyToMany);
-//		}
-//		else
+		if ( manyToMany.getMappedBy() != null )
+		{
+			manyToMany.setJoinTable(null);
+			createManyToMany$MappedByMethods(fieldOutline, manyToMany);
+		}
+		else
 			createManyToMany$JoinTable(context, fieldOutline, manyToMany);
 
 		return manyToMany;
@@ -60,56 +65,115 @@ public class ManyToManyMapping implements FieldOutlineMapping<ManyToMany>
 			List<JClass> typeParameters = valueType.getTypeParameters();
 			if ( !typeParameters.isEmpty() )
 			{
-				if ( typeParameters.get(0) instanceof JDefinedClass )
+				// Infer target type and name.
+				// Note: Type is A JDirectClass from 'jaxb:class ref="..."'.
+				JClass targetType = typeParameters.get(0);
+				String targetSideClassName = targetType.fullName();
+
+				// Attempt to resolve the target side defined class
+				JDefinedClass targetSideClass = null;
+				Outline outline = fieldOutline.parent().parent();
+				for ( ClassOutline co : outline.getClasses() )
 				{
-					JDefinedClass mappedBySideClass = fieldOutline.parent().implClass;
-					JDefinedClass owningSideClass = (JDefinedClass) typeParameters.get(0);
-
-					JMethod owningGetter = getter(fieldOutline);
-					if ( owningGetter != null )
+					JDefinedClass coi = co.implClass;
+					if ( targetSideClassName.equals(coi.fullName()) )
 					{
-						createManyToMany$AfterUnmarshalMethod(owningSideClass, mappedBySideClass, owningGetter);
+						targetSideClass = coi;
+						break;
 					}
+				}
 
-					String mappedByGetterName = "get" + capitalize(manyToMany.getMappedBy());
-					JMethod mappedByGetter = owningSideClass.getMethod(mappedByGetterName, new JType[0]);
-					if ( mappedByGetter != null )
+				if ( targetSideClass != null )
+				{
+					String targetSidePropName = capitalize(manyToMany.getMappedBy());
+					String targetGetterName = "get" + targetSidePropName;
+					JMethod targetGetter = targetSideClass.getMethod(targetGetterName, new JType[0]);
+
+					if ( targetGetter != null )
 					{
-						createManyToMany$AfterUnmarshalMethod(mappedBySideClass, owningSideClass, mappedByGetter);
+						JDefinedClass sourceSideClass = fieldOutline.parent().implClass;
+						String sourceSidePropName = fieldOutline.getPropertyInfo().getName(true);
+						String sourceGetterName = "get" + sourceSidePropName;
+						JMethod sourceGetter = sourceSideClass.getMethod(sourceGetterName, new JType[0]);
+
+						// source to target
+						createManyToMany$ActionItemMethod("remove", sourceSideClass, sourceGetter, sourceSidePropName, targetSideClass, targetGetter, false);
+						createManyToMany$ActionItemMethod("remove", sourceSideClass, sourceGetter, sourceSidePropName, targetSideClass, targetGetter, true);
+						createManyToMany$ActionItemMethod("add", sourceSideClass, sourceGetter, sourceSidePropName, targetSideClass, targetGetter, false);
+						createManyToMany$ActionItemMethod("add", sourceSideClass, sourceGetter, sourceSidePropName, targetSideClass, targetGetter, true);
+						createManyToMany$TieItemMethod(sourceSideClass, sourceGetter, sourceSidePropName, targetSideClass, targetGetter);
+
+						// target to source
+						createManyToMany$ActionItemMethod("remove", targetSideClass, targetGetter, targetSidePropName, sourceSideClass, sourceGetter, false);
+						createManyToMany$ActionItemMethod("remove", targetSideClass, targetGetter, targetSidePropName, sourceSideClass, sourceGetter, true);
+						createManyToMany$ActionItemMethod("add", targetSideClass, targetGetter, targetSidePropName, sourceSideClass, sourceGetter, false);
+						createManyToMany$ActionItemMethod("add", targetSideClass, targetGetter, targetSidePropName, sourceSideClass, sourceGetter, true);
+						createManyToMany$TieItemMethod(targetSideClass, targetGetter, targetSidePropName, sourceSideClass, sourceGetter);
 					}
 				}
 			}
 		}
 	}
 
-	private void createManyToMany$AfterUnmarshalMethod(JDefinedClass mappedBySideClass, JDefinedClass owningSideClass,
-		JMethod mappedByGetter)
+	private void createManyToMany$TieItemMethod(JDefinedClass sourceSideClass, JMethod sourceGetter,
+		String sourceSidePropName, JDefinedClass targetSideClass, JMethod targetGetter)
 	{
-		// Prepare owning-side class references.
-		JCodeModel owningSideOwner = owningSideClass.owner();
-		JClass refUnmarshaller = owningSideOwner.ref(Unmarshaller.class);
-		JClass refObject = owningSideOwner.ref(Object.class);
+		String tieItemName = "tie" + sourceSidePropName;
+		JMethod tieItemMethod = sourceSideClass.method(PUBLIC, sourceSideClass, tieItemName);
 
-		// Look for an existing "afterUnmarshal" method
-		JMethod afterUnmarshalMethod =
-			owningSideClass.getMethod("afterUnmarshal", new JType[] {refUnmarshaller, refObject});
+		tieItemMethod.javadoc().add("ManyToMany tie {@code " + targetSideClass.name() + "} item(s) method.");
+		{
+			JBlock tieItemMethodBody = tieItemMethod.body();
+			{
+				JFieldRef refItem = ref("item");
+				JForEach forEach = tieItemMethodBody.forEach(targetSideClass, "item", invoke(sourceGetter));
+				forEach.body()
+					._if(invoke(refItem.invoke(targetGetter),"contains").arg(_this()).not())
+					._then().invoke(refItem.invoke(targetGetter), "add").arg(_this());
+			}
+			tieItemMethodBody._return(_this());
+		}
 
-		// Otherwise, add a new method to the owning-side class.
-		if ( afterUnmarshalMethod == null  )
-			afterUnmarshalMethod = owningSideClass.method(JMod.NONE, owningSideOwner.VOID, "afterUnmarshal");
-
-		// Add mapped-by setter statement to the method.
-		@SuppressWarnings("unused")
-		JVar aumTarget = afterUnmarshalMethod.param(Unmarshaller.class, "target");
-		JVar aumParent = afterUnmarshalMethod.param(Object.class, "parent");
-		JBlock aumBody = afterUnmarshalMethod.body();
-
-		aumBody.
-			_if(mappedBySideClass.dotclass().invoke("isAssignableFrom").arg(aumParent.invoke("getClass"))).
-			_then().invoke(invoke(mappedByGetter), "add").arg(cast(mappedBySideClass, aumParent));
-		afterUnmarshalMethod.javadoc()
-			.add("Callback method invoked after unmarshalling XML data into this entity. ");
+		groupMethods(sourceSideClass, sourceGetter, tieItemMethod);
 	}
+
+	private void createManyToMany$ActionItemMethod(String action, JDefinedClass sourceSideClass, JMethod sourceGetter,
+        String sourceSidePropName, JDefinedClass targetSideClass, JMethod targetGetter, boolean varargs)
+    {
+        String actionItemName = action + sourceSidePropName;
+        JMethod actionItemMethod = sourceSideClass.method(PUBLIC, sourceSideClass, actionItemName);
+
+        JVar parmItems = null;
+        if ( varargs )
+        {
+            parmItems = actionItemMethod.varParam(targetSideClass, "items");
+            actionItemMethod.javadoc().addParam(parmItems).append("A vararg(s) of entities to "+action+".");
+        }
+        else
+        {
+            JClass targetSideCollection = sourceSideClass.owner().ref(Collection.class).narrow(targetSideClass);
+            parmItems = actionItemMethod.param(targetSideCollection, "items");
+            actionItemMethod.javadoc().addParam(parmItems).append("A collection of entities to "+action+".");
+        }
+
+        actionItemMethod.javadoc().add("ManyToMany "+action+" {@code " + targetSideClass.name() + "} item(s) method.");
+        {
+            JBlock actionItemMethodBody = actionItemMethod.body();
+            {
+                JConditional cond = actionItemMethodBody._if(parmItems.ne(_null()));
+                {
+                    JForEach forEach = cond._then().forEach(targetSideClass, "item", parmItems);
+                    JFieldRef refItem = ref("item");
+                    forEach.body()
+                        .add(invoke(invoke(sourceGetter), action).arg(refItem))
+                        .add(invoke(refItem.invoke(targetGetter), action).arg(_this()));
+                }
+            }
+            actionItemMethodBody._return(_this());
+        }
+
+        groupMethods(sourceSideClass, sourceGetter, actionItemMethod);
+    }
 
 	public void createManyToMany$Name(Mapping context, FieldOutline fieldOutline, final ManyToMany manyToMany)
 	{

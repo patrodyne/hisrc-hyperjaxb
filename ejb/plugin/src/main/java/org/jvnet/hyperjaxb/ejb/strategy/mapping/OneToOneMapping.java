@@ -94,8 +94,9 @@ public class OneToOneMapping implements FieldOutlineMapping<OneToOne>
 
 			if ( mappedBySetter != null )
 			{
+				String mappedBySidePropName = fieldOutline.getPropertyInfo().getName(true);
 				createOneToOne$AfterUnmarshalMethod(context, mappedBySideClass, owningSideClass, mappedBySetter);
-				createOneToOne$TieItemMethod(context, mappedBySideClass, owningSideClass, mappedBySetter);
+				createOneToOne$TieItemMethod(context, mappedBySideClass, mappedBySidePropName, owningSideClass, mappedBySetter);
 			}
 		}
 	}
@@ -137,33 +138,34 @@ public class OneToOneMapping implements FieldOutlineMapping<OneToOne>
 
 		afterUnmarshalMethod.javadoc()
 			.add("Callback method invoked after unmarshalling XML data into this entity. ");
-
 	}
 
 	private void createOneToOne$TieItemMethod(Mapping context, JDefinedClass mappedBySideClass,
-		JDefinedClass owningSideClass, JMethod mappedBySetter)
+		String mappedBySidePropName, JDefinedClass owningSideClass, JMethod mappedBySetter)
 	{
-		String getItemName = "get" + owningSideClass.name();
-		String tieItemName = "tie" + owningSideClass.name();
-
+		String getItemName = "get" + mappedBySidePropName;
 		JMethod getItemMethod = mappedBySideClass.getMethod(getItemName, new JType[0]);
-		JMethod tieItemMethod = mappedBySideClass.method(PUBLIC, mappedBySideClass, tieItemName);
+		if ( getItemMethod != null )
 		{
-			JBlock tieItemMethodBody = tieItemMethod.body();
-			JInvocation invokeGetItem = invoke(getItemMethod);
-			tieItemMethodBody.add(invokeGetItem.invoke(mappedBySetter).arg(_this()));
+			String tieItemName = "tie" + mappedBySidePropName;
+			JMethod tieItemMethod = mappedBySideClass.method(PUBLIC, mappedBySideClass, tieItemName);
+			{
+				JBlock tieItemMethodBody = tieItemMethod.body();
+				JInvocation invokeGetItem = invoke(getItemMethod);
+				tieItemMethodBody.add(invokeGetItem.invoke(mappedBySetter).arg(_this()));
 
-			// getMyEntityData().setId(getId());
-			List<JInvocation> idSyncList =
-				createOneToOne$IdSyncList(context, mappedBySideClass, invokeGetItem, owningSideClass, false);
-			for ( JInvocation idSync : idSyncList )
-				tieItemMethodBody.add(idSync);
+				// getMyEntityData().setId(getId());
+				List<JInvocation> idSyncList =
+					createOneToOne$IdSyncList(context, mappedBySideClass, invokeGetItem, owningSideClass, false);
+				for ( JInvocation idSync : idSyncList )
+					tieItemMethodBody.add(idSync);
 
-			tieItemMethodBody._return(_this());
+				tieItemMethodBody._return(_this());
+			}
+			tieItemMethod.javadoc().add("OneToOne tie the {@code " + owningSideClass.name() + "} item to this entity.");
+
+			groupMethods(mappedBySideClass, getItemMethod, tieItemMethod);
 		}
-		tieItemMethod.javadoc().add("OneToOne tie the {@code " + owningSideClass.name() + "} item to this entity.");
-
-		groupMethods(mappedBySideClass, getItemMethod, tieItemMethod);
 	}
 
 	private List<JInvocation> createOneToOne$IdSyncList(Mapping context, JDefinedClass mappedBySideClass,

@@ -13,7 +13,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Root;
 import jakarta.xml.bind.JAXBException;
 
@@ -73,9 +72,9 @@ public class Main extends Context
 		persist(getCollection(), true);
 
         // Select Collection by name, if any.
-//		Collection collection = selectCollection(getCollection().getName());
+		Collection selection = selectCollection(getCollection().getName());
 
-        String xmlCollection = marshalToString(collection);
+        String xmlCollection = marshalToString(selection);
         getLogger().info("Collection: {}\n\n{}\n", getCollection().getName(), xmlCollection);
 	}
 
@@ -109,11 +108,11 @@ public class Main extends Context
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaQuery<Collection> cq = cb.createQuery(Collection.class);
 
+			Root<Collection> fromCollection = cq.from(Collection.class);
 			// Force eager loading of authors and publications using an inner join.
 			// See https://thorben-janssen.com/5-ways-to-initialize-lazy-relations-and-when-to-use-them/
-			Root<Collection> fromCollection = cq.from(Collection.class);
-			fromCollection.fetch(Collection_.AUTHOR, JoinType.INNER);
-			fromCollection.fetch(Collection_.BLOG_OR_BOOK, JoinType.INNER);
+			// fromCollection.fetch(Collection_.AUTHOR, JoinType.INNER);
+			// fromCollection.fetch(Collection_.BLOG_OR_BOOK, JoinType.INNER);
 
 			cq.select(fromCollection)
 				.where(cb.equal(fromCollection.get(Collection_.NAME), name));

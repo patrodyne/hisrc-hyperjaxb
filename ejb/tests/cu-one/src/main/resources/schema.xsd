@@ -92,12 +92,15 @@
 			</xs:element>
 
 			<xs:element name="one-to-many-children" type="test:two" minOccurs="0" maxOccurs="unbounded">
+				<!-- 
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:one-to-many mapped-by="manyToOneParent" merge="false"/>
 					</xs:appinfo>
 				</xs:annotation>
+				 -->
 			</xs:element>
+
 			<xs:element name="one-to-many-basic" type="xs:string" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:appinfo>
@@ -172,7 +175,6 @@
 				</xs:annotation>
 			</xs:element>
 
-
 			<xs:element name="many-to-one-parent" type="test:one" minOccurs="0">
 				<xs:annotation>
 					<xs:appinfo>
@@ -182,7 +184,6 @@
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>
-
 
 		</xs:sequence>
 		<xs:attribute name="value" type="xs:string" use="optional"/>

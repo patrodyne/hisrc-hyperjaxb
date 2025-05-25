@@ -78,12 +78,13 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 
 					if ( mappedBySetter != null )
 					{
+						String oneSidePropName = fieldOutline.getPropertyInfo().getName(true);
 						createOneToMany$AfterUnmarshalMethod(oneSideClass, manySideClass, mappedBySetter);
-						createOneToMany$RemoveItemMethod(oneSideClass, manySideClass, mappedBySetter, false);
-						createOneToMany$RemoveItemMethod(oneSideClass, manySideClass, mappedBySetter, true);
-						createOneToMany$AddItemMethod(oneSideClass, manySideClass, mappedBySetter, false);
-						createOneToMany$AddItemMethod(oneSideClass, manySideClass, mappedBySetter, true);
-						createOneToMany$TieItemMethod(oneSideClass, manySideClass, mappedBySetter);
+						createOneToMany$RemoveItemMethod(oneSideClass, oneSidePropName, manySideClass, mappedBySetter, false);
+						createOneToMany$RemoveItemMethod(oneSideClass, oneSidePropName, manySideClass, mappedBySetter, true);
+						createOneToMany$AddItemMethod(oneSideClass, oneSidePropName, manySideClass, mappedBySetter, false);
+						createOneToMany$AddItemMethod(oneSideClass, oneSidePropName, manySideClass, mappedBySetter, true);
+						createOneToMany$TieItemMethod(oneSideClass, oneSidePropName, manySideClass, mappedBySetter);
 					}
 				}
 			}
@@ -117,103 +118,112 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 			.add("Callback method invoked after unmarshalling XML data into this entity. ");
 	}
 
-	private void createOneToMany$TieItemMethod(JDefinedClass oneSideClass, JDefinedClass manySideClass, JMethod mappedBySetter)
+	private void createOneToMany$TieItemMethod(JDefinedClass oneSideClass, String oneSidePropName,
+		JDefinedClass manySideClass, JMethod mappedBySetter)
 	{
-		String getItemName = "get" + manySideClass.name();
-		String tieItemName = "tie" + manySideClass.name();
-
+		String getItemName = "get" + oneSidePropName;
 		JMethod getItemMethod = oneSideClass.getMethod(getItemName, new JType[0]);
-		JMethod tieItemMethod = oneSideClass.method(PUBLIC, oneSideClass, tieItemName);
+		if ( getItemMethod != null )
 		{
-			JBlock tieItemMethodBody = tieItemMethod.body();
+			String tieItemName = "tie" + oneSidePropName;
+			JMethod tieItemMethod = oneSideClass.method(PUBLIC, oneSideClass, tieItemName);
 			{
-				JForEach forEach = tieItemMethodBody.forEach(manySideClass, "item", invoke(getItemMethod));
-				JFieldRef refItem = ref("item");
-				forEach.body().add(refItem.invoke(mappedBySetter).arg(_this()));
-			}
-			tieItemMethodBody._return(_this());
-		}
-		tieItemMethod.javadoc().add("OneToMany tie each {@code " + manySideClass.name() + "} item to this entity.");
-
-		groupMethods(oneSideClass, getItemMethod, tieItemMethod);
-	}
-
-	private void createOneToMany$AddItemMethod(JDefinedClass oneSideClass, JDefinedClass manySideClass, JMethod mappedBySetter, boolean varargs)
-	{
-		String getItemName = "get" + manySideClass.name();
-		String addItemName = "add" + manySideClass.name();
-
-		JMethod getItemMethod = oneSideClass.getMethod(getItemName, new JType[0]);
-		JMethod addItemMethod = oneSideClass.method(PUBLIC, oneSideClass, addItemName);
-
-		JVar parmItems = null;
-		if ( varargs )
-		{
-			parmItems = addItemMethod.varParam(manySideClass, "items");
-			addItemMethod.javadoc().addParam(parmItems).append("A vararg(s) of many-side entities to add.");
-		}
-		else
-		{
-			JClass manySideCollection= oneSideClass.owner().ref(Collection.class).narrow(manySideClass);
-			parmItems = addItemMethod.param(manySideCollection, "items");
-			addItemMethod.javadoc().addParam(parmItems).append("A collection of many-side entities to add.");
-		}
-
-		addItemMethod.javadoc().add("OneToMany add {@code " + manySideClass.name() + "} item(s) method.");
-		{
-			JBlock addItemMethodBody = addItemMethod.body();
-			{
-				JConditional cond = addItemMethodBody._if(parmItems.ne(_null()));
+				JBlock tieItemMethodBody = tieItemMethod.body();
 				{
-					JForEach forEach = cond._then().forEach(manySideClass, "item", parmItems);
+					JForEach forEach = tieItemMethodBody.forEach(manySideClass, "item", invoke(getItemMethod));
 					JFieldRef refItem = ref("item");
-					forEach.body().add(invoke(invoke(getItemMethod), "add").arg(refItem));
 					forEach.body().add(refItem.invoke(mappedBySetter).arg(_this()));
 				}
+				tieItemMethodBody._return(_this());
 			}
-			addItemMethodBody._return(_this());
-		}
+			tieItemMethod.javadoc().add("OneToMany tie each {@code " + manySideClass.name() + "} item to this entity.");
 
-		groupMethods(oneSideClass, getItemMethod, addItemMethod);
+			groupMethods(oneSideClass, getItemMethod, tieItemMethod);
+		}
 	}
 
-	private void createOneToMany$RemoveItemMethod(JDefinedClass oneSideClass, JDefinedClass manySideClass, JMethod mappedBySetter, boolean varargs)
+	private void createOneToMany$AddItemMethod(JDefinedClass oneSideClass, String oneSidePropName,
+		JDefinedClass manySideClass, JMethod mappedBySetter, boolean varargs)
 	{
-		String getItemName = "get" + manySideClass.name();
-		String remItemName = "remove" + manySideClass.name();
-
+		String getItemName = "get" + oneSidePropName;
 		JMethod getItemMethod = oneSideClass.getMethod(getItemName, new JType[0]);
-		JMethod remItemMethod = oneSideClass.method(PUBLIC, oneSideClass, remItemName);
+		if ( getItemMethod != null )
+		{
+			String addItemName = "add" + oneSidePropName;
+			JMethod addItemMethod = oneSideClass.method(PUBLIC, oneSideClass, addItemName);
 
-		JVar parmItems = null;
-		if ( varargs )
-		{
-			parmItems = remItemMethod.varParam(manySideClass, "items");
-			remItemMethod.javadoc().addParam(parmItems).append("A vararg(s) of many-side entities to remove.");
-		}
-		else
-		{
-			JClass manySideCollection= oneSideClass.owner().ref(Collection.class).narrow(manySideClass);
-			parmItems = remItemMethod.param(manySideCollection, "items");
-			remItemMethod.javadoc().addParam(parmItems).append("A collection of many-side entities to remove.");
-		}
-
-		remItemMethod.javadoc().add("OneToMany remove {@code " + manySideClass.name() + "} item(s) method.");
-		{
-			JBlock remItemMethodBody = remItemMethod.body();
+			JVar parmItems = null;
+			if ( varargs )
 			{
-				JConditional cond = remItemMethodBody._if(parmItems.ne(_null()));
-				{
-					JForEach forEach = cond._then().forEach(manySideClass, "item", parmItems);
-					JFieldRef refItem = ref("item");
-					forEach.body().add(invoke(invoke(getItemMethod), "remove").arg(refItem));
-					forEach.body().add(refItem.invoke(mappedBySetter).arg(_null()));
-				}
+				parmItems = addItemMethod.varParam(manySideClass, "items");
+				addItemMethod.javadoc().addParam(parmItems).append("A vararg(s) of many-side entities to add.");
 			}
-			remItemMethodBody._return(_this());
-		}
+			else
+			{
+				JClass manySideCollection= oneSideClass.owner().ref(Collection.class).narrow(manySideClass);
+				parmItems = addItemMethod.param(manySideCollection, "items");
+				addItemMethod.javadoc().addParam(parmItems).append("A collection of many-side entities to add.");
+			}
 
-		groupMethods(oneSideClass, getItemMethod, remItemMethod);
+			addItemMethod.javadoc().add("OneToMany add {@code " + manySideClass.name() + "} item(s) method.");
+			{
+				JBlock addItemMethodBody = addItemMethod.body();
+				{
+					JConditional cond = addItemMethodBody._if(parmItems.ne(_null()));
+					{
+						JForEach forEach = cond._then().forEach(manySideClass, "item", parmItems);
+						JFieldRef refItem = ref("item");
+						forEach.body().add(invoke(invoke(getItemMethod), "add").arg(refItem));
+						forEach.body().add(refItem.invoke(mappedBySetter).arg(_this()));
+					}
+				}
+				addItemMethodBody._return(_this());
+			}
+
+			groupMethods(oneSideClass, getItemMethod, addItemMethod);
+		}
+	}
+
+	private void createOneToMany$RemoveItemMethod(JDefinedClass oneSideClass, String oneSidePropName,
+		JDefinedClass manySideClass, JMethod mappedBySetter, boolean varargs)
+	{
+		String getItemName = "get" + oneSidePropName;
+		JMethod getItemMethod = oneSideClass.getMethod(getItemName, new JType[0]);
+		if ( getItemMethod != null )
+		{
+			String remItemName = "remove" + oneSidePropName;
+			JMethod remItemMethod = oneSideClass.method(PUBLIC, oneSideClass, remItemName);
+
+			JVar parmItems = null;
+			if ( varargs )
+			{
+				parmItems = remItemMethod.varParam(manySideClass, "items");
+				remItemMethod.javadoc().addParam(parmItems).append("A vararg(s) of many-side entities to remove.");
+			}
+			else
+			{
+				JClass manySideCollection= oneSideClass.owner().ref(Collection.class).narrow(manySideClass);
+				parmItems = remItemMethod.param(manySideCollection, "items");
+				remItemMethod.javadoc().addParam(parmItems).append("A collection of many-side entities to remove.");
+			}
+
+			remItemMethod.javadoc().add("OneToMany remove {@code " + manySideClass.name() + "} item(s) method.");
+			{
+				JBlock remItemMethodBody = remItemMethod.body();
+				{
+					JConditional cond = remItemMethodBody._if(parmItems.ne(_null()));
+					{
+						JForEach forEach = cond._then().forEach(manySideClass, "item", parmItems);
+						JFieldRef refItem = ref("item");
+						forEach.body().add(invoke(invoke(getItemMethod), "remove").arg(refItem));
+						forEach.body().add(refItem.invoke(mappedBySetter).arg(_null()));
+					}
+				}
+				remItemMethodBody._return(_this());
+			}
+
+			groupMethods(oneSideClass, getItemMethod, remItemMethod);
+		}
 	}
 
 	public void createOneToMany$Name(Mapping context, FieldOutline fieldOutline, final OneToMany oneToMany)
@@ -224,9 +234,7 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 	public void createOneToMany$OrderColumn(Mapping context, FieldOutline fieldOutline, final OneToMany source)
 	{
 		if ( source.getOrderColumn() != null )
-		{
 			context.getAssociationMapping().createOrderColumn(context, fieldOutline, source.getOrderColumn());
-		}
 	}
 
 	public void createOneToMany$TargetEntity(Mapping context, FieldOutline fieldOutline, final OneToMany oneToMany)

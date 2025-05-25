@@ -53,3 +53,5 @@ fi
 # ./build-JXX.sh -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -DdryRun=false release:clean
 # ./build-JXX.sh -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -DdryRun=false release:prepare
 # ./build-JXX.sh -DskipTests=true -Dorg.jvnet.hyperjaxb.todoLogLevel=DEBUG -DdryRun=false release:perform
+#
+# NEW: https://central.sonatype.org/publish/publish-portal-guide/
