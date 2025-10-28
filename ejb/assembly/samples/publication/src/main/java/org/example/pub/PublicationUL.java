@@ -38,7 +38,7 @@ public class PublicationUL extends Listener
 	 * method, the class specific callback method is invoked before this method is invoked.
 	 * </p>
 	 *
-	 * @param target Non-null instance of JAXB mapped class after to unmarshalling into it.
+	 * @param target Non-null instance of JAXB mapped class after unmarshalling into it.
 	 * @param parent Instance of JAXB mapped class that will reference <code>target</code>,
 	 *               <code>null</code> when <code>target</code> is root element.
 	 */
