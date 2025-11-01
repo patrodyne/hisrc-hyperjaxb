@@ -8,8 +8,8 @@
 	Ref: /hisrc-hyperjaxb-ejb-schemas-customizations/src/main/resources/customizations.xsd
 -->
 <hj:persistence
-	xmlns="http://jvnet.org/hyperjaxb/jpa"
-	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns="urn:jvnet.org:hyperjaxb:jpa"
+	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 >

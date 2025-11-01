@@ -6,7 +6,7 @@
 	jaxb:extensionBindingPrefixes="xjc"
 >
 
-	<jaxb:bindings scd="x-schema::tns" xmlns:tns="http://jvnet.org/hyperjaxb/jpa">
+	<jaxb:bindings scd="x-schema::tns" xmlns:tns="urn:jvnet.org:hyperjaxb:jpa">
 		<jaxb:globalBindings typesafeEnumBase="xs:NMTOKEN"/>
 	</jaxb:bindings>
 

@@ -4,7 +4,7 @@
 	elementFormDefault="qualified"
 	xmlns:tns="http://example.org/pub/model"
 	targetNamespace="http://example.org/pub/model"
-	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	jaxb:extensionBindingPrefixes="hj orm"

@@ -3,10 +3,10 @@
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-	xmlns:anx="http://jvnet.org/basicjaxb/xjc/annox"
-	xmlns:bas="http://jvnet.org/basicjaxb/xjc"
+	xmlns:anx="urn:jvnet.org:basicjaxb:xjc:annox"
+	xmlns:bas="urn:jvnet.org:basicjaxb:xjc"
 	jaxb:extensionBindingPrefixes="hj orm anx bas"
 >
 

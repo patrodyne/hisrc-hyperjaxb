@@ -5,7 +5,7 @@
 	xmlns="urn:astm-org:CCR"
 	xmlns:ccr="urn:astm-org:CCR"
 	targetNamespace="urn:astm-org:CCR"
-	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
 	jaxb:extensionBindingPrefixes="hj"
 >

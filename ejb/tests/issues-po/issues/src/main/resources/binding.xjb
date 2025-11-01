@@ -4,8 +4,8 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
-	xmlns:inheritance="http://jvnet.org/basicjaxb/xjc/inheritance"
+	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
+	xmlns:inheritance="urn:jvnet.org:basicjaxb:xjc:inheritance"
 	jaxb:extensionBindingPrefixes="hj orm xjc inheritance"
 	xmlns:test="urn:test"
 >

@@ -5,7 +5,7 @@
 	elementFormDefault="qualified" 
 	attributeFormDefault="unqualified" 
 
-	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 
 	version="1.0"

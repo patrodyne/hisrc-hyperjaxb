@@ -444,7 +444,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		return hasAnnotation;
 	}
 
-	// bas:ignored (http://jvnet.org/basicjaxb/xjc/ignored) avoids cyclic hashing, etc.
+	// bas:ignored (urn:jvnet.org:basicjaxb:xjc:ignored) avoids cyclic hashing, etc.
 	private void addBasicIgnore(HasAnnotation hasAnnotation, CElementPropertyInfo epi)
 	{
 		if ( !hasAnnotation.ignoredElement )

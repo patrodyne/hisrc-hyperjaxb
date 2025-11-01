@@ -1,6 +1,6 @@
 <xs:schema targetNamespace="http://internal.innoq.com/pl"
 	xmlns="http://internal.innoq.com/pl" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	jaxb:extensionBindingPrefixes="xjc hj orm" jaxb:version="3.0"
 	attributeFormDefault="unqualified" elementFormDefault="qualified">

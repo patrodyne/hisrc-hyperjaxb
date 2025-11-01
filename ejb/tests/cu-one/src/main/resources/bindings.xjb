@@ -2,9 +2,9 @@
 <jaxb:bindings jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-	xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox"
+	xmlns:annox="urn:jvnet.org:basicjaxb:xjc:annox"
 	jaxb:extensionBindingPrefixes="hj orm annox"
 >
 

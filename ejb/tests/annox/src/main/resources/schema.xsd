@@ -4,11 +4,11 @@
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	jaxb:version="3.0"
 
-	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 
-	xmlns:annox="http://jvnet.org/basicjaxb/xjc/annox" 
-	xmlns:hs="http://jvnet.org/basicjaxb/xjc/annox/org.hibernate.search.annotations"
-	xmlns:ha="http://jvnet.org/basicjaxb/xjc/annox/org.hibernate.annotations"
+	xmlns:annox="urn:jvnet.org:basicjaxb:xjc:annox" 
+	xmlns:hs="urn:jvnet.org:basicjaxb:xjc:annox:org.hibernate.search.annotations"
+	xmlns:ha="urn:jvnet.org:basicjaxb:xjc:annox:org.hibernate.annotations"
 
 	jaxb:extensionBindingPrefixes="hj annox">
 

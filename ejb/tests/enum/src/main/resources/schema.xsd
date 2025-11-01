@@ -6,7 +6,7 @@
 
   jaxb:version="3.0"
   xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-  xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+  xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
   xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
   elementFormDefault="qualified"
   attributeFormDefault="unqualified"

@@ -1,7 +1,7 @@
 <hj:persistence
-	xmlns="http://jvnet.org/hyperjaxb/jpa"
+	xmlns="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:hj="http://jvnet.org/hyperjaxb/jpa"
+	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm">
 	<hj:default-entity class="##default">
 	</hj:default-entity>

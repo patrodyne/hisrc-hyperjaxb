@@ -30,7 +30,7 @@ import jakarta.xml.bind.Marshaller;
 
 public class Customizations
 {
-	public static final String NAMESPACE_URI = "http://jvnet.org/hyperjaxb/jpa";
+	public static final String NAMESPACE_URI = "urn:jvnet.org:hyperjaxb:jpa";
 	public static final String JPA_NAMESPACE_URI = "https://jakarta.ee/xml/ns/persistence";
 	public static final String ORM_NAMESPACE_URI = "https://jakarta.ee/xml/ns/persistence/orm";
 	public static final Set<String> NAMESPACES;
@@ -97,7 +97,7 @@ public class Customizations
 	public static final QName BASIC_ELEMENT_NAME = hj("basic");
 	public static final QName EMBEDDED_ELEMENT_NAME = hj("embedded");
 	
-	public static QName GENERATED_ELEMENT_NAME = new QName("http://jvnet.org/basicjaxb/xjc", "generated");
+	public static QName GENERATED_ELEMENT_NAME = new QName("urn:jvnet.org:basicjaxb:xjc", "generated");
 	//
 	public static final QName ENTITY_ELEMENT_NAME = hj("entity");
 	public static final QName MAPPED_SUPERCLASS_ELEMENT_NAME = hj("mapped-superclass");
