@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.patrodyne.jvnet</groupId>
 	<artifactId>hisrc-hyperjaxb-project</artifactId>
-	<version>2.2.2-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>HiSrc HyperJAXB</name>
 	<description>HiSrc HyperJAXB is an open source project which provides JPA relational persistence for JAXB objects.</description>
@@ -101,10 +101,10 @@
 		<hibernate-series.version>6.4.4.Final</hibernate-series.version>
 		<hibernate-javadoc.version>6.4</hibernate-javadoc.version>
 		<HikariCP.version>5.1.0</HikariCP.version>
-		<hisrc-basicjaxb-annox-parser.version>2.2.2-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
-		<hisrc-basicjaxb.version>2.2.2-SNAPSHOT</hisrc-basicjaxb.version>
-		<hisrc-higherjaxb-maven-plugin.version>2.2.2-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
-		<hisrc-hyperjaxb-annox-plugin.version>2.2.2-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
+		<hisrc-basicjaxb-annox-parser.version>3.0.0-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
+		<hisrc-basicjaxb.version>3.0.0-SNAPSHOT</hisrc-basicjaxb.version>
+		<hisrc-higherjaxb-maven-plugin.version>3.0.0-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
+		<hisrc-hyperjaxb-annox-plugin.version>3.0.0-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
 		<h2database.version>2.2.224</h2database.version>
 		<javassist.version>3.30.2-GA</javassist.version>
 		<jpa-api.version>3.1.0</jpa-api.version>
