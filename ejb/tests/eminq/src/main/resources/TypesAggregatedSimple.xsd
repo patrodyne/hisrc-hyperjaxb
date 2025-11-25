@@ -75,9 +75,12 @@
 			</xs:element>
 		</xs:all>
 		<xs:attribute name="id" use="required" type="xs:long">
+		<!-- 
+		<hj:id><orm:generated-value strategy="IDENTITY" /></hj:id>
+		 -->
 			<xs:annotation>
 				<xs:appinfo>
-					<hj:id><orm:generated-value strategy="IDENTITY" /></hj:id>
+					<hj:id/>
 				</xs:appinfo>
 			</xs:annotation>
 		</xs:attribute>

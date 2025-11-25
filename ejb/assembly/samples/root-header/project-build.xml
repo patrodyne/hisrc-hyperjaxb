@@ -18,7 +18,9 @@
 			<include name="antlr4-runtime-*.jar"/>
 			<include name="jakarta.xml.bind-api-*.jar"/>
 			<include name="jakarta.persistence-api-*.jar"/>
+			<include name="jboss-logging-*.jar"/>
 			<include name="hibernate-core-*.jar"/>
+			<include name="hibernate-models-*.jar"/>
 			<include name="hibernate-jpamodelgen-*.jar"/>
 			<include name="hisrc-basicjaxb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
@@ -51,6 +53,7 @@
 			<include name="org.eclipse.persistence.extension-*.jar"/>
 			<include name="hibernate-commons-annotations-*.jar"/>
 			<include name="hibernate-core-*.jar"/>
+			<include name="hibernate-models-*.jar"/>
 			<include name="jakarta.activation-api-*.jar"/>
 			<include name="jakarta.activation-*.jar"/>
 			<include name="jakarta.persistence-api-*.jar"/>
@@ -90,6 +93,7 @@
 			<include name="jakarta.annotation-api-*.jar"/>
 			<include name="jakarta.el-api-*.jar"/>
 			<include name="jakarta.enterprise.cdi-api-*.jar"/>
+			<include name="jakarta.enterprise.cdi-el-api-*.jar"/>
 			<include name="jakarta.enterprise.lang-model-*.jar"/>
 			<include name="jakarta.inject-api-*.jar"/>
 			<include name="jakarta.interceptor-api-*.jar"/>
@@ -106,7 +110,7 @@
 			<include name="jboss-classfilewriter-*.jar"/>
 			<include name="jboss-logging-*.jar"/>
 			<include name="jboss-logging-annotations-*.jar"/>
-			<include name="jboss-logging-processor-*.jar"/>
+			<include name="jboss-logging-jpamodelgen-*.jar"/>
 
 			<include name="jcl-over-slf4j-*.jar"/>
 			<include name="relaxng-datatype-*.jar"/>

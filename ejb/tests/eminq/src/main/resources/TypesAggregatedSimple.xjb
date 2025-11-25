@@ -25,7 +25,7 @@
 		</jaxb:schemaBindings>
 
 		<hj:persistence>
-			<hj:default-generated-id>
+			<hj:default-generated-id transient="true">
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
 		</hj:persistence>

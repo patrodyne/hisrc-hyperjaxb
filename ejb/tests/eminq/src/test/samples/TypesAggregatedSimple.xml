@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<p:PlanunertGruppeElement xmlns:p="http://internal.innoq.com/pl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://internal.innoq.com/pl TypesAggregatedSimple.xsd ">
+<p:PlanunertGruppeElement
+	xmlns:p="http://internal.innoq.com/pl"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://internal.innoq.com/pl ../../main/resources/TypesAggregatedSimple.xsd "
+>
   <p:planwertGruppe id="1">
     <p:produktKategoriePlanwertGruppe>
       <p:anlass>408</p:anlass>

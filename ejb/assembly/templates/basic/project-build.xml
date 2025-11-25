@@ -47,6 +47,7 @@
 			<include name="org.eclipse.persistence.extension-*.jar"/>
 			<include name="hibernate-commons-annotations-*.jar"/>
 			<include name="hibernate-core-*.jar"/>
+			<include name="hibernate-models-*.jar"/>
 			<include name="jakarta.activation-api-*.jar"/>
 			<include name="jakarta.activation-*.jar"/>
 			<include name="jakarta.persistence-api-*.jar"/>
@@ -87,6 +88,7 @@
 			<include name="jakarta.annotation-api-*.jar"/>
 			<include name="jakarta.el-api-*.jar"/>
 			<include name="jakarta.enterprise.cdi-api-*.jar"/>
+			<include name="jakarta.enterprise.cdi-el-api-*.jar"/>
 			<include name="jakarta.enterprise.lang-model-*.jar"/>
 			<include name="jakarta.inject-api-*.jar"/>
 			<include name="jakarta.interceptor-api-*.jar"/>

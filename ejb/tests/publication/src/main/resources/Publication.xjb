@@ -75,9 +75,9 @@
 					
 					<hj:many-to-many>
 						<!-- OPTIONAL
-						<orm:join-table name="PUBLICATION_AUTHOR_JOIN">
-							<orm:join-column name="PUBLICATION_ID" />
-							<orm:inverse-join-column name="AUTHOR_ID" />
+						<orm:join-table name="PUBLICATION_AUTHOR">
+							<orm:join-column name="PUBLICATIONS_PID" />
+							<orm:inverse-join-column name="AUTHORS_PID" />
 						</orm:join-table>
 						-->
 					</hj:many-to-many>

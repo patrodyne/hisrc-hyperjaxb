@@ -6,76 +6,74 @@ import static java.sql.Connection.TRANSACTION_READ_UNCOMMITTED;
 import static java.sql.Connection.TRANSACTION_REPEATABLE_READ;
 import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
 import static org.hibernate.cache.jcache.MissingCacheStrategy.interpretSetting;
-import static org.hibernate.cfg.AvailableSettings.ALLOW_JTA_TRANSACTION_ACCESS;
-import static org.hibernate.cfg.AvailableSettings.ALLOW_UPDATE_OUTSIDE_TRANSACTION;
-import static org.hibernate.cfg.AvailableSettings.AUTOCOMMIT;
-import static org.hibernate.cfg.AvailableSettings.AUTO_CLOSE_SESSION;
-import static org.hibernate.cfg.AvailableSettings.AUTO_EVICT_COLLECTION_CACHE;
-import static org.hibernate.cfg.AvailableSettings.BATCH_FETCH_STYLE;
-import static org.hibernate.cfg.AvailableSettings.BATCH_VERSIONED_DATA;
-import static org.hibernate.cfg.AvailableSettings.CACHE_REGION_FACTORY;
-import static org.hibernate.cfg.AvailableSettings.CACHE_REGION_PREFIX;
-import static org.hibernate.cfg.AvailableSettings.CHECK_NULLABILITY;
-import static org.hibernate.cfg.AvailableSettings.CONNECTION_HANDLING;
-import static org.hibernate.cfg.AvailableSettings.CONNECTION_PROVIDER;
 import static org.hibernate.cfg.AvailableSettings.CUSTOM_ENTITY_DIRTINESS_STRATEGY;
-import static org.hibernate.cfg.AvailableSettings.DEFAULT_BATCH_FETCH_SIZE;
-import static org.hibernate.cfg.AvailableSettings.DEFAULT_CACHE_CONCURRENCY_STRATEGY;
-import static org.hibernate.cfg.AvailableSettings.DEFAULT_CATALOG;
-import static org.hibernate.cfg.AvailableSettings.DEFAULT_SCHEMA;
-import static org.hibernate.cfg.AvailableSettings.DIALECT;
-import static org.hibernate.cfg.AvailableSettings.DRIVER;
-import static org.hibernate.cfg.AvailableSettings.FLUSH_BEFORE_COMPLETION;
-import static org.hibernate.cfg.AvailableSettings.FORMAT_SQL;
-import static org.hibernate.cfg.AvailableSettings.GENERATE_STATISTICS;
-import static org.hibernate.cfg.AvailableSettings.HBM2DDL_AUTO;
-import static org.hibernate.cfg.AvailableSettings.HBM2DDL_CONNECTION;
-import static org.hibernate.cfg.AvailableSettings.HBM2DDL_DATABASE_ACTION;
-import static org.hibernate.cfg.AvailableSettings.HBM2DDL_SCRIPTS_ACTION;
-import static org.hibernate.cfg.AvailableSettings.HBM2DDL_SCRIPTS_CREATE_TARGET;
-import static org.hibernate.cfg.AvailableSettings.HBM2DDL_SCRIPTS_DROP_TARGET;
-import static org.hibernate.cfg.AvailableSettings.INTERCEPTOR;
-import static org.hibernate.cfg.AvailableSettings.ISOLATION;
-import static org.hibernate.cfg.AvailableSettings.JPAQL_STRICT_COMPLIANCE;
-import static org.hibernate.cfg.AvailableSettings.JPA_JDBC_URL;
-import static org.hibernate.cfg.AvailableSettings.JPA_JTA_DATASOURCE;
-import static org.hibernate.cfg.AvailableSettings.JPA_NON_JTA_DATASOURCE;
-import static org.hibernate.cfg.AvailableSettings.JPA_SHARED_CACHE_MODE;
-import static org.hibernate.cfg.AvailableSettings.JPA_SHARED_CACHE_RETRIEVE_MODE;
-import static org.hibernate.cfg.AvailableSettings.JPA_SHARED_CACHE_STORE_MODE;
-import static org.hibernate.cfg.AvailableSettings.JTA_CACHE_TM;
-import static org.hibernate.cfg.AvailableSettings.JTA_CACHE_UT;
-import static org.hibernate.cfg.AvailableSettings.JTA_PLATFORM;
-import static org.hibernate.cfg.AvailableSettings.JTA_PLATFORM_RESOLVER;
-import static org.hibernate.cfg.AvailableSettings.JTA_TRACK_BY_THREAD;
-import static org.hibernate.cfg.AvailableSettings.MAX_FETCH_DEPTH;
-import static org.hibernate.cfg.AvailableSettings.MULTI_TENANT_IDENTIFIER_RESOLVER;
-import static org.hibernate.cfg.AvailableSettings.ORDER_INSERTS;
-import static org.hibernate.cfg.AvailableSettings.ORDER_UPDATES;
-import static org.hibernate.cfg.AvailableSettings.PASS;
-import static org.hibernate.cfg.AvailableSettings.POOL_SIZE;
-import static org.hibernate.cfg.AvailableSettings.PREFER_USER_TRANSACTION;
-import static org.hibernate.cfg.AvailableSettings.QUERY_CACHE_FACTORY;
-import static org.hibernate.cfg.AvailableSettings.QUERY_STARTUP_CHECKING;
-import static org.hibernate.cfg.AvailableSettings.SESSION_FACTORY_NAME;
-import static org.hibernate.cfg.AvailableSettings.SESSION_FACTORY_NAME_IS_JNDI;
-import static org.hibernate.cfg.AvailableSettings.SESSION_SCOPED_INTERCEPTOR;
-import static org.hibernate.cfg.AvailableSettings.SHOW_SQL;
-import static org.hibernate.cfg.AvailableSettings.STATEMENT_BATCH_SIZE;
-import static org.hibernate.cfg.AvailableSettings.STATEMENT_FETCH_SIZE;
-import static org.hibernate.cfg.AvailableSettings.STATEMENT_INSPECTOR;
-import static org.hibernate.cfg.AvailableSettings.URL;
-import static org.hibernate.cfg.AvailableSettings.USER;
-import static org.hibernate.cfg.AvailableSettings.USE_DIRECT_REFERENCE_CACHE_ENTRIES;
-import static org.hibernate.cfg.AvailableSettings.USE_GET_GENERATED_KEYS;
 import static org.hibernate.cfg.AvailableSettings.USE_IDENTIFIER_ROLLBACK;
-import static org.hibernate.cfg.AvailableSettings.USE_MINIMAL_PUTS;
-import static org.hibernate.cfg.AvailableSettings.USE_QUERY_CACHE;
-import static org.hibernate.cfg.AvailableSettings.USE_SCROLLABLE_RESULTSET;
-import static org.hibernate.cfg.AvailableSettings.USE_SECOND_LEVEL_CACHE;
-import static org.hibernate.cfg.AvailableSettings.USE_SQL_COMMENTS;
-import static org.hibernate.cfg.AvailableSettings.USE_STRUCTURED_CACHE;
-import static org.hibernate.cfg.AvailableSettings.PERSISTENCE_UNIT_NAME;
+import static org.hibernate.cfg.BatchSettings.ORDER_INSERTS;
+import static org.hibernate.cfg.BatchSettings.ORDER_UPDATES;
+import static org.hibernate.cfg.BatchSettings.STATEMENT_BATCH_SIZE;
+import static org.hibernate.cfg.CacheSettings.AUTO_EVICT_COLLECTION_CACHE;
+import static org.hibernate.cfg.CacheSettings.CACHE_REGION_FACTORY;
+import static org.hibernate.cfg.CacheSettings.CACHE_REGION_PREFIX;
+import static org.hibernate.cfg.CacheSettings.DEFAULT_CACHE_CONCURRENCY_STRATEGY;
+import static org.hibernate.cfg.CacheSettings.JPA_SHARED_CACHE_MODE;
+import static org.hibernate.cfg.CacheSettings.JPA_SHARED_CACHE_RETRIEVE_MODE;
+import static org.hibernate.cfg.CacheSettings.JPA_SHARED_CACHE_STORE_MODE;
+import static org.hibernate.cfg.CacheSettings.QUERY_CACHE_FACTORY;
+import static org.hibernate.cfg.CacheSettings.USE_DIRECT_REFERENCE_CACHE_ENTRIES;
+import static org.hibernate.cfg.CacheSettings.USE_MINIMAL_PUTS;
+import static org.hibernate.cfg.CacheSettings.USE_QUERY_CACHE;
+import static org.hibernate.cfg.CacheSettings.USE_SECOND_LEVEL_CACHE;
+import static org.hibernate.cfg.CacheSettings.USE_STRUCTURED_CACHE;
+import static org.hibernate.cfg.FetchSettings.DEFAULT_BATCH_FETCH_SIZE;
+import static org.hibernate.cfg.FetchSettings.MAX_FETCH_DEPTH;
+import static org.hibernate.cfg.JdbcSettings.AUTOCOMMIT;
+import static org.hibernate.cfg.JdbcSettings.CONNECTION_HANDLING;
+import static org.hibernate.cfg.JdbcSettings.CONNECTION_PROVIDER;
+import static org.hibernate.cfg.JdbcSettings.DIALECT;
+import static org.hibernate.cfg.JdbcSettings.DRIVER;
+import static org.hibernate.cfg.JdbcSettings.FORMAT_SQL;
+import static org.hibernate.cfg.JdbcSettings.HBM2DDL_CONNECTION;
+import static org.hibernate.cfg.JdbcSettings.ISOLATION;
+import static org.hibernate.cfg.JdbcSettings.JPA_JDBC_URL;
+import static org.hibernate.cfg.JdbcSettings.JPA_JTA_DATASOURCE;
+import static org.hibernate.cfg.JdbcSettings.JPA_NON_JTA_DATASOURCE;
+import static org.hibernate.cfg.JdbcSettings.PASS;
+import static org.hibernate.cfg.JdbcSettings.POOL_SIZE;
+import static org.hibernate.cfg.JdbcSettings.SHOW_SQL;
+import static org.hibernate.cfg.JdbcSettings.STATEMENT_FETCH_SIZE;
+import static org.hibernate.cfg.JdbcSettings.STATEMENT_INSPECTOR;
+import static org.hibernate.cfg.JdbcSettings.URL;
+import static org.hibernate.cfg.JdbcSettings.USER;
+import static org.hibernate.cfg.JdbcSettings.USE_GET_GENERATED_KEYS;
+import static org.hibernate.cfg.JdbcSettings.USE_SCROLLABLE_RESULTSET;
+import static org.hibernate.cfg.JdbcSettings.USE_SQL_COMMENTS;
+import static org.hibernate.cfg.JpaComplianceSettings.JPAQL_STRICT_COMPLIANCE;
+import static org.hibernate.cfg.MappingSettings.DEFAULT_CATALOG;
+import static org.hibernate.cfg.MappingSettings.DEFAULT_SCHEMA;
+import static org.hibernate.cfg.MultiTenancySettings.MULTI_TENANT_IDENTIFIER_RESOLVER;
+import static org.hibernate.cfg.PersistenceSettings.PERSISTENCE_UNIT_NAME;
+import static org.hibernate.cfg.PersistenceSettings.SESSION_FACTORY_NAME;
+import static org.hibernate.cfg.PersistenceSettings.SESSION_FACTORY_NAME_IS_JNDI;
+import static org.hibernate.cfg.QuerySettings.QUERY_STARTUP_CHECKING;
+import static org.hibernate.cfg.SchemaToolingSettings.HBM2DDL_AUTO;
+import static org.hibernate.cfg.SchemaToolingSettings.HBM2DDL_DATABASE_ACTION;
+import static org.hibernate.cfg.SchemaToolingSettings.HBM2DDL_SCRIPTS_ACTION;
+import static org.hibernate.cfg.SchemaToolingSettings.HBM2DDL_SCRIPTS_CREATE_TARGET;
+import static org.hibernate.cfg.SchemaToolingSettings.HBM2DDL_SCRIPTS_DROP_TARGET;
+import static org.hibernate.cfg.SessionEventSettings.INTERCEPTOR;
+import static org.hibernate.cfg.SessionEventSettings.SESSION_SCOPED_INTERCEPTOR;
+import static org.hibernate.cfg.StatisticsSettings.GENERATE_STATISTICS;
+import static org.hibernate.cfg.TransactionSettings.ALLOW_JTA_TRANSACTION_ACCESS;
+import static org.hibernate.cfg.TransactionSettings.ALLOW_UPDATE_OUTSIDE_TRANSACTION;
+import static org.hibernate.cfg.TransactionSettings.AUTO_CLOSE_SESSION;
+import static org.hibernate.cfg.TransactionSettings.FLUSH_BEFORE_COMPLETION;
+import static org.hibernate.cfg.TransactionSettings.JTA_CACHE_TM;
+import static org.hibernate.cfg.TransactionSettings.JTA_CACHE_UT;
+import static org.hibernate.cfg.TransactionSettings.JTA_PLATFORM;
+import static org.hibernate.cfg.TransactionSettings.JTA_PLATFORM_RESOLVER;
+import static org.hibernate.cfg.TransactionSettings.JTA_TRACK_BY_THREAD;
+import static org.hibernate.cfg.TransactionSettings.PREFER_USER_TRANSACTION;
+import static org.hibernate.cfg.ValidationSettings.CHECK_NULLABILITY;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -91,8 +89,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.cache.CacheManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.SharedCacheMode;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -121,11 +117,14 @@ import org.jvnet.hyperjaxb.reflection.util.FieldAccessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.SharedCacheMode;
+
 /**
  * Utility methods for a SessionFactory.
- * 
+ *
  * TODO: Review deprecated options.
- * 
+ *
  * @author Rick O'Sullivan
  */
 @SuppressWarnings("deprecation")
@@ -135,9 +134,9 @@ public class SessionFactoryUtil
 
 	/**
 	 * Gather configurable properties from the SessionFactory context for the given EntityManagerFactory.
-	 * 
+	 *
 	 * @param emf An EntityManagerFactory instance.
-	 * 
+	 *
 	 * @return A map of configurable properties with current values.
 	 */
 	public static Map<String, Object> gatherProperties(EntityManagerFactory emf)
@@ -148,10 +147,10 @@ public class SessionFactoryUtil
 
 	/**
 	 * Gather configurable properties from the SessionFactory context for the given EntityManagerFactory.
-	 * 
+	 *
 	 * @param emf An EntityManagerFactory instance.
 	 * @param emfProperties A map of the initial (or filtered) EntityManagerFactory properties.
-	 * 
+	 *
 	 * @return A map of configurable properties with current values.
 	 */
 	public static Map<String, Object> gatherProperties(EntityManagerFactory emf, Map<String, Object> emfProperties)
@@ -162,10 +161,10 @@ public class SessionFactoryUtil
 
 	/**
 	 * Gather the Hibernate configurable SessionFactory properties from an SessionFactory instance.
-	 * 
+	 *
 	 * @param sf A Hibernate SessionFactory instance.
 	 * @param emfProperties A map of the initial (or filtered) EntityManagerFactory properties.
-	 * 
+	 *
 	 * @return A map of properties representing the configurable Hibernate external properties.
 	 */
 	public static Map<String, Object> gatherProperties(SessionFactory sf, Map<String, Object> emfProperties)
@@ -178,27 +177,27 @@ public class SessionFactoryUtil
 		// Gather password and JPA specified properties.
 		Map<String, Object> etc = new HashMap<>();
 		etc.put(PASS, sf.getProperties().get(PASS));
-		
+
 		if ( emfProperties.containsKey(JPA_SHARED_CACHE_MODE) )
 			etc.put(JPA_SHARED_CACHE_MODE, emfProperties.get(JPA_SHARED_CACHE_MODE));
 		else
 			etc.put(JPA_SHARED_CACHE_MODE, SharedCacheMode.UNSPECIFIED);
-		
+
 		if ( emfProperties.containsKey(JPA_SHARED_CACHE_RETRIEVE_MODE) )
 			etc.put(JPA_SHARED_CACHE_RETRIEVE_MODE, emfProperties.get(JPA_SHARED_CACHE_RETRIEVE_MODE));
 		else
 			etc.put(JPA_SHARED_CACHE_RETRIEVE_MODE, CacheModeHelper.DEFAULT_RETRIEVE_MODE);
-		
+
 		if ( emfProperties.containsKey(JPA_SHARED_CACHE_STORE_MODE) )
 			etc.put(JPA_SHARED_CACHE_STORE_MODE, emfProperties.get(JPA_SHARED_CACHE_STORE_MODE));
 		else
 			etc.put(JPA_SHARED_CACHE_STORE_MODE, CacheModeHelper.DEFAULT_STORE_MODE);
-		
+
 		if ( emfProperties.containsKey(JTA_CACHE_TM) )
 			etc.put(JTA_CACHE_TM, emfProperties.get(JTA_CACHE_TM));
 		else
 			etc.put(JTA_CACHE_TM, true);
-		
+
 		if ( emfProperties.containsKey(JTA_CACHE_UT) )
 			etc.put(JTA_CACHE_UT, emfProperties.get(JTA_CACHE_UT));
 		else
@@ -213,13 +212,13 @@ public class SessionFactoryUtil
 			etc.put(JTA_PLATFORM_RESOLVER, emfProperties.get(JTA_PLATFORM_RESOLVER));
 		else
 			etc.put(JTA_PLATFORM_RESOLVER, StandardJtaPlatformResolver.class.getName());
-		
+
 		if ( emfProperties.containsKey(PERSISTENCE_UNIT_NAME))
 			etc.put(PERSISTENCE_UNIT_NAME, emfProperties.get(PERSISTENCE_UNIT_NAME));
-		
+
 		if ( !emfProperties.containsKey(HBM2DDL_CONNECTION))
 			etc.put(HBM2DDL_CONNECTION, emfProperties.get(JPA_JDBC_URL));
-		
+
 		ActionGrouping actionGrouping = SchemaManagementToolCoordinator.ActionGrouping.interpret(emfProperties);
 
 		Action databaseAction = actionGrouping.getDatabaseAction();
@@ -233,7 +232,7 @@ public class SessionFactoryUtil
 //		String hbm2dllDatabaseActionValue = hbm2dllDatabaseActionAccessor.get(databaseAction);
 		String hbm2dllDatabaseActionValue = databaseAction.getExternalJpaName();
 		etc.put(HBM2DDL_DATABASE_ACTION, hbm2dllDatabaseActionValue);
-		
+
 //		FieldAccessor<String> hbm2dllScriptsActionAccessor = new FieldAccessor<>(Action.class, "externalJpaName", String.class);
 //		String hbm2dllScriptsActionValue = hbm2dllScriptsActionAccessor.get(databaseAction);
 		String hbm2dllScriptsActionValue = databaseAction.getExternalJpaName();
@@ -243,7 +242,7 @@ public class SessionFactoryUtil
 			etc.put(HBM2DDL_SCRIPTS_CREATE_TARGET, emfProperties.get(HBM2DDL_SCRIPTS_CREATE_TARGET));
 		if ( emfProperties.containsKey(HBM2DDL_SCRIPTS_DROP_TARGET))
 			etc.put(HBM2DDL_SCRIPTS_DROP_TARGET, emfProperties.get(HBM2DDL_SCRIPTS_DROP_TARGET));
-		
+
 		JdbcServices jdb = ssr.getService(JdbcServices.class);
 		etc.put(DEFAULT_CATALOG, jdb.getJdbcEnvironment().getCurrentCatalog());
 		etc.put(DEFAULT_SCHEMA, jdb.getJdbcEnvironment().getCurrentSchema());
@@ -265,7 +264,7 @@ public class SessionFactoryUtil
 					etc.put(USER, meta.getUserName());
 					etc.put(ISOLATION, meta.getDefaultTransactionIsolation());
 					etc.put(AUTOCOMMIT, conn.getAutoCommit());
-					
+
 					switch ( meta.getDefaultTransactionIsolation() )
 					{
 						case TRANSACTION_NONE: etc.put(ISOLATION, "NONE"); break;
@@ -273,7 +272,7 @@ public class SessionFactoryUtil
 						case TRANSACTION_READ_COMMITTED: etc.put(ISOLATION, "READ_COMMITTED"); break;
 						case TRANSACTION_REPEATABLE_READ: etc.put(ISOLATION, "REPEATABLE_READ"); break;
 						case TRANSACTION_SERIALIZABLE: etc.put(ISOLATION, "SERIALIZABLE"); break;
-						
+
 					}
 					try ( Statement stmt = conn.createStatement() )
 					{
@@ -295,9 +294,9 @@ public class SessionFactoryUtil
 			Object mcs = emfProperties.get(ConfigSettings.MISSING_CACHE_STRATEGY);
 			etc.put(ConfigSettings.MISSING_CACHE_STRATEGY, interpretSetting(mcs));
 		}
-		
+
 		// JndiService jndiService = ssr.getService(JndiService.class);
-		
+
 		Map<String, Object> hcoMap = new TreeMap<>();
 		putSetting(hcoMap, sf, ALLOW_JTA_TRANSACTION_ACCESS, etc);
 		putSetting(hcoMap, sf, ALLOW_JTA_TRANSACTION_ACCESS, etc);
@@ -306,8 +305,6 @@ public class SessionFactoryUtil
 		putSetting(hcoMap, sf, AUTO_CLOSE_SESSION, etc);
 		putSetting(hcoMap, sf, AUTOCOMMIT, etc);
 		putSetting(hcoMap, sf, AUTO_EVICT_COLLECTION_CACHE, etc);
-		putSetting(hcoMap, sf, BATCH_FETCH_STYLE, etc);
-		putSetting(hcoMap, sf, BATCH_VERSIONED_DATA, etc);
 		putSetting(hcoMap, sf, CACHE_REGION_FACTORY, etc);
 		putSetting(hcoMap, sf, CACHE_REGION_PREFIX, etc);
 		putSetting(hcoMap, sf, CHECK_NULLABILITY, etc);
@@ -400,13 +397,13 @@ public class SessionFactoryUtil
 //				hcoMap.put(hhcPropertyName, hcPropertyValue);
 //			}
 //		}
-		
+
 		return hcoMap;
 	}
-	
+
 	/**
 	 * Put an option and set the value into the given map.
-	 * 
+	 *
 	 * @param map A map to gather the option.
 	 * @param sf The Hibernate SessionFactory.
 	 * @param option The option to put.
@@ -416,13 +413,13 @@ public class SessionFactoryUtil
 	{
 		map.put(option, settingValue(sf, option, etc));
 	}
-	
+
 	/**
 	 * Retrieve Hibernate value from property name.
-	 * 
+	 *
 	 * @param sf Factory to create Hibernate sessions.
 	 * @param name Setting property name.
-	 * 
+	 *
 	 * @return The property value.
 	 */
 	private static Object settingValue(SessionFactory sf, String name, Map<String, Object> etc)
@@ -434,11 +431,11 @@ public class SessionFactoryUtil
 
 	/**
 	 * Retrieve Hibernate value from property name.
-	 * 
+	 *
 	 * @param sfo Aggregator of special options used to build the SessionFactory.
-	 * @param jdb 
+	 * @param jdb
 	 * @param name Setting property name.
-	 * 
+	 *
 	 * @return The property value.
 	 */
 	private static Object settingValue(SessionFactoryOptions sfo, Map<String, Object> etc, String name)
@@ -451,8 +448,6 @@ public class SessionFactoryUtil
 			case AUTO_CLOSE_SESSION: value = sfo.isAutoCloseSessionEnabled(); break;
 			case AUTOCOMMIT: value = etc.get(AUTOCOMMIT); break;
 			case AUTO_EVICT_COLLECTION_CACHE: value = sfo.isAutoEvictCollectionCache(); break;
-			case BATCH_FETCH_STYLE: value = sfo.getBatchFetchStyle(); break;
-			case BATCH_VERSIONED_DATA: value = sfo.isJdbcBatchVersionedData(); break;
 			case CACHE_REGION_FACTORY: value = etc.get(CACHE_REGION_FACTORY); break;
 			case CACHE_REGION_PREFIX: value = sfo.getCacheRegionPrefix(); break;
 			case CHECK_NULLABILITY: value = sfo.isCheckNullability(); break;
@@ -549,7 +544,7 @@ public class SessionFactoryUtil
 	 * Beware of milliseconds metrics, they are dependent of the JVM precision:
 	 * you may then encounter a 10 ms approximation depending on you OS
 	 * platform.  Please refer to the JVM documentation for more information.
-     * 
+     *
      * @param emf An Entity Manager Factory.
      */
     public static boolean logSummaryStatistics(EntityManagerFactory emf)
@@ -563,13 +558,13 @@ public class SessionFactoryUtil
     /**
      * Execute a SQL action (insert, update, delete, etc.) using a connection
      * provided by a JPA EntityManagerFactory. The EntityManagerFactory is
-     * used to unwrap a Hibernate SessionFactory. 
-     * 
+     * used to unwrap a Hibernate SessionFactory.
+     *
      * The batch is executed in a JDBC transaction.
-     * 
+     *
      * @param emf The JPA EntityManagerFactory
      * @param sqlAction A SQL action.
-     * 
+     *
      * @return The action count.
      */
 	public static int sqlAction(EntityManagerFactory emf, String sqlAction)
@@ -577,15 +572,15 @@ public class SessionFactoryUtil
         SessionFactory sessionFactory = emf.unwrap(SessionFactory.class);
         return sqlAction(sessionFactory, sqlAction);
 	}
-	
+
     /**
      * Execute a SQL action (insert, update, delete, etc.) using a connection
      * provided by a Hibernate SessionFactory. The batch is executed
      * in a JDBC transaction.
-     * 
+     *
      * @param sf The Hibernate SessionFactory;
      * @param sqlAction A SQL action.
-     * 
+     *
      * @return The action count.
      */
 	public static int sqlAction(SessionFactory sf, String sqlAction)
@@ -603,17 +598,17 @@ public class SessionFactoryUtil
 			return session.doReturningWork(rw);
 		}
 	}
-	
+
     /**
      * Execute a JDBC batch of SQL actions (insert, update, delete, etc.) using a connection
      * provided by a Hibernate SessionFactory. The EntityManagerFactory is used to unwrap a
      * Hibernate SessionFactory.
-     * 
+     *
      * The batch is executed in a JDBC transaction.
-     * 
+     *
      * @param emf The JPA EntityManagerFactory
      * @param sqlBatch A batch of SQL actions.
-     * 
+     *
      * @return A list of counts for each SQL is the batch.
      */
 	public static int[] sqlBatch(EntityManagerFactory emf, List<String> sqlBatch)
@@ -621,14 +616,14 @@ public class SessionFactoryUtil
         SessionFactory sessionFactory = emf.unwrap(SessionFactory.class);
         return sqlBatch(sessionFactory, sqlBatch);
 	}
-	
+
     /**
      * Execute a JDBC batch of SQL actions (insert, update, delete, etc.) using a connection
      * provided by a Hibernate SessionFactory. The batch is executed in a JDBC transaction.
-     * 
+     *
      * @param sf The Hibernate SessionFactory;
      * @param sqlBatch A batch of SQL actions.
-     * 
+     *
      * @return A list of counts for each SQL is the batch.
      */
 	public static int[] sqlBatch(SessionFactory sf, List<String> sqlBatch)
@@ -652,9 +647,9 @@ public class SessionFactoryUtil
     /**
      * Execute a JDBC query using a connection provided by a JPA EntityManagerFactory.
      * The EntityManagerFactory is used to unwrap a Hibernate SessionFactory.
-     * 
+     *
      * The query is executed in a JDBC transaction.
-     * 
+     *
      * @param emf The JPA EntityManagerFactory.
      * @param sql The SQL to execute.
      * @return A map of column names and values.
@@ -668,7 +663,7 @@ public class SessionFactoryUtil
     /**
      * Execute a JDBC query using a connection provided by a Hibernate
      * SessionFactory. The query is executed in a JDBC transaction.
-     * 
+     *
      * @param sf The Hibernate SessionFactory.
      * @param sql The SQL to execute.
      * @return A map of column names and values.
@@ -683,7 +678,7 @@ public class SessionFactoryUtil
 					Statement stmt = conn.createStatement();
 					try ( ResultSet rs = stmt.executeQuery(sql) )
 					{
-						return toColumnMap(rs); 
+						return toColumnMap(rs);
 					}
 				};
 				return tx.transact(connection);
@@ -691,7 +686,7 @@ public class SessionFactoryUtil
 			return session.doReturningWork(rw);
 		}
 	}
-	
+
 	/**
 	 * Convert a JDBC ResultSet into a Map of column names with row lists.
 	 * @param rs A JDBC ResultSet
