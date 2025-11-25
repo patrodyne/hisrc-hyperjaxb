@@ -1,9 +1,16 @@
 package org.example.pub;
 
 import java.io.IOException;
+import java.util.List;
 
+import org.example.pub.model.Blog;
+import org.example.pub.model.Blog_;
+import org.example.pub.model.Book;
+import org.example.pub.model.Book_;
 import org.example.pub.model.Collection;
 import org.example.pub.model.Collection_;
+import org.example.pub.model.Publication;
+import org.example.pub.model.Publication_;
 import org.jvnet.hyperjaxb.ejb.util.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +20,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Root;
 import jakarta.xml.bind.JAXBException;
 
@@ -100,7 +108,26 @@ public class Main extends Context
 		return entity;
 	}
 
-	private static Transactional<Collection> selectCollectionTX(String name)
+	private void persist(Collection entity, boolean isNew)
+		throws IOException
+	{
+		Transactional<Integer> tx = (em) ->
+		{
+			if ( isNew )
+				em.persist(entity);
+			else
+				em.merge(entity);
+		    return 1;
+		};
+		// Auto-close transactional session.
+		try ( EntityManager em = createEntityManager() )
+		{
+		    Integer count = tx.transact(em);
+			getLogger().info("Persisted {} {}(s)", count, Collection.class.getSimpleName());
+		}
+	}
+
+	protected static Transactional<Collection> selectCollectionTX(String name)
 	{
 		// Always perform EntityManager actions within a transaction!
 		Transactional<Collection> tx = (em) ->
@@ -127,23 +154,92 @@ public class Main extends Context
 		return tx;
 	}
 
-	private void persist(Collection entity, boolean isNew)
-		throws IOException
+    protected static Transactional<List<Publication>> selectPublicationsTX(Integer start, Integer count, String title)
+    {
+        // Always perform EntityManager actions within a transaction!
+        Transactional<List<Publication>> tx = (em) ->
+        {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Publication> cq = cb.createQuery(Publication.class);
+
+            // Force eager loading of authors using an inner join.
+            // See https://thorben-janssen.com/5-ways-to-initialize-lazy-relations-and-when-to-use-them/
+            Root<Publication> fromPublication = cq.from(Publication.class);
+            fromPublication.fetch(Publication_.AUTHORS, JoinType.INNER);
+
+            cq.select(fromPublication)
+                .where(cb.equal(fromPublication.get(Publication_.TITLE), title));
+
+            TypedQuery<Publication> query = em.createQuery(cq);
+            query.setHint("eclipselink.query-results-cache", false);
+            query.setHint("org.hibernate.cacheable", false);
+            List<Publication> entities = query
+                .setFirstResult(start)
+                .setMaxResults(count)
+                .getResultList();
+
+            return entities;
+        };
+        return tx;
+    }
+
+	protected static Transactional<List<Book>> selectBooksTX(Integer start, Integer count, String title)
 	{
-		Transactional<Integer> tx = (em) ->
+		// Always perform EntityManager actions within a transaction!
+		Transactional<List<Book>> tx = (em) ->
 		{
-			if ( isNew )
-				em.persist(entity);
-			else
-				em.merge(entity);
-		    return 1;
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Book> cq = cb.createQuery(Book.class);
+
+			// Force eager loading of authors using an inner join.
+			// See https://thorben-janssen.com/5-ways-to-initialize-lazy-relations-and-when-to-use-them/
+			Root<Book> fromBook = cq.from(Book.class);
+			fromBook.fetch(Book_.AUTHORS, JoinType.INNER);
+
+			cq.select(fromBook)
+				.where(cb.equal(fromBook.get(Book_.TITLE), title));
+
+			TypedQuery<Book> query = em.createQuery(cq);
+			query.setHint("eclipselink.query-results-cache", false);
+			query.setHint("org.hibernate.cacheable", false);
+			List<Book> entities = query
+				.setFirstResult(start)
+				.setMaxResults(count)
+				.getResultList();
+
+			return entities;
 		};
-		// Auto-close transactional session.
-		try ( EntityManager em = createEntityManager() )
-		{
-		    Integer count = tx.transact(em);
-			getLogger().info("Persisted {} {}(s)", count, Collection.class.getSimpleName());
-		}
+		return tx;
 	}
+
+	protected static Transactional<List<Blog>> selectBlogsTX(Integer start, Integer count, String title)
+	{
+		// Always perform EntityManager actions within a transaction!
+		Transactional<List<Blog>> tx = (em) ->
+		{
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Blog> cq = cb.createQuery(Blog.class);
+
+			// Force eager loading of authors using an inner join.
+			// See https://thorben-janssen.com/5-ways-to-initialize-lazy-relations-and-when-to-use-them/
+			Root<Blog> fromBlog = cq.from(Blog.class);
+			fromBlog.fetch(Blog_.AUTHORS, JoinType.INNER);
+
+			cq.select(fromBlog)
+				.where(cb.equal(fromBlog.get(Blog_.TITLE), title));
+
+			TypedQuery<Blog> query = em.createQuery(cq);
+			query.setHint("eclipselink.query-results-cache", false);
+			query.setHint("org.hibernate.cacheable", false);
+			List<Blog> entities = query
+				.setFirstResult(start)
+				.setMaxResults(count)
+				.getResultList();
+
+			return entities;
+		};
+		return tx;
+	}
+
 }
 // vi:set tabstop=4 hardtabs=4 shiftwidth=4:
