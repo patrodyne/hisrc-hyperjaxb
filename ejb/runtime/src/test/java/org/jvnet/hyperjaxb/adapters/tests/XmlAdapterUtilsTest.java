@@ -3,11 +3,13 @@ package org.jvnet.hyperjaxb.adapters.tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.jvnet.hyperjaxb.xml.util.XMLGregorianCalendarUtils.getTimeInMillis;
 
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -19,6 +21,7 @@ import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.QNameAsString;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.TimeStringAsCalendar;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsDate;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsDateTime;
+import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsInstant;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XMLGregorianCalendarAsTime;
 import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.XmlAdapterUtils;
 import org.slf4j.Logger;
@@ -55,9 +58,15 @@ public class XmlAdapterUtilsTest
 	{
 		DatatypeFactory df = DatatypeFactory.newInstance();
 		final XMLGregorianCalendar alpha = df.newXMLGregorianCalendar("2005-01-01T11:00:00.012+04:00");
+		assertEquals("2005-01-01T11:00:00.012+04:00",alpha.toXMLFormat());
+
 		final XMLGregorianCalendar omega = df.newXMLGregorianCalendar("2005-01-01T09:00:00.012+02:00");
-		final XMLGregorianCalendar beta = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDateTime.class,
-			XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDateTime.class, alpha));
+		assertEquals("2005-01-01T09:00:00.012+02:00",omega.toXMLFormat());
+
+		final Instant gamma = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsInstant.class, alpha);
+		final XMLGregorianCalendar beta = XmlAdapterUtils.marshall(XMLGregorianCalendarAsInstant.class, gamma);
+		assertEquals(DatatypeConstants.FIELD_UNDEFINED, beta.getTimezone());
+//		assertEquals("2005-01-01T02:00:00.012",beta.toXMLFormat());
 
 //		assertEquals(alpha.normalize(), omega.normalize(), "Conversion failed.");
 //		assertEquals(alpha.normalize(), beta.normalize(), "Conversion failed.");
@@ -66,6 +75,7 @@ public class XmlAdapterUtilsTest
 		assertEquals(getTimeInMillis(alpha), getTimeInMillis(beta), "Conversion failed.");
 		assertEquals(getTimeInMillis(alpha), getTimeInMillis(omega), "Conversion failed.");
 		assertEquals(getTimeInMillis(beta), getTimeInMillis(omega), "Conversion failed.");
+		assertEquals(getTimeInMillis(alpha), gamma.toEpochMilli(), "Conversion failed.");
 	}
 
 	@Test
@@ -74,18 +84,18 @@ public class XmlAdapterUtilsTest
 	{
 		final java.sql.Date alpha = java.sql.Date.valueOf("2005-01-01");
 		getLogger().debug("1)" + alpha.getTime());
-		
+
 		final XMLGregorianCalendar beta = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDate.class, alpha);
 		getLogger().debug("2)" + beta.toGregorianCalendar().getTimeInMillis());
 		getLogger().debug("2>" + beta);
-		
+
 		final java.util.Date gamma = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDate.class, beta);
 		getLogger().debug("3)" + gamma.getTime());
-		
+
 		final XMLGregorianCalendar delta = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDate.class, gamma);
 		getLogger().debug("4)" + delta.toGregorianCalendar().getTime().getTime());
 		getLogger().debug("4>" + delta);
-		
+
 		assertEquals(beta, delta, "Conversion failed.");
 	}
 
@@ -97,16 +107,16 @@ public class XmlAdapterUtilsTest
 		TimeZone.setDefault(TimeZone.getTimeZone("GMT-2"));
 		final java.sql.Date alpha = java.sql.Date.valueOf("2005-01-01");
 		getLogger().debug("1)" + alpha.getTime());
-		
+
 		final XMLGregorianCalendar beta = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDate.class, alpha);
 		getLogger().debug("2)" + beta.toGregorianCalendar().getTimeInMillis());
-		
+
 		final java.util.Date gamma = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDate.class, beta);
 		getLogger().debug("3)" + gamma.getTime());
-		
+
 		final XMLGregorianCalendar delta = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDate.class, gamma);
 		getLogger().debug("4)" + delta.toGregorianCalendar().getTime().getTime());
-		
+
 		assertEquals(beta, delta, "Conversion failed.");
 		TimeZone.setDefault(_default);
 	}
@@ -160,26 +170,26 @@ public class XmlAdapterUtilsTest
 	{
 		final XMLGregorianCalendar alpha = DatatypeFactory.newInstance().newXMLGregorianCalendar(text);
 		getLogger().debug("T]" + alpha.getTimezone());
-		
+
 		long a = alpha.toGregorianCalendar().getTimeInMillis();
 		getLogger().debug("1]" + a);
-		
+
 		final Date beta = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDateTime.class, alpha);
 		long b = beta.getTime();
 		getLogger().debug("2]" + b);
-		
+
 		final XMLGregorianCalendar gamma = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDateTime.class, beta);
 		long c = gamma.toGregorianCalendar().getTimeInMillis();
 		getLogger().debug("3]" + c);
-		
+
 		final Date delta = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDateTime.class, gamma);
 		long d = delta.getTime();
 		getLogger().debug("4]" + d);
-		
+
 		final XMLGregorianCalendar epsilon = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDateTime.class, delta);
 		long e = epsilon.toGregorianCalendar().getTimeInMillis();
 		getLogger().debug("5]" + e);
-		
+
 		// assertEquals("Conversion failed.", alpha, gamma);
 		assertEquals(beta, delta, "Conversion failed.");
 		assertEquals(gamma, epsilon, "Conversion failed.");
@@ -188,7 +198,7 @@ public class XmlAdapterUtilsTest
 		assertEquals(c, d, "Conversion failed.");
 		assertEquals(d, e, "Conversion failed.");
 	}
-	
+
 //	public void testXMLGregorianCalendarAsDateXmlAdapter()
 //		throws Exception
 //	{
@@ -204,22 +214,22 @@ public class XmlAdapterUtilsTest
 //	{
 //		final XMLGregorianCalendar alpha = DatatypeFactory.newInstance().newXMLGregorianCalendar(text);
 //		getLogger().debug("T>" + alpha.getTimezone());
-//		
+//
 //		long a = alpha.toGregorianCalendar().getTimeInMillis();
 //		getLogger().debug("1>" + a);
-//		
+//
 //		final Date beta = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDate.class, alpha);
 //		long b = beta.getTime();
 //		getLogger().debug("2>" + b);
-//		
+//
 //		final XMLGregorianCalendar gamma = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDate.class, beta);
 //		long c = gamma.toGregorianCalendar().getTimeInMillis();
 //		getLogger().debug("3>" + c);
-//		
+//
 //		final Date delta = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDate.class, gamma);
 //		long d = delta.getTime();
 //		getLogger().debug("4>" + d);
-//		
+//
 //		final XMLGregorianCalendar epsilon = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDate.class, delta);
 //		long e = epsilon.toGregorianCalendar().getTimeInMillis();
 //		getLogger().debug("5>" + e);
