@@ -5,10 +5,10 @@ import java.util.Date;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-public class XMLGregorianCalendarAsDate extends AbstractXMLGregorianCalendarAdapter
+public class XMLGregorianCalendarAsDate extends AbstractXMLGregorianCalendarAdapter<Date>
 {
 	@Override
-	public Date createDate(XMLGregorianCalendar calendar)
+	public Date createBoundValue(XMLGregorianCalendar calendar)
 	{
 		return new Timestamp(calendar.normalize().toGregorianCalendar().getTimeInMillis());
 	}

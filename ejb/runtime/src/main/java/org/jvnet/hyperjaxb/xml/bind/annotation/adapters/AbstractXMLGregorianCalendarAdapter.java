@@ -1,17 +1,17 @@
 package org.jvnet.hyperjaxb.xml.bind.annotation.adapters;
 
 import java.util.Calendar;
-import java.util.Date;
 
-import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-public abstract class AbstractXMLGregorianCalendarAdapter
-	extends XmlAdapter<XMLGregorianCalendar, Date>
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+
+public abstract class AbstractXMLGregorianCalendarAdapter<BoundType>
+	extends XmlAdapter<XMLGregorianCalendar, BoundType>
 {
 	@Override
-	public final Date unmarshal(XMLGregorianCalendar calendar)
+	public final BoundType unmarshal(XMLGregorianCalendar calendar)
 		throws Exception
 	{
 		if (calendar == null)
@@ -21,14 +21,14 @@ public abstract class AbstractXMLGregorianCalendarAdapter
 			// TODO Optimize
 			// final java.util.TimeZone timeZone = XMLGregorianCalendarUtils.TIMEZONE_UTC;
 			// return date.normalize().toGregorianCalendar(timeZone, Locale.getDefault(), null).getTime();
-			return createDate(calendar);
+			return createBoundValue(calendar);
 		}
 	}
 
-	public abstract Date createDate(XMLGregorianCalendar calendar);
+	public abstract BoundType createBoundValue(XMLGregorianCalendar calendar);
 
 	@Override
-	public final XMLGregorianCalendar marshal(Date date)
+	public final XMLGregorianCalendar marshal(BoundType date)
 		throws Exception
 	{
 		if (date == null)
@@ -41,8 +41,8 @@ public abstract class AbstractXMLGregorianCalendarAdapter
 		}
 	}
 
-	public abstract void createCalendar(Date date, XMLGregorianCalendar calendar);
-	
+	public abstract void createCalendar(BoundType date, XMLGregorianCalendar calendar);
+
 	// public abstract void setFields(Calendar source, XMLGregorianCalendar target);
 
 	public void setDay(Calendar source, XMLGregorianCalendar target)

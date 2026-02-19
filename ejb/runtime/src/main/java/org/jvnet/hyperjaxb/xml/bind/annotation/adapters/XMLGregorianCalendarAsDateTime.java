@@ -6,10 +6,10 @@ import java.util.GregorianCalendar;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-public class XMLGregorianCalendarAsDateTime extends AbstractXMLGregorianCalendarAdapter
+public class XMLGregorianCalendarAsDateTime extends AbstractXMLGregorianCalendarAdapter<Date>
 {
 	@Override
-	public Timestamp createDate(XMLGregorianCalendar calendar)
+	public Timestamp createBoundValue(XMLGregorianCalendar calendar)
 	{
 		final GregorianCalendar gcal = calendar.normalize().toGregorianCalendar();
 		final Timestamp timestamp = new Timestamp(gcal.getTimeInMillis());

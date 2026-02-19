@@ -1,13 +1,13 @@
 package org.jvnet.hyperjaxb.xml.bind.annotation.adapters;
 
-import jakarta.xml.bind.JAXBElement;
-import jakarta.xml.bind.annotation.adapters.XmlAdapter;
-
 import java.lang.reflect.InvocationTargetException;
 
 import javax.xml.namespace.QName;
 
 import org.jvnet.hyperjaxb.item.Converter;
+
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 public class XmlAdapterUtils
 {
@@ -137,7 +137,22 @@ public class XmlAdapterUtils
     	}
     	return declaredInstance;
 	}
-	
+
+	public static <BoundType> BoundType unmarshallSource
+	(
+		Class<BoundType> declaredType,
+		@SuppressWarnings("rawtypes") JAXBElement<? extends Comparable> source
+	)
+	{
+		BoundType declaredInstance = null;
+		if ( (declaredType != null) && (source != null) )
+		{
+			if ( declaredType.isInstance(source.getValue()) )
+				declaredInstance = declaredType.cast(source.getValue());
+		}
+		return declaredInstance;
+	}
+
 	public static <BoundType> boolean isJAXBElement(Class<BoundType> declaredType, QName name, Class<?> scope,
 		Object value)
 	{
@@ -152,9 +167,14 @@ public class XmlAdapterUtils
 			return false;
 	}
 
-	public static <ValueType, BoundType> JAXBElement<BoundType> marshallJAXBElement(
-		Class<? extends XmlAdapter<BoundType, ValueType>> xmlAdapterClass, Class<BoundType> declaredType, QName name,
-		Class<?> scope, ValueType v)
+	public static <ValueType, BoundType> JAXBElement<BoundType> marshallJAXBElement
+	(
+		Class<? extends XmlAdapter<BoundType, ValueType>> xmlAdapterClass,
+		Class<BoundType> declaredType,
+		QName name,
+		Class<?> scope,
+		ValueType v
+	)
 	{
 		try
 		{
