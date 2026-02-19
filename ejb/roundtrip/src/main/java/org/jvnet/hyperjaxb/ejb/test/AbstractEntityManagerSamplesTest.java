@@ -6,9 +6,6 @@ import static org.jvnet.basicjaxb.testing.AbstractSamplesTest.getMavenProjectDir
 import java.io.File;
 import java.util.Collection;
 
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
@@ -19,6 +16,9 @@ import org.junit.jupiter.api.Test;
 import org.jvnet.basicjaxb.testing.AbstractSamplesTest;
 import org.jvnet.basicjaxb.xml.bind.ContextPathAware;
 
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+
 public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityManagerTest implements ContextPathAware
 {
 	public static final String DEFAULT_SAMPLES_DIRECTORY_NAME = "src/test/samples";
@@ -27,7 +27,7 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 	private Boolean failFast = false;
 	public Boolean isFailFast() { return failFast; }
 	public void setFailFast(Boolean failFast) { this.failFast = failFast; }
-	
+
 	private AbstractSamplesTest samplesTest;
 	public AbstractSamplesTest getSamplesTest()
 	{
@@ -71,7 +71,7 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 	{
 		getSamplesTest().testSamples();
 	}
-	
+
 	protected AbstractSamplesTest createSamplesTest()
 	{
 		AbstractSamplesTest ast = new AbstractSamplesTest()
@@ -142,7 +142,7 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 	{
 		return DEFAULT_SAMPLES_DIRECTORY_NAME;
 	}
-	
+
 	protected File getSamplesDirectory()
 	{
 		return new File(getBaseDir(), getSamplesDirectoryName());
@@ -166,5 +166,10 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 	protected ClassLoader getContextClassLoader()
 	{
 		return getClass().getClassLoader();
+	}
+
+	public AbstractEntityManagerSamplesTest()
+	{
+		super();
 	}
 }

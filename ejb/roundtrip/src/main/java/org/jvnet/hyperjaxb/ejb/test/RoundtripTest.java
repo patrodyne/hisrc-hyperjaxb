@@ -276,4 +276,9 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 			}
 		}
 	}
+
+	public RoundtripTest()
+	{
+		super();
+	}
 }
