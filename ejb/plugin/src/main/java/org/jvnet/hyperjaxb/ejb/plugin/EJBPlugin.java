@@ -78,6 +78,10 @@ import com.sun.tools.xjc.outline.Outline;
 import com.sun.tools.xjc.reader.Ring;
 import com.sun.tools.xjc.reader.xmlschema.BGMBuilder;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
+import com.sun.xml.xsom.XSComponent;
+import com.sun.xml.xsom.XSElementDecl;
+import com.sun.xml.xsom.XSParticle;
+import com.sun.xml.xsom.XSTerm;
 
 import jakarta.activation.MimeType;
 import jakarta.xml.bind.annotation.XmlIDREF;
@@ -619,10 +623,26 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 							mappedBySidePropertInfo.getLocator(),
 							required
 						);
+						// Resolve element name
+						QName elementName = mappedBySideClassInfo.getElementName();
+						if ( elementName == null )
+						{
+							XSComponent source = mappedBySidePropertInfo.getSchemaComponent();
+							if ( source instanceof XSParticle )
+							{
+								XSTerm term = ((XSParticle) source).getTerm();
+								if ( term.isElementDecl() )
+								{
+									XSElementDecl ed = term.asElementDecl();
+									elementName = new QName(ed.getTargetNamespace(), ed.getName());
+								}
+							}
+						}
+						// Create compiler type ref
 						CTypeRef typeRef = new CTypeRef
 						(
 							mappedBySideClassInfo,
-							mappedBySideClassInfo.getElementName(),
+							elementName,
 							mappedBySideClassInfo.getTypeName(),
 							false,
 							null
