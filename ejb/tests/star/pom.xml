@@ -61,6 +61,7 @@
 						<include>STAR/Rev5.1.4/BODs/Standalone/*.xsd</include>
 						-->
 					</schemaIncludes>
+					<strict>false</strict>
 					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.star.RoundtripTest</roundtripTestClassName>
 					-->

@@ -41,6 +41,7 @@
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
+					<strict>false</strict>
 					<schemaIncludes>
 						<include>xsd/*.xsd</include>
 					</schemaIncludes>

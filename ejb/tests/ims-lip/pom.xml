@@ -42,6 +42,7 @@
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
+					<strict>false</strict>
 					<!--
 					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.ims_lip.RoundtripTest</roundtripTestClassName>
 					-->

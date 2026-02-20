@@ -53,6 +53,7 @@
 				<groupId>org.patrodyne.jvnet</groupId>
 				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
 				<configuration>
+					<strict>false</strict>
 					<schemaIncludes>
 						<include>_2008A_XML/OTA_SimpleTypes.xsd</include>
 						<include>_2008A_XML/OTA_CommonTypes.xsd</include>
