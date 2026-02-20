@@ -98,7 +98,7 @@
 		<ehcache.version>3.11.1</ehcache.version>
 		<guice.version>5.1.0</guice.version> <!-- provided by Maven -->
 		<hibernate-search.version>8.1.2.Final</hibernate-search.version>
-		<hibernate-series.version>6.6.37.Final</hibernate-series.version>
+		<hibernate-series.version>6.6.42.Final</hibernate-series.version>
 		<hibernate-javadoc.version>6.4</hibernate-javadoc.version>
 		<HikariCP.version>7.0.2</HikariCP.version>
 		<hisrc-basicjaxb-annox-parser.version>3.0.0-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
