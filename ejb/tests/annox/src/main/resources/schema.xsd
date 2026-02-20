@@ -97,15 +97,15 @@
   <xsd:complexType name="HYPERJAXB3_149_Type">
     <xsd:attribute name="timestamp0" type="xsd:dateTime" use="required">
       <xsd:annotation>
+			<!--
         <xsd:appinfo>
           <hj:generated-property propertyName="Ts0">
-			<!--
             <annox:annotate>
               <ha:Index name="HYPERJAXB3_149_TYPE_TS0" columnNames="TS0"/>
             </annox:annotate>
-			-->
           </hj:generated-property>
         </xsd:appinfo>
+			-->
       </xsd:annotation>
     </xsd:attribute>
     <xsd:attribute name="timestamp1" type="xsd:dateTime" use="required"/>

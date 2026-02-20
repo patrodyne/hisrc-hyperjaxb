@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Application1
+	xmlns="http://jvnet.org/hyperjaxb/ejb/tests/dy"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jvnet.org/hyperjaxb/ejb/tests/dy ../../main/resources/Application.xsd"
+>
+	<applicationId>7001</applicationId>
+	<version>2</version>
+	<applicationDate>2025-01-13T14:30:00Z</applicationDate>
+	<receivedDate>2025-01-14T14:30:00Z</receivedDate>
+	<signedDate>2025-01-15T14:30:00Z</signedDate>
+	<completeDate>2025-01-16T14:30:00Z</completeDate>
+	<unpaidMedicalExpense>true</unpaidMedicalExpense>
+	<totalChild>3</totalChild>
+	<totalRefugee>5</totalRefugee>
+</Application1>
+

@@ -5,7 +5,8 @@
   targetNamespace="http://bibtexml.sf.net/"
   version="Beta"
   elementFormDefault="qualified"
-  attributeFormDefault="unqualified">
+  attributeFormDefault="unqualified"
+>
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
@@ -40,7 +41,7 @@
           <xsd:element ref="bibtex:misc"/>
         </xsd:choice>
       </xsd:sequence>
-      <xsd:attribute name="id"
+      <xsd:attribute name="id" 
         use="required"
         type="xsd:ID"/>
     </xsd:complexType>
@@ -52,9 +53,7 @@
         <xsd:element ref="bibtex:entry" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
       <!--
-      <xsd:attribute name="xmlns:bibtex"
-                     fixed="http://bibtexml.sf.net/"
-                     type="xsd:string" />
+      <xsd:attribute name="xmlns:bibtex" type="xsd:string" fixed="http://bibtexml.sf.net/" />
       -->
     </xsd:complexType>
   </xsd:element>
@@ -195,46 +194,22 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <xsd:group name="InProceedings">
     <xsd:sequence>
-      <xsd:element name="author"
-        type="bibtex:authorType"/>
-      <xsd:element name="title"
-        type="bibtex:titleType"/>
-      <xsd:element name="booktitle"
-        type="bibtex:booktitleType"/>
-      <xsd:element name="year"
-        type="bibtex:yearType"/>
-      <xsd:element name="editor"
-        type="bibtex:editorType"
-        minOccurs="0"/>
+      <xsd:element name="author" type="bibtex:authorType"/>
+      <xsd:element name="title" type="bibtex:titleType"/>
+      <xsd:element name="booktitle" type="bibtex:booktitleType"/>
+      <xsd:element name="year" type="bibtex:yearType"/>
+      <xsd:element name="editor" type="bibtex:editorType" minOccurs="0"/>
       <xsd:choice minOccurs="0">
-        <xsd:element name="volume"
-          type="bibtex:volumeType"
-          minOccurs="0"/>
-        <xsd:element name="number"
-          type="bibtex:numberType"
-          minOccurs="0"/>
+        <xsd:element name="volume" type="bibtex:volumeType" minOccurs="0"/>
+        <xsd:element name="number" type="bibtex:numberType" minOccurs="0"/>
       </xsd:choice>
-      <xsd:element name="series"
-        type="bibtex:seriesType"
-        minOccurs="0"/>
-      <xsd:element name="pages"
-        type="bibtex:pagesType"
-        minOccurs="0"/>
-      <xsd:element name="address"
-        type="bibtex:addressType"
-        minOccurs="0"/>
-      <xsd:element name="month"
-        type="bibtex:monthType"
-        minOccurs="0"/>
-      <xsd:element name="organization"
-        type="bibtex:organizationType"
-        minOccurs="0"/>
-      <xsd:element name="publisher"
-        type="bibtex:publisherType"
-        minOccurs="0"/>
-      <xsd:element name="note"
-        type="bibtex:editorType"
-        minOccurs="0"/>
+      <xsd:element name="series" type="bibtex:seriesType" minOccurs="0"/>
+      <xsd:element name="pages" type="bibtex:pagesType" minOccurs="0"/>
+      <xsd:element name="address" type="bibtex:addressType" minOccurs="0"/>
+      <xsd:element name="month" type="bibtex:monthType" minOccurs="0"/>
+      <xsd:element name="organization" type="bibtex:organizationType" minOccurs="0"/>
+      <xsd:element name="publisher" type="bibtex:publisherType" minOccurs="0"/>
+      <xsd:element name="note" type="bibtex:editorType" minOccurs="0"/>
       <xsd:group ref="bibtex:common"/>
     </xsd:sequence>
   </xsd:group>
@@ -329,26 +304,13 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="author"
-          type="bibtex:authorType"
-          minOccurs="0"/>
-        <xsd:element name="title"
-          type="bibtex:titleType"/>
-        <xsd:element name="howpublished"
-          type="bibtex:howpublishedType"
-          minOccurs="0"/>
-        <xsd:element name="address"
-          type="bibtex:addressType"
-          minOccurs="0"/>
-        <xsd:element name="month"
-          type="bibtex:monthType"
-          minOccurs="0"/>
-        <xsd:element name="year"
-          type="bibtex:yearType"
-          minOccurs="0"/>
-        <xsd:element name="note"
-          type="bibtex:noteType"
-          minOccurs="0"/>
+        <xsd:element name="author" type="bibtex:authorType" minOccurs="0"/>
+        <xsd:element name="title" type="bibtex:titleType"/>
+        <xsd:element name="howpublished" type="bibtex:howpublishedType" minOccurs="0"/>
+        <xsd:element name="address" type="bibtex:addressType" minOccurs="0"/>
+        <xsd:element name="month" type="bibtex:monthType" minOccurs="0"/>
+        <xsd:element name="year" type="bibtex:yearType" minOccurs="0"/>
+        <xsd:element name="note" type="bibtex:noteType" minOccurs="0"/>
         <xsd:group ref="bibtex:common"/>
       </xsd:sequence>
     </xsd:complexType>
@@ -383,52 +345,33 @@
     <xsd:complexType>
       <xsd:sequence>
         <xsd:choice>
-          <xsd:element name="author"
-            type="bibtex:authorType"/>
-          <xsd:element name="editor"
-            type="bibtex:editorType"/>
+          <xsd:element name="author" type="bibtex:authorType"/>
+          <xsd:element name="editor" type="bibtex:editorType"/>
         </xsd:choice>
-        <xsd:element name="title"
-          type="bibtex:titleType"/>
+        <xsd:element name="title" type="bibtex:titleType"/>
         <xsd:choice>
+          <!-- Issue: InbookContentItem
           <xsd:group ref="bibtex:inbookGroup1"/>
-          <xsd:element name="pages"
-            type="bibtex:pagesType"/>
+           -->
+          <xsd:element name="pages" type="bibtex:pagesType"/>
         </xsd:choice>
-        <xsd:element name="publisher"
-          type="bibtex:publisherType"
-          minOccurs="0"/>
-        <xsd:element name="year"
-          type="bibtex:yearType"
-          minOccurs="0"/>
+        <xsd:element name="publisher" type="bibtex:publisherType" minOccurs="0"/>
+        <xsd:element name="year" type="bibtex:yearType" minOccurs="0"/>
         <xsd:choice minOccurs="0">
-          <xsd:element name="volume"
-            type="bibtex:volumeType"/>
-          <xsd:element name="number"
-            type="bibtex:numberType"/>
+          <xsd:element name="volume" type="bibtex:volumeType"/>
+          <xsd:element name="number" type="bibtex:numberType"/>
         </xsd:choice>
-        <xsd:element name="series"
-          type="bibtex:seriesType"
-          minOccurs="0"/>
-        <xsd:element name="type"
-          type="bibtex:typeType"
-          minOccurs="0"/>
-        <xsd:element name="address"
-          type="bibtex:addressType"
-          minOccurs="0"/>
-        <xsd:element name="edition"
-          type="bibtex:editionType"
-          minOccurs="0"/>
-        <xsd:element name="month"
-          type="bibtex:monthType"
-          minOccurs="0"/>
-        <xsd:element name="note"
-          type="bibtex:noteType"
-          minOccurs="0"/>
+        <xsd:element name="series" type="bibtex:seriesType" minOccurs="0"/>
+        <xsd:element name="type" type="bibtex:typeType" minOccurs="0"/>
+        <xsd:element name="address" type="bibtex:addressType" minOccurs="0"/>
+        <xsd:element name="edition" type="bibtex:editionType" minOccurs="0"/>
+        <xsd:element name="month" type="bibtex:monthType" minOccurs="0"/>
+        <xsd:element name="note" type="bibtex:noteType" minOccurs="0"/>
         <xsd:group ref="bibtex:common"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
+  
   <xsd:group name="inbookGroup1">
     <xsd:sequence>
       <xsd:element name="chapter" type="bibtex:chapterType"/>
@@ -500,29 +443,14 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="author"
-          type="bibtex:authorType"
-          minOccurs="0"/>
-        <xsd:element name="title"
-          type="bibtex:titleType"/>
-        <xsd:element name="organization"
-          type="bibtex:organizationType"
-          minOccurs="0"/>
-        <xsd:element name="address"
-          type="bibtex:addressType"
-          minOccurs="0"/>
-        <xsd:element name="edition"
-          type="bibtex:editionType"
-          minOccurs="0"/>
-        <xsd:element name="month"
-          type="bibtex:monthType"
-          minOccurs="0"/>
-        <xsd:element name="year"
-          type="bibtex:yearType"
-          minOccurs="0"/>
-        <xsd:element name="note"
-          type="bibtex:noteType"
-          minOccurs="0"/>
+        <xsd:element name="author" type="bibtex:authorType" minOccurs="0"/>
+        <xsd:element name="title" type="bibtex:titleType"/>
+        <xsd:element name="organization" type="bibtex:organizationType" minOccurs="0"/>
+        <xsd:element name="address" type="bibtex:addressType" minOccurs="0"/>
+        <xsd:element name="edition" type="bibtex:editionType" minOccurs="0"/>
+        <xsd:element name="month" type="bibtex:monthType" minOccurs="0"/>
+        <xsd:element name="year" type="bibtex:yearType" minOccurs="0"/>
+        <xsd:element name="note" type="bibtex:noteType" minOccurs="0"/>
         <xsd:group ref="bibtex:common"/>
       </xsd:sequence>
     </xsd:complexType>
@@ -555,24 +483,12 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="author"
-          type="bibtex:authorType"
-          minOccurs="0"/>
-        <xsd:element name="title"
-          type="bibtex:titleType"
-          minOccurs="0"/>
-        <xsd:element name="howpublished"
-          type="bibtex:howpublishedType"
-          minOccurs="0"/>
-        <xsd:element name="month"
-          type="bibtex:monthType"
-          minOccurs="0"/>
-        <xsd:element name="year"
-          type="bibtex:yearType"
-          minOccurs="0"/>
-        <xsd:element name="note"
-          type="bibtex:noteType"
-          minOccurs="0"/>
+        <xsd:element name="author" type="bibtex:authorType" minOccurs="0"/>
+        <xsd:element name="title" type="bibtex:titleType" minOccurs="0"/>
+        <xsd:element name="howpublished" type="bibtex:howpublishedType" minOccurs="0"/>
+        <xsd:element name="month" type="bibtex:monthType" minOccurs="0"/>
+        <xsd:element name="year" type="bibtex:yearType" minOccurs="0"/>
+        <xsd:element name="note" type="bibtex:noteType" minOccurs="0"/>
         <xsd:group ref="bibtex:common"/>
       </xsd:sequence>
     </xsd:complexType>
@@ -606,39 +522,19 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="editor"
-          type="bibtex:editorType"
-          minOccurs="0"/>
-        <xsd:element name="title"
-          type="bibtex:titleType"/>
-        <xsd:element name="year"
-          type="bibtex:yearType"/>
+        <xsd:element name="editor" type="bibtex:editorType" minOccurs="0"/>
+        <xsd:element name="title" type="bibtex:titleType"/>
+        <xsd:element name="year" type="bibtex:yearType"/>
         <xsd:choice minOccurs="0">
-          <xsd:element name="volume"
-            type="bibtex:volumeType"
-            minOccurs="0"/>
-          <xsd:element name="number"
-            type="bibtex:numberType"
-            minOccurs="0"/>
+          <xsd:element name="volume" type="bibtex:volumeType" minOccurs="0"/>
+          <xsd:element name="number" type="bibtex:numberType" minOccurs="0"/>
         </xsd:choice>
-        <xsd:element name="series"
-          type="bibtex:seriesType"
-          minOccurs="0"/>
-        <xsd:element name="address"
-          type="bibtex:addressType"
-          minOccurs="0"/>
-        <xsd:element name="month"
-          type="bibtex:monthType"
-          minOccurs="0"/>
-        <xsd:element name="organization"
-          type="bibtex:organizationType"
-          minOccurs="0"/>
-        <xsd:element name="publisher"
-          type="bibtex:publisherType"
-          minOccurs="0"/>
-        <xsd:element name="note"
-          type="bibtex:noteType"
-          minOccurs="0"/>
+        <xsd:element name="series" type="bibtex:seriesType" minOccurs="0"/>
+        <xsd:element name="address" type="bibtex:addressType" minOccurs="0"/>
+        <xsd:element name="month" type="bibtex:monthType" minOccurs="0"/>
+        <xsd:element name="organization" type="bibtex:organizationType" minOccurs="0"/>
+        <xsd:element name="publisher" type="bibtex:publisherType" minOccurs="0"/>
+        <xsd:element name="note" type="bibtex:noteType" minOccurs="0"/>
         <xsd:group ref="bibtex:common"/>
       </xsd:sequence>
     </xsd:complexType>
@@ -656,29 +552,15 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="author"
-          type="bibtex:authorType"/>
-        <xsd:element name="title"
-          type="bibtex:titleType"/>
-        <xsd:element name="institution"
-          type="bibtex:institutionType"/>
-        <xsd:element name="year"
-          type="bibtex:yearType"/>
-        <xsd:element name="type"
-          type="bibtex:typeType"
-          minOccurs="0"/>
-        <xsd:element name="number"
-          type="bibtex:numberType"
-          minOccurs="0"/>
-        <xsd:element name="address"
-          type="bibtex:addressType"
-          minOccurs="0"/>
-        <xsd:element name="month"
-          type="bibtex:monthType"
-          minOccurs="0"/>
-        <xsd:element name="note"
-          type="bibtex:noteType"
-          minOccurs="0"/>
+        <xsd:element name="author" type="bibtex:authorType"/>
+        <xsd:element name="title" type="bibtex:titleType"/>
+        <xsd:element name="institution" type="bibtex:institutionType"/>
+        <xsd:element name="year" type="bibtex:yearType"/>
+        <xsd:element name="type" type="bibtex:typeType" minOccurs="0"/>
+        <xsd:element name="number" type="bibtex:numberType" minOccurs="0"/>
+        <xsd:element name="address" type="bibtex:addressType" minOccurs="0"/>
+        <xsd:element name="month" type="bibtex:monthType" minOccurs="0"/>
+        <xsd:element name="note" type="bibtex:noteType" minOccurs="0"/>
         <xsd:group ref="bibtex:common"/>
       </xsd:sequence>
     </xsd:complexType>
@@ -959,7 +841,7 @@
       The year of publication or, for an unpublished work, the year
       it was written.  Generally it should consist of four numerals, such as
       1984. Although the standard styles can handle any year whose last four
-      nonpunctuation characters are numerals, such as `(about 1984)", it
+      non-punctuation characters are numerals, such as `(about 1984)", it
       is decided here to keep the year limited to four numerals, as such a
       type is pre-defined in XML Schema.
       </xsd:documentation>

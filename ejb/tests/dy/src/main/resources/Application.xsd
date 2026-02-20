@@ -1,115 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema
+<xs:schema elementFormDefault="qualified"
+	targetNamespace="http://jvnet.org/hyperjaxb/ejb/tests/dy"
+	xmlns:tns="http://jvnet.org/hyperjaxb/ejb/tests/dy"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-
 	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	jaxb:extensionBindingPrefixes="hj orm xjc"
+	jaxb:version="3.0"
+>
 
-	jaxb:version="3.0">
-
-	<xs:annotation>
-		<xs:appinfo>
-			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.dy"/>
-			</jaxb:schemaBindings>
-		</xs:appinfo>
-	</xs:annotation>
-
-<xs:complexType name="Application">
-   <xs:sequence>
-      <xs:element name="applicationId" type="xs:long" minOccurs="0" nillable="true">
-          <xs:annotation>
-              <xs:appinfo>
-                  <hj:id/>
-                  <!-- ** hj:type name="long"/-->
-              </xs:appinfo>
-          </xs:annotation>
-      </xs:element>
-      <xs:element name="version" type="xs:long" minOccurs="0" nillable="true">
-          <xs:annotation>
-              <xs:appinfo>
-                  <hj:version/>
-                  <!-- ** hj:type name="long"/-->
-              </xs:appinfo>
-          </xs:annotation>
-      </xs:element>   
-      <xs:element name="applicationDate" type="xs:dateTime" minOccurs="0" nillable="true">
-           <xs:annotation>
-              <xs:appinfo>
-                  <!-- ** hj:type name="date"/-->
-              </xs:appinfo>
-          </xs:annotation>     
-      </xs:element>
-      <xs:element name="receivedDate" type="xs:dateTime" minOccurs="0" nillable="true">
-           <xs:annotation>
-              <xs:appinfo>
-                  <!-- ** hj:type name="date"/-->
-              </xs:appinfo>
-          </xs:annotation>     
-      </xs:element>
-      <xs:element name="signedDate" type="xs:dateTime" minOccurs="0" nillable="true">
-           <xs:annotation>
-              <xs:appinfo>
-                  <!-- ** hj:type name="date"/-->
-              </xs:appinfo>
-          </xs:annotation>     
-      </xs:element>
-      <xs:element name="completeDate" type="xs:dateTime" minOccurs="0" nillable="true">
-           <xs:annotation>
-              <xs:appinfo>
-                  <!-- ** hj:type name="date"/-->
-              </xs:appinfo>
-          </xs:annotation>     
-      </xs:element>
-      <xs:element name="unpaidMedicalExpense" type="xs:boolean" minOccurs="0" nillable="true"/>
-      <xs:element name="totalAdult" type="xs:int" minOccurs="0" nillable="true"/>
-      <xs:element name="totalChild" type="xs:int" minOccurs="0" nillable="true"/>
-      <xs:element name="totalRefugee" type="xs:int" minOccurs="0" nillable="true"/>
-      <xs:element name="dateCreated" type="xs:dateTime" minOccurs="0" nillable="true">
-           <xs:annotation>
-              <xs:appinfo>
-                  <!-- ** hj:type name="date"/-->
-              </xs:appinfo>
-          </xs:annotation>     
-      </xs:element>
-      <xs:element name="dateModified" type="xs:dateTime" minOccurs="0" nillable="true">
-           <xs:annotation>
-              <xs:appinfo>
-                  <!-- ** hj:type name="date"/-->
-              </xs:appinfo>
-          </xs:annotation>     
-      </xs:element>
-   </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="Application1">
-   <xs:sequence>
-      <xs:element name="applicationId" type="xs:long" minOccurs="0" nillable="true">
-          <xs:annotation>
-              <xs:appinfo>
-                  <hj:id/>
-              </xs:appinfo>
-          </xs:annotation>
-      </xs:element>
-      <xs:element name="version" type="xs:long" minOccurs="0" nillable="true">
-          <xs:annotation>
-              <xs:appinfo>
-                  <hj:version/>
-              </xs:appinfo>
-          </xs:annotation>
-      </xs:element>   
-      <xs:element name="applicationDate" type="xs:dateTime" minOccurs="0" nillable="true"/>    
-
-      <xs:element name="receivedDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
-      <xs:element name="signedDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
-      <xs:element name="completeDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
-      <xs:element name="unpaidMedicalExpense" type="xs:boolean" minOccurs="0" nillable="true"/>
-      <xs:element name="totalChild" type="xs:int" minOccurs="0" nillable="true"/>
-      <xs:element name="totalRefugee" type="xs:int" minOccurs="0" nillable="true"/>
-   </xs:sequence>
-</xs:complexType>
+	<xs:element name="Application1" type="tns:Application1"/>
+	<xs:complexType name="Application1">
+		<xs:sequence>
+			<xs:element name="applicationId" type="xs:long" minOccurs="0" nillable="false">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:id/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="version" type="xs:long" minOccurs="0" nillable="false">
+				<!-- 
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:version/>
+					</xs:appinfo>
+				</xs:annotation>
+				 -->
+			</xs:element>
+			<xs:element name="applicationDate" type="xs:dateTime" minOccurs="0" nillable="false"/>
+			<xs:element name="receivedDate" type="xs:dateTime" minOccurs="0" nillable="false"/>
+			<xs:element name="signedDate" type="xs:dateTime" minOccurs="0" nillable="false"/>
+			<xs:element name="completeDate" type="xs:dateTime" minOccurs="0" nillable="false"/>
+			<xs:element name="unpaidMedicalExpense" type="xs:boolean" minOccurs="0" nillable="false"/>
+			<xs:element name="totalChild" type="xs:int" minOccurs="0" nillable="false"/>
+			<xs:element name="totalRefugee" type="xs:int" minOccurs="0" nillable="false"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="Application2" type="tns:Application2"/>
+	<xs:complexType name="Application2">
+		<xs:sequence>
+			<xs:element name="applicationId" type="xs:long" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:id/>
+						<!-- ** hj:type name="long"/-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="version" type="xs:long" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<!-- 
+						<hj:version/>
+						-->
+						<!-- ** hj:type name="long"/-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="applicationDate" type="xs:dateTime" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<!-- ** hj:type name="date"/-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="receivedDate" type="xs:dateTime" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<!-- ** hj:type name="date"/-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="signedDate" type="xs:dateTime" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<!-- ** hj:type name="date"/-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="completeDate" type="xs:dateTime" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<!-- ** hj:type name="date"/-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unpaidMedicalExpense" type="xs:boolean" minOccurs="0" nillable="true"/>
+			<xs:element name="totalAdult" type="xs:int" minOccurs="0" nillable="true"/>
+			<xs:element name="totalChild" type="xs:int" minOccurs="0" nillable="true"/>
+			<xs:element name="totalRefugee" type="xs:int" minOccurs="0" nillable="true"/>
+			<xs:element name="dateCreated" type="xs:dateTime" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<!-- ** hj:type name="date"/-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateModified" type="xs:dateTime" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<!-- ** hj:type name="date"/-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
 </xs:schema>

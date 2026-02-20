@@ -254,6 +254,8 @@
 		<xsd:attribute name="StudyID" type="xsd:ID" use="required"/> 
 	</xsd:complexType>
 
+	<xsd:element name="Investigation" type="cmd:InvestigationType"/>
+
 	<xsd:complexType name="InvestigationType"> 
 		<xsd:sequence> 
 			<xsd:element name="Name" type="xsd:string"/> 

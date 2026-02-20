@@ -5,7 +5,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jaxb https://jakarta.ee/xml/ns/jaxb/bindingschema_3_0.xsd"
 >
-	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+	<jaxb:bindings schemaLocation="clrcmetadata.xsd" node="/xs:schema">
 		<jaxb:bindings node="//xs:complexType[@name='MetadataRecordType']/xs:sequence/xs:element[@name='AccessConditions']/xs:complexType">
 			<jaxb:class name="MetadataRecordAccessConditionsType"/>
 		</jaxb:bindings>

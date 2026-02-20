@@ -32,6 +32,7 @@
 		<module>customizations</module>
 		<module>dc</module>
 		<module>device</module>
+		<module>dl</module>
 		<module>dom</module>
 		<module>dy</module>
 		<!-- Hibernate 6.2.7.Final: SemanticException: 
@@ -56,6 +57,7 @@
 		<module>issues-el</module>
 		<module>issues-jpa</module>
 		<module>issues-po</module>
+		<module>nokis</module>
 		<module>one</module>
 		<module>onix30</module>
 		<module>pesc</module>
@@ -80,6 +82,10 @@
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.github.threeten-jaxb</groupId>
+			<artifactId>threeten-jaxb-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
@@ -207,11 +213,9 @@
 			<id>tests-0</id>
 			<modules>
 				<module>derby</module>
-				<module>dl</module>
 				<module>ids</module>
 				<module>ims-lip</module>
 				<module>nml</module>
-				<module>nokis</module>
 				<module>ows</module>
 				<module>regrep</module>
 				<module>rim</module>
@@ -226,7 +230,6 @@
 			<modules>
 				<module>cda</module>
 				<module>component</module>
-				<module>fpml-pretrade</module>
 				<module>ota</module>
 				<module>plmxml</module>
 				<module>sml</module>
@@ -238,6 +241,13 @@
 			<id>tests-2</id>
 			<modules>
 				<module>po-mysql</module>
+			</modules>
+		</profile>
+		<profile>
+			<!-- package=SUCCESS; test=SUCCESS; long running -->
+			<id>tests-3</id>
+			<modules>
+				<module>fpml-pretrade</module>
 			</modules>
 		</profile>
 		<!-- Hints:

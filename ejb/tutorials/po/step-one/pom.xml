@@ -23,6 +23,10 @@
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.github.threeten-jaxb</groupId>
+			<artifactId>threeten-jaxb-core</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.patrodyne.jvnet</groupId>
