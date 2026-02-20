@@ -109,7 +109,7 @@
 		<javassist.version>3.30.2-GA</javassist.version>
 		<jpa-api.version>3.1.0</jpa-api.version>
 		<jaxb-api.version>4.0.5</jaxb-api.version>
-		<jaxb-imp.version>4.0.5</jaxb-imp.version>
+		<jaxb-imp.version>4.0.6</jaxb-imp.version>
 		<junit-jupiter.version>6.0.3</junit-jupiter.version>
 		<junit-platform.version>6.0.3</junit-platform.version>
 		<m2e.jpa.activation>false</m2e.jpa.activation>
@@ -776,15 +776,6 @@
 										<ignoreVersion>
 											<type>exact</type>
 											<version>20030203.000550</version>
-										</ignoreVersion>
-									</ignoreVersions>
-								</rule>
-								<rule>
-									<groupId>org.glassfish.jaxb</groupId>
-									<ignoreVersions>
-										<ignoreVersion>
-											<type>exact</type>
-											<version>4.0.6</version>
 										</ignoreVersion>
 									</ignoreVersions>
 								</rule>
