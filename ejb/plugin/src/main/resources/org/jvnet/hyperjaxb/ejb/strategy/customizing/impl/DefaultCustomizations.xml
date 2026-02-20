@@ -238,6 +238,11 @@
     <!-- 3.3.8 xsd:ID -->
     
     <!-- 3.3.9 xsd:IDREF -->
+	<hj:default-single-property type="xsd:IDREF">
+		<hj:basic>
+			<orm:lob/>
+		</hj:basic>
+	</hj:default-single-property>
     
     <!-- 3.3.10 xsd:IDREFs -->
     
@@ -473,6 +478,11 @@
     <!-- 3.3.8 xsd:ID -->
     
     <!-- 3.3.9 xsd:IDREF -->
+	<hj:default-collection-property type="xsd:IDREF">
+		<hj:element-collection>
+			<orm:lob/>
+		</hj:element-collection>
+	</hj:default-collection-property>
     
     <!-- 3.3.10 xsd:IDREFs -->
     
