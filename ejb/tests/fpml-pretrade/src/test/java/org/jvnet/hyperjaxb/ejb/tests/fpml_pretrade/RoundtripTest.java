@@ -7,6 +7,12 @@ public class RoundtripTest
     implements ContextPathAware
 {
     @Override
+	public Boolean isValidateXml()
+	{
+		return false;
+	}
+
+    @Override
 	public String getContextPath()
 	{
         return "org.fpml.fpml_5_0.pretrade:org.w3._2000._09.xmldsig_";
