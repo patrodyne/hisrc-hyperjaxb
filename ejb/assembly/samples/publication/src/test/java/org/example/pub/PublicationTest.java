@@ -39,6 +39,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
@@ -262,7 +263,7 @@ public class PublicationTest extends AbstractEntityManagerTest
 			.title(SCHEMA_TITLE)
 			.toOptions();
 
-	    final Config config = new Config();
+	    final Config config = ConfigUtility.newConfig();
 	    config.put("no-info", true);
 	    config.put("no-remarks", true);
 	    config.put("portable-names", true);
