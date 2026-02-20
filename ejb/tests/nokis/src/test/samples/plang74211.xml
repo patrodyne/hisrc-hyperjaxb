@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<record xmlns="http://nokis.baw.de/">
-	<mdRecordInfo>
+<record xmlns="http://nokis.baw.de/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nokis.baw.de/ ../../main/resources/schema.xsd"
+	version="1"
+>
+	<mdRecordInfo version="1">
 		<mdFileID>plang74211</mdFileID>
 		<mdRefTitle>TESTDATENSATZ: Seekabel und Rohrleitungen</mdRefTitle>
 		<mdLastModified>2005-04-28T16:41:05</mdLastModified>
@@ -11,7 +15,10 @@
 		<mdStanName>ISO 19115</mdStanName>
 		<mdStanVer>DIS</mdStanVer>
 		<mdContact>
+			<!--
 			<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="plang74211-ID12">
+			-->
+			<respPartyRec version="1">
 				<rpIndName>Simmering,Frank (1)</rpIndName>
 				<rpOrgName>plan-GIS GmbH</rpOrgName>
 				<rpPosName>Geschäftsführer</rpPosName>
@@ -65,7 +72,10 @@
 		</idPurp>
 		<idStatus>001</idStatus>
 		<idPoC>
+			<!--
 			<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="plang74211-ID12">
+			-->
+			<respPartyRec version="1">
 				<rpIndName>Simmering,Frank (1)</rpIndName>
 				<rpOrgName>plan-GIS GmbH</rpOrgName>
 				<rpPosName>Geschäftsführer</rpPosName>

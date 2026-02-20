@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<record xmlns="http://nokis.baw.de/">
-	<mdRecordInfo>
+<record xmlns="http://nokis.baw.de/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nokis.baw.de/ ../../main/resources/schema.xsd"
+	version="1"
+>
+	<mdRecordInfo version="1">
 		<mdFileID>npash48009</mdFileID>
 		<mdRefTitle>TESTDATENSATZ: Robbenliegeplätze_SH_1990 - 1995_Relatetabelle_seehp9095.zd95</mdRefTitle>
 		<mdLastModified>2005-01-25T11:22:33</mdLastModified>
@@ -11,7 +15,10 @@
 		<mdStanName>ISO 19115</mdStanName>
 		<mdStanVer>DIS</mdStanVer>
 		<mdContact>
+			<!--
 			<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="npash12567-ID12">
+			-->
+			<respPartyRec version="1">
 				<rpIndName>Rheinländer, Judith</rpIndName>
 				<rpOrgName>Nationalparkamt Schleswig-Holsteinisches Wattenmeer</rpOrgName>
 				<rpPosName>Angestellte</rpPosName>
@@ -68,7 +75,10 @@
 		<idStatus>001</idStatus>
 		<fileName>mod100/cv_seeh/seehp9095</fileName>
 		<idPoC>
+			<!--
 			<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="npash11382">
+			-->
+			<respPartyRec version="1">
 				<rpIndName>Kohlus, Jörn, Dipl. Geograph</rpIndName>
 				<rpOrgName>Nationalparkamt Schleswig-Holsteinisches Wattenmeer</rpOrgName>
 				<rpCntInfo>

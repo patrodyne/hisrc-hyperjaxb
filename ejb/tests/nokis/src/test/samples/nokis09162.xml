@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<record xmlns="http://nokis.baw.de/">
-	<mdRecordInfo>
+<record xmlns="http://nokis.baw.de/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nokis.baw.de/ ../../main/resources/schema.xsd"
+	version="1"
+>
+	<mdRecordInfo version="1">
 		<mdFileID>nokis09162</mdFileID>
 		<mdRefTitle>TESTDATENSATZ: Morwin-Seegang</mdRefTitle>
 		<mdLastModified>2005-04-28T15:49:15</mdLastModified>
@@ -11,7 +15,10 @@
 		<mdStanName>ISO 19115</mdStanName>
 		<mdStanVer>DIS</mdStanVer>
 		<mdContact>
+			<!--
 			<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="nokis09162-ID160">
+			-->
+			<respPartyRec version="1">
 				<rpIndName>Lehfeldt, Rainer, Dr.</rpIndName>
 				<rpOrgName>KFKI</rpOrgName>
 				<rpPosName>Geschäftsführer</rpPosName>
@@ -57,7 +64,10 @@
 			</resRefDate>
 			<presForm>011</presForm>
 			<citRespParty>
+				<!--
 				<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="nokis09162-ID160">
+				-->
+				<respPartyRec version="1">
 					<rpIndName>Lehfeldt, Rainer, Dr.</rpIndName>
 					<rpOrgName>KFKI</rpOrgName>
 					<rpPosName>Geschäftsführer</rpPosName>
@@ -94,7 +104,10 @@
 		</idPurp>
 		<idStatus>007</idStatus>
 		<idPoC>
+			<!--
 			<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="nokis09162-ID160">
+			-->
+			<respPartyRec version="1">
 				<rpIndName>Lehfeldt, Rainer, Dr.</rpIndName>
 				<rpOrgName>KFKI</rpOrgName>
 				<rpPosName>Geschäftsführer</rpPosName>
@@ -228,7 +241,10 @@
 		</distTranOps>
 		<distributor>
 			<distorCont>
+				<!--
 				<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="nokis09162-ID160">
+				-->
+				<respPartyRec version="1">
 					<rpIndName>Lehfeldt, Rainer, Dr.</rpIndName>
 					<rpOrgName>KFKI</rpOrgName>
 					<rpPosName>Geschäftsführer</rpPosName>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<record xmlns="http://nokis.baw.de/">
-	<mdRecordInfo>
+<record xmlns="http://nokis.baw.de/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nokis.baw.de/ ../../main/resources/schema.xsd"
+	version="1"
+>
+	<mdRecordInfo version="1">
 		<mdFileID>wsdnw00303</mdFileID>
 		<mdRefTitle>TESTDATENSATZ: DBWK 2 (Wümme, Blatt 6)</mdRefTitle>
 		<mdLastModified>2005-01-24T15:19:55</mdLastModified>
@@ -12,7 +16,10 @@
 		<mdStanName>ISO 19115</mdStanName>
 		<mdStanVer>DIS</mdStanVer>
 		<mdContact>
+			<!--
 			<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="wsdnw68209-ID16">
+			-->
+			<respPartyRec version="1">
 				<rpIndName>Woldenga, Axel, Dipl.-Ing.</rpIndName>
 				<rpOrgName>Vermessungs- und Kartenstelle bei der WSD Nordwest</rpOrgName>
 				<rpPosName>stellvertretender Leiter</rpPosName>
@@ -84,7 +91,10 @@
 		</idPurp>
 		<idStatus>001</idStatus>
 		<idPoC>
+			<!--
 			<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="wsdnw68209-ID16">
+			-->
+			<respPartyRec version="1">
 				<rpIndName>Woldenga, Axel, Dipl.-Ing.</rpIndName>
 				<rpOrgName>Vermessungs- und Kartenstelle bei der WSD Nordwest</rpOrgName>
 				<rpPosName>stellvertretender Leiter</rpPosName>
@@ -189,7 +199,10 @@
 				</resRefDate>
 				<presForm>001</presForm>
 				<citRespParty>
+					<!--
 					<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="wsdnw57528-ID13">
+					-->
+					<respPartyRec version="1">
 						<rpIndName>Heidmann, Carsten (stellvertretend)</rpIndName>
 						<rpOrgName>Sonderstelle f. Vermessungswesen (SVW)</rpOrgName>
 						<rpPosName>Sachbearbeiter</rpPosName>
@@ -234,7 +247,10 @@
 		</distTranOps>
 		<distributor>
 			<distorCont>
+				<!--
 				<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="wsdnw68209-ID16">
+				-->
+				<respPartyRec version="1">
 					<rpIndName>Woldenga, Axel, Dipl.-Ing.</rpIndName>
 					<rpOrgName>Vermessungs- und Kartenstelle bei der WSD Nordwest</rpOrgName>
 					<rpPosName>stellvertretender Leiter</rpPosName>
@@ -288,7 +304,10 @@
 			</resRefDate>
 			<presForm>001</presForm>
 			<citRespParty>
+				<!--
 				<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="wsdnw57528-ID13">
+				-->
+				<respPartyRec version="1">
 					<rpIndName>Heidmann, Carsten (stellvertretend)</rpIndName>
 					<rpOrgName>Sonderstelle f. Vermessungswesen (SVW)</rpOrgName>
 					<rpPosName>Sachbearbeiter</rpPosName>

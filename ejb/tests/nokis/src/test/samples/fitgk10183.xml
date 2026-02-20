@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<record xmlns="http://nokis.baw.de/">
-	<mdRecordInfo>
+<record xmlns="http://nokis.baw.de/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nokis.baw.de/ ../../main/resources/schema.xsd"
+	version="1"
+>
+	<mdRecordInfo version="1">
 		<mdFileID>fitgk10183</mdFileID>
 		<mdRefTitle>TESTDATENSATZ: Wasserstand Rohdaten: Travemünde</mdRefTitle>
 		<mdLastModified>2005-04-28T14:13:38</mdLastModified>
@@ -11,7 +15,10 @@
 		<mdStanName>ISO 19115</mdStanName>
 		<mdStanVer>DIS</mdStanVer>
 		<mdContact>
+			<!-- 
 			<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="fitde61748-ID14">
+			 -->
+			<respPartyRec version="1">
 				<rpIndName>F-IT der WSV</rpIndName>
 				<rpOrgName>Fachstelle der WSV für Informationstechnik</rpOrgName>
 				<rpPosName>beratende Fachstelle der Wasser- und Schifffahrtsverwaltung (WSV)</rpPosName>
@@ -68,7 +75,10 @@
 		</idPurp>
 		<idStatus>007</idStatus>
 		<idPoC>
+			<!-- 
 			<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="fitde12309-ID14">
+			-->
+			<respPartyRec version="1">
 				<rpIndName>WSD Nord</rpIndName>
 				<rpOrgName>Wasser- und Schifffahrtsdirektion Nord </rpOrgName>
 				<rpPosName>Mittelbehörde der Wasser- und Schifffahrtsverwaltung (WSV)</rpPosName>
@@ -205,7 +215,10 @@
 		</distTranOps>
 		<distributor>
 			<distorCont>
+				<!--
 				<respPartyRec xmlns:decorum="http://www.fzi.de/dbs/decorum" decorum:DocumentID="fitde28877-ID14">
+				-->
+				<respPartyRec version="1">
 					<rpIndName>FIT- IT Verfahren Gewässerkunde</rpIndName>
 					<rpOrgName>Fachstelle der WSV für Informationstechnik</rpOrgName>
 					<rpPosName>beratende Fachstelle der Wasser- und Schifffahrtsverwaltung (WSV)</rpPosName>
