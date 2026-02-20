@@ -13,8 +13,8 @@
 
 		<replace dir="${basedir}" summary="true">
 			<include name="LICENSE.md"/>
-			<replacetoken><![CDATA[Copyright &copy; 2022-2024, Rick O'Sullivan;]]></replacetoken>
-			<replacevalue><![CDATA[Copyright &copy; 2022-2025, Rick O'Sullivan;]]></replacevalue>
+			<replacetoken><![CDATA[Copyright &copy; 2022-2025, Rick O'Sullivan;]]></replacetoken>
+			<replacevalue><![CDATA[Copyright &copy; 2022-2026, Rick O'Sullivan;]]></replacevalue>
 		</replace>
 
 		<replace dir="${basedir}" summary="true">
@@ -25,8 +25,8 @@
 
 		<replace dir="${basedir}" summary="true">
 			<include name="**/sql-*-h2db.sh"/>
-			<replacetoken><![CDATA[/org/postgresql/postgresql/42.7.3/postgresql-42.7.3.jar]]></replacetoken>
-			<replacevalue><![CDATA[/org/postgresql/postgresql/42.7.8/postgresql-42.7.8.jar]]></replacevalue>
+			<replacetoken><![CDATA[/org/postgresql/postgresql/42.7.8/postgresql-42.7.8.jar]]></replacetoken>
+			<replacevalue><![CDATA[/org/postgresql/postgresql/42.7.10/postgresql-42.7.10.jar]]></replacevalue>
 		</replace>
 
 		<replace dir="${basedir}" summary="true">

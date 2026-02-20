@@ -94,7 +94,7 @@
 		<annotation.version>3.0.0</annotation.version>
 		<cdi-api.version>4.1.0</cdi-api.version>
 		<derby.version>10.17.1.0</derby.version>
-		<eclipselink.version>4.0.8</eclipselink.version>
+		<eclipselink.version>4.0.9</eclipselink.version>
 		<ehcache.version>3.11.1</ehcache.version>
 		<guice.version>5.1.0</guice.version> <!-- provided by Maven -->
 		<hibernate-search.version>8.1.2.Final</hibernate-search.version>
@@ -108,10 +108,10 @@
 		<h2database.version>2.4.240</h2database.version>
 		<javassist.version>3.30.2-GA</javassist.version>
 		<jpa-api.version>3.1.0</jpa-api.version>
-		<jaxb-api.version>4.0.4</jaxb-api.version>
+		<jaxb-api.version>4.0.5</jaxb-api.version>
 		<jaxb-imp.version>4.0.5</jaxb-imp.version>
-		<junit-jupiter.version>6.0.1</junit-jupiter.version>
-		<junit-platform.version>6.0.1</junit-platform.version>
+		<junit-jupiter.version>6.0.3</junit-jupiter.version>
+		<junit-platform.version>6.0.3</junit-platform.version>
 		<m2e.jpa.activation>false</m2e.jpa.activation>
 		<maven.compiler.release>17</maven.compiler.release>
 		<maven-api.version>3.9.6</maven-api.version>
@@ -119,13 +119,13 @@
 		<maven-plugin-plugin.version>3.15.2</maven-plugin-plugin.version>
 		<maven-plugin-testing.version>3.3.0</maven-plugin-testing.version>
 		<maven-resolver.version>1.9.18</maven-resolver.version>
-		<postgresql.version>42.7.8</postgresql.version>
+		<postgresql.version>42.7.10</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<schemacrawler.version>17.1.6</schemacrawler.version>
+		<schemacrawler.version>17.6.2</schemacrawler.version>
 		<slf4j.version>2.0.17</slf4j.version>
-		<smallrye.version>3.5.2</smallrye.version>
-		<weld.version>6.0.3.Final</weld.version>
+		<smallrye.version>3.5.3</smallrye.version>
+		<weld.version>6.0.4.Final</weld.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -257,6 +257,11 @@
 				<groupId>org.glassfish.jaxb</groupId>
 				<artifactId>codemodel</artifactId>
 				<version>${jaxb-imp.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.github.threeten-jaxb</groupId>
+				<artifactId>threeten-jaxb-core</artifactId>
+				<version>2.2.0</version>
 			</dependency>
 			<!-- JUnit -->
 			<dependency>
@@ -427,7 +432,7 @@
 			<dependency>
 				<groupId>org.jboss.logging</groupId>
 				<artifactId>jboss-logging</artifactId>
-				<version>3.6.1.Final</version>
+				<version>3.6.2.Final</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
@@ -484,27 +489,13 @@
 			<!-- SchemaCrawler -->
 			<dependency>
 				<groupId>us.fatehi</groupId>
-				<artifactId>schemacrawler</artifactId>
+				<artifactId>schemacrawler-diagram</artifactId>
 				<version>${schemacrawler.version}</version>
-				<exclusions>
-					<!-- In favor of org.slf4j:slf4j-simple -->
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-nop</artifactId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>us.fatehi</groupId>
 				<artifactId>schemacrawler-postgresql</artifactId>
 				<version>${schemacrawler.version}</version>
-				<exclusions>
-					<!-- In favor of org.slf4j:slf4j-simple -->
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-nop</artifactId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 			<!-- XMLUnit -->
 			<dependency>
