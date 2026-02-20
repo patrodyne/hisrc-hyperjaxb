@@ -12,7 +12,8 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Nested;
 import org.jvnet.basicjaxb.testing.AbstractSamplesTest;
 import org.jvnet.basicjaxb.xml.bind.ContextPathAware;
 
@@ -31,8 +32,6 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 	private AbstractSamplesTest samplesTest;
 	public AbstractSamplesTest getSamplesTest()
 	{
-		if (samplesTest == null)
-			setSamplesTest(createSamplesTest());
 		return samplesTest;
 	}
 	public void setSamplesTest(AbstractSamplesTest samplesTest)
@@ -57,7 +56,6 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 	public void setUp() throws Exception
 	{
 		super.setUp();
-		setSamplesTest(createSamplesTest());
 	}
 
 	@AfterEach
@@ -65,56 +63,68 @@ public abstract class AbstractEntityManagerSamplesTest extends AbstractEntityMan
 	{
 	}
 
-	@Test
+	/**
+	 * Can be used for a manual test run.
+	 * @throws Exception When the test fails, unexpectedly.
+	 */
+	@Disabled
 	public void testSamples()
 		throws Exception
 	{
-		getSamplesTest().testSamples();
+		new ConcreteSamplesTest().testSamples();
 	}
 
-	protected AbstractSamplesTest createSamplesTest()
+	/**
+	 * Entry point for JUnit testing.
+	 *
+	 * A nested, non-static test class (i.e., an <em>inner class</em>) that shares
+	 * setup and state with the instance of {@linkplain AbstractEntityManagerSamplesTest}.
+	 */
+	@Nested
+	protected class ConcreteSamplesTest extends AbstractSamplesTest
 	{
-		AbstractSamplesTest ast = new AbstractSamplesTest()
+		public ConcreteSamplesTest()
 		{
-			@Override
-			protected void checkSample(File sample)
-				throws Exception
-			{
-				AbstractEntityManagerSamplesTest.this.checkSample(sample);
-			}
+			setSamplesTest(this);
+			setFailFast(isFailFast());
+		}
 
-			@Override
-			protected String getContextPath()
-			{
-				return AbstractEntityManagerSamplesTest.this.getContextPath();
-			}
+		@Override
+		protected void checkSample(File sample)
+			throws Exception
+		{
+			AbstractEntityManagerSamplesTest.this.checkSample(sample);
+		}
 
-			@Override
-			protected Class<? extends Object> getTestClass()
-			{
-				return AbstractEntityManagerSamplesTest.this.getClass();
-			}
+		@Override
+		protected String getContextPath()
+		{
+			return AbstractEntityManagerSamplesTest.this.getContextPath();
+		}
 
-			@Override
-			protected File[] getSampleFiles()
-			{
-				return AbstractEntityManagerSamplesTest.this.getSampleFiles();
-			}
+		@Override
+		protected Class<? extends Object> getTestClass()
+		{
+			return AbstractEntityManagerSamplesTest.this.getClass();
+		}
 
-			@Override
-			protected File getSamplesDirectory()
-			{
-				return AbstractEntityManagerSamplesTest.this.getSamplesDirectory();
-			}
+		@Override
+		protected File[] getSampleFiles()
+		{
+			return AbstractEntityManagerSamplesTest.this.getSampleFiles();
+		}
 
-			@Override
-			protected ClassLoader getContextClassLoader()
-			{
-				return AbstractEntityManagerSamplesTest.this.getContextClassLoader();
-			}
-		};
-		ast.setFailFast(isFailFast());
-		return ast;
+		@Override
+		protected File getSamplesDirectory()
+		{
+			return AbstractEntityManagerSamplesTest.this.getSamplesDirectory();
+		}
+
+		@Override
+		protected ClassLoader getContextClassLoader()
+		{
+			return AbstractEntityManagerSamplesTest.this.getContextClassLoader();
+		}
 	}
 
 	protected JAXBContext createContext()
