@@ -6,8 +6,8 @@ import static org.jvnet.basicjaxb.testing.Bogus.firstName;
 import static org.jvnet.basicjaxb.testing.Bogus.lastName;
 import static org.jvnet.hyperjaxb.ejb.util.Transactional.CacheOption.REUSE;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.example.pub.model.Author;
@@ -80,7 +80,7 @@ public class RunPublicationTest extends AbstractEntityManagerTest
 				{
 					Blog blog = new Blog();
 					blog.setTitle(TITLE_PREFIX + Bogus.streetAddress());
-					blog.setPublishingDateItem(new Date());
+					blog.setPublishingDate(OffsetDateTime.now());
 					blog.setUrl("https://example.org/blog/"+Bogus.alpha(6));
 
 					int authorCount = 1 + RANDOM.nextInt(2);
@@ -116,7 +116,7 @@ public class RunPublicationTest extends AbstractEntityManagerTest
 				{
 					Book book = new Book();
 					book.setTitle(TITLE_PREFIX + Bogus.streetAddress());
-					book.setPublishingDateItem(new Date());
+					book.setPublishingDate(OffsetDateTime.now());
 					book.setPages(100 + RANDOM.nextInt(400));
 
 					int authorCount = 1 + RANDOM.nextInt(AUTHOR_PER_PUB_COUNT_MAX);

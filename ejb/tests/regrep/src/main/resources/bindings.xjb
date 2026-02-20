@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jaxb:bindings jaxb:version="3.0" 
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
-	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	jaxb:extensionBindingPrefixes="xjc hj orm"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jaxb https://jakarta.ee/xml/ns/jaxb/bindingschema_3_0.xsd"
@@ -20,6 +20,7 @@
 	<jaxb:globalBindings localScoping="toplevel">
 		<!--xjc:simple/-->
 		<jaxb:serializable uid="20211201" />
+		<xjc:javaType xmlType="xs:dateTime" name="java.time.OffsetDateTime" adapter="io.github.threetenjaxb.core.LenientOffsetDateTimeXmlAdapter"/>
 	</jaxb:globalBindings>
     
     <!--

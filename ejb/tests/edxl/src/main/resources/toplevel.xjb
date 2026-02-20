@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE bindings>
 <jaxb:bindings jaxb:version="3.0"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jaxb https://jakarta.ee/xml/ns/jaxb/bindingschema_3_0.xsd"
 >
@@ -15,6 +16,8 @@
 	-->
 	<jaxb:globalBindings localScoping="toplevel" >
 		<jaxb:serializable uid="20211201" />
+		<xjc:javaType xmlType="xs:time" name="java.time.OffsetTime" adapter="io.github.threetenjaxb.core.LenientOffsetTimeXmlAdapter"/>
+		<xjc:javaType xmlType="xs:dateTime" name="java.time.OffsetDateTime" adapter="io.github.threetenjaxb.core.LenientOffsetDateTimeXmlAdapter"/>
 	</jaxb:globalBindings>
 
 	<jaxb:bindings schemaLocation="CommonTypes.xsd" node="/xs:schema">

@@ -51,7 +51,7 @@ import jakarta.xml.bind.annotation.XmlValue;
 
 /**
  * Useful base class for implementing {@link FieldOutline}.
- * 
+ *
  * <p>
  * This class just provides a few utility methods and keep some
  * important variables so that they can be readily accessed any time.
@@ -62,9 +62,9 @@ import jakarta.xml.bind.annotation.XmlValue;
 public abstract class AbstractField implements FieldOutline
 {
     protected final ClassOutlineImpl outline;
-    
+
     protected final CPropertyInfo prop;
-    
+
     protected final JCodeModel codeModel;
 
     /**
@@ -322,7 +322,7 @@ public abstract class AbstractField implements FieldOutline
          * Evaluates to the target object this accessor should access.
          */
         protected final JExpression $target;
-        
+
         protected Accessor( JExpression $target ) {
             this.$target = $target;
         }
@@ -337,8 +337,8 @@ public abstract class AbstractField implements FieldOutline
             return prop;
         }
     }
-    
-    
+
+
 //
 //
 //     utility methods
@@ -366,7 +366,7 @@ public abstract class AbstractField implements FieldOutline
     {
     	return getType(prop, aspect);
     }
-    
+
     protected JType getType(CPropertyInfo prop, final Aspect aspect)
     {
         if ( prop.getAdapter() != null )
@@ -409,7 +409,7 @@ public abstract class AbstractField implements FieldOutline
                     add(typeInfo);
             }
         }
-        
+
         TypeList r = new TypeList();
         r.add(prop.ref());
 
@@ -427,10 +427,10 @@ public abstract class AbstractField implements FieldOutline
         //
         // if ( prop.isUnboxable() )
         //     t = t.unboxify();
-        
+
         return t;
     }
-    
+
 
     /**
      * Returns contents to be added to javadoc.

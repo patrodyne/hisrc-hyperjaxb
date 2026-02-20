@@ -255,7 +255,9 @@
 					<xs:appinfo>
 						<hj:id merge="false">
 							<orm:column name="FIVE_CUSTOM_ID"/>
+							<!-- 
 							<orm:temporal>TIMESTAMP</orm:temporal>
+							-->
 						</hj:id>	
 					</xs:appinfo>
 				</xs:annotation>

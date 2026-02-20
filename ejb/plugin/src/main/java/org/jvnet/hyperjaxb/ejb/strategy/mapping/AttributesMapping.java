@@ -57,7 +57,7 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes>
 	public Attributes process(Mapping context, ClassOutline classOutline)
 	{
 		setPlugin(context.getPlugin());
-		
+
 		final Attributes attributes = new Attributes();
 		final FieldOutline[] fieldOutlines = classOutline.getDeclaredFields();
 		for (final FieldOutline fieldOutline : fieldOutlines)
@@ -66,7 +66,7 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes>
 			{
 				final Object attributeMapping =	getAttributeMapping(context, fieldOutline)
 					.process(context, fieldOutline);
-				
+
 				if (attributeMapping instanceof Id)
 				{
 					if (attributes.getEmbeddedId() == null)
@@ -144,7 +144,7 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes>
 			{
 				final Collection<? extends CTypeInfo> types = context.getGetTypes()
 					.process(context, propInfo);
-				
+
 				if (types.size() == 1)
 				{
 					if (isFieldOutlineBasic(context, fieldOutline))
@@ -204,7 +204,7 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes>
 					}
 					else
 					{
-						getPlugin().trace("{}, getAttributeMapping: class={}, field={}; collection field.",
+						getPlugin().trace("{}, getAttributeMapping: class={}, field={}; homogeneous collection field.",
 							location, classInfo.shortName, propInfo.getName(false));
 					}
 				}
@@ -228,7 +228,7 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes>
 						location, classInfo.shortName, propInfo.getName(false));
 				}
 			}
-			
+
 			todo(format("%s, getAttributeMapping: class=%s, field=%s; could not be annotated. It will be made transient.",
 				location, classInfo.shortName, propInfo.getName(false)));
 			return context.getTransientMapping();

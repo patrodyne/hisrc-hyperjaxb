@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:inheritance="urn:jvnet.org:basicjaxb:xjc:inheritance"
@@ -18,6 +18,18 @@
 	-->
 	<jaxb:globalBindings localScoping="toplevel" optionalProperty="wrapper">
 		<jaxb:serializable uid="20211201" />
+
+		<xjc:javaType xmlType="xsd:date" name="java.time.LocalDate" adapter="io.github.threetenjaxb.core.LocalDateXmlAdapter"/>
+		<xjc:javaType xmlType="xsd:time" name="java.time.OffsetTime" adapter="io.github.threetenjaxb.core.LenientOffsetTimeXmlAdapter"/>
+		<xjc:javaType xmlType="xsd:dateTime" name="java.time.OffsetDateTime" adapter="io.github.threetenjaxb.core.LenientOffsetDateTimeXmlAdapter"/>
+		<xjc:javaType xmlType="xsd:duration" name="java.time.Period" adapter="io.github.threetenjaxb.core.PeriodXmlAdapter"/>
+
+		<xjc:javaType xmlType="xsd:gDay" name="java.lang.Integer" adapter="org.jvnet.basicjaxb.xml.bind.adapter.GDayXmlAdapter"/>
+		<xjc:javaType xmlType="xsd:gMonth" name="java.time.Month" adapter="org.jvnet.basicjaxb.xml.bind.adapter.GMonthXmlAdapter"/>
+		<xjc:javaType xmlType="xsd:gMonthDay" name="java.time.MonthDay" adapter="org.jvnet.basicjaxb.xml.bind.adapter.GMonthDayXmlAdapter"/>
+		<xjc:javaType xmlType="xsd:gYear" name="java.time.Year" adapter="org.jvnet.basicjaxb.xml.bind.adapter.GYearXmlAdapter"/>
+		<xjc:javaType xmlType="xsd:gYearMonth" name="java.time.YearMonth" adapter="org.jvnet.basicjaxb.xml.bind.adapter.GYearMonthXmlAdapter"/>
+
 	</jaxb:globalBindings>
 
 	<!-- Schema Bindings -->

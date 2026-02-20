@@ -40,6 +40,19 @@ public class ElementCollectionMapping implements
 			}
 
 		}
+
+		// The {@code jakarta.persistence.Temporal} annotation must
+		// be specified for persistent fields or properties of type
+		// {@code java.util.Date} and {@code java.util.Calendar}.
+		// It may only be specified for fields or properties of
+		// those types. The newer {@code java.time.* } types do not
+		// use the {@code jakarta.persistence.Temporal} annotation.
+		if ( elementCollection.getTemporal() != null )
+		{
+			if ( ! context.getAttributeMapping().isTemporal(context, fieldOutline) )
+				elementCollection.setTemporal(null);
+		}
+
 		return elementCollection;
 	}
 

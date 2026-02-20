@@ -24,6 +24,8 @@
 					parseMethod="jakarta.xml.bind.DatatypeConverter.parseDate"
 					printMethod="jakarta.xml.bind.DatatypeConverter.printDate" />
 				<jaxb:serializable uid="20211201" />
+				<xjc:javaType xmlType="xsd:date" name="java.time.LocalDate" adapter="io.github.threetenjaxb.core.LocalDateXmlAdapter"/>
+				<xjc:javaType xmlType="xsd:dateTime" name="java.time.OffsetDateTime" adapter="io.github.threetenjaxb.core.LenientOffsetDateTimeXmlAdapter"/>
 			</jaxb:globalBindings>
 			<jaxb:schemaBindings>
 				<jaxb:package name="org.jvnet.hyperjaxb.ejb.tests.tp"/>

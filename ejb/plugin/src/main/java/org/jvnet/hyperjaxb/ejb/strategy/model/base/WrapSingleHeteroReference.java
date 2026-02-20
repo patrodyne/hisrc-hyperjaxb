@@ -34,6 +34,7 @@ import org.jvnet.hyperjaxb.xml.bind.annotation.adapters.ElementAsString;
 
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;
+import com.sun.tools.xjc.model.CAdapter;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CClassRef;
@@ -64,7 +65,7 @@ public class WrapSingleHeteroReference implements CreatePropertyInfos
 	public Collection<CPropertyInfo> process(ProcessModel context, CPropertyInfo propertyInfo)
 	{
 		setPlugin(context.getPlugin());
-		
+
 		assert propertyInfo instanceof CReferencePropertyInfo;
 		final CReferencePropertyInfo referencePropertyInfo = (CReferencePropertyInfo) propertyInfo;
 		assert !referencePropertyInfo.isMixed();
@@ -206,6 +207,13 @@ public class WrapSingleHeteroReference implements CreatePropertyInfos
 						@Override
 						public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo p)
 						{
+							CAdapter cAdapter = elementInfo.getProperty().getAdapter();
+							if ( (p.getAdapter() == null) && cAdapter != null )
+							{
+								// Expose any global XmlAdapter(s)
+								if ( p instanceof CElementPropertyInfo )
+									((CElementPropertyInfo) p).setAdapter(cAdapter);
+							}
 							SingleWrappingReferenceElementInfoField field =
 								new SingleWrappingReferenceElementInfoField(classOutline, p, propInfo, elementInfo);
 							field.generateAccessors();

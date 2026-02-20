@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
@@ -23,19 +24,36 @@
 		typesafeEnumMaxMembers="512"
 	>
 		<jaxb:serializable uid="20211201" />
+		<xjc:javaType xmlType="xsd:date" name="java.time.LocalDate" adapter="io.github.threetenjaxb.core.LocalDateXmlAdapter"/>
+		<xjc:javaType xmlType="xsd:dateTime" name="java.time.OffsetDateTime" adapter="io.github.threetenjaxb.core.LenientOffsetDateTimeXmlAdapter"/>
 	</jaxb:globalBindings>
 
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+
 		<jaxb:schemaBindings>
 			<jaxb:nameXmlTransform>
 				<jaxb:elementName suffix="Element"/>
 			</jaxb:nameXmlTransform>
 		</jaxb:schemaBindings>
+
 		<hj:persistence>
 			<hj:default-generated-id>
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
 		</hj:persistence>
+
+		<jaxb:bindings node="xs:complexType[@name='PtGroup']//xs:element[@name='ptText']">
+			<hj:basic>
+				<orm:column length="4000"/>
+			</hj:basic>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="xs:complexType[@name='Medium']//xs:element[@name='medNote']">
+			<hj:basic>
+				<orm:column length="4000"/>
+			</hj:basic>
+		</jaxb:bindings>
+
 	</jaxb:bindings>
 
 </jaxb:bindings>

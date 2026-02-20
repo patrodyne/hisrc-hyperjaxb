@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
@@ -18,6 +19,18 @@
 	-->
 	<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
 		<jaxb:serializable uid="20230501" />
+
+		<xjc:javaType xmlType="xs:date" name="java.time.LocalDate" adapter="io.github.threetenjaxb.core.LocalDateXmlAdapter"/>
+		<xjc:javaType xmlType="xs:time" name="java.time.OffsetTime" adapter="io.github.threetenjaxb.core.LenientOffsetTimeXmlAdapter"/>
+		<xjc:javaType xmlType="xs:dateTime" name="java.time.OffsetDateTime" adapter="io.github.threetenjaxb.core.LenientOffsetDateTimeXmlAdapter"/>
+		<xjc:javaType xmlType="xs:duration" name="java.time.Period" adapter="io.github.threetenjaxb.core.PeriodXmlAdapter"/>
+
+		<xjc:javaType xmlType="xs:gDay" name="java.lang.Integer" adapter="org.jvnet.basicjaxb.xml.bind.adapter.GDayXmlAdapter"/>
+		<xjc:javaType xmlType="xs:gMonth" name="java.time.Month" adapter="org.jvnet.basicjaxb.xml.bind.adapter.GMonthXmlAdapter"/>
+		<xjc:javaType xmlType="xs:gMonthDay" name="java.time.MonthDay" adapter="org.jvnet.basicjaxb.xml.bind.adapter.GMonthDayXmlAdapter"/>
+		<xjc:javaType xmlType="xs:gYear" name="java.time.Year" adapter="org.jvnet.basicjaxb.xml.bind.adapter.GYearXmlAdapter"/>
+		<xjc:javaType xmlType="xs:gYearMonth" name="java.time.YearMonth" adapter="org.jvnet.basicjaxb.xml.bind.adapter.GYearMonthXmlAdapter"/>
+
 	</jaxb:globalBindings>
 
 	<!--  Schema Bindings -->
@@ -114,7 +127,7 @@
             >
                 <orm:column name="pid"/>
                 <orm:generated-value generator="SEQUENCES" strategy="TABLE"/>
-                <orm:table-generator name="SEQUENCES" table="sequences"
+                <orm:table-generator name="SEQUENCES" table="SEQUENCES"
 					pk-column-name="seq_name" value-column-name="seq_last"
 					initial-value="0" allocation-size="1"/>
             </hj:default-generated-id>

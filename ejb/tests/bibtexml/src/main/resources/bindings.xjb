@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
@@ -16,6 +17,10 @@
 	-->
 	<jaxb:globalBindings localScoping="toplevel">
 		<jaxb:serializable uid="20211201" />
+		<!--
+		<xjc:javaType xmlType="xs:gMonth" name="java.time.Month" adapter="io.github.threetenjaxb.core.MonthXmlAdapter"/>
+		-->
+		<xjc:javaType xmlType="xs:gYear" name="java.time.Year" adapter="io.github.threetenjaxb.core.YearAsTextXmlAdapter"/>
 	</jaxb:globalBindings>
 
 	<jaxb:bindings schemaLocation="bibtexml.xsd" node="/xs:schema">

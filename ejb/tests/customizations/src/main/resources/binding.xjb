@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jaxb:bindings jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
@@ -21,6 +22,8 @@
 		typesafeEnumMemberName="generateName" 
 		generateIsSetMethod="true">
 		<jaxb:serializable uid="20211201" />
+		<xjc:javaType xmlType="xs:date" name="java.time.LocalDate" adapter="io.github.threetenjaxb.core.LocalDateXmlAdapter"/>
+		<xjc:javaType xmlType="xs:gYear" name="java.time.Year" adapter="io.github.threetenjaxb.core.YearAsTextXmlAdapter"/>
 		<!--
 			These customizations were valid in XJC 1.0, but in 2.0 we
 			don't use them. OTOH, we don't want to issue an error for

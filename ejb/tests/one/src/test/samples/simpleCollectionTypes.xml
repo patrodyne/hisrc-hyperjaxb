@@ -19,7 +19,7 @@
 	<gYear>2005</gYear>
 	<gMonthDay>--01-31</gMonthDay>
 	<gDay>---31</gDay>
-	<gMonth>--01--</gMonth>
+	<gMonth>--01</gMonth>
 
 	<float>1.234</float>
 	<float>1.234</float>
@@ -117,8 +117,8 @@
 	<gMonthDayNillable>--01-31</gMonthDayNillable>
 	<gDayNillable>---31</gDayNillable>
 	<gDayNillable>---31</gDayNillable>
-	<gMonthNillable>--01--</gMonthNillable>
-	<gMonthNillable>--01--</gMonthNillable>
+	<gMonthNillable>--01</gMonthNillable>
+	<gMonthNillable>--01</gMonthNillable>
 	<floatNillable>1.234</floatNillable>
 	<floatNillable>1.234</floatNillable>
 	<doubleNillable>2.345</doubleNillable>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
@@ -17,6 +18,8 @@
 	-->
 	<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
 		<jaxb:serializable uid="20211201" />
+		<xjc:javaType xmlType="xs:date" name="java.time.LocalDate" adapter="io.github.threetenjaxb.core.LocalDateXmlAdapter"/>
+		<xjc:javaType xmlType="xs:dateTime" name="java.time.OffsetDateTime" adapter="io.github.threetenjaxb.core.LenientOffsetDateTimeXmlAdapter"/>
 	</jaxb:globalBindings>
 
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
@@ -52,16 +55,16 @@
 			</jaxb:bindings>
 		</jaxb:bindings>
 
+				<!--
 		<jaxb:bindings node="xs:complexType[@name='HYPERJAXB3_149_Type']/xs:attribute[@name='timestamp1']">
 			<hj:generated-property propertyName="Ts1">
-				<!--
 				<annox:annotate>
 					<annox:annotate
 						annox:class="org.hibernate.annotations.Index"
 						name="HYPERJAXB3_149_TYPE_INDEX_TS1" columnNames="TS1"/>
 				</annox:annotate>
-				-->
 			</hj:generated-property>
 		</jaxb:bindings>
+				-->
 	</jaxb:bindings>
 </jaxb:bindings>
