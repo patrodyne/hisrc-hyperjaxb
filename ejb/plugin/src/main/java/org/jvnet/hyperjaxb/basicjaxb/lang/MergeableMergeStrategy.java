@@ -123,6 +123,25 @@ public class MergeableMergeStrategy implements MergeStrategy
 	}
 
 	@Override
+	public Object mergeIdRef(ObjectLocator leftLocator, ObjectLocator rightLocator, Object left, Object right,
+		boolean leftSet, boolean rightSet)
+	{
+		if (left instanceof Mergeable)
+		{
+			final Mergeable mergeable = (Mergeable) left;
+			if (mergeable.isMerge())
+				return getMergeStrategy().mergeIdRef(leftLocator, rightLocator, left, right, leftSet, rightSet);
+			else
+			{
+				// Do not merge (right uses null)
+				return getMergeStrategy().mergeIdRef(leftLocator, rightLocator, left, null, leftSet, rightSet);
+			}
+		}
+		else
+			return getMergeStrategy().mergeIdRef(leftLocator, rightLocator, left, right, leftSet, rightSet);
+	}
+
+	@Override
 	public boolean[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator, boolean[] left, boolean[] right,
 		boolean leftSet, boolean rightSet)
 	{
