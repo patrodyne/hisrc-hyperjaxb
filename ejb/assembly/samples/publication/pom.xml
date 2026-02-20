@@ -55,7 +55,7 @@
 		</dependency>
 		<dependency>
 			<groupId>us.fatehi</groupId>
-			<artifactId>schemacrawler</artifactId>
+			<artifactId>schemacrawler-diagram</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>us.fatehi</groupId>
