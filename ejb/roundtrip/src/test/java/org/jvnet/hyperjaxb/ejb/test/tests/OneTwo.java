@@ -1,5 +1,16 @@
 package org.jvnet.hyperjaxb.ejb.test.tests;
 
+import static org.apache.commons.lang3.builder.ToStringStyle.SIMPLE_STYLE;
+
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.jvnet.basicjaxb.lang.Equals;
+import org.jvnet.basicjaxb.lang.EqualsStrategy;
+import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
+import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
+import org.jvnet.basicjaxb.locator.ObjectLocator;
+import org.jvnet.basicjaxb.locator.RootObjectLocator;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,17 +23,6 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
-
-import static org.apache.commons.lang3.builder.ToStringStyle.SIMPLE_STYLE;
-
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.jvnet.basicjaxb.lang.Equals;
-import org.jvnet.basicjaxb.lang.EqualsStrategy;
-import org.jvnet.basicjaxb.lang.JAXBEqualsStrategy;
-import org.jvnet.basicjaxb.locator.DefaultRootObjectLocator;
-import org.jvnet.basicjaxb.locator.ObjectLocator;
-import org.jvnet.basicjaxb.locator.RootObjectLocator;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OneTwo", propOrder = { "one", "two" })
@@ -66,10 +66,10 @@ public class OneTwo implements Equals
 	{
 		if (!(object instanceof OneTwo))
 			return false;
-		
+
 		if (this == object)
 			return true;
-		
+
 		final OneTwo that = (OneTwo) object;
 		return strategy.equals(thisLocator, thatLocator, this.getOne(), that.getOne(), this.isOneSet(), that.isTwoSet())
 			&& strategy.equals(thisLocator, thatLocator, this.getTwo(), that.getTwo(), this.isTwoSet(), that.isTwoSet());
@@ -80,7 +80,7 @@ public class OneTwo implements Equals
 	{
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
-	
+
 	@Override
 	public String toString()
 	{
