@@ -22,17 +22,40 @@
 			<replacetoken><![CDATA[/com/h2database/h2/2.2.224/h2-2.2.224.jar]]></replacetoken>
 			<replacevalue><![CDATA[/com/h2database/h2/2.4.240/h2-2.4.240.jar]]></replacevalue>
 		</replace>
-
 		<replace dir="${basedir}" summary="true">
 			<include name="**/sql-*-h2db.sh"/>
 			<replacetoken><![CDATA[/org/postgresql/postgresql/42.7.8/postgresql-42.7.8.jar]]></replacetoken>
 			<replacevalue><![CDATA[/org/postgresql/postgresql/42.7.10/postgresql-42.7.10.jar]]></replacevalue>
 		</replace>
+		<chmod perm="774">
+			<fileset dir="${basedir}">
+				<include name="**/sql-*-h2db.sh"/>
+				<modified/>
+			</fileset>
+		</chmod>
 
 		<replace dir="${basedir}" summary="true">
 			<include name="**/CreateToplevelXJBindings.sh"/>
 			<replacetoken><![CDATA[BASICJAXB_VERSION="2.2.2"]]></replacetoken>
 			<replacevalue><![CDATA[BASICJAXB_VERSION="3.0.0"]]></replacevalue>
+		</replace>
+		<chmod perm="774">
+			<fileset dir="${basedir}">
+				<include name="**/CreateToplevelXJBindings.sh"/>
+				<modified/>
+			</fileset>
+		</chmod>
+
+		<replace dir="${basedir}" summary="true">
+			<include name="**/persistence*.properties"/>
+			<replacetoken><![CDATA[org.eclipse.persistence.platform.database.PostgreSQLPlatform]]></replacetoken>
+			<replacevalue><![CDATA[org.jvnet.hyperjaxb.opt.eclipselink.database.PostgreSQL10Platform]]></replacevalue>
+		</replace>
+
+		<replace dir="${basedir}" summary="true">
+			<include name="**/persistence*.properties"/>
+			<replacetoken><![CDATA[org.jvnet.hyperjaxb.opt.hibernate.dialect.PostgreSQL12Dialect]]></replacetoken>
+			<replacevalue><![CDATA[org.jvnet.hyperjaxb.opt.hibernate.dialect.PostgreSQL13Dialect]]></replacevalue>
 		</replace>
 
 		<replace dir="${basedir}" summary="true">

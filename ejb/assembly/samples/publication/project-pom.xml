@@ -27,6 +27,7 @@
 		<jpa-api.version>${jpa-api.version}</jpa-api.version>
 		<schemacrawler.version>${schemacrawler.version}</schemacrawler.version>
 		<slf4j.version>${slf4j.version}</slf4j.version>
+		<threeten-jaxb.version>${threeten-jaxb.version}</threeten-jaxb.version>
 	</properties>
 
 	<dependencies>
@@ -53,6 +54,11 @@
 			<artifactId>hisrc-hyperjaxb-ejb-runtime</artifactId>
 			<version>\${hisrc-hyperjaxb.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>io.github.threeten-jaxb</groupId>
+			<artifactId>threeten-jaxb-core</artifactId>
+			<version>\${threeten-jaxb.version}</version>
+		</dependency>
 
 		<!-- Database Dependencies -->
 		<dependency>
@@ -70,12 +76,12 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4j.version}</version>
+			<version>\${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
-			<version>${slf4j.version}</version>
+			<version>\${slf4j.version}</version>
 		</dependency>
 
 		<!-- Test dependencies -->
@@ -109,7 +115,7 @@
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.hibernate.orm</groupId>
-							<artifactId>hibernate-jpamodelgen</artifactId>
+							<artifactId>hibernate-processor</artifactId>
 							<version>\${hibernate-series.version}</version>
 						</path>
 					</annotationProcessorPaths>

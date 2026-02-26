@@ -98,7 +98,7 @@
 		<ehcache.version>3.11.1</ehcache.version>
 		<guice.version>5.1.0</guice.version> <!-- provided by Maven -->
 		<hibernate-search.version>8.1.2.Final</hibernate-search.version>
-		<hibernate-series.version>6.6.42.Final</hibernate-series.version>
+		<hibernate-series.version>7.2.5.Final</hibernate-series.version>
 		<hibernate-javadoc.version>6.4</hibernate-javadoc.version>
 		<HikariCP.version>7.0.2</HikariCP.version>
 		<hisrc-basicjaxb-annox-parser.version>3.0.0-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
@@ -107,7 +107,7 @@
 		<hisrc-hyperjaxb-annox-plugin.version>3.0.0-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
 		<h2database.version>2.4.240</h2database.version>
 		<javassist.version>3.30.2-GA</javassist.version>
-		<jpa-api.version>3.1.0</jpa-api.version>
+		<jpa-api.version>3.2.0</jpa-api.version>
 		<jaxb-api.version>4.0.5</jaxb-api.version>
 		<jaxb-imp.version>4.0.6</jaxb-imp.version>
 		<junit-jupiter.version>6.0.3</junit-jupiter.version>
@@ -122,9 +122,10 @@
 		<postgresql.version>42.7.10</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<schemacrawler.version>17.6.2</schemacrawler.version>
+		<schemacrawler.version>17.6.3</schemacrawler.version>
 		<slf4j.version>2.0.17</slf4j.version>
 		<smallrye.version>3.5.3</smallrye.version>
+		<threeten-jaxb.version>2.2.0</threeten-jaxb.version>
 		<weld.version>6.0.4.Final</weld.version>
 	</properties>
 	<dependencyManagement>
@@ -261,7 +262,7 @@
 			<dependency>
 				<groupId>io.github.threeten-jaxb</groupId>
 				<artifactId>threeten-jaxb-core</artifactId>
-				<version>2.2.0</version>
+				<version>${threeten-jaxb.version}</version>
 			</dependency>
 			<!-- JUnit -->
 			<dependency>
@@ -437,7 +438,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate.orm</groupId>
-				<artifactId>hibernate-jpamodelgen</artifactId>
+				<artifactId>hibernate-processor</artifactId>
 				<version>${hibernate-series.version}</version>
 			</dependency>
 			<dependency>

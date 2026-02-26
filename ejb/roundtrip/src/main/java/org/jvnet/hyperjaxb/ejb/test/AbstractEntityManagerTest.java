@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ import jakarta.persistence.Persistence;
 
 /**
  * Roundtrip test case.
- * 
+ *
  * @author Aleksei Valikov
  */
 public abstract class AbstractEntityManagerTest
@@ -29,7 +30,7 @@ public abstract class AbstractEntityManagerTest
 	}
 
 	protected Class<? extends AbstractEntityManagerTest> lastTestClass;
-	
+
 	private EntityManagerFactory entityManagerFactory;
 	public EntityManagerFactory getEntityManagerFactory()
 	{
@@ -63,11 +64,16 @@ public abstract class AbstractEntityManagerTest
 		}
 	}
 
+	@AfterEach
+	public void tearDown() throws Exception
+	{
+	}
+
 	/**
 	 * Get the persistence unit name for testing the EMF.
-	 * 
+	 *
 	 * Note: Sub-classes must override this method for custom PUNs.
-	 * 
+	 *
 	 * @return A persistence unit name derived from this class/sub-class.
 	 */
 	public String getPersistenceUnitName()
@@ -107,7 +113,7 @@ public abstract class AbstractEntityManagerTest
 		{
 			getLogger().warn("EMF: Not Detected [" + resourceName + "].");
 		}
-		
+
 		final Map<String, String> properties = getEntityManagerFactoryProperties();
 		if (properties == null)
 			return Persistence.createEntityManagerFactory(getPersistenceUnitName());

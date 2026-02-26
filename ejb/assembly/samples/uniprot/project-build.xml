@@ -63,6 +63,7 @@
 			<include name="hisrc-basicjaxb-testing-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
+			<include name="hisrc-hyperjaxb-opt-eclipselink-*.jar"/>
 			<include name="hisrc-hyperjaxb-opt-hibernate-*.jar"/>
 			<include name="istack-commons-runtime-*.jar"/>
 			<include name="h2-*.jar"/>

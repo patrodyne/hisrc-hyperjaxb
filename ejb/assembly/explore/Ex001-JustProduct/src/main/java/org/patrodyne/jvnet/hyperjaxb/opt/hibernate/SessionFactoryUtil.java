@@ -11,8 +11,6 @@ import static org.hibernate.cfg.AvailableSettings.ALLOW_UPDATE_OUTSIDE_TRANSACTI
 import static org.hibernate.cfg.AvailableSettings.AUTOCOMMIT;
 import static org.hibernate.cfg.AvailableSettings.AUTO_CLOSE_SESSION;
 import static org.hibernate.cfg.AvailableSettings.AUTO_EVICT_COLLECTION_CACHE;
-import static org.hibernate.cfg.AvailableSettings.BATCH_FETCH_STYLE;
-import static org.hibernate.cfg.AvailableSettings.BATCH_VERSIONED_DATA;
 import static org.hibernate.cfg.AvailableSettings.CACHE_REGION_FACTORY;
 import static org.hibernate.cfg.AvailableSettings.CACHE_REGION_PREFIX;
 import static org.hibernate.cfg.AvailableSettings.CHECK_NULLABILITY;
@@ -307,8 +305,6 @@ public class SessionFactoryUtil
 		putSetting(hcoMap, sf, AUTO_CLOSE_SESSION, etc);
 		putSetting(hcoMap, sf, AUTOCOMMIT, etc);
 		putSetting(hcoMap, sf, AUTO_EVICT_COLLECTION_CACHE, etc);
-		putSetting(hcoMap, sf, BATCH_FETCH_STYLE, etc);
-		putSetting(hcoMap, sf, BATCH_VERSIONED_DATA, etc);
 		putSetting(hcoMap, sf, CACHE_REGION_FACTORY, etc);
 		putSetting(hcoMap, sf, CACHE_REGION_PREFIX, etc);
 		putSetting(hcoMap, sf, CHECK_NULLABILITY, etc);
@@ -452,8 +448,6 @@ public class SessionFactoryUtil
 			case AUTO_CLOSE_SESSION: value = sfo.isAutoCloseSessionEnabled(); break;
 			case AUTOCOMMIT: value = etc.get(AUTOCOMMIT); break;
 			case AUTO_EVICT_COLLECTION_CACHE: value = sfo.isAutoEvictCollectionCache(); break;
-			case BATCH_FETCH_STYLE: value = sfo.getBatchFetchStyle(); break;
-			case BATCH_VERSIONED_DATA: value = sfo.isJdbcBatchVersionedData(); break;
 			case CACHE_REGION_FACTORY: value = etc.get(CACHE_REGION_FACTORY); break;
 			case CACHE_REGION_PREFIX: value = sfo.getCacheRegionPrefix(); break;
 			case CHECK_NULLABILITY: value = sfo.isCheckNullability(); break;

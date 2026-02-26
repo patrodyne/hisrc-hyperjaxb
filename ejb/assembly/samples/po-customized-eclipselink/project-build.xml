@@ -18,7 +18,7 @@
 			<include name="jakarta.xml.bind-api-*.jar"/>
 			<include name="jakarta.persistence-api-*.jar"/>
 			<include name="jboss-logging-*.jar"/>
-			<include name="hibernate-jpamodelgen-*.jar"/>
+			<include name="hibernate-processor-*.jar"/>
 			<include name="hisrc-basicjaxb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
@@ -66,6 +66,7 @@
 			<include name="hisrc-basicjaxb-testing-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-runtime-*.jar"/>
 			<include name="hisrc-hyperjaxb-ejb-roundtrip-*.jar"/>
+			<include name="hisrc-hyperjaxb-opt-eclipselink-*.jar"/>
 			<include name="hisrc-hyperjaxb-opt-hibernate-*.jar"/>
 			<include name="istack-commons-runtime-*.jar"/>
 			<include name="h2-*.jar"/>

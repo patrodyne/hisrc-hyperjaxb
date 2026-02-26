@@ -11,8 +11,8 @@ import static org.jvnet.hyperjaxb.ejb.util.Transactional.CacheOption.REUSE;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -65,20 +65,21 @@ public class PublicationTest extends AbstractEntityManagerTest
 	private static final String OUTFILE_NAME3 = "HB-H2-JOINED";
 	private static final String SCHEMA_TITLE = OUTFILE_NAME1 + ": " + OUTFILE_NAME3;
 	private static final String OUTFILE_NAME = OUTFILE_NAME1 + OUTFILE_NAME2 + "-" + OUTFILE_NAME3;
-	
+	private static final String PERSISTENCE_H2_PROPERTIES = "persistence-h2.properties";
+
 	@Override
 	public String getPersistenceUnitName()
 	{
 		return ObjectFactory.class.getPackageName();
 	}
-	
+
 	/**
 	 * <p>Test persistence of many-to-many relationship and entity inheritance.
 	 * In the publication model, there is a many-to-many relationship between
 	 * <code>Publication</code> and <code>Author</code>. This test generates
 	 * the many-to-many instances to test JPA <em>persist</em> and <em>query</em>
 	 * methods.</p>
-	 * 
+	 *
 	 * <p>Also, the <code>Publication</code> entity is inherited by to sub-entities:
 	 * <code>Blog</code> and <code>Book</code>. This test generates both types of
 	 * sub-entities for <em>persist</em> and <em>query</em> method testing.</p>
@@ -87,7 +88,7 @@ public class PublicationTest extends AbstractEntityManagerTest
 	public void testPersistence()
 	{
 		List<Author> authorList = new ArrayList<>();
-		
+
 		try ( EntityManager entityManager = getEntityManagerFactory().createEntityManager() )
 		{
 			assertTrue(entityManager.isOpen(), "EntityManager instance is open");
@@ -100,7 +101,7 @@ public class PublicationTest extends AbstractEntityManagerTest
 					em.persist(author);
 					return author;
 				};
-				
+
 				Author author = tx.transact(entityManager, REUSE);
 				assertTrue(author.getId() > 0, "Author entity has non-zero id.");
 			}
@@ -112,9 +113,9 @@ public class PublicationTest extends AbstractEntityManagerTest
 				{
 					Blog blog = new Blog();
 					blog.setTitle(TITLE_PREFIX + streetAddress());
-					blog.setPublishingDateItem(new Date());
+					blog.setPublishingDate(OffsetDateTime.now());
 					blog.setUrl("https://example.org/blog/"+alpha(6));
-					
+
 					int authorCount = 1 + RANDOM.nextInt(2);
 					for ( int authorIdx = 0; authorIdx < authorCount; ++authorIdx)
 					{
@@ -129,10 +130,10 @@ public class PublicationTest extends AbstractEntityManagerTest
 					em.persist(blog);
 					return blog;
 				};
-				
+
 				Blog blog = tx.transact(entityManager, REUSE);
 				assertTrue(blog.getId() > 0, "Blog entity has non-zero id.");
-				
+
 				// Keep the managed authors for 'many' other publications.
 				for ( Author author : blog.getAuthors() )
 				{
@@ -140,7 +141,7 @@ public class PublicationTest extends AbstractEntityManagerTest
 						authorList.add(author);
 				}
 			}
-			
+
 			int bookCount = 1 + RANDOM.nextInt(BOOK_COUNT_MAX);
 			for ( int bookIdx = 0; bookIdx < bookCount; ++bookIdx)
 			{
@@ -148,9 +149,9 @@ public class PublicationTest extends AbstractEntityManagerTest
 				{
 					Book book = new Book();
 					book.setTitle(TITLE_PREFIX + streetAddress());
-					book.setPublishingDateItem(new Date());
+					book.setPublishingDate(OffsetDateTime.now());
 					book.setPages(100 + RANDOM.nextInt(400));
-					
+
 					int authorCount = 1 + RANDOM.nextInt(AUTHOR_PER_PUB_COUNT_MAX);
 					for ( int authorIdx = 0; authorIdx < authorCount; ++authorIdx)
 					{
@@ -161,13 +162,13 @@ public class PublicationTest extends AbstractEntityManagerTest
 							author.getPublications().add(book);
 						}
 					}
-					
+
 					em.persist(book);
 					return book;
 				};
 				Book book = tx.transact(entityManager, REUSE);
 				assertTrue(book.getId() > 0, "Book entity has non-zero id.");
-				
+
 				// Keep the managed authors for 'many' other publications.
 				for ( Author author : book.getAuthors() )
 				{
@@ -175,7 +176,7 @@ public class PublicationTest extends AbstractEntityManagerTest
 						authorList.add(author);
 				}
 			}
-			
+
 			for ( Author author : authorList )
 			{
 				assertTrue(author.getPublications().size() > 0, "There must be at least 1 publication per author.");
@@ -204,7 +205,7 @@ public class PublicationTest extends AbstractEntityManagerTest
 				}
 			}
 		}
-		
+
 		assertTrue(authorList.size() > 0, "At least 1 author must exist.");
 	}
 
@@ -221,31 +222,36 @@ public class PublicationTest extends AbstractEntityManagerTest
 		}
 		return author;
 	}
-	
+
 	@Test
 	public void testSchemaCrawler1() throws Exception
 	{
-		try ( DatabaseConnectionSource dataSource = newDatabaseConnectionSource(getEntityManagerFactoryProperties()) )
+		// SchemaCrawler has an issue with reading the h2 catalog
+		String dbFile = System.getProperty("org.jvnet.hyperjaxb.persistencePropertiesMoreFile");
+		if ( !PERSISTENCE_H2_PROPERTIES.equals(dbFile) )
 		{
-		    final SchemaCrawlerOptions scOptions = newSchemaCrawlerOptions();
-			final Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource, scOptions);
-			
-			assertEquals(1, catalog.getSchemas().size(), "Schema(s) are limited by config");
-
-			if ( getLogger().isDebugEnabled() )
+			try ( DatabaseConnectionSource dataSource = newDatabaseConnectionSource(getEntityManagerFactoryProperties()) )
 			{
-				StringBuilder sb = new StringBuilder();
-				for (final Schema schema : catalog.getSchemas())
+			    final SchemaCrawlerOptions scOptions = newSchemaCrawlerOptions();
+				final Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource, scOptions);
+
+				assertEquals(1, catalog.getSchemas().size(), "Schema(s) are limited by config");
+
+				if ( getLogger().isDebugEnabled() )
 				{
-					sb.append("Catalog Schema\n\n" + schema.getFullName()+"\n");
-					for (final Table table : catalog.getTables(schema))
+					StringBuilder sb = new StringBuilder();
+					for (final Schema schema : catalog.getSchemas())
 					{
-						sb.append("    " + table.getName()+"\n");
-						for (final Column column : table.getColumns())
-							sb.append("        " + column.getName() + " (" + column.getColumnDataType() + ")\n");
+						sb.append("Catalog Schema\n\n" + schema.getFullName()+"\n");
+						for (final Table table : catalog.getTables(schema))
+						{
+							sb.append("    " + table.getName()+"\n");
+							for (final Column column : table.getColumns())
+								sb.append("        " + column.getName() + " (" + column.getColumnDataType() + ")\n");
+						}
 					}
+					getLogger().debug(sb.toString());
 				}
-				getLogger().debug(sb.toString());
 			}
 		}
 	}
@@ -253,31 +259,36 @@ public class PublicationTest extends AbstractEntityManagerTest
 	@Test
 	public void testSchemaCrawler2() throws Exception
 	{
-	    final SchemaCrawlerOptions scOptions = newSchemaCrawlerOptions();
-	    
-	    final DiagramOutputFormat dof = DiagramOutputFormat.svg;
-	    final Path outputFile = getOutputFile(OUTFILE_PATH, OUTFILE_NAME, dof);
-	    final OutputOptions outputOptions = OutputOptionsBuilder.builder()
-			.withOutputFormat(dof)
-			.withOutputFile(outputFile)
-			.title(SCHEMA_TITLE)
-			.toOptions();
-
-	    final Config config = ConfigUtility.newConfig();
-	    config.put("no-info", true);
-	    config.put("no-remarks", true);
-	    config.put("portable-names", true);
-
-	    final String command = "schema";
-	    
-		try ( DatabaseConnectionSource dataSource = newDatabaseConnectionSource(getEntityManagerFactoryProperties()) )
+		// SchemaCrawler has an issue with reading the h2 catalog
+		String dbFile = System.getProperty("org.jvnet.hyperjaxb.persistencePropertiesMoreFile");
+		if ( !PERSISTENCE_H2_PROPERTIES.equals(dbFile) )
 		{
-			final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-			executable.setSchemaCrawlerOptions(scOptions);
-			executable.setOutputOptions(outputOptions);
-			executable.setDataSource(dataSource);
-			executable.setAdditionalConfiguration(config);
-			executable.execute();
+		    final SchemaCrawlerOptions scOptions = newSchemaCrawlerOptions();
+
+		    final DiagramOutputFormat dof = DiagramOutputFormat.svg;
+		    final Path outputFile = getOutputFile(OUTFILE_PATH, OUTFILE_NAME, dof);
+		    final OutputOptions outputOptions = OutputOptionsBuilder.builder()
+				.withOutputFormat(dof)
+				.withOutputFile(outputFile)
+				.title(SCHEMA_TITLE)
+				.toOptions();
+
+		    final Config config = ConfigUtility.newConfig();
+		    config.put("no-info", true);
+		    config.put("no-remarks", true);
+		    config.put("portable-names", true);
+
+		    final String command = "schema";
+
+			try ( DatabaseConnectionSource dataSource = newDatabaseConnectionSource(getEntityManagerFactoryProperties()) )
+			{
+				final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+				executable.setSchemaCrawlerOptions(scOptions);
+				executable.setOutputOptions(outputOptions);
+				executable.setDataSource(dataSource);
+				executable.setAdditionalConfiguration(config);
+				executable.execute();
+			}
 		}
 	}
 
@@ -286,7 +297,7 @@ public class PublicationTest extends AbstractEntityManagerTest
 		String outputfile = path + "/" + name + "." + dof.name();
 		return Paths.get(outputfile).toAbsolutePath().normalize();
 	}
-	
+
 	private DatabaseConnectionSource newDatabaseConnectionSource(Map<String, String> props)
 	{
 		String jdbcURL = props.get("jakarta.persistence.jdbc.url");
@@ -301,12 +312,12 @@ public class PublicationTest extends AbstractEntityManagerTest
 		// Create the options
 		final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
 			.includeSchemas(new RegularExpressionInclusionRule(".*"+CATALOG_SCHEMA));
-		
+
 		// Set what details are required in the schema - this affects the
 		// time taken to crawl the schema
 		final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
-			.withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
-		
+			.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+
 		final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
 			.withLimitOptions(limitOptionsBuilder.toOptions())
 			.withLoadOptions(loadOptionsBuilder.toOptions());

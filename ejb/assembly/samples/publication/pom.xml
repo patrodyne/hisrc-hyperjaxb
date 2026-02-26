@@ -32,10 +32,14 @@
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.github.threeten-jaxb</groupId>
+			<artifactId>threeten-jaxb-core</artifactId>
+		</dependency>
 		<!-- Hibernate Dependencies -->
 		<dependency>
 			<groupId>org.hibernate.orm</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
+			<artifactId>hibernate-processor</artifactId>
 		</dependency>
 		<!-- Roundtrip -->
 		<dependency>

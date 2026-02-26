@@ -35,7 +35,7 @@
 		<!-- Hibernate Dependencies -->
 		<dependency>
 			<groupId>org.hibernate.orm</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
+			<artifactId>hibernate-processor</artifactId>
 		</dependency>
 		<!-- Roundtrip -->
 		<dependency>
