@@ -17,6 +17,7 @@ target
 
 # Temporaries #
 ######################
+cache.properties
 tmp
 *.tmp
 *.out
