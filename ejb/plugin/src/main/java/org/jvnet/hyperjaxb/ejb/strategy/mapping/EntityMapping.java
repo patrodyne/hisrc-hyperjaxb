@@ -66,20 +66,20 @@ public class EntityMapping
 		{
 			if ( getPlugin().isNaiveInheritanceStrategy() )
 			{
-				// This entity is a root class AND 
+				// This entity is a root class AND
 				// naive mode adds the inheritance strategy with or without sub-entites present
 				// in the current schema (useful for episodic builds).
 				if ( (entity.getInheritance() == null) || (entity.getInheritance().getStrategy() == null) )
 				{
 					entity.setInheritance(new Inheritance());
 					entity.getInheritance().setStrategy(inheritanceStrategy.name());
-				}				
+				}
 			}
 			else
 			{
 				boolean isSuperClass = isSuperClass(context, classOutline);
 				boolean containsNDC = containsNonDiscriminatorColumn(entity);
-				
+
 				if ( isSuperClass  || !containsNDC )
 				{
 					// This entity DOES have sub-classes for inheritance OR
@@ -88,9 +88,9 @@ public class EntityMapping
 					{
 						entity.setInheritance(new Inheritance());
 						entity.getInheritance().setStrategy(inheritanceStrategy.name());
-					}				
+					}
 				}
-				
+
 				if ( !isSuperClass && containsNDC )
 				{
 					// It is a root entity but it does NOT have sub-classes for inheritance
@@ -192,7 +192,7 @@ public class EntityMapping
 			}
 		}
 	}
-	
+
 	private InheritanceType getInheritanceType(CClassRef refClass)
 	{
 		if ( refClass != null )
@@ -209,7 +209,7 @@ public class EntityMapping
 		else
 			return null;
 	}
-	
+
 	private InheritanceType getInheritanceType(Class<?> clazz)
 	{
 		InheritanceType it = null;
@@ -218,7 +218,7 @@ public class EntityMapping
 			jakarta.persistence.Inheritance inh = clazz.getAnnotation(jakarta.persistence.Inheritance.class);
 			if ( inh != null )
 				it = inh.strategy();
-			
+
 			InheritanceType its = getInheritanceType(clazz.getSuperclass());
 			if ( its != null )
 				it = its;
@@ -240,7 +240,7 @@ public class EntityMapping
 				return !isSelfOrAncestorRootEntity(context, classOutline.getSuperClass());
 		}
 	}
-	
+
 	private boolean isSelfOrAncestorRootEntity(Mapping context, ClassOutline classOutline)
 	{
 		if ( classOutline == null )
@@ -257,7 +257,7 @@ public class EntityMapping
 				{
 					if ( isRootEntity(context, classOutline) )
 						return true;
-					else 
+					else
 					{
 						if ( classOutline.getSuperClass() != null )
 							return isSelfOrAncestorRootEntity(context, classOutline.getSuperClass());
@@ -290,10 +290,10 @@ public class EntityMapping
 
 	/**
 	 * Is the given class outline a superclass of any active class outline.
-	 * 
+	 *
 	 * @param context The mapping context.
 	 * @param theClassOutline The class outline to examine.
-	 * 
+	 *
 	 * @return True when there is any class outline that is a sub-class; otherwise, false.
 	 */
 	public boolean isSuperClass(Mapping context, ClassOutline theClassOutline)
@@ -313,18 +313,18 @@ public class EntityMapping
 		}
 		return isSuperClass;
 	}
-	
+
 	/**
 	 * Does the given entity contain a non-discriminator column.
-	 * 
+	 *
 	 * EclipseLink cannot insert an empty field/column set. This can occur when an entity
 	 * uses the IDENTITY or AUTO generation strategy. This method checks for a non-empty
 	 * field/column set. When this method retourns true then the caller may elect to
 	 * remove the discriminator column when it is not required (i.e. the entity has no
 	 * inheritance).
-	 * 
+	 *
 	 * @param entity An ORM entity.
-	 * 
+	 *
 	 * @return True when the entity contains a non-discriminator column; otherwise, false.
 	 */
 	public boolean containsNonDiscriminatorColumn(Entity entity)
@@ -336,7 +336,7 @@ public class EntityMapping
 		if ( attributes != null )
 		{
 			// Entities using VERSION should be insertable.
-			if ( attributes.getVersion().size() > 0 )
+			if ( attributes.getVersion() != null )
 				containsNDC = true;
 			else
 			{
@@ -352,8 +352,8 @@ public class EntityMapping
 							break;
 						}
 					}
-				} 
-				
+				}
+
 				// Otherwise ...
 				if ( !containsNDC )
 				{
@@ -368,7 +368,7 @@ public class EntityMapping
 								containsNDC = true;
 								break;
 							}
-						}			
+						}
 					}
 					else
 					{
@@ -377,7 +377,7 @@ public class EntityMapping
 					}
 				}
 			}
-			
+
 			//
 			// TODO: Review this list for other non-discriminator column candidates:
 			//
@@ -395,7 +395,7 @@ public class EntityMapping
 			// attributes.getDescription();
 			// attributes.getTransient();
 		}
-		
+
 		return containsNDC;
 	}
 }

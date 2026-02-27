@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test;
  */
 public class ApiTest
 {
-	public static final String JAKARTA_PERSISTENCE_SPEC = "3_0";
-	public static final String JAKARTA_PERSISTENCE_ORM_SPEC = "3_1";
+	public static final String JAKARTA_PERSISTENCE_SPEC = "3_2";
+	public static final String JAKARTA_PERSISTENCE_ORM_SPEC = "3_2";
 	public static final String JAKARTA_PERSISTENCE_PKG_SPEC = "3.2";
 
 	public static final String HYPERJAXB_PERSISTENCE_SPEC = JAKARTA_PERSISTENCE_SPEC;

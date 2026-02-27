@@ -107,7 +107,7 @@ public class AttributesMapping implements ClassOutlineMapping<Attributes>
 				else if (attributeMapping instanceof Basic)
 					attributes.getBasic().add((Basic) attributeMapping);
 				else if (attributeMapping instanceof Version)
-					attributes.getVersion().add((Version) attributeMapping);
+					attributes.setVersion((Version) attributeMapping);
 				else if (attributeMapping instanceof ManyToOne)
 					attributes.getManyToOne().add((ManyToOne) attributeMapping);
 				else if (attributeMapping instanceof OneToMany)

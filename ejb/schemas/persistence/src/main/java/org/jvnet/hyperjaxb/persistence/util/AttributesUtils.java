@@ -57,11 +57,13 @@ public class AttributesUtils {
 				}
 			}
 
-			for (final Version attribute : attributes.getVersion()) {
+			{
+				final Version attribute = attributes.getVersion();
 				if (attribute != null && name.equals(attribute.getName())) {
 					return attribute;
 				}
 			}
+
 			for (final ManyToOne attribute : attributes.getManyToOne()) {
 				if (attribute != null && name.equals(attribute.getName())) {
 					return attribute;

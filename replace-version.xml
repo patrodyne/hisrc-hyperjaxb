@@ -64,6 +64,50 @@
 			<replacevalue><![CDATA[version>3.0.0-SNAPSHOT</]]></replacevalue>
 		</replace>
 
+		<!-- JPA / ORM Version Updates (rare) -->
+
+		<replace dir="${basedir}" summary="true">
+			<include name="ejb/**/resources/META-INF/orm.xml"/>
+			<replacetoken><![CDATA[entity-mappings version="3.2"]]></replacetoken>
+			<replacevalue><![CDATA[entity-mappings version="3.2"]]></replacevalue>
+		</replace>
+
+		<replace dir="${basedir}" summary="true">
+			<include name="ejb/**/resources/META-INF/persistence.xml"/>
+			<replacetoken><![CDATA[persistence_3_2.xsd]]></replacetoken>
+			<replacevalue><![CDATA[persistence_3_2.xsd]]></replacevalue>
+		</replace>
+
+		<replace dir="${basedir}" summary="true">
+			<include name="ejb/**/resources/customizations.xsd"/>
+			<replacetoken><![CDATA[schemaLocation="orm/orm_3_2.xsd"]]></replacetoken>
+			<replacevalue><![CDATA[schemaLocation="orm/orm_3_2.xsd"]]></replacevalue>
+		</replace>
+
+		<replace dir="${basedir}" summary="true">
+			<include name="ejb/**/resources/customizations.xsd"/>
+			<replacetoken><![CDATA[schemaLocation="persistence_3_2.xsd"]]></replacetoken>
+			<replacevalue><![CDATA[schemaLocation="persistence_3_2.xsd"]]></replacevalue>
+		</replace>
+
+		<replace dir="${basedir}" summary="true">
+			<include name="ejb/schemas/persistence/src/main/java/org/jvnet/hyperjaxb/persistence/jpa/JPAConstants.java"/>
+			<replacetoken><![CDATA[persistence_3_2.xsd]]></replacetoken>
+			<replacevalue><![CDATA[persistence_3_2.xsd]]></replacevalue>
+		</replace>
+
+		<replace dir="${basedir}" summary="true">
+			<include name="ejb/schemas/persistence/src/main/java/org/jvnet/hyperjaxb/persistence/jpa/JPAConstants.java"/>
+			<replacetoken><![CDATA[orm_3_2.xsd]]></replacetoken>
+			<replacevalue><![CDATA[orm_3_2.xsd]]></replacevalue>
+		</replace>
+
+		<replace dir="${basedir}" summary="true">
+			<include name="ejb/schemas/persistence/src/test/java/org/jvnet/hyperjaxb/persistence/ApiTest.java"/>
+			<replacetoken><![CDATA[= "3_2";]]></replacetoken>
+			<replacevalue><![CDATA[= "3_2";]]></replacevalue>
+		</replace>
+
 	</target>
 
 </project>

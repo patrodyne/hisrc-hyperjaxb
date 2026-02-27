@@ -127,7 +127,7 @@ import jakarta.persistence.SharedCacheMode;
  *
  * @author Rick O'Sullivan
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings({ "deprecation", "removal" })
 public class SessionFactoryUtil
 {
 	private static Logger log = LoggerFactory.getLogger(SessionFactoryUtil.class);

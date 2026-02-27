@@ -1,5 +1,7 @@
 package org.example.pub;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.example.pub.model.Author;
 import org.example.pub.model.Publication;
 
@@ -48,6 +50,7 @@ public class PublicationUL extends Listener
 		if ( target instanceof Author && parent instanceof Publication )
 		{
 			Author author = (Author) target;
+			assertNotNull(author);
 //			Publication publication = (Publication) parent;
 //			author.getPublications().add(publication);
 		}
