@@ -114,11 +114,12 @@
 		<junit-platform.version>6.0.3</junit-platform.version>
 		<m2e.jpa.activation>false</m2e.jpa.activation>
 		<maven.compiler.release>17</maven.compiler.release>
-		<maven-api.version>3.9.6</maven-api.version>
+		<maven-api.version>3.9.12</maven-api.version>
 		<maven-min.version>3.9.0</maven-min.version>
 		<maven-plugin-plugin.version>3.15.2</maven-plugin-plugin.version>
 		<maven-plugin-testing.version>3.3.0</maven-plugin-testing.version>
-		<maven-resolver.version>1.9.18</maven-resolver.version>
+		<maven-resolver.version>2.0.16</maven-resolver.version>
+		<maven-resolver-http.version>1.9.27</maven-resolver-http.version>
 		<postgresql.version>42.7.10</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -616,7 +617,7 @@
 			<dependency>
 				<groupId>org.apache.maven.resolver</groupId>
 				<artifactId>maven-resolver-transport-http</artifactId>
-				<version>${maven-resolver.version}</version>
+				<version>${maven-resolver-http.version}</version>
 				<scope>provided</scope>
 			</dependency>
 
