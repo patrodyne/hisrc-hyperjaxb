@@ -1,15 +1,20 @@
 package org.jvnet.hyperjaxb.xml.bind.annotation.adapters;
 
-import java.util.Date;
+import java.time.Year;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-public class XMLGregorianCalendarAsGYear extends XMLGregorianCalendarAsDate {
-
-	@SuppressWarnings("deprecation")
+public class XMLGregorianCalendarAsGYear extends AbstractXMLGregorianCalendarAdapter<Year>
+{
 	@Override
-	public void createCalendar(Date date, XMLGregorianCalendar calendar) {
-		calendar.setYear(date.getYear() + 1900);
+	public Year createBoundValue(XMLGregorianCalendar xgc)
+	{
+		return Year.of(xgc.getYear());
 	}
-	
+
+	@Override
+	public void mergeCalendar(Year year, XMLGregorianCalendar xgc)
+	{
+		xgc.setYear(year.getValue());
+	}
 }

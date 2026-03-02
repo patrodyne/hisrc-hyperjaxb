@@ -1,31 +1,29 @@
 package org.jvnet.hyperjaxb.xml.bind.annotation.adapters;
 
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.OffsetDateTime;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-public class XMLGregorianCalendarAsDateTime extends AbstractXMLGregorianCalendarAdapter<Date>
+public class XMLGregorianCalendarAsDateTime extends AbstractXMLGregorianCalendarAdapter<OffsetDateTime>
 {
 	@Override
-	public Timestamp createBoundValue(XMLGregorianCalendar calendar)
+	public OffsetDateTime createBoundValue(XMLGregorianCalendar xgc)
 	{
-		final GregorianCalendar gcal = calendar.normalize().toGregorianCalendar();
-		final Timestamp timestamp = new Timestamp(gcal.getTimeInMillis());
-		return timestamp;
+		return xgc.toGregorianCalendar().toZonedDateTime().toOffsetDateTime();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public void createCalendar(Date date, XMLGregorianCalendar calendar)
+	public void mergeCalendar(OffsetDateTime odt, XMLGregorianCalendar xgc)
 	{
-		calendar.setYear(date.getYear() + 1900);
-		calendar.setMonth(date.getMonth() + 1);
-		calendar.setDay(date.getDate());
-		calendar.setHour(date.getHours());
-		calendar.setMinute(date.getMinutes());
-		calendar.setSecond(date.getSeconds());
-		calendar.setMillisecond((int) (date.getTime() % 1000));
+		xgc.setYear(odt.getYear());
+		xgc.setMonth(odt.getMonthValue());
+		xgc.setDay(odt.getDayOfMonth());
+		xgc.setHour(odt.getHour());
+		xgc.setMinute(odt.getMinute());
+		xgc.setSecond(odt.getSecond());
+		// Convert nanos to milliseconds
+		xgc.setMillisecond(odt.getNano() / 1_000_000);
+		// TZ Offset in minutes
+		xgc.setTimezone(odt.getOffset().getTotalSeconds() / 60);
 	}
 }

@@ -2,8 +2,8 @@ package org.jvnet.hyperjaxb.ejb.test.tests;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.SIMPLE_STYLE;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,8 +38,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.persistence.Transient;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -338,7 +336,7 @@ public class A implements Equals
 	@XmlType(name = "FItem")
 	@Entity
 	@Table(name = "A_FITEM")
-	public static class FItem extends PrimitiveItem<Date, XMLGregorianCalendar>
+	public static class FItem extends PrimitiveItem<OffsetDateTime, XMLGregorianCalendar>
 	{
 		@XmlAttribute
 		protected Long hjid;
@@ -348,12 +346,12 @@ public class A implements Equals
 		public Long getHjid() { return hjid; }
 		public void setHjid(Long value) { this.hjid = value; }
 
-		@Temporal(TemporalType.TIMESTAMP)
-		public Date getItemAsDate()
+		//@Temporal(TemporalType.TIMESTAMP)
+		public OffsetDateTime getItemAsDate()
 		{
 			return XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDateTime.class, this.getItem());
 		}
-		public void setItemAsDate(Date target)
+		public void setItemAsDate(OffsetDateTime target)
 		{
 			this.setItem(XmlAdapterUtils.marshall(XMLGregorianCalendarAsDateTime.class, target));
 		}
@@ -375,7 +373,7 @@ public class A implements Equals
 	@XmlType(name = "FItemNillable")
 	@Entity
 	@Table(name = "A_FNILLABLEITEM")
-	public static class FNillableItem extends PrimitiveItem<Date, JAXBElement<XMLGregorianCalendar>>
+	public static class FNillableItem extends PrimitiveItem<OffsetDateTime, JAXBElement<XMLGregorianCalendar>>
 	{
 		@XmlAttribute
 		protected Long hjid;
@@ -385,12 +383,12 @@ public class A implements Equals
 		public Long getHjid() { return hjid; }
 		public void setHjid(Long value) { this.hjid = value; }
 
-		@Temporal(TemporalType.TIMESTAMP)
-		public Date getItemAsDate()
+		//@Temporal(TemporalType.TIMESTAMP)
+		public OffsetDateTime getItemAsDate()
 		{
 			return XmlAdapterUtils.unmarshallJAXBElement(XMLGregorianCalendarAsDateTime.class, this.getItem());
 		}
-		public void setItemAsDate(Date target)
+		public void setItemAsDate(OffsetDateTime target)
 		{
 			this.setItem(XmlAdapterUtils.marshallJAXBElement(XMLGregorianCalendarAsDateTime.class,
 				XMLGregorianCalendar.class, new QName("fNillable"), A.class, target));

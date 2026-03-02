@@ -374,6 +374,10 @@
 
 	<xsd:complexType name="issue129Type">
 		<xsd:attribute name="value129" use="optional" type="xsd:time">
+			<!--
+				Calendar is considered legacy and requires the deprecated TemporalType for JPA.
+				For modern applications (Java 8+), it is highly recommended to use the Java Time
+				API (e.g., LocalDate, LocalDateTime), without needing @Temporal.
 			<xsd:annotation>
 				<xsd:appinfo>
 					<jaxb:property>
@@ -386,6 +390,7 @@
 					</hj:basic>
 				</xsd:appinfo>
 			</xsd:annotation>
+			-->
 		</xsd:attribute>
 	</xsd:complexType>
 

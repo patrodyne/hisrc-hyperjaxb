@@ -1,16 +1,21 @@
 package org.jvnet.hyperjaxb.xml.bind.annotation.adapters;
 
-import java.util.Date;
+import java.time.MonthDay;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-public class XMLGregorianCalendarAsGMonthDay extends XMLGregorianCalendarAsDate {
-
-	@SuppressWarnings("deprecation")
+public class XMLGregorianCalendarAsGMonthDay extends AbstractXMLGregorianCalendarAdapter<MonthDay>
+{
 	@Override
-	public void createCalendar(Date date, XMLGregorianCalendar calendar) {
-		calendar.setMonth(date.getMonth() + 1);
-		calendar.setDay(date.getDate());
+	public MonthDay createBoundValue(XMLGregorianCalendar xgc)
+	{
+		return MonthDay.of(xgc.getMonth(), xgc.getDay());
 	}
-	
+
+	@Override
+	public void mergeCalendar(MonthDay monthDay, XMLGregorianCalendar xgc)
+	{
+		xgc.setMonth(monthDay.getMonthValue());
+		xgc.setDay(monthDay.getDayOfMonth());
+	}
 }

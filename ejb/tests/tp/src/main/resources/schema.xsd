@@ -18,12 +18,15 @@
 	<xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:globalBindings localScoping="toplevel">
-				<jaxb:javaType
-					name="java.util.Calendar"
-					xmlType="xsd:date"
+				<jaxb:serializable uid="20211201" />
+				<!--
+				Calendar is considered legacy and requires the deprecated TemporalType for JPA.
+				For modern applications (Java 8+), it is highly recommended to use the Java Time
+				API (e.g., LocalDate, LocalDateTime), without needing @Temporal.
+				<jaxb:javaType xmlType="xsd:date" name="java.util.Calendar"
 					parseMethod="jakarta.xml.bind.DatatypeConverter.parseDate"
 					printMethod="jakarta.xml.bind.DatatypeConverter.printDate" />
-				<jaxb:serializable uid="20211201" />
+				-->
 				<xjc:javaType xmlType="xsd:date" name="java.time.LocalDate" adapter="io.github.threetenjaxb.core.LocalDateXmlAdapter"/>
 				<xjc:javaType xmlType="xsd:dateTime" name="java.time.OffsetDateTime" adapter="io.github.threetenjaxb.core.LenientOffsetDateTimeXmlAdapter"/>
 			</jaxb:globalBindings>

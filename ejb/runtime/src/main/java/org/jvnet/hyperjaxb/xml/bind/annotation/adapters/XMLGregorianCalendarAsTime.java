@@ -1,28 +1,26 @@
 package org.jvnet.hyperjaxb.xml.bind.annotation.adapters;
 
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.OffsetTime;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoField;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-public class XMLGregorianCalendarAsTime extends AbstractXMLGregorianCalendarAdapter<Date>
+public class XMLGregorianCalendarAsTime extends AbstractXMLGregorianCalendarAdapter<OffsetTime>
 {
 	@Override
-	public Timestamp createBoundValue(XMLGregorianCalendar calendar)
+	public OffsetTime createBoundValue(XMLGregorianCalendar xgc)
 	{
-		final GregorianCalendar gc = calendar.normalize().toGregorianCalendar();
-		final Timestamp time = new Timestamp(gc.getTimeInMillis());
-		return time;
+		ZonedDateTime zdt = xgc.toGregorianCalendar().toZonedDateTime();
+		return zdt.toOffsetDateTime().toOffsetTime();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public void createCalendar(Date date, XMLGregorianCalendar calendar)
+	public void mergeCalendar(OffsetTime ot, XMLGregorianCalendar xgc)
 	{
-		calendar.setHour(date.getHours());
-		calendar.setMinute(date.getMinutes());
-		calendar.setSecond(date.getSeconds());
-		calendar.setMillisecond((int) (date.getTime() % 1000));
+		xgc.setHour(ot.getHour());
+		xgc.setMinute(ot.getMinute());
+		xgc.setSecond(ot.getSecond());
+		xgc.setMillisecond(ot.get(ChronoField.MILLI_OF_SECOND));
 	}
 }

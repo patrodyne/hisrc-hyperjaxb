@@ -1,7 +1,7 @@
 package org.example.po;
 
 import java.io.IOException;
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.jvnet.hyperjaxb.ejb.util.Transactional;
@@ -89,7 +89,7 @@ public class Main extends Context
         }
 	}
 	
-	private List<PurchaseOrder> selectPurchaseOrders(Integer start, Integer count, Date orderDate)
+	private List<PurchaseOrder> selectPurchaseOrders(Integer start, Integer count, OffsetDateTime orderDate)
 		throws IOException
 	{
 		// Always perform EntityManager actions within a transaction!

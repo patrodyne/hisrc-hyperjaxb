@@ -4,8 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.jvnet.hyperjaxb.xml.util.XMLGregorianCalendarUtils.getTimeInMillis;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZoneId;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -82,15 +85,15 @@ public class XmlAdapterUtilsTest
 	public void testXMLGregorianCalendarAsDate()
 		throws Exception
 	{
-		final java.sql.Date alpha = java.sql.Date.valueOf("2005-01-01");
-		getLogger().debug("1)" + alpha.getTime());
+		LocalDate alpha = LocalDate.parse("2005-01-01");
+		getLogger().debug("1)" + alpha.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli());
 
 		final XMLGregorianCalendar beta = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDate.class, alpha);
 		getLogger().debug("2)" + beta.toGregorianCalendar().getTimeInMillis());
 		getLogger().debug("2>" + beta);
 
-		final java.util.Date gamma = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDate.class, beta);
-		getLogger().debug("3)" + gamma.getTime());
+		final LocalDate gamma = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDate.class, beta);
+		getLogger().debug("3)" + gamma.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli());
 
 		final XMLGregorianCalendar delta = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDate.class, gamma);
 		getLogger().debug("4)" + delta.toGregorianCalendar().getTime().getTime());
@@ -105,14 +108,14 @@ public class XmlAdapterUtilsTest
 	{
 		TimeZone _default = TimeZone.getDefault();
 		TimeZone.setDefault(TimeZone.getTimeZone("GMT-2"));
-		final java.sql.Date alpha = java.sql.Date.valueOf("2005-01-01");
-		getLogger().debug("1)" + alpha.getTime());
+		LocalDate alpha = LocalDate.parse("2005-01-01");
+		getLogger().debug("1)" + alpha.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli());
 
 		final XMLGregorianCalendar beta = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDate.class, alpha);
 		getLogger().debug("2)" + beta.toGregorianCalendar().getTimeInMillis());
 
-		final java.util.Date gamma = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDate.class, beta);
-		getLogger().debug("3)" + gamma.getTime());
+		final LocalDate gamma = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDate.class, beta);
+		getLogger().debug("3)" + gamma.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli());
 
 		final XMLGregorianCalendar delta = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDate.class, gamma);
 		getLogger().debug("4)" + delta.toGregorianCalendar().getTime().getTime());
@@ -125,9 +128,9 @@ public class XmlAdapterUtilsTest
 	public void testXMLGregorianCalendarAsTime()
 		throws Exception
 	{
-		final java.sql.Time alpha = java.sql.Time.valueOf("10:12:14");
+		final OffsetTime alpha = OffsetTime.parse("10:12:14Z");
 		final XMLGregorianCalendar beta = XmlAdapterUtils.marshall(XMLGregorianCalendarAsTime.class, alpha);
-		final java.util.Date gamma = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsTime.class, beta);
+		final OffsetTime gamma = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsTime.class, beta);
 		final XMLGregorianCalendar delta = XmlAdapterUtils.marshall(XMLGregorianCalendarAsTime.class, gamma);
 		assertEquals(beta, delta, "Conversion failed.");
 	}
@@ -174,17 +177,17 @@ public class XmlAdapterUtilsTest
 		long a = alpha.toGregorianCalendar().getTimeInMillis();
 		getLogger().debug("1]" + a);
 
-		final Date beta = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDateTime.class, alpha);
-		long b = beta.getTime();
-		getLogger().debug("2]" + b);
+		final OffsetDateTime beta = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDateTime.class, alpha);
+		long b = beta.toInstant().toEpochMilli();
+		getLogger().debug("2]" + b); // the number of milliseconds since January 1, 1970, 00:00:00 GMT
 
 		final XMLGregorianCalendar gamma = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDateTime.class, beta);
 		long c = gamma.toGregorianCalendar().getTimeInMillis();
 		getLogger().debug("3]" + c);
 
-		final Date delta = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDateTime.class, gamma);
-		long d = delta.getTime();
-		getLogger().debug("4]" + d);
+		final OffsetDateTime delta = XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDateTime.class, gamma);
+		long d = delta.toInstant().toEpochMilli();
+		getLogger().debug("4]" + d); // the number of milliseconds since January 1, 1970, 00:00:00 GMT
 
 		final XMLGregorianCalendar epsilon = XmlAdapterUtils.marshall(XMLGregorianCalendarAsDateTime.class, delta);
 		long e = epsilon.toGregorianCalendar().getTimeInMillis();
