@@ -74,22 +74,24 @@ original `maven-jaxb2-plugin` name.
 * [hisrc-hyperjaxb-opt-hibernate][49]
 * [hisrc-hyperjaxb-opt-hikaricp][50]
 
-### Goals
-
-New goals for the next release are:
-
-* Review in progress.
-
-### Status
-
-* Review in progress.
-
-#### Completed
-
-* Review in progress.
-
 ### Fork History
 
+#### Version 3.0.0
+
+* Changed HiSrc namespace scheme from `http` to `urn`:
+    * `NEW: urn:jvnet.org:hyperjaxb:jpa`
+    * `OLD: http://jvnet.org/hyperjaxb/jpa`
+* Use `java.time` instead of `XMLGregorianCalendar` in unit tests.
+* Added `XmlAdapter` implementations for `java.time` types.
+* Improved `mapped-by` to generate code for both (bidirectional) sides.
+* Respect JavaBean naming convention when the name is all CAPS.
+* Migrated the catalog `resolver:20050927` to the new [JEP 268 API][46].
+* Exclude other JAXB annotations when `@XmlTransient` is present.
+* Upgraded the project dependencies to the latest versions.
+* Upgraded the Maven plugin ecosystem to the latest versions.
+* Migrated distribution management from **OSSRH (Sonatype)** to a new **MCR-deploy** profile.
+* Refactored the `pom.xml` by removing legacy repository configurations and streamlining the `<scm>` and `<properties>` blocks.
+* Updated the `build-jxx.sh` script to reflect the new deployment path and ensure consistency across release goals.
 
 #### Version 2.2.1
 
