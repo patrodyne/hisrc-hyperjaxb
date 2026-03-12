@@ -285,7 +285,7 @@ public class PublicationTest extends AbstractEntityManagerTest
 				final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
 				executable.setSchemaCrawlerOptions(scOptions);
 				executable.setOutputOptions(outputOptions);
-				executable.setDataSource(dataSource);
+				executable.setConnectionSource(dataSource);
 				executable.setAdditionalConfiguration(config);
 				executable.execute();
 			}
