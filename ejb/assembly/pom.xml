@@ -17,7 +17,7 @@
 		<ant-atleast.version>1.10.4</ant-atleast.version>
 		<hisrc-basicjaxb.version>3.0.0</hisrc-basicjaxb.version>
 		<hisrc-basicjaxb-annox-parser.version>3.0.0</hisrc-basicjaxb-annox-parser.version>
-		<hisrc-higherjaxb-maven-plugin.version>3.0.0-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
+		<hisrc-higherjaxb-maven-plugin.version>3.0.0</hisrc-higherjaxb-maven-plugin.version>
 		<hisrc-hyperjaxb-annox-plugin.version>3.0.0-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
 		<hisrc-hyperjaxb.version>3.0.0-SNAPSHOT</hisrc-hyperjaxb.version>
 		<root.basedir>${basedir}/../..</root.basedir>
