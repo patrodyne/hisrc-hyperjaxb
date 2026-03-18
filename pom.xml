@@ -90,8 +90,8 @@
 		<hibernate-series.version>7.2.6.Final</hibernate-series.version>
 		<hibernate-javadoc.version>6.4</hibernate-javadoc.version>
 		<HikariCP.version>7.0.2</HikariCP.version>
-		<hisrc-basicjaxb-annox-parser.version>3.0.0-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
-		<hisrc-basicjaxb.version>3.0.0-SNAPSHOT</hisrc-basicjaxb.version>
+		<hisrc-basicjaxb-annox-parser.version>3.0.0</hisrc-basicjaxb-annox-parser.version>
+		<hisrc-basicjaxb.version>3.0.0</hisrc-basicjaxb.version>
 		<hisrc-higherjaxb-maven-plugin.version>3.0.0-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
 		<hisrc-hyperjaxb-annox-plugin.version>3.0.0-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
 		<h2database.version>2.4.240</h2database.version>
