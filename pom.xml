@@ -98,7 +98,7 @@
 		<javassist.version>3.30.2-GA</javassist.version>
 		<jpa-api.version>3.2.0</jpa-api.version>
 		<jaxb-api.version>4.0.5</jaxb-api.version>
-		<jaxb-imp.version>4.0.6</jaxb-imp.version>
+		<jaxb-imp.version>4.0.7</jaxb-imp.version>
 		<junit-jupiter.version>6.0.3</junit-jupiter.version>
 		<junit-platform.version>6.0.3</junit-platform.version>
 		<m2e.jpa.activation>false</m2e.jpa.activation>
@@ -425,7 +425,7 @@
 			<dependency>
 				<groupId>org.jboss.logging</groupId>
 				<artifactId>jboss-logging</artifactId>
-				<version>3.6.2.Final</version>
+				<version>3.6.3.Final</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
@@ -505,7 +505,7 @@
 			<dependency>
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-utils</artifactId>
-				<version>4.0.2</version>
+				<version>4.0.3</version>
 			</dependency>
 			<!-- Maven JSR-330 Dependency Injection -->
 			<dependency>
