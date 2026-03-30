@@ -83,11 +83,11 @@
 		<annotation.version>3.0.0</annotation.version>
 		<cdi-api.version>4.1.0</cdi-api.version>
 		<derby.version>10.17.1.0</derby.version>
-		<eclipselink.version>4.0.9</eclipselink.version>
+		<eclipselink.version>5.0.0</eclipselink.version>
 		<ehcache.version>3.11.1</ehcache.version>
 		<guice.version>5.1.0</guice.version> <!-- provided by Maven -->
 		<hibernate-search.version>8.1.2.Final</hibernate-search.version>
-		<hibernate-series.version>7.2.6.Final</hibernate-series.version>
+		<hibernate-series.version>7.3.0.Final</hibernate-series.version>
 		<hibernate-javadoc.version>6.4</hibernate-javadoc.version>
 		<HikariCP.version>7.0.2</HikariCP.version>
 		<hisrc-basicjaxb-annox-parser.version>3.0.0</hisrc-basicjaxb-annox-parser.version>
@@ -112,7 +112,7 @@
 		<postgresql.version>42.7.10</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<schemacrawler.version>17.7.0</schemacrawler.version>
+		<schemacrawler.version>17.9.0</schemacrawler.version>
 		<slf4j.version>2.0.17</slf4j.version>
 		<smallrye.version>3.5.3</smallrye.version>
 		<threeten-jaxb.version>2.2.0</threeten-jaxb.version>

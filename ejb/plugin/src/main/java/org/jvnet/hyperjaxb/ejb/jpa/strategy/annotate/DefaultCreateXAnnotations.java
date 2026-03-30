@@ -106,15 +106,15 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 
 	/**
 	 * Create a {@link MapsId} annotation when value is not null.
-	 * 
+	 *
 	 * <p>
-	 * The value element specifies the attribute within a composite key to which the relationship attribute corresponds. 
+	 * The value element specifies the attribute within a composite key to which the relationship attribute corresponds.
 	 * If the entity's primary key is of the same Java type as the primary key of the entity referenced by the
 	 * relationship, then the value attribute is not specified.
 	 * </p>
-	 * 
+	 *
 	 * @param value The {@code MapsId} attribute within a composite key.
-	 * 
+	 *
 	 * @return A {@code MapsId} instance with an optional value.
 	 */
 	public XAnnotation<jakarta.persistence.MapsId> createMapsId(String value)
@@ -423,18 +423,30 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 
 	public Collection<XAnnotation<?>> createElementCollectionAnnotations(ElementCollection source)
 	{
-		return source == null ? Collections.<XAnnotation<?>> emptyList() : annotations(createElementCollection(source),
-			createOrderBy(source.getOrderBy()), createOrderColumn(source.getOrderColumn()),
-			createMapKey(source.getMapKey()), createMapKeyClass(source.getMapKeyClass()),
-			createMapKeyTemporal(source.getMapKeyTemporal()), createMapKeyEnumerated(source.getMapKeyEnumerated()),
-			createAttributeOverrides(source.getMapKeyAttributeOverride()), createMapKeyColumn(source.getMapKeyColumn()),
-			createMapKeyJoinColumns(source.getMapKeyJoinColumn()), createColumn(source.getColumn()),
-			createTemporal(source.getTemporal()), createEnumerated(source.getEnumerated()), createLob(source.getLob()),
+		return source == null ? Collections.<XAnnotation<?>> emptyList() : annotations
+		(
+			createElementCollection(source),
+			createOrderBy(source.getOrderBy()),
+			createOrderColumn(source.getOrderColumn()),
+			createMapKey(source.getMapKey()),
+			createMapKeyClass(source.getMapKeyClass()),
+			createMapKeyTemporal(source.getMapKeyTemporal()),
+			createMapKeyEnumerated(source.getMapKeyEnumerated()),
+			createAttributeOverrides(source.getMapKeyAttributeOverride()),
+			createMapKeyColumn(source.getMapKeyColumn()),
+			createMapKeyJoinColumns(source.getMapKeyJoinColumn()),
+			createColumn(source.getColumn()),
+			createTemporal(source.getTemporal()),
+			createEnumerated(source.getEnumerated()),
+			createLob(source.getLob()),
 			createAttributeOverrides(source.getAttributeOverride()),
 			createAssociationOverrides(source.getAssociationOverride()),
-			createCollectionTable(source.getCollectionTable()), createAccess(source.getAccess()));
+			createCollectionTable(source.getCollectionTable()),
+			createAccess(source.getAccess())
+		);
 	}
 
+	@Deprecated(since = "JPA 3.2")
 	public XAnnotation<jakarta.persistence.MapKeyTemporal> createMapKeyTemporal(String source)
 	{
 		return source == null ? null : new XAnnotation<jakarta.persistence.MapKeyTemporal>(

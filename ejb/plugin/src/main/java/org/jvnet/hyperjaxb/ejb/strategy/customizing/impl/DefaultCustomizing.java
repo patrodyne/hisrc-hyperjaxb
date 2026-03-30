@@ -52,6 +52,7 @@ import org.jvnet.hyperjaxb.jpa.Version;
 import org.jvnet.hyperjaxb.xsom.SimpleTypeAnalyzer;
 import org.jvnet.hyperjaxb.xsom.TypeUtils;
 
+import com.sun.tools.xjc.model.CAdapter;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CCustomizable;
 import com.sun.tools.xjc.model.CPluginCustomization;
@@ -70,14 +71,14 @@ import jakarta.inject.Inject;
 
 /**
  * The default strategy to implement HyperJAXB customizations.
- * 
+ *
  * HyperJAXB allows you to influence the generated object-relational
  * mappings or annotations using customization schema elements.
- * 
+ *
  * HyperJAXB customization elements are essentially XML elements in the
  * HyperJAXB customization namespace associated with target XML Schema
  * constructs (complex types, elements, the schema itself and so on).
- * 
+ *
  * Injected: Persistence
  * Instantiated: none
  */
@@ -91,12 +92,12 @@ public class DefaultCustomizing implements Customizing
 	private EJBPlugin plugin;
 	public EJBPlugin getPlugin() { return plugin; }
 	public void setPlugin(EJBPlugin plugin) { this.plugin = plugin; }
-	
+
 	@Inject
 	private Persistence defaultCustomizations;
 	public Persistence getDefaultCustomizations() { return defaultCustomizations; }
 	public void setDefaultCustomizations(Persistence defaultCustomization) { this.defaultCustomizations = defaultCustomization; }
-	
+
 	private <T> T findCustomization(Model model, QName name)
 	{
 		final CPluginCustomization customization = CustomizationUtils.findCustomization(model, name);
@@ -115,7 +116,7 @@ public class DefaultCustomizing implements Customizing
 	private <T> T findCustomization(CClassInfo classInfo, QName name, T defaultValue, Merge<T> merge)
 	{
 		final CPluginCustomization customization = CustomizationUtils.findCustomization(classInfo, name);
-		return (T) unmarshalCustomization(customization, defaultValue, merge);
+		return unmarshalCustomization(customization, defaultValue, merge);
 	}
 
 	private <T> Collection<T> findCustomizations(CClassInfo classInfo, QName name)
@@ -132,7 +133,7 @@ public class DefaultCustomizing implements Customizing
 	private <T> T findCustomization(CPropertyInfo propertyInfo, QName name, T defaultValue, Merge<T> merge)
 	{
 		final CPluginCustomization customization = CustomizationUtils.findCustomization(propertyInfo, name);
-		final T t = (T) unmarshalCustomization(customization, defaultValue, merge);
+		final T t = unmarshalCustomization(customization, defaultValue, merge);
 		return t;
 	}
 
@@ -198,7 +199,7 @@ public class DefaultCustomizing implements Customizing
 	private <T> T unmarshalCustomization(final CPluginCustomization customization)
 		throws AssertionError
 	{
-		T t = (T) unmarshalCustomization(customization, (T) null, null);
+		T t = unmarshalCustomization(customization, (T) null, null);
 		return t;
 	}
 
@@ -486,13 +487,48 @@ public class DefaultCustomizing implements Customizing
 		return defaultBasic;
 	}
 
+    /**
+     * Is this property a string reference whose column type can
+     * be parameterized by length. Applies only to columns whose
+     * type is parameterized by length, for example, {@code varchar}
+     * or {@code varbinary} types. In JPA, {@code varbinary} types
+     * are usually annotated as {@code Lob} using a standard max
+     * length; thus, length is omitted for {@code varbinary} types.
+     */
+	private boolean isStringRef(CPropertyInfo property)
+	{
+		boolean isStringRef = false;
+		CAdapter adapter = property.getAdapter();
+		if ( adapter != null )
+		{
+			if ( adapter.customType.fullName().equals(String.class.getName()) )
+				isStringRef = true;
+		}
+		else
+		{
+			for (CTypeInfo typeInfo : property.ref() )
+			{
+				if ( typeInfo.getType().fullName().equals(String.class.getName()) )
+				{
+					isStringRef = true;
+					break;
+				}
+			}
+		}
+		return isStringRef;
+	}
+
 	private void assignColumn$LengthPrecisionScale(CPropertyInfo property, final Column column)
 	{
-		final Integer length = createColumn$Length(property);
-		if (length != null)
+		if ( isStringRef(property) )
 		{
-			column.setLength(length);
+			final Integer length = createColumn$Length(property);
+			if (length != null)
+				column.setLength(length);
 		}
+		else
+			column.setLength(null);
+
 		final Integer precision = createColumn$Precision(property);
 		final Integer scale = createColumn$Scale(property);
 		if (precision != null && precision.intValue() != 0)
@@ -671,16 +707,12 @@ public class DefaultCustomizing implements Customizing
 		final Integer finalLength;
 		final Long length = SimpleTypeAnalyzer.getLength(property.getSchemaComponent());
 		if (length != null)
-		{
 			finalLength = length.intValue();
-		}
 		else
 		{
 			final Long maxLength = SimpleTypeAnalyzer.getMaxLength(property.getSchemaComponent());
 			if (maxLength != null)
-			{
 				finalLength = maxLength.intValue();
-			}
 			else
 			{
 				final Long minLength = SimpleTypeAnalyzer.getMinLength(property.getSchemaComponent());
@@ -688,18 +720,12 @@ public class DefaultCustomizing implements Customizing
 				{
 					int intMinLength = minLength.intValue();
 					if (intMinLength > 127)
-					{
 						finalLength = intMinLength * 2;
-					}
 					else
-					{
 						finalLength = null;
-					}
 				}
 				else
-				{
 					finalLength = null;
-				}
 			}
 		}
 		return finalLength;
@@ -1238,10 +1264,10 @@ public class DefaultCustomizing implements Customizing
 		final Persistence persistence = getModelCustomization(property);
 		if (persistence.getDefaultJaxbContext() == null)
 			throw new AssertionError("Default jaxb-context element is not provided.");
-		
+
 		final JaxbContext defaultJaxbContext = (JaxbContext) persistence.getDefaultJaxbContext()
 			.copyTo(new JaxbContext());
-		
+
 		final JaxbContext jaxbContext;
 		if (containsCustomization(property, JAXB_CONTEXT_ELEMENT_NAME))
 		{
@@ -1250,7 +1276,7 @@ public class DefaultCustomizing implements Customizing
 		}
 		else
 			jaxbContext = defaultJaxbContext;
-		
+
 		return jaxbContext;
 	}
 

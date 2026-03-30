@@ -71,7 +71,7 @@ import jakarta.persistence.TemporalType;
  * HiSrc Annox reads annotations into XAnnotation, XAnnotationField, XPackage,
  * XClass, XConstructor, XField, XMethod, and XParameter structures from XML, to
  * run visitors on them, etc.
- * 
+ *
  * <ul>
  * <li>JSR220-EJB30: "JSR 220: Enterprise JavaBeans TM, Version 3.0 Java Persistence API", May 2, 2006.</li>
  * <li>JSR317-JPA20: "JSR 317: Java TM Persistence API, Version 2.0", November 10, 2009.</li>
@@ -360,13 +360,16 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 	// JSR220-EJB30: 9.1.5
 	public XAnnotation<jakarta.persistence.Column> createColumn(Column cColumn)
 	{
-		return cColumn == null ? null : new XAnnotation<jakarta.persistence.Column>(jakarta.persistence.Column.class,
-			AnnotationUtils.create("name", cColumn.getName()), AnnotationUtils.create("unique", cColumn.isUnique()),
+		return cColumn == null ? null : new XAnnotation<jakarta.persistence.Column>(
+			jakarta.persistence.Column.class,
+			AnnotationUtils.create("name", cColumn.getName()),
+			AnnotationUtils.create("unique", cColumn.isUnique()),
 			AnnotationUtils.create("nullable", cColumn.isNullable()),
 			AnnotationUtils.create("insertable", cColumn.isInsertable()),
 			AnnotationUtils.create("updatable", cColumn.isUpdatable()),
 			AnnotationUtils.create("columnDefinition", cColumn.getColumnDefinition()),
-			AnnotationUtils.create("table", cColumn.getTable()), AnnotationUtils.create("length", cColumn.getLength()),
+			AnnotationUtils.create("table", cColumn.getTable()),
+			AnnotationUtils.create("length", cColumn.getLength()),
 			AnnotationUtils.create("precision", cColumn.getPrecision()),
 			AnnotationUtils.create("scale", cColumn.getScale()));
 	}
@@ -375,7 +378,8 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 	public XAnnotation<jakarta.persistence.JoinColumn> createJoinColumn(JoinColumn cJoinColumn)
 	{
 		return cJoinColumn == null ? null : new XAnnotation<jakarta.persistence.JoinColumn>(
-			jakarta.persistence.JoinColumn.class, AnnotationUtils.create("name", cJoinColumn.getName()),
+			jakarta.persistence.JoinColumn.class,
+			AnnotationUtils.create("name", cJoinColumn.getName()),
 			AnnotationUtils.create("referencedColumnName", cJoinColumn.getReferencedColumnName()),
 			AnnotationUtils.create("unique", cJoinColumn.isUnique()),
 			AnnotationUtils.create("nullable", cJoinColumn.isNullable()),
@@ -600,6 +604,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 	}
 
 	// JSR220-EJB30: 9.1.20
+	@Deprecated(since = "JPA 3.2")
 	public XAnnotation<jakarta.persistence.Temporal> createTemporal(String cTemporal)
 	{
 		return cTemporal == null	? null
@@ -813,7 +818,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 			AnnotationUtils.create("uniqueConstraints", createUniqueConstraint(cTableGenerator.getUniqueConstraint()),
 				jakarta.persistence.UniqueConstraint.class));
 	}
-	
+
 	// ==================================================================
 	// JSR220-EJB30: 10.1
 	// ==================================================================

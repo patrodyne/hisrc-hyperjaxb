@@ -57,6 +57,7 @@
 			<include name="commons-io-*.jar"/>
 			<include name="commons-lang3-*.jar"/>
 			<include name="eclipselink-*.jar"/>
+			<include name="asm-*.jar"/>
 			<include name="org.eclipse.persistence.extension-*.jar"/>
 			<include name="hibernate-commons-annotations-*.jar"/>
 			<include name="hibernate-core-*.jar"/>

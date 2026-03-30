@@ -17,33 +17,7 @@ public class JTypeUtils
 	private JTypeUtils() { }
 
 	/**
-	 * Determine when the given {@link JType} is a basic type.
-	 *
-	 * @param type The {@link JType} to evaluate.
-	 *
-	 * @return True when the given type is a basic type; otherwise, false.
-	 */
-	public static boolean isBasicType(final JType type)
-	{
-		final JType[] basicTypes = getBasicTypes(type.owner());
-		return ArrayUtils.contains(basicTypes, type);
-	}
-
-	/**
-	 * Determine when the given {@link JType} is a temporal type.
-	 *
-	 * @param type The {@link JType} to evaluate.
-	 *
-	 * @return True when the given type is a temporal type; otherwise, false.
-	 */
-	public static boolean isTemporalType(final JType type)
-	{
-		final JType[] temporalTypes = getTemporalTypes(type.owner());
-		return ArrayUtils.contains(temporalTypes, type);
-	}
-
-	/**
-	 * The static list of basic {@link JType}s.
+	 * The static list of basic {@link JType}s for the given codemodel.
 	 *
 	 * @param codeModel The {@link JCodeModel} to reference.
 	 *
@@ -53,15 +27,15 @@ public class JTypeUtils
 	{
 		final JType[] basicTypes = new JType[]
 		{
-			codeModel.BOOLEAN,
-			codeModel.BOOLEAN.boxify(), codeModel.BYTE,
-			codeModel.BYTE.boxify(), codeModel.CHAR,
-			codeModel.CHAR.boxify(), codeModel.DOUBLE,
-			codeModel.DOUBLE.boxify(), codeModel.FLOAT,
-			codeModel.FLOAT.boxify(), codeModel.INT,
-			codeModel.INT.boxify(), codeModel.LONG,
-			codeModel.LONG.boxify(), codeModel.SHORT,
-			codeModel.SHORT.boxify(), codeModel.ref(String.class),
+			codeModel.BOOLEAN, codeModel.BOOLEAN.boxify(),
+			codeModel.BYTE, codeModel.BYTE.boxify(),
+			codeModel.CHAR, codeModel.CHAR.boxify(),
+			codeModel.DOUBLE, codeModel.DOUBLE.boxify(),
+			codeModel.FLOAT, codeModel.FLOAT.boxify(),
+			codeModel.INT, codeModel.INT.boxify(),
+			codeModel.LONG, codeModel.LONG.boxify(),
+			codeModel.SHORT, codeModel.SHORT.boxify(),
+			codeModel.ref(String.class),
 			codeModel.ref(BigInteger.class),
 			codeModel.ref(BigDecimal.class),
 			codeModel.ref(java.util.Date.class),
@@ -90,7 +64,20 @@ public class JTypeUtils
 	}
 
 	/**
-	 * The static list of temporal {@link JType}s.
+	 * Determine when the given {@link JType} is a basic type.
+	 *
+	 * @param type The {@link JType} to evaluate.
+	 *
+	 * @return True when the given type is a basic type; otherwise, false.
+	 */
+	public static boolean isBasicType(final JType type)
+	{
+		final JType[] basicTypes = getBasicTypes(type.owner());
+		return ArrayUtils.contains(basicTypes, type);
+	}
+
+	/**
+	 * The static list of temporal {@link JType}s for the given codemodel.
 	 *
 	 * The {@code jakarta.persistence.Temporal} annotation must
 	 * be specified for persistent fields or properties ONLY of
@@ -116,5 +103,18 @@ public class JTypeUtils
 			codeModel.ref(java.sql.Timestamp.class)
 		};
 		return temporalTypes;
+	}
+
+	/**
+	 * Determine when the given {@link JType} is a temporal type.
+	 *
+	 * @param type The {@link JType} to evaluate.
+	 *
+	 * @return True when the given type is a temporal type; otherwise, false.
+	 */
+	public static boolean isTemporalType(final JType type)
+	{
+		final JType[] temporalTypes = getTemporalTypes(type.owner());
+		return ArrayUtils.contains(temporalTypes, type);
 	}
 }

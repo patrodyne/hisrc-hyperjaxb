@@ -10,10 +10,10 @@ public class Constants {
 	public static final String PERSISTENCE_PROPERTIES_BASE_FILE="org.jvnet.hyperjaxb.persistencePropertiesBaseFile";
 	public static final String PERSISTENCE_PROPERTIES_MORE_FILE="org.jvnet.hyperjaxb.persistencePropertiesMoreFile";
 	
-	public static final String JPA_EJB_VERSION = "3.0";
-	public static final String ORM_EJB_VERSION = "3.0";
-	public static final String JPA_JPA_VERSION = "3.0";
-	public static final String ORM_JPA_VERSION = "3.0";
+	public static final String JPA_EJB_VERSION = "3.2";
+	public static final String ORM_EJB_VERSION = "3.2";
+	public static final String JPA_JPA_VERSION = "3.2";
+	public static final String ORM_JPA_VERSION = "3.2";
 
 	public static final String NAMESPACE = "http://hyperjaxb.jvnet.org";
 
