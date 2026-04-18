@@ -41,6 +41,8 @@ original `maven-jaxb2-plugin` name.
 4. hisrc-hyperjaxb-annox
 5. hisrc-hyperjaxb
 
+![build.sh][5]
+
 ### Releases
 
 #### GitHub Releases, Demonstrations
@@ -202,6 +204,7 @@ original `maven-jaxb2-plugin` name.
   [2]: https://github.com/highsource
   [3]: https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-user-account-settings/managing-your-tab-size-rendering-preference
   [4]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/etc/CODE_STYLE_GUIDE.md
+  [5]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/etc/BUILD_MENU.png
   [11]: https://github.com/patrodyne/hisrc-basicjaxb-annox#readme
   [12]: https://github.com/patrodyne/hisrc-basicjaxb#readme
   [13]: https://github.com/patrodyne/hisrc-higherjaxb#readme
