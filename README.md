@@ -41,6 +41,10 @@ original `maven-jaxb2-plugin` name.
 4. hisrc-hyperjaxb-annox
 5. hisrc-hyperjaxb
 
+Each HiSrc project includes a shell script named `build.sh`, as shown below.
+This script provides a menu of options to review, compile, test, package and
+install the HiSrc artifacts to your local Maven repository.
+
 ![build.sh][5]
 
 ### Releases
