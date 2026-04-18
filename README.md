@@ -41,8 +41,8 @@ original `maven-jaxb2-plugin` name.
 4. hisrc-hyperjaxb-annox
 5. hisrc-hyperjaxb
 
-Each HiSrc project includes a shell script named `build.sh`, as shown below.
-This script provides a menu of options to review, compile, test, package and
+Each HiSrc project includes a shell script named [`build.sh`][6]. As shown below,
+this script provides a menu of options to review, compile, test, package and
 install the HiSrc artifacts to your local Maven repository.
 
 ![build.sh][5]
@@ -209,6 +209,7 @@ install the HiSrc artifacts to your local Maven repository.
   [3]: https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-user-account-settings/managing-your-tab-size-rendering-preference
   [4]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/etc/CODE_STYLE_GUIDE.md
   [5]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/etc/BUILD_MENU.png
+  [6]: https://github.com/patrodyne/hisrc-hyperjaxb/blob/master/build.md
   [11]: https://github.com/patrodyne/hisrc-basicjaxb-annox#readme
   [12]: https://github.com/patrodyne/hisrc-basicjaxb#readme
   [13]: https://github.com/patrodyne/hisrc-higherjaxb#readme
