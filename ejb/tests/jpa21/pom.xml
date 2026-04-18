@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-ejb-tests</artifactId>
+		<version>3.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>hisrc-hyperjaxb-ejb-tests-jpa21</artifactId>
+	<packaging>pom</packaging>
+	<name>HiSrc HyperJAXB EJB Test [jpa21]</name>
+	<properties>
+		<root.basedir>${basedir}/../../..</root.basedir>
+	</properties>
+	<modules>
+		<module>code</module>
+		<module>schema</module>
+	</modules>
+	<build>
+		<defaultGoal>test</defaultGoal>
+	</build>
+</project>

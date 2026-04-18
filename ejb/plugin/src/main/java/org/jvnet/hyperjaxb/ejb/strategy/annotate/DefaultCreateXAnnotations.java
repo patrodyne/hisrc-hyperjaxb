@@ -372,7 +372,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 				AnnotationUtils.create("catalog", cTable.getCatalog()),
 				AnnotationUtils.create("schema", cTable.getSchema()),
 				AnnotationUtils.create("uniqueConstraints",
-				createUniqueConstraint(cTable.getUniqueConstraint()), jakarta.persistence.UniqueConstraint.class)
+					createUniqueConstraint(cTable.getUniqueConstraint()), jakarta.persistence.UniqueConstraint.class)
 			);
 	}
 

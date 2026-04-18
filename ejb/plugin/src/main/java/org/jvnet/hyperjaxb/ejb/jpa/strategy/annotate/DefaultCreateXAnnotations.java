@@ -3,6 +3,7 @@ package org.jvnet.hyperjaxb.ejb.jpa.strategy.annotate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 import org.jvnet.basicjaxb_annox.model.XAnnotation;
 import org.jvnet.basicjaxb_annox.model.annotation.field.XSingleAnnotationField;
@@ -21,17 +22,22 @@ import ee.jakarta.xml.ns.persistence.orm.Embedded;
 import ee.jakarta.xml.ns.persistence.orm.EmbeddedId;
 import ee.jakarta.xml.ns.persistence.orm.Entity;
 import ee.jakarta.xml.ns.persistence.orm.Id;
+import ee.jakarta.xml.ns.persistence.orm.Index;
 import ee.jakarta.xml.ns.persistence.orm.ManyToMany;
 import ee.jakarta.xml.ns.persistence.orm.ManyToOne;
 import ee.jakarta.xml.ns.persistence.orm.MapKeyClass;
 import ee.jakarta.xml.ns.persistence.orm.MapKeyColumn;
 import ee.jakarta.xml.ns.persistence.orm.MapKeyJoinColumn;
 import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
+import ee.jakarta.xml.ns.persistence.orm.NamedAttributeNode;
+import ee.jakarta.xml.ns.persistence.orm.NamedEntityGraph;
 import ee.jakarta.xml.ns.persistence.orm.NamedQuery;
+import ee.jakarta.xml.ns.persistence.orm.NamedSubgraph;
 import ee.jakarta.xml.ns.persistence.orm.OneToMany;
 import ee.jakarta.xml.ns.persistence.orm.OneToOne;
 import ee.jakarta.xml.ns.persistence.orm.OrderColumn;
 import ee.jakarta.xml.ns.persistence.orm.SequenceGenerator;
+import ee.jakarta.xml.ns.persistence.orm.Table;
 import ee.jakarta.xml.ns.persistence.orm.UniqueConstraint;
 import ee.jakarta.xml.ns.persistence.orm.Version;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -85,6 +91,151 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 	// ==================================================================
 	// JSR220-EJB30: 9.1
 	// ==================================================================
+
+	// JSR220-EJB30: 9.1.1
+	// JSR339-JPA21: 11.1.49 (new: index)
+	@Override
+	public XAnnotation<jakarta.persistence.Table> createTable(Table cTable)
+	{
+		return cTable == null ? null :
+			new XAnnotation<jakarta.persistence.Table>
+			(
+				jakarta.persistence.Table.class,
+				AnnotationUtils.create("name", cTable.getName()),
+				AnnotationUtils.create("catalog", cTable.getCatalog()),
+				AnnotationUtils.create("schema", cTable.getSchema()),
+				AnnotationUtils.create("uniqueConstraints",
+					createUniqueConstraint(cTable.getUniqueConstraint()), jakarta.persistence.UniqueConstraint.class),
+				AnnotationUtils.create("indexes",
+					createIndex(cTable.getIndex()), jakarta.persistence.Index.class)
+			);
+	}
+
+	// JSR339-JPA21: 11.1.23
+	public XAnnotation<?>[] createIndex(List<Index> cIndexes)
+	{
+		return transform
+		(
+			cIndexes,
+			new Transformer<Index, XAnnotation<jakarta.persistence.Index>>()
+			{
+				@Override
+				public XAnnotation<jakarta.persistence.Index> transform(Index input)
+				{
+					return createIndex(input);
+				}
+			}
+		);
+	}
+
+	// JSR339-JPA21: 11.1.23
+	public XAnnotation<jakarta.persistence.Index> createIndex(Index source)
+	{
+		return source == null ? null :
+			new XAnnotation<jakarta.persistence.Index>
+			(
+				jakarta.persistence.Index.class,
+				AnnotationUtils.create("name", source.getName()),
+				AnnotationUtils.create("columnList", source.getColumnList()),
+				AnnotationUtils.create("unique", source.isUnique())
+			);
+	}
+
+	// JSR339-JPA21: 12.2.3.17
+	public XAnnotation<?>[] createNamedEntityGraph(List<NamedEntityGraph> cGraphs)
+	{
+		return transform
+		(
+			cGraphs,
+			new Transformer<NamedEntityGraph, XAnnotation<jakarta.persistence.NamedEntityGraph>>()
+			{
+				@Override
+				public XAnnotation<jakarta.persistence.NamedEntityGraph> transform(NamedEntityGraph input)
+				{
+					return createNamedEntityGraph(input);
+				}
+			}
+		);
+	}
+
+	// JSR339-JPA21: 12.2.3.17
+	public XAnnotation<jakarta.persistence.NamedEntityGraph> createNamedEntityGraph(NamedEntityGraph cGraph)
+	{
+		return cGraph == null ? null :
+			new XAnnotation<jakarta.persistence.NamedEntityGraph>
+			(
+				jakarta.persistence.NamedEntityGraph.class,
+				AnnotationUtils.create("name", cGraph.getName()),
+				AnnotationUtils.create("includeAllAttributes", cGraph.isIncludeAllAttributes()),
+				AnnotationUtils.create("attributeNodes",
+					createNamedAttributeNode(cGraph.getNamedAttributeNode()), jakarta.persistence.NamedAttributeNode.class),
+				AnnotationUtils.create("subgraphs",
+					createNamedSubgraph(cGraph.getSubgraph()), jakarta.persistence.NamedSubgraph.class),
+				AnnotationUtils.create("subclassSubgraphs",
+					createNamedSubgraph(cGraph.getSubclassSubgraph()), jakarta.persistence.NamedSubgraph.class)
+			);
+	}
+
+	// JSR339-JPA21: 12.2.3.17
+	public XAnnotation<?>[] createNamedAttributeNode(List<NamedAttributeNode> cNodes)
+	{
+		return transform
+		(
+			cNodes,
+			new Transformer<NamedAttributeNode, XAnnotation<jakarta.persistence.NamedAttributeNode>>()
+			{
+				@Override
+				public XAnnotation<jakarta.persistence.NamedAttributeNode> transform(NamedAttributeNode input)
+				{
+					return createNamedAttributeNode(input);
+				}
+			}
+		);
+	}
+
+	// JSR339-JPA21: 12.2.3.17
+	public XAnnotation<jakarta.persistence.NamedAttributeNode> createNamedAttributeNode(NamedAttributeNode source)
+	{
+		return source == null ? null :
+			new XAnnotation<jakarta.persistence.NamedAttributeNode>
+			(
+				jakarta.persistence.NamedAttributeNode.class,
+				AnnotationUtils.create("name", source.getName()),
+				AnnotationUtils.create("subgraph", source.getSubgraph()),
+				AnnotationUtils.create("keySubgraph", source.getKeySubgraph())
+			);
+	}
+
+	// JSR339-JPA21: 12.2.3.17
+	public XAnnotation<?>[] createNamedSubgraph(List<NamedSubgraph> cGraphs)
+	{
+		return transform
+		(
+			cGraphs,
+			new Transformer<NamedSubgraph, XAnnotation<jakarta.persistence.NamedSubgraph>>()
+			{
+				@Override
+				public XAnnotation<jakarta.persistence.NamedSubgraph> transform(NamedSubgraph input)
+				{
+					return createNamedSubgraph(input);
+				}
+			}
+		);
+	}
+
+	// JSR339-JPA21: 12.2.3.17
+	public XAnnotation<jakarta.persistence.NamedSubgraph> createNamedSubgraph(NamedSubgraph source)
+	{
+		return source == null ? null :
+			new XAnnotation<jakarta.persistence.NamedSubgraph>
+			(
+				jakarta.persistence.NamedSubgraph.class,
+				AnnotationUtils.create("name", source.getName()),
+				AnnotationUtils.create("type", source.getClazz()),
+				AnnotationUtils.create("attributeNodes",
+					createNamedAttributeNode(source.getNamedAttributeNode()), jakarta.persistence.NamedAttributeNode.class)
+			);
+	}
 
 	// JSR220-EJB30: 9.1.4
 	// JSR317-JPA20: 11.1.49 (new: name)
@@ -242,12 +393,18 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 	// ==================================================================
 
 	// JSR220-EJB30: 10.1.3
-	// JSR317-JPA20: 12.2.3.3 (new: cacheable)
+	// JSR317-JPA20: 12.2.3.3  (new: Cacheable)
+	// JSR339-JPA21: 12.2.3.17 (new: NamedEntityGraph)
 	@Override
 	public Collection<XAnnotation<?>> createEntityAnnotations(Entity source)
 	{
-		final Collection<XAnnotation<?>> annotations = super.createEntityAnnotations(source);
-		return source == null ? annotations : annotations(annotations, createCacheable(source.isCacheable()));
+		Collection<XAnnotation<?>> annotations = super.createEntityAnnotations(source);
+		if ( source != null )
+		{
+			annotations = annotations(annotations, createCacheable(source.isCacheable()));
+			annotations = annotations(annotations, createNamedEntityGraph(source.getNamedEntityGraph()));
+		}
+		return annotations;
 	}
 
 	// JSR220-EJB30: 10.1.3.22
@@ -408,6 +565,8 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 			);
 	}
 
+	// JSR317-JPA20: 11.1.8 (new: CollectionTable)
+	// JESP-JPA32..: 11.1.8 (new: options)
 	public XAnnotation<jakarta.persistence.CollectionTable> createCollectionTable(CollectionTable source)
 	{
 		return source == null ? null :

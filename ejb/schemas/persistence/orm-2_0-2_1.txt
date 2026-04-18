@@ -1,0 +1,122 @@
+	@Target({METHOD, FIELD}) @Retention(RUNTIME)
+	public @interface CollectionTable {
+		String name() default "";
+		String catalog() default "";
+		String schema() default "";
+		JoinColumn[] joinColumns() default {};
+		UniqueConstraint[] uniqueConstraints() default {};
+*		Index[] indexes() default {};
+	}
+
+	@Target({}) @Retention(RUNTIME)
+	public @interface ColumnResult {
+		String name();
+*		Class type() default void.class;
+	}
+
+	@Target({}) @Retention(RUNTIME)
+	public @interface ConstructorResult {
+		Class targetClass();
+		ColumnResult[] columns();
+	}
+
+	@Target({TYPE, METHOD, FIELD}) @Retention(RUNTIME)
+	public @interface Convert {
+		Class converter() default void.class;
+		String attributeName() default "";
+		boolean disableConversion() default false;
+	}
+
+	@Target({TYPE, METHOD, FIELD}) @Retention(RUNTIME)
+	public @interface Converter {
+		boolean autoApply() default false;
+	}
+
+	@Target({}) @Retention(RUNTIME)
+	public @interface ForeignKey {
+		String name() default "";
+		ConstraintMode value() default CONSTRAINT;
+		String foreign-key-definition() default "";
+		// Note that the elements that embed the use of the annotation
+		// default this use as @ForeignKey(PROVIDER_DEFAULT).
+	}
+
+	@Target({}) @Retention(RUNTIME)
+	public @interface Index {
+		String name() default "";
+		String columnList();
+		boolean unique() default false;
+	}
+
+	@Target({}) @Retention(RUNTIME)
+	public @interface NamedAttributeNode {
+		String value();
+		String subgraph() default "";
+		String keySubgraph() default "";
+	}
+
+	@Target({TYPE}) @Retention(RUNTIME)
+	public @interface NamedStoredProcedureQuery {
+		String name();
+		String procedureName();
+		StoredProcedureParameter[] parameters() default {};
+		Class[] resultClasses() default {};
+		String[] resultSetMappings() default{};
+		QueryHint[] hints() default {};
+	}
+
+	@Target({}) @Retention(RUNTIME)
+	public @interface NamedSubgraph {
+		String name();
+		Class type() default void.class;
+		NamedAttributeNode[] attributeNodes();
+	}
+
+	@Target({TYPE}) @Retention(RUNTIME)
+	public @interface SecondaryTable {
+		String name();
+		String catalog() default "";
+		String schema() default "";
+		PrimaryKeyJoinColumn[] pkJoinColumns() default {};
+		UniqueConstraint[] uniqueConstraints() default {};
+*		Index[] indexes() default {};
+	 }
+
+	@Target({TYPE}) @Retention(RUNTIME)
+	public @interface SqlResultSetMapping {
+		String name();
+		EntityResult[] entities() default {};
+*		ConstructorResult[] classes() default{};
+		ColumnResult[] columns() default {};
+	}
+
+	@Target({TYPE}) @Retention(RUNTIME)
+	public @interface StoredProcedureParameter {
+		String name() default "";
+		ParameterMode mode() default ParameterMode.IN;
+		Class type();
+	}
+
+	@Target({TYPE}) @Retention(RUNTIME)
+	public @interface Table {
+		String name() default "";
+		String catalog() default "";
+		String schema() default "";
+		UniqueConstraint[] uniqueConstraints() default {};
+*		Index[] indexes() default {};
+	}
+
+	@Target({TYPE, METHOD, FIELD}) @Retention(RUNTIME)
+	public @interface TableGenerator {
+		String name();
+		String table() default "";
+		String catalog() default "";
+		String schema() default "";
+		String pkColumnName() default "";
+		String valueColumnName() default "";
+		String pkColumnValue() default "";
+		int initialValue() default 0;
+		int allocationSize() default 50;
+		UniqueConstraint[] uniqueConstraints() default {};
+*		Indexes[] indexes() default {};
+	}

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.patrodyne.jvnet</groupId>
+		<artifactId>hisrc-hyperjaxb-ejb-tests-jpa21</artifactId>
+		<version>3.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>hisrc-hyperjaxb-ejb-tests-jpa21-schema</artifactId>
+	<packaging>jar</packaging>
+	<name>HiSrc HyperJAXB EJB Test [jpa21-schema]</name>
+
+	<properties>
+		<root.basedir>${basedir}/../../../..</root.basedir>
+	</properties>
+
+	<dependencies>
+
+		<!-- JPA Dependencies -->
+		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+		</dependency>
+
+		<!-- Database Dependencies -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- SLF4J Implementation -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<defaultGoal>test</defaultGoal>
+		<plugins>
+			<!-- mvn hisrc-hyperjaxb:help -Ddetail=true -->
+			<!-- mvn hisrc-hyperjaxb:generate -->
+			<plugin>
+				<groupId>org.patrodyne.jvnet</groupId>
+				<artifactId>hisrc-hyperjaxb-maven-plugin</artifactId>
+				<configuration>
+					<noFileHeader>true</noFileHeader>
+					<!--
+					<generateHashCode>true</generateHashCode>
+					<generateEquals>true</generateEquals>
+					<generateToString>true</generateToString>
+					<generateCopyable>true</generateCopyable>
+					<generateMergeable>true</generateMergeable>
+					<roundtripTestClassName>org.jvnet.hyperjaxb.ejb.tests.addressbook.RoundtripTest</roundtripTestClassName>
+					-->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

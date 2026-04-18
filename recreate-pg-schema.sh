@@ -34,6 +34,7 @@ SQLFILE="src/test/resources/persistence-pg-recreate-schema.sql"
 #
 # Comment out 'exit' to recreate all schemas!
 #
+${SQLCMD} "ejb/tests/jpa21/${SQLFILE}" | grep "GRANT ALL"
 exit 0
 ${SQLCMD} "ejb/assembly/explore/Ex001-JustProduct/${SQLFILE}" | grep "GRANT ALL"
 ${SQLCMD} "ejb/assembly/samples/po-customized-eclipselink/${SQLFILE}" | grep "GRANT ALL"

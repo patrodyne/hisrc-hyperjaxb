@@ -187,8 +187,8 @@
 					</executions>
 				</plugin>
 				<plugin>
-					<artifactId>plantuml-generator-maven-plugin</artifactId>
 					<groupId>de.elnarion.maven</groupId>
+					<artifactId>plantuml-generator-maven-plugin</artifactId>
 					<version>${plantuml-generator-maven-plugin.version}</version>
 					<executions>
 						<execution>

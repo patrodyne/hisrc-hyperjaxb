@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="urn:example.org:jpa21:model"
+	xmlns:tns="urn:example.org:jpa21:model"
+	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	jaxb:extensionBindingPrefixes="hj orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=
+		"urn:jvnet.org:hyperjaxb:jpa ../../../../../../schemas/customizations/src/main/resources/customizations.xsd
+		https://jakarta.ee/xml/ns/persistence/orm ../../../../../../schemas/persistence/orm_2_1.xsd"
+>
+	<xs:complexType name="Department">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:id/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="employees" type="tns:Employee" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Employee">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:entity>
+					<orm:table name="EMPLOYEES">
+						<orm:index name="idx_emp_last_name" column-list="last_name"/>
+					</orm:table>
+					<orm:named-entity-graph name="Employee.projects">
+						<orm:named-attribute-node name="projects" />
+					</orm:named-entity-graph>
+				</hj:entity>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:id/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastName" type="xs:string"/>
+			<xs:element name="active" type="xs:boolean"/>
+			<xs:element name="department" type="tns:Department" minOccurs="0"/>
+			<xs:element name="projects" type="tns:Project" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Project">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:id/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="projectName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="Organization">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0">
+					<xs:annotation>
+						<xs:appinfo>
+							<hj:id/>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="departments" type="tns:Department" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="employees" type="tns:Employee" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="projects" type="tns:Project" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

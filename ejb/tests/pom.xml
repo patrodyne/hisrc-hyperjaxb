@@ -57,6 +57,7 @@
 		<module>issues-el</module>
 		<module>issues-jpa</module>
 		<module>issues-po</module>
+		<module>jpa21</module>
 		<module>nokis</module>
 		<module>one</module>
 		<module>onix30</module>
