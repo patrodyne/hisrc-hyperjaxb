@@ -36,6 +36,12 @@
 					<orm:named-entity-graph name="Employee.projects">
 						<orm:named-attribute-node name="projects" />
 					</orm:named-entity-graph>
+					<orm:named-stored-procedure-query
+						name="getEmployeeCount"
+						procedure-name="ejb_tests_jpa21.FETCH_EMP_COUNT"
+					>
+						<orm:parameter class="java.lang.Long" mode="INOUT"/>
+					</orm:named-stored-procedure-query>
 				</hj:entity>
 			</xs:appinfo>
 		</xs:annotation>

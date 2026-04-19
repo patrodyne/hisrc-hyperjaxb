@@ -32,11 +32,13 @@ import ee.jakarta.xml.ns.persistence.orm.MappedSuperclass;
 import ee.jakarta.xml.ns.persistence.orm.NamedAttributeNode;
 import ee.jakarta.xml.ns.persistence.orm.NamedEntityGraph;
 import ee.jakarta.xml.ns.persistence.orm.NamedQuery;
+import ee.jakarta.xml.ns.persistence.orm.NamedStoredProcedureQuery;
 import ee.jakarta.xml.ns.persistence.orm.NamedSubgraph;
 import ee.jakarta.xml.ns.persistence.orm.OneToMany;
 import ee.jakarta.xml.ns.persistence.orm.OneToOne;
 import ee.jakarta.xml.ns.persistence.orm.OrderColumn;
 import ee.jakarta.xml.ns.persistence.orm.SequenceGenerator;
+import ee.jakarta.xml.ns.persistence.orm.StoredProcedureParameter;
 import ee.jakarta.xml.ns.persistence.orm.Table;
 import ee.jakarta.xml.ns.persistence.orm.UniqueConstraint;
 import ee.jakarta.xml.ns.persistence.orm.Version;
@@ -47,6 +49,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.MapKeyJoinColumns;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.ParameterMode;
 import jakarta.persistence.QueryHint;
 import jakarta.persistence.TemporalType;
 
@@ -200,7 +203,7 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 			new XAnnotation<jakarta.persistence.NamedAttributeNode>
 			(
 				jakarta.persistence.NamedAttributeNode.class,
-				AnnotationUtils.create("name", source.getName()),
+				AnnotationUtils.create("value", source.getName()),
 				AnnotationUtils.create("subgraph", source.getSubgraph()),
 				AnnotationUtils.create("keySubgraph", source.getKeySubgraph())
 			);
@@ -231,9 +234,76 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 			(
 				jakarta.persistence.NamedSubgraph.class,
 				AnnotationUtils.create("name", source.getName()),
-				AnnotationUtils.create("type", source.getClazz()),
+				AnnotationUtils.createClass("type", source.getClazz()),
 				AnnotationUtils.create("attributeNodes",
 					createNamedAttributeNode(source.getNamedAttributeNode()), jakarta.persistence.NamedAttributeNode.class)
+			);
+	}
+
+	// JSR339-JPA21: 12.2.3.20
+	public XAnnotation<?>[] createNamedStoredProcedureQuery(List<NamedStoredProcedureQuery> cProcs)
+	{
+		return transform
+		(
+			cProcs,
+			new Transformer<NamedStoredProcedureQuery, XAnnotation<jakarta.persistence.NamedStoredProcedureQuery>>()
+			{
+				@Override
+				public XAnnotation<jakarta.persistence.NamedStoredProcedureQuery> transform(NamedStoredProcedureQuery input)
+				{
+					return createNamedStoredProcedureQuery(input);
+				}
+			}
+		);
+	}
+
+	// JSR339-JPA21: 12.2.3.20
+	public XAnnotation<jakarta.persistence.NamedStoredProcedureQuery> createNamedStoredProcedureQuery(NamedStoredProcedureQuery cProc)
+	{
+		return cProc == null ? null :
+			new XAnnotation<jakarta.persistence.NamedStoredProcedureQuery>
+			(
+				jakarta.persistence.NamedStoredProcedureQuery.class,
+				AnnotationUtils.create("name", cProc.getName()),
+				AnnotationUtils.create("procedureName", cProc.getProcedureName()),
+				AnnotationUtils.create("parameters",
+					createStoredProcedureParameter(cProc.getParameter()), jakarta.persistence.StoredProcedureParameter.class),
+				AnnotationUtils.createClass("resultClasses", cProc.getResultClass()),
+				AnnotationUtils.create("resultSetMappings",
+					cProc.getResultSetMapping().toArray(new String[cProc.getResultSetMapping().size()])),
+				AnnotationUtils.create("hint",
+					createQueryHint(cProc.getHint()), jakarta.persistence.QueryHint.class)
+			);
+	}
+
+	// JSR339-JPA21: 12.2.3.20
+	public XAnnotation<?>[] createStoredProcedureParameter(List<StoredProcedureParameter> cParms)
+	{
+		return transform
+		(
+			cParms,
+			new Transformer<StoredProcedureParameter, XAnnotation<jakarta.persistence.StoredProcedureParameter>>()
+			{
+				@Override
+				public XAnnotation<jakarta.persistence.StoredProcedureParameter> transform(StoredProcedureParameter input)
+				{
+					return createStoredProcedureParameter(input);
+				}
+			}
+		);
+	}
+
+	// JSR339-JPA21: 12.2.3.20
+	public XAnnotation<jakarta.persistence.StoredProcedureParameter> createStoredProcedureParameter(
+		StoredProcedureParameter source)
+	{
+		return source == null ? null :
+			new XAnnotation<jakarta.persistence.StoredProcedureParameter>
+			(
+				jakarta.persistence.StoredProcedureParameter.class,
+				AnnotationUtils.create("name", source.getName()),
+				AnnotationUtils.createClass("type", source.getClazz()),
+				AnnotationUtils.create("mode", ParameterMode.valueOf(source.getMode()))
 			);
 	}
 
@@ -394,7 +464,7 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 
 	// JSR220-EJB30: 10.1.3
 	// JSR317-JPA20: 12.2.3.3  (new: Cacheable)
-	// JSR339-JPA21: 12.2.3.17 (new: NamedEntityGraph)
+	// JSR339-JPA21: 12.2.3.17 (new: NamedEntityGraph, NamedStoredProcedureQuery)
 	@Override
 	public Collection<XAnnotation<?>> createEntityAnnotations(Entity source)
 	{
@@ -403,6 +473,7 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 		{
 			annotations = annotations(annotations, createCacheable(source.isCacheable()));
 			annotations = annotations(annotations, createNamedEntityGraph(source.getNamedEntityGraph()));
+			annotations = annotations(annotations, createNamedStoredProcedureQuery(source.getNamedStoredProcedureQuery()));
 		}
 		return annotations;
 	}

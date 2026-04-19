@@ -174,17 +174,6 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 		);
 	}
 
-	public XAnnotation<jakarta.persistence.QueryHint> createQueryHint(QueryHint cQueryHint)
-	{
-		return cQueryHint == null ? null :
-			new XAnnotation<jakarta.persistence.QueryHint>
-			(
-				jakarta.persistence.QueryHint.class,
-				AnnotationUtils.create("name", cQueryHint.getName()),
-				AnnotationUtils.create("value", cQueryHint.getValue())
-			);
-	}
-
 	public XAnnotation<?>[] createQueryHint(Collection<QueryHint> cQueryHints)
 	{
 		return transform
@@ -199,6 +188,17 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 				}
 			}
 		);
+	}
+
+	public XAnnotation<jakarta.persistence.QueryHint> createQueryHint(QueryHint cQueryHint)
+	{
+		return cQueryHint == null ? null :
+			new XAnnotation<jakarta.persistence.QueryHint>
+			(
+				jakarta.persistence.QueryHint.class,
+				AnnotationUtils.create("name", cQueryHint.getName()),
+				AnnotationUtils.create("value", cQueryHint.getValue())
+			);
 	}
 
 	// JSR220-EJB30: 8.3.2
