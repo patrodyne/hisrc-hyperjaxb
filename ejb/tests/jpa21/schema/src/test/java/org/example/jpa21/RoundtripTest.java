@@ -11,12 +11,12 @@ public class RoundtripTest
 	@Override
 	public String getContextPath()
 	{
-		return "org.example.jpa21";
+		return "org.example.jpa21.model";
 	}
 
 	@Override
 	public String getPersistenceUnitName()
 	{
-		return "org.example.jpa21";
+		return "org.example.jpa21.model";
 	}
 }

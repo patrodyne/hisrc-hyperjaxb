@@ -1,13 +1,13 @@
 package org.jvnet.hyperjaxb.annotation.util.tests;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.LinkedList;
 
 import org.junit.jupiter.api.Test;
-
 import org.jvnet.basicjaxb_annox.model.XAnnotation;
 import org.jvnet.basicjaxb_annox.model.annotation.field.XAnnotationField;
 import org.jvnet.hyperjaxb.annotation.util.AnnotationUtils;
@@ -29,6 +29,7 @@ public class AnnotationUtilsTest {
 	{
 		final Collection<XAnnotation<?>> a = new LinkedList<XAnnotation<?>>();
 		XAnnotationField<Annotation[]> xa = AnnotationUtils.create("test", a.toArray(new XAnnotation[a.size()]), Override.class);
-		assertNotNull(xa, "XAnnotationField should be created.");
+		assertNull(xa, "XAnnotationField for empty list should be null.");
+		// Note: Otherwise, empty, non-null collections generate noisy Java annotations.
 	}
 }

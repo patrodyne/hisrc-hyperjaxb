@@ -42,6 +42,23 @@ import jakarta.persistence.Table;
 	name = "Employee.projects",
 	attributeNodes = @NamedAttributeNode("projects")
 )
+//Standard mapping for native SQL result to a non-entity DTO
+@SqlResultSetMapping(
+	name = "EmployeeSummaryMapping",
+	classes = @ConstructorResult(
+		targetClass = EmployeeSummary.class,
+		columns = {
+			@ColumnResult(name = "id", type = Long.class),
+			@ColumnResult(name = "last_name", type = String.class)
+		}
+	)
+)
+// SQL to summarize all employees
+@NamedNativeQuery(
+	name = "EmployeeSelectAll",
+	query = "SELECT e.id, e.last_name FROM ejb_tests_jpa21.EMPLOYEES e",
+	resultSetMapping = "EmployeeSummaryMapping"
+)
 // Standardized Stored Procedure Mapping: Count
 @NamedStoredProcedureQuery(
 	name = "getEmployeeCount",
@@ -49,12 +66,6 @@ import jakarta.persistence.Table;
 	parameters = {
 		@StoredProcedureParameter(mode = ParameterMode.INOUT, type = Long.class)
 	}
-)
-//SQL to summarize all employees
-@NamedNativeQuery(
-	name = "EmployeeSelectAll",
-	query = "SELECT e.id, e.last_name FROM ejb_tests_jpa21.EMPLOYEES e",
-	resultSetMapping = "EmployeeSummaryMapping"
 )
 // Standardized Stored Procedure Mapping: Details
 // When mapping this in JPA, you do not use ParameterMode.OUT.
@@ -76,17 +87,6 @@ import jakarta.persistence.Table;
         @StoredProcedureParameter(mode = ParameterMode.INOUT, type = Long.class),
         @StoredProcedureParameter(mode = ParameterMode.INOUT, type = String.class)
     }
-)
-// Standard mapping for native SQL result to a non-entity DTO
-@SqlResultSetMapping(
-	name = "EmployeeSummaryMapping",
-	classes = @ConstructorResult(
-		targetClass = EmployeeSummary.class,
-		columns = {
-			@ColumnResult(name = "id", type = Long.class),
-			@ColumnResult(name = "last_name", type = String.class)
-		}
-	)
 )
 public class Employee
 {

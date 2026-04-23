@@ -16,6 +16,8 @@ import ee.jakarta.xml.ns.persistence.orm.AssociationOverride;
 import ee.jakarta.xml.ns.persistence.orm.Basic;
 import ee.jakarta.xml.ns.persistence.orm.CascadeType;
 import ee.jakarta.xml.ns.persistence.orm.CollectionTable;
+import ee.jakarta.xml.ns.persistence.orm.ColumnResult;
+import ee.jakarta.xml.ns.persistence.orm.ConstructorResult;
 import ee.jakarta.xml.ns.persistence.orm.ElementCollection;
 import ee.jakarta.xml.ns.persistence.orm.Embeddable;
 import ee.jakarta.xml.ns.persistence.orm.Embedded;
@@ -37,9 +39,12 @@ import ee.jakarta.xml.ns.persistence.orm.NamedSubgraph;
 import ee.jakarta.xml.ns.persistence.orm.OneToMany;
 import ee.jakarta.xml.ns.persistence.orm.OneToOne;
 import ee.jakarta.xml.ns.persistence.orm.OrderColumn;
+import ee.jakarta.xml.ns.persistence.orm.SecondaryTable;
 import ee.jakarta.xml.ns.persistence.orm.SequenceGenerator;
+import ee.jakarta.xml.ns.persistence.orm.SqlResultSetMapping;
 import ee.jakarta.xml.ns.persistence.orm.StoredProcedureParameter;
 import ee.jakarta.xml.ns.persistence.orm.Table;
+import ee.jakarta.xml.ns.persistence.orm.TableGenerator;
 import ee.jakarta.xml.ns.persistence.orm.UniqueConstraint;
 import ee.jakarta.xml.ns.persistence.orm.Version;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -111,6 +116,54 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 					createUniqueConstraint(cTable.getUniqueConstraint()), jakarta.persistence.UniqueConstraint.class),
 				AnnotationUtils.create("indexes",
 					createIndex(cTable.getIndex()), jakarta.persistence.Index.class)
+			);
+	}
+
+	// JSR220-EJB30: 9.1.2
+	// JSR339-JPA21: 11.1.46 (new: index)
+	@Override
+	public XAnnotation<jakarta.persistence.SecondaryTable> createSecondaryTable(SecondaryTable cSecondaryTable)
+	{
+		return cSecondaryTable == null ? null :
+			new XAnnotation<jakarta.persistence.SecondaryTable>
+			(
+				jakarta.persistence.SecondaryTable.class,
+				AnnotationUtils.create("name", cSecondaryTable.getName()),
+				AnnotationUtils.create("catalog", cSecondaryTable.getCatalog()),
+				AnnotationUtils.create("schema", cSecondaryTable.getSchema()),
+				AnnotationUtils.create("pkJoinColumns",
+					createPrimaryKeyJoinColumn(cSecondaryTable.getPrimaryKeyJoinColumn()),
+					jakarta.persistence.PrimaryKeyJoinColumn.class),
+				AnnotationUtils.create("uniqueConstraints",
+					createUniqueConstraint(cSecondaryTable.getUniqueConstraint()),
+					jakarta.persistence.UniqueConstraint.class),
+				AnnotationUtils.create("indexes",
+					createIndex(cSecondaryTable.getIndex()), jakarta.persistence.Index.class)
+			);
+	}
+
+	// JSR220-EJB30: 9.1.38
+	// JSR339-JPA21: 11.1.50 (new: indexes)
+	@Override
+	public XAnnotation<jakarta.persistence.TableGenerator> createTableGenerator(TableGenerator cTableGenerator)
+	{
+		return cTableGenerator == null ? null :
+			new XAnnotation<jakarta.persistence.TableGenerator>
+			(
+				jakarta.persistence.TableGenerator.class,
+				AnnotationUtils.create("name", cTableGenerator.getName()),
+				AnnotationUtils.create("table", cTableGenerator.getTable()),
+				AnnotationUtils.create("catalog", cTableGenerator.getCatalog()),
+				AnnotationUtils.create("schema", cTableGenerator.getSchema()),
+				AnnotationUtils.create("pkColumnName", cTableGenerator.getPkColumnName()),
+				AnnotationUtils.create("valueColumnName", cTableGenerator.getValueColumnName()),
+				AnnotationUtils.create("pkColumnValue", cTableGenerator.getPkColumnValue()),
+				AnnotationUtils.create("initialValue", cTableGenerator.getInitialValue()),
+				AnnotationUtils.create("allocationSize", cTableGenerator.getAllocationSize()),
+				AnnotationUtils.create("uniqueConstraints",createUniqueConstraint(cTableGenerator.getUniqueConstraint()),
+					jakarta.persistence.UniqueConstraint.class),
+				AnnotationUtils.create("indexes",
+					createIndex(cTableGenerator.getIndex()), jakarta.persistence.Index.class)
 			);
 	}
 
@@ -237,6 +290,70 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 				AnnotationUtils.createClass("type", source.getClazz()),
 				AnnotationUtils.create("attributeNodes",
 					createNamedAttributeNode(source.getNamedAttributeNode()), jakarta.persistence.NamedAttributeNode.class)
+			);
+	}
+
+	// JSR220-EJB30: 3.8.15
+	// JSR339-JPA21: 12.2.3.21 (new: classes)
+	@Override
+	public XAnnotation<jakarta.persistence.SqlResultSetMapping> createSqlResultSetMapping(
+		SqlResultSetMapping cSqlResultSetMapping)
+	{
+		return cSqlResultSetMapping == null ? null :
+			new XAnnotation<jakarta.persistence.SqlResultSetMapping>
+			(
+				jakarta.persistence.SqlResultSetMapping.class,
+				AnnotationUtils.create("name", cSqlResultSetMapping.getName()),
+				AnnotationUtils.create("entities", createEntityResult(cSqlResultSetMapping.getEntityResult()),
+					jakarta.persistence.EntityResult.class),
+				AnnotationUtils.create("classes", createConstructorResult(cSqlResultSetMapping.getConstructorResult()),
+					jakarta.persistence.ConstructorResult.class),
+				AnnotationUtils.create("columns", createColumnResult(cSqlResultSetMapping.getColumnResult()),
+					jakarta.persistence.ColumnResult.class)
+			);
+	}
+
+	// JSR339-JPA21: 3.10.16.2.2
+	public XAnnotation<jakarta.persistence.ConstructorResult>[] createConstructorResult(List<ConstructorResult> cResults)
+	{
+		return transform
+		(
+			cResults,
+			new Transformer<ConstructorResult, XAnnotation<jakarta.persistence.ConstructorResult>>()
+			{
+				@Override
+				public XAnnotation<jakarta.persistence.ConstructorResult> transform(ConstructorResult input)
+				{
+					return createConstructorResult(input);
+				}
+			}
+		);
+	}
+
+	// JSR339-JPA21: 3.10.16.2.2
+	public XAnnotation<jakarta.persistence.ConstructorResult> createConstructorResult(ConstructorResult cResult)
+	{
+		return cResult == null ? null :
+			new XAnnotation<jakarta.persistence.ConstructorResult>
+			(
+				jakarta.persistence.ConstructorResult.class,
+				AnnotationUtils.createClass("targetClass", cResult.getTargetClass()),
+				AnnotationUtils.create("columns",
+					createColumnResult(cResult.getColumn()), jakarta.persistence.ColumnResult.class)
+			);
+	}
+
+	// JSR220-EJB30: 8.3.3
+	// JSR339-JPA21: 10.4.4 (new type)
+	@Override
+	public XAnnotation<jakarta.persistence.ColumnResult> createColumnResult(ColumnResult cColumnResult)
+	{
+		return cColumnResult == null ? null :
+			new XAnnotation<jakarta.persistence.ColumnResult>
+			(
+				jakarta.persistence.ColumnResult.class,
+				AnnotationUtils.create("name", cColumnResult.getName()),
+				AnnotationUtils.createClass("type", cColumnResult.getClazz())
 			);
 	}
 
@@ -636,7 +753,8 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 			);
 	}
 
-	// JSR317-JPA20: 11.1.8 (new: CollectionTable)
+	// JSR317-JPA20:
+	// JSR339-JPA21: 11.1.8 (new: indexes)
 	// JESP-JPA32..: 11.1.8 (new: options)
 	public XAnnotation<jakarta.persistence.CollectionTable> createCollectionTable(CollectionTable source)
 	{
@@ -649,7 +767,9 @@ public class DefaultCreateXAnnotations extends org.jvnet.hyperjaxb.ejb.strategy.
 				AnnotationUtils.create("schema", source.getSchema()),
 				AnnotationUtils.create("joinColumns", createJoinColumn(source.getJoinColumn()), JoinColumn.class),
 				AnnotationUtils.create("uniqueConstraints", createUniqueConstraint(source.getUniqueConstraint()),
-					jakarta.persistence.UniqueConstraint.class)
+					jakarta.persistence.UniqueConstraint.class),
+				AnnotationUtils.create("indexes",
+					createIndex(source.getIndex()), jakarta.persistence.Index.class)
 			);
 	}
 

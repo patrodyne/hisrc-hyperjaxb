@@ -143,9 +143,6 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 			new XAnnotation<ExcludeDefaultListeners>(ExcludeDefaultListeners.class);
 	}
 
-	// public XAnnotation createEntityListeners(EntityListeners
-	// cEntityListeners)
-
 	// JSR220-EJB30: 8.3.1
 	public XAnnotation<jakarta.persistence.NamedQuery> createNamedQuery(NamedQuery cNamedQuery)
 	{
@@ -241,6 +238,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 		);
 	}
 
+	// JSR220-EJB30: 3.8.15
 	public XAnnotation<jakarta.persistence.SqlResultSetMapping> createSqlResultSetMapping(
 		SqlResultSetMapping cSqlResultSetMapping)
 	{
@@ -249,13 +247,14 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 			(
 				jakarta.persistence.SqlResultSetMapping.class,
 				AnnotationUtils.create("name", cSqlResultSetMapping.getName()),
-				AnnotationUtils.create("entityResult", createEntityResult(cSqlResultSetMapping.getEntityResult()),
+				AnnotationUtils.create("entities", createEntityResult(cSqlResultSetMapping.getEntityResult()),
 					jakarta.persistence.EntityResult.class),
-				AnnotationUtils.create("columnResult", createColumnResult(cSqlResultSetMapping.getColumnResult()),
+				AnnotationUtils.create("columns", createColumnResult(cSqlResultSetMapping.getColumnResult()),
 					jakarta.persistence.ColumnResult.class)
 			);
 	}
 
+	// JSR220-EJB30: 3.8.15
 	public XAnnotation<?> createSqlResultSetMapping(Collection<SqlResultSetMapping> cSqlResultSetMappings)
 	{
 		return transform
@@ -331,6 +330,7 @@ public class DefaultCreateXAnnotations implements CreateXAnnotations
 		);
 	}
 
+	// JSR220-EJB30: 8.3.3
 	public XAnnotation<jakarta.persistence.ColumnResult> createColumnResult(ColumnResult cColumnResult)
 	{
 		return cColumnResult == null ? null :

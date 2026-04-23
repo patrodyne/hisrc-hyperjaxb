@@ -36,11 +36,37 @@
 					<orm:named-entity-graph name="Employee.projects">
 						<orm:named-attribute-node name="projects" />
 					</orm:named-entity-graph>
+					<orm:sql-result-set-mapping name="EmployeeSummaryMapping">
+						<orm:constructor-result target-class="org.example.jpa21.other.EmployeeSummary">
+							<orm:column name="id" class="java.lang.Long"/>
+							<orm:column name="last_name" class="java.lang.String"/>
+						</orm:constructor-result>
+					</orm:sql-result-set-mapping>
+					<orm:named-native-query
+						name="EmployeeSelectAll"
+						result-set-mapping="EmployeeSummaryMapping"
+					>
+						<orm:query>SELECT e.id, e.last_name FROM ejb_tests_jpa21.EMPLOYEES e</orm:query>
+					</orm:named-native-query>
 					<orm:named-stored-procedure-query
 						name="getEmployeeCount"
 						procedure-name="ejb_tests_jpa21.FETCH_EMP_COUNT"
 					>
 						<orm:parameter class="java.lang.Long" mode="INOUT"/>
+					</orm:named-stored-procedure-query>
+					<orm:named-stored-procedure-query
+						name="getEmployeeDetailsH2"
+						procedure-name="ejb_tests_jpa21.FETCH_EMP_NAME"
+					>
+						<orm:parameter class="java.lang.Long" mode="IN"/>
+						<orm:result-set-mapping>EmployeeSummaryMapping</orm:result-set-mapping>
+					</orm:named-stored-procedure-query>
+					<orm:named-stored-procedure-query
+						name="getEmployeeDetailsPG"
+						procedure-name="ejb_tests_jpa21.FETCH_EMP_NAME"
+					>
+						<orm:parameter class="java.lang.Long" mode="INOUT"/>
+						<orm:parameter class="java.lang.String" mode="INOUT"/>
 					</orm:named-stored-procedure-query>
 				</hj:entity>
 			</xs:appinfo>

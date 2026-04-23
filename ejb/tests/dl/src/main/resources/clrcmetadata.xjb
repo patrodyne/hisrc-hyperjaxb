@@ -52,10 +52,10 @@
 			
 		</jaxb:bindings>
 		
+		<!-- Intentionally, duplicate to ensure the Annotator dedups properly. -->
 		<jaxb:bindings node="xs:complexType[@name='InvestigationType']">
 			<anx:annotate>@jakarta.xml.bind.annotation.XmlRootElement</anx:annotate>
 		</jaxb:bindings>
-
 		<jaxb:bindings node="xs:complexType[@name='InvestigationType']">
 			<anx:annotate>@jakarta.xml.bind.annotation.XmlRootElement</anx:annotate>
 		</jaxb:bindings>

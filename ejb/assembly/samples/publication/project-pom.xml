@@ -15,7 +15,7 @@
 		<maven-antrun-plugin.version>${maven-antrun-plugin.version}</maven-antrun-plugin.version>
 		<maven.compiler.release>${maven.compiler.release}</maven.compiler.release>
 		<maven-min.version>${maven-min.version}</maven-min.version>
-		<plantuml-generator-maven-plugin>${plantuml-generator-maven-plugin.version}</plantuml-generator-maven-plugin>
+		<plantuml-generator-maven-plugin.version>${plantuml-generator-maven-plugin.version}</plantuml-generator-maven-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<annotation.version>${annotation.version}</annotation.version>
