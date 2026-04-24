@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:Organization 
+	xmlns:tns="urn:example.org:jpa21:model" 
+	xmlns:xsi="http://w3.org"
+	xsi:schemaLocation="urn:example.org:jpa21:model schema.xsd">
+	
+	<id>1</id>
+
+	<!-- 4 Departments -->
+	<departments>
+		<id>101</id>
+		<name>Engineering</name>
+	</departments>
+	<departments>
+		<id>102</id>
+		<name>Marketing</name>
+	</departments>
+	<departments>
+		<id>103</id>
+		<name>Human Resources</name>
+	</departments>
+	<departments>
+		<id>104</id>
+		<name>Finance</name>
+	</departments>
+
+	<!-- 8 Employees -->
+	<employees>
+		<id>1</id>
+		<lastName>Smith</lastName>
+		<active>true</active>
+		<department><id>101</id><name>Engineering</name></department>
+		<projects><id>501</id><projectName>Apollo</projectName></projects>
+	</employees>
+	<employees>
+		<id>2</id>
+		<lastName>Johnson</lastName>
+		<active>true</active>
+		<department><id>101</id><name>Engineering</name></department>
+		<projects><id>501</id><projectName>Apollo</projectName></projects>
+	</employees>
+	<employees>
+		<id>3</id>
+		<lastName>Williams</lastName>
+		<active>true</active>
+		<department><id>102</id><name>Marketing</name></department>
+		<projects><id>502</id><projectName>Zeus</projectName></projects>
+	</employees>
+	<employees>
+		<id>4</id>
+		<lastName>Brown</lastName>
+		<active>false</active>
+		<department><id>102</id><name>Marketing</name></department>
+	</employees>
+	<employees>
+		<id>5</id>
+		<lastName>Jones</lastName>
+		<active>true</active>
+		<department><id>103</id><name>Human Resources</name></department>
+	</employees>
+	<employees>
+		<id>6</id>
+		<lastName>Garcia</lastName>
+		<active>true</active>
+		<department><id>103</id><name>Human Resources</name></department>
+	</employees>
+	<employees>
+		<id>7</id>
+		<lastName>Miller</lastName>
+		<active>true</active>
+		<department><id>104</id><name>Finance</name></department>
+		<projects><id>502</id><projectName>Zeus</projectName></projects>
+	</employees>
+	<employees>
+		<id>8</id>
+		<lastName>Davis</lastName>
+		<active>true</active>
+		<department><id>104</id><name>Finance</name></department>
+	</employees>
+
+	<!-- 2 Projects -->
+	<projects>
+		<id>501</id>
+		<projectName>Apollo</projectName>
+	</projects>
+	<projects>
+		<id>502</id>
+		<projectName>Zeus</projectName>
+	</projects>
+
+</tns:Organization>
