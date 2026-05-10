@@ -13,7 +13,7 @@ package org.example.jpa21.other;
 public class EmployeeSummary
 {
 	// The constructor must match the @ConstructorResult order: id, then name
-	public EmployeeSummary(Long id, String name)
+	public EmployeeSummary(String id, String name)
 	{
 		this.id = id;
 		this.name = name;
@@ -21,8 +21,8 @@ public class EmployeeSummary
 
 	// Getters only (setters are optional since JPA uses the constructor)
 
-	private Long id;
-	public Long getId() { return id; }
+	private String id;
+	public String getId() { return id; }
 
 	private String name;
 	public String getName() { return name; }

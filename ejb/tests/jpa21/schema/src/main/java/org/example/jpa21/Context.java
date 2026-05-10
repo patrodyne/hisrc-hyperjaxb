@@ -1,18 +1,27 @@
 package org.example.jpa21;
 
 import static jakarta.persistence.Persistence.createEntityManagerFactory;
+import static jakarta.persistence.PersistenceConfiguration.JDBC_DRIVER;
+import static jakarta.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
 import static org.jvnet.hyperjaxb.ejb.util.EntityManagerFactoryUtil.createEntityManagerFactoryProperties;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Map;
 
-import org.example.jpa21.model.Employee;
+import org.example.jpa21.model.Organization;
 import org.jvnet.basicjaxb.config.LocatorProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 
 /**
  * JPA context for {@link org.example.jpa21.model.Employee}
@@ -40,7 +49,78 @@ abstract public class Context
 		}
 	}
 
+	// JAXB Context
+
+	private JAXBContext jaxbContext;
+	public JAXBContext getJaxbContext() throws JAXBException
+	{
+		if ( jaxbContext == null )
+			setJaxbContext(JAXBContext.newInstance(Organization.class));
+		return jaxbContext;
+	}
+	public void setJaxbContext(JAXBContext jaxbContext)
+	{
+		this.jaxbContext = jaxbContext;
+	}
+
+	private Unmarshaller unmarshaller = null;
+	protected Unmarshaller getUnmarshaller() throws JAXBException
+	{
+		if ( unmarshaller == null )
+			setUnmarshaller(getJaxbContext().createUnmarshaller());
+		return unmarshaller;
+	}
+	protected void setUnmarshaller(Unmarshaller unmarshaller)
+	{
+		this.unmarshaller = unmarshaller;
+	}
+
+	private Marshaller marshaller = null;
+	public Marshaller getMarshaller() throws JAXBException
+	{
+		if ( marshaller == null )
+		{
+			setMarshaller(getJaxbContext().createMarshaller());
+			getMarshaller().setProperty(JAXB_FORMATTED_OUTPUT, true);
+		}
+		return marshaller;
+	}
+	public void setMarshaller(Marshaller marshaller)
+	{
+		this.marshaller = marshaller;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected <T> T unmarshal(String xmlFileName, Class<T> clazz) throws JAXBException
+	{
+		File xmlFile = new File(xmlFileName);
+		Object obj = getUnmarshaller().unmarshal(xmlFile);
+		if ( obj instanceof JAXBElement )
+			return ((JAXBElement<T>) obj).getValue();
+		else
+		return (T) getUnmarshaller().unmarshal(xmlFile);
+	}
+
+    protected String marshalToString(Object instance) throws JAXBException, IOException
+    {
+        String xml = null;
+        if ( instance != null)
+        {
+            try ( StringWriter writer = new StringWriter() )
+            {
+                getMarshaller().marshal(instance, writer);
+                xml = writer.toString();
+            }
+        }
+        return xml;
+    }
+
 	// JPA Context
+
+	public String getJDBCDriver() throws IOException
+	{
+		return getEntityManagerFactoryProperties().get(JDBC_DRIVER);
+	}
 
 	private Map<String, String> entityManagerFactoryProperties = null;
 	public Map<String, String> getEntityManagerFactoryProperties() throws IOException
@@ -48,7 +128,7 @@ abstract public class Context
 		if ( entityManagerFactoryProperties == null )
 		{
 			Map<String, String> map = createEntityManagerFactoryProperties(getClass());
-			if ( map != null && map.containsKey("jakarta.persistence.jdbc.driver") )
+			if ( map != null && map.containsKey(JDBC_DRIVER) )
 				setEntityManagerFactoryProperties(map);
 			else
 				throw new IOException("Incomplete EntityManagerFactory properties");
@@ -67,7 +147,7 @@ abstract public class Context
 		{
 			String pun = getEntityManagerFactoryProperties().get(HIBERNATE_PUN);
 			if ( pun == null )
-				pun = Employee.class.getPackageName();
+				pun = Organization.class.getPackageName();
 			setPersistenceUnitName(pun);
 		}
 		return persistenceUnitName;
@@ -107,41 +187,6 @@ abstract public class Context
 	protected EntityManager createEntityManager() throws IOException
 	{
 		return getEntityManagerFactory().createEntityManager();
-	}
-
-	/**
-	 * A factory to generate an id of the form "ABCDE".
-	 */
-	protected class IdFactory
-	{
-		private char[] counter;
-
-		protected IdFactory()
-		{
-			this("AAAA@");
-		}
-
-		protected IdFactory(String seed)
-		{
-			counter = seed.toUpperCase().toCharArray();
-		}
-
-		protected String nextId()
-		{
-			return incrementCounter(counter.length-1);
-		}
-
-		private String incrementCounter(int pos)
-		{
-			if ( counter[pos] != 'Z')
-				++counter[pos];
-			else if ( pos > 0 )
-			{
-				counter[pos] = 'A';
-				incrementCounter(--pos);
-			}
-			return new String(counter);
-		}
 	}
 }
 // vi:set tabstop=4 hardtabs=4 shiftwidth=4:

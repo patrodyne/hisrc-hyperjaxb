@@ -174,7 +174,7 @@ public abstract class AbstractWrappingField extends AbstractField
 
 	class Accessor extends AbstractField.Accessor
 	{
-		// private final FieldAccessor core;
+		// private final FieldAccessor itemTypeList;
 		private final JFieldRef coreField;
 
 		Accessor(JExpression $target)

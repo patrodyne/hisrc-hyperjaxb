@@ -61,8 +61,12 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		getLogger().debug("Unmarshalling sample.");
 		Sample initialSample = new Sample(unmarshaller, sampleFile);
 
+		postUnmarshalSample(initialSample);
+
 		getLogger().debug("Unmarshalling etalon.");
 		Sample etalonSample = new Sample(unmarshaller, sampleFile);
+
+		postUnmarshalSample(etalonSample);
 
 		if ( getLogger().isTraceEnabled() )
 		{
@@ -190,6 +194,11 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 		}
 	}
 
+	protected void postUnmarshalSample(Sample etalonSample)
+	{
+		// Sub-classes can override.
+	}
+
 	private void checkCopyable(Object value)
 	{
 		if ( value instanceof CopyTo )
@@ -244,7 +253,7 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest
 	/**
 	 * This local class represents a sample file's unmarshalled value and optional JAXBElement.
 	 */
-	private class Sample
+	protected class Sample
 	{
 		private JAXBElement<Object> jaxbElement;
 		public JAXBElement<Object> getJAXBElement() { return jaxbElement; }

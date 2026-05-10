@@ -9,6 +9,7 @@ import static org.jvnet.basicjaxb.util.CustomizationUtils.createCustomization;
 import static org.jvnet.basicjaxb.util.GeneratorContextUtils.generateContextPathAwareClass;
 import static org.jvnet.basicjaxb.util.LocatorUtils.toLocation;
 import static org.jvnet.hyperjaxb.jpa.Customizations.MANY_TO_MANY_ELEMENT_NAME;
+import static org.jvnet.hyperjaxb.jpa.Customizations.MANY_TO_ONE_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.ONE_TO_MANY_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb.jpa.Customizations.ONE_TO_ONE_ELEMENT_NAME;
 import static org.jvnet.hyperjaxb_annox.plugin.annotate.AnnotatePlugin.ANNOTATE_PROPERTY_FIELD_QNAME;
@@ -27,9 +28,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 
 import org.glassfish.jaxb.core.v2.model.core.ID;
@@ -51,6 +52,7 @@ import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
+import com.sun.codemodel.JType;
 import com.sun.tools.xjc.BadCommandLineException;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.generator.bean.BeanGenerator;
@@ -387,6 +389,8 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 				postProcessOneToProperty(classInfo, propertyInfo, elm);
 			else if ( MANY_TO_MANY_ELEMENT_NAME.equals(elmQName) )
 				postProcessManyToManyProperty(classInfo, propertyInfo, elm);
+			else if ( MANY_TO_ONE_ELEMENT_NAME.equals(elmQName) )
+				postProcessManyToOneProperty(classInfo, propertyInfo, elm);
 		}
 		if ( propertyInfo instanceof CReferencePropertyInfo )
 		{
@@ -418,6 +422,15 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		boolean ignoredElement = false;
 	}
 
+	/**
+	 * Determine if the given list of {@link CPluginCustomization}s
+	 * contains annotations for {@code XmlIDREF}, {@code XmlTransient},
+	 * or {@code ignoredElement}.
+	 *
+	 * @param customizations a list of {@link CPluginCustomization}s.
+	 *
+	 * @return Instance of {@code HasAnnotation} containing the results.
+	 */
 	private HasAnnotation hasAnnotation(CCustomizations customizations)
 	{
 		HasAnnotation hasAnnotation = new HasAnnotation();
@@ -495,6 +508,24 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		}
 	}
 
+	private CClassInfo findClassInfo(Map<NClass, CClassInfo> modelBeans, String ciFullName)
+	{
+		CClassInfo classInfo = null;
+		if ( ciFullName != null )
+		{
+	        for ( CClassInfo possibleClassInfo : modelBeans.values() )
+	        {
+	            final String possibleFullName = possibleClassInfo.fullName();
+	            if ( ciFullName.equals(possibleFullName))
+	            {
+	            	classInfo = possibleClassInfo;
+	            	break;
+	            }
+	        }
+		}
+        return classInfo;
+	}
+
 	private void postProcessManyToManyProperty(CClassInfo mappedBySideClassInfo,
 		CPropertyInfo mappedBySidePropertInfo, Element mappedBySideElement)
 	{
@@ -526,17 +557,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 						CClassRef ownerSideClassRef = (CClassRef) ownerSideType;
 						String ownerSideClassName = ownerSideClassRef.fullName();
 						Map<NClass, CClassInfo> modelBeans = mappedBySideClassInfo.model.beans();
-						CClassInfo ownerSideClassInfo = null;
-						for ( Entry<NClass, CClassInfo> modelBeanEntry : modelBeans.entrySet() )
-						{
-							String beanFullName = modelBeanEntry.getKey().fullName();
-							if ( ownerSideClassName.equals(beanFullName) )
-							{
-								ownerSideClassInfo = modelBeanEntry.getValue();
-								break;
-							}
-						}
-
+						CClassInfo ownerSideClassInfo = findClassInfo(modelBeans, ownerSideClassName);
 						CPropertyInfo ownerSidePropertyInfo = ownerSideClassInfo.getProperty(mappedBy);
 						if ( ownerSidePropertyInfo instanceof CElementPropertyInfo )
 						{
@@ -561,30 +582,59 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 		}
 	}
 
+	private static final QName W3C_IDREF_QNAME =
+		new QName(XMLConstants.W3C_XML_SCHEMA_NS_URI, "IDREF");
+
+	private void postProcessManyToOneProperty(
+		CClassInfo manySideClassInfo,
+		CPropertyInfo manySidePropertInfo,
+		Element manySideElement)
+	{
+		CElementPropertyInfo manySideElmPropInfo = (CElementPropertyInfo) manySidePropertInfo;
+		QName manySideSchemaType = manySideElmPropInfo.getSchemaType();
+		if ( W3C_IDREF_QNAME.equals(manySideSchemaType) )
+		{
+			HasAnnotation hasAnnotation = hasAnnotation(manySideElmPropInfo.getCustomizations());
+			addXmlIDREF(hasAnnotation, manySideElmPropInfo);
+		}
+	}
+
 	private static final Set<QName> INVOKE_ANNOTATE_QNAME_SET =	CUSTOMIZATION_ELEMENT_QNAMES;
 
 	private void postProcessOneToProperty(CClassInfo mappedBySideClassInfo,
-		CPropertyInfo mappedBySidePropertInfo, Element mappedBySideElement)
+		CPropertyInfo mappedBySidePropertyInfo, Element mappedBySideElement)
 	{
 		// Is this a bidirectional mapping?
 		String mappedBy = mappedBySideElement.getAttribute("mapped-by");
 		if ( (mappedBy != null) && !mappedBy.isBlank() )
 		{
 			// Check for an unambiguous type for the owner side.
-			if ( mappedBySidePropertInfo.ref().size() == 1)
+			if ( mappedBySidePropertyInfo.ref().size() == 1)
 			{
+				// For a collection property, the baseType is the type of the items.
+				CClassInfo ownerSideBaseInfo = null;
+				JType ownerSideBaseType = mappedBySidePropertyInfo.baseType;
+				if ( ownerSideBaseType != null )
+				{
+					Map<NClass, CClassInfo> modelBeans = mappedBySideClassInfo.model.beans();
+					ownerSideBaseInfo = findClassInfo(modelBeans, ownerSideBaseType.fullName());
+				}
+
 				// 	Iterate the only TypeInfo that this 'mapped-by' side attribute references.
-				Iterator<? extends CTypeInfo> typeInfos = mappedBySidePropertInfo.ref().iterator();
+				Iterator<? extends CTypeInfo> typeInfos = mappedBySidePropertyInfo.ref().iterator();
 				if ( typeInfos.hasNext() )
 				{
-					// Get the unambiguous 'owner-side' type.
-					CClassInfo ownerSideType = (CClassInfo) typeInfos.next().getType();
-
 					// Initial annotation status is false, by default.
 					HasAnnotation hasAnnotation = new HasAnnotation();
 
 					// Check for an existing 'mappedBy' property bound to an element.
-					CPropertyInfo ownerSidePropertyInfo = ownerSideType.getProperty(mappedBy);
+					// Get the unambiguous 'owner-side' type.
+					CClassInfo ownerSideTypeInfo = null;
+					if ( ownerSideBaseInfo != null )
+						ownerSideTypeInfo = ownerSideBaseInfo;
+					else
+						ownerSideTypeInfo = (CClassInfo) typeInfos.next().getType();
+					CPropertyInfo ownerSidePropertyInfo = ownerSideTypeInfo.getProperty(mappedBy);
 					CElementPropertyInfo ownerSideElementInfo = (CElementPropertyInfo) ownerSidePropertyInfo;
 					if ( ownerSideElementInfo != null )
 					{
@@ -618,16 +668,16 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 							CollectionMode.NOT_REPEATED,
 							ID.NONE,
 							mimeType,
-							mappedBySidePropertInfo.getSchemaComponent(),
+							mappedBySidePropertyInfo.getSchemaComponent(),
 							customizations,
-							mappedBySidePropertInfo.getLocator(),
+							mappedBySidePropertyInfo.getLocator(),
 							required
 						);
 						// Resolve element name
 						QName elementName = mappedBySideClassInfo.getElementName();
 						if ( elementName == null )
 						{
-							XSComponent source = mappedBySidePropertInfo.getSchemaComponent();
+							XSComponent source = mappedBySidePropertyInfo.getSchemaComponent();
 							if ( source instanceof XSParticle )
 							{
 								XSTerm term = ((XSParticle) source).getTerm();
@@ -648,7 +698,7 @@ public class EJBPlugin extends AbstractWeldCDIPlugin
 							null
 						);
 						ownerSideElementInfo.getTypes().add(typeRef);
-						ownerSideType.addProperty(ownerSideElementInfo);
+						ownerSideTypeInfo.addProperty(ownerSideElementInfo);
 					}
 
 					// If needed, add customizations

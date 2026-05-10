@@ -55,7 +55,7 @@ public class H2Procedures
 	 *
 	 * @return A simple result set of the query results.
 	 */
-	public static ResultSet fetchEmployeeName(Connection conn, Long empId)
+	public static ResultSet fetchEmployeeName(Connection conn, String empId)
 		throws SQLException
 	{
 		SimpleResultSet result = new SimpleResultSet();
@@ -68,7 +68,7 @@ public class H2Procedures
 			String query = "SELECT id, last_name FROM ejb_tests_jpa21.EMPLOYEES WHERE id = ?";
 			try ( PreparedStatement ps = conn.prepareStatement(query) )
 			{
-				ps.setLong(1, empId);
+				ps.setString(1, empId);
 				try ( ResultSet rs = ps.executeQuery() )
 				{
 					if (rs.next())
@@ -77,7 +77,7 @@ public class H2Procedures
 						result.addColumn("id", Types.BIGINT, 0, 0);
 						result.addColumn("last_name", Types.VARCHAR, 255, 0);
 						// Row as an array of column objects
-						empId = rs.getLong("id");
+						empId = rs.getString("id");
 						String empName = rs.getString("last_name");
 						result.addRow(empId, empName);
 					}

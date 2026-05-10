@@ -18,6 +18,12 @@
 
 	<dependencies>
 
+		<!-- Apache Commons Dependencies -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-collections4</artifactId>
+		</dependency>
+
 		<!-- JPA Dependencies -->
 		<dependency>
 			<groupId>jakarta.annotation</groupId>

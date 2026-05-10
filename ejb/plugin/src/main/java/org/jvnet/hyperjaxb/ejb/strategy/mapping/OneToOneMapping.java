@@ -109,21 +109,40 @@ public class OneToOneMapping implements FieldOutlineMapping<OneToOne>
 		JClass refUnmarshaller = owningSideModel.ref(Unmarshaller.class);
 		JClass refObject = owningSideModel.ref(Object.class);
 
+		// Declare "afterUnmarshal" method's parameters.
+		@SuppressWarnings("unused")
+		JVar aumTarget = null;
+		JVar aumParent = null;
+
 		// Look for an existing "afterUnmarshal" method
 		JMethod afterUnmarshalMethod =
 			owningSideClass.getMethod("afterUnmarshal", new JType[] {refUnmarshaller, refObject});
 
 		// Otherwise, add a new method to the many-side class.
 		if ( afterUnmarshalMethod == null  )
+		{
 			afterUnmarshalMethod = owningSideClass.method(JMod.NONE, owningSideModel.VOID, "afterUnmarshal");
+			// Add mapped-by setter parameter references.
+			aumTarget = afterUnmarshalMethod.param(Unmarshaller.class, "target");
+			aumParent = afterUnmarshalMethod.param(Object.class, "parent");
+			afterUnmarshalMethod.javadoc()
+				.add("Callback method invoked after unmarshalling XML data into this entity. ");
+		}
+		else
+		{
+			for ( JVar param : afterUnmarshalMethod.params() )
+			{
+				switch ( param.name() )
+				{
+					case "target" -> aumTarget = param;
+					case "parent" -> aumParent = param;
+					default -> { /* ignore unknown param */ }
+				}
+			}
+		}
 
-		// Get mapped-by setter parameter references.
-		@SuppressWarnings("unused")
-		JVar aumTarget = afterUnmarshalMethod.param(Unmarshaller.class, "target");
-		JVar aumParent = afterUnmarshalMethod.param(Object.class, "parent");
-
-		// Add mapped-by setter statement and the primary id setter(s)
-		// to the 'afterUnmarshal' method.
+		// Append mapped-by setter statement and the primary id setter(s)
+		// into the 'afterUnmarshal' method's body.
 		JBlock aumBody = afterUnmarshalMethod.body();
 		JInvocation aumParentCond = mappedBySideClass.dotclass().invoke("isAssignableFrom").arg(aumParent.invoke("getClass"));
 		JBlock aumIfParentThen = aumBody._if(aumParentCond)._then();
@@ -135,9 +154,6 @@ public class OneToOneMapping implements FieldOutlineMapping<OneToOne>
 			createOneToOne$IdSyncList(context, mappedBySideClass, mappedBySideCast, owningSideClass, true);
 		for ( JInvocation idSync : idSyncList )
 			aumIfParentThen.add(idSync);
-
-		afterUnmarshalMethod.javadoc()
-			.add("Callback method invoked after unmarshalling XML data into this entity. ");
 	}
 
 	private void createOneToOne$TieItemMethod(Mapping context, JDefinedClass mappedBySideClass,

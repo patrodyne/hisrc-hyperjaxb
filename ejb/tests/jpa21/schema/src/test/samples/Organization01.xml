@@ -1,91 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:Organization 
-	xmlns:tns="urn:example.org:jpa21:model" 
-	xmlns:xsi="http://w3.org"
-	xsi:schemaLocation="urn:example.org:jpa21:model schema.xsd">
-	
-	<id>1</id>
+<Organization 
+	xmlns="urn:example.org:jpa21:model" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:example.org:jpa21:model ../../main/resources/organization.xsd"
+>
+
+	<id>ORG01</id>
 
 	<!-- 4 Departments -->
 	<departments>
-		<id>101</id>
+		<id>DE-ENG</id>
 		<name>Engineering</name>
 	</departments>
 	<departments>
-		<id>102</id>
-		<name>Marketing</name>
+		<id>DE-FIN</id>
+		<name>Finance</name>
 	</departments>
 	<departments>
-		<id>103</id>
+		<id>DE-HR</id>
 		<name>Human Resources</name>
 	</departments>
 	<departments>
-		<id>104</id>
-		<name>Finance</name>
+		<id>DE-MKT</id>
+		<name>Marketing</name>
 	</departments>
-
-	<!-- 8 Employees -->
-	<employees>
-		<id>1</id>
-		<lastName>Smith</lastName>
-		<active>true</active>
-		<department><id>101</id><name>Engineering</name></department>
-		<projects><id>501</id><projectName>Apollo</projectName></projects>
-	</employees>
-	<employees>
-		<id>2</id>
-		<lastName>Johnson</lastName>
-		<active>true</active>
-		<department><id>101</id><name>Engineering</name></department>
-		<projects><id>501</id><projectName>Apollo</projectName></projects>
-	</employees>
-	<employees>
-		<id>3</id>
-		<lastName>Williams</lastName>
-		<active>true</active>
-		<department><id>102</id><name>Marketing</name></department>
-		<projects><id>502</id><projectName>Zeus</projectName></projects>
-	</employees>
-	<employees>
-		<id>4</id>
-		<lastName>Brown</lastName>
-		<active>false</active>
-		<department><id>102</id><name>Marketing</name></department>
-	</employees>
-	<employees>
-		<id>5</id>
-		<lastName>Jones</lastName>
-		<active>true</active>
-		<department><id>103</id><name>Human Resources</name></department>
-	</employees>
-	<employees>
-		<id>6</id>
-		<lastName>Garcia</lastName>
-		<active>true</active>
-		<department><id>103</id><name>Human Resources</name></department>
-	</employees>
-	<employees>
-		<id>7</id>
-		<lastName>Miller</lastName>
-		<active>true</active>
-		<department><id>104</id><name>Finance</name></department>
-		<projects><id>502</id><projectName>Zeus</projectName></projects>
-	</employees>
-	<employees>
-		<id>8</id>
-		<lastName>Davis</lastName>
-		<active>true</active>
-		<department><id>104</id><name>Finance</name></department>
-	</employees>
-
+	
 	<!-- 2 Projects -->
 	<projects>
-		<id>501</id>
+		<id>PR-APO</id>
 		<projectName>Apollo</projectName>
 	</projects>
 	<projects>
-		<id>502</id>
+		<id>PR-ZEU</id>
 		<projectName>Zeus</projectName>
 	</projects>
 
-</tns:Organization>
+	<!-- 8 Employees -->
+	<employees>
+		<id>EM-BRO01</id>
+		<lastName>Brown</lastName>
+		<active>false</active>
+		<department>DE-MKT</department>
+	</employees>
+	<employees>
+		<id>EM-DAV01</id>
+		<lastName>Davis</lastName>
+		<active>true</active>
+		<department>DE-FIN</department>
+	</employees>
+	<employees>
+		<id>EM-GAR01</id>
+		<lastName>Garcia</lastName>
+		<active>true</active>
+		<department>DE-HR</department>
+	</employees>
+	<employees>
+		<id>EM-JOH01</id>
+		<lastName>Johnson</lastName>
+		<active>true</active>
+		<department>DE-ENG</department>
+		<projects>PR-APO</projects>
+	</employees>
+	<employees>
+		<id>EM-JON01</id>
+		<lastName>Jones</lastName>
+		<active>true</active>
+		<department>DE-HR</department>
+	</employees>
+	<employees>
+		<id>EM-MIL01</id>
+		<lastName>Miller</lastName>
+		<active>true</active>
+		<department>DE-FIN</department>
+		<projects>PR-ZEU</projects>
+	</employees>
+	<employees>
+		<id>EM-SMI01</id>
+		<lastName>Smith</lastName>
+		<active>true</active>
+		<department>DE-ENG</department>
+		<projects>PR-APO</projects>
+		<projects>PR-ZEU</projects>
+	</employees>
+	<employees>
+		<id>EM-WIL01</id>
+		<lastName>Williams</lastName>
+		<active>true</active>
+		<department>DE-MKT</department>
+		<projects>PR-ZEU</projects>
+	</employees>
+
+</Organization>

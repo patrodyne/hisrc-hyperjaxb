@@ -8,6 +8,19 @@ import org.jvnet.higherjaxb.mojo.testing.SLF4JLogger;
 import org.jvnet.hyperjaxb.mojo.HyperjaxbMojo;
 import org.jvnet.hyperjaxb.mojo.ejb.testing.AbstractHyperMojoTest;
 
+/**
+ * This test harness executes HyperjaxbMojo which is the main goal of the HyperJAXB Maven plugin.
+ *
+ * <p>The harness parallels the configuration and actions performed in the Maven build;
+ * but, as a unit test. Typically, this harness is run in an IDE for advanced debugging of
+ * the HiSrc plugin and libraries</p>
+ *
+ * <p>As a Maven plugin and as a mojo that supports its own dependencies, it has a complicated
+ * classpath structure. For best results, close any other HiSrc projects that you have open in
+ * your IDE. This will force the IDE to use the packaged jars; instead of attempted to build a
+ * classpath from any open projects. Maven plugins and other jars have resource files that are
+ * specially packaged and which the IDE may not pick up.</p>
+ */
 @Order(1)
 public class RunRegrepPluginTest extends AbstractHyperMojoTest
 {

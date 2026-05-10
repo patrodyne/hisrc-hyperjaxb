@@ -21,6 +21,20 @@ import org.jvnet.higherjaxb.mojo.HigherjaxbMojo;
 
 import com.sun.tools.xjc.Options;
 
+/**
+ * HyperjaxbMojo is the main goal of the HyperJAXB Maven plugin, which automates the process of adding Jakarta Persistence (JPA) annotations to JAXB-generated Java classes.
+ * <p>It acts as an extension to the XML Schema Compiler (XJC), allowing you to take XML schemas (XSD) and turn them into Java objects that are already mapped for database persistence, bridging the gap between XML data and relational databases.</p>
+ *
+ * <p>Key Functions of HyperjaxbMojo</p>
+ * <ul>
+ *   <li>JPA Annotation Generation: As it generates Java classes from XML schemas (using XJC), it adds @Entity, @Id, @Column, and relationship annotations (@OneToMany, etc.) to the source code.</li>
+ *   <li>Relational Persistence: It allows JAXB objects to be easily saved, loaded, and queried within a database.</li>
+ *   <li>XSD to Database Mapping: It translates XML structure directly into relational database schema mappings, reducing manual coding for data binding.</li>
+ *   <li>Customization: It enables customizations to control how specific XML elements and attributes map to database columns and tables.</li>
+ * </ul>
+ *
+ * <p>Essentially, it turns your XSD into an ORM-ready (Object-Relational Mapping) Java model.</p>
+ */
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, threadSafe = true)
 public class HyperjaxbMojo extends HigherjaxbMojo
 {
@@ -36,7 +50,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	public boolean getEnableIntrospection() { return enableIntrospection; }
 	@Override
 	public void setEnableIntrospection(boolean enableIntrospection) { this.enableIntrospection = enableIntrospection; }
-	
+
 	/**
 	 * Target directory for the generated mappings. If left empty, mappings are
 	 * generated together with sources.
@@ -203,7 +217,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	private boolean generateDefaultValue = false;
 	public boolean isGenerateDefaultValue() { return generateDefaultValue; }
 	public void setGenerateDefaultValue(boolean generateDefaultValue) { this.generateDefaultValue = generateDefaultValue; }
-	
+
 	/**
 	 * Whether the <code>FluentApi</code> methods should be generated.
 	 */
@@ -249,13 +263,13 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	private String[] postArgs = new String[0];
 	public String[] getPostArgs() { return postArgs; }
 	public void setPostArgs(String[] postArgs) { this.postArgs = postArgs; }
-	
+
 	/**
 	 * Optional name of a properties file containing custom bean mappings.
-	 * 
+	 *
 	 * Each property is a key-value pair where the key is a bean name defined by HyperJAXB
 	 * and the value is a class or resource name. Example:
-	 * 
+	 *
 	 * <p>classpath:/META-INF/beans.properties</p>
 	 * <ul>
 	 *   <li>naming=org.example.CustomNames</li>
@@ -266,7 +280,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 	private String beansPropertiesLocator = null;
 	public String getBeansPropertiesLocator() { return beansPropertiesLocator; }
 	public void setBeansPropertiesLocator(String beansPropertiesLocator) { this.beansPropertiesLocator = beansPropertiesLocator; }
-	
+
 	/**
 	 * Sets up the verbose and debug mode depending on mvn logging level, and
 	 * sets up hyperjaxb logging.
@@ -345,10 +359,10 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 
 		if (getEnableIntrospection())
 			add(arguments,"-enableIntrospection");
-		
+
 		if (getPreArgs() != null)
 			addAll(arguments,Arrays.asList(getPreArgs()));
-		
+
 		addAll(arguments,super.getArguments());
 
 		if (isGenerateInheritance())
@@ -462,7 +476,7 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 					break;
 			}
 		}
-		
+
 		if (isGenerateCopyable())
 			add(arguments,"-Xcopyable");
 		if (isGenerateMergeable())
@@ -482,13 +496,13 @@ public class HyperjaxbMojo extends HigherjaxbMojo
 
 		return arguments;
 	}
-	
+
 	/**
 	 * Add an item to the list, if not present.
-	 * 
+	 *
 	 * @param list The list to receive the item.
 	 * @param item The item to be added.
-	 * 
+	 *
 	 * @return True when the item is added or is present; otherwise, false.
 	 */
 	private boolean add(List<String> list, String item)

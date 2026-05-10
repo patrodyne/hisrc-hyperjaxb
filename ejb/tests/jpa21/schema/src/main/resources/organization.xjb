@@ -3,6 +3,7 @@
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="urn:example.org:jpa21:model"
 	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	jaxb:extensionBindingPrefixes="hj orm"
@@ -15,15 +16,36 @@
 		  generateElementProperty customization be set to 'false' in globalBindings.
 		* Hint: Increase EnumMemberSizeCap above 256 with typesafeEnumMaxMembers="512".
 	-->
-	<jaxb:globalBindings localScoping="toplevel">
+	<jaxb:globalBindings localScoping="toplevel" generateElementProperty="false" >
 		<jaxb:serializable uid="20260401" />
 	</jaxb:globalBindings>
 
 	<jaxb:bindings schemaLocation="organization.xsd" node="/xs:schema">
 		<hj:persistence>
+
 			<hj:default-generated-id>
 				 <orm:generated-value strategy="IDENTITY"/> 
 			</hj:default-generated-id>
+
+			<!-- cascade-x: ALL, PERSIST, MERGE, REMOVE, REFRESH, DETACH -->
+
+			<hj:default-one-to-one fetch="EAGER"/>
+			<hj:default-one-to-many fetch="EAGER"/>
+			<hj:default-many-to-one merge="false" fetch="EAGER">
+				<orm:cascade>
+					<orm:cascade-refresh />
+					<orm:cascade-persist />
+					<orm:cascade-merge />
+				</orm:cascade>
+			</hj:default-many-to-one>
+			<hj:default-many-to-many merge="false" fetch="EAGER">
+				<orm:cascade>
+					<orm:cascade-refresh />
+					<orm:cascade-persist />
+					<orm:cascade-merge />
+				</orm:cascade>
+			</hj:default-many-to-many>
+
 		</hj:persistence>
 	</jaxb:bindings>
 

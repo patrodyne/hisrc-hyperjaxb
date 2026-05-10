@@ -247,8 +247,8 @@ public class Main extends Context
 		{
 			// Retrieve the named graph
 			EntityGraph<?> graph = em.getEntityGraph("Employee.projects");
-			return em.find(Employee.class, empId,
-			    Map.of("javax.persistence.loadgraph", graph));
+			return tem.find(Employee.class, empId,
+			    Map.of("jakarta.persistence.loadgraph", graph));
 		};
 
 		Employee employee  = tx.transact(em);
@@ -263,7 +263,7 @@ public class Main extends Context
 		Transactional<Long> tx = (tem) ->
 		{
 			StoredProcedureQuery query =
-				em.createNamedStoredProcedureQuery("getEmployeeCount");
+				tem.createNamedStoredProcedureQuery("getEmployeeCount");
 			// PG: query.setHint("escapeSyntaxCallMode", "call");
 			query.setParameter(1, 0L);
 			// return (Long) query.getSingleResult();
@@ -281,7 +281,7 @@ public class Main extends Context
 		@SuppressWarnings("unchecked")
 		Transactional<List<EmployeeSummary>> tx = (tem) ->
 		{
-			return em.createNamedQuery("EmployeeSelectAll")
+			return tem.createNamedQuery("EmployeeSelectAll")
 				.getResultList();
 		};
 
@@ -296,7 +296,7 @@ public class Main extends Context
 		Transactional<List<EmployeeSummary>> tx = (tem) ->
 		{
 			// 1. Create the query pointing to your procedure
-			StoredProcedureQuery query = em.createStoredProcedureQuery("ejb_tests_jpa21.fetch_emp_name");
+			StoredProcedureQuery query = tem.createStoredProcedureQuery("ejb_tests_jpa21.fetch_emp_name");
 
 			// 2. Register parameters (REF_CURSOR must be registered with void.class or the target Entity)
 			// Dialect [org.hibernate.dialect.H2Dialect] not known to support REF_CURSOR parameters
@@ -347,7 +347,7 @@ public class Main extends Context
 		Transactional<List<EmployeeSummary>> tx = (tem) ->
 		{
 			StoredProcedureQuery query =
-				em.createNamedStoredProcedureQuery("getEmployeeDetailsH2");
+				tem.createNamedStoredProcedureQuery("getEmployeeDetailsH2");
 			// IN Parameters
 			Long empId = 1L;
 			// Positional for H2 compatibility
@@ -366,7 +366,7 @@ public class Main extends Context
 		Transactional<List<EmployeeSummary>> tx = (tem) ->
 		{
 			StoredProcedureQuery query =
-				em.createNamedStoredProcedureQuery("getEmployeeDetailsPG");
+				tem.createNamedStoredProcedureQuery("getEmployeeDetailsPG");
 			// Set by db URL: query.setHint("escapeSyntaxCallMode", "call");
 
 			// INOUT Parameters
@@ -408,7 +408,7 @@ public class Main extends Context
 	 *
 	 * @param start The starting offset.
 	 * @param count The count limit.
-	 * @param department The employee last name.
+	 * @param department The department name.
 	 *
 	 * @return A list of employee(es).
 	 *
@@ -423,9 +423,9 @@ public class Main extends Context
 	protected static Transactional<List<Employee>> selectEmployeesTX(Integer start, Integer count, String department)
 	{
 		// Always perform EntityManager actions within a transaction!
-		Transactional<List<Employee>> tx = (em) ->
+		Transactional<List<Employee>> tx = (tem) ->
 		{
-			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaBuilder cb = tem.getCriteriaBuilder();
 			CriteriaQuery<Employee> cq = cb.createQuery(Employee.class);
 
 			// Force eager loading of entities using an inner join.
@@ -436,7 +436,7 @@ public class Main extends Context
 			cq.select(fromEmployee)
 				.where(cb.equal(fromEmployee.get("department").get("name"), department));
 
-			TypedQuery<Employee> query = em.createQuery(cq);
+			TypedQuery<Employee> query = tem.createQuery(cq);
 			query.setHint("eclipselink.query-results-cache", false);
 			query.setHint("org.hibernate.cacheable", false);
 			List<Employee> entities = query

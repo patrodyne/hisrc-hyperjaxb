@@ -28,7 +28,9 @@ import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
+import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
+import com.sun.tools.xjc.outline.Outline;
 
 import ee.jakarta.xml.ns.persistence.orm.OneToMany;
 import jakarta.xml.bind.Unmarshaller;
@@ -64,13 +66,37 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 		if ( fieldOutline.getRawType() instanceof JClass )
 		{
 			JClass valueType = (JClass) fieldOutline.getRawType();
+
+			// Resolve JDefinedClass or JDirectClass, if possible.
 			List<JClass> typeParameters = valueType.getTypeParameters();
 			if ( !typeParameters.isEmpty() )
 			{
+				JDefinedClass manySideClass = null;
 				if ( typeParameters.get(0) instanceof JDefinedClass )
+					manySideClass = (JDefinedClass) typeParameters.get(0);
+				else
+				{
+	                // Infer target type and name.
+	                // Note: Type may be a JDirectClass from 'jaxb:class ref="..."'.
+	                JClass targetType = typeParameters.get(0);
+	                String targetSideClassName = targetType.fullName();
+
+	                // Attempt to resolve the target side defined class
+	                Outline outline = fieldOutline.parent().parent();
+	                for ( ClassOutline co : outline.getClasses() )
+	                {
+	                    JDefinedClass coi = co.implClass;
+	                    if ( targetSideClassName.equals(coi.fullName()) )
+	                    {
+	                    	manySideClass = coi;
+	                        break;
+	                    }
+	                }
+				}
+
+				if ( manySideClass != null )
 				{
 					JDefinedClass oneSideClass = fieldOutline.parent().implClass;
-					JDefinedClass manySideClass = (JDefinedClass) typeParameters.get(0);
 
 					String mappedBySetterName = "set" + capitalize(oneToMany.getMappedBy());
 					JType[] mappedBySetterTypes = new JType[] { oneSideClass };
@@ -98,24 +124,43 @@ public class OneToManyMapping implements FieldOutlineMapping<OneToMany>
 		JClass refUnmarshaller = manySideOwner.ref(Unmarshaller.class);
 		JClass refObject = manySideOwner.ref(Object.class);
 
+		// Declare "afterUnmarshal" method's parameters.
+		@SuppressWarnings("unused")
+		JVar aumTarget = null;
+		JVar aumParent = null;
+
 		// Look for an existing "afterUnmarshal" method
 		JMethod afterUnmarshalMethod =
 			manySideClass.getMethod("afterUnmarshal", new JType[] {refUnmarshaller, refObject});
 
-		// Otherwise, add a new method to the many-side class.
+		// Otherwise, add a new method with parameters to the many-side class.
 		if ( afterUnmarshalMethod == null  )
+		{
 			afterUnmarshalMethod = manySideClass.method(JMod.NONE, manySideOwner.VOID, "afterUnmarshal");
+			// Add mapped-by setter parameter references.
+			aumTarget = afterUnmarshalMethod.param(Unmarshaller.class, "target");
+			aumParent = afterUnmarshalMethod.param(Object.class, "parent");
+			afterUnmarshalMethod.javadoc()
+				.add("Callback method invoked after unmarshalling XML data into this entity. ");
+		}
+		else
+		{
+			for ( JVar param : afterUnmarshalMethod.params() )
+			{
+				switch ( param.name() )
+				{
+					case "target" -> aumTarget = param;
+					case "parent" -> aumParent = param;
+					default -> { /* ignore unknown param */ }
+				}
+			}
+		}
 
-		// Add mapped-by setter statement to the method.
-		@SuppressWarnings("unused")
-		JVar aumTarget = afterUnmarshalMethod.param(Unmarshaller.class, "target");
-		JVar aumParent = afterUnmarshalMethod.param(Object.class, "parent");
+		// Append mapped-by setter statement into the method body.
 		JBlock aumBody = afterUnmarshalMethod.body();
 		aumBody.
 			_if(oneSideClass.dotclass().invoke("isAssignableFrom").arg(aumParent.invoke("getClass"))).
 			_then().invoke(mappedBySetter).arg(cast(oneSideClass, aumParent));
-		afterUnmarshalMethod.javadoc()
-			.add("Callback method invoked after unmarshalling XML data into this entity. ");
 	}
 
 	private void createOneToMany$TieItemMethod(JDefinedClass oneSideClass, String oneSidePropName,

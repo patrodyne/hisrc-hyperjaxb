@@ -6,6 +6,7 @@
 	xmlns:hj="urn:jvnet.org:hyperjaxb:jpa"
 	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	jaxb:version="3.0"
 	jaxb:extensionBindingPrefixes="hj orm"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation=
@@ -14,7 +15,7 @@
 >
 	<xs:complexType name="Department">
 		<xs:sequence>
-			<xs:element name="id" type="xs:long" minOccurs="0">
+			<xs:element name="id" type="xs:ID" minOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:id/>
@@ -22,7 +23,41 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="name" type="xs:string"/>
-			<xs:element name="employees" type="tns:Employee" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- 
+			<xs:element name="employeeRefs" type="xs:IDREFS" minOccurs="0">
+				<xs:annotation>
+	                <xs:appinfo>
+	                    <jaxb:property>
+                            <jaxb:baseType name="org.example.jpa21.model.Employee" />
+                        </jaxb:property>
+                        <hj:one-to-many mapped-by="department" />
+	                </xs:appinfo>
+            	</xs:annotation>
+            </xs:element>
+			 -->
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Project">
+		<xs:sequence>
+			<xs:element name="id" type="xs:ID" minOccurs="1">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:id/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="projectName" type="xs:string"/>
+			<xs:element name="employees" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:class ref="org.example.jpa21.model.Employee"/>
+						<hj:many-to-many>
+							<orm:order-by>id</orm:order-by>
+						</hj:many-to-many>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -30,49 +65,57 @@
 		<xs:annotation>
 			<xs:appinfo>
 				<hj:entity>
+				
 					<orm:table name="EMPLOYEES">
 						<orm:index name="idx_emp_last_name" column-list="last_name"/>
 					</orm:table>
+					
 					<orm:named-entity-graph name="Employee.projects">
 						<orm:named-attribute-node name="projects" />
 					</orm:named-entity-graph>
+					
 					<orm:sql-result-set-mapping name="EmployeeSummaryMapping">
 						<orm:constructor-result target-class="org.example.jpa21.other.EmployeeSummary">
-							<orm:column name="id" class="java.lang.Long"/>
+							<orm:column name="id" class="java.lang.String"/>
 							<orm:column name="last_name" class="java.lang.String"/>
 						</orm:constructor-result>
 					</orm:sql-result-set-mapping>
+					
 					<orm:named-native-query
 						name="EmployeeSelectAll"
 						result-set-mapping="EmployeeSummaryMapping"
 					>
 						<orm:query>SELECT e.id, e.last_name FROM ejb_tests_jpa21.EMPLOYEES e</orm:query>
 					</orm:named-native-query>
+					
 					<orm:named-stored-procedure-query
 						name="getEmployeeCount"
 						procedure-name="ejb_tests_jpa21.FETCH_EMP_COUNT"
 					>
 						<orm:parameter class="java.lang.Long" mode="INOUT"/>
 					</orm:named-stored-procedure-query>
+					
 					<orm:named-stored-procedure-query
 						name="getEmployeeDetailsH2"
 						procedure-name="ejb_tests_jpa21.FETCH_EMP_NAME"
 					>
-						<orm:parameter class="java.lang.Long" mode="IN"/>
+						<orm:parameter class="java.lang.String" mode="IN"/>
 						<orm:result-set-mapping>EmployeeSummaryMapping</orm:result-set-mapping>
 					</orm:named-stored-procedure-query>
+					
 					<orm:named-stored-procedure-query
 						name="getEmployeeDetailsPG"
 						procedure-name="ejb_tests_jpa21.FETCH_EMP_NAME"
 					>
-						<orm:parameter class="java.lang.Long" mode="INOUT"/>
+						<orm:parameter class="java.lang.String" mode="INOUT"/>
 						<orm:parameter class="java.lang.String" mode="INOUT"/>
 					</orm:named-stored-procedure-query>
+					
 				</hj:entity>
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="xs:long" minOccurs="0">
+			<xs:element name="id" type="xs:ID" minOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:id/>
@@ -81,37 +124,74 @@
 			</xs:element>
 			<xs:element name="lastName" type="xs:string"/>
 			<xs:element name="active" type="xs:boolean"/>
-			<xs:element name="department" type="tns:Department" minOccurs="0"/>
-			<xs:element name="projects" type="tns:Project" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="Project">
-		<xs:sequence>
-			<xs:element name="id" type="xs:long" minOccurs="0">
+			<xs:element name="department" type="xs:IDREF" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>
-						<hj:id/>
+						<jaxb:class ref="Department"/>
+						<!-- 
+	                    <jaxb:property>
+                            <jaxb:baseType name="org.example.jpa21.model.Department" />
+                        </jaxb:property>
+						 -->
+						<hj:many-to-one />
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="projectName" type="xs:string"/>
+			<xs:element name="projects" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:class ref="org.example.jpa21.model.Project"/>
+						<!-- 
+	                    <jaxb:property>
+                            <jaxb:baseType name="org.example.jpa21.model.Project" />
+                        </jaxb:property>
+						 -->
+						<hj:many-to-many mapped-by="employees" >
+							<orm:order-by>id</orm:order-by>
+						</hj:many-to-many>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 
 	<xs:element name="Organization">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="id" type="xs:long" minOccurs="0">
+				<xs:element name="id" type="xs:string" minOccurs="1">
 					<xs:annotation>
 						<xs:appinfo>
 							<hj:id/>
 						</xs:appinfo>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="departments" type="tns:Department" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element name="employees" type="tns:Employee" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element name="projects" type="tns:Project" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="departments" type="tns:Department" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:appinfo>
+							<hj:one-to-many mapped-by="organization">
+								<orm:order-by>id</orm:order-by>
+							</hj:one-to-many>
+						</xs:appinfo>
+					</xs:annotation>					
+				</xs:element>
+				<xs:element name="projects" type="tns:Project" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:appinfo>
+							<hj:one-to-many mapped-by="organization">
+								<orm:order-by>id</orm:order-by>
+							</hj:one-to-many>
+						</xs:appinfo>
+					</xs:annotation>					
+				</xs:element>
+				<xs:element name="employees" type="tns:Employee" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:appinfo>
+							<hj:one-to-many mapped-by="organization">
+								<orm:order-by>id</orm:order-by>
+							</hj:one-to-many>
+						</xs:appinfo>
+					</xs:annotation>					
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

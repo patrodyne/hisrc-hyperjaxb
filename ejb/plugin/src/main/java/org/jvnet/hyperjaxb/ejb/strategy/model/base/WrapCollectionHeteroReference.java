@@ -193,18 +193,18 @@ public class WrapCollectionHeteroReference implements CreatePropertyInfos
 
 	private class MixedItemFieldRederer implements FieldRenderer
 	{
-		// private final FieldRenderer core;
+		// private final FieldRenderer itemTypeList;
 		public MixedItemFieldRederer(final FieldRenderer core)
 		{
 			super();
-			// this.core = core;
+			// this.core = itemTypeList;
 		}
 
 		@Override
 		public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo propertyInfo)
 		{
 			final FieldOutline fieldOutline =
-				// core == null ?
+				// itemTypeList == null ?
 				new SingleField(classOutline, propertyInfo)
 				{
 					@Override
@@ -218,7 +218,7 @@ public class WrapCollectionHeteroReference implements CreatePropertyInfos
 					{
 						return super.getType(aspect).boxify();
 					}
-				};// : core.generate(classOutline, propertyInfo);
+				};// : itemTypeList.generate(classOutline, propertyInfo);
 			final JClass itemClass = classOutline.implClass.owner().ref(MixedItem.class)
 				.narrow(fieldOutline.getRawType().boxify());
 			classOutline.implClass._implements(itemClass);
@@ -239,18 +239,18 @@ public class WrapCollectionHeteroReference implements CreatePropertyInfos
 
 	private class ItemFieldRederer implements FieldRenderer
 	{
-		// private final FieldRenderer core;
+		// private final FieldRenderer itemTypeList;
 		public ItemFieldRederer(final FieldRenderer core)
 		{
 			super();
-			// this.core = core;
+			// this.core = itemTypeList;
 		}
 
 		@Override
 		public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo propertyInfo)
 		{
 			final FieldOutline fieldOutline =
-				// core == null ?
+				// itemTypeList == null ?
 				new SingleField(classOutline, propertyInfo)
 				{
 					@Override
@@ -264,7 +264,7 @@ public class WrapCollectionHeteroReference implements CreatePropertyInfos
 					{
 						return super.getType(aspect).boxify();
 					}
-				};// : core.generate(classOutline, propertyInfo);
+				};// : itemTypeList.generate(classOutline, propertyInfo);
 			final JClass itemClass = classOutline.implClass.owner().ref(Item.class)
 				.narrow(fieldOutline.getRawType().boxify());
 			classOutline.implClass._implements(itemClass);

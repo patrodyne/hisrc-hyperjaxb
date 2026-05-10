@@ -151,18 +151,18 @@ public class WrapCollectionHeteroElement implements CreatePropertyInfos
 
 	private class ItemFieldRenderer implements FieldRenderer
 	{
-		// private final CPropertyInfo core;
+		// private final CPropertyInfo itemTypeList;
 		public ItemFieldRenderer(final CPropertyInfo core)
 		{
 			super();
-			// this.core = core;
+			// this.core = itemTypeList;
 		}
 
 		@Override
 		public FieldOutline generate(ClassOutlineImpl classOutline, CPropertyInfo propertyInfo)
 		{
 			// final FieldOutline coreFieldOutline =
-			// classOutline.parent().getField(core);
+			// classOutline.parent().getField(itemTypeList);
 			final FieldOutline fieldOutline = new SingleField(classOutline, propertyInfo)
 			{
 				// @Override
