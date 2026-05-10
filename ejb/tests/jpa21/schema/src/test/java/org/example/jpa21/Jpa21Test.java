@@ -45,6 +45,7 @@ public class Jpa21Test extends Context
 		for ( Employee employee : organization.getEmployees() )
 			employee.tieProjects();
 		persist(organization, true);
+		getLogger().debug("setUp: Organization: {}", organization);
 	}
 
 	@AfterEach
