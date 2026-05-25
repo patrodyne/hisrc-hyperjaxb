@@ -48,7 +48,6 @@
 			</hj:entity>
 		</jaxb:bindings>
 
-
 		<jaxb:bindings node="xs:complexType[@name='Items']/xs:sequence/xs:element[@name='item']">
 			<hj:one-to-many>
 				<orm:order-by>partNum</orm:order-by>
@@ -64,7 +63,7 @@
 				<jaxb:bindings node="xs:sequence">
 					<jaxb:bindings node="xs:element[@name='USPrice']">
 						<hj:basic>
-							<orm:column name="PRICE"/>
+							<orm:column name="PRICE" precision="20" scale="2"/>
 						</hj:basic>
 					</jaxb:bindings>
 					<jaxb:bindings node="xs:element[@name='productName']">

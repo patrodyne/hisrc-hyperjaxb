@@ -20,7 +20,7 @@
 				<element name="Street" type="string"/>
 				<element name="City" type="string"/>
 				<element name="State" type="string"/>
-				<element name="Zip" type="decimal"/>
+				<element name="Zip" type="int"/>
 			</sequence>
 			<attribute name="Country" type="NMTOKEN" fixed="USA"/>
 			<attribute name="Stage" type="tns:stage" use="required" />

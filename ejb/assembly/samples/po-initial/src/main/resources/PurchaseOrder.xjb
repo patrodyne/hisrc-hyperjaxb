@@ -43,6 +43,12 @@
 
 		</hj:persistence>
 
+		<jaxb:bindings node="//xs:element[@name='USPrice']" >
+			<hj:basic>
+				<orm:column precision="20" scale="2"/>
+			</hj:basic>
+		</jaxb:bindings>
+
 	</jaxb:bindings>
 
 </jaxb:bindings>

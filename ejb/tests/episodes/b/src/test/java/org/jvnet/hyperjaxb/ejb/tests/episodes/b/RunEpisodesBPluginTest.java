@@ -28,7 +28,6 @@ import org.jvnet.hyperjaxb.mojo.ejb.testing.AbstractHyperMojoTest;
  * classpath from any open projects. Maven plugins and other jars have resource files that are
  * specially packaged and which the IDE may not pick up.</p>
  */
- */
 @Order(1)
 public class RunEpisodesBPluginTest extends AbstractHyperMojoTest
 {
@@ -47,7 +46,7 @@ public class RunEpisodesBPluginTest extends AbstractHyperMojoTest
         episode.setVersion(getProjectVersion());
         episode.setSystemPath(format("../a/target/%s-%s.jar", episode.getArtifactId(), episode.getVersion()));
         episode.setScope(SCOPE_SYSTEM);
-        
+
 		//
 		// MOJO Execution
 		//
@@ -56,20 +55,20 @@ public class RunEpisodesBPluginTest extends AbstractHyperMojoTest
 		//     hisrc-hyperjaxb-annox-plugin
 		//     hisrc-basicjaxb-plugins
 		//
-		
+
 		HyperjaxbMojo mojo = new HyperjaxbMojo();
 		mojo.setLog(new SLF4JLogger(getLogger()));
 
 		mojo.getRemoteRepos().add(REMOTE_REPOSITORY);
 		mojo.setRepoSession(REPOSITORY_SYSTEM_SESSION);
 		mojo.setRepoSystem(repositorySystem);
-		
+
 		mojo.setProject(createMavenProject());
 		mojo.setSchemaLanguage(XMLSCHEMA.name());
 		mojo.setSchemaDirectory(fullpath("src/main/resources"));
 		mojo.setSchemaIncludes(new String[] { "*.xsd" });
 		mojo.setBindingIncludes(new String[] { "*.xjb" });
-		mojo.setGenerateDirectory(fullpath("target/generated-sources/xjc")); 
+		mojo.setGenerateDirectory(fullpath("target/generated-sources/xjc"));
 		mojo.setVerbose(true);
 		mojo.setDebug(true);
 		mojo.setWriteCode(true);
@@ -78,7 +77,7 @@ public class RunEpisodesBPluginTest extends AbstractHyperMojoTest
 		mojo.setNoFileHeader(true);
 		mojo.setExtension(true);
 		mojo.setArgs(new ArrayList<>());
-		
+
 		mojo.setStrict(false);
 		mojo.setCatalog(fullpath("src/main/resources/catalog.xml"));
 		mojo.setEpisodes(new Dependency[] { episode });
@@ -87,7 +86,7 @@ public class RunEpisodesBPluginTest extends AbstractHyperMojoTest
 		mojo.setRoundtripTestClassName(getRoundtripTestClassName());
 		if ( mojo.getRoundtripTestClassName() != null )
 			mojo.setValidateXml(false);
-		
+
 		mojo.execute();
 	}
 }
