@@ -24,8 +24,8 @@
 		</replace>
 		<replace dir="${basedir}" summary="true">
 			<include name="**/sql-*-h2db.sh"/>
-			<replacetoken><![CDATA[/org/postgresql/postgresql/42.7.8/postgresql-42.7.8.jar]]></replacetoken>
-			<replacevalue><![CDATA[/org/postgresql/postgresql/42.7.10/postgresql-42.7.10.jar]]></replacevalue>
+			<replacetoken><![CDATA[/org/postgresql/postgresql/42.7.10/postgresql-42.7.10.jar]]></replacetoken>
+			<replacevalue><![CDATA[/org/postgresql/postgresql/42.7.11/postgresql-42.7.11.jar]]></replacevalue>
 		</replace>
 		<chmod perm="774">
 			<fileset dir="${basedir}">

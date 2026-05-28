@@ -1,0 +1,256 @@
+        @Repeatable(AssociationOverrides.class)
+        @Target({TYPE, METHOD, FIELD}) @Retention(RUNTIME)
+        public @interface AssociationOverride {
+          String name();
+          JoinColumn[] joinColumns() default{};
+*         ForeignKey foreignKey() default @ForeignKey(PROVIDER_DEFAULT);
+          JoinTable joinTable() default @JoinTable;
+        }
+
+        @Target({}) @Retention(RUNTIME)
+        public @interface CheckConstraint {
+          String name() default "";
+          String constraint();
+          String options() default "";
+        }
+
+        @Target({METHOD, FIELD}) @Retention(RUNTIME)
+        public @interface CollectionTable {
+          String name() default "";
+          String catalog() default "";
+          String schema() default "";
+          JoinColumn[] joinColumns() default {};
+*         ForeignKey foreignKey() default @ForeignKey(ConstraintMode.PROVIDER_DEFAULT);
+          UniqueConstraint[] uniqueConstraints() default {};
+          Index[] indexes() default {};
+*         String options() default "";
+        }
+
+        @Target({METHOD, FIELD}) @Retention(RUNTIME)
+        public @interface Column {
+          String name() default "";
+          boolean unique() default false;
+          boolean nullable() default true;
+          boolean insertable() default true;
+          boolean updatable() default true;
+          String columnDefinition() default "";
+*         String options() default "";
+          String table() default "";
+          int length() default 255;
+          int precision() default 0; // decimal precision
+          int scale() default 0; // decimal scale
+*         int secondPrecision() default -1; //fractional second precision
+*         CheckConstraint[] check() default {};
+*         String comment() default "";
+        }
+
+        @Target({TYPE}) @Retention(RUNTIME)
+        public @interface DiscriminatorColumn {
+          String name() default "DTYPE";
+          DiscriminatorType discriminatorType() default STRING;
+          String columnDefinition() default "";
+*         String options() default "";
+          int length() default 31;
+        }
+
+        @Target({}) @Retention(RUNTIME)
+        public @interface EntityResult {
+          Class<?> entityClass();
+*         LockModeType lockMode() default LockModeType.OPTIMISTIC;
+          FieldResult[] fields() default {};
+          String discriminatorColumn() default "";
+        }
+
+        @Target({}) @Retention(RUNTIME)
+        public @interface ForeignKey {
+          String name() default "";
+          ConstraintMode value() default CONSTRAINT;
+          String foreign-key-definition() default "";
+*         String options() default "";
+        }
+
+        @Target({}) @Retention(RUNTIME)
+        public @interface Index {
+          String name() default "";
+          String columnList();
+          boolean unique() default false;
+*         String options() default "";
+        }
+
+        @Repeatable(JoinColumns.class)
+        @Target({METHOD, FIELD}) @Retention(RUNTIME)
+        public @interface JoinColumn {
+          String name() default "";
+          String referencedColumnName() default "";
+          boolean unique() default false;
+          boolean nullable() default true;
+          boolean insertable() default true;
+          boolean updatable() default true;
+          String columnDefinition() default "";
+*         String options() default "";
+          String table() default "";
+          ForeignKey foreignKey() default @ForeignKey();
+*         CheckConstraint[] check() default {};
+*         String comment() default "";
+        }
+
+        @Target({METHOD, FIELD}) @Retention(RUNTIME)
+        public @interface JoinTable {
+          String name() default "";
+          String catalog() default "";
+          String schema() default "";
+          JoinColumn[] joinColumns() default {};
+          JoinColumn[] inverseJoinColumns() default {};
+*         ForeignKey foreignKey() default @ForeignKey(ConstraintMode.PROVIDER_DEFAULT);
+*         ForeignKey inverseForeignKey() default @ForeignKey(ConstraintMode.PROVIDER_DEFAULT);
+          UniqueConstraint[] uniqueConstraints() default {};
+          Index[] indexes() default {};
+*         CheckConstraint[] check() default {};
+*         String comment() default "";
+*         String options() default "";
+        }
+
+        @Target({METHOD, FIELD}) @Retention(RUNTIME)
+        public @interface MapKeyColumn {
+          String name() default "";
+          boolean unique() default false;
+          boolean nullable() default false;
+          boolean insertable() default true;
+          boolean updatable() default true;
+          String columnDefinition() default "";
+*         String options() default "";
+          String table() default "";
+          int length() default 255;
+          int precision() default 0; // decimal precision
+          int scale() default 0; // decimal scale
+        }
+
+        @Repeatable(MapKeyJoinColumns.class)
+        @Target({METHOD, FIELD}) @Retention(RUNTIME)
+        public @interface MapKeyJoinColumn {
+          String name() default "";
+          String referencedColumnName() default "";
+          boolean unique() default false;
+          boolean nullable() default false;
+          boolean insertable() default true;
+          boolean updatable() default true;
+          String columnDefinition() default "";
+*         String options() default "";
+          String table() default "";
+*         ForeignKey foreignKey() default @ForeignKey(ConstraintMode.PROVIDER_DEFAULT);
+        }
+
+        @Repeatable(NamedNativeQueries.class)
+        @Target({TYPE}) @Retention(RUNTIME)
+        public @interface NamedNativeQuery {
+          String name();
+          String query();
+          QueryHint[] hints() default {};
+          Class<?> resultClass() default void.class;
+          String resultSetMapping() default ""; //named SqlResultSetMapping
+*         EntityResult[] entities() default {};
+*         ConstructorResult[] classes() default {};
+*         ColumnResult[] columns() default {};
+        }
+
+        @Repeatable(NamedQueries.class)
+        @Target({TYPE}) @Retention(RUNTIME)
+        public @interface NamedQuery {
+          String name();
+          String query();
+*         LockModeType lockMode() default LockModeType.NONE;
+          QueryHint[] hints() default {};
+        }
+
+        @Target({METHOD, FIELD}) @Retention(RUNTIME)
+        public @interface OneToMany {
+          Class<?> targetEntity() default void.class;
+          CascadeType[] cascade() default {};
+          FetchType fetch() default FetchType.LAZY;
+          String mappedBy() default "";
+*         boolean orphanRemoval() default false;
+        }
+
+        @Target({METHOD, FIELD}) @Retention(RUNTIME)
+        public @interface OrderColumn {
+          String name() default "";
+          boolean nullable() default true;
+          boolean insertable() default true;
+          boolean updatable() default true;
+          String columnDefinition() default "";
+*         String options() default "";
+        }
+
+        @Repeatable(PrimaryKeyJoinColumns.class)
+        @Target({TYPE, METHOD, FIELD}) @Retention(RUNTIME)
+        public @interface PrimaryKeyJoinColumn {
+          String name() default "";
+          String referencedColumnName() default "";
+          String columnDefinition() default "";
+*         String options() default "";
+*         ForeignKey foreignKey() default @ForeignKey(PROVIDER_DEFAULT);
+        }
+
+        @Repeatable(SecondaryTables.class)
+        @Target({TYPE}) @Retention(RUNTIME)
+        public @interface SecondaryTable {
+          String name();
+          String catalog() default "";
+          String schema() default "";
+          PrimaryKeyJoinColumn[] pkJoinColumns() default {};
+*         ForeignKey foreignKey() default @ForeignKey(ConstraintMode.PROVIDER_DEFAULT);
+          UniqueConstraint[] uniqueConstraints() default {};
+          Index[] indexes() default {};
+*         CheckConstraint[] check() default {};
+*         String comment() default "";
+*         String options() default "";
+        }
+
+        @Repeatable(SequenceGenerators.class)
+        @Target({TYPE, METHOD, FIELD, PACKAGE}) @Retention(RUNTIME)
+        public @interface SequenceGenerator {
+          String name() default "";
+          String sequenceName() default "";
+          String catalog() default "";
+          String schema() default "";
+          int initialValue() default 1;
+          int allocationSize() default 50;
+*         String options() default "";
+        }
+
+        @Target({TYPE}) @Retention(RUNTIME)
+        public @interface Table {
+          String name() default "";
+          String catalog() default "";
+          String schema() default "";
+          UniqueConstraint[] uniqueConstraints() default {};
+          Index[] indexes() default {};
+*         CheckConstraint[] check() default {};
+*         String comment() default "";
+*         String options() default "";
+        }
+
+        @Repeatable(TableGenerators.class)
+        @Target({TYPE, METHOD, FIELD, PACKAGE}) @Retention(RUNTIME)
+        public @interface TableGenerator {
+          String name() default "";
+          String table() default "";
+          String catalog() default "";
+          String schema() default "";
+          String pkColumnName() default "";
+          String valueColumnName() default "";
+          String pkColumnValue() default "";
+          int initialValue() default 0;
+          int allocationSize() default 50;
+          UniqueConstraint[] uniqueConstraints() default {};
+          Indexes[] indexes() default {};
+*         String options() default "";
+        }
+
+        @Target({}) @Retention(RUNTIME)
+        public @interface UniqueConstraint {
+          String name() default "";
+          String[] columnNames();
+*         String options() default "";
+        }
+
