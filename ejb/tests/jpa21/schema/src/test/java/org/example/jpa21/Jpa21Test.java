@@ -14,6 +14,8 @@ import org.example.jpa21.other.EmployeeSummary;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.jvnet.hyperjaxb.ejb.util.Provider;
+import org.jvnet.hyperjaxb.ejb.util.ProviderDetector;
 import org.jvnet.hyperjaxb.ejb.util.Transactional;
 
 import jakarta.persistence.EntityGraph;
@@ -44,7 +46,10 @@ public class Jpa21Test extends Context
 			project.tieEmployees();
 		for ( Employee employee : organization.getEmployees() )
 			employee.tieProjects();
-		persist(organization, true);
+
+		// EclipseLink may not drop tables, pass isNew=false
+		persist(organization, false);
+
 		getLogger().debug("setUp: Organization: {}", organization);
 	}
 
@@ -53,6 +58,9 @@ public class Jpa21Test extends Context
 		throws Exception
 	{
 		em.close();
+		// EclipseLink drops tables when EMF is closed.
+		//getEntityManagerFactory().close();
+		//setEntityManagerFactory(null);
 	}
 
 	@Test
@@ -105,7 +113,19 @@ public class Jpa21Test extends Context
 				tem.createNamedStoredProcedureQuery("getEmployeeCount");
 			// PG: query.setHint("escapeSyntaxCallMode", "call");
 			query.setParameter(1, 0L);
-			// return (Long) query.getSingleResult();
+
+			Provider provider = ProviderDetector.getProvider(em);
+			// EclipseLink follows a strict, spec-first time line. It requires an explicit trigger event (execute())
+			// to allocate resources and fetch data. If you skip execute(), the internal cursor/statement doesn't
+			// exist yet, resulting in an immediate IllegalStateException.
+			//
+			// Hibernate uses a lazy, auto-executing architecture. If you call getOutputParameterValue() before
+			// calling execute(), Hibernate implicitly runs the query for you under the hood. However, this means
+			// Hibernate keeps the underlying JDBC statement open longer; if the statement or session is closed
+			// before you read the value, it throws Object is already closed.
+			if ( provider == Provider.ECLIPSELINK )
+				query.execute();
+
 			return (Long) query.getOutputParameterValue(1);
 		};
 

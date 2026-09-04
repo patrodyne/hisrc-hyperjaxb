@@ -270,13 +270,13 @@ public class PublicationTest extends AbstractEntityManagerTest
 		    final OutputOptions outputOptions = OutputOptionsBuilder.builder()
 				.withOutputFormat(dof)
 				.withOutputFile(outputFile)
-				.title(SCHEMA_TITLE)
 				.toOptions();
 
 		    final Config config = ConfigUtility.newConfig();
 		    config.put("no-info", true);
 		    config.put("no-remarks", true);
 		    config.put("portable-names", true);
+		    config.put("schemacrawler.format.title", SCHEMA_TITLE);
 
 		    final String command = "schema";
 

@@ -86,38 +86,38 @@
 		<cdi-api.version>4.1.0</cdi-api.version>
 		<commons-io.version>2.22.0</commons-io.version>
 		<derby.version>10.17.1.0</derby.version>
-		<eclipselink.version>5.0.0</eclipselink.version>
+		<eclipselink.version>5.0.1</eclipselink.version>
 		<ehcache.version>3.12.0</ehcache.version>
 		<guice.version>5.1.0</guice.version> <!-- provided by Maven -->
 		<hibernate-search.version>8.1.2.Final</hibernate-search.version>
-		<hibernate-series.version>7.4.0.Final</hibernate-series.version>
+		<hibernate-series.version>7.4.7.Final</hibernate-series.version>
 		<hibernate-javadoc.version>6.4</hibernate-javadoc.version>
-		<HikariCP.version>7.0.2</HikariCP.version>
+		<HikariCP.version>7.1.0</HikariCP.version>
 		<hisrc-basicjaxb-annox-parser.version>3.0.1-SNAPSHOT</hisrc-basicjaxb-annox-parser.version>
 		<hisrc-basicjaxb.version>3.0.1-SNAPSHOT</hisrc-basicjaxb.version>
 		<hisrc-higherjaxb-maven-plugin.version>3.0.1-SNAPSHOT</hisrc-higherjaxb-maven-plugin.version>
 		<hisrc-hyperjaxb-annox-plugin.version>3.0.1-SNAPSHOT</hisrc-hyperjaxb-annox-plugin.version>
-		<h2database.version>2.4.240</h2database.version>
-		<javassist.version>3.31.0-GA</javassist.version>
+		<h2database.version>2.5.250</h2database.version>
+		<javassist.version>3.33.0-GA</javassist.version>
 		<jpa-api.version>3.2.0</jpa-api.version>
 		<jaxb-api.version>4.0.5</jaxb-api.version>
 		<jaxb-imp.version>4.0.9</jaxb-imp.version>
-		<junit-jupiter.version>6.1.0</junit-jupiter.version>
-		<junit-platform.version>6.1.0</junit-platform.version>
+		<junit-jupiter.version>6.1.3</junit-jupiter.version>
+		<junit-platform.version>6.1.3</junit-platform.version>
 		<m2e.jpa.activation>false</m2e.jpa.activation>
 		<maven.compiler.release>17</maven.compiler.release>
-		<maven-api.version>3.9.14</maven-api.version>
+		<maven-api.version>3.9.16</maven-api.version>
 		<maven-min.version>3.9.0</maven-min.version>
 		<maven-plugin-plugin.version>3.15.2</maven-plugin-plugin.version>
 		<maven-plugin-testing.version>3.3.0</maven-plugin-testing.version>
 		<maven-resolver.version>1.9.27</maven-resolver.version>
 		<maven-resolver-http.version>1.9.27</maven-resolver-http.version>
-		<postgresql.version>42.7.10</postgresql.version>
+		<postgresql.version>42.7.13</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<schemacrawler.version>17.11.1</schemacrawler.version>
-		<slf4j.version>2.0.18</slf4j.version>
-		<smallrye.version>3.5.3</smallrye.version>
+		<schemacrawler.version>17.14.1</schemacrawler.version>
+		<slf4j.version>2.0.19</slf4j.version>
+		<smallrye.version>3.6.0</smallrye.version>
 		<threeten-jaxb.version>2.2.0</threeten-jaxb.version>
 		<weld.version>6.0.4.Final</weld.version>
 
@@ -303,7 +303,7 @@
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-collections4</artifactId>
-				<version>4.5.0</version>
+				<version>4.6.0</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sourceforge.collections</groupId>
@@ -513,7 +513,7 @@
 			<dependency>
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-utils</artifactId>
-				<version>4.0.3</version>
+				<version>4.1.0</version>
 			</dependency>
 			<!-- Maven JSR-330 Dependency Injection -->
 			<dependency>
